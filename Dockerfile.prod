@@ -1,0 +1,19 @@
+FROM node:16-alpine as builder
+# Setup working dir to /app
+WORKDIR /app
+# Cache effective copying
+COPY ["package.json", "yarn.lock", "./"]
+# Install the dependencies in /app
+RUN yarn install --frozen-lockfile
+# Copy the rest of the files to app
+COPY . .
+# Run app
+RUN yarn build
+
+# Bundle static assets with nginx
+FROM ubuntu
+RUN apt-get update
+RUN apt-get install nginx -y
+COPY --from=builder /app/dist /var/www/html
+EXPOSE 80
+CMD ["nginx","-g","daemon off;"]
