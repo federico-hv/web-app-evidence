@@ -48,7 +48,7 @@ The web-application was developed using
 
 - NVM
 - Node 18+
-- Yarn 3+
+- Yarn 1.22.19
 - Docker
 
 ## Setup
