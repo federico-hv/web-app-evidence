@@ -21,10 +21,8 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
 
-      - name: Run install
-        uses: borales/actions-yarn@v4
-        with:
-          cmd: install # will run `yarn install` command
+      - name: Install deps and build (with cache)
+        uses: bahmutov/npm-install@v1
 
       - name: Lint
         run: yarn lint
