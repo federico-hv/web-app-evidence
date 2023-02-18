@@ -264,7 +264,7 @@ The `src` has the following structure:
 ├─ pages/           # page components linked to specific paths
 ├─ shared/          # constants, types, props and interfaces that are shared
 ├─ utilities/       # helper functions
-App.tsx             # Main app
+app.tsx             # Main app
 main.tsx            # Similar to index.tsx (for React)
 setup.ts            # Setup testing library
 vite-env.d.ts       # Do not touch
