@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { HomePage, NotFoundPage } from 'pages';
+import { HomePage, NotFoundPage, LoginPage, RegisterPage } from 'pages';
 import { globalStyles } from 'configs';
 
 export function BaseApp() {
@@ -7,6 +7,8 @@ export function BaseApp() {
     <Routes>
       <Route path='/' element={<HomePage />} />
       <Route path='*' element={<NotFoundPage />} />
+      <Route path='/login' element={<LoginPage />} />
+      <Route path='/register' element={<RegisterPage />} />
     </Routes>
   );
 }

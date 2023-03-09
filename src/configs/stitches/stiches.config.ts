@@ -10,6 +10,8 @@ export const { styled, css, theme, keyframes } = createStitches({
       primary200: '#FBFCf0',
       primary300: '#c3c4bc',
       primary400: '#FBFCF4',
+      primary500: '#fbfcf503',
+      primary600: '#171717',
       secondary100: '#a8a8ff',
       secondary200: '#8b8bfc',
       secondary300: '#7878fe',
@@ -42,6 +44,7 @@ export const { styled, css, theme, keyframes } = createStitches({
       darkTint300: 'rgba(0,0,0,0.25)',
       darkTint400: 'rgba(0,0,0,0.5)',
       darkTint500: 'rgba(0,0,0,0.75)',
+      lightTint: 'rgba(0, 0, 0, 0.1)',
     },
     space: {
       0: '0px',
@@ -64,6 +67,7 @@ export const { styled, css, theme, keyframes } = createStitches({
       7: '2rem',
       8: '2.25rem',
       9: '3rem',
+      10: '2.5rem',
     },
     fonts: {
       text: 'Rubik Sans, apple-system, sans-serif',
@@ -88,7 +92,8 @@ export const { styled, css, theme, keyframes } = createStitches({
       6: '2rem',
       7: '2.25rem',
       8: '2.5rem',
-      9: '3.5rem',
+      9: '2.9rem',
+      10: '3.5rem',
     },
     letterSpacings: {
       tighter: '-0.05em',
@@ -245,11 +250,13 @@ export const globalStyles = globalCss({
     '-webkit-font-smoothing': 'antialiased',
     '-moz-osx-font-smoothing': 'grayscale',
     '-webkit-text-size-adjust': '100%',
+    height: '100vh',
   },
   '*': {
     margin: 0,
     outline: 0,
     padding: 0,
     border: 0,
+    boxSizing: 'border-box',
   },
 });

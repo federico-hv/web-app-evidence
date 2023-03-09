@@ -54,7 +54,7 @@
     "vite.config.ts",
     "cypress",
     "src"
-  ],
+, "src/configs/stitches/.ts"  ],
   "references": [
     {
       "path": "./tsconfig.node.json"
