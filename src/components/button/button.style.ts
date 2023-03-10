@@ -5,7 +5,6 @@ export const StyledButton = styled('button', {
   fontFamily: 'Rubik',
   transition: 'background-color 0.2s ease-in-out, color 0.2s ease-in-out',
   cursor: 'pointer',
-  // boxShadow: '0px 3px 3px rgba(0, 0, 0, 0.25)',
 
   variants: {
     type: {
