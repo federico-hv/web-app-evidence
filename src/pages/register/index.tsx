@@ -1,3 +1,3 @@
 export function RegisterPage() {
-  return <div role='register'>Register Page</div>;
+  return <div>Register Page</div>;
 }

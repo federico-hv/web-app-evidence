@@ -5,13 +5,13 @@ export const StyledButton = styled('button', {
   fontFamily: '$fonts.text',
   transition: 'background-color 0.2s ease-in-out, color 0.2s ease-in-out',
   cursor: 'pointer',
+  fontWeight: '$500',
 
   variants: {
     type: {
       primary: {
         backgroundColor: '$secondary400',
         padding: '20px 12px',
-        fontWeight: '$500',
         fontSize: '24px',
         lineHeight: '28px',
         borderRadius: '22px',
@@ -21,7 +21,6 @@ export const StyledButton = styled('button', {
       secondary: {
         backgroundColor: '$primary600',
         padding: '20px 12px',
-        fontWeight: '500',
         fontSize: '24px',
         lineHeight: '28px',
         borderRadius: '22px',
@@ -32,7 +31,6 @@ export const StyledButton = styled('button', {
         backgroundColor: 'rgba(251, 252, 245, 0.1)',
         color: '$primary600',
         padding: '20px 12px',
-        fontWeight: '500',
         fontSize: '24px',
         lineHeight: '28px',
         borderRadius: '22px',
@@ -43,7 +41,6 @@ export const StyledButton = styled('button', {
         borderRadius: '50px',
         color: '$primary400',
         fontSize: '18px',
-        fontWeight: '500',
         lineHeight: '18px',
         padding: '11px 17px',
         letterSpacing: '0.02em',
