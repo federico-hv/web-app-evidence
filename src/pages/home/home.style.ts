@@ -11,7 +11,7 @@ export const HomeWrapper = styled('div', {
 export const HorizontalLine = styled('hr', {
   width: '65px',
   height: '0px',
-  border: '6px solid #171717',
+  border: '6px solid $primary600',
 });
 
 export const HomeBox = styled('div', {
@@ -38,6 +38,6 @@ export const HomeParagraph = styled('p', {
   paddingTop: '10px',
   fontWeight: '300',
   span: {
-    color: '#6666FF',
+    color: '$secondary400',
   },
 });
