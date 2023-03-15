@@ -1,10 +1,7 @@
 import { TextWrapper } from './text.style';
-import { TextProps } from 'shared';
+import { TextProps } from './text.type';
 
-export function Text({ children, className, size, uppercase }: TextProps) {
-  return (
-    <TextWrapper size={size} className={className} uppercase={uppercase}>
-      {children}
-    </TextWrapper>
-  );
+export function Text(props: TextProps) {
+  const { children } = props;
+  return <TextWrapper {...props}>{children}</TextWrapper>;
 }

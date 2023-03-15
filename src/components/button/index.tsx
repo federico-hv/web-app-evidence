@@ -1,10 +1,7 @@
 import { StyledButton } from './button.style';
-import { ButtonProps } from 'shared';
+import { ButtonProps } from './button.type';
 
-export function Button({ children, onClick, type }: ButtonProps) {
-  return (
-    <StyledButton onClick={onClick} type={type}>
-      {children}
-    </StyledButton>
-  );
+export function Button(props: ButtonProps) {
+  const { children } = props;
+  return <StyledButton {...props}>{children}</StyledButton>;
 }
