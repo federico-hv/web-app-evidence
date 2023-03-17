@@ -10,7 +10,7 @@ export function Navigation() {
   return (
     <NavigationWrapper>
       <NavigationContainer>
-        <NavigationLogo src={logo} />
+        <NavigationLogo src={logo} alt='logo' />
         <Button type='tertiary'>Log In</Button>
       </NavigationContainer>
     </NavigationWrapper>
