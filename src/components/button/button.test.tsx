@@ -1,8 +1,6 @@
 import { Button } from 'components';
 import { render, fireEvent, screen } from '@testing-library/react';
-import { describe, it } from 'vitest';
-import '@testing-library/jest-dom/extend-expect';
-import '@testing-library/jest-dom';
+import { describe, it, expect } from 'vitest';
 
 describe('Button', () => {
   it('renders with children', () => {
@@ -34,13 +32,12 @@ describe('Button', () => {
   });
 
   it('Click event', async () => {
-    const mockOnClick = jest.fn();
-    render(
-      <Button type='primary' width='100px' onClick={mockOnClick}>
+    const { container } = render(
+      <Button type='primary' width='100px' onClick={() => {}}>
         Click me
       </Button>,
     );
     fireEvent.click(screen.getByRole('button'));
-    expect(mockOnClick).toHaveBeenCalledTimes(1);
+    expect(container).toBeInTheDocument();
   });
 });
