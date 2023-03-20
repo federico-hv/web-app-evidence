@@ -1,6 +1,8 @@
 import { describe, it } from 'vitest';
 import { render } from '@testing-library/react';
 import { Text } from 'components';
+import '@testing-library/jest-dom/extend-expect';
+import '@testing-library/jest-dom';
 
 describe('Text', () => {
   it('renders the children prop', () => {
