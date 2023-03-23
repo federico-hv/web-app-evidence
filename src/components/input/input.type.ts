@@ -1,9 +1,9 @@
 import { ChangeEvent, ReactElement } from 'react';
 import { FormikErrors } from 'formik';
 
-export type AutoCompleteValues = 'password' | 'email' | 'on' | 'off';
+export type AutoCompleteType = 'password' | 'email' | 'on' | 'off';
 
-export type ErrorTypes =
+export type ErrorType =
   | string
   | string[]
   | FormikErrors<any>
@@ -17,7 +17,7 @@ export interface InputProps {
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   icon?: ReactElement;
   isPassword?: boolean;
-  autoComplete?: AutoCompleteValues;
+  autoComplete?: AutoCompleteType;
   isNewPassword?: boolean;
-  error?: ErrorTypes;
+  error?: ErrorType;
 }

@@ -2,7 +2,7 @@ import { Formik } from 'formik';
 import { Input } from 'components';
 import { render, fireEvent, screen } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
-import { AutoCompleteValues } from './input.type';
+import { AutoCompleteType } from './input.type';
 import userEvent from '@testing-library/user-event';
 import jest from 'jest-mock';
 
@@ -11,7 +11,7 @@ describe('Input component', () => {
     name: 'email',
     error: 'Invalid email',
     isPassword: false,
-    autoComplete: 'email' as AutoCompleteValues,
+    autoComplete: 'email' as AutoCompleteType,
     value: '',
     onChange: jest.fn(),
     placeholder: 'Enter your email',
@@ -33,7 +33,7 @@ describe('Input component', () => {
     const passwordProps = {
       ...props,
       isPassword: true,
-      autoComplete: 'new-password' as AutoCompleteValues,
+      autoComplete: 'new-password' as AutoCompleteType,
     };
     const { container } = render(
       <Formik initialValues={{}} onSubmit={() => {}}>
@@ -47,7 +47,7 @@ describe('Input component', () => {
     const passwordProps = {
       ...props,
       isPassword: true,
-      autoComplete: 'new-password' as AutoCompleteValues,
+      autoComplete: 'new-password' as AutoCompleteType,
     };
     render(
       <Formik initialValues={{}} onSubmit={() => {}}>
