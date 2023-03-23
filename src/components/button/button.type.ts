@@ -3,6 +3,8 @@ import { ReactNode } from 'react';
 export interface ButtonProps {
   children: ReactNode;
   onClick?: () => void;
-  type?: 'primary' | 'secondary' | 'tertiary' | 'neutral';
+  class?: 'primary' | 'secondary' | 'tertiary' | 'neutral';
   width?: string;
+  type?: 'button' | 'submit' | 'reset';
+  disabled?: boolean;
 }
