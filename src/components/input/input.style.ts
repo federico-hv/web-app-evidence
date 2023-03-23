@@ -27,7 +27,7 @@ export const StyledInputPasswordIcon = styled('span', {
   position: 'relative',
   textAlign: 'right',
   left: '1.25rem',
-  bottom: '3rem',
+  bottom: '3.49rem',
   verticalAlign: 'middle',
   fontWeight: 'bold',
   cursor: 'pointer',
@@ -36,7 +36,7 @@ export const StyledInputPasswordIcon = styled('span', {
 export const StyledInputShowPasswordIcon = styled('span', {
   position: 'relative',
   left: '613px',
-  bottom: '2.68rem',
+  bottom: '2.96rem',
   cursor: 'pointer',
 });
 

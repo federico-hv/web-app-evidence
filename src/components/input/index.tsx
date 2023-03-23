@@ -7,7 +7,8 @@ import {
   StyledInputPasswordIcon,
   StyledInputShowPasswordIcon,
 } from './input.style';
-import lock from './../../assets/passwordLock.png';
+import eyeLock from './../../assets/lock.png';
+import eyeOpen from './../../assets/view.png';
 import passwordIcon from './../../assets/password.png';
 import emailIcon from './../../assets/email.png';
 
@@ -69,7 +70,7 @@ export function Input({
       )}
       {isPassword && (
         <StyledInputShowPasswordIcon onClick={handleShowPassword}>
-          {showPassword ? <img src={lock} /> : <img src={lock} />}
+          {showPassword ? <img src={eyeLock} /> : <img src={eyeOpen} />}
         </StyledInputShowPasswordIcon>
       )}
     </StyledInput>
