@@ -12,6 +12,8 @@ export const { styled, css, theme, keyframes } = createStitches({
       primary400: '#FBFCF4',
       primary500: '#fbfcf503',
       primary600: '#171717',
+      primary700: '#1717173f',
+      primary800: '#d3190b',
       secondary100: '#a8a8ff',
       secondary200: '#8b8bfc',
       secondary300: '#7878fe',

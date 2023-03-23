@@ -8,7 +8,7 @@ export const StyledButton = styled('button', {
   fontWeight: '$500',
 
   variants: {
-    type: {
+    class: {
       primary: {
         backgroundColor: '$secondary400',
         padding: '1.25rem 0.75rem',

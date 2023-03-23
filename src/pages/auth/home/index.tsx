@@ -13,9 +13,9 @@ export function HomePage() {
         </Text>
         <HomeBox>
           <Text size='h2'>Sign Up</Text>
-          <Button type='primary'>Continue as a Fan</Button>
-          <Button type='secondary'>Continue as an Artist</Button>
-          <Button type='neutral'>Continue as a Band</Button>
+          <Button class='primary'>Continue as a Fan</Button>
+          <Button class='secondary'>Continue as an Artist</Button>
+          <Button class='neutral'>Continue as a Band</Button>
           <HomeParagraph>
             By continuing, you agree to the <span>Terms of Use</span> and{' '}
             <span>Privacy Policy</span>

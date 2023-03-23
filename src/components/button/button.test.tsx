@@ -11,7 +11,7 @@ describe('Button', () => {
   it('renders all props', () => {
     const { getByRole } = render(
       <Button
-        type='primary'
+        class='primary'
         width='100px'
         onClick={() => console.log('click in')}
       >
@@ -22,7 +22,9 @@ describe('Button', () => {
   });
 
   it('applies styles based on the type prop', () => {
-    const { getByRole } = render(<Button type='primary'>Click me</Button>);
+    const { getByRole } = render(
+      <Button class='primary'>Click me</Button>,
+    );
     expect(getByRole('button')).toBeInTheDocument();
   });
 
@@ -33,7 +35,7 @@ describe('Button', () => {
 
   it('Click event', async () => {
     const { container } = render(
-      <Button type='primary' width='100px' onClick={() => {}}>
+      <Button class='primary' width='100px' onClick={() => {}}>
         Click me
       </Button>,
     );
