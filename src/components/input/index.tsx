@@ -70,7 +70,7 @@ export function Input({
       )}
       {isPassword && (
         <StyledInputShowPasswordIcon onClick={handleShowPassword}>
-          {showPassword ? <img src={eyeLock} /> : <img src={eyeOpen} />}
+          {showPassword ? <img src={eyeOpen} /> : <img src={eyeLock} />}
         </StyledInputShowPasswordIcon>
       )}
     </StyledInput>

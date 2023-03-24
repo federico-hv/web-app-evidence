@@ -3,6 +3,7 @@ import { styled } from 'configs';
 export const StyledInput = styled('div', {
   input: {
     fontFamily: '$text',
+    color: 'rgba(23, 23, 23, 0.35)',
     fontWeight: '$400',
     fontSize: '1.5rem',
     height: '4.25rem',
@@ -10,6 +11,9 @@ export const StyledInput = styled('div', {
     border: '1px solid $primary700',
     borderRadius: '1rem',
     paddingLeft: '3.125rem',
+    '&::placeholder': {
+      color: 'rgba(23, 23, 23, 0.35)',
+    },
   },
 });
 

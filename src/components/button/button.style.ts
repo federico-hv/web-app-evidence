@@ -1,4 +1,3 @@
-import { StyledComponent } from './../../layouts/template/component.style';
 import { styled } from 'configs';
 
 export const StyledButton = styled('button', {
@@ -9,6 +8,17 @@ export const StyledButton = styled('button', {
 
   variants: {
     class: {
+      disabled: {
+        cursor: 'unset !important',
+        backgroundColor: 'rgba(23, 23, 23, 0.25)',
+        border: 'rgba(23, 23, 23, 0.25)',
+        color: '#fff',
+        padding: '1.25rem 0.75rem',
+        fontSize: '1.5rem',
+        lineHeight: '1.75rem',
+        borderRadius: '1.38rem',
+        width: '100%',
+      },
       primary: {
         backgroundColor: '$secondary400',
         padding: '1.25rem 0.75rem',
