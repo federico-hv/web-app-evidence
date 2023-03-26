@@ -1,4 +1,3 @@
-import { HorizontalLine } from './../home/home.style';
 import { styled } from 'configs';
 
 export const LoginWrapper = styled('div', {
