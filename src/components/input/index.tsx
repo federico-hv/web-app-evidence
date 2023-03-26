@@ -1,4 +1,10 @@
-import { useState, Fragment, useMemo, useCallback } from 'react';
+import {
+  useState,
+  Fragment,
+  useMemo,
+  useCallback,
+  ReactNode,
+} from 'react';
 import { InputProps } from './input.type';
 import { Field } from 'formik';
 import {
@@ -6,6 +12,8 @@ import {
   StyledInputEmailIcon,
   StyledInputPasswordIcon,
   StyledInputShowPasswordIcon,
+  StyledPasswordError,
+  StyledEmailError,
 } from './input.style';
 import eyeLock from './../../assets/lock.png';
 import eyeOpen from './../../assets/view.png';
@@ -18,6 +26,7 @@ export function Input({
   autoComplete,
   value,
   onChange,
+  error,
   placeholder,
 }: InputProps) {
   const [focused, setFocused] = useState(false);
@@ -37,6 +46,7 @@ export function Input({
       autoComplete: autoComplete || 'off',
       name,
       placeholder,
+      error,
       value,
       onChange,
       onFocus: detectFocus,
@@ -46,6 +56,7 @@ export function Input({
       autoComplete,
       detectFocus,
       isPassword,
+      error,
       name,
       onChange,
       placeholder,
@@ -72,6 +83,12 @@ export function Input({
         <StyledInputShowPasswordIcon onClick={handleShowPassword}>
           {showPassword ? <img src={eyeOpen} /> : <img src={eyeLock} />}
         </StyledInputShowPasswordIcon>
+      )}
+      {error?.includes('password') && (
+        <StyledPasswordError>{error}</StyledPasswordError>
+      )}
+      {error?.includes('email') && (
+        <StyledEmailError>{error}</StyledEmailError>
       )}
     </StyledInput>
   );

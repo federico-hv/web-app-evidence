@@ -19,5 +19,5 @@ export interface InputProps {
   isPassword?: boolean;
   autoComplete?: AutoCompleteType;
   isNewPassword?: boolean;
-  error?: ErrorType;
+  error?: string | null;
 }

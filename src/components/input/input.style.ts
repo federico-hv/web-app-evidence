@@ -44,13 +44,18 @@ export const StyledInputShowPasswordIcon = styled('span', {
   cursor: 'pointer',
 });
 
-export const StyledInputError = styled('div', {
-  label: {
-    color: '$primary800',
-    fontFamily: '$text',
-    fontstyle: 'normal',
-    fontWeight: '$500',
-    fontSize: '0.75px',
-    lineHeight: '1.125rem',
-  },
+export const StyledPasswordError = styled('p', {
+  color: 'red',
+  fontWeight: '$500',
+  position: 'relative',
+  bottom: '2.125rem',
+  paddingLeft: '0.5rem',
+});
+
+export const StyledEmailError = styled('p', {
+  color: 'red',
+  fontWeight: '$500',
+  position: 'relative',
+  bottom: '1.25rem',
+  paddingLeft: '0.5rem',
 });

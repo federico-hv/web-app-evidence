@@ -12,7 +12,7 @@ export const StyledButton = styled('button', {
         cursor: 'unset !important',
         backgroundColor: 'rgba(23, 23, 23, 0.25)',
         border: 'rgba(23, 23, 23, 0.25)',
-        color: '#fff',
+        color: '$white',
         padding: '1.25rem 0.75rem',
         fontSize: '1.5rem',
         lineHeight: '1.75rem',
