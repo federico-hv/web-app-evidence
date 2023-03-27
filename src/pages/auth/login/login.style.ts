@@ -15,6 +15,10 @@ export const LoginParagraph = styled('p', {
   paddingBottom: '1.25rem',
 });
 
+export const StyledLoginForm = styled('form', {
+  width: '100%',
+});
+
 export const LoginWrapperBox = styled('div', {
   display: 'flex',
   flexDirection: 'column',

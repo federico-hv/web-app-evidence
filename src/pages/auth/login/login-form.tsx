@@ -1,7 +1,7 @@
 import { Formik, Form, FormikHelpers } from 'formik';
 import { Button } from 'components';
 import { Input } from 'components';
-import { Link } from './login.style';
+import { Link, StyledLoginForm } from './login.style';
 
 interface Values {
   email: string;
@@ -18,6 +18,7 @@ export function LoginForm() {
     <Formik
       initialValues={{ email: '', password: '' }}
       validate={(values) => {
+        // move it once API is integrated
         const errors: Errors = {};
         if (!values.password) {
           errors.password = 'Enter your password.';
@@ -51,32 +52,36 @@ export function LoginForm() {
         } = props;
 
         return (
-          <Form onSubmit={handleSubmit}>
-            <Input
-              value={values.email}
-              placeholder='Email'
-              onChange={handleChange}
-              name='email'
-              error={errors.email}
-            />
-            <Input
-              value={values.password}
-              placeholder='Password'
-              isPassword
-              name='password'
-              onChange={handleChange}
-              error={errors.password}
-            />
-            <Link href=''>Forgot Password</Link>
-            <Button
-              type='submit'
-              class={
-                !values.email || !values.password ? 'disabled' : 'primary'
-              }
-            >
-              Log In
-            </Button>
-          </Form>
+          <StyledLoginForm>
+            <Form onSubmit={handleSubmit}>
+              <Input
+                value={values.email}
+                placeholder='Email'
+                onChange={handleChange}
+                name='email'
+                error={errors.email}
+              />
+              <Input
+                value={values.password}
+                placeholder='Password'
+                isPassword
+                name='password'
+                onChange={handleChange}
+                error={errors.password}
+              />
+              <Link href=''>Forgot Password</Link>
+              <Button
+                type='submit'
+                class={
+                  !values.email || !values.password
+                    ? 'disabled'
+                    : 'primary'
+                }
+              >
+                Log In
+              </Button>
+            </Form>
+          </StyledLoginForm>
         );
       }}
     </Formik>

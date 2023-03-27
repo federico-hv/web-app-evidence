@@ -7,7 +7,7 @@ export const StyledInput = styled('div', {
     fontWeight: '$400',
     fontSize: '1.5rem',
     height: '4.25rem',
-    width: '668px',
+    width: '100%',
     border: '1px solid $primary700',
     borderRadius: '1rem',
     paddingLeft: '3.125rem',
