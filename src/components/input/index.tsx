@@ -6,16 +6,8 @@ import { StyledInput, StyledInputShowPasswordIcon } from './input.style';
 import eyeLock from './../../assets/lock.png';
 import eyeOpen from './../../assets/view.png';
 
-export function Input({
-  name,
-  isPassword,
-  autoComplete,
-  value,
-  onChange,
-  error = null,
-  icon,
-  placeholder,
-}: InputProps) {
+export function Input(props: InputProps) {
+  const { isPassword, icon, error = null } = props;
   const [showPassword, setShowPassword] = useState(false);
 
   const handleShowPassword = useCallback(() => {
@@ -26,14 +18,7 @@ export function Input({
 
   return (
     <StyledInput>
-      <Field
-        type={inputType}
-        autoComplete={autoComplete || 'off'}
-        name={name}
-        placeholder={placeholder}
-        value={value}
-        onChange={onChange}
-      />
+      <Field type={inputType} {...props} />
       {icon && <span>{icon}</span>}
       {isPassword && (
         <StyledInputShowPasswordIcon onClick={handleShowPassword}>
