@@ -4,10 +4,10 @@ import {
   NavigationLogo,
 } from './navigation.style';
 import { Button } from 'components';
-import { NavigationProps } from './navigation.type';
+import { Link } from 'shared';
 import logo from './../../assets/Logo.png';
 
-export function Navigation(props: NavigationProps) {
+export function Navigation(props: Link) {
   const { text, link } = props;
   return (
     <NavigationWrapper>

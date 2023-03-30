@@ -15,7 +15,7 @@ export const LoginParagraph = styled('p', {
   paddingBottom: '1.25rem',
 });
 
-export const StyledLoginForm = styled('form', {
+export const StyledLoginForm = styled('div', {
   width: '100%',
 });
 
@@ -57,6 +57,7 @@ export const Link = styled('a', {
   justifyContent: 'flex-end',
   position: 'relative',
   bottom: '1.5625rem',
+  paddingTop: '0.65rem',
 });
 
 export const Line = styled('hr', {

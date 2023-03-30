@@ -4,4 +4,7 @@ export const SocialLoginWrapper = styled('div', {
   display: 'flex',
   flexDirection: 'row',
   gap: '39px',
+  button: {
+    background: 'transparent',
+  },
 });

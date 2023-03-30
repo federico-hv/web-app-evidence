@@ -15,6 +15,13 @@ export const StyledInput = styled('div', {
       color: 'rgba(23, 23, 23, 0.35)',
     },
   },
+  img: {
+    position: 'relative',
+    paddingLeft: '20px',
+    bottom: '47px',
+    verticalAlign: 'middle',
+    top: 'unset',
+  },
 });
 
 export const StyledInputEmailIcon = styled('span', {
@@ -42,6 +49,10 @@ export const StyledInputShowPasswordIcon = styled('span', {
   left: '613px',
   bottom: '2.96rem',
   cursor: 'pointer',
+  img: {
+    bottom: '-2px !important',
+    right: '49px !important',
+  },
 });
 
 export const StyledPasswordError = styled('p', {
@@ -52,7 +63,7 @@ export const StyledPasswordError = styled('p', {
   paddingLeft: '0.5rem',
 });
 
-export const StyledEmailError = styled('p', {
+export const StyledError = styled('p', {
   color: 'red',
   fontWeight: '$500',
   position: 'relative',

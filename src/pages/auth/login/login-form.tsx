@@ -2,34 +2,27 @@ import { Formik, Form, FormikHelpers } from 'formik';
 import { Button } from 'components';
 import { Input } from 'components';
 import { Link, StyledLoginForm } from './login.style';
+import emailIcon from '../../../assets/email.png';
+import passwordIcon from '../../../assets/password.png';
+import * as Yup from 'yup';
 
 interface Values {
   email: string;
   password: string;
 }
 
-interface Errors {
-  email?: string;
-  password?: string;
-}
+const validationSchema = Yup.object().shape({
+  email: Yup.string()
+    .email('Must be a valid email address')
+    .required('Enter your email.'),
+  password: Yup.string().required('Enter your password.'),
+});
 
 export function LoginForm() {
   return (
     <Formik
       initialValues={{ email: '', password: '' }}
-      validate={(values) => {
-        // move it once API is integrated
-        const errors: Errors = {};
-        if (!values.password) {
-          errors.password = 'Enter your password.';
-        }
-        if (
-          !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-        ) {
-          errors.email = 'Enter your email or mobile number.';
-        }
-        return errors;
-      }}
+      validationSchema={validationSchema}
       onSubmit={(
         values: Values,
         { setSubmitting }: FormikHelpers<Values>,
@@ -51,6 +44,8 @@ export function LoginForm() {
           handleSubmit,
         } = props;
 
+        console.log(props);
+
         return (
           <StyledLoginForm>
             <Form onSubmit={handleSubmit}>
@@ -60,6 +55,7 @@ export function LoginForm() {
                 onChange={handleChange}
                 name='email'
                 error={errors.email}
+                icon={<img src={emailIcon} />}
               />
               <Input
                 value={values.password}
@@ -68,14 +64,13 @@ export function LoginForm() {
                 name='password'
                 onChange={handleChange}
                 error={errors.password}
+                icon={<img src={passwordIcon} />}
               />
               <Link href=''>Forgot Password</Link>
               <Button
                 type='submit'
                 class={
-                  !values.email || !values.password
-                    ? 'disabled'
-                    : 'primary'
+                  Object.keys(values).length < 0 ? 'disabled' : 'primary'
                 }
               >
                 Log In

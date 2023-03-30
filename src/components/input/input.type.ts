@@ -1,4 +1,4 @@
-import { ChangeEvent, ReactElement } from 'react';
+import { ChangeEvent, InputHTMLAttributes, ReactElement } from 'react';
 import { FormikErrors } from 'formik';
 
 export type AutoCompleteType = 'password' | 'email' | 'on' | 'off';
@@ -10,7 +10,7 @@ export type ErrorType =
   | FormikErrors<any>[]
   | undefined;
 
-export interface InputProps {
+export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   value?: string;
   name: string;
   placeholder?: string;
