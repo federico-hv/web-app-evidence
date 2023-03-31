@@ -4,19 +4,12 @@ import { Input } from 'components';
 import { Link, StyledLoginForm } from './login.style';
 import emailIcon from '../../../assets/email.png';
 import passwordIcon from '../../../assets/password.png';
-import * as Yup from 'yup';
+import { validationSchema } from './validations';
 
 interface Values {
   email: string;
   password: string;
 }
-
-const validationSchema = Yup.object().shape({
-  email: Yup.string()
-    .email('Must be a valid email address')
-    .required('Enter your email.'),
-  password: Yup.string().required('Enter your password.'),
-});
 
 export function LoginForm() {
   return (
@@ -60,8 +53,8 @@ export function LoginForm() {
               <Input
                 value={values.password}
                 placeholder='Password'
-                isPassword
                 name='password'
+                isPassword
                 onChange={handleChange}
                 error={errors.password}
                 icon={<img src={passwordIcon} />}
@@ -70,7 +63,9 @@ export function LoginForm() {
               <Button
                 type='submit'
                 class={
-                  Object.keys(values).length < 0 ? 'disabled' : 'primary'
+                  (values.email && values.password) || isSubmitting
+                    ? 'primary'
+                    : 'disabled'
                 }
               >
                 Log In
