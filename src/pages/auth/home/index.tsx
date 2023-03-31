@@ -2,11 +2,14 @@ import { Navigation } from 'components';
 import { Text } from 'components';
 import { HomeBox, HomeParagraph, HomeWrapper } from './home.style';
 import { Button } from 'components';
+import { useNavigate } from 'react-router-dom';
 
 export function HomePage() {
+  const navigate = useNavigate();
+
   return (
     <>
-      <Navigation />
+      <Navigation text='Log in' link={() => navigate('/login')} />
       <HomeWrapper>
         <Text size='h1' uppercase>
           Bridging music and community{' '}

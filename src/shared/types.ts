@@ -4,3 +4,8 @@ export interface ITemplate {
 }
 
 export type TemplateType = string | number;
+
+export interface Link {
+  text?: string;
+  link?: () => void;
+}

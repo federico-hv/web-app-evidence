@@ -1,36 +1,42 @@
 import { describe, it, expect } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { render, fireEvent, screen } from '@testing-library/react';
 import { HomePage } from 'pages';
 
+import { MemoryRouter } from 'react-router-dom';
+
 describe('HomePage', () => {
-  it('renders the sign up header', () => {
-    const { getByText } = render(<HomePage />);
-    expect(getByText('Bridging music and community')).toBeInTheDocument();
-  });
+  it('renders the navigation and sign up form', () => {
+    const { getByText, getByRole } = render(
+      <MemoryRouter>
+        <HomePage />
+      </MemoryRouter>,
+    );
+    const navigation = getByText('Log in');
+    const header = getByText('Bridging music and community');
+    const fanButton = getByRole('button', { name: 'Continue as a Fan' });
+    const artistButton = getByRole('button', {
+      name: 'Continue as an Artist',
+    });
+    const bandButton = getByRole('button', { name: 'Continue as a Band' });
 
-  it('renders the "Continue as a Fan" button', () => {
-    const { getByRole } = render(<HomePage />);
-    expect(
-      getByRole('button', { name: 'Continue as a Fan' }),
-    ).toBeInTheDocument();
-  });
-
-  it('renders the "Continue as an Artist" button', () => {
-    const { getByRole } = render(<HomePage />);
-    expect(
-      getByRole('button', { name: 'Continue as an Artist' }),
-    ).toBeInTheDocument();
-  });
-
-  it('renders the "Continue as a Band" button', () => {
-    const { getByRole } = render(<HomePage />);
-    expect(
-      getByRole('button', { name: 'Continue as a Band' }),
-    ).toBeInTheDocument();
-  });
-
-  it('renders the terms and privacy policy statement', () => {
-    const { getByText } = render(<HomePage />);
     expect(screen.getByText(/terms of use/i)).toBeInTheDocument();
+    expect(navigation).toBeInTheDocument();
+    expect(fanButton).toBeInTheDocument();
+    expect(artistButton).toBeInTheDocument();
+    expect(bandButton).toBeInTheDocument();
+    expect(header).toBeInTheDocument();
+  });
+
+  test('clicking the "Log in" button navigates to the login page', () => {
+    render(
+      <MemoryRouter>
+        <HomePage />
+      </MemoryRouter>,
+    );
+
+    const loginButton = screen.getByText('Log in');
+    fireEvent.click(loginButton);
+
+    expect(location.pathname).toBe('/');
   });
 });
