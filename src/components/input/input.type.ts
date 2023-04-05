@@ -14,7 +14,7 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   value?: string;
   name: string;
   placeholder?: string;
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
   icon?: ReactElement;
   isPassword?: boolean;
   autoComplete?: AutoCompleteType;

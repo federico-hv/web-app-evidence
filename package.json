@@ -37,6 +37,7 @@
     "@storybook/addon-docs": "^6.5.16",
     "dayjs": "^1.11.7",
     "formik": "^2.2.9",
+    "formik-stepper": "^2.1.4",
     "framer-motion": "^9.0.1",
     "graphql": "^16.6.0",
     "jest": "^29.5.0",

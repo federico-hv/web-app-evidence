@@ -16,7 +16,9 @@ export function HomePage() {
         </Text>
         <HomeBox>
           <Text size='h2'>Sign Up</Text>
-          <Button class='primary'>Continue as a Fan</Button>
+          <Button onClick={() => navigate('/register')} class='primary'>
+            Continue as a Fan
+          </Button>
           <Button class='secondary'>Continue as an Artist</Button>
           <Button class='neutral'>Continue as a Band</Button>
           <HomeParagraph>
