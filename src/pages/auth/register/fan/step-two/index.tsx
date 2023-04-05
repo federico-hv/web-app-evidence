@@ -3,7 +3,7 @@ import { Button } from 'components';
 import { StepProps } from 'shared';
 import personIcon from '../../../../assets/person.png';
 import dateIcon from '../../../../assets/date.png';
-import { DateInput } from './index.styles';
+import { DateInput } from '../index.styles';
 
 export function StepTwo({ values, errors, setPage }: StepProps) {
   return (
