@@ -2,10 +2,12 @@ import { Input } from 'components';
 import { Button } from 'components';
 import { StepProps } from 'shared';
 import personIcon from '../../../../assets/person.png';
+import dateIcon from '../../../../assets/date.png';
+import { DateInput } from './index.styles';
 
 export function StepTwo({ values, errors, setPage }: StepProps) {
   return (
-    <>
+    <DateInput>
       <Input
         value={values.name}
         error={errors.name}
@@ -18,7 +20,8 @@ export function StepTwo({ values, errors, setPage }: StepProps) {
         error={errors.dateOfBirth}
         name='dateOfBirth'
         placeholder='Date of Birth'
-        icon={<img src={personIcon} />}
+        icon={<img src={dateIcon} />}
+        type='date'
       />
       <Button
         class={
@@ -34,6 +37,6 @@ export function StepTwo({ values, errors, setPage }: StepProps) {
       >
         Next
       </Button>
-    </>
+    </DateInput>
   );
 }

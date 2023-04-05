@@ -26,3 +26,12 @@ export const ProgressBarDiv = styled('div', {
     page: '0',
   },
 });
+
+export const DateInput = styled('div', {
+  input: {
+    paddingRight: '12px',
+  },
+  img: {
+    height: '19px',
+  },
+});
