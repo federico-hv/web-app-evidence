@@ -2,7 +2,7 @@ import { Formik, Form, Field, ErrorMessage, FormikValues } from 'formik';
 import { Input } from 'components';
 import { Button } from 'components';
 import { StepProps } from 'shared';
-import emailIcon from '../../../../assets/email.png';
+import emailIcon from '../../../../../assets/email.png';
 
 export function StepOne({ values, errors, setPage }: StepProps) {
   return (

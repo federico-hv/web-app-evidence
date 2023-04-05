@@ -1,7 +1,7 @@
 import { Input } from 'components';
 import { Button } from 'components';
 import { StepProps } from 'shared';
-import personIcon from '../../../../assets/person.png';
+import personIcon from '../../../../../assets/person.png';
 
 export function StepThree({ values, errors, setPage }: StepProps) {
   return (

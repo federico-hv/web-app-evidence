@@ -1,7 +1,7 @@
 import { Input } from 'components';
 import { Button } from 'components';
 import { StepProps } from 'shared';
-import passwordIcon from '../../../../assets/password.png';
+import passwordIcon from '../../../../../assets/password.png';
 
 export function StepFour({
   values,
