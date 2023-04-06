@@ -6,3 +6,4 @@ export * from './text';
 export * from './input';
 export * from './social-button';
 export * from './input-error';
+export * from './layout';
