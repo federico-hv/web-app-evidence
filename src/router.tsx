@@ -1,5 +1,11 @@
 import { Routes, Route } from 'react-router';
-import { HomePage, NotFoundPage, LoginPage, RegisterPage } from 'pages';
+import {
+  HomePage,
+  NotFoundPage,
+  LoginPage,
+  RegisterPage,
+  ArtistRegisterPage,
+} from 'pages';
 
 function Router() {
   return (
@@ -7,6 +13,7 @@ function Router() {
       <Route path='/' element={<HomePage />} />
       <Route path='/login' element={<LoginPage />} />
       <Route path='/register' element={<RegisterPage />} />
+      <Route path='/artist-register' element={<ArtistRegisterPage />} />
       <Route path='*' element={<NotFoundPage />} />
     </Routes>
   );
