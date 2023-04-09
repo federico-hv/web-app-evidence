@@ -1,5 +1,5 @@
-export * from './register';
+export * from './fan-registration';
 export * from './login';
 export * from './home';
 export * from './social-login';
-export * from './artist-register';
+export * from './artist-registration';

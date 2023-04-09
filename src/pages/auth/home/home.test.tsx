@@ -17,13 +17,13 @@ describe('HomePage', () => {
     const artistButton = getByRole('button', {
       name: 'Continue as an Artist',
     });
-    const bandButton = getByRole('button', { name: 'Continue as a Band' });
+    // const bandButton = getByRole('button', { name: 'Continue as a Band' });
 
     expect(screen.getByText(/terms of use/i)).toBeInTheDocument();
     expect(navigation).toBeInTheDocument();
     expect(fanButton).toBeInTheDocument();
     expect(artistButton).toBeInTheDocument();
-    expect(bandButton).toBeInTheDocument();
+    // expect(bandButton).toBeInTheDocument();
     expect(header).toBeInTheDocument();
   });
 

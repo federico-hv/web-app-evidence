@@ -4,15 +4,15 @@ import { SocialLogin } from 'pages';
 import { Text } from 'components';
 import { Layout } from 'components';
 import { RegisterParagraph, Paragraph } from './register.style';
-import { StepperForm } from './fan';
+import { StepperForm } from './artist';
 
-export function RegisterPage() {
+export function ArtistRegisterPage() {
   const navigate = useNavigate();
   return (
     <>
       <Navigation text='Log In' link={() => navigate('/login')} />
       <Layout>
-        <Text size='h2'>Fan Registration</Text>
+        <Text size='h2'>Artist Registration</Text>
         <RegisterParagraph>Sign up with your socials</RegisterParagraph>
         <SocialLogin />
         <StepperForm />
