@@ -4,6 +4,7 @@ import {
   screen,
   fireEvent,
   waitFor,
+  queryAllByRole,
 } from '@testing-library/react';
 import { it, expect } from 'vitest';
 import { StepperForm } from '.';
@@ -33,6 +34,6 @@ it('moves to the third step when the "Next" button is clicked on the second step
 
 it('submits the form when the "Submit" button is clicked on the fourth step', async () => {
   render(<StepperForm />);
-  const submitButton = screen.getByRole('button');
+  const submitButton = screen.getByText('Next');
   fireEvent.click(submitButton);
 });

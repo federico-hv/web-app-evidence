@@ -8,6 +8,7 @@ import { StepOne } from './step-one';
 import { StepFour } from './step-four';
 import { validationSchema } from '../validation';
 import { RegisterParagraph } from '../register.style';
+import { SocialLogin } from 'pages';
 
 export function StepperForm() {
   const [page, setPage] = useState(0);
@@ -35,12 +36,24 @@ export function StepperForm() {
       {({ errors, values, isSubmitting }) => {
         return (
           <>
+            {page === 0 && (
+              <>
+                <RegisterParagraph>
+                  Sign up with your socials
+                </RegisterParagraph>
+                <SocialLogin />
+              </>
+            )}
             <ProgressBar>
               <ProgressBarDiv page={page} />
             </ProgressBar>
-            <RegisterParagraph>
-              Or continue with your socials
-            </RegisterParagraph>
+            {page === 0 && (
+              <>
+                <RegisterParagraph>
+                  Or continue with your socials
+                </RegisterParagraph>
+              </>
+            )}
             <StyledForm>
               <Form>
                 {page === 0 && (

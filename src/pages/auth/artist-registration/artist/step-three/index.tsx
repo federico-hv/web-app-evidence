@@ -9,7 +9,7 @@ export function StepThree({ values, errors, setPage }: StepProps) {
       <Input
         value={values.artistName}
         error={errors.artistName}
-        name='displayName'
+        name='artistName'
         placeholder='Artist Name'
         icon={<img src={personIcon} />}
       />
