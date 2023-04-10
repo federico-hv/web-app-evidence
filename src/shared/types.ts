@@ -11,13 +11,14 @@ export interface Link {
 }
 
 export interface FormValues {
-  email: string;
-  name: string;
-  dateOfBirth: string;
-  displayName: string;
-  username: string;
-  password: string;
-  confirmPassword: string;
+  email?: string;
+  name?: string;
+  dateOfBirth?: string;
+  displayName?: string;
+  artistName?: string;
+  username?: string;
+  password?: string;
+  confirmPassword?: string;
 }
 export interface StepProps {
   values: {
@@ -27,6 +28,7 @@ export interface StepProps {
     name?: string;
     dateOfBirth?: string;
     displayName?: string;
+    artistName?: string;
     username?: string;
   };
   errors: {
@@ -35,6 +37,7 @@ export interface StepProps {
     email?: string;
     name?: string;
     dateOfBirth?: string;
+    artistName?: string;
     displayName?: string;
     username?: string;
   };

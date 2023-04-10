@@ -13,9 +13,9 @@ export function Navigation(props: NavigationLinkProps) {
   return (
     <NavigationWrapper>
       <NavigationContainer>
-        <Link to='/'>
+        <a href='/'>
           <NavigationLogo src={logo} alt='logo' />
-        </Link>
+        </a>
         <Button class='tertiary' onClick={link}>
           {text}
         </Button>

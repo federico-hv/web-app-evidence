@@ -24,3 +24,17 @@ describe('Navigation', () => {
     expect(mockFn).toHaveBeenCalledTimes(1);
   });
 });
+
+// describe('Navigation component', () => {
+//   test('renders navigation links', () => {
+//     render(<Navigation text='Home' link={() => {}} />);
+//     const homeLink = getByText('Sign in');
+//     expect(homeLink).toBeInTheDocument();
+//   });
+
+//   test('renders logo', () => {
+//     render(<Navigation text='Home' link={() => {}} />);
+//     const logo = screen.getByAltText('logo');
+//     expect(logo).toBeInTheDocument();
+//   });
+// });

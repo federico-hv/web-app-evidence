@@ -7,8 +7,8 @@ export function StepThree({ values, errors, setPage }: StepProps) {
   return (
     <>
       <Input
-        value={values.displayName}
-        error={errors.displayName}
+        value={values.artistName}
+        error={errors.artistName}
         name='displayName'
         placeholder='Artist Name'
         icon={<img src={personIcon} />}
@@ -23,8 +23,8 @@ export function StepThree({ values, errors, setPage }: StepProps) {
       <Button
         type='button'
         class={
-          values.displayName &&
-          !errors.displayName &&
+          values.artistName &&
+          !errors.artistName &&
           values.username &&
           !errors.username
             ? 'primary'

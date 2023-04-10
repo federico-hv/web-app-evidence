@@ -6,7 +6,7 @@ import { StepThree } from './step-three';
 import { StepTwo } from './step-two';
 import { StepOne } from './step-one';
 import { StepFour } from './step-four';
-import { validationSchema } from './validation';
+import { validationSchema } from '../validation';
 import { RegisterParagraph } from '../register.style';
 
 export function StepperForm() {
