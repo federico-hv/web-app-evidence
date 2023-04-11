@@ -7,3 +7,4 @@ export * from './input';
 export * from './social-button';
 export * from './input-error';
 export * from './layout';
+export * from './image-upload';
