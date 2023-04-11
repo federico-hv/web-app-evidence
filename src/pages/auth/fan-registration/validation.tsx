@@ -5,7 +5,7 @@ export const validationSchema = Yup.object({
     .email('Invalid email address')
     .required('Email is required'),
   name: Yup.string().required('Name is required'),
-  dateOfBirth: Yup.string().required('Date of birth is required'),
+  birthday: Yup.string().required('Date of birth is required'),
   displayName: Yup.string().required('Display name is required'),
   username: Yup.string().required('Username is required'),
   password: Yup.string()
