@@ -1,10 +1,7 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Avatar from '../../assets/avatar.png';
-
-type ImageUploadProps = {
-  onUpload: (file: File) => void;
-  imageUrl?: string;
-};
+import { ImageUploadProps } from './image-upload.type';
+import { AvatarImage, ImageWrapper, Image } from './image-upload.style';
 
 export const ImageUpload: React.FC<ImageUploadProps> = ({
   onUpload,
@@ -22,19 +19,14 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
   };
 
   return (
-    <div>
-      <div style={{ display: 'flex', alignItems: 'center' }}>
-        {imageUrl ? (
-          <img
-            src={imageUrl}
-            alt='uploaded image'
-            style={{ maxWidth: '100%' }}
-          />
-        ) : (
-          <img src={Avatar} />
-        )}
+    <>
+      <ImageWrapper>
         <label htmlFor='avatar-input'>
-          {imageUrl ? 'Change' : 'Upload'} Avatar
+          {imageUrl ? (
+            <Image src={imageUrl} alt='uploaded image' />
+          ) : (
+            <AvatarImage src={Avatar} alt='avatar image' />
+          )}
         </label>
         <input
           id='avatar-input'
@@ -43,7 +35,7 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
           onChange={handleFileChange}
           style={{ display: 'none' }}
         />
-      </div>
-    </div>
+      </ImageWrapper>
+    </>
   );
 };
