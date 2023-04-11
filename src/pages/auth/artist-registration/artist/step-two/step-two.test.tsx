@@ -9,7 +9,7 @@ describe('StepTwo', () => {
   it('should render inputs and a button', () => {
     render(
       <Formik
-        initialValues={{ name: '', dateOfBirth: '' }}
+        initialValues={{ name: '', birthday: '' }}
         validationSchema={validationSchema}
         onSubmit={() => {}}
       >
@@ -29,7 +29,7 @@ describe('StepTwo', () => {
   it('should disable button if inputs are empty', () => {
     render(
       <Formik
-        initialValues={{ name: '', dateOfBirth: '' }}
+        initialValues={{ name: '', birthday: '' }}
         validationSchema={validationSchema}
         onSubmit={() => {}}
       >
@@ -46,7 +46,7 @@ describe('StepTwo', () => {
   it('should enable button if inputs are filled out correctly', () => {
     render(
       <Formik
-        initialValues={{ name: '', dateOfBirth: '' }}
+        initialValues={{ name: '', birthday: '' }}
         validationSchema={validationSchema}
         onSubmit={() => {}}
       >
@@ -70,7 +70,7 @@ describe('StepTwo', () => {
     const handleSubmit = jest.fn();
     render(
       <Formik
-        initialValues={{ name: '', dateOfBirth: '' }}
+        initialValues={{ name: '', birthday: '' }}
         validationSchema={validationSchema}
         onSubmit={() => {}}
       >

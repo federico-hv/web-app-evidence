@@ -16,7 +16,7 @@ export function StepperForm() {
   const initialValues: FormValues = {
     email: '',
     name: '',
-    dateOfBirth: '',
+    birthday: '',
     artistName: '',
     username: '',
     password: '',
