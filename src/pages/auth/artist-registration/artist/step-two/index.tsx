@@ -16,9 +16,9 @@ export function StepTwo({ values, errors, setPage }: StepProps) {
         icon={<img src={personIcon} />}
       />
       <Input
-        value={values.dateOfBirth}
-        error={errors.dateOfBirth}
-        name='dateOfBirth'
+        value={values.birthday}
+        error={errors.birthday}
+        name='birthday'
         placeholder='Date of Birth'
         icon={<img src={dateIcon} />}
         type='date'
@@ -27,8 +27,8 @@ export function StepTwo({ values, errors, setPage }: StepProps) {
         class={
           values.email &&
           !errors.email &&
-          values.dateOfBirth &&
-          !errors.dateOfBirth
+          values.birthday &&
+          !errors.birthday
             ? 'primary'
             : 'disabled'
         }
