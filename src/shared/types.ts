@@ -19,6 +19,7 @@ export interface FormValues {
   username?: string;
   password?: string;
   confirmPassword?: string;
+  image?: string;
 }
 export interface StepProps {
   values: {
@@ -30,6 +31,7 @@ export interface StepProps {
     displayName?: string;
     artistName?: string;
     username?: string;
+    image?: string;
   };
   errors: {
     password?: string;
@@ -40,6 +42,7 @@ export interface StepProps {
     artistName?: string;
     displayName?: string;
     username?: string;
+    image?: string;
   };
   setPage: (page: number) => void;
   isSubmitting?: boolean;
