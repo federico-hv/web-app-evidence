@@ -9,6 +9,7 @@ import { StepFour } from './step-four';
 import { validationSchema } from '../validation';
 import { RegisterParagraph } from '../register.style';
 import { SocialLogin } from 'pages';
+import { ImageUpload } from 'components';
 
 export function StepperForm() {
   const [page, setPage] = useState(0);
@@ -21,9 +22,18 @@ export function StepperForm() {
     username: '',
     password: '',
     confirmPassword: '',
+    image: '',
+  };
+
+  const [imageUrl, setImageUrl] = useState<string | undefined>(undefined);
+
+  const handleUpload = (file: File) => {
+    const imageUrl = URL.createObjectURL(file);
+    setImageUrl(imageUrl);
   };
 
   const handleSubmit = (values: FormValues) => {
+    values.image = imageUrl;
     console.log(values, 'result');
   };
 
@@ -36,6 +46,9 @@ export function StepperForm() {
       {({ errors, values, isSubmitting }) => {
         return (
           <>
+            {page === 2 && (
+              <ImageUpload onUpload={handleUpload} imageUrl={imageUrl} />
+            )}
             {page === 0 && (
               <>
                 <RegisterParagraph>
