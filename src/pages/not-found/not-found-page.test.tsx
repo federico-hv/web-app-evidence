@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { screen, render } from '@testing-library/react';
-import { NotFoundPage } from './';
+import NotFoundPage from './';
 
 describe('Page: NotFound', () => {
   it('should be have a heading with "Page Not Found" text', () => {
