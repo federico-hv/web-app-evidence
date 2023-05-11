@@ -45,12 +45,6 @@ function NavigationLg() {
           '@bp5': 'calc(100% - 450px)',
           '@bp7': 'calc(100% - 750px)',
         }}
-        css={{
-          '&  label': {
-            // width: 'auto',
-            boxSizing: 'border-box',
-          },
-        }}
       >
         <GlobalSearch />
       </Box>

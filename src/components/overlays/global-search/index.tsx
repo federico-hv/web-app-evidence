@@ -64,7 +64,14 @@ function GlobalSearch() {
   };
 
   return (
-    <Box w='full'>
+    <Box
+      w='full'
+      css={{
+        '& label': {
+          boxSizing: 'border-box',
+        },
+      }}
+    >
       <Spotlight>
         <Spotlight.Input
           value={value}
