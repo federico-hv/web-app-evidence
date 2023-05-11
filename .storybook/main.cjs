@@ -32,6 +32,10 @@ module.exports = {
             find: "utilities",
             replacement: path.resolve(__dirname, "./src/utilities")
           },
+          {
+            find: "layouts",
+            replacement: path.resolve(__dirname, "./src/layouts")
+          },
           { find: "lib", replacement: path.resolve(__dirname, "./src/lib") },
           {
             find: "pages",

@@ -62,6 +62,10 @@ export default (configEnv: ConfigEnv) => {
           find: 'shared',
           replacement: path.resolve(__dirname, './src/shared'),
         },
+        {
+          find: 'layouts',
+          replacement: path.resolve(__dirname, './src/layouts'),
+        },
       ],
     },
   });
