@@ -38,6 +38,10 @@ export default (configEnv: ConfigEnv) => {
           replacement: path.resolve(__dirname, './src/hooks'),
         },
         {
+          find: 'layouts',
+          replacement: path.resolve(__dirname, './src/layouts'),
+        },
+        {
           find: 'utilities',
           replacement: path.resolve(__dirname, './src/utilities'),
         },
@@ -61,10 +65,6 @@ export default (configEnv: ConfigEnv) => {
         {
           find: 'shared',
           replacement: path.resolve(__dirname, './src/shared'),
-        },
-        {
-          find: 'layouts',
-          replacement: path.resolve(__dirname, './src/layouts'),
         },
         {
           find: 'assets',
