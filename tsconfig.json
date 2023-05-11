@@ -28,7 +28,7 @@
         "src/configs/*"
       ],
       "context/*": [
-        "src/context/*"
+        "src/contexts/*"
       ],
       "hooks/*": [
         "src/hooks/*"
