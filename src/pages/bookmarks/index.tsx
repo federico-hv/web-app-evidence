@@ -4,23 +4,30 @@ import {
   ContentLayoutAside,
   ContentLayoutMain,
 } from '../../layouts';
+import { Head } from '../../components';
 
 function BookmarksPage() {
   return (
-    <ContentLayout>
-      <ContentLayoutMain>
-        <Text role='contentinfo'>Bookmarks page</Text>
-      </ContentLayoutMain>
-      <ContentLayoutAside>
-        <Heading as='h1' size={3} weight={500}>
-          Recommended Artists
-        </Heading>
-        <Box h='2px' w='full' bgColor='base100' />
-        <Heading as='h1' size={3} weight={500}>
-          Recommended Channels
-        </Heading>
-      </ContentLayoutAside>
-    </ContentLayout>
+    <>
+      <Head
+        title='Channels'
+        description='Tap back into all the stuff that you saved earlier and found interesting.'
+      />
+      <ContentLayout>
+        <ContentLayoutMain>
+          <Text role='contentinfo'>Bookmarks page</Text>
+        </ContentLayoutMain>
+        <ContentLayoutAside>
+          <Heading as='h1' size={3} weight={500}>
+            Recommended Artists
+          </Heading>
+          <Box h='2px' w='full' bgColor='base100' />
+          <Heading as='h1' size={3} weight={500}>
+            Recommended Channels
+          </Heading>
+        </ContentLayoutAside>
+      </ContentLayout>
+    </>
   );
 }
 BookmarksPage.displayName = 'BookmarksPage';
