@@ -1,20 +1,33 @@
 import { Routes, Route } from 'react-router';
 import {
-  HomePage,
   NotFoundPage,
-  LoginPage,
-  FanRegisterPage,
-  ArtistRegisterPage,
+  HomePage,
+  DiscoverPage,
+  ReleasesPage,
+  ChannelsPage,
+  BookmarksPage,
+  NotificationsPage,
+  ProfilePage,
 } from 'pages';
+import { MainLayout } from 'layouts';
+import { PathParams, Paths } from 'shared';
 
 function Router() {
   return (
     <Routes>
-      <Route path='/' element={<HomePage />} />
-      <Route path='/login' element={<LoginPage />} />
-      <Route path='/fan-register' element={<FanRegisterPage />} />
-      <Route path='/artist-register' element={<ArtistRegisterPage />} />
-      <Route path='*' element={<NotFoundPage />} />
+      <Route path='/' element={<MainLayout />}>
+        <Route path={Paths.home} element={<HomePage />} />
+        <Route path={PathParams.profileId} element={<ProfilePage />} />
+        <Route path={Paths.discover} element={<DiscoverPage />} />
+        <Route path={Paths.channels} element={<ChannelsPage />} />
+        <Route path={Paths.bookmarks} element={<BookmarksPage />} />
+        <Route path={Paths.releases} element={<ReleasesPage />} />
+        <Route
+          path={Paths.notifications}
+          element={<NotificationsPage />}
+        />
+        <Route path='*' element={<NotFoundPage />} />
+      </Route>
     </Routes>
   );
 }

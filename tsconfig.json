@@ -42,6 +42,12 @@
       "utilities/*": [
         "src/utilities/*"
       ],
+      "assets/*": [
+        "src/assets/*"
+      ],
+      "layouts/*": [
+        "src/layouts/*"
+      ],
       "shared/*": [
         "src/shared/*"
       ]
@@ -53,8 +59,9 @@
     "cypress.config.ts",
     "vite.config.ts",
     "cypress",
-    "src"
-, "src/configs/stitches/.ts"  ],
+    "src",
+    "src/configs/stitches/.ts"
+  ],
   "references": [
     {
       "path": "./tsconfig.node.json"

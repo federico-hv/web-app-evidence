@@ -1,7 +1,12 @@
-export function NotFoundPage() {
+import { Box, Heading } from '@holdr-ui/react';
+
+function NotFoundPage() {
   return (
-    <div>
-      <h1>Page Not Found</h1>
-    </div>
+    <Box>
+      <Heading as='h1'>Page Not Found</Heading>
+    </Box>
   );
 }
+NotFoundPage.displayName = 'NotFoundPage';
+
+export default NotFoundPage;

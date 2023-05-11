@@ -32,6 +32,10 @@ module.exports = {
             find: "utilities",
             replacement: path.resolve(__dirname, "./src/utilities")
           },
+          {
+            find: "layouts",
+            replacement: path.resolve(__dirname, "./src/layouts")
+          },
           { find: "lib", replacement: path.resolve(__dirname, "./src/lib") },
           {
             find: "pages",
@@ -48,6 +52,10 @@ module.exports = {
           {
             find: 'shared',
             replacement: path.resolve(__dirname, './src/shared'),
+          },
+          {
+            find: 'assets',
+            replacement: path.resolve(__dirname, './src/assets'),
           },
           {
             find: "components",
