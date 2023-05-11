@@ -66,6 +66,10 @@ export default (configEnv: ConfigEnv) => {
           find: 'layouts',
           replacement: path.resolve(__dirname, './src/layouts'),
         },
+        {
+          find: 'assets',
+          replacement: path.resolve(__dirname, './src/assets'),
+        },
       ],
     },
   });

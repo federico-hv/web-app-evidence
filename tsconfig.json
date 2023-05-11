@@ -42,6 +42,9 @@
       "utilities/*": [
         "src/utilities/*"
       ],
+      "assets/*": [
+        "src/assets/*"
+      ],
       "layouts/*": [
         "src/layouts/*"
       ],

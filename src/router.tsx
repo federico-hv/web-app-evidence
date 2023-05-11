@@ -10,22 +10,14 @@ import {
   ProfilePage,
 } from 'pages';
 import { MainLayout } from 'layouts';
-
-export const Paths = {
-  home: '',
-  discover: 'discover',
-  channels: 'channels',
-  bookmarks: 'bookmark',
-  releases: 'releases',
-  notifications: 'notifications',
-};
+import { PathParams, Paths } from 'shared';
 
 function Router() {
   return (
     <Routes>
       <Route path='/' element={<MainLayout />}>
         <Route path={Paths.home} element={<HomePage />} />
-        <Route path=':id' element={<ProfilePage />} />
+        <Route path={PathParams.profileId} element={<ProfilePage />} />
         <Route path={Paths.discover} element={<DiscoverPage />} />
         <Route path={Paths.channels} element={<ChannelsPage />} />
         <Route path={Paths.bookmarks} element={<BookmarksPage />} />
