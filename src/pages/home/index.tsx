@@ -12,6 +12,7 @@ function HomePage() {
       <Head
         title='Feeds'
         description='View all the latest articles, posts and more from all the artists that you are following'
+        url='/feeds'
       />
       <ContentLayout>
         <ContentLayoutMain>

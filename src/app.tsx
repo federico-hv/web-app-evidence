@@ -5,7 +5,7 @@ import Router from './router';
 export function App() {
   globalStyles();
   return (
-    <BrowserRouter basename={import.meta.env.VITE_APP_BASE_URL}>
+    <BrowserRouter basename={import.meta.env.VITE_APP_BASE_PATH}>
       <Router />
     </BrowserRouter>
   );
