@@ -2,29 +2,36 @@ import { Link, matchPath, useLocation } from 'react-router-dom';
 import {
   Box,
   Button,
+  IconButton,
   NavigationLink,
   NavigationLinkGroup,
   VStack,
 } from '@holdr-ui/react';
 import { prefix } from 'utilities';
 import { Paths } from 'shared';
-import { extraBtnPadding } from './header-lg.styles';
 
-function HeaderLg() {
+function HeaderMd() {
   const { pathname } = useLocation();
   return (
     <VStack
       as='header'
-      w={375}
+      w={75}
       borderRight={2}
       borderColor='base100'
       h='full'
       css={{
-        '@bp1': { display: 'none' },
-        '@bp7': { display: 'flex' },
+        '@bp1': {
+          display: 'none',
+        },
+        '@bp3': {
+          display: 'flex',
+        },
+        '@bp7': {
+          display: 'none',
+        },
       }}
     >
-      <VStack w={375} h='full' justify='space-between'>
+      <VStack w={75} h='full' justify='space-between' items='center'>
         <NavigationLinkGroup
           direction='vertical'
           variant='ghost'
@@ -35,44 +42,53 @@ function HeaderLg() {
           <NavigationLink
             as={<Link to={prefix('/', Paths.home)} />}
             isActive={!!matchPath('', pathname)}
-            text='Home'
             activeIcon='home-fill'
             inactiveIcon='home-outline'
+            css={{
+              padding: 0,
+            }}
           />
           <NavigationLink
             as={<Link to={prefix('/', Paths.discover)} />}
             isActive={!!matchPath('discover', pathname)}
-            text='Discover'
             activeIcon='discover-fill'
             inactiveIcon='discover-outline'
+            css={{
+              padding: 0,
+            }}
           />
           <NavigationLink
             as={<Link to={prefix('/', Paths.channels)} />}
             isActive={!!matchPath('channels', pathname)}
-            text='Channels'
             activeIcon='channels-fill'
             inactiveIcon='channels-outline'
+            css={{
+              padding: 0,
+            }}
           />
           <NavigationLink
             as={<Link to={prefix('/', Paths.bookmarks)} />}
             isActive={!!matchPath('bookmarks', pathname)}
-            text='Bookmarks'
             activeIcon='bookmark-fill'
             inactiveIcon='bookmark-outline'
+            css={{
+              padding: 0,
+            }}
           />
           <NavigationLink
             as={<Link to={prefix('/', Paths.releases)} />}
             isActive={!!matchPath('releases', pathname)}
-            text='Releases'
             activeIcon='releases-fill'
             inactiveIcon='releases-outline'
+            css={{
+              padding: 0,
+            }}
           />
         </NavigationLinkGroup>
         <Box p={4} borderTop={2} borderBottom={2} borderColor='base100'>
-          <Button
-            className={extraBtnPadding()}
-            label='Holdr Club'
-            fullWidth
+          <IconButton
+            icon='store-fill'
+            ariaLabel='go to shop'
             colorTheme='secondary400'
           />
         </Box>
@@ -83,6 +99,6 @@ function HeaderLg() {
     </VStack>
   );
 }
-HeaderLg.displayName = 'HeaderLg';
+HeaderMd.displayName = 'HeaderMd';
 
-export default HeaderLg;
+export default HeaderMd;
