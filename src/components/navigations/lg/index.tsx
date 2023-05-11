@@ -6,6 +6,7 @@ import {
   IconButton,
   Image,
 } from '@holdr-ui/react';
+import { GlobalSearch } from '../../overlays/';
 import { useNavigate } from 'react-router-dom';
 import { prefix } from 'utilities';
 import { Paths } from 'shared';
@@ -32,7 +33,9 @@ function NavigationLg() {
         </Box>
       </Box>
 
-      <Box px={4} h='2rem' w='calc(100% - 750px)' />
+      <Box px={4} h='2rem' w='calc(100% - 750px)'>
+        <GlobalSearch />
+      </Box>
 
       <HStack
         px={5}
