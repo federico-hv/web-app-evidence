@@ -15,12 +15,12 @@ function HeaderLg() {
   return (
     <VStack
       as='header'
-      w={350}
-      borderRight={1}
+      w={375}
+      borderRight={2}
       borderColor='base100'
       h='full'
     >
-      <VStack h='full' justify='space-between'>
+      <VStack w={375} h='full' justify='space-between'>
         <NavigationLinkGroup
           direction='vertical'
           variant='ghost'
@@ -64,7 +64,7 @@ function HeaderLg() {
             inactiveIcon='releases-outline'
           />
         </NavigationLinkGroup>
-        <Box p={4} borderTop={1} borderBottom={1} borderColor='base100'>
+        <Box p={4} borderTop={2} borderBottom={2} borderColor='base100'>
           <Button
             className={extraBtnPadding()}
             label='Holdr Club'

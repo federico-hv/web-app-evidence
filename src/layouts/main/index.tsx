@@ -6,9 +6,9 @@ function MainLayout() {
   return (
     <Box>
       <NavigationLg />
-      <HStack h='calc(100vh - 63px)' position='relative'>
+      <HStack h='calc(100vh - 65px)' position='relative'>
         <HeaderLg />
-        <Box as='main' p={4}>
+        <Box w='full' h='full'>
           <Outlet />
         </Box>
       </HStack>

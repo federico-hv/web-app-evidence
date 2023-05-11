@@ -5,6 +5,7 @@ export const Paths = {
   bookmarks: 'bookmarks',
   releases: 'releases',
   notifications: 'notifications',
+  messages: 'messages',
 };
 
 export const PathParams = {
