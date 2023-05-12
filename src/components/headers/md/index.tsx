@@ -1,7 +1,6 @@
 import { Link, matchPath, useLocation } from 'react-router-dom';
 import {
   Box,
-  Button,
   IconButton,
   NavigationLink,
   NavigationLinkGroup,
@@ -36,7 +35,7 @@ function HeaderMd() {
           direction='vertical'
           variant='ghost'
           as='nav'
-          gap={4}
+          gap={5}
           p={4}
         >
           <NavigationLink

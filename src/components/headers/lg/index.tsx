@@ -29,7 +29,7 @@ function HeaderLg() {
           direction='vertical'
           variant='ghost'
           as='nav'
-          gap={4}
+          gap={5}
           p={4}
         >
           <NavigationLink
