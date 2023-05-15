@@ -80,8 +80,8 @@ function GlobalSearch() {
         <Spotlight.Content>
           <Spotlight.Header>
             {history.length === 0 && (
-              <Center>
-                <Text size={2} color='base400' weight={500}>
+              <Center py={4}>
+                <Text size={2} color='base400'>
                   No recent searches
                 </Text>
               </Center>

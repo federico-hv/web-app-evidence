@@ -260,7 +260,7 @@ export const globalStyles = globalCss({
     border: 0,
   },
   body: {
-    backgroundColor: theme.colors.primary400,
+    backgroundColor: '#fbfbfa',
   },
   a: {
     'text-decoration': 'none',

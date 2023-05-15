@@ -265,7 +265,7 @@ The `src` has the following structure:
 ├─ shared/          # constants, types, props and interfaces that are shared
 ├─ utilities/       # helper functions
 app.tsx             # Main app
-main.tsx            # Similar to index.tsx (for React)
+main.tsx            # Similar to index.ts (for React)
 setup.ts            # Setup testing library
 vite-env.d.ts       # Do not touch
 ```
@@ -279,7 +279,7 @@ of our `components/` as seen below:
 components/
 ├─ forms/                         # Subdirectory for all forms
 │  ├─ login-form/                 # Subdirectory for login form
-│  │  ├─ index.tsx                # Component's defintion
+│  │  ├─ index.ts                # Component's defintion
 │  │  ├─ login-form.stories.tsx   # Component's stories (Storybook)
 │  │  ├─ login-form.test.tsx      # Component's tests
 │  │  ├─ login-form.style.ts      # Compnents' styles (Stitches JS)
@@ -289,7 +289,7 @@ components/
 ```
 
 From the illustration above, we see that the component's code is defined
-in the `login-form/index.tsx` file. The function will be export from the
+in the `login-form/index.ts` file. The function will be export from the
 `forms/index.ts` which in turn will be exported from the `components/index.ts`
 file. This will allow us to import the components as follows:
 
@@ -323,7 +323,7 @@ to **arrange** interactive components in Page components.
 ```
 layouts/
 ├─ auth-layout/
-│  ├─ index.tsx                   # Export the main layout
+│  ├─ index.ts                   # Export the main layout
 │  ├─ auth-layout.stories.tsx
 │  ├─ auth-layout.test.tsx
 │  ├─ auth-layout.styles.ts

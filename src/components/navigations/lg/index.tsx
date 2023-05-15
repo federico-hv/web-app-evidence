@@ -1,16 +1,15 @@
 import {
-  Avatar,
   Box,
   ButtonGroup,
-  Center,
   HStack,
   IconButton,
   Image,
 } from '@holdr-ui/react';
-import { GlobalSearch } from '../../overlays/';
 import { useNavigate } from 'react-router-dom';
 import { prefix } from 'utilities';
 import { Paths } from 'shared';
+import { GlobalSearch } from '../../overlays/';
+import { ProfileMenu } from '../../menus';
 
 import logoDark from 'assets/images/logo-dark.png';
 
@@ -65,9 +64,7 @@ function NavigationLg() {
             ariaLabel='open notifications'
           />
         </ButtonGroup>
-        <Center>
-          <Avatar size='sm' name='Sam Hack' />
-        </Center>
+        <ProfileMenu />
       </HStack>
     </HStack>
   );

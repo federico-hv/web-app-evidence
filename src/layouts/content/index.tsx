@@ -37,8 +37,6 @@ const ContentLayoutMain = ({ children }: BaseContentLayoutProps) => {
       }}
       borderRight={2}
       borderColor='base100'
-      px={5}
-      py={4}
     >
       {children}
     </Box>
