@@ -8,12 +8,20 @@ import {
   useDisclosure,
 } from '@holdr-ui/react';
 import { prefix } from 'utilities';
-import { Paths } from 'shared';
+import { IUserSm, Paths } from 'shared';
 import { useNavigate } from 'react-router-dom';
+import { ProfileCardSm } from '../../cards';
 
 function HeaderSm() {
+  const currentUser: IUserSm = {
+    displayName: 'Got Sauce',
+    username: 'trent45',
+    avatarUrl: '',
+  };
+
   const navigate = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();
+
   const goToNotifications = () =>
     navigate(prefix('/', Paths.notifications));
   return (
@@ -24,7 +32,7 @@ function HeaderSm() {
     >
       <HStack px={3} py={4} items='center' justify='space-between'>
         <Box role='button' onClick={onOpen}>
-          <Avatar size='sm' name='Sam Hack' />
+          <Avatar size='sm' name='Got Sauce' />
         </Box>
         <ButtonGroup variant='ghost' size='lg'>
           <IconButton icon='chat-outline' ariaLabel='open chats' />
@@ -43,12 +51,17 @@ function HeaderSm() {
               <Box
                 bgColor='primary400'
                 w='full'
-                minHeight='450px'
+                minHeight='350px'
                 css={{
-                  borderTopLeftRadius: '$2',
-                  borderTopRightRadius: '$2',
+                  borderTopLeftRadius: '$3',
+                  borderTopRightRadius: '$3',
                 }}
-              ></Box>
+              >
+                <ProfileCardSm
+                  onClose={onClose}
+                  currentUser={currentUser}
+                />
+              </Box>
             </Drawer.Content>
           </Drawer.Portal>
         </Drawer>

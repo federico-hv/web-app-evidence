@@ -5,3 +5,4 @@ export * from './support';
 export * from './overlays';
 export * from './cards';
 export * from './menus';
+export * from './dialogs';

@@ -2,19 +2,23 @@ import { useNavigate } from 'react-router-dom';
 import { Avatar, Card, HStack, Icon, Text, VStack } from '@holdr-ui/react';
 import { ProfileCardProps } from './profile-card.type';
 import { ActionWrapper } from './support';
+import { LogoutDialog } from '../../dialogs';
+import { Paths } from 'shared';
 
-function ProfileCard({ currentUser }: ProfileCardProps) {
+function ProfileCardLg({ currentUser }: ProfileCardProps) {
   const navigate = useNavigate();
 
-  const goToProfile = () => {
-    navigate(currentUser.username);
+  const open = {
+    profile: () => navigate(currentUser.username),
+    settings: () => navigate(Paths.settings),
+    support: () => navigate(Paths.support),
   };
 
   return (
     <Card boxShadow='none'>
       <Card.Header borderBottom={2} borderColor='base100' py={2}>
         <HStack
-          onClick={goToProfile}
+          onClick={open.profile}
           items='center'
           gap={3}
           py={3}
@@ -45,18 +49,15 @@ function ProfileCard({ currentUser }: ProfileCardProps) {
         </HStack>
       </Card.Header>
       <Card.Body py={2}>
-        <ActionWrapper>
+        <ActionWrapper onClick={open.settings}>
           <Text>Settings & Privacy</Text>
           <Icon name='settings-outline' size='lg' />
         </ActionWrapper>
-        <ActionWrapper>
+        <ActionWrapper onClick={open.support}>
           <Text>Help & Support</Text>
           <Icon name='question-outline' size='lg' />
         </ActionWrapper>
-        <ActionWrapper>
-          <Text>Logout</Text>
-          <Icon name='logout-outline' size='lg' />
-        </ActionWrapper>
+        <LogoutDialog />
       </Card.Body>
       <Card.Footer
         direction='horizontal'
@@ -74,6 +75,6 @@ function ProfileCard({ currentUser }: ProfileCardProps) {
     </Card>
   );
 }
-ProfileCard.displayName = 'ProfileCard';
+ProfileCardLg.displayName = 'ProfileCardLg';
 
-export default ProfileCard;
+export default ProfileCardLg;

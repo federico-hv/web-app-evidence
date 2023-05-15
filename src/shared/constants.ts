@@ -5,6 +5,8 @@ export const Paths = {
   bookmarks: 'bookmarks',
   releases: 'releases',
   notifications: 'notifications',
+  settings: 'settings',
+  support: 'support',
   messages: 'messages',
 };
 

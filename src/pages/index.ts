@@ -6,3 +6,5 @@ export { default as ChannelsPage } from './channels';
 export { default as BookmarksPage } from './bookmarks';
 export { default as NotificationsPage } from './notifications';
 export { default as ProfilePage } from './profile';
+export { default as SettingsPage } from './settings';
+export { default as SupportPage } from './support';

@@ -8,6 +8,8 @@ import {
   BookmarksPage,
   NotificationsPage,
   ProfilePage,
+  SupportPage,
+  SettingsPage,
 } from 'pages';
 import { MainLayout } from 'layouts';
 import { PathParams, Paths } from 'shared';
@@ -22,6 +24,8 @@ function Router() {
         <Route path={Paths.channels} element={<ChannelsPage />} />
         <Route path={Paths.bookmarks} element={<BookmarksPage />} />
         <Route path={Paths.releases} element={<ReleasesPage />} />
+        <Route path={Paths.settings} element={<SettingsPage />} />
+        <Route path={Paths.support} element={<SupportPage />} />
         <Route
           path={Paths.notifications}
           element={<NotificationsPage />}

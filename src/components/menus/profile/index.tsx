@@ -1,6 +1,6 @@
 import { Avatar, Center, Popover } from '@holdr-ui/react';
 import { IUserSm } from 'shared';
-import { ProfileCard } from '../../cards';
+import { ProfileCardLg } from '../../cards';
 
 function ProfileMenu() {
   const currentUser: IUserSm = {
@@ -22,7 +22,7 @@ function ProfileMenu() {
       </Popover.Trigger>
       <Popover.Portal>
         <Popover.Content sideOffset={10} align='end'>
-          <ProfileCard currentUser={currentUser} />
+          <ProfileCardLg currentUser={currentUser} />
         </Popover.Content>
       </Popover.Portal>
     </Popover>
