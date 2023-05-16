@@ -1,16 +1,18 @@
 import {
   Avatar,
   Box,
-  ButtonGroup,
   Drawer,
   HStack,
   IconButton,
+  Image,
   useDisclosure,
 } from '@holdr-ui/react';
 import { prefix } from 'utilities';
 import { IUserSm, Paths } from 'shared';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ProfileCardSm } from '../../cards';
+
+import logoDark from 'assets/images/logo-dark.png';
 
 function HeaderSm() {
   const currentUser: IUserSm = {
@@ -22,26 +24,35 @@ function HeaderSm() {
   const navigate = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const goToNotifications = () =>
-    navigate(prefix('/', Paths.notifications));
+  const open = {
+    notifications: () => navigate(prefix('/', Paths.notifications)),
+  };
+
   return (
-    <Box
-      css={{
-        '@bp3': { display: 'none' },
-      }}
-    >
-      <HStack px={3} py={4} items='center' justify='space-between'>
+    <>
+      <HStack
+        as='header'
+        p={3}
+        items='center'
+        justify='space-between'
+        css={{
+          '@bp3': { display: 'none' },
+        }}
+      >
         <Box role='button' onClick={onOpen}>
           <Avatar size='sm' name='Got Sauce' />
         </Box>
-        <ButtonGroup variant='ghost' size='lg'>
-          <IconButton icon='chat-outline' ariaLabel='open chats' />
-          <IconButton
-            onClick={goToNotifications}
-            icon='notification-outline'
-            ariaLabel='open notifications'
-          />
-        </ButtonGroup>
+        <Link to={prefix('/', Paths.home)}>
+          <Image size={22.5} src={logoDark} alt='logo' />
+        </Link>
+
+        <IconButton
+          onClick={open.notifications}
+          icon='notification-outline'
+          ariaLabel='open notifications'
+          variant='ghost'
+          size='lg'
+        />
       </HStack>
       {isOpen && (
         <Drawer isOpen={isOpen} onClose={onClose}>
@@ -66,7 +77,7 @@ function HeaderSm() {
           </Drawer.Portal>
         </Drawer>
       )}
-    </Box>
+    </>
   );
 }
 HeaderSm.displayName = 'HeaderSm';

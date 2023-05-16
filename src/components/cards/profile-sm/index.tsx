@@ -2,6 +2,7 @@ import {
   Avatar,
   Button,
   Card,
+  CloseButton,
   HStack,
   Icon,
   Text,
@@ -31,26 +32,24 @@ function ProfileCardSm({ currentUser, onClose }: ProfileCardProps) {
   };
   return (
     <Card boxShadow='none' h={350}>
-      <Card.Header py={4} items='center'>
+      <Card.Header py={5} px={3} direction='horizontal' items='center'>
         <HStack
-          gap={3}
-          p={2}
-          items='center'
-          radius='full'
-          border={2}
-          borderColor='base100'
+          role='link'
           onClick={open.profile}
-          _hover={{ backgroundColor: '$base100' }}
+          flex={1}
+          gap={3}
+          items='center'
         >
           <Avatar
-            size='xs'
             src={currentUser.avatarUrl}
             name={currentUser.displayName}
           />
-          <VStack>
-            <Text>{currentUser.displayName}</Text>
+          <VStack gap={1}>
+            <Text weight={500}>{currentUser.displayName}</Text>
+            <Text color='base400'>@{currentUser.username}</Text>
           </VStack>
         </HStack>
+        <CloseButton onClick={onClose} variant='ghost' />
       </Card.Header>
       <Card.Body borderTop={2} borderColor='base100'>
         <ActionWrapper onClick={open.settings}>

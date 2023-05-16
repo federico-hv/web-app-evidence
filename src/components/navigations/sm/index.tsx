@@ -12,8 +12,7 @@ function NavigationSm() {
       position='fixed'
       size='lg'
       b={0}
-      py={4}
-      px={3}
+      p={3}
       w='w-screen'
       justify='space-between'
       borderColor='base100'
