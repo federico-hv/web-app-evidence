@@ -1,9 +1,10 @@
-import { Heading, StackDivider, Text, VStack } from '@holdr-ui/react';
+import { Text } from '@holdr-ui/react';
 import {
   ContentLayout,
   ContentLayoutAside,
   ContentLayoutMain,
 } from '../../layouts';
+import { RecommendationListsGroup } from '../../components';
 
 function ProfilePage() {
   return (
@@ -12,14 +13,7 @@ function ProfilePage() {
         <Text role='contentinfo'>Profile page</Text>
       </ContentLayoutMain>
       <ContentLayoutAside>
-        <VStack divider={<StackDivider />} gap={4}>
-          <Heading as='h1' casing='uppercase' size={3} weight={500}>
-            Recommended Artists
-          </Heading>
-          <Heading as='h1' casing='uppercase' size={3} weight={500}>
-            Recommended Channels
-          </Heading>
-        </VStack>
+        <RecommendationListsGroup />
       </ContentLayoutAside>
     </ContentLayout>
   );

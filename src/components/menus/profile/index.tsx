@@ -1,20 +1,14 @@
 import { Avatar, Center, Popover } from '@holdr-ui/react';
-import { IUserSm } from 'shared';
 import { ProfileCardLg } from '../../cards';
+import { ProfileMenuProps } from './profile-menu.types';
 
-function ProfileMenu() {
-  const currentUser: IUserSm = {
-    displayName: 'Got Sauce',
-    username: 'trent45',
-    avatarUrl: '',
-  };
-
+function ProfileMenu({ currentUser }: ProfileMenuProps) {
   return (
     <Popover>
       <Popover.Trigger>
         <Center>
           <Avatar
-            src={currentUser.avatarUrl}
+            src={currentUser.avatar}
             name={currentUser.displayName}
             size='sm'
           />

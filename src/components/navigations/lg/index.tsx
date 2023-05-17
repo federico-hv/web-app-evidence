@@ -1,23 +1,20 @@
-import {
-  Box,
-  ButtonGroup,
-  HStack,
-  IconButton,
-  Image,
-} from '@holdr-ui/react';
+import { Box, HStack, Image } from '@holdr-ui/react';
+import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { prefix } from 'utilities';
-import { Paths } from 'shared';
+import { AuthContext } from 'contexts';
 import { GlobalSearch } from '../../overlays/';
-import { ProfileMenu } from '../../menus';
 
 import logoDark from 'assets/images/logo-dark.png';
+import {
+  AuthenticatedNavActions,
+  UnauthenticatedNavActions,
+} from './support';
 
 function NavigationLg() {
+  const { currentUser } = useContext(AuthContext);
+
   const navigate = useNavigate();
   const goToHome = () => navigate('/');
-  const goToNotifications = () =>
-    navigate(prefix('/', Paths.notifications));
 
   return (
     <HStack
@@ -47,24 +44,18 @@ function NavigationLg() {
       >
         <GlobalSearch />
       </Box>
-
       <HStack
         py={4}
         pr={5}
-        gap={4}
         w={{ '@bp1': 160, '@bp5': 375 }}
         items='center'
         justify='flex-end'
       >
-        <ButtonGroup items='center' gap={4} colorTheme='primary400'>
-          <IconButton icon='chat-outline' ariaLabel='open chats' />
-          <IconButton
-            onClick={goToNotifications}
-            icon='notification-outline'
-            ariaLabel='open notifications'
-          />
-        </ButtonGroup>
-        <ProfileMenu />
+        {currentUser ? (
+          <AuthenticatedNavActions />
+        ) : (
+          <UnauthenticatedNavActions />
+        )}
       </HStack>
     </HStack>
   );
