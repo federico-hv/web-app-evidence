@@ -10,7 +10,7 @@ function AsideCard({
   keyExtractor,
 }: AsideCardProps) {
   return (
-    <Card boxShadow='none'>
+    <Card boxShadow='none' p={1}>
       <Card.Header>
         <Heading as='h1' casing='uppercase' size={3} weight={500}>
           {title}

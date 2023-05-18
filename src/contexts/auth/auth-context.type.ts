@@ -3,7 +3,7 @@ import { IUserMe } from 'shared';
 
 export interface IAuthContext {
   currentUser: IUserMe | null;
-  setCurrentUser?: Dispatch<SetStateAction<IUserMe | null>>;
+  setCurrentUser: Dispatch<SetStateAction<IUserMe | null>>;
 }
 
 export interface AuthProviderProps {

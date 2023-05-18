@@ -7,3 +7,5 @@ export * from './cards';
 export * from './menus';
 export * from './dialogs';
 export * from './groups';
+export * from './buttons';
+export * from './loaders';

@@ -1,7 +1,18 @@
 import { AlertDialog, Heading, Icon, Text } from '@holdr-ui/react';
 import { ActionWrapper } from '../../cards/profile-lg/support';
+import { Cookies } from 'react-cookie';
+import { useContext } from 'react';
+import { AuthContext } from '../../../contexts';
 
 function LogoutDialog() {
+  const { setCurrentUser } = useContext(AuthContext);
+  const logout = () => {
+    const cookie = new Cookies();
+    cookie.remove('access_token');
+    cookie.remove('refresh_token');
+    setCurrentUser(null);
+  };
+
   return (
     <AlertDialog>
       <AlertDialog.Trigger>
@@ -25,7 +36,7 @@ function LogoutDialog() {
           </AlertDialog.Description>
           <AlertDialog.Actions>
             <AlertDialog.Cancel variant='ghost'>Cancel</AlertDialog.Cancel>
-            <AlertDialog.Action colorTheme='danger'>
+            <AlertDialog.Action onClick={logout} colorTheme='danger'>
               Yes, Logout
             </AlertDialog.Action>
           </AlertDialog.Actions>

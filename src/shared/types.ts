@@ -15,3 +15,14 @@ export interface IUserMe {
 export type GenericItem = { id: StringNumeric };
 
 export type StringNumeric = string | number;
+
+export type AccountType = 'FAN' | 'PERSONAL' | 'ARTIST';
+
+export interface IProfile {
+  accountType: AccountType;
+  username: string;
+  displayName: string;
+  connected: boolean;
+  coverImage: string;
+  avatar: string;
+}

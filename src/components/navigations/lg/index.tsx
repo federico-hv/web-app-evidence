@@ -20,12 +20,17 @@ function NavigationLg() {
     <HStack
       as='header'
       items='center'
+      position='fixed'
+      t={0}
+      w='100%'
       borderBottom={1}
       borderColor='base100'
       boxShadow='0px 3px 3px rgba(0, 0, 0, 0.1)'
       css={{
+        backgroundColor: '#fbfbfa',
         '@bp1': { display: 'none' },
         '@bp3': { display: 'flex' },
+        zIndex: 15,
       }}
     >
       <Box px={5} py={4} w={{ '@bp1': 75, '@bp7': 375 }}>

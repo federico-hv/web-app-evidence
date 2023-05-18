@@ -12,19 +12,28 @@ function HeaderLg() {
     <VStack
       as='header'
       w={375}
-      borderRight={2}
-      borderColor='base100'
+      minWidth={375}
       h='full'
       css={{
         '@bp1': { display: 'none' },
         '@bp7': { display: 'flex' },
       }}
     >
-      {currentUser ? (
-        <AuthenticatedNavigation />
-      ) : (
-        <UnauthenticatedNavigation />
-      )}
+      <VStack
+        position='fixed'
+        t={65}
+        w={375}
+        h='calc(100% - 65px)'
+        justify='space-between'
+      >
+        <VStack h='100%' justify='space-between' overflowY='scroll'>
+          {currentUser ? (
+            <AuthenticatedNavigation />
+          ) : (
+            <UnauthenticatedNavigation />
+          )}
+        </VStack>
+      </VStack>
     </VStack>
   );
 }

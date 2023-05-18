@@ -57,10 +57,16 @@ function UnauthenticatedNavActions() {
                 <Text>Help & Support</Text>
                 <Icon name='question-outline' size='lg' />
               </ActionWrapper>
-              <ActionWrapper>
-                <Text>Log In / Register</Text>
-                <Icon name='logout-outline' size='lg' />
-              </ActionWrapper>
+              <a
+                href={`${import.meta.env.VITE_AUTH_APP_URL}?redirect_url=${
+                  import.meta.env.VITE_APP_BASE_URL
+                }${import.meta.env.VITE_APP_BASE_PATH}`}
+              >
+                <ActionWrapper>
+                  <Text>Log In / Register</Text>
+                  <Icon name='logout-outline' size='lg' />
+                </ActionWrapper>
+              </a>
               <HStack
                 items='center'
                 gap={3}

@@ -1,11 +1,8 @@
 import { createContext, useEffect, useState } from 'react';
-import {
-  AuthProviderProps,
-  IAuthContext,
-  IUserMe,
-} from './auth-context.type';
+import { AuthProviderProps, IAuthContext } from './auth-context.type';
 import { useQuery } from '@apollo/client';
 import { GET_ME } from 'lib';
+import { IUserMe } from 'shared';
 
 const AuthContext = createContext<IAuthContext>({
   currentUser: null,

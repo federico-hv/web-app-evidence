@@ -15,7 +15,7 @@ function ProfileMenu({ currentUser }: ProfileMenuProps) {
         </Center>
       </Popover.Trigger>
       <Popover.Portal>
-        <Popover.Content sideOffset={10} align='end'>
+        <Popover.Content zIndex={50} sideOffset={10} align='end'>
           <ProfileCardLg currentUser={currentUser} />
         </Popover.Content>
       </Popover.Portal>
