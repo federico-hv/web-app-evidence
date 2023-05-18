@@ -9,3 +9,4 @@ export * from './dialogs';
 export * from './groups';
 export * from './buttons';
 export * from './loaders';
+export * from './content';
