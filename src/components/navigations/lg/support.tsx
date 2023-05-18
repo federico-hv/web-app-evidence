@@ -51,7 +51,7 @@ function UnauthenticatedNavActions() {
           </Circle>
         </Popover.Trigger>
         <Popover.Portal>
-          <Popover.Content sideOffset={10} align='end'>
+          <Popover.Content zIndex={50} sideOffset={10} align='end'>
             <VStack gap={2}>
               <ActionWrapper>
                 <Text>Help & Support</Text>
