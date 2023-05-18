@@ -42,7 +42,7 @@ function ProfileCardSm({ currentUser, onClose }: ProfileCardProps) {
             items='center'
           >
             <Avatar
-              src={currentUser.avatarUrl}
+              src={currentUser.avatar}
               name={currentUser.displayName}
             />
             <VStack gap={1}>

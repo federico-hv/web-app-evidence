@@ -66,10 +66,12 @@ function HeaderSm() {
                   borderTopRightRadius: '$3',
                 }}
               >
-                <ProfileCardSm
-                  onClose={onClose}
-                  currentUser={currentUser}
-                />
+                {currentUser && (
+                  <ProfileCardSm
+                    onClose={onClose}
+                    currentUser={currentUser}
+                  />
+                )}
               </Box>
             </Drawer.Content>
           </Drawer.Portal>
