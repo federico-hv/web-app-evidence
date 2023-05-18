@@ -62,7 +62,7 @@ function ProfilePage() {
               </SpinnerLoader>
 
               <SpinnerLoader loading={loading}>
-                <Box px={6} h='150vh'>
+                <Box px={6}>
                   <Box pt={4} fontSize={3}>
                     🚧 {"Hol' Up, We are building!"} 🚧
                   </Box>
