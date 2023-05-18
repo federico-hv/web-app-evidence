@@ -264,6 +264,7 @@ export const globalStyles = globalCss({
   },
   a: {
     'text-decoration': 'none',
+    color: 'inherit',
   },
   button: {
     backgroundColor: 'inherit',

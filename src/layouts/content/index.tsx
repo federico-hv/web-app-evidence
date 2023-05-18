@@ -36,7 +36,11 @@ const ContentLayoutMain = ({ children }: BaseContentLayoutProps) => {
         '@bp5': 'calc(100% - 375px)',
       }}
       borderRight={2}
+      borderLeft={2}
+      h='fit-content'
+      minHeight='100vh'
       borderColor='base100'
+      position='relative'
     >
       {children}
     </Box>
@@ -49,14 +53,16 @@ const ContentLayoutAside = ({ children }: BaseContentLayoutProps) => {
     <Box
       as='aside'
       w={{ '@bp1': 0, '@bp4': 160, '@bp5': 375 }}
-      px={5}
-      py={4}
       css={{ '@bp1': { display: 'none' }, '@bp4': { display: 'block' } }}
     >
       <Box
+        position='fixed'
+        t={65}
         css={{ '@bp1': { display: 'none' }, '@bp5': { display: 'block' } }}
       >
-        {children}
+        <Box p={4} w={{ '@bp1': 0, '@bp4': 160, '@bp5': 375 }}>
+          {children}
+        </Box>
       </Box>
     </Box>
   );

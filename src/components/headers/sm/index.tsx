@@ -1,3 +1,4 @@
+import { useContext } from 'react';
 import {
   Avatar,
   Box,
@@ -8,18 +9,15 @@ import {
   useDisclosure,
 } from '@holdr-ui/react';
 import { prefix } from 'utilities';
-import { IUserSm, Paths } from 'shared';
+import { Paths } from 'shared';
 import { Link, useNavigate } from 'react-router-dom';
 import { ProfileCardSm } from '../../cards';
+import { AuthContext } from '../../../contexts';
 
 import logoDark from 'assets/images/logo-dark.png';
 
 function HeaderSm() {
-  const currentUser: IUserSm = {
-    displayName: 'Got Sauce',
-    username: 'trent45',
-    avatarUrl: '',
-  };
+  const { currentUser } = useContext(AuthContext);
 
   const navigate = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -68,10 +66,12 @@ function HeaderSm() {
                   borderTopRightRadius: '$3',
                 }}
               >
-                <ProfileCardSm
-                  onClose={onClose}
-                  currentUser={currentUser}
-                />
+                {currentUser && (
+                  <ProfileCardSm
+                    onClose={onClose}
+                    currentUser={currentUser}
+                  />
+                )}
               </Box>
             </Drawer.Content>
           </Drawer.Portal>

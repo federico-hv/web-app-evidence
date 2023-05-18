@@ -9,7 +9,7 @@ function ProfileCardLg({ currentUser }: ProfileCardProps) {
   const navigate = useNavigate();
 
   const open = {
-    profile: () => navigate(currentUser.username),
+    profile: () => navigate(currentUser ? currentUser.username : ''),
     settings: () => navigate(Paths.settings),
     support: () => navigate(Paths.support),
   };
@@ -30,7 +30,7 @@ function ProfileCardLg({ currentUser }: ProfileCardProps) {
           }}
         >
           <Avatar
-            src={currentUser.avatarUrl}
+            src={currentUser.avatar}
             name={currentUser.displayName}
           />
           <VStack gap={1}>

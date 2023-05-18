@@ -1,10 +1,10 @@
-import { Heading, StackDivider, Text, VStack } from '@holdr-ui/react';
+import { Text } from '@holdr-ui/react';
 import {
   ContentLayout,
   ContentLayoutAside,
   ContentLayoutMain,
 } from 'layouts';
-import { Head } from 'components';
+import { Head, RecommendationListsGroup } from 'components';
 
 function SupportPage() {
   return (
@@ -18,11 +18,7 @@ function SupportPage() {
           <Text role='contentinfo'>Support page</Text>
         </ContentLayoutMain>
         <ContentLayoutAside>
-          <VStack divider={<StackDivider />} gap={4}>
-            <Heading as='h1' casing='uppercase' size={3} weight={500}>
-              Recommended Artists
-            </Heading>
-          </VStack>
+          <RecommendationListsGroup />
         </ContentLayoutAside>
       </ContentLayout>
     </>

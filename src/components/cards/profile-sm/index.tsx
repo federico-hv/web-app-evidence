@@ -19,7 +19,7 @@ function ProfileCardSm({ currentUser, onClose }: ProfileCardProps) {
   const open = {
     profile: () => {
       onClose && onClose();
-      navigate(currentUser.username);
+      navigate(currentUser ? currentUser.username : '');
     },
     settings: () => {
       onClose && onClose();
@@ -33,22 +33,24 @@ function ProfileCardSm({ currentUser, onClose }: ProfileCardProps) {
   return (
     <Card boxShadow='none' h={350}>
       <Card.Header py={5} px={3} direction='horizontal' items='center'>
-        <HStack
-          role='link'
-          onClick={open.profile}
-          flex={1}
-          gap={3}
-          items='center'
-        >
-          <Avatar
-            src={currentUser.avatarUrl}
-            name={currentUser.displayName}
-          />
-          <VStack gap={1}>
-            <Text weight={500}>{currentUser.displayName}</Text>
-            <Text color='base400'>@{currentUser.username}</Text>
-          </VStack>
-        </HStack>
+        {currentUser && (
+          <HStack
+            role='link'
+            onClick={open.profile}
+            flex={1}
+            gap={3}
+            items='center'
+          >
+            <Avatar
+              src={currentUser.avatar}
+              name={currentUser.displayName}
+            />
+            <VStack gap={1}>
+              <Text weight={500}>{currentUser.displayName}</Text>
+              <Text color='base400'>@{currentUser.username}</Text>
+            </VStack>
+          </HStack>
+        )}
         <CloseButton onClick={onClose} variant='ghost' />
       </Card.Header>
       <Card.Body borderTop={2} borderColor='base100'>

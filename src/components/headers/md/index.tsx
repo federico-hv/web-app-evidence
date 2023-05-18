@@ -1,16 +1,14 @@
-import { Link, matchPath, useLocation } from 'react-router-dom';
+import { VStack } from '@holdr-ui/react';
+
 import {
-  Box,
-  IconButton,
-  NavigationLink,
-  NavigationLinkGroup,
-  VStack,
-} from '@holdr-ui/react';
-import { prefix } from 'utilities';
-import { Paths } from 'shared';
+  AuthenticatedNavigationMd,
+  UnauthenticatedNavigationMd,
+} from './support';
+import { useContext } from 'react';
+import { AuthContext } from 'contexts';
 
 function HeaderMd() {
-  const { pathname } = useLocation();
+  const { currentUser } = useContext(AuthContext);
   return (
     <VStack
       as='header'
@@ -30,70 +28,21 @@ function HeaderMd() {
         },
       }}
     >
-      <VStack w={75} h='full' justify='space-between' items='center'>
-        <NavigationLinkGroup
-          direction='vertical'
-          variant='ghost'
-          as='nav'
-          gap={5}
-          p={4}
-        >
-          <NavigationLink
-            as={<Link to={prefix('/', Paths.home)} />}
-            isActive={!!matchPath('', pathname)}
-            activeIcon='home-fill'
-            inactiveIcon='home-outline'
-            css={{
-              padding: 0,
-            }}
-          />
-          <NavigationLink
-            as={<Link to={prefix('/', Paths.discover)} />}
-            isActive={!!matchPath('discover', pathname)}
-            activeIcon='discover-fill'
-            inactiveIcon='discover-outline'
-            css={{
-              padding: 0,
-            }}
-          />
-          <NavigationLink
-            as={<Link to={prefix('/', Paths.channels)} />}
-            isActive={!!matchPath('channels', pathname)}
-            activeIcon='channels-fill'
-            inactiveIcon='channels-outline'
-            css={{
-              padding: 0,
-            }}
-          />
-          <NavigationLink
-            as={<Link to={prefix('/', Paths.bookmarks)} />}
-            isActive={!!matchPath('bookmarks', pathname)}
-            activeIcon='bookmark-fill'
-            inactiveIcon='bookmark-outline'
-            css={{
-              padding: 0,
-            }}
-          />
-          <NavigationLink
-            as={<Link to={prefix('/', Paths.releases)} />}
-            isActive={!!matchPath('releases', pathname)}
-            activeIcon='releases-fill'
-            inactiveIcon='releases-outline'
-            css={{
-              padding: 0,
-            }}
-          />
-        </NavigationLinkGroup>
-        <Box p={4} borderTop={2} borderBottom={2} borderColor='base100'>
-          <IconButton
-            icon='store-fill'
-            ariaLabel='go to shop'
-            colorTheme='secondary400'
-          />
-        </Box>
-        <Box h={320} p={4} w='full'>
-          <Box bgColor='base100' w='full' h='full'></Box>
-        </Box>
+      <VStack
+        position='fixed'
+        t={65}
+        w={75}
+        h='calc(100% - 65px)'
+        justify='space-between'
+        items='center'
+      >
+        <VStack h='100%' justify='space-between' overflowY='scroll'>
+          {currentUser ? (
+            <AuthenticatedNavigationMd />
+          ) : (
+            <UnauthenticatedNavigationMd />
+          )}
+        </VStack>
       </VStack>
     </VStack>
   );

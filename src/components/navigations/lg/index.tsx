@@ -1,34 +1,36 @@
-import {
-  Box,
-  ButtonGroup,
-  HStack,
-  IconButton,
-  Image,
-} from '@holdr-ui/react';
+import { Box, HStack, Image } from '@holdr-ui/react';
+import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { prefix } from 'utilities';
-import { Paths } from 'shared';
+import { AuthContext } from 'contexts';
 import { GlobalSearch } from '../../overlays/';
-import { ProfileMenu } from '../../menus';
 
 import logoDark from 'assets/images/logo-dark.png';
+import {
+  AuthenticatedNavActions,
+  UnauthenticatedNavActions,
+} from './support';
 
 function NavigationLg() {
+  const { currentUser } = useContext(AuthContext);
+
   const navigate = useNavigate();
   const goToHome = () => navigate('/');
-  const goToNotifications = () =>
-    navigate(prefix('/', Paths.notifications));
 
   return (
     <HStack
       as='header'
       items='center'
+      position='fixed'
+      t={0}
+      w='100%'
       borderBottom={1}
       borderColor='base100'
       boxShadow='0px 3px 3px rgba(0, 0, 0, 0.1)'
       css={{
+        backgroundColor: '#fbfbfa',
         '@bp1': { display: 'none' },
         '@bp3': { display: 'flex' },
+        zIndex: 15,
       }}
     >
       <Box px={5} py={4} w={{ '@bp1': 75, '@bp7': 375 }}>
@@ -47,24 +49,18 @@ function NavigationLg() {
       >
         <GlobalSearch />
       </Box>
-
       <HStack
         py={4}
         pr={5}
-        gap={4}
         w={{ '@bp1': 160, '@bp5': 375 }}
         items='center'
         justify='flex-end'
       >
-        <ButtonGroup items='center' gap={4} colorTheme='primary400'>
-          <IconButton icon='chat-outline' ariaLabel='open chats' />
-          <IconButton
-            onClick={goToNotifications}
-            icon='notification-outline'
-            ariaLabel='open notifications'
-          />
-        </ButtonGroup>
-        <ProfileMenu />
+        {currentUser ? (
+          <AuthenticatedNavActions />
+        ) : (
+          <UnauthenticatedNavActions />
+        )}
       </HStack>
     </HStack>
   );
