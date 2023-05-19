@@ -4,16 +4,18 @@ import {
   Card,
   CloseButton,
   HStack,
-  Icon,
   Text,
   VStack,
 } from '@holdr-ui/react';
 import { extraBtnPadding, Paths } from 'shared';
-import { ActionWrapper } from '../profile-lg/support';
-import { ProfileCardProps } from '../profile-lg/profile-card.type';
+import { AuthenticatedProfileMenuProps } from '../profile-lg/profile-menu.type';
 import { useNavigate } from 'react-router-dom';
+import { MenuButton } from '../../../buttons';
 
-function ProfileCardSm({ currentUser, onClose }: ProfileCardProps) {
+function AuthenticatedProfileMenuSm({
+  currentUser,
+  onClose,
+}: AuthenticatedProfileMenuProps) {
   const navigate = useNavigate();
 
   const open = {
@@ -54,18 +56,17 @@ function ProfileCardSm({ currentUser, onClose }: ProfileCardProps) {
         <CloseButton onClick={onClose} variant='ghost' />
       </Card.Header>
       <Card.Body borderTop={2} borderColor='base100'>
-        <ActionWrapper onClick={open.settings}>
-          <Text>Settings & Privacy</Text>
-          <Icon name='settings-outline' size='lg' />
-        </ActionWrapper>
-        <ActionWrapper onClick={open.support}>
-          <Text>Help & Support</Text>
-          <Icon name='question-outline' size='lg' />
-        </ActionWrapper>
-        <ActionWrapper>
-          <Text>Logout</Text>
-          <Icon name='logout-outline' size='lg' />
-        </ActionWrapper>
+        <MenuButton
+          label='Settings & Privacy'
+          icon='settings-outline'
+          onClick={open.settings}
+        />
+        <MenuButton
+          label='Help & Support'
+          icon='question-outline'
+          onClick={open.support}
+        />
+        <MenuButton label='Logout' icon='logout-outline' />
       </Card.Body>
       <Card.Footer
         h='calc(100% - 222px)'
@@ -84,6 +85,6 @@ function ProfileCardSm({ currentUser, onClose }: ProfileCardProps) {
     </Card>
   );
 }
-ProfileCardSm.displayName = 'ProfileCardSm';
+AuthenticatedProfileMenuSm.displayName = 'AuthenticatedProfileMenuSm';
 
-export default ProfileCardSm;
+export default AuthenticatedProfileMenuSm;

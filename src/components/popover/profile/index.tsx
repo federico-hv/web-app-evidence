@@ -1,8 +1,8 @@
 import { Avatar, Center, Popover } from '@holdr-ui/react';
-import { ProfileCardLg } from '../../cards';
-import { ProfileMenuProps } from './profile-menu.types';
+import { ProfilePopoverLgProps } from './profile-popover.types';
+import { AuthenticatedProfileMenuLg } from '../../authenticated';
 
-function ProfileMenu({ currentUser }: ProfileMenuProps) {
+function ProfilePopoverLg({ currentUser }: ProfilePopoverLgProps) {
   return (
     <Popover>
       <Popover.Trigger>
@@ -16,12 +16,12 @@ function ProfileMenu({ currentUser }: ProfileMenuProps) {
       </Popover.Trigger>
       <Popover.Portal>
         <Popover.Content zIndex={50} sideOffset={10} align='end'>
-          <ProfileCardLg currentUser={currentUser} />
+          <AuthenticatedProfileMenuLg currentUser={currentUser} />
         </Popover.Content>
       </Popover.Portal>
     </Popover>
   );
 }
-ProfileMenu.displayName = 'ProfileMenu';
+ProfilePopoverLg.displayName = 'ProfilePopoverLg';
 
-export default ProfileMenu;
+export default ProfilePopoverLg;

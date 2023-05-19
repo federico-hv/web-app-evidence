@@ -1,62 +1,32 @@
-import { NavigationLink, NavigationLinkGroup } from '@holdr-ui/react';
-import { Link, matchPath, useLocation } from 'react-router-dom';
-import { prefix } from '../../../utilities';
-import { Paths } from '../../../shared';
+import { Box } from '@holdr-ui/react';
+import { useContext } from 'react';
+import { AuthContext } from 'contexts';
+import {
+  AuthenticatedNavigationSm,
+  UnauthenticatedNavigationSm,
+} from './support';
 
 function NavigationSm() {
-  const { pathname } = useLocation();
-
+  const { currentUser } = useContext(AuthContext);
   return (
-    <NavigationLinkGroup
-      variant='ghost'
-      position='fixed'
-      size='lg'
+    <Box
       b={0}
-      p={3}
-      w='w-screen'
-      justify='space-between'
+      w='100vw'
+      position='fixed'
       borderColor='base100'
       borderTop={2}
       css={{
         '@bp3': { display: 'none' },
+        borderTopRightRadius: '$4',
+        borderTopLeftRadius: '$4',
       }}
     >
-      <NavigationLink
-        as={<Link to={prefix('/', Paths.home)} />}
-        isActive={!!matchPath('', pathname)}
-        activeIcon='home-fill'
-        inactiveIcon='home-outline'
-        css={{ padding: 0 }}
-      />
-      <NavigationLink
-        as={<Link to={prefix('/', Paths.discover)} />}
-        isActive={!!matchPath('discover', pathname)}
-        activeIcon='discover-fill'
-        inactiveIcon='discover-outline'
-        css={{ padding: 0 }}
-      />
-      <NavigationLink
-        as={<Link to={prefix('/', Paths.channels)} />}
-        isActive={!!matchPath('channels', pathname)}
-        activeIcon='channels-fill'
-        inactiveIcon='channels-outline'
-        css={{ padding: 0 }}
-      />
-      <NavigationLink
-        as={<Link to={prefix('/', Paths.bookmarks)} />}
-        isActive={!!matchPath('bookmarks', pathname)}
-        activeIcon='bookmark-fill'
-        inactiveIcon='bookmark-outline'
-        css={{ padding: 0 }}
-      />
-      <NavigationLink
-        as={<Link to={prefix('/', Paths.releases)} />}
-        isActive={!!matchPath('releases', pathname)}
-        activeIcon='releases-fill'
-        inactiveIcon='releases-outline'
-        css={{ padding: 0 }}
-      />
-    </NavigationLinkGroup>
+      {currentUser ? (
+        <AuthenticatedNavigationSm />
+      ) : (
+        <UnauthenticatedNavigationSm />
+      )}
+    </Box>
   );
 }
 NavigationSm.displayName = 'NavigationSm';

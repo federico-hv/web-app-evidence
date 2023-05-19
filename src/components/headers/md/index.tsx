@@ -1,10 +1,9 @@
+import { useContext } from 'react';
 import { VStack } from '@holdr-ui/react';
-
 import {
   AuthenticatedNavigationMd,
   UnauthenticatedNavigationMd,
 } from './support';
-import { useContext } from 'react';
 import { AuthContext } from 'contexts';
 
 function HeaderMd() {

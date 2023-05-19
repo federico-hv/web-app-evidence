@@ -1,11 +1,13 @@
 import { useNavigate } from 'react-router-dom';
 import { Avatar, Card, HStack, Icon, Text, VStack } from '@holdr-ui/react';
-import { ProfileCardProps } from './profile-card.type';
-import { ActionWrapper } from './support';
-import { LogoutDialog } from '../../dialogs';
+import { AuthenticatedProfileMenuProps } from './profile-menu.type';
+import { LogoutDialog } from '../../../dialogs';
 import { Paths } from 'shared';
+import { MenuButton } from '../../../buttons';
 
-function ProfileCardLg({ currentUser }: ProfileCardProps) {
+function AuthenticatedProfileMenuLg({
+  currentUser,
+}: AuthenticatedProfileMenuProps) {
   const navigate = useNavigate();
 
   const open = {
@@ -49,14 +51,16 @@ function ProfileCardLg({ currentUser }: ProfileCardProps) {
         </HStack>
       </Card.Header>
       <Card.Body py={2}>
-        <ActionWrapper onClick={open.settings}>
-          <Text>Settings & Privacy</Text>
-          <Icon name='settings-outline' size='lg' />
-        </ActionWrapper>
-        <ActionWrapper onClick={open.support}>
-          <Text>Help & Support</Text>
-          <Icon name='question-outline' size='lg' />
-        </ActionWrapper>
+        <MenuButton
+          label='Settings & Privacy'
+          icon='settings-outline'
+          onClick={open.settings}
+        />
+        <MenuButton
+          label='Help & Support'
+          icon='question-outline'
+          onClick={open.support}
+        />
         <LogoutDialog />
       </Card.Body>
       <Card.Footer
@@ -75,6 +79,6 @@ function ProfileCardLg({ currentUser }: ProfileCardProps) {
     </Card>
   );
 }
-ProfileCardLg.displayName = 'ProfileCardLg';
+AuthenticatedProfileMenuLg.displayName = 'AuthenticatedProfileMenuLg';
 
-export default ProfileCardLg;
+export default AuthenticatedProfileMenuLg;

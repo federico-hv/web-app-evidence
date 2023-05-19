@@ -1,8 +1,8 @@
-import { AlertDialog, Heading, Icon, Text } from '@holdr-ui/react';
-import { ActionWrapper } from '../../cards/profile-lg/support';
+import { AlertDialog, Heading } from '@holdr-ui/react';
 import { Cookies } from 'react-cookie';
 import { useContext } from 'react';
 import { AuthContext } from '../../../contexts';
+import { MenuButton } from '../../buttons';
 
 function LogoutDialog() {
   const { setCurrentUser } = useContext(AuthContext);
@@ -16,10 +16,7 @@ function LogoutDialog() {
   return (
     <AlertDialog>
       <AlertDialog.Trigger>
-        <ActionWrapper>
-          <Text>Logout</Text>
-          <Icon name='logout-outline' size='lg' />
-        </ActionWrapper>
+        <MenuButton label='logout' icon='logout-outline' />
       </AlertDialog.Trigger>
       <AlertDialog.Portal>
         <AlertDialog.Overlay blur='sm' />

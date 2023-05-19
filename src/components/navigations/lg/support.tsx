@@ -13,8 +13,8 @@ import {
   Text,
   VStack,
 } from '@holdr-ui/react';
-import { ProfileMenu } from '../../menus';
-import { ActionWrapper } from '../../cards/profile-lg/support';
+import { ProfilePopoverLg } from '../../popover';
+import { MenuButton } from '../../buttons';
 
 function AuthenticatedNavActions() {
   const { currentUser } = useContext(AuthContext);
@@ -34,7 +34,7 @@ function AuthenticatedNavActions() {
               ariaLabel='open notifications'
             />
           </ButtonGroup>
-          <ProfileMenu currentUser={currentUser} />
+          <ProfilePopoverLg currentUser={currentUser} />
         </HStack>
       )}
     </>
@@ -42,6 +42,18 @@ function AuthenticatedNavActions() {
 }
 
 function UnauthenticatedNavActions() {
+  const navigate = useNavigate();
+
+  const open = {
+    support: () => {
+      navigate(prefix('/', Paths.support));
+    },
+    settings: () => navigate(prefix('/', Paths.settings)),
+    discover: () => {
+      navigate(prefix('/', Paths.discover));
+    },
+  };
+
   return (
     <HStack gap={4} items='center' justify='flex-end'>
       <Popover>
@@ -53,19 +65,25 @@ function UnauthenticatedNavActions() {
         <Popover.Portal>
           <Popover.Content zIndex={50} sideOffset={10} align='end'>
             <VStack gap={2}>
-              <ActionWrapper>
-                <Text>Help & Support</Text>
-                <Icon name='question-outline' size='lg' />
-              </ActionWrapper>
+              <MenuButton
+                label='Settings & Privacy'
+                icon='settings-outline'
+                onClick={open.settings}
+              />
+              <MenuButton
+                label='Help & Support'
+                icon='question-outline'
+                onClick={open.support}
+              />
               <a
                 href={`${import.meta.env.VITE_AUTH_APP_URL}?redirect_url=${
                   import.meta.env.VITE_APP_BASE_URL
                 }${import.meta.env.VITE_APP_BASE_PATH}`}
               >
-                <ActionWrapper>
-                  <Text>Log In / Register</Text>
-                  <Icon name='logout-outline' size='lg' />
-                </ActionWrapper>
+                <MenuButton
+                  label='Login / Register'
+                  icon='logout-outline'
+                />
               </a>
               <HStack
                 items='center'
