@@ -26,3 +26,11 @@ export interface IProfile {
   coverImage: string;
   avatar: string;
 }
+
+export interface IAccount {
+  username: string;
+  displayName: string;
+  role: string;
+  id: string;
+  avatar: string;
+}

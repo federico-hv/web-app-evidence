@@ -24,3 +24,15 @@ export const GET_PROFILE = gql`
     }
   }
 `;
+
+export const FIND_USER = gql`
+  query searchForUser($q: String!) {
+    searchForUser(queryString: $q) {
+      username
+      displayName
+      id
+      avatar
+      role
+    }
+  }
+`;

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   Button,
   Center,
@@ -7,57 +8,76 @@ import {
   Spotlight,
   Text,
   Box,
+  Avatar,
 } from '@holdr-ui/react';
-import { useState } from 'react';
-import { prefix } from '../../../utilities';
-import { Paths } from '../../../shared';
+import { useQuery } from '@apollo/client';
 import { useNavigate } from 'react-router-dom';
+import { prefix } from 'utilities';
+import { IAccount, Paths } from 'shared';
+import { FIND_USER } from 'lib';
+import { Item } from './global-search.types';
 
-type Item = { item: string; index: number };
-
-const filterFn = (value: string, data: string[]) => {
-  return data.filter((item) => {
-    if (!value.length) return false;
-    return !!item.match(value);
-  });
-};
+/**
+ * TODO:
+ * 1. Add debounce
+ * 2. Add search history
+ * 3. Add mutation to store search values, and search events
+ */
 
 function GlobalSearch() {
   const navigate = useNavigate();
   const [value, setValue] = useState('');
-  const [results, setResults] = useState<string[]>([]);
-  const [history, setHistory] = useState<string[]>([]);
+  const [results, setResults] = useState<IAccount[]>([]);
+  const [history, setHistory] = useState<IAccount[]>([]);
+
+  const { data, loading, error } = useQuery<{ searchForUser: IAccount[] }>(
+    FIND_USER,
+    {
+      variables: {
+        q: value,
+      },
+    },
+  );
+
+  if (error) {
+    console.log(error);
+  }
 
   const handleOnValueChange = (newValue: string) => {
     setValue(newValue);
-    setResults(filterFn(newValue, []));
+    if (!loading && !error && data) {
+      setResults(data.searchForUser);
+    }
   };
   const renderItem = ({ item }: Item) => (
     <HStack gap={3} items='center' px={2} py={3}>
-      <Circle size={30} bgColor='base800' color='primary400'>
-        <Icon name='search-outline' />
-      </Circle>
-      <Text>{item}</Text>
+      {item.avatar ? (
+        <Avatar src={item.avatar} name={item.displayName} />
+      ) : (
+        <Circle size={40} bgColor='base800' color='primary400'>
+          <Icon name='search-outline' />
+        </Circle>
+      )}
+      <Text>{item.username}</Text>
     </HStack>
   );
   const renderHistoryItem = ({ item }: Item) => (
     <HStack gap={3} items='center' px={2} py={3}>
-      <Circle size={30} bgColor='base800' color='primary400'>
-        <Icon name='search-outline' />
-      </Circle>
-      <Text css={{ flex: 1 }}>{item}</Text>
-      <Center>
-        <Icon name='close' size='lg' />
-      </Center>
+      {item.avatar ? (
+        <Avatar src={item.avatar} name={item.displayName} />
+      ) : (
+        <Circle size={40} bgColor='base800' color='primary400'>
+          <Icon name='search-outline' />
+        </Circle>
+      )}
+      <Text>{item.username}</Text>
     </HStack>
   );
-  const keyExtractor = ({ item }: Item) => `${item}`;
+  const keyExtractor = ({ item }: Item) => item.id;
   const onClickItem = ({ item }: Item) => {
-    setHistory((prev) => {
-      const idx = prev.findIndex((current) => current === item);
-      if (idx < 0) return [item, ...prev];
-      return prev;
-    });
+    // save the search text
+    // save the user's event
+    navigate(prefix('/', item.username));
   };
   const onClickSearchItem = (searchText: string) => {
     navigate(prefix('/', `${Paths.discover}?q=${searchText}`));
@@ -98,15 +118,17 @@ function GlobalSearch() {
               </HStack>
             )}
           </Spotlight.Header>
-          <Spotlight.List
-            data={results.length > 0 ? results : history}
-            onClickItem={onClickItem}
-            onClickSearchItem={onClickSearchItem}
-            renderItem={
-              results.length > 0 ? renderItem : renderHistoryItem
-            }
-            keyExtractor={keyExtractor}
-          />
+          {value.length > 0 && (
+            <Spotlight.List
+              data={results.length > 0 ? results : history}
+              onClickItem={onClickItem}
+              onClickSearchItem={onClickSearchItem}
+              renderItem={
+                results.length > 0 ? renderItem : renderHistoryItem
+              }
+              keyExtractor={keyExtractor}
+            />
+          )}
         </Spotlight.Content>
       </Spotlight>
     </Box>
