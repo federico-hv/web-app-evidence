@@ -34,6 +34,7 @@ function AuthenticatedProfileMenuLg({
           <Avatar
             src={currentUser.avatar}
             name={currentUser.displayName}
+            variant='squircle'
           />
           <VStack gap={1}>
             <Text>{currentUser.displayName}</Text>

@@ -1,5 +1,6 @@
 import { ReactNode, useContext, useEffect } from 'react';
 import {
+  Avatar,
   Box,
   Button,
   HStack,
@@ -27,7 +28,6 @@ import { IProfile } from 'shared';
 import { AuthContext } from 'contexts';
 import { useGoBack } from 'hooks';
 
-import darkPlaceholder from '../../assets/images/dark-placeholder.jpg';
 import lightPlaceholder from '../../assets/images/light-placeholder.jpg';
 function HeaderSm({ children }: { children?: ReactNode }) {
   const goBack = useGoBack();
@@ -214,11 +214,14 @@ function ProfileHeaderSm({ profile }: { profile: IProfile }) {
               px={3}
             >
               <Box flex={1}>
-                <Image
+                <Avatar
                   src={profile.avatar}
-                  size={75}
-                  radius={4}
-                  fallbackSrc={darkPlaceholder}
+                  variant='squircle'
+                  name=''
+                  css={{
+                    height: 75,
+                    width: 75,
+                  }}
                 />
               </Box>
               <ProfileNameGroup
@@ -273,11 +276,14 @@ function ProfileHeaderLg({ profile }: { profile: IProfile }) {
         >
           <HStack w='100%' gap={4}>
             <Box>
-              <Image
+              <Avatar
                 src={profile.avatar}
-                size={100}
-                radius={4}
-                fallbackSrc={darkPlaceholder}
+                variant='squircle'
+                name=''
+                css={{
+                  height: 100,
+                  width: 100,
+                }}
               />
             </Box>
             <HStack w='100%' justify='space-between' items='flex-start'>
