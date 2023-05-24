@@ -13,8 +13,13 @@ function NotFoundContent() {
       h='100%'
       css={{ flexDirection: 'column' }}
     >
-      <VStack gap={3} items='center' w='70%' mb={5}>
-        <Heading as='h1' weight={500}>
+      <VStack
+        gap={3}
+        items='center'
+        w={{ '@bp1': '100%', '@bp3': '70%' }}
+        mb={5}
+      >
+        <Heading as='h1' weight={500} css={{ textAlign: 'center' }}>
           Oops, nothing here
         </Heading>
         <Text size={3} css={{ textAlign: 'center' }}>

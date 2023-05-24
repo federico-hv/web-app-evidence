@@ -10,7 +10,7 @@ import {
   VStack,
 } from '@holdr-ui/react';
 import { FollowButton, FriendButton } from '../../buttons';
-import darkPlaceholder from '../../../assets/images/dark-placeholder.webp';
+import darkPlaceholder from '../../../assets/images/dark-placeholder.jpg';
 import { EditProfileDialog } from '../../dialogs';
 import { ProfileContentProps } from './profile-page.types';
 import { ReactNode } from 'react';

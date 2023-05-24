@@ -15,14 +15,20 @@ import {
   ContentLayoutAside,
   ContentLayoutMain,
 } from 'layouts';
-import { RecommendationListsGroup, ContentBox, Head } from 'components';
+import {
+  RecommendationListsGroup,
+  ContentBox,
+  Head,
+  Loader,
+  NotFoundContent,
+} from 'components';
 import { GET_PROFILE } from 'lib';
 import { IProfile } from 'shared';
 import { AuthContext } from 'contexts';
 import { useGoBack } from 'hooks';
 
-import darkPlaceholder from 'assets/images/dark-placeholder.webp';
-
+import darkPlaceholder from '../../assets/images/dark-placeholder.jpg';
+import lightPlaceholder from '../../assets/images/light-placeholder.jpg';
 function HeaderSm({ children }: { children?: ReactNode }) {
   const goBack = useGoBack();
   return (
@@ -77,12 +83,12 @@ function ProfileButton({ profile }: { profile: IProfile }) {
           {profile.accountType === 'ARTIST' && (
             <HStack gap={3} items='center'>
               <Button
-                size={{ '@bp1': 'sm', '@bp3': 'base' }}
+                size={{ '@bp1': 'sm', '@bp4': 'base' }}
                 label='Follow'
               />
               <IconButton
                 variant='ghost'
-                size={{ '@bp1': 'sm', '@bp3': 'base' }}
+                size={{ '@bp1': 'sm', '@bp4': 'base' }}
                 ariaLabel='more'
                 icon='more-fill'
               />
@@ -92,12 +98,12 @@ function ProfileButton({ profile }: { profile: IProfile }) {
           {profile.accountType === 'FAN' && (
             <HStack gap={3} items='center'>
               <Button
-                size={{ '@bp1': 'sm', '@bp3': 'base' }}
+                size={{ '@bp1': 'sm', '@bp4': 'base' }}
                 label='Make Friend'
               />
               <IconButton
                 variant='ghost'
-                size={{ '@bp1': 'sm', '@bp3': 'base' }}
+                size={{ '@bp1': 'sm', '@bp4': 'base' }}
                 ariaLabel='more'
                 icon='more-fill'
               />
@@ -105,7 +111,7 @@ function ProfileButton({ profile }: { profile: IProfile }) {
           )}
 
           {profile.accountType === 'PERSONAL' && (
-            <Button size={{ '@bp1': 'sm', '@bp3': 'base' }} label='Edit' />
+            <Button size={{ '@bp1': 'sm', '@bp4': 'base' }} label='Edit' />
           )}
         </>
       )}
@@ -127,7 +133,7 @@ function ProfileNameGroup({
       borderBottom={2}
       borderColor='base100'
       css={{
-        '@bp3': {
+        '@bp4': {
           borderBottom: 'none',
         },
       }}
@@ -178,7 +184,7 @@ function ProfileStatistics({ profile }: { profile: IProfile }) {
 
 function ProfileHeaderSm({ profile }: { profile: IProfile }) {
   return (
-    <Box css={{ '@bp3': { display: 'none' } }}>
+    <Box css={{ '@bp4': { display: 'none' } }}>
       <HeaderSm />
       <Box
         role='banner'
@@ -194,7 +200,7 @@ function ProfileHeaderSm({ profile }: { profile: IProfile }) {
               w='100%'
               h={150}
               src={profile.coverImage}
-              fallbackSrc={darkPlaceholder}
+              fallbackSrc={lightPlaceholder}
             />
 
             <ProfileHeaderOverlay />
@@ -239,7 +245,7 @@ function ProfileHeaderSm({ profile }: { profile: IProfile }) {
 function ProfileHeaderLg({ profile }: { profile: IProfile }) {
   return (
     <Box
-      css={{ '@bp1': { display: 'none' }, '@bp3': { display: 'block' } }}
+      css={{ '@bp1': { display: 'none' }, '@bp4': { display: 'block' } }}
     >
       <Box
         role='banner'
@@ -254,7 +260,7 @@ function ProfileHeaderLg({ profile }: { profile: IProfile }) {
           w='100%'
           h={200}
           src={profile.coverImage}
-          fallbackSrc={darkPlaceholder}
+          fallbackSrc={lightPlaceholder}
         />
         <HStack
           position='absolute'
@@ -290,6 +296,20 @@ function ProfileHeaderLg({ profile }: { profile: IProfile }) {
   );
 }
 
+function NotFoundError() {
+  return (
+    <>
+      <Head
+        title='Page Not Found'
+        description="We do not have what you're looking for."
+      />
+      <Box h={{ '@bp1': '100vh', '@bp3': 'calc(100vh - 65px)' }} w='100%'>
+        <NotFoundContent />
+      </Box>
+    </>
+  );
+}
+
 function ProfileHeader() {
   const currentUser = useContext(AuthContext).currentUser;
   const username = useLocation().pathname.split('/')[1];
@@ -304,20 +324,38 @@ function ProfileHeader() {
   );
 
   return (
-    <>
+    <Error hasError={!!error} errorEl={<NotFoundError />}>
       {data && data.profile && (
-        <>
-          <Head
-            prefix=''
-            title={`${data.profile.displayName} (@${data.profile.username})`}
-            description={data.profile.bio || ''}
-          />
-          <ProfileHeaderSm profile={data.profile} />
-          <ProfileHeaderLg profile={data.profile} />
-        </>
+        <Head
+          prefix=''
+          title={`${data.profile.displayName} (@${data.profile.username})`}
+          description={data.profile.bio || ''}
+        />
       )}
-    </>
+      <Loader loading={loading}>
+        {data && data.profile && (
+          <>
+            <ProfileHeaderSm profile={data.profile} />
+            <ProfileHeaderLg profile={data.profile} />
+          </>
+        )}
+      </Loader>
+    </Error>
   );
+}
+
+function Error({
+  hasError,
+  children,
+  errorEl: el,
+}: {
+  errorMessage?: string;
+  errorTitle?: string;
+  hasError: boolean;
+  children?: ReactNode;
+  errorEl: JSX.Element;
+}) {
+  return <>{hasError ? <>{el}</> : <>{children}</>}</>;
 }
 
 function ProfilePage() {

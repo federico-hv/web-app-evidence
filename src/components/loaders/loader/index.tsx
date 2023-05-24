@@ -1,13 +1,14 @@
 import { AnimatePresence } from 'framer-motion';
 import { Center, CircularProgress } from '@holdr-ui/react';
-import { SpinnerLoaderProps } from './spinner-loader.types';
+import { LoaderProps } from './loader.types';
 import { MotionBox } from 'shared';
 
-function SpinnerLoader({
+function Loader({
   children,
   loading,
   h = 150,
-}: SpinnerLoaderProps) {
+  as = <CircularProgress size={30} isIndeterminate />,
+}: LoaderProps) {
   return (
     <AnimatePresence>
       {!loading ? (
@@ -19,13 +20,11 @@ function SpinnerLoader({
           {children}
         </MotionBox>
       ) : (
-        <Center h={h}>
-          <CircularProgress size={30} isIndeterminate />
-        </Center>
+        <Center h={h}>{as}</Center>
       )}
     </AnimatePresence>
   );
 }
-SpinnerLoader.displayName = 'SpinnerLoader';
+Loader.displayName = 'Loader';
 
-export default SpinnerLoader;
+export default Loader;
