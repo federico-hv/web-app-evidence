@@ -11,12 +11,14 @@ import { extraBtnPadding, Paths } from 'shared';
 import { AuthenticatedProfileMenuProps } from '../profile-lg/profile-menu.type';
 import { useNavigate } from 'react-router-dom';
 import { MenuButton } from '../../../buttons';
+import { useLogout } from 'hooks';
 
 function AuthenticatedProfileMenuSm({
   currentUser,
   onClose,
 }: AuthenticatedProfileMenuProps) {
   const navigate = useNavigate();
+  const logout = useLogout();
 
   const open = {
     profile: () => {
@@ -66,7 +68,14 @@ function AuthenticatedProfileMenuSm({
           icon='question-outline'
           onClick={open.support}
         />
-        <MenuButton label='Logout' icon='logout-outline' />
+        <MenuButton
+          label='Logout'
+          icon='logout-outline'
+          onClick={() => {
+            logout();
+            onClose && onClose();
+          }}
+        />
       </Card.Body>
       <Card.Footer
         h='calc(100% - 222px)'

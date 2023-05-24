@@ -12,8 +12,6 @@ function HeaderMd() {
     <VStack
       as='header'
       w={75}
-      borderRight={2}
-      borderColor='base100'
       h='full'
       css={{
         '@bp1': {

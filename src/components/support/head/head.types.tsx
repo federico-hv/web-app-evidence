@@ -1,5 +1,6 @@
 export interface HeadProps {
   title: string;
+  prefix?: string;
   description: string;
   /** image url */
   image?: string;

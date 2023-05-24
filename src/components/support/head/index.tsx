@@ -2,13 +2,21 @@ import { Helmet } from 'react-helmet';
 import { HeadProps } from './head.types';
 import { prefix } from 'utilities';
 
-function Head({ title, description, image, url }: HeadProps) {
+function Head({
+  title,
+  prefix: prefixStr = 'Holdr Base -',
+  description,
+  image,
+  url,
+}: HeadProps) {
   return (
     <Helmet>
       <meta charSet='utf-8' />
-      <title>Holdr Base - {title}</title>
+      <title>
+        {prefixStr} {title}
+      </title>
       <meta name='description' content={description} />
-
+      <link rel='icon' type='image/png' href='/logo-dark.png' />
       <meta name='og:title' content={title} />
       <meta name='og:description' content={title} />
       {image && <meta name='og:image' content={image} />}

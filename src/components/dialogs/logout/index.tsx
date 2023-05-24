@@ -1,22 +1,14 @@
 import { AlertDialog, Heading } from '@holdr-ui/react';
-import { Cookies } from 'react-cookie';
-import { useContext } from 'react';
-import { AuthContext } from '../../../contexts';
+
 import { MenuButton } from '../../buttons';
+import { useLogout } from 'hooks';
 
 function LogoutDialog() {
-  const { setCurrentUser } = useContext(AuthContext);
-  const logout = () => {
-    const cookie = new Cookies();
-    cookie.remove('access_token');
-    cookie.remove('refresh_token');
-    setCurrentUser(null);
-  };
-
+  const logout = useLogout();
   return (
     <AlertDialog>
       <AlertDialog.Trigger>
-        <MenuButton label='logout' icon='logout-outline' />
+        <MenuButton label='Logout' icon='logout-outline' />
       </AlertDialog.Trigger>
       <AlertDialog.Portal>
         <AlertDialog.Overlay blur='sm' />

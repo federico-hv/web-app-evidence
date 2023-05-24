@@ -14,6 +14,7 @@ const cookie = new Cookies();
 const authLink = setContext((_, { headers }) => {
   const token = cookie.get('access_token');
   // return the headers to the context so httpLink can read them
+  console.log('access_token');
   return {
     headers: {
       ...headers,

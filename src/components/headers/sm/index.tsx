@@ -34,7 +34,7 @@ function HeaderSm() {
       <HStack
         as='header'
         px={3}
-        py={4}
+        py={2}
         items='center'
         justify='evenly'
         borderBottom={2}
@@ -45,7 +45,11 @@ function HeaderSm() {
       >
         <Box flex={1} role='button' onClick={onOpen}>
           {currentUser ? (
-            <Avatar size='sm' name='Got Sauce' />
+            <Avatar
+              size='sm'
+              src={currentUser.avatar}
+              name={currentUser.displayName}
+            />
           ) : (
             <Circle bgColor='base300' size={30}>
               <Icon color='primary400' name='user-fill' />

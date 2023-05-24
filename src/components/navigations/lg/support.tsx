@@ -15,6 +15,7 @@ import {
 } from '@holdr-ui/react';
 import { ProfilePopoverLg } from '../../popover';
 import { MenuButton } from '../../buttons';
+import querystring from 'querystring';
 
 function AuthenticatedNavActions() {
   const { currentUser } = useContext(AuthContext);
@@ -43,6 +44,12 @@ function AuthenticatedNavActions() {
 
 function UnauthenticatedNavActions() {
   const navigate = useNavigate();
+
+  const queryParams = querystring.encode({
+    redirect_url: `${import.meta.env.VITE_APP_BASE_URL}${
+      import.meta.env.VITE_APP_BASE_PATH
+    }`,
+  });
 
   const open = {
     support: () => {
@@ -76,9 +83,9 @@ function UnauthenticatedNavActions() {
                 onClick={open.support}
               />
               <a
-                href={`${import.meta.env.VITE_AUTH_APP_URL}?redirect_url=${
-                  import.meta.env.VITE_APP_BASE_URL
-                }${import.meta.env.VITE_APP_BASE_PATH}`}
+                href={`${
+                  import.meta.env.VITE_AUTH_APP_URL
+                }?${queryParams}`}
               >
                 <MenuButton
                   label='Login / Register'

@@ -8,6 +8,7 @@ export const Paths = {
   settings: 'settings',
   support: 'support',
   messages: 'messages',
+  authRedirect: 'auth/redirect',
 };
 
 export const PathParams = {

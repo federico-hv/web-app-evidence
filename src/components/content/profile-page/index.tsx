@@ -1,5 +1,7 @@
 import {
   Box,
+  Button,
+  ButtonGroup,
   Center,
   HStack,
   IconButton,
@@ -32,9 +34,15 @@ function ProfilePageHeader({ profile }: ProfileContentProps) {
   );
 }
 
-function ProfilePageBanner({ profile, currentUser }: ProfileContentProps) {
+function BannerLg({ profile, currentUser }: ProfileContentProps) {
   return (
-    <Box h={150} w='full' mt={1} position='relative'>
+    <Box
+      h={150}
+      w='full'
+      mt={1}
+      position='relative'
+      css={{ '@bp1': { display: 'none' }, '@bp3': { display: 'block' } }}
+    >
       <Box zIndex={1} position='absolute' t={0} l={0} w='100%'>
         <Image
           src={profile.coverImage}
@@ -99,9 +107,92 @@ function ProfilePageBanner({ profile, currentUser }: ProfileContentProps) {
   );
 }
 
+function BannerSm({ profile, currentUser }: ProfileContentProps) {
+  return (
+    <Box css={{ '@bp3': { display: 'none' } }}>
+      <Box t={0} position='absolute' w='100%'>
+        <Image h={100} w='100%' src={darkPlaceholder} />
+      </Box>
+      <VStack
+        position='absolute'
+        w='100%'
+        gap={6}
+        t={0}
+        bgColor='clearTint500'
+        px={3}
+        py={3}
+      >
+        <ButtonGroup
+          colorTheme='primary400'
+          justify='space-between'
+          size='sm'
+          boxShadow='none'
+        >
+          <IconButton icon='arrow-left-outline' ariaLabel='go back' />
+          <IconButton
+            icon='notification-outline'
+            ariaLabel='notifications'
+          />
+        </ButtonGroup>
+        <HStack gap={3} mb={0}>
+          <Image
+            src={profile.avatar}
+            size={50}
+            radius={4}
+            fallbackSrc={darkPlaceholder}
+          />
+          <VStack flex={1} borderBottom={2} borderColor='base100'>
+            <Text weight={500}>{profile.displayName}</Text>
+            <Text size={2} color='base400'>
+              @{profile.username}
+            </Text>
+          </VStack>
+        </HStack>
+      </VStack>
+      <VStack w='100%' position='absolute' t={100} pt={6}>
+        {profile.bio && <Text size={2}>[Bio]</Text>}
+        <HStack justify='space-between' items='center'>
+          <HStack gap={3}>
+            {profile.accountType === 'ARTIST' && (
+              <Text size={2}>0 Followers</Text>
+            )}
+            {profile.accountType === 'FAN' && (
+              <Text size={2}>0 Friends</Text>
+            )}
+            {profile.holdrs && <Text size={2}>[Holdrs]</Text>}
+            {profile.memberships && <Text size={2}>[Memberships]</Text>}
+          </HStack>
+          {currentUser && (
+            <>
+              {profile.accountType === 'ARTIST' && (
+                <Button size='sm' label='Follow' />
+              )}
+              {profile.accountType === 'FAN' && (
+                <Button size='sm' label='Friend' />
+              )}
+              {profile.accountType === 'PERSONAL' && (
+                <Button size='sm' label='Edit' />
+              )}
+            </>
+          )}
+        </HStack>
+      </VStack>
+    </Box>
+  );
+}
+
+function ProfilePageBanner({ profile, currentUser }: ProfileContentProps) {
+  return (
+    <>
+      <BannerLg profile={profile} currentUser={currentUser} />
+      <BannerSm profile={profile} currentUser={currentUser} />
+    </>
+  );
+}
+
 function ProfilePageContent({ children }: { children?: ReactNode }) {
   return (
-    <Box position='absolute' t={65} w='100%'>
+    <Box position='absolute' h='100%' t={{ '@bp3': 65 }} w='100%'>
       <Box position='relative' h='100%' overflow='hidden'>
         {children}
       </Box>

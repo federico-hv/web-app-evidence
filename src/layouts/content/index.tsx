@@ -35,10 +35,11 @@ const ContentLayoutMain = ({ children }: BaseContentLayoutProps) => {
         '@bp4': 'calc(100% - 160px)',
         '@bp5': 'calc(100% - 375px)',
       }}
+      t={{ '@bp3': 65 }}
       borderRight={2}
       borderLeft={2}
       h='fit-content'
-      minHeight='100vh'
+      minHeight='calc(100vh - 65px)'
       borderColor='base100'
       position='relative'
     >

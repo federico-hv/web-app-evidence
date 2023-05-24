@@ -1,10 +1,9 @@
-import { Text } from '@holdr-ui/react';
 import {
   ContentLayout,
   ContentLayoutMain,
   ContentLayoutAside,
 } from 'layouts';
-import { Head, RecommendationListsGroup } from 'components';
+import { ContentBox, Head, RecommendationListsGroup } from 'components';
 
 function HomePage() {
   return (
@@ -16,7 +15,7 @@ function HomePage() {
       />
       <ContentLayout>
         <ContentLayoutMain>
-          <Text role='contentinfo'>Home page</Text>
+          <ContentBox>Nothing To Display</ContentBox>
         </ContentLayoutMain>
         <ContentLayoutAside>
           <RecommendationListsGroup />

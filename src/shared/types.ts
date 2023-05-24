@@ -8,7 +8,7 @@ export interface IUserMe {
   username: string;
   displayName: string;
   avatar: string;
-  role: string;
+  role: Role;
   id: string;
 }
 
@@ -25,6 +25,10 @@ export interface IProfile {
   connected: boolean;
   coverImage: string;
   avatar: string;
+  url?: string;
+  bio?: string;
+  holdrs?: number;
+  memberships?: number;
 }
 
 export interface IAccount {
@@ -34,3 +38,5 @@ export interface IAccount {
   id: string;
   avatar: string;
 }
+
+export type Role = 'FAN' | 'ARTIST';

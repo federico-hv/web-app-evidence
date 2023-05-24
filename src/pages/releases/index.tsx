@@ -1,10 +1,13 @@
-import { Text } from '@holdr-ui/react';
 import {
   ContentLayout,
   ContentLayoutAside,
   ContentLayoutMain,
 } from '../../layouts';
-import { Head, RecommendationListsGroup } from '../../components';
+import {
+  ContentBox,
+  Head,
+  RecommendationListsGroup,
+} from '../../components';
 
 function ReleasesPage() {
   return (
@@ -15,7 +18,7 @@ function ReleasesPage() {
       />
       <ContentLayout>
         <ContentLayoutMain>
-          <Text role='contentinfo'>Releases page</Text>
+          <ContentBox>Nothing To Display</ContentBox>
         </ContentLayoutMain>
         <ContentLayoutAside>
           <RecommendationListsGroup />
