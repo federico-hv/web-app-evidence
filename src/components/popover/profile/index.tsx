@@ -1,11 +1,13 @@
+import { useState } from 'react';
 import { Avatar, Center, Popover } from '@holdr-ui/react';
 import { ProfilePopoverLgProps } from './profile-popover.types';
 import { AuthenticatedProfileMenuLg } from '../../authenticated';
 
 function ProfilePopoverLg({ currentUser }: ProfilePopoverLgProps) {
+  const [state, set] = useState(false);
   return (
-    <Popover>
-      <Popover.Trigger>
+    <Popover isOpen={state} onOpenChange={set}>
+      <Popover.Trigger onClick={() => set(true)}>
         <Center>
           <Avatar
             src={currentUser.avatar}
@@ -16,7 +18,10 @@ function ProfilePopoverLg({ currentUser }: ProfilePopoverLgProps) {
       </Popover.Trigger>
       <Popover.Portal>
         <Popover.Content zIndex={50} sideOffset={10} align='end'>
-          <AuthenticatedProfileMenuLg currentUser={currentUser} />
+          <AuthenticatedProfileMenuLg
+            onClose={() => set(false)}
+            currentUser={currentUser}
+          />
         </Popover.Content>
       </Popover.Portal>
     </Popover>

@@ -1,5 +1,5 @@
 import { Box, HStack } from '@holdr-ui/react';
-import { ContentBox, Head } from 'components';
+import { ContentBox, Head } from '../../../components';
 import { Outlet } from 'react-router-dom';
 
 function SettingsPage() {

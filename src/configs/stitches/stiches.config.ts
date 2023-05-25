@@ -261,10 +261,14 @@ export const globalStyles = globalCss({
   },
   body: {
     backgroundColor: '#fbfbfa',
+    fontFamily: 'Rubik, ui-sans-serif, system-ui',
   },
   a: {
     'text-decoration': 'none',
     color: 'inherit',
+  },
+  textarea: {
+    fontFamily: 'inherit',
   },
   button: {
     backgroundColor: 'inherit',

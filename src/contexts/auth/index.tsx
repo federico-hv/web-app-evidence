@@ -5,8 +5,6 @@ import { GET_ME } from 'lib';
 import { IUserMe, MotionBox } from 'shared';
 import { Image, Center } from '@holdr-ui/react';
 
-import logoDark from 'assets/images/logo-dark.png';
-
 const AuthContext = createContext<IAuthContext>({
   currentUser: null,
   // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -38,7 +36,7 @@ function AuthProvider({ children }: AuthProviderProps) {
           <Image
             loading='eager'
             size={100}
-            src={logoDark}
+            src='logo-dark.png'
             alt='holdr logo'
           />
         </MotionBox>

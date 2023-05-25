@@ -1,1 +1,1 @@
-export * from './profile-page';
+export { default as ProfileContent } from './profile';

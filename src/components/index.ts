@@ -8,7 +8,7 @@ export * from './popover';
 export * from './dialogs';
 export * from './groups';
 export * from './buttons';
-export * from './loaders';
+export * from './utility';
 export * from './content';
 export * from './authenticated';
 export * from './unauthenticated';

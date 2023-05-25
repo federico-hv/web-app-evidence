@@ -9,6 +9,7 @@ import {
   Text,
   Box,
   Avatar,
+  VStack,
 } from '@holdr-ui/react';
 import { useQuery } from '@apollo/client';
 import { useNavigate } from 'react-router-dom';
@@ -58,7 +59,12 @@ function GlobalSearch() {
           <Icon name='search-outline' />
         </Circle>
       )}
-      <Text>{item.username}</Text>
+      <VStack>
+        <Text weight={500}>{item.displayName}</Text>
+        <Text size={2} color='base400'>
+          @{item.username}
+        </Text>
+      </VStack>
     </HStack>
   );
   const renderHistoryItem = ({ item }: Item) => (
@@ -84,14 +90,7 @@ function GlobalSearch() {
   };
 
   return (
-    <Box
-      w='full'
-      css={{
-        '& label': {
-          boxSizing: 'border-box',
-        },
-      }}
-    >
+    <Box w='full'>
       <Spotlight>
         <Spotlight.Input
           value={value}

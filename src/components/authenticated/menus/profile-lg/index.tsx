@@ -6,14 +6,24 @@ import { Paths } from 'shared';
 import { MenuButton } from '../../../buttons';
 
 function AuthenticatedProfileMenuLg({
+  onClose,
   currentUser,
 }: AuthenticatedProfileMenuProps) {
   const navigate = useNavigate();
 
   const open = {
-    profile: () => navigate(currentUser ? currentUser.username : ''),
-    settings: () => navigate(Paths.settings),
-    support: () => navigate(Paths.support),
+    profile: () => {
+      navigate(currentUser ? currentUser.username : '');
+      onClose && onClose();
+    },
+    settings: () => {
+      navigate(Paths.settings);
+      onClose && onClose();
+    },
+    support: () => {
+      navigate(Paths.support);
+      onClose && onClose();
+    },
   };
 
   return (

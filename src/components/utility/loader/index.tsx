@@ -1,7 +1,7 @@
 import { AnimatePresence } from 'framer-motion';
 import { Center, CircularProgress } from '@holdr-ui/react';
 import { LoaderProps } from './loader.types';
-import { MotionBox } from 'shared';
+import { MotionBox } from '../../../shared';
 
 function Loader({
   children,

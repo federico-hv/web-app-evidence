@@ -16,7 +16,7 @@ function AuthenticatedNavigation() {
         direction='vertical'
         variant='ghost'
         as='nav'
-        gap={5}
+        gap={6}
         p={4}
       >
         <NavigationLink
@@ -77,7 +77,7 @@ function UnauthenticatedNavigation() {
         direction='vertical'
         variant='ghost'
         as='nav'
-        gap={5}
+        gap={6}
         p={4}
         flex={1}
       >
