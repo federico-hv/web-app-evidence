@@ -4,7 +4,9 @@ import {
   ContentLayoutAside,
 } from 'layouts';
 import { ContentBox, Head, RecommendationListsGroup } from 'components';
-import { Box, Tabs } from '@holdr-ui/react';
+import { Box, HStack, Tabs, Image } from '@holdr-ui/react';
+
+import logoDark from 'assets/images/logo-dark.png';
 
 function HomeContent() {
   return (
@@ -33,6 +35,21 @@ function HomeContent() {
   );
 }
 
+function HomeHeader() {
+  return (
+    <HStack
+      py={4}
+      justify='center'
+      w='100%'
+      borderBottom={2}
+      borderColor='base100'
+      css={{ '@bp3': { display: 'none' } }}
+    >
+      <Image size={25} src={logoDark} />
+    </HStack>
+  );
+}
+
 function HomePage() {
   return (
     <>
@@ -43,6 +60,7 @@ function HomePage() {
       />
       <ContentLayout>
         <ContentLayoutMain>
+          <HomeHeader />
           <HomeContent />
         </ContentLayoutMain>
         <ContentLayoutAside>
