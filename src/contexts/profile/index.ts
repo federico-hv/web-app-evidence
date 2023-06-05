@@ -1,4 +1,4 @@
-import { createContext } from 'react';
+import { createContext, useContext } from 'react';
 import { IProfileContext } from './profile.types';
 
 const ProfileContext = createContext<IProfileContext>({
@@ -7,4 +7,6 @@ const ProfileContext = createContext<IProfileContext>({
 
 const ProfileContextProvider = ProfileContext.Provider;
 
-export { ProfileContextProvider, ProfileContext };
+const useProfileContext = () => useContext(ProfileContext);
+
+export { ProfileContextProvider, ProfileContext, useProfileContext };

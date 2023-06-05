@@ -1,16 +1,27 @@
-import {
-  Button,
-  Dialog,
-  FormControl,
-  Heading,
-  HStack,
-  Input,
-  Textarea,
-  VStack,
-} from '@holdr-ui/react';
+import { Button, Dialog, Heading, HStack } from '@holdr-ui/react';
+import { useAuthContext } from 'hooks';
+import { useQuery } from '@apollo/client';
+import { IProfile } from 'shared';
+import { GET_PROFILE } from 'lib';
+import { ProfileForm } from '../../forms';
+import { Error, Loader } from '../../utility';
+import { ProfileContextProvider } from '../../../contexts';
 
 function EditProfileDialog() {
-  // when the dialog is opened change the url /settings/profile
+  const { currentUser } = useAuthContext();
+  // QUERY for profile
+
+  const { data, loading, error } = useQuery<{ profile: IProfile }>(
+    GET_PROFILE,
+    {
+      variables: {
+        payload: {
+          username: currentUser?.username,
+          id: currentUser?.id,
+        },
+      },
+    },
+  );
 
   return (
     <Dialog ariaDescribedBy='edit-profile-modal__heading'>
@@ -25,35 +36,39 @@ function EditProfileDialog() {
           radius={{ '@bp1': 0, '@bp3': 3 }}
           w={{ '@bp1': '100vw', '@bp3': '90vw' }}
         >
-          <Dialog.Header>
+          <Dialog.Header borderBottom={2} borderColor='base100'>
             <HStack items='center' flex={1} justify='space-between'>
-              <Heading as='h4'>Edit Profile</Heading>
-              <Button>Save</Button>
+              <Heading as='h4' size={3}>
+                Edit Profile
+              </Heading>
+              <Button role='submit'>Save</Button>
             </HStack>
           </Dialog.Header>
           <Dialog.Body>
-            <VStack>
-              <FormControl>
-                <FormControl.Label>Display Name</FormControl.Label>
-                <Input type='text' />
-              </FormControl>
-              <FormControl>
-                <FormControl.Label>Bio</FormControl.Label>
-                <Textarea />
-              </FormControl>
-              <FormControl>
-                <FormControl.Label>Spotify Url</FormControl.Label>
-                <Input type='text' />
-              </FormControl>
-              <FormControl>
-                <FormControl.Label>Apple Music Url</FormControl.Label>
-                <Input type='text' />
-              </FormControl>
-              <FormControl>
-                <FormControl.Label>Youtube Url</FormControl.Label>
-                <Input type='text' />
-              </FormControl>
-            </VStack>
+            <Error
+              errorEl={<></>}
+              hasError={!!error}
+              errorMessage={error?.message}
+            >
+              {data && (
+                <Loader loading={loading}>
+                  <ProfileContextProvider
+                    value={{
+                      profile: data.profile,
+                    }}
+                  >
+                    <ProfileForm
+                      onFinish={async () => {
+                        console.log('eee');
+                      }}
+                      onSubmit={async () => {
+                        console.log('eee');
+                      }}
+                    />
+                  </ProfileContextProvider>
+                </Loader>
+              )}
+            </Error>
           </Dialog.Body>
         </Dialog.Content>
       </Dialog.Portal>

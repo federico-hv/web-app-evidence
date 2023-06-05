@@ -13,7 +13,7 @@ import {
 } from 'pages';
 import { MainLayout } from 'layouts';
 import { PathParams, Paths } from 'shared';
-import { AuthGuard, AuthRedirect } from './components';
+import { AuthGuard, AuthRedirect } from 'components';
 
 function Router() {
   return (

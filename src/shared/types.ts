@@ -39,4 +39,17 @@ export interface IAccount {
   avatar: string;
 }
 
+export interface FormProps<T> {
+  isLoading?: boolean;
+  onSubmit: (data: T) => Promise<void>;
+  onFinish: () => void;
+}
+
+export interface ProfileFormData {
+  displayName: string;
+  bio: string;
+  avatar?: any;
+  coverImage?: any;
+}
+
 export type Role = 'FAN' | 'ARTIST';
