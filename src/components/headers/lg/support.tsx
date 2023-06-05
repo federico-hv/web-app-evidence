@@ -16,7 +16,7 @@ function AuthenticatedNavigation() {
         direction='vertical'
         variant='ghost'
         as='nav'
-        gap={6}
+        gap={4}
         p={4}
       >
         <NavigationLink
@@ -25,6 +25,9 @@ function AuthenticatedNavigation() {
           text='Home'
           activeIcon='home-fill'
           inactiveIcon='home-outline'
+          css={{
+            height: '2.75rem',
+          }}
         />
         <NavigationLink
           as={<Link to={prefix('/', Paths.discover)} />}
@@ -32,6 +35,9 @@ function AuthenticatedNavigation() {
           text='Discover'
           activeIcon='discover-fill'
           inactiveIcon='discover-outline'
+          css={{
+            height: '2.75rem',
+          }}
         />
         <NavigationLink
           as={<Link to={prefix('/', Paths.channels)} />}
@@ -39,6 +45,9 @@ function AuthenticatedNavigation() {
           text='Channels'
           activeIcon='channels-fill'
           inactiveIcon='channels-outline'
+          css={{
+            height: '2.75rem',
+          }}
         />
         <NavigationLink
           as={<Link to={prefix('/', Paths.bookmarks)} />}
@@ -46,6 +55,9 @@ function AuthenticatedNavigation() {
           text='Bookmarks'
           activeIcon='bookmark-fill'
           inactiveIcon='bookmark-outline'
+          css={{
+            height: '2.75rem',
+          }}
         />
         <NavigationLink
           as={<Link to={prefix('/', Paths.releases)} />}
@@ -53,6 +65,9 @@ function AuthenticatedNavigation() {
           text='Releases'
           activeIcon='releases-fill'
           inactiveIcon='releases-outline'
+          css={{
+            height: '2.75rem',
+          }}
         />
       </NavigationLinkGroup>
       <Box p={4} borderTop={2} borderBottom={2} borderColor='base100'>
@@ -87,6 +102,9 @@ function UnauthenticatedNavigation() {
           text='Feeds'
           activeIcon='home-fill'
           inactiveIcon='home-outline'
+          css={{
+            height: '2.75rem',
+          }}
         />
         <NavigationLink
           as={<Link to={prefix('/', Paths.discover)} />}
@@ -94,6 +112,9 @@ function UnauthenticatedNavigation() {
           text='Discover'
           activeIcon='discover-fill'
           inactiveIcon='discover-outline'
+          css={{
+            height: '2.75rem',
+          }}
         />
       </NavigationLinkGroup>
       <Box p={4} borderTop={2} borderBottom={2} borderColor='base100'>
