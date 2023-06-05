@@ -1,4 +1,4 @@
-import { IProfile, IUserMe } from 'shared';
+import { IProfile, IUserMe } from '../../shared';
 
 export interface ProfileContentProps {
   currentUser?: IUserMe | null;

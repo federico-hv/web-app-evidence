@@ -1,12 +1,12 @@
 import { useContext } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
+import { Box } from '@holdr-ui/react';
 import { AuthContext } from 'contexts';
 import { IProfile } from 'shared';
 import { GET_PROFILE } from 'lib';
-import { Error, Loader } from '../../utility';
+import { Error, Loader } from 'components';
 import { ArtistProfileTab, GeneralUserProfileTab } from './support';
-import { Box } from '@holdr-ui/react';
 
 function ProfileContent() {
   const currentUser = useContext(AuthContext).currentUser;

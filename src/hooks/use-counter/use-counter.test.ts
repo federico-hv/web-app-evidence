@@ -2,7 +2,7 @@ import { act, renderHook } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 import { useCounter } from '.';
 
-describe('Hook: useCounter', () => {
+describe('Hook: use-counter', () => {
   it('should increment the count', () => {
     const { result } = renderHook(() => useCounter());
     act(() => {

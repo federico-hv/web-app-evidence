@@ -1,5 +1,5 @@
 import { Tabs } from '@holdr-ui/react';
-import { ContentBox } from '../../support';
+import { ContentBox } from '../../components/support';
 
 function ArtistProfileTab() {
   return (

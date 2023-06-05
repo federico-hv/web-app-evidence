@@ -70,6 +70,10 @@ export default (configEnv: ConfigEnv) => {
           find: 'assets',
           replacement: path.resolve(__dirname, './src/assets'),
         },
+        {
+          find: 'content',
+          replacement: path.resolve(__dirname, './src/content'),
+        },
       ],
     },
   });

@@ -58,6 +58,10 @@ module.exports = {
             replacement: path.resolve(__dirname, './src/assets'),
           },
           {
+            find: 'content',
+            replacement: path.resolve(__dirname, './src/content'),
+          },
+          {
             find: "components",
             replacement: path.resolve(__dirname, "./src/components")
           }]

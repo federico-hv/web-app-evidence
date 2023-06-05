@@ -1,11 +1,8 @@
 import { Button, HStack, IconButton } from '@holdr-ui/react';
 import { SocialButtonProps } from './social.types';
 import { EditProfileDialog } from '../../dialogs';
-import { useContext } from 'react';
-import { ProfileContext } from '../../../contexts';
 
-function SocialButton({ currentUser }: SocialButtonProps) {
-  const { profile } = useContext(ProfileContext);
+function SocialButton({ currentUser, profile }: SocialButtonProps) {
   return (
     <>
       {currentUser && (

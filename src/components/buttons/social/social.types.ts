@@ -1,6 +1,6 @@
 import { IProfile, IUserMe } from 'shared';
 
 export interface SocialButtonProps {
-  profile?: IProfile;
+  profile: IProfile;
   currentUser: IUserMe;
 }

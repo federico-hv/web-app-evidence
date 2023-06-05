@@ -47,6 +47,9 @@
       ],
       "shared/*": [
         "src/shared/*"
+      ],
+      "content/*": [
+        "src/content/*"
       ]
     }
   },
