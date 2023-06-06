@@ -1,4 +1,11 @@
-import { Box, Center, Input, useDisclosure } from '@holdr-ui/react';
+import {
+  Box,
+  Center,
+  Circle,
+  Icon,
+  Input,
+  useDisclosure,
+} from '@holdr-ui/react';
 import React, { ChangeEvent, useCallback } from 'react';
 import { ImageUploadProps } from './image-upload.types';
 import {
@@ -13,9 +20,13 @@ import {
   CropperDialogHeader,
 } from './support';
 import { useCroppedImage, useImageUpload } from 'hooks';
-import { getCroppedImage } from 'utilities';
+import { getCroppedImage, imageFileToUrl } from 'utilities';
+import { useField } from 'formik';
+import { removeButtonCSS } from './image-upload.styles';
+import { ImageUploadContextProvider } from '../../../contexts';
 
 function ImageUpload({
+  aspect,
   name,
   title,
   children,
@@ -24,8 +35,8 @@ function ImageUpload({
   // used for dialog control
   const { isOpen, onOpen, onClose } = useDisclosure(false);
   // handle updating image file in global form state
-  // const [field, _, helpers] = useField(name);
-  // const setAvatarValue = helpers.setValue;
+  const [field, meta, helpers] = useField(name);
+  const setAvatarValue = helpers.setValue;
   // use hook to control image
   const {
     displayedImage,
@@ -34,8 +45,7 @@ function ImageUpload({
     chosenImage,
     onChange,
     resetChosenImage,
-    // removeDisplayedImage,
-  } = useImageUpload(placeholder);
+  } = useImageUpload(imageFileToUrl(field.value) || placeholder);
   // use hook to control cropper
   const {
     zoom,
@@ -52,13 +62,6 @@ function ImageUpload({
     onClose();
   };
 
-  // remove the image being used
-  // const removeImage = (e: any) => {
-  //   e.stopPropagation();
-  //   removeDisplayedImage();
-  //   // setAvatarValue(null);
-  // };
-
   // save the image
   const saveImage = useCallback(async () => {
     try {
@@ -68,7 +71,7 @@ function ImageUpload({
         imageType,
       );
       if (croppedImage) {
-        // setAvatarValue(croppedImage.file);
+        setAvatarValue(croppedImage.file);
         setDisplayedImage(croppedImage.url);
       }
     } catch (e) {
@@ -81,58 +84,61 @@ function ImageUpload({
 
   return (
     <>
-      <Box onClick={onOpen} position='relative' overflow='hidden'>
-        <Center as='label'>
-          {!displayedImage && (
-            <Input
-              id={name}
-              name={name}
-              hidden
-              type='file'
-              css={{ display: 'none' }}
-              accept='image/jpeg,image/png'
-              onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                onChange(event);
-                onOpen(); // open dialog
-              }}
-            />
-          )}
+      <Box position='relative' overflow='hidden'>
+        <Center h='100%' w='100%' as='label'>
+          <Input
+            id={name}
+            name={name}
+            hidden
+            type='file'
+            css={{ display: 'none' }}
+            accept='image/jpeg,image/png,image/webp'
+            onChange={(event: ChangeEvent<HTMLInputElement>) => {
+              onChange(event);
+              onOpen(); // open dialog
+            }}
+          />
 
-          {/*{!displayedImage && (*/}
-          {/*  <Center fontSize={7}>*/}
-          {/*    <Icon name='camera-fill' color='base400' />*/}
-          {/*  </Center>*/}
-          {/*)}*/}
-          {/*</Center>*/}
-          {/*{displayedImage && (*/}
-          {/*  <Image src={displayedImage} alt='avatar' size={125} />*/}
-          {/*)}*/}
-          {/*{displayedImage && (*/}
-          {/*  <Center*/}
-          {/*    bgColor='clearTint300'*/}
-          {/*    position='absolute'*/}
-          {/*    h='100%'*/}
-          {/*    w='100%'*/}
-          {/*  >*/}
-          {/*    <IconButton*/}
-          {/*      type='button'*/}
-          {/*      boxShadow='none'*/}
-          {/*      colorTheme='darkTint300'*/}
-          {/*      icon='close'*/}
-          {/*      ariaLabel='remove current image'*/}
-          {/*      className={removeButtonCSS()}*/}
-          {/*      onClick={removeImage}*/}
-          {/*    />*/}
+          <Center
+            fontSize={7}
+            position='absolute'
+            w='100%'
+            h='100%'
+            zIndex={50}
+          >
+            <Circle
+              size={40}
+              bgColor='darkTint300'
+              className={removeButtonCSS()}
+            >
+              <Icon
+                color='primary400'
+                size='base'
+                name='camera-fill'
+                aria-label='change image'
+              />
+            </Circle>
+          </Center>
+
+          <ImageUploadContextProvider
+            value={{
+              src: displayedImage,
+              name: name,
+              error: meta.error,
+            }}
+          >
+            {children}
+          </ImageUploadContextProvider>
         </Center>
-
-        {children}
       </Box>
+
       <CustomDialog1 isOpen={isOpen} onClose={closeDialog} onOpen={onOpen}>
         <CustomDialog1Header>
           <CropperDialogHeader title={title} saveImage={saveImage} />
         </CustomDialog1Header>
         <CustomDialog1Body>
           <CropperDialogBody
+            aspect={aspect}
             setZoom={setZoom}
             zoom={zoom}
             chosenImage={chosenImage}

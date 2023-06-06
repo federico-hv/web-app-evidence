@@ -15,6 +15,7 @@ export const GET_ME = gql`
 export const GET_PROFILE = gql`
   query profile($payload: ProfileInput!) {
     profile(payload: $payload) {
+      biography
       accountType
       username
       displayName

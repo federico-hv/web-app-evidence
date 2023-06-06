@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom';
-import { Avatar, Card, HStack, Icon, Text, VStack } from '@holdr-ui/react';
+import { Avatar, Box, Card, HStack, Text, VStack } from '@holdr-ui/react';
 import { AuthenticatedProfileMenuProps } from './profile-menu.type';
 import { LogoutDialog } from '../../../dialogs';
-import { Paths } from 'shared';
+import { Paths, textEllipsis } from 'shared';
 import { MenuButton } from '../../../buttons';
 
 function AuthenticatedProfileMenuLg({
@@ -27,7 +27,7 @@ function AuthenticatedProfileMenuLg({
   };
 
   return (
-    <Card boxShadow='none'>
+    <Card boxShadow='none' w='100%'>
       <Card.Header borderBottom={2} borderColor='base100' py={2}>
         <HStack
           onClick={open.profile}
@@ -46,17 +46,29 @@ function AuthenticatedProfileMenuLg({
             name={currentUser.displayName}
             variant='squircle'
           />
-          <VStack gap={1}>
-            <Text>{currentUser.displayName}</Text>
+          <VStack
+            gap={1}
+            overflow='hidden'
+            as='a'
+            title={currentUser.displayName}
+          >
+            <Box
+              overflow='hidden'
+              className={textEllipsis()}
+              css={{ fontWeight: 600 }}
+            >
+              {currentUser.displayName}
+            </Box>
             <Text
               size={1}
+              weight={600}
+              color='base400'
               css={{
                 verticalAlign: 'middle',
                 display: 'inline-flex',
               }}
             >
-              <Icon name='at' />
-              {currentUser.username}
+              @{currentUser.username}
             </Text>
           </VStack>
         </HStack>

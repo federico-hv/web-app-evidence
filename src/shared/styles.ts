@@ -11,6 +11,11 @@ export const extraBtnPadding = css({
   height: '2.75rem !important',
 });
 
+export const textEllipsis = css({
+  textOverflow: 'ellipsis',
+  whiteSpace: 'nowrap',
+});
+
 export const MotionWrapper = motion(HStack);
 
 export const MotionBox = motion(Box);

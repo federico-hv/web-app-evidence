@@ -1,16 +1,35 @@
-import { Button, Dialog, Heading, HStack } from '@holdr-ui/react';
+import {
+  Button,
+  Dialog,
+  Heading,
+  HStack,
+  useSwitch,
+} from '@holdr-ui/react';
 import { useAuthContext } from 'hooks';
-import { useQuery } from '@apollo/client';
-import { IProfile } from 'shared';
-import { GET_PROFILE } from 'lib';
+import { useMutation, useQuery } from '@apollo/client';
+import { IProfile, ProfileFormData } from 'shared';
+import { GET_PROFILE, UPDATE_PROFILE } from 'lib';
+import { ProfileContextProvider } from 'contexts';
 import { ProfileForm } from '../../forms';
 import { Error, Loader } from '../../utility';
-import { ProfileContextProvider } from '../../../contexts';
+import { parseToProfileFormData } from '../../../utilities';
 
-function EditProfileDialog() {
+export interface UpdateProfileModel {
+  displayName?: string;
+  avatar?: string;
+  coverImage?: string;
+  biography?: string;
+  region?: string;
+}
+
+export interface UpdateProfilePayload {
+  payload: ProfileFormData;
+}
+
+const useMyProfile = () => {
   const { currentUser } = useAuthContext();
-  // QUERY for profile
 
+  // QUERY for profile
   const { data, loading, error } = useQuery<{ profile: IProfile }>(
     GET_PROFILE,
     {
@@ -23,47 +42,91 @@ function EditProfileDialog() {
     },
   );
 
+  console.log({ data });
+  return { data, loading, error };
+};
+
+const useUpdateProfileMutation = () => {
+  const [updateProfile, { loading, error }] = useMutation<
+    UpdateProfileModel,
+    UpdateProfilePayload
+  >(UPDATE_PROFILE);
+
+  const onSubmit = async (formData: ProfileFormData) => {
+    await updateProfile({
+      variables: { payload: formData },
+    });
+  };
+
+  const onFinish = (cb: VoidFunction) => {
+    cb();
+  };
+
+  return { loading, error, onSubmit, onFinish };
+};
+
+function EditProfileDialog() {
+  const { switchState, turnOff, turnOn } = useSwitch(false);
+  const {
+    loading: loadingQuery,
+    data,
+    error: errorQuery,
+  } = useMyProfile();
+  const {
+    loading: loadingMutation,
+    error: errorMutation,
+    onSubmit,
+    onFinish,
+  } = useUpdateProfileMutation();
+
   return (
-    <Dialog ariaDescribedBy='edit-profile-modal__heading'>
+    <Dialog
+      isOpen={switchState}
+      onOpen={turnOn}
+      onClose={turnOff}
+      ariaDescribedBy='edit-profile-modal__heading'
+    >
       <Dialog.Trigger>
         <Button size={{ '@bp1': 'base', '@bp4': 'base' }} label='Edit' />
       </Dialog.Trigger>
       <Dialog.Portal>
         <Dialog.Overlay />
         <Dialog.Content
+          position='relative'
           h={{ '@bp1': '100vh', '@bp3': 550 }}
           maxHeight={{ '@bp1': '100vh', '@bp3': '85vh' }}
           radius={{ '@bp1': 0, '@bp3': 3 }}
           w={{ '@bp1': '100vw', '@bp3': '90vw' }}
         >
-          <Dialog.Header borderBottom={2} borderColor='base100'>
+          <Dialog.Header
+            borderBottom={2}
+            borderColor='base100'
+            position='fixed'
+          >
             <HStack items='center' flex={1} justify='space-between'>
               <Heading as='h4' size={3}>
                 Edit Profile
               </Heading>
-              <Button role='submit'>Save</Button>
             </HStack>
           </Dialog.Header>
           <Dialog.Body>
             <Error
               errorEl={<></>}
-              hasError={!!error}
-              errorMessage={error?.message}
+              hasError={!!errorQuery || !!errorMutation}
+              errorMessage={errorQuery?.message}
             >
               {data && (
-                <Loader loading={loading}>
+                <Loader loading={loadingQuery || loadingMutation}>
                   <ProfileContextProvider
                     value={{
                       profile: data.profile,
+                      loading: loadingMutation,
                     }}
                   >
                     <ProfileForm
-                      onFinish={async () => {
-                        console.log('eee');
-                      }}
-                      onSubmit={async () => {
-                        console.log('eee');
-                      }}
+                      initialValues={parseToProfileFormData(data.profile)}
+                      onFinish={() => onFinish(turnOff)}
+                      onSubmit={onSubmit}
                     />
                   </ProfileContextProvider>
                 </Loader>

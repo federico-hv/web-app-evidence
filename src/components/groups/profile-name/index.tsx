@@ -1,5 +1,6 @@
-import { Text, VStack } from '@holdr-ui/react';
+import { Box, Text, VStack } from '@holdr-ui/react';
 import { ProfileNameGroupProps } from './profile-name-group.type';
+import { textEllipsis } from '../../../shared';
 
 function ProfileNameGroup({
   username,
@@ -7,19 +8,28 @@ function ProfileNameGroup({
 }: ProfileNameGroupProps) {
   return (
     <VStack
-      gap={1}
+      gap={3}
       w='100%'
+      overflow='hidden'
       borderBottom={2}
       borderColor='base100'
       css={{
+        whiteSpace: 'nowrap',
+
         '@bp4': {
           borderBottom: 'none',
         },
       }}
     >
-      <Text weight={600} size={4}>
+      <Box
+        fontSize={4}
+        className={textEllipsis()}
+        css={{
+          fontWeight: 600,
+        }}
+      >
         {displayName}
-      </Text>
+      </Box>
       <Text size={2}>@{username}</Text>
     </VStack>
   );

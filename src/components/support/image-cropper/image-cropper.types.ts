@@ -5,4 +5,5 @@ export interface ImageCropperProps {
   zoom: number;
   setZoom: Dispatch<SetStateAction<number>>;
   setCroppedAreaPixels: Dispatch<SetStateAction<any>>;
+  aspect?: number;
 }

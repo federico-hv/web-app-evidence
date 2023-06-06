@@ -27,7 +27,7 @@ function ProfileHeader() {
         <Head
           prefix=''
           title={`${data.profile.displayName} (@${data.profile.username})`}
-          description={data.profile.bio || ''}
+          description={data.profile.biography || ''}
         />
       )}
       <Loader loading={loading}>

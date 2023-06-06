@@ -1,8 +1,5 @@
 import { useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { AuthContext } from 'contexts';
-import { prefix } from 'utilities';
-import { Paths } from 'shared';
 import {
   ButtonGroup,
   Circle,
@@ -16,13 +13,11 @@ import {
 import { ProfilePopoverLg } from '../../popover';
 import { MenuButton } from '../../buttons';
 import querystring from 'querystring';
+import { useMenuNavigate } from '../../../hooks';
 
 function AuthenticatedNavActions() {
   const { currentUser } = useContext(AuthContext);
-  const navigate = useNavigate();
-  const goToNotifications = () =>
-    navigate(prefix('/', Paths.notifications));
-
+  const { goto } = useMenuNavigate();
   return (
     <>
       {currentUser && (
@@ -30,7 +25,7 @@ function AuthenticatedNavActions() {
           <ButtonGroup items='center' gap={4} colorTheme='primary400'>
             <IconButton icon='chat-outline' ariaLabel='open chats' />
             <IconButton
-              onClick={goToNotifications}
+              onClick={goto.notifications}
               icon='notification-outline'
               ariaLabel='open notifications'
             />
@@ -43,23 +38,13 @@ function AuthenticatedNavActions() {
 }
 
 function UnauthenticatedNavActions() {
-  const navigate = useNavigate();
-
   const queryParams = querystring.encode({
     redirect_url: `${import.meta.env.VITE_APP_BASE_URL}${
       import.meta.env.VITE_APP_BASE_PATH
     }`,
   });
 
-  const open = {
-    support: () => {
-      navigate(prefix('/', Paths.support));
-    },
-    settings: () => navigate(prefix('/', Paths.settings)),
-    discover: () => {
-      navigate(prefix('/', Paths.discover));
-    },
-  };
+  const { goto } = useMenuNavigate();
 
   return (
     <HStack gap={4} items='center' justify='flex-end'>
@@ -75,12 +60,12 @@ function UnauthenticatedNavActions() {
               <MenuButton
                 label='Settings & Privacy'
                 icon='settings-outline'
-                onClick={open.settings}
+                onClick={goto.settings}
               />
               <MenuButton
                 label='Help & Support'
                 icon='question-outline'
-                onClick={open.support}
+                onClick={goto.support}
               />
               <a
                 href={`${

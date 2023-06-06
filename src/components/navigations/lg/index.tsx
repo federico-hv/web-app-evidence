@@ -1,6 +1,6 @@
 import { Box, HStack, Image } from '@holdr-ui/react';
 import { useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
+
 import { AuthContext } from 'contexts';
 import { GlobalSearch } from '../../overlays/';
 
@@ -9,12 +9,12 @@ import {
   AuthenticatedNavActions,
   UnauthenticatedNavActions,
 } from './support';
+import { useMenuNavigate } from '../../../hooks';
 
 function NavigationLg() {
   const { currentUser } = useContext(AuthContext);
 
-  const navigate = useNavigate();
-  const goToHome = () => navigate('/');
+  const { goto } = useMenuNavigate();
 
   return (
     <HStack
@@ -34,7 +34,7 @@ function NavigationLg() {
       }}
     >
       <Box px={5} py={4} w={{ '@bp1': 75, '@bp7': 375 }}>
-        <Box as='span' onClick={goToHome}>
+        <Box as='span' onClick={goto.home}>
           <Image size={{ '@bp1': 2, '@bp4': 30 }} src={logoDark} />
         </Box>
       </Box>

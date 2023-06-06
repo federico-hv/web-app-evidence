@@ -26,6 +26,7 @@ function AuthenticatedNavigationMd() {
           inactiveIcon='home-outline'
           css={{
             padding: 0,
+            size: '2.5rem',
           }}
         />
         <NavigationLink
@@ -35,6 +36,7 @@ function AuthenticatedNavigationMd() {
           inactiveIcon='discover-outline'
           css={{
             padding: 0,
+            size: '2.5rem',
           }}
         />
         <NavigationLink
@@ -44,6 +46,7 @@ function AuthenticatedNavigationMd() {
           inactiveIcon='channels-outline'
           css={{
             padding: 0,
+            size: '2.5rem',
           }}
         />
         <NavigationLink
@@ -53,6 +56,7 @@ function AuthenticatedNavigationMd() {
           inactiveIcon='bookmark-outline'
           css={{
             padding: 0,
+            size: '2.5rem',
           }}
         />
         <NavigationLink
@@ -62,6 +66,7 @@ function AuthenticatedNavigationMd() {
           inactiveIcon='releases-outline'
           css={{
             padding: 0,
+            size: '2.5rem',
           }}
         />
       </NavigationLinkGroup>
@@ -97,6 +102,7 @@ function UnauthenticatedNavigationMd() {
           inactiveIcon='home-outline'
           css={{
             padding: 0,
+            size: '2.5rem',
           }}
         />
         <NavigationLink
@@ -106,6 +112,7 @@ function UnauthenticatedNavigationMd() {
           inactiveIcon='discover-outline'
           css={{
             padding: 0,
+            size: '2.5rem',
           }}
         />
       </NavigationLinkGroup>

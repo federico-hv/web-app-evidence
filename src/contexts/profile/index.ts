@@ -3,6 +3,7 @@ import { IProfileContext } from './profile.types';
 
 const ProfileContext = createContext<IProfileContext>({
   profile: Object(),
+  loading: false,
 });
 
 const ProfileContextProvider = ProfileContext.Provider;

@@ -55,6 +55,7 @@ export function CropperDialogHeader({
 }
 
 export function CropperDialogBody({
+  aspect = 1,
   chosenImage,
   zoom,
   setZoom,
@@ -63,6 +64,7 @@ export function CropperDialogBody({
   return (
     <Box w='100%' h={420} position='relative'>
       <ImageCropper
+        aspect={aspect}
         image={chosenImage}
         zoom={zoom}
         setZoom={setZoom}

@@ -62,9 +62,14 @@ function ProfileHeaderSm({ profile }: { profile: IProfile }) {
       </Box>
 
       <VStack w='100%' mt={6} px={3}>
-        {profile.bio && <Text size={2}>[Bio]</Text>}
+        {profile.biography && <Text size={2}>{profile.biography}</Text>}
         {profile.url && <Text size={2}>[Url]</Text>}
-        <HStack justify='space-between' items='center' color='base400'>
+        <HStack
+          mt={4}
+          justify='space-between'
+          items='center'
+          color='base400'
+        >
           <ProfileStatistics profile={profile} />
           {currentUser && (
             <SocialButton profile={profile} currentUser={currentUser} />

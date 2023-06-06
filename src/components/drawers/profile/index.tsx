@@ -9,7 +9,7 @@ import {
   VStack,
 } from '@holdr-ui/react';
 import Statistic from '../../data-display/statistic';
-import { extraBtnPadding } from '../../../shared';
+import { extraBtnPadding, textEllipsis } from '../../../shared';
 import { DrawerButton } from '../../buttons';
 import { ProfileFDrawerProps } from './profile.drawer.type';
 import { useLogout, useMenuNavigate } from '../../../hooks';
@@ -48,7 +48,12 @@ function ProfileDrawer({
                     name={displayName}
                   />
                   <VStack>
-                    <Text weight={500}>{displayName}</Text>
+                    <Box
+                      className={textEllipsis()}
+                      css={{ fontWeight: 600 }}
+                    >
+                      {displayName}
+                    </Box>
                     <Text size={2}>@{username}</Text>
                   </VStack>
                 </HStack>

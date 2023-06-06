@@ -7,6 +7,7 @@ function ImageCropper({
   zoom,
   setZoom,
   setCroppedAreaPixels,
+  aspect = 1,
 }: ImageCropperProps) {
   const [crop, setCrop] = useState({ x: 0, y: 0 });
 
@@ -22,7 +23,7 @@ function ImageCropper({
       image={image}
       crop={crop}
       zoom={zoom}
-      aspect={1}
+      aspect={aspect}
       showGrid={false}
       onCropChange={setCrop}
       onCropComplete={onCropComplete}

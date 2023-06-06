@@ -1,10 +1,11 @@
-import { Dispatch, ReactNode, SetStateAction } from 'react';
+import { Dispatch, ReactElement, SetStateAction } from 'react';
 
 export interface ImageUploadProps {
+  aspect?: number;
   name: string;
   title: string;
   placeholder?: string;
-  children?: ReactNode;
+  children?: ReactElement;
 }
 
 export interface CropperDialogFooterProps {
@@ -18,6 +19,7 @@ export interface CropperDialogHeaderProps {
 }
 
 export interface CropperDialogBodyProps {
+  aspect?: number;
   chosenImage: string;
   zoom: number;
   setZoom: Dispatch<SetStateAction<number>>;

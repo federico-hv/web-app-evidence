@@ -10,6 +10,7 @@ export const useMenuNavigate: UseMenuNavigate = () => {
 
   const goto = {
     home: () => navigate(prefix('/', Paths.home)),
+    notifications: () => navigate(prefix('/', Paths.notifications)),
     discover: () => navigate(prefix('/', Paths.discover)),
     settings: () => navigate(prefix('/', Paths.settings)),
     support: () => navigate(prefix('/', Paths.support)),

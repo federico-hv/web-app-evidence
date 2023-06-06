@@ -26,7 +26,7 @@ export interface IProfile {
   coverImage: string;
   avatar: string;
   url?: string;
-  bio?: string;
+  biography?: string;
   holdrs?: number;
   memberships?: number;
 }
@@ -47,9 +47,9 @@ export interface FormProps<T> {
 
 export interface ProfileFormData {
   displayName: string;
-  bio: string;
-  avatar?: any;
-  coverImage?: any;
+  biography?: string;
+  avatar?: File;
+  coverImage?: File;
 }
 
 export type Role = 'FAN' | 'ARTIST';

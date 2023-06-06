@@ -17,7 +17,12 @@ function ProfilePopoverLg({ currentUser }: ProfilePopoverLgProps) {
         </Center>
       </Popover.Trigger>
       <Popover.Portal>
-        <Popover.Content zIndex={50} sideOffset={10} align='end'>
+        <Popover.Content
+          maxWidth={300}
+          zIndex={50}
+          sideOffset={10}
+          align='end'
+        >
           <AuthenticatedProfileMenuLg
             onClose={() => set(false)}
             currentUser={currentUser}

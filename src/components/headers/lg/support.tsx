@@ -16,7 +16,7 @@ function AuthenticatedNavigation() {
         direction='vertical'
         variant='ghost'
         as='nav'
-        gap={4}
+        gap={5}
         p={4}
       >
         <NavigationLink
@@ -26,7 +26,7 @@ function AuthenticatedNavigation() {
           activeIcon='home-fill'
           inactiveIcon='home-outline'
           css={{
-            height: '2.75rem',
+            height: '2.5rem',
           }}
         />
         <NavigationLink
@@ -36,7 +36,7 @@ function AuthenticatedNavigation() {
           activeIcon='discover-fill'
           inactiveIcon='discover-outline'
           css={{
-            height: '2.75rem',
+            height: '2.5rem',
           }}
         />
         <NavigationLink
@@ -46,7 +46,7 @@ function AuthenticatedNavigation() {
           activeIcon='channels-fill'
           inactiveIcon='channels-outline'
           css={{
-            height: '2.75rem',
+            height: '2.5rem',
           }}
         />
         <NavigationLink
@@ -56,7 +56,7 @@ function AuthenticatedNavigation() {
           activeIcon='bookmark-fill'
           inactiveIcon='bookmark-outline'
           css={{
-            height: '2.75rem',
+            height: '2.5rem',
           }}
         />
         <NavigationLink
@@ -66,7 +66,7 @@ function AuthenticatedNavigation() {
           activeIcon='releases-fill'
           inactiveIcon='releases-outline'
           css={{
-            height: '2.75rem',
+            height: '2.5rem',
           }}
         />
       </NavigationLinkGroup>
@@ -92,7 +92,7 @@ function UnauthenticatedNavigation() {
         direction='vertical'
         variant='ghost'
         as='nav'
-        gap={6}
+        gap={5}
         p={4}
         flex={1}
       >
@@ -103,7 +103,7 @@ function UnauthenticatedNavigation() {
           activeIcon='home-fill'
           inactiveIcon='home-outline'
           css={{
-            height: '2.75rem',
+            height: '2.5rem',
           }}
         />
         <NavigationLink
@@ -113,7 +113,7 @@ function UnauthenticatedNavigation() {
           activeIcon='discover-fill'
           inactiveIcon='discover-outline'
           css={{
-            height: '2.75rem',
+            height: '2.5rem',
           }}
         />
       </NavigationLinkGroup>
