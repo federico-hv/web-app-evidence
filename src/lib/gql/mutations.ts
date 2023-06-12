@@ -6,8 +6,7 @@ export const UPDATE_PROFILE = gql`
       displayName
       avatar
       coverImage
-      biography
-      region
+      bio
     }
   }
 `;

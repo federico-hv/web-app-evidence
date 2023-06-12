@@ -62,8 +62,8 @@ function ProfileHeaderSm({ profile }: { profile: IProfile }) {
       </Box>
 
       <VStack w='100%' mt={6} px={3}>
-        {profile.biography && <Text size={2}>{profile.biography}</Text>}
-        {profile.url && <Text size={2}>[Url]</Text>}
+        {profile.bio && <Text size={2}>{profile.bio}</Text>}
+        {/*{profile.url && <Text size={2}>[Url]</Text>}*/}
         <HStack
           mt={4}
           justify='space-between'
@@ -71,9 +71,7 @@ function ProfileHeaderSm({ profile }: { profile: IProfile }) {
           color='base400'
         >
           <ProfileStatistics profile={profile} />
-          {currentUser && (
-            <SocialButton profile={profile} currentUser={currentUser} />
-          )}
+          {currentUser && <SocialButton />}
         </HStack>
       </VStack>
     </Box>
@@ -129,12 +127,7 @@ function ProfileHeaderLg({ profile }: { profile: IProfile }) {
                   username={profile.username}
                 />
               </VStack>
-              {currentUser && (
-                <SocialButton
-                  profile={profile}
-                  currentUser={currentUser}
-                />
-              )}
+              {currentUser && <SocialButton />}
             </HStack>
           </HStack>
         </HStack>

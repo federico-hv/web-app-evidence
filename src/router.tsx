@@ -32,7 +32,7 @@ function Router() {
           />
         </Route>
         {/* PROTECTED ROUTES - ARTISTS */}
-        <Route element={<AuthGuard roles={['ARTIST']} />}></Route>
+        <Route element={<AuthGuard roles={['artist']} />}></Route>
         {/* PUBLIC ROUTES*/}
         <Route path={Paths.home} element={<HomePage />} />
         <Route path={PathParams.profileId} element={<ProfilePage />} />

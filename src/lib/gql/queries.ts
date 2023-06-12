@@ -12,28 +12,33 @@ export const GET_ME = gql`
   }
 `;
 
+export const GET_RELATIONSHIP_WITH_USER = gql`
+  query relationshipWithUser($username: String!) {
+    relationshipWithUser(username: $username)
+  }
+`;
+
 export const GET_PROFILE = gql`
-  query profile($payload: ProfileInput!) {
-    profile(payload: $payload) {
-      biography
-      accountType
+  query profile($username: String!) {
+    profile(username: $username) {
       username
       displayName
-      connected
       coverImage
       avatar
+      bio
+      followers
+      following
     }
   }
 `;
 
 export const FIND_USER = gql`
-  query searchForUser($q: String!) {
-    searchForUser(queryString: $q) {
+  query findUser($queryString: String!) {
+    findUser(queryString: $queryString) {
       username
       displayName
       id
       avatar
-      role
     }
   }
 `;

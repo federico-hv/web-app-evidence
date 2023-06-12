@@ -2,7 +2,7 @@ import { ProfileFormData } from 'shared';
 
 export const profileValues: ProfileFormData = {
   avatar: undefined,
-  biography: '',
+  bio: '',
   coverImage: undefined,
   displayName: '',
 };

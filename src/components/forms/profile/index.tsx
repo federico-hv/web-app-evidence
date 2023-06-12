@@ -83,9 +83,9 @@ function InnerForm() {
       />
 
       <FormInput
-        defaultValue={profile.biography}
+        defaultValue={profile.bio}
         label='Bio'
-        name='biography'
+        name='bio'
         type='textarea'
       />
 

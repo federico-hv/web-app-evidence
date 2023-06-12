@@ -5,36 +5,26 @@ export interface IUserSm {
 }
 
 export interface IUserMe {
+  id: string;
   username: string;
   displayName: string;
   avatar: string;
   role: Role;
-  id: string;
 }
-
-export type GenericItem = { id: StringNumeric };
-
-export type StringNumeric = string | number;
-
-export type AccountType = 'FAN' | 'PERSONAL' | 'ARTIST';
 
 export interface IProfile {
-  accountType: AccountType;
   username: string;
   displayName: string;
-  connected: boolean;
-  coverImage: string;
-  avatar: string;
-  url?: string;
-  biography?: string;
-  holdrs?: number;
-  memberships?: number;
+  coverImage?: string;
+  avatar?: string;
+  bio?: string;
+  followers: number;
+  following: number;
 }
 
-export interface IAccount {
+export interface IFindUser {
   username: string;
   displayName: string;
-  role: string;
   id: string;
   avatar: string;
 }
@@ -47,9 +37,19 @@ export interface FormProps<T> {
 
 export interface ProfileFormData {
   displayName: string;
-  biography?: string;
+  bio?: string;
   avatar?: File;
   coverImage?: File;
 }
 
-export type Role = 'FAN' | 'ARTIST';
+export interface UpdateProfilePayload {
+  payload: ProfileFormData;
+}
+
+export type UpdateProfileData = { updateProfile: IProfile };
+
+export type Role = 'general' | 'artist';
+
+export type GenericItem = { id: StringNumeric };
+
+export type StringNumeric = string | number;

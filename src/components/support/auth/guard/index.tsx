@@ -1,15 +1,15 @@
 import { useContext } from 'react';
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
-import { AuthContext } from '../../../../contexts';
-import { prefix } from '../../../../utilities';
-import { Paths, Role } from '../../../../shared';
+import { AuthContext } from 'contexts';
+import { prefix } from 'utilities';
+import { Paths, Role } from 'shared';
 import NotFound from '../../../groups/not-found';
 
 interface AuthGuardProps {
   roles?: Role[];
 }
 
-function AuthGuard({ roles = ['FAN', 'ARTIST'] }: AuthGuardProps) {
+function AuthGuard({ roles = ['general', 'artist'] }: AuthGuardProps) {
   const { currentUser } = useContext(AuthContext);
   const location = useLocation();
 

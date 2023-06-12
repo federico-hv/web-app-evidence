@@ -5,65 +5,11 @@ import {
   HStack,
   useSwitch,
 } from '@holdr-ui/react';
-import { useAuthContext } from 'hooks';
-import { useMutation, useQuery } from '@apollo/client';
-import { IProfile, ProfileFormData } from 'shared';
-import { GET_PROFILE, UPDATE_PROFILE } from 'lib';
 import { ProfileContextProvider } from 'contexts';
+import { parseToProfileFormData } from 'utilities';
+import { useCurrentUserProfile, useUpdateProfile } from 'lib';
 import { ProfileForm } from '../../forms';
 import { Error, Loader } from '../../utility';
-import { parseToProfileFormData } from '../../../utilities';
-
-export interface UpdateProfileModel {
-  displayName?: string;
-  avatar?: string;
-  coverImage?: string;
-  biography?: string;
-  region?: string;
-}
-
-export interface UpdateProfilePayload {
-  payload: ProfileFormData;
-}
-
-const useMyProfile = () => {
-  const { currentUser } = useAuthContext();
-
-  // QUERY for profile
-  const { data, loading, error } = useQuery<{ profile: IProfile }>(
-    GET_PROFILE,
-    {
-      variables: {
-        payload: {
-          username: currentUser?.username,
-          id: currentUser?.id,
-        },
-      },
-    },
-  );
-
-  console.log({ data });
-  return { data, loading, error };
-};
-
-const useUpdateProfileMutation = () => {
-  const [updateProfile, { loading, error }] = useMutation<
-    UpdateProfileModel,
-    UpdateProfilePayload
-  >(UPDATE_PROFILE);
-
-  const onSubmit = async (formData: ProfileFormData) => {
-    await updateProfile({
-      variables: { payload: formData },
-    });
-  };
-
-  const onFinish = (cb: VoidFunction) => {
-    cb();
-  };
-
-  return { loading, error, onSubmit, onFinish };
-};
 
 function EditProfileDialog() {
   const { switchState, turnOff, turnOn } = useSwitch(false);
@@ -71,13 +17,13 @@ function EditProfileDialog() {
     loading: loadingQuery,
     data,
     error: errorQuery,
-  } = useMyProfile();
+  } = useCurrentUserProfile();
   const {
     loading: loadingMutation,
     error: errorMutation,
     onSubmit,
     onFinish,
-  } = useUpdateProfileMutation();
+  } = useUpdateProfile();
 
   return (
     <Dialog

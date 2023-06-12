@@ -5,7 +5,7 @@ export function parseToProfileFormData(
 ): ProfileFormData {
   return {
     displayName: profile.displayName,
-    biography: profile.biography || '',
+    bio: profile.bio || '',
     avatar: undefined,
     coverImage: undefined,
   };

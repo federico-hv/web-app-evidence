@@ -14,7 +14,7 @@ import {
 import { useQuery } from '@apollo/client';
 import { useNavigate } from 'react-router-dom';
 import { prefix } from 'utilities';
-import { IAccount, Paths } from 'shared';
+import { IFindUser, Paths } from 'shared';
 import { FIND_USER } from 'lib';
 import { Item } from './global-search.types';
 
@@ -28,26 +28,26 @@ import { Item } from './global-search.types';
 function GlobalSearch() {
   const navigate = useNavigate();
   const [value, setValue] = useState('');
-  const [results, setResults] = useState<IAccount[]>([]);
-  const [history, setHistory] = useState<IAccount[]>([]);
+  const [results, setResults] = useState<IFindUser[]>([]);
+  const [history, setHistory] = useState<IFindUser[]>([]);
 
-  const { data, loading, error } = useQuery<{ searchForUser: IAccount[] }>(
+  const { data, loading, error } = useQuery<{ findUser: IFindUser[] }>(
     FIND_USER,
     {
       variables: {
-        q: value,
+        queryString: value,
       },
     },
   );
 
   if (error) {
-    console.log(error);
+    console.error(error);
   }
 
   const handleOnValueChange = (newValue: string) => {
     setValue(newValue);
     if (!loading && !error && data) {
-      setResults(data.searchForUser);
+      setResults(data.findUser);
     }
   };
   const renderItem = ({ item }: Item) => (
