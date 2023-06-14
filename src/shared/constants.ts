@@ -13,6 +13,12 @@ export const Paths = {
   settings: 'settings',
   setting: {
     account: 'account',
+    username: 'username',
+    email: 'email',
+    phone: 'phone',
+    country: 'country',
+    birthday: 'birthday',
+    gender: 'gender',
     muted_notifications: 'muted_notifications',
     email_notifications: 'email_notifications',
     blocked_accounts: 'blocked_accounts',
@@ -52,4 +58,9 @@ export const Provider: Record<ProviderName, IProviderItem> = {
     image: appleLogo,
     name: 'Apple',
   },
+};
+
+export const Age = {
+  min: 18,
+  max: 75,
 };

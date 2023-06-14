@@ -21,17 +21,17 @@ function AccountInfoPage() {
     <HeaderLayout title='Account information'>
       <VStack borderBottom={2} borderColor='base100'>
         <SettingButton
-          path=''
+          path={prefix(RootSettingsPath, Paths.setting.username)}
           heading='Username'
           subheading={`@${accountInfo.username}`}
         />
         <SettingButton
-          path=''
+          path={prefix(RootSettingsPath, Paths.setting.phone)}
           heading='Phone'
           subheading={`${accountInfo.phone}`}
         />
         <SettingButton
-          path=''
+          path={prefix(RootSettingsPath, Paths.setting.email)}
           heading='Email'
           subheading={`${accountInfo.email}`}
         />
@@ -50,17 +50,17 @@ function AccountInfoPage() {
 
       <VStack borderBottom={2} borderColor='base100'>
         <SettingButton
-          path=''
+          path={prefix(RootSettingsPath, Paths.setting.country)}
           heading='Country'
           subheading={`${accountInfo.country}`}
         />
         <SettingButton
-          path=''
+          path={prefix(RootSettingsPath, Paths.setting.gender)}
           heading='Gender'
           subheading={`${accountInfo.gender}`}
         />
         <SettingButton
-          path=''
+          path={prefix(RootSettingsPath, Paths.setting.birthday)}
           heading='Birth date'
           subheading={`${dayjs(accountInfo.birthday).format(
             'MMM DD, YYYY',

@@ -27,10 +27,16 @@ import {
   NotificationsFilterSettingsPage,
   EmailFiltersSettingsPage,
   MutedNotificationsSettingsPage,
+  UsernameSettingPage,
+  PhoneSettingPage,
+  EmailSettingPage,
+  GenderSettingPage,
+  CountrySettingPage,
 } from './pages';
 import { MainLayout } from './layouts';
 import { PathParams, Paths } from './shared';
 import { AuthGuard, AuthRedirect } from './components';
+import BirthdaySettingPage from './pages/settings/account/birthday';
 
 function Router() {
   return (
@@ -114,6 +120,30 @@ function Router() {
             <Route
               path={Paths.setting.muted_notifications}
               element={<MutedNotificationsSettingsPage />}
+            />
+            <Route
+              path={Paths.setting.username}
+              element={<UsernameSettingPage />}
+            />
+            <Route
+              path={Paths.setting.phone}
+              element={<PhoneSettingPage />}
+            />
+            <Route
+              path={Paths.setting.email}
+              element={<EmailSettingPage />}
+            />
+            <Route
+              path={Paths.setting.country}
+              element={<CountrySettingPage />}
+            />
+            <Route
+              path={Paths.setting.gender}
+              element={<GenderSettingPage />}
+            />
+            <Route
+              path={Paths.setting.birthday}
+              element={<BirthdaySettingPage />}
             />
           </Route>
         </Route>
