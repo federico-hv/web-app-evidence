@@ -16,6 +16,12 @@ export const textEllipsis = css({
   whiteSpace: 'nowrap',
 });
 
+export const settingButtonHoverCss = css({
+  '&:hover': {
+    backgroundColor: '$base100',
+  },
+});
+
 export const MotionWrapper = motion(HStack);
 
 export const MotionBox = motion(Box);

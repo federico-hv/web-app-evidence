@@ -46,6 +46,18 @@ export interface UpdateProfilePayload {
   payload: ProfileFormData;
 }
 
+export interface IProviderItem {
+  name: string;
+  image: string;
+}
+
+export interface ConnectedAccount {
+  provider: ProviderName;
+  email: string;
+}
+
+export type ProviderName = 'google' | 'spotify' | 'apple';
+
 export type UpdateProfileData = { updateProfile: IProfile };
 
 export type Role = 'general' | 'artist';

@@ -4,7 +4,7 @@ import { prefix } from 'utilities';
 
 function Head({
   title,
-  prefix: prefixStr = 'Holdr Base -',
+  prefix: prefixStr = 'Holdr -',
   description,
   image,
   url,

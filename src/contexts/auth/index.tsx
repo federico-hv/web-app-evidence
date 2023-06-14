@@ -3,7 +3,7 @@ import { AuthProviderProps, IAuthContext } from './auth-context.type';
 import { useQuery } from '@apollo/client';
 import { GET_ME } from 'lib';
 import { IUserMe, MotionBox } from 'shared';
-import { Image, Center } from '@holdr-ui/react';
+import { Image, Center, Box } from '@holdr-ui/react';
 
 const AuthContext = createContext<IAuthContext>({
   currentUser: null,
@@ -38,6 +38,7 @@ function AuthProvider({ children }: AuthProviderProps) {
             size={100}
             src='logo-dark.png'
             alt='holdr logo'
+            fallback={<Box />}
           />
         </MotionBox>
       </Center>
