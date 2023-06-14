@@ -21,7 +21,7 @@ function NotificationSettingsPage() {
             Paths.setting.notifications_filters,
           )}
           heading='Filters'
-          subheading='Select your preferences by notification type.'
+          subheading='Filter your notifications based on what you want to receive.'
           icon='settings-alt-outline'
         />
         <SettingButton
