@@ -1,18 +1,26 @@
 import { FormInputProps } from './form-input.types';
 import { useField } from 'formik';
-import { Input, Textarea } from '@holdr-ui/react';
+import { Input, Select, Textarea } from '@holdr-ui/react';
 import { textareaCSS } from './form-input.style';
 import React from 'react';
+import { css } from '../../../configs';
+
+const selectCss = css({
+  'box-sizing': 'border-box',
+});
+
 function FormField({
   name,
   type,
   placeholder,
   ...others
-}: FormInputProps & { type: 'text' | 'textarea' | string }) {
+}: FormInputProps & {
+  type: 'text' | 'textarea' | 'select' | string;
+}) {
   const [field] = useField(name);
   return (
     <>
-      {type === 'text' && (
+      {type !== 'select' && type !== 'textarea' && (
         <Input
           variant='unstyled'
           id={name}
@@ -31,6 +39,15 @@ function FormField({
           {...field}
           {...others}
           className={textareaCSS()}
+        />
+      )}
+      {type === 'select' && (
+        <Select
+          id={name}
+          placeholder={placeholder}
+          {...field}
+          {...others}
+          className={selectCss()}
         />
       )}
     </>

@@ -10,3 +10,17 @@ export const UPDATE_PROFILE = gql`
     }
   }
 `;
+
+export const UPDATE_ACCOUNT_INFO = gql`
+  mutation updateAccountInfo($payload: UpdateAccountInfoInput!) {
+    updateAccountInfo(payload: $payload) {
+      email
+      username
+      phone
+      country
+      gender
+      birthday
+      protected
+    }
+  }
+`;

@@ -46,6 +46,16 @@ export interface UpdateProfilePayload {
   payload: ProfileFormData;
 }
 
+export interface IAccountInfo {
+  email: string;
+  username: string;
+  phone: string;
+  country: string;
+  gender: string;
+  birthday: string;
+  protected: boolean;
+}
+
 export interface IProviderItem {
   name: string;
   image: string;

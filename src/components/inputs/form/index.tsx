@@ -14,6 +14,7 @@ import FormField from './form-field';
 const AppearingBox = motion(Box);
 
 function FormInput({
+  disabled,
   placeholder,
   label,
   leftIcon,
@@ -43,6 +44,7 @@ function FormInput({
           </InputGroup.LeftElement>
         )}
         <FormField
+          disabled={disabled}
           type={type}
           placeholder={placeholder}
           {...field}

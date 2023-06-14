@@ -16,4 +16,5 @@ export * from './drawers';
 export * from './utility';
 export * from './forms';
 export * from './links';
+export * from './inputs';
 export * from './checkbox';

@@ -22,6 +22,13 @@ export const settingButtonHoverCss = css({
   },
 });
 
+export const CustomLabel1 = styled('label', {
+  display: 'flex',
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+});
+
 export const MotionWrapper = motion(HStack);
 
 export const MotionBox = motion(Box);

@@ -1,37 +1,57 @@
-import {
-  Input,
-  VStack,
-  HStack,
-  Button,
-  Box,
-  FormControl,
-} from '@holdr-ui/react';
+import { Box } from '@holdr-ui/react';
 import { HeaderLayout } from 'layouts';
-import { Head } from 'components';
+import { AccountInfoForm, Head, Error, Loader } from 'components';
 import { Paths } from 'shared';
+import { useAccountInfo, useUpdateAccountInfo } from '../../../hooks';
+import { AccountInfoContextProvider } from '../../../contexts';
+import { isEqual, pick } from 'lodash';
 
 function EmailSettingPage() {
+  const {
+    loading: loadingQuery,
+    error: errorQuery,
+    data,
+  } = useAccountInfo();
+
+  const {
+    loading: loadingMutation,
+    error: errorMutation,
+    onSubmit,
+    onFinish,
+  } = useUpdateAccountInfo();
+
   return (
-    <>
+    <Error
+      hasError={!!errorQuery || !!errorMutation}
+      errorEl={<Box>{errorQuery?.message || errorMutation?.message}</Box>}
+    >
       <Head
         title='Update email'
         description='Change your email.'
         url={`${Paths.settings}/${Paths.setting.username}`}
       />
-      <HeaderLayout title='Email'>
-        <VStack as='form'>
-          <Box px={4} pb={5} borderBottom={2} borderColor='base100'>
-            <FormControl>
-              <FormControl.Label>Email</FormControl.Label>
-              <Input defaultValue='takdev@gmail.com' />
-            </FormControl>
-          </Box>
-        </VStack>
-        <HStack p={4} justify='flex-end'>
-          <Button disabled={true}>Update</Button>
-        </HStack>
-      </HeaderLayout>
-    </>
+      <Loader loading={loadingQuery}>
+        {data && (
+          <HeaderLayout title='Email'>
+            <AccountInfoContextProvider
+              value={{
+                loading: loadingMutation,
+                disabled: (values) =>
+                  isEqual(values, pick(data.accountInfo, 'email')),
+                data: data.accountInfo,
+                name: 'email',
+              }}
+            >
+              <AccountInfoForm
+                initialValues={{ email: data.accountInfo.email }}
+                onSubmit={onSubmit}
+                onFinish={onFinish}
+              />
+            </AccountInfoContextProvider>
+          </HeaderLayout>
+        )}
+      </Loader>
+    </Error>
   );
 }
 EmailSettingPage.displayName = 'EmailSettingPage';

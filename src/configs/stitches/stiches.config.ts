@@ -270,6 +270,9 @@ export const globalStyles = globalCss({
   textarea: {
     fontFamily: 'inherit',
   },
+  'input[type=date]': {
+    fontFamily: 'inherit',
+  },
   button: {
     backgroundColor: 'inherit',
     fontFamily: 'inherit',

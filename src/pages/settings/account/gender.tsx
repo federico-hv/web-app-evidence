@@ -1,3 +1,4 @@
+import { FormEvent } from 'react';
 import {
   Text,
   VStack,
@@ -5,49 +6,144 @@ import {
   Button,
   Radio,
   Input,
+  Box,
 } from '@holdr-ui/react';
 import { HeaderLayout } from 'layouts';
-import { Head } from 'components';
-import { Paths } from 'shared';
+import { Head, Error, Loader } from 'components';
+import { CustomLabel1, IAccountInfo, Paths } from 'shared';
+import { useAccountInfo, useUpdateAccountInfo } from 'hooks';
+import { Formik } from 'formik';
+import { isInputDisabled } from 'utilities';
+import { isEqual, pick } from 'lodash';
+import { AccountInfoFormData } from '../../../components/forms/account-info/account-info.types';
+import { UpdateAccountInfoSchema } from '../../../components/forms/account-info/account-info.schema';
 
 function GenderSettingPage() {
+  const {
+    loading: loadingQuery,
+    error: errorQuery,
+    data,
+  } = useAccountInfo();
+
+  const {
+    loading: loadingMutation,
+    error: errorMutation,
+    onSubmit,
+    onFinish,
+  } = useUpdateAccountInfo();
+
   return (
-    <>
+    <Error
+      hasError={!!errorQuery || !!errorMutation}
+      errorEl={<Box>{errorQuery?.message || errorMutation?.message}</Box>}
+    >
       <Head
         title='Update gender'
         description='Change your gender.'
         url={`${Paths.settings}/${Paths.setting.gender}`}
       />
-      <HeaderLayout title='Gender'>
-        <VStack
-          as='form'
-          gap={4}
-          p={4}
-          borderBottom={2}
-          borderTop={2}
-          borderColor='base100'
-        >
-          <VStack as='fieldset' gap={3}>
-            <HStack justify='space-between' items='center'>
-              <Text id='Gender_Male'>Male</Text>
-              <Radio labelledBy='Gender_Male' name='gender' />
-            </HStack>
-            <HStack justify='space-between' items='center'>
-              <Text id='Gender_Female'>Female</Text>
-              <Radio labelledBy='Gender_Male' name='gender' />
-            </HStack>
-            <HStack justify='space-between' items='center'>
-              <Text id='Gender_Specify'>Specify</Text>
-              <Radio labelledBy='Gender_Male' name='gender' />
-            </HStack>
-          </VStack>
-          <Input />
-        </VStack>
-        <HStack p={4} justify='flex-end'>
-          <Button disabled={true}>Update</Button>
-        </HStack>
-      </HeaderLayout>
-    </>
+      <Loader loading={loadingQuery}>
+        {data && (
+          <HeaderLayout title='Gender'>
+            <Formik<AccountInfoFormData>
+              initialValues={{ gender: data.accountInfo.gender }}
+              validationSchema={UpdateAccountInfoSchema}
+              onSubmit={async (data) => {
+                try {
+                  await onSubmit(data);
+                  onFinish();
+                } catch (e) {
+                  return;
+                }
+              }}
+            >
+              {({ handleSubmit, errors, handleChange, values }) => (
+                <VStack
+                  as='form'
+                  gap={5}
+                  p={4}
+                  borderBottom={2}
+                  borderTop={2}
+                  borderColor='base100'
+                  onSubmit={(e) =>
+                    handleSubmit(e as FormEvent<HTMLFormElement>)
+                  }
+                >
+                  <VStack as='fieldset' gap={5}>
+                    <CustomLabel1>
+                      <Text id='Gender_Male'>Male</Text>
+                      <Radio
+                        onChange={handleChange}
+                        checked={values.gender === 'Male'}
+                        labelledBy='Gender_Male'
+                        name='gender'
+                        value='Male'
+                      />
+                    </CustomLabel1>
+                    <CustomLabel1>
+                      <Text id='Gender_Female'>Female</Text>
+                      <Radio
+                        onChange={handleChange}
+                        checked={values.gender === 'Female'}
+                        labelledBy='Gender_Male'
+                        name='gender'
+                        value='Female'
+                      />
+                    </CustomLabel1>
+                    <CustomLabel1>
+                      <Text id='Gender_Specify'>Specify</Text>
+                      <Radio
+                        onChange={handleChange}
+                        checked={
+                          !!values.gender &&
+                          values.gender.length > 0 &&
+                          values.gender !== 'Male' &&
+                          values.gender !== 'Female'
+                        }
+                        labelledBy='Gender_Male'
+                        name='gender'
+                        value='Specific'
+                      />
+                    </CustomLabel1>
+                  </VStack>
+                  {values.gender &&
+                    values.gender?.length > 0 &&
+                    values.gender !== 'Male' &&
+                    values.gender !== 'Female' && (
+                      <Input
+                        name='gender'
+                        value={
+                          values.gender === 'Specific' ? '' : values.gender
+                        }
+                        onChange={handleChange}
+                      />
+                    )}
+                  <HStack p={4} justify='flex-end'>
+                    <Button
+                      type='submit'
+                      loadingText={loadingMutation ? '' : 'Saving'}
+                      isLoading={loadingMutation}
+                      disabled={
+                        values.gender === 'Specific' ||
+                        isEqual(
+                          values,
+                          pick(data.accountInfo, 'gender'),
+                        ) ||
+                        isInputDisabled(values as IAccountInfo, errors, [
+                          'gender',
+                        ])
+                      }
+                    >
+                      Update
+                    </Button>
+                  </HStack>
+                </VStack>
+              )}
+            </Formik>
+          </HeaderLayout>
+        )}
+      </Loader>
+    </Error>
   );
 }
 GenderSettingPage.displayName = 'GenderSettingPage';

@@ -1,32 +1,61 @@
-import { Input, VStack, HStack, Button, Box } from '@holdr-ui/react';
+import { Box } from '@holdr-ui/react';
 import { HeaderLayout } from 'layouts';
-import { Head } from 'components';
-import { Age, Paths } from 'shared';
+import { Head, Loader, Error, AccountInfoForm } from 'components';
+import { Paths } from 'shared';
 import dayjs from 'dayjs';
+import { useAccountInfo, useUpdateAccountInfo } from '../../../hooks';
+import { isEqual, pick } from 'lodash';
+import { AccountInfoContextProvider } from '../../../contexts';
 
 function BirthdaySettingPage() {
+  const {
+    loading: loadingQuery,
+    error: errorQuery,
+    data,
+  } = useAccountInfo();
+
+  const {
+    loading: loadingMutation,
+    error: errorMutation,
+    onSubmit,
+    onFinish,
+  } = useUpdateAccountInfo();
   return (
-    <>
+    <Error
+      hasError={!!errorQuery || !!errorMutation}
+      errorEl={<Box>{errorQuery?.message || errorMutation?.message}</Box>}
+    >
       <Head
         title='Update birthday'
         description='Change your birthday.'
         url={`${Paths.settings}/${Paths.setting.birthday}`}
       />
-      <HeaderLayout title='Birthday'>
-        <VStack as='form'>
-          <Box px={4} pb={5} borderBottom={2} borderColor='base100'>
-            <Input
-              type='date'
-              min={dayjs().subtract(Age.max, 'y').format('YYYY-MM-DD')}
-              max={dayjs().subtract(Age.min, 'y').format('YYYY-MM-DD')}
-            />
-          </Box>
-        </VStack>
-        <HStack p={4} justify='flex-end'>
-          <Button disabled={true}>Update</Button>
-        </HStack>
-      </HeaderLayout>
-    </>
+      <Loader loading={loadingQuery}>
+        {data && (
+          <HeaderLayout title='Birthday'>
+            <AccountInfoContextProvider
+              value={{
+                loading: loadingMutation,
+                disabled: (values) =>
+                  isEqual(values, pick(data.accountInfo, 'birthday')),
+                data: data.accountInfo,
+                name: 'birthday',
+              }}
+            >
+              <AccountInfoForm
+                initialValues={{
+                  birthday: dayjs(data.accountInfo.birthday).format(
+                    'YYYY-MM-DD',
+                  ),
+                }}
+                onSubmit={onSubmit}
+                onFinish={onFinish}
+              />
+            </AccountInfoContextProvider>
+          </HeaderLayout>
+        )}
+      </Loader>
+    </Error>
   );
 }
 BirthdaySettingPage.displayName = 'BirthdaySettingPage';

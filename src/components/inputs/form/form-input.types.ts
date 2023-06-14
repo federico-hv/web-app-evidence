@@ -1,7 +1,9 @@
 import { IconName } from '@holdr-ui/react/dist/shared/types';
 import { StringNumeric } from 'shared';
+import { ReactNode } from 'react';
 
 export interface FormInputProps {
+  disabled?: boolean;
   defaultValue?: string;
   placeholder?: string;
   label?: string;
@@ -12,4 +14,5 @@ export interface FormInputProps {
   onClickButton?: VoidFunction;
   min?: StringNumeric;
   max?: StringNumeric;
+  children?: ReactNode;
 }

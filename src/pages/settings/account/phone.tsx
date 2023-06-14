@@ -1,37 +1,57 @@
-import {
-  Input,
-  VStack,
-  HStack,
-  Button,
-  Box,
-  FormControl,
-} from '@holdr-ui/react';
 import { HeaderLayout } from 'layouts';
-import { Head } from 'components';
+import { AccountInfoForm, Error, Head, Loader } from 'components';
 import { Paths } from 'shared';
+import { isEqual, pick } from 'lodash';
+import { AccountInfoContextProvider } from 'contexts';
+import { useAccountInfo, useUpdateAccountInfo } from 'hooks';
+import { Box } from '@holdr-ui/react';
 
 function PhoneSettingPage() {
+  const {
+    loading: loadingQuery,
+    error: errorQuery,
+    data,
+  } = useAccountInfo();
+
+  const {
+    loading: loadingMutation,
+    error: errorMutation,
+    onSubmit,
+    onFinish,
+  } = useUpdateAccountInfo();
+
   return (
-    <>
+    <Error
+      hasError={!!errorQuery || !!errorMutation}
+      errorEl={<Box>{errorQuery?.message || errorMutation?.message}</Box>}
+    >
       <Head
         title='Update phone'
         description='Change your phone number.'
         url={`${Paths.settings}/${Paths.setting.phone}`}
       />
-      <HeaderLayout title='Phone'>
-        <VStack as='form'>
-          <Box px={4} pb={5} borderBottom={2} borderColor='base100'>
-            <FormControl>
-              <FormControl.Label>Phone</FormControl.Label>
-              <Input defaultValue={'+1555555555'} />
-            </FormControl>
-          </Box>
-        </VStack>
-        <HStack p={4} justify='flex-end'>
-          <Button disabled={true}>Update</Button>
-        </HStack>
-      </HeaderLayout>
-    </>
+      <Loader loading={loadingQuery}>
+        {data && (
+          <HeaderLayout title='Phone'>
+            <AccountInfoContextProvider
+              value={{
+                loading: loadingMutation,
+                disabled: (values) =>
+                  isEqual(values, pick(data.accountInfo, 'phone')),
+                data: data.accountInfo,
+                name: 'phone',
+              }}
+            >
+              <AccountInfoForm
+                initialValues={{ phone: data.accountInfo.phone || '' }}
+                onSubmit={onSubmit}
+                onFinish={onFinish}
+              />
+            </AccountInfoContextProvider>
+          </HeaderLayout>
+        )}
+      </Loader>
+    </Error>
   );
 }
 PhoneSettingPage.displayName = 'PhoneSettingPage';
