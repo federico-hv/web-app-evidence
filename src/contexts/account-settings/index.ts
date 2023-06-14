@@ -7,7 +7,7 @@ const AccountSettingsContext = createContext<IAccountInfo>({
   phone: '',
   country: '',
   gender: '',
-  birthday: new Date(),
+  birthday: '',
   protected: false,
 });
 
