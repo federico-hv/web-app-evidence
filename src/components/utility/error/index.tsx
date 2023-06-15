@@ -16,7 +16,7 @@ function Error({
     }
   }, [hasError, setOpen]);
 
-  if (el) {
+  if (el && hasError) {
     return (
       <>
         {el}
