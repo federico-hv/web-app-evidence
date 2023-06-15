@@ -5,5 +5,5 @@ export interface ErrorProps {
   errorTitle?: string;
   hasError: boolean;
   children?: ReactNode;
-  errorEl: JSX.Element;
+  errorEl?: JSX.Element;
 }

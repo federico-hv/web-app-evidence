@@ -1,7 +1,9 @@
+import { StringNumeric } from 'shared';
+import { ChangeEvent } from 'react';
+
 interface DatePickerProps {
-  name: string;
   date: string;
-  onChange: any;
+  onChange: (e: string | ChangeEvent<any>) => void;
 }
 
 export type { DatePickerProps };

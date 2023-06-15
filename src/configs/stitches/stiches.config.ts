@@ -273,6 +273,9 @@ export const globalStyles = globalCss({
   'input[type=date]': {
     fontFamily: 'inherit',
   },
+  'input:autofill': {
+    'background-color': 'none',
+  },
   button: {
     backgroundColor: 'inherit',
     fontFamily: 'inherit',

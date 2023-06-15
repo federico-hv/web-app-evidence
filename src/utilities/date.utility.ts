@@ -12,6 +12,16 @@ export class DateUtility {
     );
   }
 
+  static daysInMonth(month: string, year: string) {
+    return dayjs(
+      this.fromBreakdown({
+        day: '1',
+        month: month,
+        year: year,
+      }),
+    ).daysInMonth();
+  }
+
   static breakdown(date: string): IDate {
     const months = this.allMonths();
     return {

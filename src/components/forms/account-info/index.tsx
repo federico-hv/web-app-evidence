@@ -51,12 +51,7 @@ function InnerForm() {
             />
           )}
           {name === 'birthday' && (
-            <FormInput
-              disabled={loading}
-              name='birthday'
-              type='date'
-              label='Birthday'
-            />
+            <FormInput disabled={loading} name='birthday' type='date' />
           )}
           {name === 'country' && (
             <FormInput name='country' type='select' label='country'>

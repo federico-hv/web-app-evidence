@@ -21,9 +21,10 @@ export function isInputDisabled<T extends StringNumeric, U>(
   for (const key of keys) {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    if (!values[key]) {
+    if (values[key] === undefined) {
       continue;
     }
+
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     if (values[key].length === 0 || Object.keys(errors).includes(key)) {

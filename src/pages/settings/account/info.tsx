@@ -1,4 +1,5 @@
 import { Box, VStack } from '@holdr-ui/react';
+import { capitalize } from 'lodash';
 import dayjs from 'dayjs';
 import { HeaderLayout } from 'layouts';
 import { Error, Head, SettingButton, Loader } from 'components';
@@ -6,7 +7,6 @@ import { prefix } from 'utilities';
 import { Paths } from 'shared';
 import { useAccountInfo } from 'lib';
 import { RootSettingsPath } from '../security/root';
-import { capitalize } from 'lodash';
 
 function AccountInfoPage() {
   const { loading, error, data } = useAccountInfo();

@@ -14,7 +14,6 @@ function HeaderLayout({
   const navigate = useNavigate();
 
   const goBack = () => {
-    console.log({ backLink });
     if (backLink) navigate(backLink);
   };
 

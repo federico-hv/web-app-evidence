@@ -1,4 +1,4 @@
-import { Box } from '@holdr-ui/react';
+import { Box, Heading } from '@holdr-ui/react';
 import { HeaderLayout } from 'layouts';
 import { Head, Loader, Error, AccountInfoForm } from 'components';
 import { Paths } from 'shared';
@@ -39,6 +39,11 @@ function BirthdaySettingPage() {
             title='Birthday'
             backLink={prefix(RootSettingsPath, Paths.setting.account_info)}
           >
+            <Box px={4}>
+              <Heading as='h2' size={4}>
+                Birthday
+              </Heading>
+            </Box>
             <AccountInfoContextProvider
               value={{
                 loading: loadingMutation,

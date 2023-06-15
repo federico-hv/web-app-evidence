@@ -52,11 +52,7 @@ function FormField({
         />
       )}
       {type === 'date' && (
-        <DatePicker
-          name={name}
-          date={field.value}
-          onChange={field.onChange}
-        />
+        <DatePicker date={field.value} onChange={field.onChange(name)} />
       )}
     </>
   );

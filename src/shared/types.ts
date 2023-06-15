@@ -32,7 +32,7 @@ export interface IFindUser {
 export interface FormProps<T> {
   isLoading?: boolean;
   onSubmit: (data: T) => Promise<void>;
-  onFinish: () => void;
+  onFinish: (data?: any) => void;
 }
 
 export interface ProfileFormData {
@@ -42,8 +42,18 @@ export interface ProfileFormData {
   coverImage?: File;
 }
 
+export interface UpdatePasswordFormData {
+  currentPassword: string;
+  newPassword: string;
+  newPasswordVerification: string;
+}
+
 export interface UpdateProfilePayload {
   payload: ProfileFormData;
+}
+
+export interface UpdatePasswordPayload {
+  payload: UpdatePasswordFormData;
 }
 
 export interface IAccountInfo {
@@ -72,9 +82,16 @@ export interface ConnectedAccount {
   email: string;
 }
 
+export interface IStatus {
+  status: boolean;
+  message: string;
+}
+
 export type ProviderName = 'google' | 'spotify' | 'apple';
 
 export type UpdateProfileData = { updateProfile: IProfile };
+
+export type UpdatePasswordData = { updatePassword: IStatus };
 
 export type Role = 'general' | 'artist';
 
