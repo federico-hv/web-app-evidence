@@ -12,7 +12,10 @@ function BlockedSettingsPage() {
         description='See the accounts that have been blocked.'
         url={prefix(RootSettingsPath, Paths.setting.privacy)}
       />
-      <HeaderLayout title='Blocked accounts'></HeaderLayout>
+      <HeaderLayout
+        title='Blocked accounts'
+        backLink={prefix(RootSettingsPath, Paths.setting.mute_and_block)}
+      ></HeaderLayout>
     </>
   );
 }

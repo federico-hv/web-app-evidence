@@ -1,16 +1,18 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Box, HStack, Icon, Text, VStack } from '@holdr-ui/react';
 import { SettingsButtonProp } from './setting.type';
 import { settingButtonHoverCss } from '../../../shared';
 
 function SettingButton({
-  path,
+  path: pathname,
   icon,
   heading,
   subheading,
 }: SettingsButtonProp) {
+  const location = useLocation();
+
   return (
-    <Link to={path}>
+    <Link to={pathname} state={{ prevPath: location.pathname }}>
       <HStack items='center' p={4} className={settingButtonHoverCss()}>
         {icon && (
           <Box px={4}>

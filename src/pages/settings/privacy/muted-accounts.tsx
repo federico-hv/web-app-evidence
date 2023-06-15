@@ -12,7 +12,10 @@ function MutedSettingsPage() {
         description='See the accounts that have been muted.'
         url={prefix(RootSettingsPath, Paths.setting.privacy)}
       />
-      <HeaderLayout title='Muted accounts'></HeaderLayout>
+      <HeaderLayout
+        title='Muted accounts'
+        backLink={prefix(RootSettingsPath, Paths.setting.mute_and_block)}
+      ></HeaderLayout>
     </>
   );
 }

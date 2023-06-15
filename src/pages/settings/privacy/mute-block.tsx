@@ -10,9 +10,12 @@ function MuteAndBlockSettingsPage() {
       <Head
         title='Mute and block'
         description='Manage the notifications that you receive and how your receive them.'
-        url={`${Paths.settings}/${Paths.setting.account_info}`}
+        url={prefix(RootSettingsPath, Paths.setting.mute_and_block)}
       />
-      <HeaderLayout title='Mute and block'>
+      <HeaderLayout
+        title='Mute and block'
+        backLink={prefix(RootSettingsPath, Paths.setting.privacy)}
+      >
         <SettingButton
           path={prefix(RootSettingsPath, Paths.setting.blocked_accounts)}
           heading='Blocked accounts'
