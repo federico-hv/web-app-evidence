@@ -2,6 +2,8 @@ import { Box, VStack } from '@holdr-ui/react';
 import { HeaderLayout } from 'layouts';
 import { Head, SettingCheckbox } from 'components';
 import { Paths } from '../../../shared';
+import { prefix } from '../../../utilities';
+import { RootSettingsPath } from './root';
 
 function TwoFactorAuthSettingsPage() {
   return (
@@ -11,9 +13,12 @@ function TwoFactorAuthSettingsPage() {
         description='Help protect your account from unauthorized access by
         requiring a second authentication method in addition to your Twitter
         password. You can choose a text message, authentication app, or security key'
-        url={`${Paths.settings}/${Paths.setting.account_info}`}
+        url={prefix(RootSettingsPath, Paths.setting.login_security)}
       />
-      <HeaderLayout title='Two-factor authentication'>
+      <HeaderLayout
+        title='Two-factor authentication'
+        backLink={prefix(RootSettingsPath, Paths.setting.account_security)}
+      >
         <Box px={4}>
           <VStack gap={4}>
             <SettingCheckbox

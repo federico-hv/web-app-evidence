@@ -13,7 +13,10 @@ function AccountSecuritySettingsPage() {
         description=''
         url={prefix(RootSettingsPath, Paths.setting.account_security)}
       />
-      <HeaderLayout title='Security'>
+      <HeaderLayout
+        title='Security'
+        backLink={prefix(RootSettingsPath, Paths.setting.security)}
+      >
         <VStack borderBottom={2} borderColor='base100'>
           <Box px={4}>
             <Heading as='h2' size={3} color='base600'>
