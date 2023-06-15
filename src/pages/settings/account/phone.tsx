@@ -3,8 +3,10 @@ import { AccountInfoForm, Error, Head, Loader } from 'components';
 import { Paths } from 'shared';
 import { isEqual, pick } from 'lodash';
 import { AccountInfoContextProvider } from 'contexts';
-import { useAccountInfo, useUpdateAccountInfo } from 'hooks';
+import { useUpdateAccountInfo, useAccountInfo } from 'lib';
 import { Box } from '@holdr-ui/react';
+import { prefix } from '../../../utilities';
+import { RootSettingsPath } from '../security/root';
 
 function PhoneSettingPage() {
   const {
@@ -32,7 +34,10 @@ function PhoneSettingPage() {
       />
       <Loader loading={loadingQuery}>
         {data && (
-          <HeaderLayout title='Phone'>
+          <HeaderLayout
+            title='Phone'
+            backLink={prefix(RootSettingsPath, Paths.setting.account_info)}
+          >
             <AccountInfoContextProvider
               value={{
                 loading: loadingMutation,

@@ -3,8 +3,10 @@ import { HeaderLayout } from 'layouts';
 import { Head, Error, Loader, AccountInfoForm } from 'components';
 import { Paths } from 'shared';
 import { isEqual, pick } from 'lodash';
-import { useAccountInfo, useUpdateAccountInfo } from 'hooks';
+import { useUpdateAccountInfo, useAccountInfo } from 'lib';
 import { AccountInfoContextProvider } from 'contexts';
+import { prefix } from '../../../utilities';
+import { RootSettingsPath } from '../security/root';
 
 function UsernameSettingPage() {
   const {
@@ -32,7 +34,10 @@ function UsernameSettingPage() {
       />
       <Loader loading={loadingQuery}>
         {data && (
-          <HeaderLayout title='Username'>
+          <HeaderLayout
+            title='Username'
+            backLink={prefix(RootSettingsPath, Paths.setting.account_info)}
+          >
             <AccountInfoContextProvider
               value={{
                 loading: loadingMutation,

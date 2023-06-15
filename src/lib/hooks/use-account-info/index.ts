@@ -1,6 +1,6 @@
 import { useQuery } from '@apollo/client';
-import { IAccountInfo } from '../../shared';
-import { GET_ACCOUNT_INFO } from '../../lib';
+import { IAccountInfo } from 'shared';
+import { GET_ACCOUNT_INFO } from '../../gql';
 
 /**
  * Retrieve the current user's account information.

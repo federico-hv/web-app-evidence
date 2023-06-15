@@ -6,5 +6,3 @@ export * from './use-auth-context';
 export * from './use-auth-context';
 export * from './use-cropped-image';
 export * from './use-image-upload';
-export * from './use-account-info';
-export * from './use-update-account-info';

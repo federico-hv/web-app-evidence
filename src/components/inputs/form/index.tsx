@@ -37,12 +37,7 @@ function FormInput({
           {label}
         </FormControl.Label>
       )}
-      <InputGroup variant='filled'>
-        {leftIcon && (
-          <InputGroup.LeftElement>
-            <Icon color='base300' name={leftIcon} />
-          </InputGroup.LeftElement>
-        )}
+      {type === 'date' ? (
         <FormField
           disabled={disabled}
           type={type}
@@ -50,19 +45,34 @@ function FormInput({
           {...field}
           {...others}
         />
-        {rightIcon && (
-          <InputGroup.RightElement>
-            <IconButton
-              onClick={onClickButton}
-              type='button'
-              icon={rightIcon}
-              ariaLabel='action'
-              size='sm'
-              variant='ghost'
-            />
-          </InputGroup.RightElement>
-        )}
-      </InputGroup>
+      ) : (
+        <InputGroup variant='filled'>
+          {leftIcon && (
+            <InputGroup.LeftElement>
+              <Icon color='base300' name={leftIcon} />
+            </InputGroup.LeftElement>
+          )}
+          <FormField
+            disabled={disabled}
+            type={type}
+            placeholder={placeholder}
+            {...field}
+            {...others}
+          />
+          {rightIcon && (
+            <InputGroup.RightElement>
+              <IconButton
+                onClick={onClickButton}
+                type='button'
+                icon={rightIcon}
+                ariaLabel='action'
+                size='sm'
+                variant='ghost'
+              />
+            </InputGroup.RightElement>
+          )}
+        </InputGroup>
+      )}
 
       <FormControl.ErrorText>
         <AnimatePresence>

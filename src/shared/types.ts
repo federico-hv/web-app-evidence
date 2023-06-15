@@ -61,6 +61,12 @@ export interface IProviderItem {
   image: string;
 }
 
+export interface IDate {
+  month: string;
+  day: string;
+  year: string;
+}
+
 export interface ConnectedAccount {
   provider: ProviderName;
   email: string;

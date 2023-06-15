@@ -2,10 +2,12 @@ import { Box } from '@holdr-ui/react';
 import { HeaderLayout } from 'layouts';
 import { Head, Loader, Error, AccountInfoForm } from 'components';
 import { Paths } from 'shared';
+import { useUpdateAccountInfo, useAccountInfo } from 'lib';
+import { isEqual } from 'lodash';
+import { prefix } from 'utilities';
+import { AccountInfoContextProvider } from 'contexts';
+import { RootSettingsPath } from '../security/root';
 import dayjs from 'dayjs';
-import { useAccountInfo, useUpdateAccountInfo } from '../../../hooks';
-import { isEqual, pick } from 'lodash';
-import { AccountInfoContextProvider } from '../../../contexts';
 
 function BirthdaySettingPage() {
   const {
@@ -20,6 +22,7 @@ function BirthdaySettingPage() {
     onSubmit,
     onFinish,
   } = useUpdateAccountInfo();
+
   return (
     <Error
       hasError={!!errorQuery || !!errorMutation}
@@ -28,16 +31,22 @@ function BirthdaySettingPage() {
       <Head
         title='Update birthday'
         description='Change your birthday.'
-        url={`${Paths.settings}/${Paths.setting.birthday}`}
+        url={`/${RootSettingsPath}/${Paths.setting.birthday}`}
       />
       <Loader loading={loadingQuery}>
         {data && (
-          <HeaderLayout title='Birthday'>
+          <HeaderLayout
+            title='Birthday'
+            backLink={prefix(RootSettingsPath, Paths.setting.account_info)}
+          >
             <AccountInfoContextProvider
               value={{
                 loading: loadingMutation,
                 disabled: (values) =>
-                  isEqual(values, pick(data.accountInfo, 'birthday')),
+                  isEqual(
+                    dayjs(values.birthday).format('YYYY-MM-DD'),
+                    dayjs(data.accountInfo.birthday).format('YYYY-MM-DD'),
+                  ),
                 data: data.accountInfo,
                 name: 'birthday',
               }}

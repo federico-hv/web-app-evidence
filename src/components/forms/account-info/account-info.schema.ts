@@ -7,7 +7,7 @@ import {
   usernamePattern,
   usernamePatternMsg,
 } from 'shared';
-import { minimumLengthMsg } from 'utilities';
+import { maximumLengthMsg, minimumLengthMsg } from 'utilities';
 
 export const UpdateAccountInfoSchema = object<ProfileFormData>({
   email: string().email(emailPatternMsg).optional(),
@@ -19,7 +19,7 @@ export const UpdateAccountInfoSchema = object<ProfileFormData>({
   birthday: string().optional(),
   username: string()
     .min(3, minimumLengthMsg(3))
-    .max(30)
+    .max(15, maximumLengthMsg(15))
     .matches(new RegExp(usernamePattern), usernamePatternMsg)
     .optional(),
 });

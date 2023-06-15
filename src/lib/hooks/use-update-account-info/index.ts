@@ -1,6 +1,6 @@
 import { useMutation } from '@apollo/client';
-import { IAccountInfo } from 'shared';
-import { GET_ACCOUNT_INFO, UPDATE_ACCOUNT_INFO } from 'lib';
+import { IAccountInfo } from '../../../shared';
+import { GET_ACCOUNT_INFO, UPDATE_ACCOUNT_INFO } from '../../gql';
 
 export function useUpdateAccountInfo() {
   const [updateAccountInfo, { loading, error }] = useMutation<

@@ -2,9 +2,11 @@ import { Box } from '@holdr-ui/react';
 import { HeaderLayout } from 'layouts';
 import { Head, Loader, Error, AccountInfoForm } from 'components';
 import { Paths } from 'shared';
-import { useAccountInfo, useUpdateAccountInfo } from '../../../hooks';
-import { AccountInfoContextProvider } from '../../../contexts';
+import { AccountInfoContextProvider } from 'contexts';
 import { isEqual, lowerCase, pick } from 'lodash';
+import { useUpdateAccountInfo, useAccountInfo } from 'lib';
+import { prefix } from '../../../utilities';
+import { RootSettingsPath } from '../security/root';
 
 function CountrySettingPage() {
   const {
@@ -31,7 +33,10 @@ function CountrySettingPage() {
       />
       <Loader loading={loadingQuery}>
         {data && (
-          <HeaderLayout title='Email'>
+          <HeaderLayout
+            title='Country'
+            backLink={prefix(RootSettingsPath, Paths.setting.account_info)}
+          >
             <AccountInfoContextProvider
               value={{
                 loading: loadingMutation,

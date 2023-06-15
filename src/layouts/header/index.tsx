@@ -1,16 +1,22 @@
 import { ReactNode } from 'react';
-import { useGoBack } from '../../hooks';
 import { Heading, HStack, IconButton, VStack } from '@holdr-ui/react';
+import { useNavigate } from 'react-router-dom';
 
 function HeaderLayout({
   children,
   title,
+  backLink,
 }: {
   children?: ReactNode;
   title: string;
   backLink?: string;
 }) {
-  const goBack = useGoBack();
+  const navigate = useNavigate();
+
+  const goBack = () => {
+    console.log({ backLink });
+    if (backLink) navigate(backLink);
+  };
 
   return (
     <VStack w='full'>

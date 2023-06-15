@@ -2,9 +2,11 @@ import { Box } from '@holdr-ui/react';
 import { HeaderLayout } from 'layouts';
 import { AccountInfoForm, Head, Error, Loader } from 'components';
 import { Paths } from 'shared';
-import { useAccountInfo, useUpdateAccountInfo } from '../../../hooks';
+import { useUpdateAccountInfo, useAccountInfo } from 'lib';
 import { AccountInfoContextProvider } from '../../../contexts';
 import { isEqual, pick } from 'lodash';
+import { prefix } from '../../../utilities';
+import { RootSettingsPath } from '../security/root';
 
 function EmailSettingPage() {
   const {
@@ -32,7 +34,10 @@ function EmailSettingPage() {
       />
       <Loader loading={loadingQuery}>
         {data && (
-          <HeaderLayout title='Email'>
+          <HeaderLayout
+            title='Email'
+            backLink={prefix(RootSettingsPath, Paths.setting.account_info)}
+          >
             <AccountInfoContextProvider
               value={{
                 loading: loadingMutation,

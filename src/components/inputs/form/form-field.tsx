@@ -4,6 +4,7 @@ import { Input, Select, Textarea } from '@holdr-ui/react';
 import { textareaCSS } from './form-input.style';
 import React from 'react';
 import { css } from '../../../configs';
+import DatePicker from '../date-picker';
 
 const selectCss = css({
   'box-sizing': 'border-box',
@@ -20,7 +21,7 @@ function FormField({
   const [field] = useField(name);
   return (
     <>
-      {type !== 'select' && type !== 'textarea' && (
+      {type !== 'select' && type !== 'textarea' && type !== 'date' && (
         <Input
           variant='unstyled'
           id={name}
@@ -48,6 +49,13 @@ function FormField({
           {...field}
           {...others}
           className={selectCss()}
+        />
+      )}
+      {type === 'date' && (
+        <DatePicker
+          name={name}
+          date={field.value}
+          onChange={field.onChange}
         />
       )}
     </>

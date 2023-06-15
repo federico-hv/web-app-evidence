@@ -2,6 +2,8 @@ import { Input, VStack, Text, HStack, Button } from '@holdr-ui/react';
 import { HeaderLayout } from 'layouts';
 import { Head } from 'components';
 import { Paths } from 'shared';
+import { prefix } from '../../../utilities';
+import { RootSettingsPath } from '../security/root';
 
 function ChangePasswordSettingPage() {
   return (
@@ -11,7 +13,10 @@ function ChangePasswordSettingPage() {
         description='Change your password at any time.'
         url={`${Paths.settings}/${Paths.setting.change_password}`}
       />
-      <HeaderLayout title='Change your password'>
+      <HeaderLayout
+        title='Change your password'
+        backLink={prefix(RootSettingsPath, Paths.setting.account)}
+      >
         <VStack as='form'>
           <VStack
             gap={3}

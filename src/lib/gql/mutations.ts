@@ -24,3 +24,12 @@ export const UPDATE_ACCOUNT_INFO = gql`
     }
   }
 `;
+
+export const UPDATE_PASSWORD = gql`
+  mutation updatePassword($payload: UpdatePasswordInput!) {
+    updatePassword(payload: $payload) {
+      status
+      message
+    }
+  }
+`;

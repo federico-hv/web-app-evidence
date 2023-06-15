@@ -11,12 +11,13 @@ import {
 import { HeaderLayout } from 'layouts';
 import { Head, Error, Loader } from 'components';
 import { CustomLabel1, IAccountInfo, Paths } from 'shared';
-import { useAccountInfo, useUpdateAccountInfo } from 'hooks';
+import { useUpdateAccountInfo, useAccountInfo } from 'lib';
 import { Formik } from 'formik';
-import { isInputDisabled } from 'utilities';
+import { isInputDisabled, prefix } from 'utilities';
 import { isEqual, pick } from 'lodash';
 import { AccountInfoFormData } from '../../../components/forms/account-info/account-info.types';
 import { UpdateAccountInfoSchema } from '../../../components/forms/account-info/account-info.schema';
+import { RootSettingsPath } from '../security/root';
 
 function GenderSettingPage() {
   const {
@@ -44,7 +45,10 @@ function GenderSettingPage() {
       />
       <Loader loading={loadingQuery}>
         {data && (
-          <HeaderLayout title='Gender'>
+          <HeaderLayout
+            title='Gender'
+            backLink={prefix(RootSettingsPath, Paths.setting.account_info)}
+          >
             <Formik<AccountInfoFormData>
               initialValues={{ gender: data.accountInfo.gender }}
               validationSchema={UpdateAccountInfoSchema}
