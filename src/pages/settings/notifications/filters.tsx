@@ -12,7 +12,10 @@ function NotificationsFilterSettingsPage() {
         description='Filter your notifications based on what you want to receive.'
         url={prefix(RootSettingsPath, Paths.setting.privacy)}
       />
-      <HeaderLayout title='Filters'>
+      <HeaderLayout
+        title='Filters'
+        backLink={prefix(RootSettingsPath, Paths.setting.notifications)}
+      >
         <SettingButton
           path={prefix(
             RootSettingsPath,

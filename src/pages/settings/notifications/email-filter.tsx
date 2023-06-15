@@ -13,7 +13,13 @@ function EmailFiltersSettingsPage() {
         description='Filter the notifications that you get on your email.'
         url={prefix(RootSettingsPath, Paths.setting.privacy)}
       />
-      <HeaderLayout title='Filters'>
+      <HeaderLayout
+        title='Filters'
+        backLink={prefix(
+          RootSettingsPath,
+          Paths.setting.notifications_preferences,
+        )}
+      >
         <HStack
           px={4}
           pb={4}

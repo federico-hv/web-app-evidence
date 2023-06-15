@@ -13,17 +13,18 @@ function MutedNotificationsSettingsPage() {
         description='Filter your notifications based on what you want to receive.'
         url={prefix(RootSettingsPath, Paths.setting.privacy)}
       />
-      <HeaderLayout title='Muted notifications'>
-        <VStack px={4} gap={4}>
-          <Heading
-            as='h2'
-            size={3}
-            weight={500}
-            css={{ fontSize: 'large' }}
-          >
+      <HeaderLayout
+        title='Muted notifications'
+        backLink={prefix(
+          RootSettingsPath,
+          Paths.setting.notifications_filters,
+        )}
+      >
+        <VStack px={4} gap={5}>
+          <Heading as='h2' size={4} weight={500}>
             Mute notifications from people
           </Heading>
-          <VStack gap={4}>
+          <VStack gap={5}>
             <SettingCheckbox heading="Who don't follow you" />
             <SettingCheckbox heading="Who haven't confirmed their email" />
             <SettingCheckbox heading="Who haven't confirmed their phone number" />

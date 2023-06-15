@@ -10,9 +10,15 @@ function NotificationsPreferenceSettingsPage() {
       <Head
         title='Preferences'
         description='Select your preferences by notification type.'
-        url={prefix(RootSettingsPath, Paths.setting.privacy)}
+        url={prefix(
+          RootSettingsPath,
+          Paths.setting.notifications_preferences,
+        )}
       />
-      <HeaderLayout title='Preferences'>
+      <HeaderLayout
+        title='Preferences'
+        backLink={prefix(RootSettingsPath, Paths.setting.notifications)}
+      >
         <SettingButton
           path={prefix(
             RootSettingsPath,
