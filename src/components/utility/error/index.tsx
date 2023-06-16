@@ -17,24 +17,21 @@ function Error({
   }, [hasError, setOpen]);
 
   if (el && hasError) {
-    return (
-      <>
-        {el}
-        {children}
-      </>
-    );
+    return <>{el}</>;
   }
 
   return (
     <>
-      <Toast.Item open={open} onOpenChange={setOpen}>
-        <Toast.Message
-          status='danger'
-          description={errorMessage}
-          onCloseClick={() => setOpen(false)}
-        />
-        <Toast.Viewport />
-      </Toast.Item>
+      {hasError && errorMessage && !el && (
+        <Toast.Item open={open} onOpenChange={setOpen}>
+          <Toast.Message
+            status='danger'
+            description={errorMessage}
+            onCloseClick={() => setOpen(false)}
+          />
+          <Toast.Viewport />
+        </Toast.Item>
+      )}
       {children}
     </>
   );

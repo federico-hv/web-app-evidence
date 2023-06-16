@@ -1,6 +1,6 @@
 import { useMutation } from '@apollo/client';
 import { IAccountInfo } from '../../../shared';
-import { GET_ACCOUNT_INFO, UPDATE_ACCOUNT_INFO } from '../../gql';
+import { GET_ACCOUNT_INFO, GET_ME, UPDATE_ACCOUNT_INFO } from '../../gql';
 
 export function useUpdateAccountInfo() {
   const [updateAccountInfo, { loading, error }] = useMutation<
@@ -19,6 +19,13 @@ export function useUpdateAccountInfo() {
               cache.writeQuery({
                 query: GET_ACCOUNT_INFO,
                 data: { ...current, accountInfo },
+              });
+            },
+            me(current) {
+              const username = data?.updateAccountInfo.username;
+              cache.writeQuery({
+                query: GET_ME,
+                data: { ...current, username: username },
               });
             },
           },

@@ -41,6 +41,8 @@ export const Paths = {
   authRedirect: 'auth/redirect',
 };
 
+export const RootSettingsPath = `/${Paths.settings}/`;
+
 export const PathParams = {
   profileId: ':id',
 };
@@ -77,6 +79,6 @@ export const passwordPattern =
 export const emailPatternMsg = 'Enter a valid email address';
 export const passwordPatternMsg =
   'Password must have at least 1 special character (@#$%^&+=) and at least 1 number';
-export const passwordMismatch = 'Must match password';
+export const passwordMismatch = 'Must match account-info';
 export const minimumAgeMsg = 'You are required to be 18 years or older';
 export const maximumAgeMsg = 'Please enter an appropriate date.';

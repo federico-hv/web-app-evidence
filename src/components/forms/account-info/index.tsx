@@ -8,17 +8,17 @@ import { FormEvent, useContext } from 'react';
 import { Box, Button, HStack, VStack } from '@holdr-ui/react';
 import { isInputDisabled } from 'utilities';
 import { IAccountInfo } from 'shared';
-import { AccountInfoContext } from 'contexts';
 import { capitalize } from 'lodash';
 import countryList from 'country-list';
 import { FormInput } from '../../inputs';
+import { AccountInfoFormContext } from 'contexts';
 
 function InnerForm() {
   const countries = Object.keys(countryList.getNameList());
   const { handleSubmit, values, errors } =
     useFormikContext<AccountInfoFormData>();
   // disabled = isEqual(values, pick(data.accountInfo, 'username'))
-  const { loading, disabled, name } = useContext(AccountInfoContext);
+  const { loading, disabled, name } = useContext(AccountInfoFormContext);
   return (
     <VStack
       as='form'

@@ -18,8 +18,8 @@ function HeaderLayout({
   };
 
   return (
-    <VStack w='full'>
-      <HStack flex={1} items='center' py={4} px={3} gap={4}>
+    <VStack w='full' h='58px'>
+      <HStack minHeight='58px' flex={1} items='center' px={3} gap={4}>
         <IconButton
           icon='arrow-left-outline'
           ariaLabel='go back'
@@ -27,7 +27,7 @@ function HeaderLayout({
           colorTheme='base400'
           onClick={goBack}
         />
-        <Heading size={3} weight={500} css={{ fontSize: 'medium' }}>
+        <Heading size={4} weight={500} css={{ fontSize: 'large' }}>
           {title}
         </Heading>
       </HStack>

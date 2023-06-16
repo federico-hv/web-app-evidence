@@ -2,6 +2,8 @@ import { Box, Checkbox, HStack, Text, VStack } from '@holdr-ui/react';
 import { SettingCheckboxProp } from './setting-checkbox.type';
 
 function SettingCheckbox({
+  value,
+  onChange,
   heading,
   subheading,
   disabled,
@@ -23,7 +25,13 @@ function SettingCheckbox({
           )}
         </Box>
       </VStack>
-      <Checkbox disabled={disabled} labelledBy={id} />
+      <Checkbox
+        value={`${value}`}
+        checked={value}
+        onChange={onChange}
+        disabled={disabled}
+        labelledBy={id}
+      />
     </HStack>
   );
 }

@@ -1,5 +1,12 @@
 import { useEffect } from 'react';
-import { Heading, VStack } from '@holdr-ui/react';
+import {
+  Box,
+  Heading,
+  Icon,
+  Input,
+  InputGroup,
+  VStack,
+} from '@holdr-ui/react';
 import { Head, SettingNavigationLink } from 'components';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { ShelfLayout } from 'layouts';
@@ -10,12 +17,12 @@ export function PageHeader({ title }: { title: string }) {
     <VStack
       justify='center'
       px={4}
-      py={2}
+      py={4}
       borderBottom={2}
       borderColor='base100'
-      h={60}
+      h={58}
     >
-      <Heading size={3} weight={500} css={{ fontSize: 'medium' }}>
+      <Heading size={4} weight={500} css={{ fontSize: 'large' }}>
         {title}
       </Heading>
     </VStack>
@@ -48,6 +55,14 @@ function SettingsPage() {
           borderColor='base100'
         >
           <PageHeader title='Settings' />
+          <Box px={4} py={4} borderBottom={2} borderColor='base100'>
+            <InputGroup radius='full'>
+              <InputGroup.LeftElement>
+                <Icon name='search-outline' />
+              </InputGroup.LeftElement>
+              <Input placeholder='Search settings' />
+            </InputGroup>
+          </Box>
           <SettingNavigationLink
             to={Paths.setting.account}
             label='Your account'

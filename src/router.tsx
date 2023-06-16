@@ -9,34 +9,12 @@ import {
   NotificationsPage,
   ProfilePage,
   SupportPage,
-  SettingsPage,
-  TwoFactorAuthSettingsPage,
-  AccountSecuritySettingsPage,
-  ConnectedAccountSettingsPage,
-  AccountSettingsPage,
-  ChangePasswordSettingPage,
-  AccountInfoSettingsPage,
-  SecuritySettingsPage,
-  PrivacySettingsPage,
-  NotificationsSettingsPage,
-  ProtectAndTaggingSettingsPage,
-  MuteAndBlockSettingsPage,
-  MutedAccountsSettingsPage,
-  BlockedAccountsSettingsPage,
-  NotificationsPreferenceSettingsPage,
-  NotificationsFilterSettingsPage,
-  EmailFiltersSettingsPage,
-  MutedNotificationsSettingsPage,
-  UsernameSettingPage,
-  PhoneSettingPage,
-  EmailSettingPage,
-  GenderSettingPage,
-  CountrySettingPage,
 } from './pages';
 import { MainLayout } from './layouts';
 import { PathParams, Paths } from './shared';
 import { AuthGuard, AuthRedirect } from './components';
-import BirthdaySettingPage from './pages/settings/account/birthday';
+import { prefix } from './utilities';
+import { SettingsRoutes } from './routes';
 
 function Router() {
   return (
@@ -52,100 +30,10 @@ function Router() {
             path={Paths.notifications}
             element={<NotificationsPage />}
           />
-          <Route path={Paths.settings} element={<SettingsPage />}>
-            <Route
-              path={Paths.setting.login_security}
-              element={<TwoFactorAuthSettingsPage />}
-            />
-            <Route
-              path={Paths.setting.account_security}
-              element={<AccountSecuritySettingsPage />}
-            />
-            <Route
-              path={Paths.setting.connected_accounts}
-              element={<ConnectedAccountSettingsPage />}
-            />
-            <Route
-              path={Paths.setting.account}
-              element={<AccountSettingsPage />}
-            />
-            <Route
-              path={Paths.setting.change_password}
-              element={<ChangePasswordSettingPage />}
-            />
-            <Route
-              path={Paths.setting.account_info}
-              element={<AccountInfoSettingsPage />}
-            />
-            <Route
-              path={Paths.setting.security}
-              element={<SecuritySettingsPage />}
-            />
-            <Route
-              path={Paths.setting.privacy}
-              element={<PrivacySettingsPage />}
-            />
-            <Route
-              path={Paths.setting.notifications}
-              element={<NotificationsSettingsPage />}
-            />
-            <Route
-              path={Paths.setting.protection_and_tagging}
-              element={<ProtectAndTaggingSettingsPage />}
-            />
-            <Route
-              path={Paths.setting.mute_and_block}
-              element={<MuteAndBlockSettingsPage />}
-            />
-            <Route
-              path={Paths.setting.muted_accounts}
-              element={<MutedAccountsSettingsPage />}
-            />
-            <Route
-              path={Paths.setting.blocked_accounts}
-              element={<BlockedAccountsSettingsPage />}
-            />
-            <Route
-              path={Paths.setting.notifications_filters}
-              element={<NotificationsFilterSettingsPage />}
-            />
-            <Route
-              path={Paths.setting.notifications_preferences}
-              element={<NotificationsPreferenceSettingsPage />}
-            />
-            <Route
-              path={Paths.setting.email_notifications}
-              element={<EmailFiltersSettingsPage />}
-            />
-            <Route
-              path={Paths.setting.muted_notifications}
-              element={<MutedNotificationsSettingsPage />}
-            />
-            <Route
-              path={Paths.setting.username}
-              element={<UsernameSettingPage />}
-            />
-            <Route
-              path={Paths.setting.phone}
-              element={<PhoneSettingPage />}
-            />
-            <Route
-              path={Paths.setting.email}
-              element={<EmailSettingPage />}
-            />
-            <Route
-              path={Paths.setting.country}
-              element={<CountrySettingPage />}
-            />
-            <Route
-              path={Paths.setting.gender}
-              element={<GenderSettingPage />}
-            />
-            <Route
-              path={Paths.setting.birthday}
-              element={<BirthdaySettingPage />}
-            />
-          </Route>
+          <Route
+            path={prefix(Paths.settings, '/*')}
+            element={<SettingsRoutes />}
+          />
         </Route>
         {/* PROTECTED ROUTES - ARTISTS */}
         <Route element={<AuthGuard roles={['artist']} />}></Route>

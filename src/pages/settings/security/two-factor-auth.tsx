@@ -20,7 +20,7 @@ function TwoFactorAuthSettingsPage() {
         backLink={prefix(RootSettingsPath, Paths.setting.account_security)}
       >
         <Box px={4}>
-          <VStack gap={4}>
+          <VStack gap={5}>
             <SettingCheckbox
               heading='Text Message'
               subheading='Logging into Holdr will prompt a text message to be sent

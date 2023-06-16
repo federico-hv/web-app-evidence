@@ -21,7 +21,7 @@ function SettingButton({
         )}
         <HStack flex={1} justify='space-between' items='center'>
           <VStack gap={1}>
-            <Text casing='capitalize'>{heading}</Text>
+            <Text>{heading}</Text>
             {subheading && (
               <Text size={2} color='base400'>
                 {subheading}

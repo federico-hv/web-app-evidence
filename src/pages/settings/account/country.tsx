@@ -1,20 +1,18 @@
-import { Box } from '@holdr-ui/react';
 import { HeaderLayout } from 'layouts';
-import { Head, Loader, Error, AccountInfoForm } from 'components';
+import { Head, Error, AccountInfoForm } from 'components';
 import { Paths } from 'shared';
-import { AccountInfoContextProvider } from 'contexts';
+import {
+  AccountInfoContext,
+  AccountInfoFormContextProvider,
+} from 'contexts';
 import { isEqual, lowerCase, pick } from 'lodash';
-import { useUpdateAccountInfo, useAccountInfo } from 'lib';
-import { prefix } from '../../../utilities';
+import { useUpdateAccountInfo } from 'lib';
+import { prefix } from 'utilities';
 import { RootSettingsPath } from '../security/root';
+import { useContext } from 'react';
 
 function CountrySettingPage() {
-  const {
-    loading: loadingQuery,
-    error: errorQuery,
-    data,
-  } = useAccountInfo();
-
+  const { data } = useContext(AccountInfoContext);
   const {
     loading: loadingMutation,
     error: errorMutation,
@@ -23,40 +21,35 @@ function CountrySettingPage() {
   } = useUpdateAccountInfo();
   return (
     <Error
-      hasError={!!errorQuery || !!errorMutation}
-      errorEl={<Box>{errorQuery?.message || errorMutation?.message}</Box>}
+      hasError={!!errorMutation}
+      errorMessage={errorMutation?.message}
     >
       <Head
         title='Update country'
         description='Change your country.'
         url={`${Paths.settings}/${Paths.setting.country}`}
       />
-      <Loader loading={loadingQuery}>
-        {data && (
-          <HeaderLayout
-            title='Country'
-            backLink={prefix(RootSettingsPath, Paths.setting.account_info)}
-          >
-            <AccountInfoContextProvider
-              value={{
-                loading: loadingMutation,
-                disabled: (values) =>
-                  isEqual(values, pick(data.accountInfo, 'country')),
-                data: data.accountInfo,
-                name: 'country',
-              }}
-            >
-              <AccountInfoForm
-                initialValues={{
-                  country: lowerCase(data.accountInfo.country),
-                }}
-                onSubmit={onSubmit}
-                onFinish={onFinish}
-              />
-            </AccountInfoContextProvider>
-          </HeaderLayout>
-        )}
-      </Loader>
+      <HeaderLayout
+        title='Country'
+        backLink={prefix(RootSettingsPath, Paths.setting.account_info)}
+      >
+        <AccountInfoFormContextProvider
+          value={{
+            loading: loadingMutation,
+            disabled: (values) => isEqual(values, pick(data, 'country')),
+            data: data,
+            name: 'country',
+          }}
+        >
+          <AccountInfoForm
+            initialValues={{
+              country: lowerCase(data.country),
+            }}
+            onSubmit={onSubmit}
+            onFinish={onFinish}
+          />
+        </AccountInfoFormContextProvider>
+      </HeaderLayout>
     </Error>
   );
 }

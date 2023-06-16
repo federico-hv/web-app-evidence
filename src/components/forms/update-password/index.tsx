@@ -8,6 +8,7 @@ import { UpdatePasswordFormProps } from './update-password.types';
 import { UpdatePasswordSchema } from './update-password.schema';
 import { updatePasswordValues } from './data';
 import { FormInput } from '../../inputs';
+import { ForgotPasswordLink } from '../../links';
 
 function InnerForm() {
   const { handleSubmit, values, errors } =
@@ -32,19 +33,7 @@ function InnerForm() {
             </Text>
           )}
         </VStack>
-        <a
-          href={`${
-            import.meta.env.VITE_AUTH_APP_URL
-          }/reset-password/request`}
-        >
-          <Text
-            size={2}
-            color='base400'
-            css={{ textDecoration: 'underline' }}
-          >
-            Forgot Password?
-          </Text>
-        </a>
+        <ForgotPasswordLink />
       </VStack>
       <VStack px={4} py={5} gap={5} borderBottom={2} borderColor='base100'>
         <FormInput
@@ -95,7 +84,7 @@ function UpdatePasswordForm({
       onSubmit={async (data, { resetForm }) => {
         try {
           await onSubmit(data);
-          //  Check if the password has been successfully set and reset only then
+          //  Check if the account-info has been successfully set and reset only then
           if (mutationData && !mutationData.status) return;
           onFinish(resetForm);
         } catch (e) {
