@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { HeaderLayout } from 'layouts';
-import { AccountInfoForm, Head, Error } from 'components';
+import { Head, Error } from 'components';
 import { Paths } from 'shared';
 import { useUpdateAccountInfo } from 'lib';
 import {
@@ -10,14 +10,22 @@ import {
 import { isEqual, pick } from 'lodash';
 import { prefix } from 'utilities';
 import { RootSettingsPath } from '../security/root';
+import {
+  Box,
+  Button,
+  FormControl,
+  HStack,
+  Input,
+  VStack,
+} from '@holdr-ui/react';
 
 function EmailSettingPage() {
   const { data } = useContext(AccountInfoContext);
   const {
     loading: loadingMutation,
     error: errorMutation,
-    onSubmit,
-    onFinish,
+    // onSubmit,
+    // onFinish,
   } = useUpdateAccountInfo();
 
   return (
@@ -42,11 +50,22 @@ function EmailSettingPage() {
             name: 'email',
           }}
         >
-          <AccountInfoForm
-            initialValues={{ email: data.email }}
-            onSubmit={onSubmit}
-            onFinish={onFinish}
-          />
+          <VStack>
+            <Box px={4} pb={5} borderBottom={2} borderColor='base100'>
+              <Box css={{ opacity: 0.5 }}>
+                <FormControl disabled>
+                  <FormControl.Label>Email</FormControl.Label>
+                  <Input
+                    defaultValue={data.email}
+                    css={{ 'user-select': 'none' }}
+                  />
+                </FormControl>
+              </Box>
+            </Box>
+            <HStack justify='flex-end' p={4}>
+              <Button>Update</Button>
+            </HStack>
+          </VStack>
         </AccountInfoFormContextProvider>
       </HeaderLayout>
     </Error>

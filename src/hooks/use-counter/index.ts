@@ -16,9 +16,12 @@ export const useCounter: UseCounterType = () => {
 
   const decrement = () => set((prev) => prev - 1);
 
+  const reset = () => set(0);
+
   return {
     count,
     increment,
+    reset,
     decrement,
   };
 };
