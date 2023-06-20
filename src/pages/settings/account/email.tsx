@@ -37,6 +37,7 @@ function EmailSettingPage() {
   const close = () => {
     turnOff();
     reset();
+    set(data.email);
   };
   const update = (value: string) => set(value);
 

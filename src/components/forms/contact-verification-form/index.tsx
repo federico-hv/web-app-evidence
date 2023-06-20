@@ -12,6 +12,7 @@ import { extraBtnPadding } from '../../../shared';
 import phones from 'assets/json/phone.code.json';
 import { ContactVerificationSchema } from './contact-verification.schema';
 import { useSendVerificationOTP } from '../../../lib';
+import { isInputDisabled } from '../../../utilities';
 
 const Channel: Record<'email' | 'phone', string> = {
   email: 'email',
@@ -20,9 +21,7 @@ const Channel: Record<'email' | 'phone', string> = {
 
 function ContactVerificationForm() {
   const { increment } = useContext(StepperContext);
-  const { name, phone, email, update } = useContext(
-    ChangeContactInfoContext,
-  );
+  const { name, update } = useContext(ChangeContactInfoContext);
   const { data } = useContext(AccountInfoContext);
 
   const currentPhone = phones.find(
@@ -47,8 +46,8 @@ function ContactVerificationForm() {
   return (
     <Formik
       initialValues={{
-        phone: phone,
-        email: email,
+        phone: '',
+        email: '',
         channel: Channel[name],
       }}
       validationSchema={ContactVerificationSchema}
@@ -56,42 +55,48 @@ function ContactVerificationForm() {
         resetForm();
       }}
     >
-      <VStack as='form' h='full' justify='space-between'>
-        <VStack gap={3}>
-          {error && error.message && (
-            <Alert status='danger' variant='subtle'>
-              <Alert.Content>
-                <Alert.Description>{error.message}</Alert.Description>
-              </Alert.Content>
-            </Alert>
-          )}
+      {({ values, errors }) => (
+        <VStack as='form' h='full' justify='space-between'>
+          <VStack gap={3}>
+            {error && error.message && (
+              <Alert status='danger' variant='subtle'>
+                <Alert.Content>
+                  <Alert.Description>{error.message}</Alert.Description>
+                </Alert.Content>
+              </Alert>
+            )}
+            {name === 'phone' && (
+              <FormInput
+                prefix={currentPhone ? currentPhone.dial_code : ''}
+                name='phone'
+                type='phone'
+              />
+            )}
+            {name === 'email' && (
+              <FormInput name='email' type='email' label='email' />
+            )}
+          </VStack>
           {name === 'phone' && (
-            <FormInput
-              prefix={currentPhone ? currentPhone.dial_code : ''}
-              name='phone'
-              type='phone'
+            <VerifyContactInfoDialog
+              loading={loading}
+              onContinue={handleContinue}
             />
           )}
           {name === 'email' && (
-            <FormInput name='email' type='email' label='email' />
+            <Button
+              type='button'
+              disabled={isInputDisabled(values, errors, ['email'])}
+              fullWidth
+              className={extraBtnPadding()}
+              onClick={async () =>
+                handleContinue(values.email as string, 'email')
+              }
+            >
+              Continue
+            </Button>
           )}
         </VStack>
-        {name === 'phone' && (
-          <VerifyContactInfoDialog
-            loading={loading}
-            onContinue={handleContinue}
-          />
-        )}
-        {name === 'email' && (
-          <Button
-            fullWidth
-            className={extraBtnPadding()}
-            onClick={increment}
-          >
-            Continue
-          </Button>
-        )}
-      </VStack>
+      )}
     </Formik>
   );
 }

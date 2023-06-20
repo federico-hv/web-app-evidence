@@ -48,6 +48,7 @@ function PhoneSettingPage() {
   const close = () => {
     turnOff();
     reset();
+    set(data.phone);
   };
 
   const update = (value: string) => set(value);
