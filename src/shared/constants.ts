@@ -41,6 +41,33 @@ export const Paths = {
   authRedirect: 'auth/redirect',
 };
 
+export const SettingsParentMap = {
+  [Paths.setting.account]: Paths.setting.account,
+  [Paths.setting.account_info]: Paths.setting.account,
+  [Paths.setting.username]: Paths.setting.account,
+  [Paths.setting.phone]: Paths.setting.account,
+  [Paths.setting.email]: Paths.setting.account,
+  [Paths.setting.country]: Paths.setting.account,
+  [Paths.setting.gender]: Paths.setting.account,
+  [Paths.setting.birthday]: Paths.setting.account,
+  [Paths.setting.change_password]: Paths.setting.account,
+
+  [Paths.setting.security]: Paths.setting.security,
+  [Paths.setting.account_security]: Paths.setting.security,
+  [Paths.setting.login_security]: Paths.setting.security,
+  [Paths.setting.connected_accounts]: Paths.setting.security,
+
+  [Paths.setting.privacy]: Paths.setting.privacy,
+  [Paths.setting.protection_and_tagging]: Paths.setting.privacy,
+  [Paths.setting.mute_and_block]: Paths.setting.privacy,
+  [Paths.setting.blocked_accounts]: Paths.setting.privacy,
+  [Paths.setting.muted_accounts]: Paths.setting.privacy,
+
+  [Paths.setting.notifications]: Paths.setting.notifications,
+  [Paths.setting.email_notifications]: Paths.setting.notifications,
+  [Paths.setting.muted_notifications]: Paths.setting.notifications,
+};
+
 export const RootSettingsPath = `/${Paths.settings}/`;
 
 export const PathParams = {

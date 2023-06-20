@@ -14,6 +14,8 @@ function SettingNavigationLink({
         p={4}
         bgColor={active ? 'base100' : 'transparent'}
         _hover={{ backgroundColor: '$base100' }}
+        borderLeft={active ? 2 : 0}
+        borderColor='base600'
       >
         {label}
         <Icon name='caret-right-outline' />

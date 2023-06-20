@@ -1,8 +1,5 @@
 import { object, string } from 'yup';
 import {
-  emailPatternMsg,
-  phonePattern,
-  phonePatternMsg,
   ProfileFormData,
   usernamePattern,
   usernamePatternMsg,
@@ -10,10 +7,6 @@ import {
 import { maximumLengthMsg, minimumLengthMsg } from 'utilities';
 
 export const UpdateAccountInfoSchema = object<ProfileFormData>({
-  email: string().email(emailPatternMsg).optional(),
-  phone: string()
-    .matches(new RegExp(phonePattern), phonePatternMsg)
-    .optional(),
   country: string().optional(),
   gender: string().optional(),
   birthday: string().optional(),

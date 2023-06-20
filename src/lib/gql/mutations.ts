@@ -14,9 +14,7 @@ export const UPDATE_PROFILE = gql`
 export const UPDATE_ACCOUNT_INFO = gql`
   mutation updateAccountInfo($payload: UpdateAccountInfoInput!) {
     updateAccountInfo(payload: $payload) {
-      email
       username
-      phone
       country
       gender
       birthday
@@ -30,6 +28,24 @@ export const UPDATE_PASSWORD = gql`
     updatePassword(payload: $payload) {
       status
       message
+    }
+  }
+`;
+
+export const SEND_VERIFICATION_OTP = gql`
+  mutation sendVerificationOTP($payload: SendVerificationOtpInput!) {
+    sendVerificationOTP(payload: $payload) {
+      status
+      message
+    }
+  }
+`;
+
+export const UPDATE_CONTACT_INFO = gql`
+  mutation updateContactInfo($payload: UpdateContactInfoInput!) {
+    updateContactInfo(payload: $payload) {
+      email
+      phone
     }
   }
 `;

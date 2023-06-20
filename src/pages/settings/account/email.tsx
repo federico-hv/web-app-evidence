@@ -1,55 +1,113 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { HeaderLayout } from 'layouts';
-import { AccountInfoForm, Head, Error } from 'components';
+import {
+  Head,
+  ChangeContactInfoDialog,
+  Stepper,
+  StepperStep,
+  ChangeContactInfoDialogBody,
+  ContactVerificationForm,
+  OTPVerificationForm,
+} from 'components';
 import { Paths } from 'shared';
-import { useUpdateAccountInfo } from 'lib';
 import {
   AccountInfoContext,
-  AccountInfoFormContextProvider,
+  ChangeContactInfoContextProvider,
+  StepperContextProvider,
 } from 'contexts';
-import { isEqual, pick } from 'lodash';
 import { prefix } from 'utilities';
 import { RootSettingsPath } from '../security/root';
+import {
+  Box,
+  FormControl,
+  HStack,
+  Input,
+  Text,
+  useSwitch,
+  VStack,
+} from '@holdr-ui/react';
+import { useCounter } from '../../../hooks';
+import { ContactDialogWrapper } from './phone';
 
 function EmailSettingPage() {
+  const { count: step, increment, decrement, reset } = useCounter();
   const { data } = useContext(AccountInfoContext);
-  const {
-    loading: loadingMutation,
-    error: errorMutation,
-    onSubmit,
-    onFinish,
-  } = useUpdateAccountInfo();
+  const [state, set] = useState(data.email);
+  const { switchState, turnOn, turnOff } = useSwitch();
+  const close = () => {
+    turnOff();
+    reset();
+    set(data.email);
+  };
+  const update = (value: string) => set(value);
 
   return (
-    <Error
-      hasError={!!errorMutation}
-      errorMessage={errorMutation?.message}
-    >
+    <>
       <Head
-        title='Update email'
-        description='Change your email.'
-        url={`${Paths.settings}/${Paths.setting.username}`}
+        title='Change email'
+        description='Change your email address.'
+        url={`${Paths.settings}/${Paths.setting.email}`}
       />
       <HeaderLayout
         title='Email'
         backLink={prefix(RootSettingsPath, Paths.setting.account_info)}
       >
-        <AccountInfoFormContextProvider
-          value={{
-            loading: loadingMutation,
-            disabled: (values) => isEqual(values, pick(data, 'email')),
-            data: data,
-            name: 'email',
-          }}
-        >
-          <AccountInfoForm
-            initialValues={{ email: data.email }}
-            onSubmit={onSubmit}
-            onFinish={onFinish}
-          />
-        </AccountInfoFormContextProvider>
+        <VStack>
+          <Box px={4} pb={5} borderBottom={2} borderColor='base100'>
+            <Box css={{ opacity: 0.5 }}>
+              <FormControl disabled>
+                <FormControl.Label>Email</FormControl.Label>
+                <Input
+                  defaultValue={data.email}
+                  css={{ 'user-select': 'none' }}
+                />
+              </FormControl>
+            </Box>
+          </Box>
+          <HStack justify='flex-end' p={4}>
+            <ChangeContactInfoDialog
+              isOpen={switchState}
+              onOpen={turnOn}
+              onClose={close}
+              name='email'
+              value={data.email}
+            >
+              <ChangeContactInfoContextProvider
+                value={{ email: state, update, name: 'email', close }}
+              >
+                <StepperContextProvider
+                  value={{ increment, decrement, step }}
+                >
+                  <Stepper currentStep={step}>
+                    <StepperStep step={0}>
+                      <ContactDialogWrapper>
+                        <ChangeContactInfoDialogBody
+                          name='email'
+                          value={data.email}
+                        />
+                        <ContactVerificationForm />
+                      </ContactDialogWrapper>
+                    </StepperStep>
+                    <StepperStep step={1}>
+                      <ContactDialogWrapper>
+                        <Text>
+                          Enter the code that you was sent to{' '}
+                          <Text weight={500} css={{ display: 'inline' }}>
+                            {state}
+                          </Text>
+                          .
+                        </Text>
+                        <OTPVerificationForm />
+                      </ContactDialogWrapper>
+                    </StepperStep>
+                  </Stepper>
+                </StepperContextProvider>
+              </ChangeContactInfoContextProvider>
+            </ChangeContactInfoDialog>
+          </HStack>
+        </VStack>
       </HeaderLayout>
-    </Error>
+    </>
   );
 }
 EmailSettingPage.displayName = 'EmailSettingPage';

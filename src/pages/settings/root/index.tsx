@@ -10,7 +10,7 @@ import {
 import { Head, SettingNavigationLink } from 'components';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { ShelfLayout } from 'layouts';
-import { Paths } from 'shared';
+import { Paths, SettingsParentMap } from 'shared';
 
 export function PageHeader({ title }: { title: string }) {
   return (
@@ -66,22 +66,31 @@ function SettingsPage() {
           <SettingNavigationLink
             to={Paths.setting.account}
             label='Your account'
-            active={currentSetting === Paths.setting.account}
+            active={
+              SettingsParentMap[currentSetting] === Paths.setting.account
+            }
           />
           <SettingNavigationLink
             to={Paths.setting.security}
             label='Security and account access'
-            active={currentSetting === Paths.setting.security}
+            active={
+              SettingsParentMap[currentSetting] === Paths.setting.security
+            }
           />
           <SettingNavigationLink
             to={Paths.setting.privacy}
             label='Privacy and safety'
-            active={currentSetting === Paths.setting.privacy}
+            active={
+              SettingsParentMap[currentSetting] === Paths.setting.privacy
+            }
           />
           <SettingNavigationLink
             to={Paths.setting.notifications}
             label='Notifications'
-            active={currentSetting === Paths.setting.notifications}
+            active={
+              SettingsParentMap[currentSetting] ===
+              Paths.setting.notifications
+            }
           />
         </ShelfLayout.Shelf>
         <ShelfLayout.Shelf

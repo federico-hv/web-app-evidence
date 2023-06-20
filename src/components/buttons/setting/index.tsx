@@ -8,6 +8,7 @@ function SettingButton({
   icon,
   heading,
   subheading,
+  capitalize,
 }: SettingsButtonProp) {
   const location = useLocation();
 
@@ -21,9 +22,15 @@ function SettingButton({
         )}
         <HStack flex={1} justify='space-between' items='center'>
           <VStack gap={1}>
-            <Text>{heading}</Text>
+            <Text casing={capitalize?.heading ? 'capitalize' : 'normal'}>
+              {heading}
+            </Text>
             {subheading && (
-              <Text size={2} color='base400'>
+              <Text
+                casing={capitalize?.subheading ? 'capitalize' : 'normal'}
+                size={2}
+                color='base400'
+              >
                 {subheading}
               </Text>
             )}

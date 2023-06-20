@@ -5,4 +5,5 @@ export interface SettingsButtonProp {
   icon?: IconName;
   heading: string;
   subheading?: string;
+  capitalize?: { subheading?: boolean; heading?: boolean };
 }

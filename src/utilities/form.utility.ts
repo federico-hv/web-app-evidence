@@ -10,7 +10,7 @@ export const maximumLengthMsg = (max: number) =>
 export const requiredField = (field: string) => `Enter your ${field}`;
 
 export function isInputDisabled<T extends StringNumeric, U>(
-  values: Record<T, any>,
+  values: Record<any, any>,
   errors: FormikErrors<U>,
   keys: Array<any>,
 ) {
