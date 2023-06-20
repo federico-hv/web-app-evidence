@@ -1,7 +1,7 @@
 import { Formik } from 'formik';
 import { Button, VStack, Alert } from '@holdr-ui/react';
 import { FormInput } from '../../inputs';
-import { useContext } from 'react';
+import { FormEvent, useContext } from 'react';
 import {
   AccountInfoContext,
   ChangeContactInfoContext,
@@ -37,8 +37,8 @@ function ContactVerificationForm() {
       contact: value,
       channel: channel,
     });
+    update(value);
     if (!error) {
-      update(value);
       increment();
     }
   };
@@ -51,12 +51,20 @@ function ContactVerificationForm() {
         channel: Channel[name],
       }}
       validationSchema={ContactVerificationSchema}
-      onSubmit={(_, { resetForm }) => {
-        resetForm();
+      onSubmit={() => {
+        increment();
       }}
     >
-      {({ values, errors }) => (
-        <VStack as='form' h='full' justify='space-between'>
+      {({ values, handleSubmit, errors }) => (
+        <VStack
+          as='form'
+          h='full'
+          justify='space-between'
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleSubmit(e as FormEvent<HTMLFormElement>);
+          }}
+        >
           <VStack gap={3}>
             {error && error.message && (
               <Alert status='danger' variant='subtle'>

@@ -90,7 +90,13 @@ function EmailSettingPage() {
                     </StepperStep>
                     <StepperStep step={1}>
                       <ContactDialogWrapper>
-                        <Text>Enter the code that you was sent to .</Text>
+                        <Text>
+                          Enter the code that you was sent to{' '}
+                          <Text weight={500} css={{ display: 'inline' }}>
+                            {state}
+                          </Text>
+                          .
+                        </Text>
                         <OTPVerificationForm />
                       </ContactDialogWrapper>
                     </StepperStep>
