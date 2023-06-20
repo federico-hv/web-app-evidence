@@ -37,8 +37,8 @@ function ContactVerificationForm() {
       contact: value,
       channel: channel,
     });
-    update(value);
     if (!error) {
+      update(value);
       increment();
     }
   };
@@ -52,7 +52,7 @@ function ContactVerificationForm() {
       }}
       validationSchema={ContactVerificationSchema}
       onSubmit={() => {
-        increment();
+        //nothing
       }}
     >
       {({ values, handleSubmit, errors }) => (
@@ -60,10 +60,7 @@ function ContactVerificationForm() {
           as='form'
           h='full'
           justify='space-between'
-          onSubmit={(e) => {
-            e.preventDefault();
-            handleSubmit(e as FormEvent<HTMLFormElement>);
-          }}
+          onSubmit={(e) => handleSubmit(e as FormEvent<HTMLFormElement>)}
         >
           <VStack gap={3}>
             {error && error.message && (
