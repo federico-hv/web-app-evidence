@@ -28,6 +28,15 @@ import {
 } from '../pages';
 import BirthdaySettingPage from '../pages/settings/account/birthday';
 
+/**
+ * Responsive:
+ * Try removing the SettingsPage from the main Route component
+ * and see what happens => the rest of the content will be rendered:
+ *
+ * 1) Will need a settings page ->  display all setting options
+ * 2) Possibly add a wrapper that adds the appropriate padding-top
+ */
+
 const SettingsRoutes = () => (
   <Routes>
     <Route path='' element={<SettingsPage />}>

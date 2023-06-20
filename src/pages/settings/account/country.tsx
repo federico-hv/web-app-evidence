@@ -5,7 +5,7 @@ import {
   AccountInfoContext,
   AccountInfoFormContextProvider,
 } from 'contexts';
-import { isEqual, lowerCase, pick } from 'lodash';
+import { isEqual, pick } from 'lodash';
 import { useUpdateAccountInfo } from 'lib';
 import { prefix } from 'utilities';
 import { RootSettingsPath } from '../security/root';
@@ -43,7 +43,7 @@ function CountrySettingPage() {
         >
           <AccountInfoForm
             initialValues={{
-              country: lowerCase(data.country),
+              country: data.country,
             }}
             onSubmit={onSubmit}
             onFinish={onFinish}

@@ -15,4 +15,5 @@ export interface FormInputProps {
   min?: StringNumeric;
   max?: StringNumeric;
   children?: ReactNode;
+  prefix?: string;
 }

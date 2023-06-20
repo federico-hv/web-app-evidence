@@ -8,16 +8,15 @@ import { FormEvent, useContext } from 'react';
 import { Box, Button, HStack, VStack } from '@holdr-ui/react';
 import { isInputDisabled } from 'utilities';
 import { IAccountInfo } from 'shared';
-import { capitalize } from 'lodash';
-import countryList from 'country-list';
 import { FormInput } from '../../inputs';
 import { AccountInfoFormContext } from 'contexts';
 
+import phones from 'assets/json/phone.code.json';
+
 function InnerForm() {
-  const countries = Object.keys(countryList.getNameList());
+  const countries = phones.map(({ name }) => name);
   const { handleSubmit, values, errors } =
     useFormikContext<AccountInfoFormData>();
-  // disabled = isEqual(values, pick(data.accountInfo, 'username'))
   const { loading, disabled, name } = useContext(AccountInfoFormContext);
   return (
     <VStack
@@ -34,30 +33,18 @@ function InnerForm() {
               label='Username'
             />
           )}
-          {name === 'phone' && (
-            <FormInput
-              disabled={loading}
-              name='phone'
-              type='text'
-              label='Phone'
-            />
-          )}
-          {name === 'email' && (
-            <FormInput
-              disabled={loading}
-              name='email'
-              type='text'
-              label='Email'
-            />
-          )}
           {name === 'birthday' && (
             <FormInput disabled={loading} name='birthday' type='date' />
           )}
           {name === 'country' && (
             <FormInput name='country' type='select' label='country'>
               {countries.map((country) => (
-                <option key={country} value={country}>
-                  {capitalize(country)}
+                <option
+                  key={country}
+                  value={country}
+                  style={{ textTransform: 'capitalize' }}
+                >
+                  {country}
                 </option>
               ))}
             </FormInput>

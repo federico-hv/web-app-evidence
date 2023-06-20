@@ -56,6 +56,7 @@ function AccountInfoPage() {
             path={prefix(RootSettingsPath, Paths.setting.country)}
             heading='Country'
             subheading={capitalize(data.country)}
+            capitalize={{ subheading: true }}
           />
           <SettingButton
             path={prefix(RootSettingsPath, Paths.setting.gender)}

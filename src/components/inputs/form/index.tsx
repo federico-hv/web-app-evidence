@@ -37,7 +37,7 @@ function FormInput({
           {label}
         </FormControl.Label>
       )}
-      {type === 'date' ? (
+      {type === 'date' || type === 'phone' ? (
         <FormField
           disabled={disabled}
           type={type}
