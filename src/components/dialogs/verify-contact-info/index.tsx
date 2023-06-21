@@ -35,7 +35,7 @@ function VerifyContactInfoDialog({
         <AlertDialog.Overlay />
         <AlertDialog.Content>
           <AlertDialog.Title>
-            <Heading as='h4' size={3} casing='capitalize'>
+            <Heading as='h4' size={3}>
               Verification code
             </Heading>
           </AlertDialog.Title>

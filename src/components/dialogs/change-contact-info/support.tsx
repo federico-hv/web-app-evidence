@@ -8,11 +8,11 @@ function ChangeContactInfoHeader({
   return (
     <>
       {value ? (
-        <Heading as='h3' size={3}>
+        <Heading as='h3' size={3} casing='uppercase'>
           Change {name}
         </Heading>
       ) : (
-        <Heading as='h3' size={3}>
+        <Heading as='h3' size={3} casing='uppercase'>
           Add {name}
         </Heading>
       )}

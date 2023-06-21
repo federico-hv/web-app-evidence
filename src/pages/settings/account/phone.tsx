@@ -8,6 +8,7 @@ import {
   StepperStep,
   ChangeContactInfoDialogBody,
   OTPVerificationForm,
+  DestructiveAlertDialog,
 } from 'components';
 import {
   AccountInfoContext,
@@ -75,7 +76,16 @@ function PhoneSettingPage() {
               </FormControl>
             </Box>
           </Box>
-          <HStack justify='flex-end' p={4}>
+          <HStack justify='flex-end' p={4} gap={4}>
+            {data.phone && (
+              <DestructiveAlertDialog
+                heading='Delete phone number'
+                description='Once you delete the phone number,
+                  you will no longer receive login codes via the phone number.'
+                actionText='Yes, Delete Number'
+                buttonText='Delete'
+              />
+            )}
             <ChangeContactInfoDialog
               isOpen={switchState}
               onOpen={turnOn}
