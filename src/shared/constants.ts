@@ -1,7 +1,8 @@
 import googleLogo from '../assets/images/google-logo.png';
 import spotifyLogo from '../assets/images/spotify-logo.png';
 import appleLogo from '../assets/images/apple-logo.png';
-import { IProviderItem, ProviderName } from './types';
+import { ProviderName } from './types';
+import { IProviderItem } from './interfaces';
 
 export const Paths = {
   home: '',
