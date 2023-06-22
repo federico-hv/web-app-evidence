@@ -26,7 +26,7 @@ export function useUpdateContactInfo() {
                 const accountInfo = data?.updateContactInfo;
                 cache.writeQuery({
                   query: GET_ACCOUNT_INFO,
-                  data: { ...current, accountInfo },
+                  data: { ...current, ...accountInfo },
                 });
               },
             },

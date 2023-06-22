@@ -2,7 +2,7 @@ import { Box, HStack, Image } from '@holdr-ui/react';
 import { useContext } from 'react';
 
 import { AuthContext } from 'contexts';
-import { GlobalSearch } from '../../overlays/';
+import { GlobalSearch } from '../../overlay/';
 
 import logoDark from 'assets/images/logo-dark.png';
 import {

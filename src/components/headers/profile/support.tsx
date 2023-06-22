@@ -1,14 +1,17 @@
 import { useContext } from 'react';
 import { Avatar, Box, HStack, Image, Text, VStack } from '@holdr-ui/react';
 import { IProfile } from 'shared';
-
 import { SocialButton } from '../../buttons';
-import { ProfileOverlay } from '../../overlays';
-import ProfileNameGroup from '../../groups/profile-name';
+import { ProfileOverlay } from '../../overlay';
 import { AuthContext } from '../../../contexts';
-import { ProfileStatistics } from '../../groups';
 
 import lightPlaceholder from 'assets/images/light-placeholder.jpg';
+import Statistic from '../../data-display/statistic';
+import {
+  TextGroup,
+  TextGroupHeading,
+  TextGroupSubheading,
+} from '../../groups';
 
 function ProfileHeaderSm({ profile }: { profile: IProfile }) {
   const { currentUser } = useContext(AuthContext);
@@ -52,10 +55,12 @@ function ProfileHeaderSm({ profile }: { profile: IProfile }) {
                   }}
                 />
               </Box>
-              <ProfileNameGroup
-                username={profile.username}
-                displayName={profile.displayName}
-              />
+              <TextGroup>
+                <TextGroupHeading>{profile.displayName}</TextGroupHeading>
+                <TextGroupSubheading>
+                  @{profile.username}
+                </TextGroupSubheading>
+              </TextGroup>
             </HStack>
           </Box>
         </Box>
@@ -70,7 +75,9 @@ function ProfileHeaderSm({ profile }: { profile: IProfile }) {
           items='center'
           color='base400'
         >
-          <ProfileStatistics profile={profile} />
+          <HStack gap={3}>
+            <Statistic value={profile.followers} label='followers' />
+          </HStack>
           {currentUser && <SocialButton />}
         </HStack>
       </VStack>
@@ -121,12 +128,12 @@ function ProfileHeaderLg({ profile }: { profile: IProfile }) {
               />
             </Box>
             <HStack w='100%' justify='space-between' items='flex-start'>
-              <VStack gap={4}>
-                <ProfileNameGroup
-                  displayName={profile.displayName}
-                  username={profile.username}
-                />
-              </VStack>
+              <TextGroup>
+                <TextGroupHeading>{profile.displayName}</TextGroupHeading>
+                <TextGroupSubheading>
+                  @{profile.username}
+                </TextGroupSubheading>
+              </TextGroup>
               {currentUser && <SocialButton />}
             </HStack>
           </HStack>

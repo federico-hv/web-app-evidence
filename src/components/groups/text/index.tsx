@@ -1,38 +1,54 @@
-import { ReactNode } from 'react';
-import { Text, VStack } from '@holdr-ui/react';
+import { Stack, Text, Heading } from '@holdr-ui/react';
 // Need to start exporting this properly
-import { TextProps } from '@holdr-ui/react/dist/components/text/src/text.types';
+import {
+  TextGroupHeadingProps,
+  TextGroupProps,
+  TextGroupSubheadingProps,
+  TextGroupSCNames,
+} from './types';
+import { getSubComponent } from 'utilities';
 
-function TextGroup({ children }: { children?: ReactNode }) {
+function TextGroup({ children, ...props }: TextGroupProps) {
+  const TextGroupHeadings = getSubComponent<TextGroupSCNames>(
+    children,
+    'TextGroupHeading',
+  );
+  const TextGroupSubheadings = getSubComponent<TextGroupSCNames>(
+    children,
+    'TextGroupSubheading',
+  );
   return (
-    <VStack
-      gap={1}
-      w='100%'
-      borderBottom={2}
-      borderColor='base100'
-      css={{
-        '@bp4': {
-          borderBottom: 'none',
-        },
-      }}
-    >
-      {children}
-    </VStack>
+    <Stack direction='vertical' gap={2} w='100%' {...props}>
+      {TextGroupHeadings}
+      {TextGroupSubheadings}
+    </Stack>
   );
 }
 TextGroup.displayName = 'TextGroup';
 
-const TextGroupItem = ({ children }: TextProps) => {
+const TextGroupHeading = ({
+  children,
+  ...props
+}: TextGroupHeadingProps) => {
   return (
-    <Text weight={600} size={4}>
+    <Heading as='h1' weight={500} size={4} {...props}>
       {children}
-    </Text>
+    </Heading>
   );
 };
-TextGroupItem.displayName = 'TextGroupItem';
+TextGroupHeading.displayName = 'TextGroupHeading';
 
-TextGroup.Item = TextGroupItem;
+const TextGroupSubheading = ({
+  children,
+  ...props
+}: TextGroupSubheadingProps) => {
+  return <Text {...props}>{children}</Text>;
+};
+TextGroupSubheading.displayName = 'TextGroupSubheading';
 
-export { TextGroupItem };
+TextGroup.Heading = TextGroupHeading;
+TextGroup.Subheading = TextGroupSubheading;
+
+export { TextGroupHeading, TextGroupSubheading };
 
 export default TextGroup;

@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { Avatar, Box, Card, HStack, Text, VStack } from '@holdr-ui/react';
 import { AuthenticatedProfileMenuProps } from './profile-menu.type';
-import { LogoutDialog } from '../../../dialogs';
+import { LogoutDialog } from '../../../dialog';
 import { Paths, textEllipsis } from 'shared';
 import { MenuButton } from '../../../buttons';
 

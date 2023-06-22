@@ -49,3 +49,21 @@ export const UPDATE_CONTACT_INFO = gql`
     }
   }
 `;
+
+export const TWO_FA_APP_REGISTRATION = gql`
+  mutation twoFAAppRegistration {
+    twoFAAppRegistration {
+      code
+      qrCodeUrl
+    }
+  }
+`;
+
+export const ENABLE_TWO_FA = gql`
+  mutation enableTwoFA($payload: EnableTwoFaInput!) {
+    enableTwoFA(payload: $payload) {
+      status
+      message
+    }
+  }
+`;

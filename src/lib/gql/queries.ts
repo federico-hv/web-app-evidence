@@ -65,3 +65,9 @@ export const GET_CONNECTED_ACCOUNTS = gql`
     }
   }
 `;
+
+export const GET_TWO_FA_CHANNEL = gql`
+  query twoFAChannel {
+    twoFAChannel
+  }
+`;

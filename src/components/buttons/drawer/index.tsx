@@ -1,6 +1,6 @@
 import { HStack, Icon, Text } from '@holdr-ui/react';
 import { DrawerButtonProps } from './drawer.button.types';
-import { ButtonActiveOverlay } from '../../overlays';
+import { ButtonActiveOverlay } from '../../overlay';
 
 function DrawerButton({ icon, label, action }: DrawerButtonProps) {
   return (

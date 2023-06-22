@@ -7,7 +7,7 @@ import {
   ChangeContactInfoContext,
   StepperContext,
 } from '../../../contexts';
-import { VerifyContactInfoDialog } from '../../dialogs';
+import { VerifyContactInfoDialog } from '../../dialog';
 import { extraBtnPadding } from '../../../shared';
 import phones from 'assets/json/phone.code.json';
 import { ContactVerificationSchema } from './contact-verification.schema';

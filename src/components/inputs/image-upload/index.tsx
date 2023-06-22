@@ -13,7 +13,7 @@ import {
   CustomDialog1Body,
   CustomDialog1Footer,
   CustomDialog1Header,
-} from '../../dialogs';
+} from '../../dialog';
 import {
   CropperDialogBody,
   CropperDialogFooter,

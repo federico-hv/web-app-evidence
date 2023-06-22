@@ -1,6 +1,6 @@
 import { Button, HStack, IconButton, Skeleton } from '@holdr-ui/react';
 import { Error, Loader } from '../../utility';
-import { EditProfileDialog } from '../../dialogs';
+import { EditProfileDialog } from '../../dialog';
 import { useQuery } from '@apollo/client';
 import { GET_RELATIONSHIP_WITH_USER } from 'lib';
 import { useLocation } from 'react-router-dom';

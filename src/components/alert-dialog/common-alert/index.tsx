@@ -1,25 +1,17 @@
-import { AlertDialog, Button, Heading } from '@holdr-ui/react';
+import { AlertDialog, Heading } from '@holdr-ui/react';
+import { CommonAlertProps } from './types';
 
-interface DestructiveAlertDialogProps {
-  description: string;
-  actionText: string;
-  heading: string;
-  buttonText: string;
-}
-
-function DestructiveAlertDialog({
+function CommonAlertDialog({
   description,
   actionText,
   heading,
-  buttonText,
-}: DestructiveAlertDialogProps) {
+  onAction,
+  variant = 'destructive',
+  children,
+}: CommonAlertProps) {
   return (
     <AlertDialog>
-      <AlertDialog.Trigger>
-        <Button variant='ghost' colorTheme='danger'>
-          {buttonText}
-        </Button>
-      </AlertDialog.Trigger>
+      <AlertDialog.Trigger>{children}</AlertDialog.Trigger>
       <AlertDialog.Portal>
         <AlertDialog.Overlay />
         <AlertDialog.Content>
@@ -31,7 +23,12 @@ function DestructiveAlertDialog({
           <AlertDialog.Description>{description}</AlertDialog.Description>
           <AlertDialog.Actions>
             <AlertDialog.Cancel variant='ghost'>Cancel</AlertDialog.Cancel>
-            <AlertDialog.Action colorTheme='danger'>
+            <AlertDialog.Action
+              onClick={onAction}
+              colorTheme={
+                variant === 'informational' ? 'base800' : 'danger'
+              }
+            >
               {actionText}
             </AlertDialog.Action>
           </AlertDialog.Actions>
@@ -40,6 +37,6 @@ function DestructiveAlertDialog({
     </AlertDialog>
   );
 }
-DestructiveAlertDialog.displayName = 'DestructiveAlertDialog';
+CommonAlertDialog.displayName = 'DestructiveAlertDialog';
 
-export default DestructiveAlertDialog;
+export default CommonAlertDialog;

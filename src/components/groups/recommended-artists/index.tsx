@@ -1,6 +1,6 @@
 import { Box } from '@holdr-ui/react';
 import { GenericItem, Paths, StringNumeric } from 'shared';
-import AsideCard from '../../cards/aside';
+import AsideCard from '../../card/aside';
 import { prefix } from '../../../utilities';
 
 type Artist = { id: string; displayName: string };

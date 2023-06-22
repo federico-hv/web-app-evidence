@@ -8,7 +8,7 @@ import {
   StepperStep,
   ChangeContactInfoDialogBody,
   OTPVerificationForm,
-  DestructiveAlertDialog,
+  CommonAlertDialog,
 } from 'components';
 import {
   AccountInfoContext,
@@ -25,6 +25,7 @@ import {
   VStack,
   Text,
   useSwitch,
+  Button,
 } from '@holdr-ui/react';
 import { useCounter } from '../../../hooks';
 import { Paths } from '../../../shared';
@@ -78,13 +79,18 @@ function PhoneSettingPage() {
           </Box>
           <HStack justify='flex-end' p={4} gap={4}>
             {data.phone && (
-              <DestructiveAlertDialog
+              <CommonAlertDialog
                 heading='Delete phone number'
                 description='Once you delete the phone number,
                   you will no longer receive login codes via the phone number.'
                 actionText='Yes, Delete Number'
-                buttonText='Delete'
-              />
+              >
+                <Button
+                  label='Delete'
+                  variant='ghost'
+                  colorTheme='danger'
+                />
+              </CommonAlertDialog>
             )}
             <ChangeContactInfoDialog
               isOpen={switchState}

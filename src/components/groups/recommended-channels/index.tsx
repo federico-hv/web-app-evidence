@@ -1,6 +1,6 @@
 import { Box } from '@holdr-ui/react';
 import { GenericItem, StringNumeric } from 'shared';
-import AsideCard from '../../cards/aside';
+import AsideCard from '../../card/aside';
 
 type Channel = { id: string; name: string };
 
