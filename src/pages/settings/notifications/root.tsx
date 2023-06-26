@@ -4,8 +4,10 @@ import { Head, SettingButton } from 'components';
 import { prefix } from '../../../utilities';
 import { RootSettingsPath } from '../security/root';
 import { Paths } from '../../../shared';
+import { useMenuNavigate } from '../../../hooks';
 
 function NotificationSettingsPage() {
+  const { goto } = useMenuNavigate();
   return (
     <>
       <Head
@@ -14,7 +16,7 @@ function NotificationSettingsPage() {
         url={prefix(RootSettingsPath, Paths.setting.notifications)}
       />
       <Box>
-        <PageHeader title='Notifications' />
+        <PageHeader title='Notifications' onBack={goto.settings} />
         <SettingButton
           path={prefix(
             RootSettingsPath,

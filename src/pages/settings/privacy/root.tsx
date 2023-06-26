@@ -4,8 +4,10 @@ import { Head, SettingButton } from 'components';
 import { Paths } from 'shared';
 import { prefix } from 'utilities';
 import { RootSettingsPath } from '../security/root';
+import { useMenuNavigate } from '../../../hooks';
 
 function PrivacySettingsPage() {
+  const { goto } = useMenuNavigate();
   return (
     <>
       <Head
@@ -14,7 +16,7 @@ function PrivacySettingsPage() {
         url={prefix(RootSettingsPath, Paths.setting.privacy)}
       />
       <Box>
-        <PageHeader title='Privacy and safety' />
+        <PageHeader title='Privacy and safety' onBack={goto.settings} />
         <SettingButton
           path={prefix(
             RootSettingsPath,

@@ -3,9 +3,11 @@ import { PageHeader } from '../root';
 import { Paths } from 'shared';
 import { prefix } from 'utilities';
 import { Head, SettingButton } from 'components';
+import { useMenuNavigate } from '../../../hooks';
 
 export const RootSettingsPath = `/${Paths.settings}/`;
 function SecuritySettingsPage() {
+  const { goto } = useMenuNavigate();
   return (
     <>
       <Head
@@ -14,7 +16,10 @@ function SecuritySettingsPage() {
         url={prefix(RootSettingsPath, Paths.setting.account_info)}
       />
       <Box>
-        <PageHeader title='Security and account access' />
+        <PageHeader
+          title='Security and account access'
+          onBack={goto.settings}
+        />
         <SettingButton
           path={prefix(RootSettingsPath, Paths.setting.account_security)}
           icon='lock-outline'
