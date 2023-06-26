@@ -67,3 +67,21 @@ export const ENABLE_TWO_FA = gql`
     }
   }
 `;
+
+export const DELETE_PHONE_NUMBER = gql`
+  mutation deletePhoneNumber {
+    deletePhoneNumber {
+      status
+      message
+    }
+  }
+`;
+
+export const DISABLE_TWO_FA = gql`
+  mutation disableTwoFA($channel: TwoFAChannel!) {
+    disableTwoFA(channel: $channel) {
+      status
+      message
+    }
+  }
+`;

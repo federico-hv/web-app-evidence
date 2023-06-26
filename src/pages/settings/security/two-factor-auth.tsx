@@ -1,5 +1,4 @@
 import {
-  AlertDialog,
   Button,
   Center,
   Checkbox,
@@ -26,6 +25,7 @@ import {
   Error,
   Loader,
   TextGroupSubheading,
+  CommonAlertDialog,
 } from 'components';
 import {
   EnableTwoFAInput,
@@ -40,10 +40,88 @@ import { useCounter } from '../../../hooks';
 import { useState } from 'react';
 import { useMutation, useQuery } from '@apollo/client';
 import {
+  DISABLE_TWO_FA,
   ENABLE_TWO_FA,
   GET_TWO_FA_CHANNEL,
   TWO_FA_APP_REGISTRATION,
 } from '../../../lib';
+
+export type TwoFAChannel = 'app' | 'sms';
+
+export function useDisableTwoFA() {
+  const [mutate, { loading, error, data }] = useMutation<
+    { disableTwoFA: IStatus },
+    { channel: TwoFAChannel }
+  >(DISABLE_TWO_FA);
+
+  const disableTwoFA = async (
+    channel: TwoFAChannel,
+    cb?: VoidFunction,
+  ) => {
+    const { data } = await mutate({
+      variables: {
+        channel: channel,
+      },
+      update: (cache) => {
+        cache.modify({
+          fields: {
+            twoFAChannel() {
+              cache.writeQuery({
+                query: GET_TWO_FA_CHANNEL,
+                data: '',
+              });
+            },
+          },
+        });
+      },
+    });
+
+    if (data && data.disableTwoFA.status) {
+      cb && cb();
+    }
+  };
+
+  return { loading, error, data, disableTwoFA };
+}
+
+export function useEnableTwoFA() {
+  const [mutate, { loading: loading, error, data }] = useMutation<
+    {
+      enableTwoFA: IStatus;
+    },
+    { payload: EnableTwoFAInput }
+  >(ENABLE_TWO_FA);
+
+  const enableTwoFA = async (code: string, cb: VoidFunction) => {
+    const { data } = await mutate({
+      variables: {
+        payload: {
+          code: code,
+          channel: 'app',
+        },
+      },
+      update: (cache, { data }) => {
+        cache.modify({
+          fields: {
+            twoFAChannel(current) {
+              const channel = data?.enableTwoFA.status ? 'app' : current;
+              cache.writeQuery({
+                query: GET_TWO_FA_CHANNEL,
+                data: channel,
+              });
+            },
+          },
+        });
+      },
+    });
+
+    if (data && data.enableTwoFA.status) {
+      cb();
+    }
+  };
+
+  return { enableTwoFA, loading, error, data };
+}
 
 function TwoFAAppStep1({ onContinue }: { onContinue?: VoidFunction }) {
   return (
@@ -154,42 +232,10 @@ function TwoFAAppStep2({
 
 function CodeStep({ onContinue }: { onContinue: VoidFunction }) {
   // TODO: Pass error to a global error context provider
-  const [enableTwoFA, { loading: loading, data }] = useMutation<
-    {
-      enableTwoFA: IStatus;
-    },
-    { payload: EnableTwoFAInput }
-  >(ENABLE_TWO_FA);
-
-  const confirm = async () => {
-    const { data } = await enableTwoFA({
-      variables: {
-        payload: {
-          code: value,
-          channel: 'app',
-        },
-      },
-      update: (cache, { data }) => {
-        cache.modify({
-          fields: {
-            twoFAChannel(current) {
-              const channel = data?.enableTwoFA.status ? 'app' : current;
-              cache.writeQuery({
-                query: GET_TWO_FA_CHANNEL,
-                data: channel,
-              });
-            },
-          },
-        });
-      },
-    });
-
-    if (data && data.enableTwoFA.status) {
-      onContinue();
-    }
-  };
+  const { loading, data, enableTwoFA } = useEnableTwoFA();
 
   const { value, handleOnChange } = useInputChange('');
+
   return (
     <>
       <VStack gap={6}>
@@ -223,7 +269,7 @@ function CodeStep({ onContinue }: { onContinue: VoidFunction }) {
       <Button
         isLoading={loading}
         loadingText={loading ? '' : 'Confirming'}
-        onClick={confirm}
+        onClick={() => enableTwoFA(value, onContinue)}
         fullWidth
         className={extraBtnPadding()}
       >
@@ -276,11 +322,12 @@ function TwoFACheckbox({
   name,
   isActive,
 }: {
-  name: 'app' | 'sms';
+  name: TwoFAChannel;
   isActive: boolean;
 }) {
   const { count: step, reset } = useCounter();
   const { switchState, turnOn, turnOff } = useSwitch();
+  const { disableTwoFA } = useDisableTwoFA();
 
   const close = () => {
     reset();
@@ -298,34 +345,16 @@ function TwoFACheckbox({
   return (
     <SwitchConditional>
       <SwitchConditionalCase on={isActive}>
-        <AlertDialog>
-          <AlertDialog.Trigger>
-            <Trigger />
-          </AlertDialog.Trigger>
-          <AlertDialog.Portal>
-            <AlertDialog.Overlay />
-            <AlertDialog.Content>
-              <AlertDialog.Title>
-                <Heading as='h4' size={3} casing='capitalize'>
-                  Disable Two Factor authentication
-                </Heading>
-              </AlertDialog.Title>
-              <AlertDialog.Description>
-                Removing this feature, will remove an extra layer of
+        <CommonAlertDialog
+          heading='Disable Two Factor authentication'
+          description='Removing this feature, will remove an extra layer of
                 security for your account. Are you sure you want to disable
-                it?
-              </AlertDialog.Description>
-              <AlertDialog.Actions>
-                <AlertDialog.Cancel variant='ghost'>
-                  Cancel
-                </AlertDialog.Cancel>
-                <AlertDialog.Action colorTheme='danger'>
-                  Yes, turn off
-                </AlertDialog.Action>
-              </AlertDialog.Actions>
-            </AlertDialog.Content>
-          </AlertDialog.Portal>
-        </AlertDialog>
+                it?'
+          actionText='Yes, turn off'
+          onAction={() => disableTwoFA(name)}
+        >
+          <Trigger />
+        </CommonAlertDialog>
       </SwitchConditionalCase>
 
       <SwitchConditionalCase on={!isActive}>
