@@ -29,6 +29,8 @@ import {
 } from '@holdr-ui/react';
 import { useCounter } from '../../../hooks';
 import { Paths } from '../../../shared';
+import { useMutation } from '@apollo/client';
+import { DELETE_PHONE_NUMBER, GET_ACCOUNT_INFO } from '../../../lib';
 
 export function ContactDialogWrapper({
   children,
@@ -42,11 +44,37 @@ export function ContactDialogWrapper({
   );
 }
 
+export function useDeletePhoneNumber() {
+  const [deletePhoneNumber, { loading, error }] = useMutation(
+    DELETE_PHONE_NUMBER,
+  );
+
+  const onSubmit = async () => {
+    await deletePhoneNumber({
+      update: (cache) => {
+        cache.modify({
+          fields: {
+            accountInfo(current) {
+              cache.writeQuery({
+                query: GET_ACCOUNT_INFO,
+                data: { ...current, phone: '' },
+              });
+            },
+          },
+        });
+      },
+    });
+  };
+
+  return { loading, error, onSubmit };
+}
+
 function PhoneSettingPage() {
   const { count: step, increment, decrement, reset } = useCounter();
   const { data } = useContext(AccountInfoContext);
   const [state, set] = useState(data.phone);
   const { switchState, turnOn, turnOff } = useSwitch();
+  const { onSubmit } = useDeletePhoneNumber();
   const close = () => {
     turnOff();
     reset();
@@ -84,6 +112,7 @@ function PhoneSettingPage() {
                 description='Once you delete the phone number,
                   you will no longer receive login codes via the phone number.'
                 actionText='Yes, Delete Number'
+                onAction={onSubmit}
               >
                 <Button
                   label='Delete'
