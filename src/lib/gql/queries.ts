@@ -71,3 +71,9 @@ export const GET_TWO_FA_CHANNEL = gql`
     twoFAChannel
   }
 `;
+
+export const GET_2FA_RECOVERY_KEY = gql`
+  query twoFARecoveryKey {
+    twoFARecoveryKey
+  }
+`;

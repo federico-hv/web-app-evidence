@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   Center,
   Checkbox,
@@ -26,6 +27,7 @@ import {
   Loader,
   TextGroupSubheading,
   CommonAlertDialog,
+  SettingButton,
 } from 'components';
 import {
   EnableTwoFAInput,
@@ -429,39 +431,68 @@ function TwoFactorAuthSettingsPage() {
           )}
         >
           {data && (
-            <VStack gap={5}>
-              <HStack px={4} gap={4} items='center'>
-                <TextGroup gap={1}>
-                  <TextGroup.Heading id='heading__2fa-sms' size={3}>
-                    Text Message
-                  </TextGroup.Heading>
-                  <TextGroup.Subheading size={2} color='base400'>
-                    Logging into Holdr will prompt a text message to be
-                    sent to your mobile device with an authentication code
-                  </TextGroup.Subheading>
-                </TextGroup>
-                <TwoFACheckbox
-                  name='sms'
-                  isActive={data.twoFAChannel === 'sms'}
-                />
-              </HStack>
-              <HStack px={4} items='center'>
-                <TextGroup gap={1}>
-                  <TextGroup.Heading id='heading__2fa-app' size={3}>
-                    Authentication app
-                  </TextGroup.Heading>
-                  <TextGroup.Subheading size={2} color='base400'>
-                    Logging into Holdr will prompt an authentication code
-                    to be sent to a mobile authentication app.
-                  </TextGroup.Subheading>
-                </TextGroup>
+            <>
+              <VStack gap={5}>
+                <HStack px={4} gap={4} items='center'>
+                  <TextGroup gap={1}>
+                    <TextGroup.Heading id='heading__2fa-sms' size={3}>
+                      Text Message
+                    </TextGroup.Heading>
+                    <TextGroup.Subheading size={2} color='base400'>
+                      Logging into Holdr will prompt a text message to be
+                      sent to your mobile device with an authentication
+                      code
+                    </TextGroup.Subheading>
+                  </TextGroup>
+                  <TwoFACheckbox
+                    name='sms'
+                    isActive={data.twoFAChannel === 'sms'}
+                  />
+                </HStack>
+                <HStack px={4} items='center'>
+                  <TextGroup gap={1}>
+                    <TextGroup.Heading id='heading__2fa-app' size={3}>
+                      Authentication app
+                    </TextGroup.Heading>
+                    <TextGroup.Subheading size={2} color='base400'>
+                      Logging into Holdr will prompt an authentication code
+                      to be sent to a mobile authentication app.
+                    </TextGroup.Subheading>
+                  </TextGroup>
 
-                <TwoFACheckbox
-                  name='app'
-                  isActive={data.twoFAChannel === 'app'}
+                  <TwoFACheckbox
+                    name='app'
+                    isActive={data.twoFAChannel === 'app'}
+                  />
+                </HStack>
+              </VStack>
+              <VStack
+                borderTop={2}
+                borderColor='base100'
+                gap={3}
+                pb={2}
+                mt={4}
+                pt={4}
+              >
+                <Box px={4}>
+                  <Heading
+                    size={4}
+                    weight={500}
+                    css={{ fontSize: 'large' }}
+                  >
+                    Additional information
+                  </Heading>
+                </Box>
+                <SettingButton
+                  path={prefix(
+                    RootSettingsPath,
+                    Paths.setting.backup_code,
+                  )}
+                  heading='Back up codes'
+                  subheading='Get access code that you can use when do not have access for your two factor authentication options.'
                 />
-              </HStack>
-            </VStack>
+              </VStack>
+            </>
           )}
         </HeaderLayout>
       </Loader>

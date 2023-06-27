@@ -5,6 +5,7 @@ import {
   AccountInfoSettingsPage,
   AccountSecuritySettingsPage,
   AccountSettingsPage,
+  BackupCodeSettingsPage,
   BlockedAccountsSettingsPage,
   ChangePasswordSettingPage,
   ConnectedAccountSettingsPage,
@@ -80,6 +81,10 @@ const SettingsRoutes = () => (
       <Route
         path={Paths.setting.mute_and_block}
         element={<MuteAndBlockSettingsPage />}
+      />
+      <Route
+        path={Paths.setting.backup_code}
+        element={<BackupCodeSettingsPage />}
       />
       <Route
         path={Paths.setting.muted_accounts}

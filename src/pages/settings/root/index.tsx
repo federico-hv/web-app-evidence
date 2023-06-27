@@ -58,7 +58,7 @@ export function SettingsSm() {
   return (
     <Box
       display={{ '@bp4': 'none' }}
-      pt={{ '@bp3': '60px' }}
+      pt={{ '@bp3': '67px' }}
       borderLeft={2}
       borderColor='base100'
       h='100vh'

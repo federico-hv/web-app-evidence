@@ -20,6 +20,7 @@ export const Paths = {
     country: 'country',
     birthday: 'birthday',
     gender: 'gender',
+    backup_code: 'backup_code',
     muted_notifications: 'muted_notifications',
     email_notifications: 'email_notifications',
     blocked_accounts: 'blocked_accounts',

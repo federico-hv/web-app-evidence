@@ -85,3 +85,9 @@ export const DISABLE_TWO_FA = gql`
     }
   }
 `;
+
+export const REFRESH_2FA_RECOVERY_KEY = gql`
+  mutation refreshTwoFARecoveryKey {
+    refreshTwoFARecoveryKey
+  }
+`;

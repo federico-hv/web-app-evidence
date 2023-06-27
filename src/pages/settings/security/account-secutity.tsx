@@ -34,10 +34,12 @@ function AccountSecuritySettingsPage() {
               </Text>
             </a>
           </Box>
-          <SettingButton
-            path={prefix(RootSettingsPath, Paths.setting.login_security)}
-            heading='Two-factor authentication'
-          />
+          <Box pb={2} pt={5}>
+            <SettingButton
+              path={prefix(RootSettingsPath, Paths.setting.login_security)}
+              heading='Two-factor authentication'
+            />
+          </Box>
         </VStack>
       </HeaderLayout>
     </>
