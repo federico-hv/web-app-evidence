@@ -6,3 +6,5 @@ export * from './use-update-password';
 export * from './use-send-verifcation-otp';
 export * from './use-update-contact-info';
 export * from './use-refresh-2fa-recovery-key';
+export * from './use-create-relationship';
+export * from './use-remove-relationship';

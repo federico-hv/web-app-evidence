@@ -1,5 +1,8 @@
 import { useMutation } from '@apollo/client';
-import { GET_2FA_RECOVERY_KEY, REFRESH_2FA_RECOVERY_KEY } from '../../gql';
+import {
+  GET_2FA_RECOVERY_KEY,
+  REFRESH_2FA_RECOVERY_KEY,
+} from '../../index';
 
 export function useRefresh2FARecoveryKey() {
   const [mutation, { loading, error }] = useMutation<{

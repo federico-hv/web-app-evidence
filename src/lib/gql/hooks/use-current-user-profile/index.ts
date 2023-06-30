@@ -1,7 +1,7 @@
-import { useAuthContext } from '../../../hooks';
+import { useAuthContext } from '../../../../hooks';
 import { useQuery } from '@apollo/client';
-import { IProfile } from '../../../shared';
-import { GET_PROFILE } from '../../gql';
+import { IProfile } from '../../../../shared';
+import { GET_PROFILE } from '../../index';
 
 export const useCurrentUserProfile = () => {
   const { currentUser } = useAuthContext();

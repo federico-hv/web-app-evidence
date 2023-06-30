@@ -3,8 +3,8 @@ import {
   UpdatePasswordData,
   UpdatePasswordFormData,
   UpdatePasswordPayload,
-} from 'shared';
-import { UPDATE_PASSWORD } from '../../gql';
+} from '../../../../shared';
+import { UPDATE_PASSWORD } from '../../index';
 
 export const useUpdatePassword = () => {
   const [updatePassword, { data, loading, error }] = useMutation<

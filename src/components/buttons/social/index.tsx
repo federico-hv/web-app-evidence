@@ -1,16 +1,23 @@
-import { Button, HStack, IconButton, Skeleton } from '@holdr-ui/react';
-import { Error, Loader } from '../../utility';
+import { Skeleton } from '@holdr-ui/react';
+import {
+  Error,
+  Loader,
+  SwitchConditional,
+  SwitchConditionalCase,
+} from '../../utility';
 import { EditProfileDialog } from '../../dialog';
 import { useQuery } from '@apollo/client';
-import { GET_RELATIONSHIP_WITH_USER } from 'lib';
+import { GET_RELATIONSHIP, RelationshipModel } from 'lib';
 import { useLocation } from 'react-router-dom';
+import FollowButton from '../follow';
+import { FollowingButton2 } from '../following';
 
 function SocialButton() {
   const username = useLocation().pathname.split('/')[1];
 
   const { data, loading, error } = useQuery<{
-    relationshipWithUser: 'none' | 'owned' | 'following';
-  }>(GET_RELATIONSHIP_WITH_USER, {
+    relationship: RelationshipModel;
+  }>(GET_RELATIONSHIP, {
     variables: {
       username: username,
     },
@@ -19,26 +26,18 @@ function SocialButton() {
   return (
     <Error hasError={!!error} errorEl={<></>}>
       <Loader loading={loading} as={<Skeleton />}>
-        {data && data.relationshipWithUser && (
+        {data && data.relationship && (
           <>
-            {data.relationshipWithUser === 'none' && (
-              <HStack gap={3} items='center'>
-                <Button
-                  size={{ '@bp1': 'base', '@bp4': 'base' }}
-                  label='Follow'
-                />
-                <IconButton
-                  variant='ghost'
-                  size={{ '@bp1': 'base', '@bp4': 'base' }}
-                  ariaLabel='more'
-                  icon='more-fill'
-                />
-              </HStack>
-            )}
+            <SwitchConditional>
+              <SwitchConditionalCase on={!data.relationship.code}>
+                <FollowButton />
+              </SwitchConditionalCase>
+              <SwitchConditionalCase on={data.relationship.code === 'F'}>
+                <FollowingButton2 />
+              </SwitchConditionalCase>
+            </SwitchConditional>
 
-            {data.relationshipWithUser === 'owned' && (
-              <EditProfileDialog />
-            )}
+            {data.relationship.code === 'O' && <EditProfileDialog />}
           </>
         )}
       </Loader>

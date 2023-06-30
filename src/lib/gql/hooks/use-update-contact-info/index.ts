@@ -1,5 +1,5 @@
 import { useMutation } from '@apollo/client';
-import { GET_ACCOUNT_INFO, UPDATE_CONTACT_INFO } from '../../gql';
+import { GET_ACCOUNT_INFO, UPDATE_CONTACT_INFO } from '../../index';
 
 interface UpdateContactInfoInput {
   contact: string;

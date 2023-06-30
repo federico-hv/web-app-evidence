@@ -1,23 +1,28 @@
-import { Button, useSwitch } from '@holdr-ui/react';
+import { Button } from '@holdr-ui/react';
+import { useCreateRelationship } from '../../../lib';
+import { useUsername } from '../../../hooks';
 
 function FollowButton() {
-  const { switchState: isFollowing, toggle } = useSwitch(false);
-  const text = isFollowing ? 'Following' : 'Follow';
+  // TODO: Error is given to global Error context
+  const username = useUsername();
+  const { createRelationship, loading } = useCreateRelationship();
+
+  const follow = async () => {
+    await createRelationship({ username, action: 'follow' });
+  };
 
   return (
-    <>
-      {isFollowing ? (
-        <Button variant='outline' onClick={toggle} colorTheme='base700'>
-          {text}
-        </Button>
-      ) : (
-        <Button onClick={toggle} colorTheme='primary400'>
-          {text}
-        </Button>
-      )}
-    </>
+    <Button
+      colorTheme='primary400'
+      isLoading={loading}
+      loadingText={loading ? '' : 'Loading'}
+      onClick={follow}
+    >
+      Follow
+    </Button>
   );
 }
+
 FollowButton.displayName = 'FollowButton';
 
 export default FollowButton;

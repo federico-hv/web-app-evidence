@@ -80,10 +80,12 @@ function GlobalSearch() {
     </HStack>
   );
   const keyExtractor = ({ item }: Item) => item.id;
-  const onClickItem = ({ item }: Item) => {
+  const onClickItem = ({ item }: Item, clearValue?: VoidFunction) => {
     // save the search text
     // save the user's event
     navigate(prefix('/', item.username));
+    setValue('');
+    clearValue && clearValue();
   };
   const onClickSearchItem = (searchText: string) => {
     navigate(prefix('/', `${Paths.discover}?q=${searchText}`));

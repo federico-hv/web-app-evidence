@@ -14,13 +14,22 @@ import { Head, Error, Loader } from 'components';
 import { prefix } from 'utilities';
 import { RootSettingsPath } from './root';
 import { GET_2FA_RECOVERY_KEY, useRefresh2FARecoveryKey } from 'lib';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function BackupCode() {
+  const navigate = useNavigate();
   const { refresh2FARecoveryKey, loading: loadingMutation } =
     useRefresh2FARecoveryKey();
   const { loading, error, data } = useQuery<{ twoFARecoveryKey: string }>(
     GET_2FA_RECOVERY_KEY,
   );
+
+  useEffect(() => {
+    if (!data && !loading) {
+      navigate(prefix(RootSettingsPath, Paths.setting.login_security));
+    }
+  }, [data, error, loading, navigate]);
 
   return (
     <Error hasError={!!error} errorEl={<Box>{error?.message}</Box>}>

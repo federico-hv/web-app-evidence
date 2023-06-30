@@ -91,3 +91,21 @@ export const REFRESH_2FA_RECOVERY_KEY = gql`
     refreshTwoFARecoveryKey
   }
 `;
+
+export const CREATE_RELATIONSHIP = gql`
+  mutation createRelationship($payload: CreateRelationshipInput!) {
+    createRelationship(payload: $payload) {
+      addresseeId
+      code
+    }
+  }
+`;
+
+export const REMOVE_RELATIONSHIP = gql`
+  mutation removeRelationship($payload: RemoveRelationshipInput!) {
+    removeRelationship(payload: $payload) {
+      addresseeId
+      code
+    }
+  }
+`;

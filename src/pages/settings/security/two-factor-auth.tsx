@@ -466,32 +466,34 @@ function TwoFactorAuthSettingsPage() {
                   />
                 </HStack>
               </VStack>
-              <VStack
-                borderTop={2}
-                borderColor='base100'
-                gap={3}
-                pb={2}
-                mt={4}
-                pt={4}
-              >
-                <Box px={4}>
-                  <Heading
-                    size={4}
-                    weight={500}
-                    css={{ fontSize: 'large' }}
-                  >
-                    Additional information
-                  </Heading>
-                </Box>
-                <SettingButton
-                  path={prefix(
-                    RootSettingsPath,
-                    Paths.setting.backup_code,
-                  )}
-                  heading='Back up codes'
-                  subheading='Get access code that you can use when do not have access for your two factor authentication options.'
-                />
-              </VStack>
+              {data && data.twoFAChannel && (
+                <VStack
+                  borderTop={2}
+                  borderColor='base100'
+                  gap={3}
+                  pb={2}
+                  mt={4}
+                  pt={4}
+                >
+                  <Box px={4}>
+                    <Heading
+                      size={4}
+                      weight={500}
+                      css={{ fontSize: 'large' }}
+                    >
+                      Additional information
+                    </Heading>
+                  </Box>
+                  <SettingButton
+                    path={prefix(
+                      RootSettingsPath,
+                      Paths.setting.backup_code,
+                    )}
+                    heading='Back up codes'
+                    subheading='Get access code that you can use when do not have access for your two factor authentication options.'
+                  />
+                </VStack>
+              )}
             </>
           )}
         </HeaderLayout>

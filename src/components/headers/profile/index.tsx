@@ -1,13 +1,13 @@
-import { useLocation } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import { IProfile } from 'shared';
 import { GET_PROFILE } from 'lib';
 import { Head, NotFoundError } from '../../support';
 import { Loader, Error } from '../../utility';
 import { ProfileHeaderLg, ProfileHeaderSm } from './support';
+import { useUsername } from '../../../hooks';
 
 function ProfileHeader() {
-  const username = useLocation().pathname.split('/')[1];
+  const username = useUsername();
 
   const { data, loading, error } = useQuery<{ profile: IProfile }>(
     GET_PROFILE,

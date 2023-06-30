@@ -1,5 +1,5 @@
 import { useMutation } from '@apollo/client';
-import { SEND_VERIFICATION_OTP } from '../../gql';
+import { SEND_VERIFICATION_OTP } from '../../index';
 
 export function useSendVerificationOTP() {
   const [sendVerificationOTP, { loading, error }] = useMutation(

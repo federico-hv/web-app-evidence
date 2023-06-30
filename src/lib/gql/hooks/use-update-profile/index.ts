@@ -1,10 +1,10 @@
 import { useMutation } from '@apollo/client';
-import { GET_ME, GET_PROFILE, UPDATE_PROFILE } from '../../gql';
+import { GET_ME, GET_PROFILE, UPDATE_PROFILE } from '../../index';
 import {
   ProfileFormData,
   UpdateProfileData,
   UpdateProfilePayload,
-} from 'shared';
+} from '../../../../shared';
 
 export const useUpdateProfile = () => {
   const [updateProfile, { loading, error }] = useMutation<

@@ -16,7 +16,7 @@ function MenuButton({ label, icon, onClick }: MenuButtonProps) {
         background: '$base100',
       }}
     >
-      <Text>{label}</Text>
+      <Text weight={500}>{label}</Text>
       <Icon name={icon} size='lg' />
     </HStack>
   );

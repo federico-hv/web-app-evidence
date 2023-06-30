@@ -12,9 +12,12 @@ export const GET_ME = gql`
   }
 `;
 
-export const GET_RELATIONSHIP_WITH_USER = gql`
-  query relationshipWithUser($username: String!) {
-    relationshipWithUser(username: $username)
+export const GET_RELATIONSHIP = gql`
+  query relationship($username: String!) {
+    relationship(username: $username) {
+      addresseeId # id of the user requested to create relationship with
+      code # code of relationship status
+    }
   }
 `;
 
@@ -26,8 +29,6 @@ export const GET_PROFILE = gql`
       coverImage
       avatar
       bio
-      followers
-      following
     }
   }
 `;

@@ -56,8 +56,10 @@ function ProfileHeaderSm({ profile }: { profile: IProfile }) {
                 />
               </Box>
               <TextGroup>
-                <TextGroupHeading>{profile.displayName}</TextGroupHeading>
-                <TextGroupSubheading>
+                <TextGroupHeading color='primary400'>
+                  {profile.displayName}
+                </TextGroupHeading>
+                <TextGroupSubheading color='primary400'>
                   @{profile.username}
                 </TextGroupSubheading>
               </TextGroup>
@@ -129,8 +131,10 @@ function ProfileHeaderLg({ profile }: { profile: IProfile }) {
             </Box>
             <HStack w='100%' justify='space-between' items='flex-start'>
               <TextGroup>
-                <TextGroupHeading>{profile.displayName}</TextGroupHeading>
-                <TextGroupSubheading>
+                <TextGroupHeading size={5} color='primary400'>
+                  {profile.displayName}
+                </TextGroupHeading>
+                <TextGroupSubheading color='primary400'>
                   @{profile.username}
                 </TextGroupSubheading>
               </TextGroup>
