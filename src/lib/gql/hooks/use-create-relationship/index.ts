@@ -1,14 +1,14 @@
 import { useMutation } from '@apollo/client';
 import {
   CreateRelationshipInput,
-  RelationshipModel,
+  CreateRelationshipModel,
 } from '../../interfaces';
 import { CREATE_RELATIONSHIP } from '../../mutations';
-import { GET_RELATIONSHIP } from '../../queries';
+import { GET_RELATIONSHIP_STATUS_INFO } from '../../queries';
 
 export function useCreateRelationship() {
   const [mutation, { loading, error, data }] = useMutation<
-    { createRelationship: RelationshipModel },
+    { createRelationship: CreateRelationshipModel },
     { payload: CreateRelationshipInput }
   >(CREATE_RELATIONSHIP);
 
@@ -20,10 +20,15 @@ export function useCreateRelationship() {
       update: (cache, { data }) => {
         cache.modify({
           fields: {
-            relationship() {
+            relationshipStatusInfo(current) {
               cache.writeQuery({
-                query: GET_RELATIONSHIP,
-                data: { relationship: data?.createRelationship },
+                query: GET_RELATIONSHIP_STATUS_INFO,
+                data: {
+                  relationshipStatusInfo: {
+                    ...current,
+                    ...data?.createRelationship,
+                  },
+                },
               });
             },
           },

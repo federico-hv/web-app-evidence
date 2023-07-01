@@ -95,8 +95,10 @@ export const REFRESH_2FA_RECOVERY_KEY = gql`
 export const CREATE_RELATIONSHIP = gql`
   mutation createRelationship($payload: CreateRelationshipInput!) {
     createRelationship(payload: $payload) {
-      addresseeId
-      code
+      isBlocked
+      isMuted
+      isFollowing
+      isFavourite
     }
   }
 `;
@@ -104,8 +106,11 @@ export const CREATE_RELATIONSHIP = gql`
 export const REMOVE_RELATIONSHIP = gql`
   mutation removeRelationship($payload: RemoveRelationshipInput!) {
     removeRelationship(payload: $payload) {
-      addresseeId
-      code
+      isBlocked
+      isMuted
+      isFollowing
+      isFriend
+      isFavourite
     }
   }
 `;

@@ -16,9 +16,11 @@ import { RootSettingsPath } from './root';
 import { GET_2FA_RECOVERY_KEY, useRefresh2FARecoveryKey } from 'lib';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useCopyToClipboard } from '../../../hooks';
 
 function BackupCode() {
   const navigate = useNavigate();
+  const copyToClipboard = useCopyToClipboard();
   const { refresh2FARecoveryKey, loading: loadingMutation } =
     useRefresh2FARecoveryKey();
   const { loading, error, data } = useQuery<{ twoFARecoveryKey: string }>(
@@ -60,9 +62,7 @@ function BackupCode() {
                     bgColor='base100'
                     radius={1}
                     cursor='pointer'
-                    onClick={() => {
-                      navigator.clipboard.writeText(data.twoFARecoveryKey);
-                    }}
+                    onClick={() => copyToClipboard(data.twoFARecoveryKey)}
                   >
                     <Icon name='collections-outline' />
                     <Text size={4} weight={500}>

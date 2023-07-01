@@ -5,28 +5,33 @@ import {
   Drawer,
   HStack,
   Icon,
-  IconButton,
   Popover,
   Text,
   useDisclosure,
-  useSwitch,
   VStack,
 } from '@holdr-ui/react';
-import { SwitchConditional, SwitchConditionalCase } from '../../utility';
 import { useAlertDialog, useUsername } from '../../../hooks';
-import { useEffect } from 'react';
-import { useRemoveRelationship } from '../../../lib';
+import { useContext, useEffect } from 'react';
+import {
+  useCreateRelationship,
+  useRemoveRelationship,
+} from '../../../lib';
 import { extraBtnPadding } from '../../../shared';
+import { RelationshipStatusContext } from '../../../contexts';
 
-function MenuItem({
-  label,
-  icon,
-  onClick,
-}: {
+interface MenuItemProps {
+  dangerous?: boolean;
   label: string;
   icon: IconName;
   onClick?: VoidFunction;
-}) {
+}
+
+export function MenuItem({
+  label,
+  icon,
+  onClick,
+  dangerous,
+}: MenuItemProps) {
   return (
     <HStack
       justify='space-between'
@@ -34,7 +39,10 @@ function MenuItem({
       radius={2}
       cursor='pointer'
       p={4}
-      _hover={{ backgroundColor: '$base100' }}
+      color={dangerous ? 'danger' : 'base800'}
+      _hover={{
+        backgroundColor: dangerous ? 'rgba(255,205,205,0.38)' : '$base100',
+      }}
       onClick={onClick}
     >
       <Text weight={500}>{label}</Text>
@@ -43,71 +51,36 @@ function MenuItem({
   );
 }
 
-function FollowingButton() {
-  const { switchState, turnOn, turnOff } = useSwitch();
+function useCreateRelationshipAction(username: string) {
+  const { createRelationship } = useCreateRelationship();
 
-  return (
-    <HStack gap={4}>
-      <Box onMouseEnter={turnOn} onMouseLeave={turnOff}>
-        <SwitchConditional>
-          <SwitchConditionalCase on={switchState}>
-            <Button colorTheme='danger'>Unfollow</Button>
-          </SwitchConditionalCase>
-          <SwitchConditionalCase on={!switchState}>
-            <Button colorTheme='base500'>Following</Button>
-          </SwitchConditionalCase>
-        </SwitchConditional>
-      </Box>
-      <Popover>
-        <Popover.Trigger>
-          <IconButton
-            colorTheme='primary400'
-            variant='ghost'
-            size={{ '@bp1': 'base', '@bp4': 'base' }}
-            ariaLabel='more'
-            icon='more-fill'
-          />
-        </Popover.Trigger>
-        <Popover.Portal>
-          <Popover.Content
-            minWidth={275}
-            side='bottom'
-            align='end'
-            sideOffset={5}
-          >
-            <VStack
-              px={4}
-              divider={<Box borderBottom={1} borderColor='base100' />}
-            >
-              <MenuItem
-                label='Add to friends'
-                icon='subscriptions-outline'
-              />
-              <MenuItem label='Mute' icon='mute-outline' />
-              <MenuItem label='Block' icon='close' />
-              <MenuItem label='Report' icon='report-outline' />
-              <MenuItem label='Unfollow' icon='user-unfollow-outline' />
-            </VStack>
-          </Popover.Content>
-        </Popover.Portal>
-      </Popover>
-    </HStack>
-  );
+  const mute = () => createRelationship({ username, action: 'mute' });
+  const favourite = () =>
+    createRelationship({ username, action: 'favourite' });
+
+  return { mute, favourite };
 }
 
-function FollowingButton2() {
-  const username = useUsername();
-  // const {data, loading, error} = useQuery(GET_RELATIONSHIP_INFO)
-  const {
-    isOpen: drawerOpen,
-    onOpen: openDrawer,
-    onClose: closeDrawer,
-  } = useDisclosure();
-  const { open, isOpen, set } = useAlertDialog();
+function useRemoveRelationshipAction(username: string) {
   const { removeRelationship } = useRemoveRelationship();
 
   const unfollow = () =>
     removeRelationship({ username, action: 'follow' });
+  const unmute = () => removeRelationship({ username, action: 'mute' });
+  const removeFavourite = () =>
+    removeRelationship({ username, action: 'favourite' });
+
+  return { unfollow, unmute, removeFavourite };
+}
+
+function FollowingMenu() {
+  const username = useUsername();
+  const { open, isOpen, set } = useAlertDialog();
+  const { isMuted, isFavourite } = useContext(RelationshipStatusContext);
+
+  const { unfollow, unmute, removeFavourite } =
+    useRemoveRelationshipAction(username);
+  const { mute, favourite } = useCreateRelationshipAction(username);
 
   useEffect(() => {
     if (isOpen && set)
@@ -120,19 +93,40 @@ function FollowingButton2() {
       });
   }, [isOpen, username, set]);
 
-  const Menu = () => (
+  return (
     <VStack divider={<Box borderBottom={1} borderColor='base100' />}>
       <MenuItem label='Add to friends' icon='subscriptions-outline' />
-      <MenuItem label='Mute' icon='mute-outline' />
-      <MenuItem label='Block' icon='close' />
-      <MenuItem label='Report' icon='report-outline' />
       <MenuItem
+        label={
+          isFavourite ? 'Remove from favourites' : 'Add to favourites'
+        }
+        icon={isFavourite ? 'heart-fill' : 'heart-outline'}
+        onClick={isFavourite ? removeFavourite : favourite}
+      />
+      <MenuItem
+        label={isMuted ? 'Unmute' : 'Mute'}
+        icon={isMuted ? 'mute-fill' : 'mute-outline'}
+        onClick={isMuted ? unmute : mute}
+      />
+      <MenuItem dangerous label='Restrict' icon='close' />
+      <MenuItem
+        dangerous
         onClick={open}
         label='Unfollow'
         icon='user-unfollow-outline'
       />
     </VStack>
   );
+}
+
+function FollowingButton() {
+  const username = useUsername();
+  // const {data, loading, error} = useQuery(GET_RELATIONSHIP_INFO)
+  const {
+    isOpen: drawerOpen,
+    onOpen: openDrawer,
+    onClose: closeDrawer,
+  } = useDisclosure();
 
   // Use fixed menu
   return (
@@ -142,7 +136,7 @@ function FollowingButton2() {
       <Box display={{ '@bp1': 'none', '@bp3': 'block' }}>
         <Popover>
           <Popover.Trigger>
-            <Button rightIcon='caret-down-outline' colorTheme='base500'>
+            <Button rightIcon='caret-down-outline' colorTheme='primary400'>
               Following
             </Button>
           </Popover.Trigger>
@@ -153,7 +147,7 @@ function FollowingButton2() {
               align='end'
               sideOffset={5}
             >
-              <Menu />
+              <FollowingMenu />
             </Popover.Content>
           </Popover.Portal>
         </Popover>
@@ -162,7 +156,7 @@ function FollowingButton2() {
         <Button
           onClick={openDrawer}
           rightIcon='caret-down-outline'
-          colorTheme='base500'
+          colorTheme='primary400'
         >
           Following
         </Button>
@@ -180,7 +174,7 @@ function FollowingButton2() {
                 <HStack justify='center' p={4}>
                   <Text weight={500}>@{username}</Text>
                 </HStack>
-                <Menu />
+                <FollowingMenu />
                 <VStack px={4} flex={1} justify='center'>
                   <Button
                     className={extraBtnPadding()}
@@ -199,4 +193,4 @@ function FollowingButton2() {
   );
 }
 
-export { FollowingButton, FollowingButton2 };
+export default FollowingButton;

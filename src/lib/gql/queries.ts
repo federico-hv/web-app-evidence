@@ -78,3 +78,16 @@ export const GET_2FA_RECOVERY_KEY = gql`
     twoFARecoveryKey
   }
 `;
+
+export const GET_RELATIONSHIP_STATUS_INFO = gql`
+  query relationshipStatusInfo($username: String!) {
+    relationshipStatusInfo(username: $username) {
+      isBlocked
+      isMuted
+      isFollower
+      isFollowing
+      isFriend
+      isFavourite
+    }
+  }
+`;

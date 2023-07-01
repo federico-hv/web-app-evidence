@@ -9,6 +9,31 @@ export interface RelationshipModel {
   code: RelationshipStatusCode;
 }
 
+export interface RelationshipStatusInfo {
+  isBlocked: boolean | null;
+  isMuted: boolean | null;
+  isFollower: boolean | null;
+  isFollowing: boolean | null;
+  isFriend: boolean | null;
+  isFavourite: boolean | null;
+  isOwned: boolean | null;
+}
+
+export interface CreateRelationshipModel {
+  isBlocked: boolean | null;
+  isMuted: boolean | null;
+  isFollowing: boolean | null;
+  isFavourite: boolean | null;
+}
+
+export interface RemoveRelationshipModel {
+  isBlocked: boolean | null;
+  isMuted: boolean | null;
+  isFollowing: boolean | null;
+  isFriend: boolean | null;
+  isFavourite: boolean | null;
+}
+
 export interface CreateRelationshipInput {
   username: string;
   action: CreateRelationshipAction;
