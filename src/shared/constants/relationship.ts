@@ -21,6 +21,8 @@ export const removeRelationshipActions = [
   'mute',
   'friend',
   'favourite',
+  'follow request',
+  'friend request',
 ] as const;
 
 export const requestRelationshipActions = [

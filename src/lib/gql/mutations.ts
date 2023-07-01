@@ -114,3 +114,12 @@ export const REMOVE_RELATIONSHIP = gql`
     }
   }
 `;
+
+export const REQUEST_RELATIONSHIP = gql`
+  mutation requestRelationship($payload: RequestRelationshipInput!) {
+    requestRelationship(payload: $payload) {
+      hasFriendRequest
+      hasFollowRequest
+    }
+  }
+`;

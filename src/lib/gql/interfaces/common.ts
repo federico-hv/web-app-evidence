@@ -2,6 +2,7 @@ import {
   CreateRelationshipAction,
   RelationshipStatusCode,
   RemoveRelationshipAction,
+  RequestRelationshipAction,
 } from '../types';
 
 export interface RelationshipModel {
@@ -17,6 +18,9 @@ export interface RelationshipStatusInfo {
   isFriend: boolean | null;
   isFavourite: boolean | null;
   isOwned: boolean | null;
+  // TODO: currently missing on B.End
+  hasFriendRequest: boolean | null;
+  hasFollowRequest: boolean | null;
 }
 
 export interface CreateRelationshipModel {
@@ -24,6 +28,11 @@ export interface CreateRelationshipModel {
   isMuted: boolean | null;
   isFollowing: boolean | null;
   isFavourite: boolean | null;
+}
+
+export interface RequestRelationshipModel {
+  hasFriendRequest: boolean | null;
+  hasFollowRequest: boolean | null;
 }
 
 export interface RemoveRelationshipModel {
@@ -42,4 +51,9 @@ export interface CreateRelationshipInput {
 export interface RemoveRelationshipInput {
   username: string;
   action: RemoveRelationshipAction;
+}
+
+export interface RequestRelationshipInput {
+  username: string;
+  action: RequestRelationshipAction;
 }

@@ -1,19 +1,20 @@
 import { useMutation } from '@apollo/client';
 import {
-  CreateRelationshipInput,
-  CreateRelationshipModel,
+  RequestRelationshipInput,
+  RequestRelationshipModel,
 } from '../../interfaces';
-import { CREATE_RELATIONSHIP } from '../../mutations';
+import { REQUEST_RELATIONSHIP } from '../../mutations';
 import { GET_RELATIONSHIP_STATUS_INFO } from '../../queries';
-import { useToast } from '../../../../hooks';
 
-export function useCreateRelationship() {
+export function useRequestRelationship() {
   const [mutation, { loading, error, data }] = useMutation<
-    { createRelationship: CreateRelationshipModel },
-    { payload: CreateRelationshipInput }
-  >(CREATE_RELATIONSHIP);
+    { requestRelationship: RequestRelationshipModel },
+    { payload: RequestRelationshipInput }
+  >(REQUEST_RELATIONSHIP);
 
-  const createRelationship = async (payload: CreateRelationshipInput) => {
+  const requestRelationship = async (
+    payload: RequestRelationshipInput,
+  ) => {
     await mutation({
       variables: {
         payload,
@@ -27,7 +28,7 @@ export function useCreateRelationship() {
                 data: {
                   relationshipStatusInfo: {
                     ...current,
-                    ...data?.createRelationship,
+                    ...data?.requestRelationship,
                   },
                 },
               });
@@ -38,5 +39,5 @@ export function useCreateRelationship() {
     });
   };
 
-  return { createRelationship, loading, error, data };
+  return { requestRelationship, loading, error, data };
 }

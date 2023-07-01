@@ -1,51 +1,104 @@
-import { Box, IconButton, Popover, VStack } from '@holdr-ui/react';
-import { MenuItem } from '../following';
+import {
+  Box,
+  Button,
+  Drawer,
+  IconButton,
+  Popover,
+  useDisclosure,
+  VStack,
+} from '@holdr-ui/react';
 import { useContext } from 'react';
 import { RelationshipStatusContext } from '../../../contexts';
 import { useCopyToClipboard } from '../../../hooks';
+import MenuButton from '../menu';
+import { Responsive, ResponsiveItem } from '../../utility';
+import { extraBtnPadding } from '../../../shared';
+
+function ProfileOptionsMenu() {
+  const copyToClipboard = useCopyToClipboard('Copied link to clipboard.');
+  const { isFollower } = useContext(RelationshipStatusContext);
+  return (
+    <VStack divider={<Box borderBottom={1} borderColor='base100' />}>
+      <MenuButton dangerous label='Block' icon='remove-outline' />
+      <MenuButton dangerous label='Report' icon='report-outline' />
+      {isFollower && (
+        <MenuButton label='Remove follower' icon='user-unfollow-outline' />
+      )}
+      <MenuButton
+        label='Copy profile URL'
+        icon='collections-outline'
+        onClick={() => copyToClipboard(window.location.href)}
+      />
+      <MenuButton label='About this account' icon='information-outline' />
+    </VStack>
+  );
+}
 
 function ProfileOptionsButton() {
-  const { isFollower } = useContext(RelationshipStatusContext);
-  const copyToClipboard = useCopyToClipboard();
+  const {
+    isOpen: drawerOpen,
+    onOpen: openDrawer,
+    onClose: closeDrawer,
+  } = useDisclosure();
   return (
-    <Popover>
-      <Popover.Trigger>
+    <Responsive>
+      <ResponsiveItem tablet='show'>
+        <Popover>
+          <Popover.Trigger>
+            <IconButton
+              variant='ghost'
+              colorTheme='primary400'
+              icon='more-fill'
+              ariaLabel='open profile options'
+            />
+          </Popover.Trigger>
+          <Popover.Portal>
+            <Popover.Content
+              minWidth={275}
+              side='bottom'
+              align='end'
+              sideOffset={5}
+            >
+              <ProfileOptionsMenu />
+            </Popover.Content>
+          </Popover.Portal>
+        </Popover>
+      </ResponsiveItem>
+      <ResponsiveItem mobile='show' tablet='show'>
         <IconButton
+          onClick={openDrawer}
           variant='ghost'
-          colorTheme='primary400'
+          colorTheme='base800'
           icon='more-fill'
           ariaLabel='open profile options'
         />
-      </Popover.Trigger>
-      <Popover.Portal>
-        <Popover.Content
-          minWidth={275}
-          side='bottom'
-          align='end'
-          sideOffset={5}
-        >
-          <VStack divider={<Box borderBottom={1} borderColor='base100' />}>
-            <MenuItem dangerous label='Block' icon='remove-outline' />
-            <MenuItem dangerous label='Report' icon='report-outline' />
-            {isFollower && (
-              <MenuItem
-                label='Remove follower'
-                icon='user-unfollow-outline'
-              />
-            )}
-            <MenuItem
-              label='Copy profile URL'
-              icon='collections-outline'
-              onClick={() => copyToClipboard(window.location.href)}
-            />
-            <MenuItem
-              label='About this account'
-              icon='information-outline'
-            />
-          </VStack>
-        </Popover.Content>
-      </Popover.Portal>
-    </Popover>
+        <Drawer isOpen={drawerOpen} onClose={closeDrawer}>
+          <Drawer.Portal>
+            <Drawer.Overlay />
+            <Drawer.Content>
+              <VStack
+                radius={3}
+                bgColor='primary400'
+                w='full'
+                h='390px'
+                divider={<Box borderBottom={1} borderColor='base100' />}
+              >
+                <ProfileOptionsMenu />
+                <VStack px={4} flex={1} justify='center'>
+                  <Button
+                    className={extraBtnPadding()}
+                    fullWidth
+                    onClick={closeDrawer}
+                  >
+                    Close
+                  </Button>
+                </VStack>
+              </VStack>
+            </Drawer.Content>
+          </Drawer.Portal>
+        </Drawer>
+      </ResponsiveItem>
+    </Responsive>
   );
 }
 ProfileOptionsButton.displayName = 'ProfileOptionsButton';

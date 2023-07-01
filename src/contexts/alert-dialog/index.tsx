@@ -1,10 +1,4 @@
-import {
-  createContext,
-  Dispatch,
-  ReactNode,
-  SetStateAction,
-  useState,
-} from 'react';
+import { createContext, useState } from 'react';
 import {
   Text,
   Box,
@@ -14,37 +8,21 @@ import {
   useDisclosure,
   VStack,
 } from '@holdr-ui/react';
-import { extraBtnPadding } from '../../shared';
-
-export interface AlertDialogContextState {
-  title: string;
-  description: string;
-  actionText: string;
-  cancelText?: string;
-  onAction?: VoidFunction;
-  onCancel?: VoidFunction;
-}
-
-interface IAlertDialogContext {
-  current: AlertDialogContextState | undefined;
-  set?: Dispatch<SetStateAction<AlertDialogContextState | undefined>>;
-  onOpen: VoidFunction;
-  onClose: VoidFunction;
-  isOpen: boolean;
-}
-
-interface AlertDialogProviderProps {
-  children: ReactNode;
-}
+import { extraBtnPadding, GenericProps } from '../../shared';
+import {
+  AlertDialogContextState,
+  IAlertDialogContext,
+} from './alert-dialog-context.types';
+import { dummyFn } from '../../utilities';
 
 const AlertDialogContext = createContext<IAlertDialogContext>({
   current: undefined,
-  onClose: () => console.log(''),
-  onOpen: () => console.log(''),
+  onClose: dummyFn,
+  onOpen: dummyFn,
   isOpen: false,
 });
 
-function AlertDialogProvider({ children }: AlertDialogProviderProps) {
+function AlertDialogProvider({ children }: GenericProps) {
   const [current, set] = useState<AlertDialogContextState>();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -129,3 +107,4 @@ function AlertDialogProvider({ children }: AlertDialogProviderProps) {
 }
 
 export { AlertDialogContext, AlertDialogProvider };
+export type { AlertDialogContextState };

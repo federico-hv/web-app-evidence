@@ -1,4 +1,9 @@
 import { ProviderName, Role } from './types';
+import { ReactNode } from 'react';
+
+export interface GenericProps {
+  children?: ReactNode;
+}
 
 export interface IUserSm {
   username: string;
@@ -17,12 +22,11 @@ export interface IUserMe {
 export interface IProfile {
   // TODO: Get role
   username: string;
+  protected: boolean;
   displayName: string;
   coverImage?: string;
   avatar?: string;
   bio?: string;
-  followers: number;
-  following: number;
 }
 
 export interface IFindUser {

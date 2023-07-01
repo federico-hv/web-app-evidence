@@ -5,3 +5,4 @@ export { default as SocialButton } from './social';
 export { default as DrawerButton } from './drawer';
 export { default as SettingButton } from './setting';
 export { default as ProfileOptionsButton } from './profile-options';
+export { default as ProfileNotificationsButton } from './profile-notification';

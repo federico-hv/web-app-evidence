@@ -20,7 +20,9 @@ import { useCopyToClipboard } from '../../../hooks';
 
 function BackupCode() {
   const navigate = useNavigate();
-  const copyToClipboard = useCopyToClipboard();
+  const copyToClipboard = useCopyToClipboard(
+    'Copied recovery key to clipboard',
+  );
   const { refresh2FARecoveryKey, loading: loadingMutation } =
     useRefresh2FARecoveryKey();
   const { loading, error, data } = useQuery<{ twoFARecoveryKey: string }>(
@@ -64,10 +66,10 @@ function BackupCode() {
                     cursor='pointer'
                     onClick={() => copyToClipboard(data.twoFARecoveryKey)}
                   >
-                    <Icon name='collections-outline' />
                     <Text size={4} weight={500}>
                       {data.twoFARecoveryKey}
                     </Text>
+                    <Icon name='collections-outline' />
                   </HStack>
                   <Center>
                     <Text size={2} color='base400'>

@@ -1,106 +1,91 @@
 import {
-  Box,
-  Dialog,
-  Text,
-  IconButton,
   Skeleton,
-  Center,
-  VStack,
   HStack,
-  Switch,
-  Icon,
-  Drawer,
-  useDisclosure,
   Button,
+  Box,
+  Popover,
+  Drawer,
+  VStack,
+  useDisclosure,
+  Text,
 } from '@holdr-ui/react';
 import {
   Error,
   Loader,
+  Responsive,
+  ResponsiveItem,
   SwitchConditional,
   SwitchConditionalCase,
 } from '../../utility';
 import { EditProfileDialog } from '../../dialog';
 import { useQuery } from '@apollo/client';
 import { GET_RELATIONSHIP_STATUS_INFO, RelationshipStatusInfo } from 'lib';
-import { useLocation } from 'react-router-dom';
 import {
   FollowButton,
   FollowingButton,
   ProfileOptionsButton,
 } from '../index';
 import { extraBtnPadding, MotionWrapper } from '../../../shared';
-import { RelationshipStatusContextProvider } from '../../../contexts';
+import {
+  RelationshipStatusContextProvider,
+  useProfileContext,
+} from '../../../contexts';
+import { useUsername } from '../../../hooks';
+import ProfileNotificationsButton from '../profile-notification';
+import MenuButton from '../menu';
+import { useRemoveRelationshipAction } from '../following';
 
-function NotificationSettings() {
-  return (
-    <VStack
-      flex={1}
-      divider={<Box borderBottom={1} borderColor='base100' />}
-    >
-      <HStack p={4} justify='space-between'>
-        <Text>Posts</Text>
-        <Switch />
-      </HStack>
-      <HStack p={4} justify='space-between'>
-        <Text>Releases</Text>
-        <Switch />
-      </HStack>
-      <HStack p={4} justify='space-between'>
-        <Text>Events</Text>
-        <Switch />
-      </HStack>
-      <VStack p={4} justify='center' color='base400'>
-        <HStack gap={4}>
-          <Icon name='information-outline' />
-          <Text size={2}>
-            Get notifications whenever user shares new feeds, events and
-            music releases
-          </Text>
-        </HStack>
-      </VStack>
-    </VStack>
-  );
-}
-
-function ProfileNotificationsButton() {
+function RequestedButton() {
+  const { profile } = useProfileContext();
   const {
     isOpen: drawerOpen,
     onOpen: openDrawer,
     onClose: closeDrawer,
   } = useDisclosure();
-  return (
+  const { removeFollowRequest } = useRemoveRelationshipAction(
+    profile.username,
+  );
+
+  const Menu = () => (
     <>
-      <Box display={{ '@bp1': 'none', '@bp3': 'block' }}>
-        <Dialog>
-          <Dialog.Trigger>
-            <IconButton
-              colorTheme='primary400'
-              icon='notification-outline'
-              ariaLabel='open profile options'
-            />
-          </Dialog.Trigger>
-          <Dialog.Portal>
-            <Dialog.Overlay />
-            <Dialog.Content w={400} h={300}>
-              <Dialog.Body css={{ padding: 0 }}>
-                <Center p={5} borderBottom={1} borderColor='base100'>
-                  <Text size={4} weight={500}>
-                    Notifications
-                  </Text>
-                </Center>
-                <NotificationSettings />
-              </Dialog.Body>
-            </Dialog.Content>
-          </Dialog.Portal>
-        </Dialog>
-      </Box>
-      <Box display={{ '@bp1': 'block', '@bp3': 'none' }}>
-        <IconButton
+      <MenuButton
+        onClick={removeFollowRequest}
+        dangerous
+        label='Cancel Request'
+        icon='remove-outline'
+      />
+    </>
+  );
+
+  return (
+    <Responsive>
+      <ResponsiveItem tablet='show'>
+        <Popover>
+          <Popover.Trigger>
+            <Button colorTheme='base100' rightIcon='caret-down-outline'>
+              Requested
+            </Button>
+          </Popover.Trigger>
+          <Popover.Portal>
+            <Popover.Content
+              minWidth={275}
+              side='bottom'
+              align='end'
+              sideOffset={5}
+            >
+              <Menu />
+            </Popover.Content>
+          </Popover.Portal>
+        </Popover>
+      </ResponsiveItem>
+      <ResponsiveItem mobile='show' tablet='show'>
+        <Button
           onClick={openDrawer}
-          colorTheme='primary400'
-          icon='notification-outline'
-          ariaLabel='open profile options'
-        />
+          colorTheme='base100'
+          rightIcon='caret-down-outline'
+        >
+          Requested
+        </Button>
         <Drawer isOpen={drawerOpen} onClose={closeDrawer}>
           <Drawer.Portal>
             <Drawer.Overlay />
@@ -109,14 +94,14 @@ function ProfileNotificationsButton() {
                 radius={3}
                 bgColor='primary400'
                 w='full'
-                h='380px'
+                h='200px'
                 divider={<Box borderBottom={1} borderColor='base100' />}
               >
-                <Center p={4} borderBottom={1} borderColor='base100'>
-                  <Text weight={500}>Notifications</Text>
-                </Center>
-                <NotificationSettings />
-                <VStack flex={1} px={4} justify='center'>
+                <HStack justify='center' p={4}>
+                  <Text weight={500}>{profile.displayName}</Text>
+                </HStack>
+                <Menu />
+                <VStack px={4} flex={1} justify='center'>
                   <Button
                     className={extraBtnPadding()}
                     fullWidth
@@ -129,13 +114,13 @@ function ProfileNotificationsButton() {
             </Drawer.Content>
           </Drawer.Portal>
         </Drawer>
-      </Box>
-    </>
+      </ResponsiveItem>
+    </Responsive>
   );
 }
 
 function SocialButton() {
-  const username = useLocation().pathname.split('/')[1];
+  const username = useUsername();
 
   const { data, loading, error } = useQuery<{
     relationshipStatusInfo: RelationshipStatusInfo;
@@ -146,33 +131,50 @@ function SocialButton() {
   });
 
   return (
-    <Error hasError={!!error} errorEl={<></>}>
+    <Error hasError={!!error} errorMessage={error?.message}>
       <Loader loading={loading} as={<Skeleton />}>
         {data && data.relationshipStatusInfo && (
           <RelationshipStatusContextProvider
             value={{ ...data.relationshipStatusInfo }}
           >
-            <HStack gap={3}>
-              <ProfileOptionsButton />
-              <SwitchConditional>
-                <SwitchConditionalCase
-                  on={!data.relationshipStatusInfo.isFollowing}
-                >
-                  <FollowButton />
-                </SwitchConditionalCase>
-                <SwitchConditionalCase
-                  on={!!data.relationshipStatusInfo.isFollowing}
-                >
-                  <MotionWrapper gap={3}>
-                    <ProfileNotificationsButton />
-                    <FollowingButton />
-                  </MotionWrapper>
-                </SwitchConditionalCase>
-              </SwitchConditional>
-              {data.relationshipStatusInfo.isOwned === true && (
+            <SwitchConditional>
+              <SwitchConditionalCase
+                on={!data.relationshipStatusInfo.isOwned}
+              >
+                <HStack gap={3}>
+                  <ProfileOptionsButton />
+                  <SwitchConditional>
+                    <SwitchConditionalCase
+                      on={
+                        !data.relationshipStatusInfo.isFollowing &&
+                        !data.relationshipStatusInfo.isOwned &&
+                        !data.relationshipStatusInfo.hasFollowRequest
+                      }
+                    >
+                      <FollowButton />
+                    </SwitchConditionalCase>
+                    <SwitchConditionalCase
+                      on={!!data.relationshipStatusInfo.hasFollowRequest}
+                    >
+                      <RequestedButton />
+                    </SwitchConditionalCase>
+                    <SwitchConditionalCase
+                      on={!!data.relationshipStatusInfo.isFollowing}
+                    >
+                      <MotionWrapper gap={3}>
+                        <ProfileNotificationsButton />
+                        <FollowingButton />
+                      </MotionWrapper>
+                    </SwitchConditionalCase>
+                  </SwitchConditional>
+                </HStack>
+              </SwitchConditionalCase>
+              <SwitchConditionalCase
+                on={data.relationshipStatusInfo.isOwned === true}
+              >
                 <EditProfileDialog />
-              )}
-            </HStack>
+              </SwitchConditionalCase>
+            </SwitchConditional>
           </RelationshipStatusContextProvider>
         )}
       </Loader>

@@ -20,6 +20,8 @@ function Error({
     return <>{el}</>;
   }
 
+  //TODO: Change this as there is now a global error
+
   return (
     <>
       {hasError && errorMessage && !el && (

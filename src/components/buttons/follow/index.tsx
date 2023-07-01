@@ -1,25 +1,43 @@
 import { Button } from '@holdr-ui/react';
-import { useCreateRelationship } from '../../../lib';
 import { useUsername } from '../../../hooks';
+import { useProfileContext } from '../../../contexts';
+import { SwitchConditional, SwitchConditionalCase } from '../../utility';
+import {
+  useCreateRelationshipAction,
+  useRequestRelationshipAction,
+} from '../following';
 
 function FollowButton() {
-  // TODO: Error is given to global Error context
   const username = useUsername();
-  const { createRelationship, loading } = useCreateRelationship();
-
-  const follow = async () => {
-    await createRelationship({ username, action: 'follow' });
-  };
+  const { follow, loading: loading0 } =
+    useCreateRelationshipAction(username);
+  const { followRequest, loading: loading1 } =
+    useRequestRelationshipAction(username);
+  const { profile } = useProfileContext();
 
   return (
-    <Button
-      colorTheme='primary400'
-      isLoading={loading}
-      loadingText={loading ? '' : 'Loading'}
-      onClick={follow}
-    >
-      Follow
-    </Button>
+    <SwitchConditional>
+      <SwitchConditionalCase on={!profile.protected}>
+        <Button
+          colorTheme='primary400'
+          isLoading={loading0}
+          loadingText={loading0 ? '' : 'Loading'}
+          onClick={follow}
+        >
+          Follow
+        </Button>
+      </SwitchConditionalCase>
+      <SwitchConditionalCase on={profile.protected}>
+        <Button
+          colorTheme='primary400'
+          isLoading={loading1}
+          loadingText={loading1 ? '' : 'Loading'}
+          onClick={followRequest}
+        >
+          Follow
+        </Button>
+      </SwitchConditionalCase>
+    </SwitchConditional>
   );
 }
 

@@ -29,6 +29,7 @@ export const GET_PROFILE = gql`
       coverImage
       avatar
       bio
+      protected
     }
   }
 `;
@@ -88,6 +89,9 @@ export const GET_RELATIONSHIP_STATUS_INFO = gql`
       isFollowing
       isFriend
       isFavourite
+      hasFriendRequest
+      hasFollowRequest
+      isOwned
     }
   }
 `;

@@ -1,23 +1,12 @@
-import { useQuery } from '@apollo/client';
-import { IProfile } from 'shared';
-import { GET_PROFILE } from 'lib';
+import { useProfile } from 'lib';
 import { Head, NotFoundError } from '../../support';
 import { Loader, Error } from '../../utility';
 import { ProfileHeaderLg, ProfileHeaderSm } from './support';
-import { useUsername } from '../../../hooks';
+import { ProfileContext } from '../../../contexts';
 
 function ProfileHeader() {
-  const username = useUsername();
-
-  const { data, loading, error } = useQuery<{ profile: IProfile }>(
-    GET_PROFILE,
-    {
-      variables: {
-        username: username,
-      },
-    },
-  );
-
+  const { data, loading, error } = useProfile();
+  console.log({ data });
   return (
     <Error hasError={!!error} errorEl={<NotFoundError />}>
       {data && data.profile && (
@@ -29,10 +18,10 @@ function ProfileHeader() {
       )}
       <Loader loading={loading}>
         {data && data.profile && (
-          <>
+          <ProfileContext.Provider value={{ profile: data.profile }}>
             <ProfileHeaderSm profile={data.profile} />
             <ProfileHeaderLg profile={data.profile} />
-          </>
+          </ProfileContext.Provider>
         )}
       </Loader>
     </Error>
