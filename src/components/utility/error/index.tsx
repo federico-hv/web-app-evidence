@@ -1,42 +1,24 @@
 import { ErrorProps } from './error.types';
-import { Toast } from '@holdr-ui/react';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import { useToast } from '../../../hooks';
 
-function Error({
-  hasError,
-  children,
-  errorEl: el,
-  errorMessage,
-}: ErrorProps) {
-  const [open, setOpen] = useState(false);
+function Error({ hasError, errorEl: el, errorMessage }: ErrorProps) {
+  const { open } = useToast({
+    description:
+      errorMessage ||
+      'Oops, something went wrong. It looks like its our fault. Please try again later.',
+    status: 'danger',
+  });
 
   useEffect(() => {
-    if (hasError) {
-      setOpen(true);
+    if (hasError && errorMessage && open) {
+      open();
     }
-  }, [hasError, setOpen]);
+  }, [hasError, errorMessage, open]);
 
   if (el && hasError) {
     return <>{el}</>;
   }
-
-  //TODO: Change this as there is now a global error
-
-  return (
-    <>
-      {hasError && errorMessage && !el && (
-        <Toast.Item open={open} onOpenChange={setOpen}>
-          <Toast.Message
-            status='danger'
-            description={errorMessage}
-            onCloseClick={() => setOpen(false)}
-          />
-          <Toast.Viewport />
-        </Toast.Item>
-      )}
-      {children}
-    </>
-  );
 }
 Error.displayName = 'Error';
 

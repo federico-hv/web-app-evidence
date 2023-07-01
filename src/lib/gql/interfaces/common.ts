@@ -18,7 +18,6 @@ export interface RelationshipStatusInfo {
   isFriend: boolean | null;
   isFavourite: boolean | null;
   isOwned: boolean | null;
-  // TODO: currently missing on B.End
   hasFriendRequest: boolean | null;
   hasFollowRequest: boolean | null;
 }
