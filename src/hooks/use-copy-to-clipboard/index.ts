@@ -6,10 +6,19 @@ import { useToast } from '../use-toast';
  * @param description The text to show in the toast message
  */
 export function useCopyToClipboard(description?: string) {
-  const { open } = useToast({
-    description: description || 'Copied to clipboard',
+  const { open, set } = useToast({
+    description: 'Copied to clipboard',
     status: 'success',
   });
 
-  return (text: string) => navigator.clipboard.writeText(text).then(open);
+  return (text: string) =>
+    navigator.clipboard.writeText(text).then(() => {
+      if (set) {
+        set({
+          description: description || 'Copied to clipboard',
+          status: 'success',
+        });
+        open();
+      }
+    });
 }

@@ -9,4 +9,5 @@ export * from './use-image-upload';
 export * from './use-username';
 export * from './use-alert-dialog';
 export * from './use-toast';
+export * from './user-relationship-action';
 export * from './use-copy-to-clipboard';

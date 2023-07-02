@@ -1,11 +1,11 @@
 import { Button } from '@holdr-ui/react';
-import { useUsername } from '../../../hooks';
-import { useProfileContext } from '../../../contexts';
-import { SwitchConditional, SwitchConditionalCase } from '../../utility';
 import {
   useCreateRelationshipAction,
   useRequestRelationshipAction,
-} from '../following';
+  useUsername,
+} from '../../../hooks';
+import { useProfileContext } from '../../../contexts';
+import { SwitchConditional, SwitchConditionalCase } from '../../utility';
 
 function FollowButton() {
   const username = useUsername();

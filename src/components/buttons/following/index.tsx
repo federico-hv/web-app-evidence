@@ -1,22 +1,15 @@
-import { IconName } from '@holdr-ui/react/dist/shared/types';
 import {
   Box,
   Button,
   Drawer,
   HStack,
-  Icon,
   Popover,
   Text,
   useDisclosure,
   VStack,
 } from '@holdr-ui/react';
-import { useAlertDialog, useToast, useUsername } from '../../../hooks';
-import { useContext, useEffect } from 'react';
-import {
-  useCreateRelationship,
-  useRemoveRelationship,
-  useRequestRelationship,
-} from '../../../lib';
+import { useAlertDialog, useUsername } from '../../../hooks';
+import { useContext } from 'react';
 import { extraBtnPadding } from '../../../shared';
 import {
   RelationshipStatusContext,
@@ -29,104 +22,11 @@ import {
   SwitchConditional,
   SwitchConditionalCase,
 } from '../../utility';
-
-/**
- * Create a new relationship
- *
- * @param username
- */
-export function useCreateRelationshipAction(username: string) {
-  const { createRelationship, error, loading } = useCreateRelationship();
-  const { open, set } = useToast({
-    status: 'danger',
-    description:
-      'Oops! Something went wrong. Totally our fault, but try again later. ',
-  });
-
-  useEffect(() => {
-    if (error && set) {
-      set({ description: error.message, status: 'danger' });
-      open();
-    }
-  }, [error, set, open]);
-
-  const follow = () => createRelationship({ username, action: 'follow' });
-  const mute = () => createRelationship({ username, action: 'mute' });
-  const favourite = () =>
-    createRelationship({ username, action: 'favourite' });
-
-  return { mute, favourite, follow, loading };
-}
-
-/**
- * Remove a relationship
- * @param username
- */
-export function useRemoveRelationshipAction(username: string) {
-  const { removeRelationship, loading, error } = useRemoveRelationship();
-  const { open, set } = useToast({
-    status: 'danger',
-    description:
-      'Oops! Something went wrong. Totally our fault, but try again later. ',
-  });
-
-  useEffect(() => {
-    if (error && set) {
-      set({ description: error.message, status: 'danger' });
-      open();
-    }
-  }, [error, set, open]);
-
-  const unfollow = () =>
-    removeRelationship({ username, action: 'follow' });
-  const unmute = () => removeRelationship({ username, action: 'mute' });
-  const removeFavourite = () =>
-    removeRelationship({ username, action: 'favourite' });
-  const removeFriendRequest = () =>
-    removeRelationship({ username, action: 'friend request' });
-  const removeFollowRequest = () =>
-    removeRelationship({ username, action: 'follow request' });
-  const removeFriend = () =>
-    removeRelationship({ username, action: 'friend' });
-
-  return {
-    unfollow,
-    unmute,
-    removeFavourite,
-    removeFriendRequest,
-    removeFollowRequest,
-    removeFriend,
-    loading,
-  };
-}
-
-/**
- * Create a relationship request
- *
- * @param username
- */
-export function useRequestRelationshipAction(username: string) {
-  const { requestRelationship, loading, error } = useRequestRelationship();
-  const { open, set } = useToast({
-    status: 'danger',
-    description:
-      'Oops! Something went wrong. Totally our fault, but try again later. ',
-  });
-
-  useEffect(() => {
-    if (error && set) {
-      set({ description: error.message, status: 'danger' });
-      open();
-    }
-  }, [error, set, open]);
-
-  const friendRequest = () =>
-    requestRelationship({ username, action: 'friend request' });
-  const followRequest = () =>
-    requestRelationship({ username, action: 'follow request' });
-
-  return { friendRequest, followRequest, loading };
-}
+import {
+  useCreateRelationshipAction,
+  useRemoveRelationshipAction,
+  useRequestRelationshipAction,
+} from '../../../hooks';
 
 function FollowingMenu() {
   const username = useUsername();
