@@ -6,7 +6,6 @@ import { ProfileOverlay } from '../../overlay';
 import { AuthContext } from '../../../contexts';
 
 import lightPlaceholder from 'assets/images/light-placeholder.jpg';
-import Statistic from '../../data-display/statistic';
 import {
   TextGroup,
   TextGroupHeading,
@@ -77,9 +76,9 @@ function ProfileHeaderSm({ profile }: { profile: IProfile }) {
           items='center'
           color='base400'
         >
-          <HStack gap={3}>
-            <Statistic value={profile.followers} label='followers' />
-          </HStack>
+          {/*<HStack gap={3}>*/}
+          {/*  <Statistic value={profile.followers} label='followers' />*/}
+          {/*</HStack>*/}
           {currentUser && <SocialButton />}
         </HStack>
       </VStack>

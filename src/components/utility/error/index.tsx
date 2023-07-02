@@ -2,7 +2,12 @@ import { ErrorProps } from './error.types';
 import { useEffect } from 'react';
 import { useToast } from '../../../hooks';
 
-function Error({ hasError, errorEl: el, errorMessage }: ErrorProps) {
+function Error({
+  hasError,
+  errorEl: el,
+  errorMessage,
+  children,
+}: ErrorProps) {
   const { open } = useToast({
     description:
       errorMessage ||
@@ -19,6 +24,8 @@ function Error({ hasError, errorEl: el, errorMessage }: ErrorProps) {
   if (el && hasError) {
     return <>{el}</>;
   }
+
+  return <>{children}</>;
 }
 Error.displayName = 'Error';
 
