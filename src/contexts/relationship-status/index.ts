@@ -9,6 +9,8 @@ const RelationshipStatusContext = createContext<RelationshipStatusInfo>({
   isFriend: false,
   isFavourite: false,
   isOwned: false,
+  hasFollowRequest: false,
+  hasFriendRequest: false,
 });
 
 const RelationshipStatusContextProvider =
