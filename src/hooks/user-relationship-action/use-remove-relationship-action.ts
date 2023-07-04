@@ -34,13 +34,15 @@ export function useRemoveRelationshipAction(username: string) {
     removeRelationship({ username, action: 'friend' });
   const removeRestriction = () =>
     removeRelationship({ username, action: 'restrict' });
-
+  const removeBlock = () =>
+    removeRelationship({ username, action: 'block' });
   return {
     unfollow,
     unmute,
     removeFavourite,
     removeFriendRequest,
     removeFollowRequest,
+    removeBlock,
     removeFriend,
     removeRestriction,
     loading,

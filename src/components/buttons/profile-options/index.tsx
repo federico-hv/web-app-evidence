@@ -13,7 +13,7 @@ import {
   useDisclosure,
   VStack,
 } from '@holdr-ui/react';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import {
   RelationshipStatusContext,
   useProfileContext,
@@ -31,7 +31,7 @@ import {
 } from '../../utility';
 import { extraBtnPadding } from '../../../shared';
 
-function BlockButton() {
+function BlockButton({ close }: { close: VoidFunction }) {
   const { profile } = useProfileContext();
 
   const { block, loading } = useCreateRelationshipAction(profile.username);
@@ -96,7 +96,10 @@ function BlockButton() {
             <Box pb={4} w='100%'>
               <Button
                 onClick={async () => {
-                  await block().then(() => onClose());
+                  await block().then(() => {
+                    onClose();
+                    close();
+                  });
                 }}
                 className={extraBtnPadding()}
                 fullWidth
@@ -113,7 +116,7 @@ function BlockButton() {
   );
 }
 
-function ProfileOptionsMenu() {
+function ProfileOptionsMenu({ close }: { close: VoidFunction }) {
   const copyToClipboard = useCopyToClipboard('Copied link to clipboard.');
   const { isFollower, isBlocked } = useContext(RelationshipStatusContext);
 
@@ -122,7 +125,7 @@ function ProfileOptionsMenu() {
       <MenuButton dangerous label='Report' icon='report-outline' />
       <SwitchConditional>
         <SwitchConditionalCase on={!isBlocked}>
-          <BlockButton />
+          <BlockButton close={close} />
         </SwitchConditionalCase>
         {/*<SwitchConditionalCase on={isBlocked === true}>*/}
         {/*  <MenuButton label='Unblock' icon='add' />*/}
@@ -134,7 +137,7 @@ function ProfileOptionsMenu() {
       <MenuButton
         label='Copy profile URL'
         icon='collections-outline'
-        onClick={() => copyToClipboard(window.location.href)}
+        onClick={() => copyToClipboard(window.location.href).then(close)}
       />
       <MenuButton label='About this account' icon='information-outline' />
     </VStack>
@@ -147,10 +150,14 @@ function ProfileOptionsButton() {
     onOpen: openDrawer,
     onClose: closeDrawer,
   } = useDisclosure();
+
+  const [openPopover, setOpenPopover] = useState(false);
+  const closePopover = () => setOpenPopover(false);
+
   return (
     <Responsive>
       <ResponsiveItem tablet='show'>
-        <Popover>
+        <Popover isOpen={openPopover} onOpenChange={setOpenPopover}>
           <Popover.Trigger>
             <IconButton
               variant='ghost'
@@ -166,7 +173,7 @@ function ProfileOptionsButton() {
               align='end'
               sideOffset={5}
             >
-              <ProfileOptionsMenu />
+              <ProfileOptionsMenu close={closePopover} />
             </Popover.Content>
           </Popover.Portal>
         </Popover>
@@ -190,7 +197,7 @@ function ProfileOptionsButton() {
                 h='300px'
                 divider={<Box borderBottom={1} borderColor='base100' />}
               >
-                <ProfileOptionsMenu />
+                <ProfileOptionsMenu close={closeDrawer} />
                 <VStack px={4} flex={1} justify='center'>
                   <Button
                     className={extraBtnPadding()}

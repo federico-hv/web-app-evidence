@@ -16,17 +16,23 @@ import {
   ProfileNotificationsButton,
 } from '../index';
 import { MotionWrapper } from '../../../shared';
-import { RelationshipStatusContextProvider } from '../../../contexts';
-import { useUsername } from '../../../hooks';
+import {
+  RelationshipStatusContextProvider,
+  useProfileContext,
+} from '../../../contexts';
+import { useRemoveRelationshipAction } from '../../../hooks';
 
 function SocialButton() {
-  const username = useUsername();
+  const { profile } = useProfileContext();
+
+  const { removeBlock, loading: loadingRemoval } =
+    useRemoveRelationshipAction(profile.username);
 
   const { data, loading, error } = useQuery<{
     relationshipStatusInfo: RelationshipStatusInfo;
   }>(GET_RELATIONSHIP_STATUS_INFO, {
     variables: {
-      username: username,
+      username: profile.username,
     },
   });
 
@@ -62,7 +68,14 @@ function SocialButton() {
                     <SwitchConditionalCase
                       on={!!data.relationshipStatusInfo.isBlocked}
                     >
-                      <Button colorTheme='danger'>Unblock</Button>
+                      <Button
+                        colorTheme='danger'
+                        onClick={removeBlock}
+                        isLoading={loadingRemoval}
+                        loadingText={loadingRemoval ? '' : 'Unblocking'}
+                      >
+                        Unblock
+                      </Button>
                     </SwitchConditionalCase>
                     <SwitchConditionalCase
                       on={

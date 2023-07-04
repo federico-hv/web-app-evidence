@@ -13,7 +13,7 @@ import {
   VStack,
 } from '@holdr-ui/react';
 import { useAlertDialog } from '../../../hooks';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { extraBtnPadding } from '../../../shared';
 import {
   ProfileContext,
@@ -33,7 +33,7 @@ import {
   useRequestRelationshipAction,
 } from '../../../hooks';
 
-function RestrictButton() {
+function RestrictButton({ close }: { close: VoidFunction }) {
   const { profile } = useContext(ProfileContext);
 
   const { restrict, loading } = useCreateRelationshipAction(
@@ -100,7 +100,10 @@ function RestrictButton() {
             <Box pb={4} w='100%'>
               <Button
                 onClick={async () => {
-                  await restrict().then(() => onClose());
+                  await restrict().then(() => {
+                    onClose();
+                    close(); // close popover
+                  });
                 }}
                 className={extraBtnPadding()}
                 fullWidth
@@ -117,7 +120,7 @@ function RestrictButton() {
   );
 }
 
-function FollowingMenu() {
+function FollowingMenu({ close }: { close: VoidFunction }) {
   const { profile } = useContext(ProfileContext);
 
   const {
@@ -191,7 +194,7 @@ function FollowingMenu() {
       {isFriend && (
         <SwitchConditional>
           <SwitchConditionalCase on={!isRestricted}>
-            <RestrictButton />
+            <RestrictButton close={close} />
           </SwitchConditionalCase>
           <SwitchConditionalCase on={isRestricted === true}>
             <MenuButton
@@ -225,11 +228,13 @@ function FollowingButton() {
     onClose: closeDrawer,
   } = useDisclosure();
 
-  // Use fixed menu
+  const [openPopover, setOpenPopover] = useState(false);
+  const closePopover = () => setOpenPopover(false);
+
   return (
     <Responsive>
       <ResponsiveItem tablet='show'>
-        <Popover>
+        <Popover isOpen={openPopover} onOpenChange={setOpenPopover}>
           <Popover.Trigger>
             <Button rightIcon='caret-down-outline' colorTheme='primary400'>
               Following
@@ -242,7 +247,7 @@ function FollowingButton() {
               align='end'
               sideOffset={5}
             >
-              <FollowingMenu />
+              <FollowingMenu close={closePopover} />
             </Popover.Content>
           </Popover.Portal>
         </Popover>
@@ -269,7 +274,7 @@ function FollowingButton() {
                 <HStack justify='center' p={4}>
                   <Text weight={500}>{profile.displayName}</Text>
                 </HStack>
-                <FollowingMenu />
+                <FollowingMenu close={closeDrawer} />
                 <VStack px={4} flex={1} justify='center'>
                   <Button
                     className={extraBtnPadding()}
