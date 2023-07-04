@@ -1,17 +1,22 @@
 import {
+  Avatar,
   Box,
   Button,
+  Dialog,
   Drawer,
+  Heading,
   HStack,
+  Icon,
   Popover,
   Text,
   useDisclosure,
   VStack,
 } from '@holdr-ui/react';
-import { useAlertDialog, useUsername } from '../../../hooks';
+import { useAlertDialog } from '../../../hooks';
 import { useContext } from 'react';
 import { extraBtnPadding } from '../../../shared';
 import {
+  ProfileContext,
   RelationshipStatusContext,
   useProfileContext,
 } from '../../../contexts';
@@ -28,31 +33,120 @@ import {
   useRequestRelationshipAction,
 } from '../../../hooks';
 
-function FollowingMenu() {
-  const username = useUsername();
-  const { isFriend, hasFriendRequest } = useContext(
-    RelationshipStatusContext,
+function RestrictButton() {
+  const { profile } = useContext(ProfileContext);
+
+  const { restrict, loading } = useCreateRelationshipAction(
+    profile.username,
   );
 
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  return (
+    <Dialog isOpen={isOpen} onOpen={onOpen} onClose={onClose}>
+      <Dialog.Trigger>
+        <MenuButton dangerous label='Restrict' icon='close' />
+      </Dialog.Trigger>
+      <Dialog.Portal>
+        <Dialog.Overlay />
+        <Dialog.Content
+          w={{ '@bp1': '100vw', '@bp3': '90vw' }}
+          maxWidth={500}
+          h={{ '@bp1': '100vh', '@bp3': 500 }}
+          maxHeight={{ '@bp1': '100vh', '@bp3': '85vh' }}
+          radius={{ '@bp1': 0, '@bp3': 4 }}
+        >
+          <Dialog.Header>
+            <Heading as='h2' size={4}>
+              Restrict
+            </Heading>
+          </Dialog.Header>
+          <Dialog.Body
+            justify={{
+              '@bp1': 'space-around',
+              '@bp3': 'space-between',
+            }}
+            items='center'
+          >
+            <VStack items='center' gap={3}>
+              <Avatar src={profile.avatar} size='2xl' />
+              <Text size={2} weight={500} color='base500'>
+                @{profile.username}
+              </Text>
+            </VStack>
+            <VStack gap={5}>
+              <HStack items='center' gap={5}>
+                <Icon name='shield-keyhole-fill' size='xl' />
+                <Text>
+                  Limit interactions without you having to block or
+                  unfollow someone.
+                </Text>
+              </HStack>
+              <HStack items='center' gap={5}>
+                <Icon name='at' size='xl' />
+                <Text>
+                  Mentions about yourself from the user will not be visible
+                  to you and you will not be notified about them.
+                </Text>
+              </HStack>
+              <HStack items='center' gap={5}>
+                <Icon name='send-outline' size='xl' />
+                <Text>
+                  Their chat will be moved to your hidden messages, so the
+                  won&apos;t be able to know when you have read it.
+                </Text>
+              </HStack>
+            </VStack>
+            <Box pb={4} w='100%'>
+              <Button
+                onClick={async () => {
+                  await restrict().then(() => onClose());
+                }}
+                className={extraBtnPadding()}
+                fullWidth
+                loadingText={loading ? '' : 'Restricting'}
+                isLoading={loading}
+              >
+                Restrict
+              </Button>
+            </Box>
+          </Dialog.Body>
+        </Dialog.Content>
+      </Dialog.Portal>
+    </Dialog>
+  );
+}
+
+function FollowingMenu() {
+  const { profile } = useContext(ProfileContext);
+
+  const {
+    isFriend,
+    hasFriendRequest,
+    isRestricted,
+    isMuted,
+    isFavourite,
+  } = useContext(RelationshipStatusContext);
+
   const { unfollow, unmute, removeFavourite } =
-    useRemoveRelationshipAction(username);
+    useRemoveRelationshipAction(profile.username);
 
-  const { mute, favourite } = useCreateRelationshipAction(username);
+  const { mute, favourite } = useCreateRelationshipAction(
+    profile.username,
+  );
 
-  const { friendRequest } = useRequestRelationshipAction(username);
+  const { friendRequest } = useRequestRelationshipAction(profile.username);
 
-  const { removeFriendRequest, removeFriend } =
-    useRemoveRelationshipAction(username);
+  const { removeFriendRequest, removeFriend, removeRestriction } =
+    useRemoveRelationshipAction(profile.username);
 
   const { open } = useAlertDialog({
     actionText: 'Unfollow',
     onAction: unfollow,
-    title: `Unfollow @${username}`,
+    title: `Unfollow @${profile.username}`,
     description:
       'Their posts will no longer show up in your home feed. You can still view their profile, unless their profile is protected.',
   });
-
-  const { isMuted, isFavourite } = useContext(RelationshipStatusContext);
 
   return (
     <VStack divider={<Box borderBottom={1} borderColor='base100' />}>
@@ -87,12 +181,28 @@ function FollowingMenu() {
         icon={isFavourite ? 'heart-fill' : 'heart-outline'}
         onClick={isFavourite ? removeFavourite : favourite}
       />
+
       <MenuButton
         label={isMuted ? 'Unmute' : 'Mute'}
         icon={isMuted ? 'mute-fill' : 'mute-outline'}
         onClick={isMuted ? unmute : mute}
       />
-      <MenuButton dangerous label='Restrict' icon='close' />
+
+      {isFriend && (
+        <SwitchConditional>
+          <SwitchConditionalCase on={!isRestricted}>
+            <RestrictButton />
+          </SwitchConditionalCase>
+          <SwitchConditionalCase on={isRestricted === true}>
+            <MenuButton
+              onClick={removeRestriction}
+              dangerous
+              label='Unrestrict'
+              icon='check'
+            />
+          </SwitchConditionalCase>
+        </SwitchConditional>
+      )}
 
       {!isFriend && (
         <MenuButton

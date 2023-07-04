@@ -23,9 +23,9 @@ export function useRequestRelationshipAction(username: string) {
   }, [error, set, open]);
 
   const friendRequest = () =>
-    requestRelationship({ username, action: 'friend requested' });
+    requestRelationship({ username, action: 'friend request' });
   const followRequest = () =>
-    requestRelationship({ username, action: 'follow requested' });
+    requestRelationship({ username, action: 'follow request' });
 
   return { friendRequest, followRequest, loading };
 }

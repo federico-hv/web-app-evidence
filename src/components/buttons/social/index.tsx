@@ -1,4 +1,4 @@
-import { Skeleton, HStack } from '@holdr-ui/react';
+import { Skeleton, HStack, Button } from '@holdr-ui/react';
 import {
   Error,
   Loader,
@@ -48,7 +48,8 @@ function SocialButton() {
                       on={
                         !data.relationshipStatusInfo.isFollowing &&
                         !data.relationshipStatusInfo.isOwned &&
-                        !data.relationshipStatusInfo.hasFollowRequest
+                        !data.relationshipStatusInfo.hasFollowRequest &&
+                        !data.relationshipStatusInfo.isBlocked
                       }
                     >
                       <FollowButton />
@@ -59,7 +60,15 @@ function SocialButton() {
                       <RequestedButton />
                     </SwitchConditionalCase>
                     <SwitchConditionalCase
-                      on={!!data.relationshipStatusInfo.isFollowing}
+                      on={!!data.relationshipStatusInfo.isBlocked}
+                    >
+                      <Button colorTheme='danger'>Unblock</Button>
+                    </SwitchConditionalCase>
+                    <SwitchConditionalCase
+                      on={
+                        !!data.relationshipStatusInfo.isFollowing &&
+                        !data.relationshipStatusInfo.isBlocked
+                      }
                     >
                       <MotionWrapper gap={3}>
                         <ProfileNotificationsButton />

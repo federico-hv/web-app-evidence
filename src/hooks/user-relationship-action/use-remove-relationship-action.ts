@@ -27,19 +27,19 @@ export function useRemoveRelationshipAction(username: string) {
   const removeFavourite = () =>
     removeRelationship({ username, action: 'favourite' });
   const removeFriendRequest = () =>
-    removeRelationship({ username, action: 'friend requested' });
-  const removeFollowRequest = () =>
-    removeRelationship({ username, action: 'follow requested' });
+    removeRelationship({ username, action: 'friend request' });
   const removeFriend = () =>
     removeRelationship({ username, action: 'friend' });
+  const removeRestriction = () =>
+    removeRelationship({ username, action: 'restrict' });
 
   return {
     unfollow,
     unmute,
     removeFavourite,
     removeFriendRequest,
-    removeFollowRequest,
     removeFriend,
+    removeRestriction,
     loading,
   };
 }

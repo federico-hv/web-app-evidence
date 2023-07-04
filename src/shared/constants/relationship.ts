@@ -13,6 +13,7 @@ export const createRelationshipActions = [
   'follow',
   'mute',
   'favourite',
+  'restrict',
 ] as const;
 
 export const removeRelationshipActions = [
@@ -21,11 +22,12 @@ export const removeRelationshipActions = [
   'mute',
   'friend',
   'favourite',
-  'follow requested',
-  'friend requested',
+  'restrict',
+  'follow request',
+  'friend request',
 ] as const;
 
 export const requestRelationshipActions = [
-  'follow requested',
-  'friend requested',
+  'follow request',
+  'friend request',
 ] as const;

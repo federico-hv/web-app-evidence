@@ -20,7 +20,7 @@ function ProfilePopoverLg({ currentUser }: ProfilePopoverLgProps) {
         <Popover.Content
           maxWidth={300}
           zIndex={50}
-          sideOffset={10}
+          sideOffset={20}
           align='end'
         >
           <AuthenticatedProfileMenuLg

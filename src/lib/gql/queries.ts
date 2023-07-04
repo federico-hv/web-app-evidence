@@ -12,15 +12,6 @@ export const GET_ME = gql`
   }
 `;
 
-export const GET_RELATIONSHIP = gql`
-  query relationship($username: String!) {
-    relationship(username: $username) {
-      addresseeId # id of the user requested to create relationship with
-      code # code of relationship status
-    }
-  }
-`;
-
 export const GET_PROFILE = gql`
   query profile($username: String!) {
     profile(username: $username) {
@@ -89,9 +80,25 @@ export const GET_RELATIONSHIP_STATUS_INFO = gql`
       isFollowing
       isFriend
       isFavourite
+      isRestricted
       hasFriendRequest
       hasFollowRequest
       isOwned
+    }
+  }
+`;
+
+export const GET_RELATIONSHIP_REQUESTS = gql`
+  query relationshipRequests {
+    relationshipRequests {
+      id
+      requestType
+      requester {
+        id
+        username
+        displayName
+        avatar
+      }
     }
   }
 `;

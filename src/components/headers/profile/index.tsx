@@ -6,7 +6,7 @@ import { ProfileContext } from '../../../contexts';
 
 function ProfileHeader() {
   const { data, loading, error } = useProfile();
-  console.log({ data });
+
   return (
     <Error hasError={!!error} errorEl={<NotFoundError />}>
       {data && data.profile && (

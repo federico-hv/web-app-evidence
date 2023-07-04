@@ -22,6 +22,7 @@ function Router() {
       <Route path='/' element={<MainLayout />}>
         {/* PROTECTED ROUTES - ANYONE */}
         <Route element={<AuthGuard />}>
+          <Route path={Paths.home} element={<HomePage />} />
           <Route path={Paths.channels} element={<ChannelsPage />} />
           <Route path={Paths.bookmarks} element={<BookmarksPage />} />
           <Route path={Paths.discover} element={<DiscoverPage />} />
@@ -38,7 +39,6 @@ function Router() {
         {/* PROTECTED ROUTES - ARTISTS */}
         <Route element={<AuthGuard roles={['artist']} />}></Route>
         {/* PUBLIC ROUTES*/}
-        <Route path={Paths.home} element={<HomePage />} />
         <Route path={PathParams.profileId} element={<ProfilePage />} />
         <Route path={Paths.support} element={<SupportPage />} />
         <Route path='*' element={<NotFoundPage />} />

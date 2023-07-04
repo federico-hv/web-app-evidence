@@ -123,3 +123,15 @@ export const REQUEST_RELATIONSHIP = gql`
     }
   }
 `;
+
+export const ACCEPT_RELATIONSHIP_REQUEST = gql`
+  mutation acceptRelationshipRequest($id: Int!) {
+    acceptRelationshipRequest(id: $id)
+  }
+`;
+
+export const DECLINE_RELATIONSHIP_REQUEST = gql`
+  mutation declineRelationshipRequest($id: Int!) {
+    declineRelationshipRequest(id: $id)
+  }
+`;

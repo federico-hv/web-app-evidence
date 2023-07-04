@@ -10,8 +10,20 @@ export interface RelationshipModel {
   code: RelationshipStatusCode;
 }
 
+export interface RelationshipRequest {
+  id: number;
+  requestType: 'hasFollowRequest' | 'hasFriendRequest';
+  requester: {
+    id: string;
+    avatar: string;
+    username: string;
+    displayName: string;
+  };
+}
+
 export interface RelationshipStatusInfo {
   isBlocked: boolean | null;
+  isRestricted: boolean | null;
   isMuted: boolean | null;
   isFollower: boolean | null;
   isFollowing: boolean | null;

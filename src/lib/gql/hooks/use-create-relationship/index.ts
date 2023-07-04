@@ -5,7 +5,6 @@ import {
 } from '../../interfaces';
 import { CREATE_RELATIONSHIP } from '../../mutations';
 import { GET_RELATIONSHIP_STATUS_INFO } from '../../queries';
-import { useToast } from '../../../../hooks';
 
 export function useCreateRelationship() {
   const [mutation, { loading, error, data }] = useMutation<

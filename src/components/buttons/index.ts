@@ -7,3 +7,4 @@ export { default as SettingButton } from './setting';
 export { default as ProfileOptionsButton } from './profile-options';
 export { default as RequestedButton } from './requested';
 export { default as ProfileNotificationsButton } from './profile-notification';
+export { default as NotificationsButton } from './notifications';

@@ -26,6 +26,9 @@ export function useCreateRelationshipAction(username: string) {
   const mute = () => createRelationship({ username, action: 'mute' });
   const favourite = () =>
     createRelationship({ username, action: 'favourite' });
+  const block = () => createRelationship({ username, action: 'block' });
+  const restrict = () =>
+    createRelationship({ username, action: 'restrict' });
 
-  return { mute, favourite, follow, loading };
+  return { mute, favourite, follow, restrict, block, loading };
 }
