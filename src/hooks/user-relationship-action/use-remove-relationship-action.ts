@@ -28,6 +28,8 @@ export function useRemoveRelationshipAction(username: string) {
     removeRelationship({ username, action: 'favourite' });
   const removeFriendRequest = () =>
     removeRelationship({ username, action: 'friend request' });
+  const removeFollowRequest = () =>
+    removeRelationship({ username, action: 'follow request' });
   const removeFriend = () =>
     removeRelationship({ username, action: 'friend' });
   const removeRestriction = () =>
@@ -38,6 +40,7 @@ export function useRemoveRelationshipAction(username: string) {
     unmute,
     removeFavourite,
     removeFriendRequest,
+    removeFollowRequest,
     removeFriend,
     removeRestriction,
     loading,
