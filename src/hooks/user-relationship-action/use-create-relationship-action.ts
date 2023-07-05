@@ -12,7 +12,7 @@ export function useCreateRelationshipAction(username: string) {
   const { open, set } = useToast({
     status: 'danger',
     description:
-      'Oops! Something went wrong. Totally our fault, but try again later. ',
+      'Oops! Something went wrong. Totally our fault, but try again later.',
   });
 
   useEffect(() => {

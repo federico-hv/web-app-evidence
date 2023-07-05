@@ -13,7 +13,7 @@ import {
   useDisclosure,
   VStack,
 } from '@holdr-ui/react';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import {
   RelationshipStatusContext,
   useProfileContext,
@@ -21,6 +21,7 @@ import {
 import {
   useCopyToClipboard,
   useCreateRelationshipAction,
+  useToast,
 } from '../../../hooks';
 import MenuButton from '../menu';
 import {
@@ -30,6 +31,7 @@ import {
   SwitchConditionalCase,
 } from '../../utility';
 import { extraBtnPadding } from '../../../shared';
+import { useRemoveFollower } from '../../../lib/gql/hooks/use-remove-follower';
 
 function BlockButton({ close }: { close: VoidFunction }) {
   const { profile } = useProfileContext();
@@ -117,8 +119,24 @@ function BlockButton({ close }: { close: VoidFunction }) {
 }
 
 function ProfileOptionsMenu({ close }: { close: VoidFunction }) {
-  const copyToClipboard = useCopyToClipboard('Copied link to clipboard.');
+  const { profile } = useProfileContext();
   const { isFollower, isBlocked } = useContext(RelationshipStatusContext);
+  const copyToClipboard = useCopyToClipboard('Copied link to clipboard.');
+  const { removeFollower, error } = useRemoveFollower();
+
+  const { set, open } = useToast({
+    description:
+      error?.message ||
+      'Oops! Something went wrong. Totally our fault, but try again later.',
+    status: 'danger',
+  });
+
+  useEffect(() => {
+    if (error && set) {
+      set({ description: error.message, status: 'danger' });
+      open();
+    }
+  }, [error, set, open]);
 
   return (
     <VStack divider={<Box borderBottom={1} borderColor='base100' />}>
@@ -132,7 +150,13 @@ function ProfileOptionsMenu({ close }: { close: VoidFunction }) {
         {/*</SwitchConditionalCase>*/}
       </SwitchConditional>
       {isFollower && (
-        <MenuButton label='Remove follower' icon='user-unfollow-outline' />
+        <MenuButton
+          onClick={async () => {
+            await removeFollower(profile.username);
+          }}
+          label='Remove follower'
+          icon='user-unfollow-outline'
+        />
       )}
       <MenuButton
         label='Copy profile URL'
