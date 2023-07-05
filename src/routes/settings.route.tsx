@@ -13,9 +13,10 @@ import {
   EmailFiltersSettingsPage,
   EmailSettingPage,
   GenderSettingPage,
-  MuteAndBlockSettingsPage,
+  ManageUsersSettingsPage,
   MutedAccountsSettingsPage,
   MutedNotificationsSettingsPage,
+  NotFoundPage,
   NotificationsFilterSettingsPage,
   NotificationsPreferenceSettingsPage,
   NotificationsSettingsPage,
@@ -79,8 +80,8 @@ const SettingsRoutes = () => (
         element={<ProtectAndTaggingSettingsPage />}
       />
       <Route
-        path={Paths.setting.mute_and_block}
-        element={<MuteAndBlockSettingsPage />}
+        path={Paths.setting.manage_users}
+        element={<ManageUsersSettingsPage />}
       />
       <Route
         path={Paths.setting.backup_code}
@@ -106,6 +107,7 @@ const SettingsRoutes = () => (
         path={Paths.setting.email_notifications}
         element={<EmailFiltersSettingsPage />}
       />
+
       <Route
         path={Paths.setting.muted_notifications}
         element={<MutedNotificationsSettingsPage />}
@@ -136,6 +138,7 @@ const SettingsRoutes = () => (
         />
       </Route>
     </Route>
+    <Route path='*' element={<NotFoundPage />} />
   </Routes>
 );
 

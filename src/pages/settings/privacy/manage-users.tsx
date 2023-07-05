@@ -4,13 +4,13 @@ import { prefix } from '../../../utilities';
 import { RootSettingsPath } from '../security/root';
 import { Paths } from '../../../shared';
 
-function MuteAndBlockSettingsPage() {
+function ManageUsersSettingsPage() {
   return (
     <>
       <Head
         title='Mute and block'
         description='Manage the notifications that you receive and how your receive them.'
-        url={prefix(RootSettingsPath, Paths.setting.mute_and_block)}
+        url={prefix(RootSettingsPath, Paths.setting.manage_users)}
       />
       <HeaderLayout
         title='Mute and block'
@@ -24,10 +24,17 @@ function MuteAndBlockSettingsPage() {
           path={prefix(RootSettingsPath, Paths.setting.muted_accounts)}
           heading='Muted accounts'
         />
+        {/*<SettingButton*/}
+        {/*  path={prefix(*/}
+        {/*    RootSettingsPath,*/}
+        {/*    Paths.setting.restricted_accounts,*/}
+        {/*  )}*/}
+        {/*  heading='Restricted accounts'*/}
+        {/*/>*/}
       </HeaderLayout>
     </>
   );
 }
-MuteAndBlockSettingsPage.displayName = 'MuteAndBlockSettingsPage';
+ManageUsersSettingsPage.displayName = 'ManageUsersSettingsPage';
 
-export default MuteAndBlockSettingsPage;
+export default ManageUsersSettingsPage;

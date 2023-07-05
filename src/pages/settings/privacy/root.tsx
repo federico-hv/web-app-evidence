@@ -27,10 +27,10 @@ function PrivacySettingsPage() {
           icon='shield-keyhole-fill'
         />
         <SettingButton
-          path={prefix(RootSettingsPath, Paths.setting.mute_and_block)}
-          heading='Mute and block'
-          subheading='Manage the notifications that you receive and how your receive them.'
-          icon='mute-outline'
+          path={prefix(RootSettingsPath, Paths.setting.manage_users)}
+          heading='Manage users'
+          subheading='Manage who can view your content and account.'
+          icon='user-outline'
         />
       </Box>
     </>

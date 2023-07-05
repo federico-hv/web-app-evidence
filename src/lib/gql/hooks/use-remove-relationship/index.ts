@@ -4,7 +4,11 @@ import {
   RemoveRelationshipModel,
 } from '../../interfaces';
 import { REMOVE_RELATIONSHIP } from '../../mutations';
-import { GET_RELATIONSHIP_STATUS_INFO } from '../../queries';
+import {
+  GET_BLOCKED_ACCOUNTS,
+  GET_MUTED_ACCOUNTS,
+  GET_RELATIONSHIP_STATUS_INFO,
+} from '../../queries';
 
 export function useRemoveRelationship() {
   const [mutation, { loading, error }] = useMutation<
@@ -29,6 +33,26 @@ export function useRemoveRelationship() {
                   relationshipStatusInfo: {
                     ...current,
                     ...data?.removeRelationship,
+                  },
+                },
+              });
+            },
+            blockedUsers(current) {
+              cache.writeQuery({
+                query: GET_BLOCKED_ACCOUNTS,
+                data: {
+                  blockedUsers: {
+                    ...current,
+                  },
+                },
+              });
+            },
+            mutedUsers(current) {
+              cache.writeQuery({
+                query: GET_MUTED_ACCOUNTS,
+                data: {
+                  mutedUsers: {
+                    ...current,
                   },
                 },
               });

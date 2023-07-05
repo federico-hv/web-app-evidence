@@ -19,7 +19,8 @@ export const Paths = {
     email_notifications: 'email_notifications',
     blocked_accounts: 'blocked_accounts',
     muted_accounts: 'muted_accounts',
-    mute_and_block: 'mute_and_block',
+    restricted_accounts: 'restricted_accounts',
+    manage_users: 'manage_users',
     protection_and_tagging: 'protection',
     security: 'security_and_account_access',
     login_security: 'login_security',
@@ -55,7 +56,7 @@ export const SettingsParentMap = {
 
   [Paths.setting.privacy]: Paths.setting.privacy,
   [Paths.setting.protection_and_tagging]: Paths.setting.privacy,
-  [Paths.setting.mute_and_block]: Paths.setting.privacy,
+  [Paths.setting.manage_users]: Paths.setting.privacy,
   [Paths.setting.blocked_accounts]: Paths.setting.privacy,
   [Paths.setting.muted_accounts]: Paths.setting.privacy,
 

@@ -102,3 +102,36 @@ export const GET_RELATIONSHIP_REQUESTS = gql`
     }
   }
 `;
+
+export const GET_BLOCKED_ACCOUNTS = gql`
+  query blockedUsers {
+    blockedUsers {
+      id
+      username
+      displayName
+      avatar
+    }
+  }
+`;
+
+export const GET_MUTED_ACCOUNTS = gql`
+  query mutedUsers {
+    mutedUsers {
+      id
+      username
+      displayName
+      avatar
+    }
+  }
+`;
+
+export const GET_RESTRICTED_ACCOUNTS = gql`
+  query restrictedUsers {
+    restrictedUsers {
+      id
+      username
+      displayName
+      avatar
+    }
+  }
+`;

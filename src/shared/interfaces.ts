@@ -28,7 +28,7 @@ export interface IProfile {
   bio?: string;
 }
 
-export interface IFindUser {
+export interface IUser {
   username: string;
   displayName: string;
   id: string;

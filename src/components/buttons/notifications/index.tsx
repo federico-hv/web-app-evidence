@@ -1,4 +1,4 @@
-import { GenericProps, IUserSm } from '../../../shared';
+import { GenericProps, IUserSm, LinkOverlay } from '../../../shared';
 import {
   Avatar,
   Box,
@@ -23,6 +23,7 @@ import { useQuery } from '@apollo/client';
 import { ContentBox } from '../../support';
 import { Loader } from '../../utility';
 import { TextGroup, TextGroupSubheading } from '../../groups';
+import { prefix } from '../../../utilities';
 
 function BadgeWrapper({
   children,
@@ -52,10 +53,12 @@ function UserRequestItem({
   id,
   user,
   type,
+  onClick,
 }: {
   id: number;
   user: IUserSm;
   type: 'hasFollowRequest' | 'hasFriendRequest';
+  onClick: VoidFunction;
 }) {
   const { accept, loading: loadingAccept } =
     useAcceptRelationshipRequest();
@@ -74,6 +77,7 @@ function UserRequestItem({
         backgroundColor: '$base100',
       }}
     >
+      <LinkOverlay onClick={onClick} to={prefix('/', user.username)} />
       <Avatar src={user.avatar} name={user.username} />
       <TextGroup gap={0}>
         <TextGroupSubheading weight={500}>
@@ -110,9 +114,11 @@ function UserRequestItem({
 function NotificationsButton() {
   const { data, loading } = useQuery<{
     relationshipRequests: RelationshipRequest[];
-  }>(GET_RELATIONSHIP_REQUESTS);
+  }>(GET_RELATIONSHIP_REQUESTS, { fetchPolicy: 'cache-and-network' });
 
   const [isOpen, setOpen] = useState(false);
+
+  const closePopover = () => setOpen(false);
 
   return (
     <Popover isOpen={isOpen} onOpenChange={setOpen}>
@@ -207,6 +213,7 @@ function NotificationsButton() {
                             id={id}
                             type={requestType}
                             user={requester}
+                            onClick={closePopover}
                           />
                         ),
                       )}
