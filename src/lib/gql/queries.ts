@@ -12,12 +12,6 @@ export const GET_ME = gql`
   }
 `;
 
-export const GET_RELATIONSHIP_WITH_USER = gql`
-  query relationshipWithUser($username: String!) {
-    relationshipWithUser(username: $username)
-  }
-`;
-
 export const GET_PROFILE = gql`
   query profile($username: String!) {
     profile(username: $username) {
@@ -26,8 +20,7 @@ export const GET_PROFILE = gql`
       coverImage
       avatar
       bio
-      followers
-      following
+      protected
     }
   }
 `;
@@ -75,5 +68,70 @@ export const GET_TWO_FA_CHANNEL = gql`
 export const GET_2FA_RECOVERY_KEY = gql`
   query twoFARecoveryKey {
     twoFARecoveryKey
+  }
+`;
+
+export const GET_RELATIONSHIP_STATUS_INFO = gql`
+  query relationshipStatusInfo($username: String!) {
+    relationshipStatusInfo(username: $username) {
+      isBlocked
+      isMuted
+      isFollower
+      isFollowing
+      isFriend
+      isFavourite
+      isRestricted
+      hasFriendRequest
+      hasFollowRequest
+      isOwned
+    }
+  }
+`;
+
+export const GET_RELATIONSHIP_REQUESTS = gql`
+  query relationshipRequests {
+    relationshipRequests {
+      id
+      requestType
+      requester {
+        id
+        username
+        displayName
+        avatar
+      }
+    }
+  }
+`;
+
+export const GET_BLOCKED_ACCOUNTS = gql`
+  query blockedUsers {
+    blockedUsers {
+      id
+      username
+      displayName
+      avatar
+    }
+  }
+`;
+
+export const GET_MUTED_ACCOUNTS = gql`
+  query mutedUsers {
+    mutedUsers {
+      id
+      username
+      displayName
+      avatar
+    }
+  }
+`;
+
+export const GET_RESTRICTED_ACCOUNTS = gql`
+  query restrictedUsers {
+    restrictedUsers {
+      id
+      username
+      displayName
+      avatar
+    }
   }
 `;

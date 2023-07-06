@@ -73,7 +73,10 @@ function AuthenticatedProfileMenuLg({
           </VStack>
         </HStack>
       </Card.Header>
-      <Card.Body py={2}>
+      <Card.Body
+        py={2}
+        divider={<Box borderBottom={1} borderColor='base100' />}
+      >
         <MenuButton
           label='Settings & Privacy'
           icon='settings-outline'

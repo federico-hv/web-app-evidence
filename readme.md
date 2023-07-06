@@ -129,7 +129,7 @@ export default MyComponent;
 ```
 
 If the component, contains `props`, the props interface will be defined in the
-`*.types.ts` file. For all components with similar prop types, we will define a
+`*.common.ts` file. For all components with similar prop types, we will define a
 `IBaseComponentProps` interface in the `shared/props.ts` and extend them as the need arises.
 
 ```ts
@@ -327,7 +327,7 @@ layouts/
 │  ├─ auth-layout.stories.tsx
 │  ├─ auth-layout.test.tsx
 │  ├─ auth-layout.styles.ts
-│  ├─ auth-layout.types.ts
+│  ├─ auth-layout.common.ts
 ├─ root.tsx                       # Exports all layout components 
 ```
 
@@ -391,11 +391,11 @@ the app. All the code is exported in the `shared/root.tsx` file.
 
 ```
 shared/
-├─ constants.ts     # Shared constants
+├─ general.ts     # Shared constants
 ├─ root.tsx         # Export all shared type, interface, props, and constants
 ├─ props.ts         # Shared base props
 ├─ styles.ts        # Shared styles
-├─ types.ts         # Shared types
+├─ common.ts         # Shared types
 ```
 
 #### Cypress

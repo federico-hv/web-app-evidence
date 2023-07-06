@@ -1,12 +1,7 @@
 import { createContext } from 'react';
+import { IChangeContactInfoContext } from './change-contact-info-context.types';
 
-const ChangeContactInfoContext = createContext<{
-  name: 'phone' | 'email';
-  update: (value: string) => void;
-  phone?: string;
-  email?: string;
-  close: VoidFunction;
-}>({
+const ChangeContactInfoContext = createContext<IChangeContactInfoContext>({
   phone: '',
   email: '',
   name: 'phone',

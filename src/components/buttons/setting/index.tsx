@@ -17,7 +17,7 @@ function SettingButton({
       <HStack items='center' p={4} className={settingButtonHoverCss()}>
         {icon && (
           <Box px={4}>
-            <Icon name={icon} />
+            <Icon size='lg' name={icon} />
           </Box>
         )}
         <HStack flex={1} justify='space-between' items='center'>

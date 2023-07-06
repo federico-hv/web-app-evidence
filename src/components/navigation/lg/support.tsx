@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 import { AuthContext } from 'contexts';
 import {
+  Box,
   ButtonGroup,
   Circle,
   HStack,
@@ -11,25 +12,21 @@ import {
   VStack,
 } from '@holdr-ui/react';
 import { ProfilePopoverLg } from '../../popover';
-import { MenuButton } from '../../buttons';
+import { MenuButton, NotificationsButton } from '../../buttons';
 import querystring from 'querystring';
 import { useMenuNavigate } from '../../../hooks';
 
 function AuthenticatedNavActions() {
   const { currentUser } = useContext(AuthContext);
-  const { goto } = useMenuNavigate();
+
   return (
     <>
       {currentUser && (
         <HStack gap={4} items='center' justify='flex-end'>
           <ButtonGroup items='center' gap={4} colorTheme='primary400'>
             <IconButton icon='chat-outline' ariaLabel='open chats' />
-            <IconButton
-              onClick={goto.notifications}
-              icon='notification-outline'
-              ariaLabel='open notifications'
-            />
           </ButtonGroup>
+          <NotificationsButton />
           <ProfilePopoverLg currentUser={currentUser} />
         </HStack>
       )}
@@ -37,6 +34,8 @@ function AuthenticatedNavActions() {
   );
 }
 
+// This is in the wrong fucking place
+// TODO: Remove this
 function UnauthenticatedNavActions() {
   const queryParams = querystring.encode({
     redirect_url: `${import.meta.env.VITE_APP_BASE_URL}${
@@ -56,7 +55,10 @@ function UnauthenticatedNavActions() {
         </Popover.Trigger>
         <Popover.Portal>
           <Popover.Content zIndex={50} sideOffset={10} align='end'>
-            <VStack gap={2}>
+            <VStack
+              gap={2}
+              divider={<Box borderBottom={1} borderColor='base100' />}
+            >
               <MenuButton
                 label='Settings & Privacy'
                 icon='settings-outline'

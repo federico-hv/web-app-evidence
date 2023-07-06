@@ -3,7 +3,7 @@ import { Box } from '@holdr-ui/react';
 function ProfileOverlay() {
   return (
     <Box
-      bgColor='clearTint500'
+      bgColor='darkTint400'
       position='absolute'
       t={{ '@bp1': 50, '@bp3': 0 }}
       b={0}

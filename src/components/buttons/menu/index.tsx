@@ -1,22 +1,22 @@
 import { HStack, Icon, Text } from '@holdr-ui/react';
 import { MenuButtonProps } from './menu-button.types';
 
-function MenuButton({ label, icon, onClick }: MenuButtonProps) {
+function MenuButton({ label, icon, onClick, dangerous }: MenuButtonProps) {
   return (
     <HStack
-      py={4}
-      px={3}
+      justify='space-between'
       role='button'
       items='center'
-      justify='space-between'
       radius={2}
-      onClick={onClick}
       cursor='pointer'
+      p={4}
+      color={dangerous ? 'danger' : 'base800'}
       _hover={{
-        background: '$base100',
+        backgroundColor: dangerous ? 'rgba(255,205,205,0.38)' : '$base100',
       }}
+      onClick={onClick}
     >
-      <Text>{label}</Text>
+      <Text weight={500}>{label}</Text>
       <Icon name={icon} size='lg' />
     </HStack>
   );

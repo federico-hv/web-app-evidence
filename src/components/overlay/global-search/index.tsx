@@ -14,7 +14,7 @@ import {
 import { useQuery } from '@apollo/client';
 import { useNavigate } from 'react-router-dom';
 import { prefix } from 'utilities';
-import { IFindUser, Paths } from 'shared';
+import { IUser, Paths } from 'shared';
 import { FIND_USER } from 'lib';
 import { Item } from './global-search.types';
 
@@ -28,10 +28,10 @@ import { Item } from './global-search.types';
 function GlobalSearch() {
   const navigate = useNavigate();
   const [value, setValue] = useState('');
-  const [results, setResults] = useState<IFindUser[]>([]);
-  const [history, setHistory] = useState<IFindUser[]>([]);
+  const [results, setResults] = useState<IUser[]>([]);
+  const [history, setHistory] = useState<IUser[]>([]);
 
-  const { data, loading, error } = useQuery<{ findUser: IFindUser[] }>(
+  const { data, loading, error } = useQuery<{ findUser: IUser[] }>(
     FIND_USER,
     {
       variables: {
@@ -80,10 +80,12 @@ function GlobalSearch() {
     </HStack>
   );
   const keyExtractor = ({ item }: Item) => item.id;
-  const onClickItem = ({ item }: Item) => {
+  const onClickItem = ({ item }: Item, clearValue?: VoidFunction) => {
     // save the search text
     // save the user's event
     navigate(prefix('/', item.username));
+    setValue('');
+    clearValue && clearValue();
   };
   const onClickSearchItem = (searchText: string) => {
     navigate(prefix('/', `${Paths.discover}?q=${searchText}`));

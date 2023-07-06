@@ -1,3 +1,3 @@
-import { IFindUser } from '../../../shared';
+import { IUser } from '../../../shared';
 
-export type Item = { item: IFindUser; index: number };
+export type Item = { item: IUser; index: number };

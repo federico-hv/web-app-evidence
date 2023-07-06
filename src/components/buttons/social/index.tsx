@@ -1,45 +1,103 @@
-import { Button, HStack, IconButton, Skeleton } from '@holdr-ui/react';
-import { Error, Loader } from '../../utility';
+import { Skeleton, HStack, Button } from '@holdr-ui/react';
+import {
+  Error,
+  Loader,
+  SwitchConditional,
+  SwitchConditionalCase,
+} from '../../utility';
 import { EditProfileDialog } from '../../dialog';
 import { useQuery } from '@apollo/client';
-import { GET_RELATIONSHIP_WITH_USER } from 'lib';
-import { useLocation } from 'react-router-dom';
+import { GET_RELATIONSHIP_STATUS_INFO, RelationshipStatusInfo } from 'lib';
+import {
+  FollowButton,
+  FollowingButton,
+  ProfileOptionsButton,
+  RequestedButton,
+  ProfileNotificationsButton,
+} from '../index';
+import { MotionWrapper } from '../../../shared';
+import {
+  RelationshipStatusContextProvider,
+  useProfileContext,
+} from '../../../contexts';
+import { useRemoveRelationshipAction } from '../../../hooks';
 
 function SocialButton() {
-  const username = useLocation().pathname.split('/')[1];
+  const { profile } = useProfileContext();
+
+  const { removeBlock, loading: loadingRemoval } =
+    useRemoveRelationshipAction(profile.username);
 
   const { data, loading, error } = useQuery<{
-    relationshipWithUser: 'none' | 'owned' | 'following';
-  }>(GET_RELATIONSHIP_WITH_USER, {
+    relationshipStatusInfo: RelationshipStatusInfo;
+  }>(GET_RELATIONSHIP_STATUS_INFO, {
     variables: {
-      username: username,
+      username: profile.username,
     },
   });
 
   return (
-    <Error hasError={!!error} errorEl={<></>}>
+    <Error hasError={!!error} errorMessage={error?.message}>
       <Loader loading={loading} as={<Skeleton />}>
-        {data && data.relationshipWithUser && (
-          <>
-            {data.relationshipWithUser === 'none' && (
-              <HStack gap={3} items='center'>
-                <Button
-                  size={{ '@bp1': 'base', '@bp4': 'base' }}
-                  label='Follow'
-                />
-                <IconButton
-                  variant='ghost'
-                  size={{ '@bp1': 'base', '@bp4': 'base' }}
-                  ariaLabel='more'
-                  icon='more-fill'
-                />
-              </HStack>
-            )}
-
-            {data.relationshipWithUser === 'owned' && (
-              <EditProfileDialog />
-            )}
-          </>
+        {data && data.relationshipStatusInfo && (
+          <RelationshipStatusContextProvider
+            value={{ ...data.relationshipStatusInfo }}
+          >
+            <SwitchConditional>
+              <SwitchConditionalCase
+                on={!data.relationshipStatusInfo.isOwned}
+              >
+                <HStack gap={3}>
+                  <ProfileOptionsButton />
+                  <SwitchConditional>
+                    <SwitchConditionalCase
+                      on={
+                        !data.relationshipStatusInfo.isFollowing &&
+                        !data.relationshipStatusInfo.isOwned &&
+                        !data.relationshipStatusInfo.hasFollowRequest &&
+                        !data.relationshipStatusInfo.isBlocked
+                      }
+                    >
+                      <FollowButton />
+                    </SwitchConditionalCase>
+                    <SwitchConditionalCase
+                      on={!!data.relationshipStatusInfo.hasFollowRequest}
+                    >
+                      <RequestedButton />
+                    </SwitchConditionalCase>
+                    <SwitchConditionalCase
+                      on={!!data.relationshipStatusInfo.isBlocked}
+                    >
+                      <Button
+                        colorTheme='danger'
+                        onClick={removeBlock}
+                        isLoading={loadingRemoval}
+                        loadingText={loadingRemoval ? '' : 'Unblocking'}
+                      >
+                        Unblock
+                      </Button>
+                    </SwitchConditionalCase>
+                    <SwitchConditionalCase
+                      on={
+                        !!data.relationshipStatusInfo.isFollowing &&
+                        !data.relationshipStatusInfo.isBlocked
+                      }
+                    >
+                      <MotionWrapper gap={3}>
+                        <ProfileNotificationsButton />
+                        <FollowingButton />
+                      </MotionWrapper>
+                    </SwitchConditionalCase>
+                  </SwitchConditional>
+                </HStack>
+              </SwitchConditionalCase>
+              <SwitchConditionalCase
+                on={data.relationshipStatusInfo.isOwned === true}
+              >
+                <EditProfileDialog />
+              </SwitchConditionalCase>
+            </SwitchConditional>
+          </RelationshipStatusContextProvider>
         )}
       </Loader>
     </Error>

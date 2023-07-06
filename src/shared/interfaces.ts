@@ -1,4 +1,9 @@
 import { ProviderName, Role } from './types';
+import { ReactNode } from 'react';
+
+export interface GenericProps {
+  children?: ReactNode;
+}
 
 export interface IUserSm {
   username: string;
@@ -15,17 +20,15 @@ export interface IUserMe {
 }
 
 export interface IProfile {
-  // TODO: Get role
   username: string;
+  protected: boolean;
   displayName: string;
   coverImage?: string;
   avatar?: string;
   bio?: string;
-  followers: number;
-  following: number;
 }
 
-export interface IFindUser {
+export interface IUser {
   username: string;
   displayName: string;
   id: string;
@@ -90,7 +93,6 @@ export interface IStatus {
   message: string;
 }
 
-// TODO: Move this into the query/mutation types
 export interface TwoFAAppRegistrationModel {
   code: string;
   qrCodeUrl: string;

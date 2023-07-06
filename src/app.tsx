@@ -1,11 +1,14 @@
 import { BrowserRouter } from 'react-router-dom';
 import { globalStyles } from 'configs';
-import { AuthProvider } from 'contexts';
+import {
+  AlertDialogProvider,
+  AuthProvider,
+  ToastProvider,
+} from 'contexts';
 import { CookiesProvider } from 'react-cookie';
 import { ApolloProvider } from '@apollo/client';
 import { GQLClient } from 'lib';
 import Router from './router';
-import { Toast } from '@holdr-ui/react';
 
 export function App() {
   globalStyles();
@@ -13,11 +16,13 @@ export function App() {
     <CookiesProvider>
       <ApolloProvider client={GQLClient}>
         <AuthProvider>
-          <BrowserRouter basename={import.meta.env.VITE_APP_BASE_PATH}>
-            <Toast.Provider>
-              <Router />
-            </Toast.Provider>
-          </BrowserRouter>
+          <AlertDialogProvider>
+            <BrowserRouter basename={import.meta.env.VITE_APP_BASE_PATH}>
+              <ToastProvider>
+                <Router />
+              </ToastProvider>
+            </BrowserRouter>
+          </AlertDialogProvider>
         </AuthProvider>
       </ApolloProvider>
     </CookiesProvider>

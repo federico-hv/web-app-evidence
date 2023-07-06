@@ -6,7 +6,6 @@ import { ProfileOverlay } from '../../overlay';
 import { AuthContext } from '../../../contexts';
 
 import lightPlaceholder from 'assets/images/light-placeholder.jpg';
-import Statistic from '../../data-display/statistic';
 import {
   TextGroup,
   TextGroupHeading,
@@ -56,8 +55,10 @@ function ProfileHeaderSm({ profile }: { profile: IProfile }) {
                 />
               </Box>
               <TextGroup>
-                <TextGroupHeading>{profile.displayName}</TextGroupHeading>
-                <TextGroupSubheading>
+                <TextGroupHeading color='primary400'>
+                  {profile.displayName}
+                </TextGroupHeading>
+                <TextGroupSubheading color='primary400'>
                   @{profile.username}
                 </TextGroupSubheading>
               </TextGroup>
@@ -75,9 +76,9 @@ function ProfileHeaderSm({ profile }: { profile: IProfile }) {
           items='center'
           color='base400'
         >
-          <HStack gap={3}>
-            <Statistic value={profile.followers} label='followers' />
-          </HStack>
+          {/*<HStack gap={3}>*/}
+          {/*  <Statistic value={profile.followers} label='followers' />*/}
+          {/*</HStack>*/}
           {currentUser && <SocialButton />}
         </HStack>
       </VStack>
@@ -129,8 +130,10 @@ function ProfileHeaderLg({ profile }: { profile: IProfile }) {
             </Box>
             <HStack w='100%' justify='space-between' items='flex-start'>
               <TextGroup>
-                <TextGroupHeading>{profile.displayName}</TextGroupHeading>
-                <TextGroupSubheading>
+                <TextGroupHeading size={5} color='primary400'>
+                  {profile.displayName}
+                </TextGroupHeading>
+                <TextGroupSubheading color='primary400'>
                   @{profile.username}
                 </TextGroupSubheading>
               </TextGroup>

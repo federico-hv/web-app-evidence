@@ -1,23 +1,46 @@
-import { Button, useSwitch } from '@holdr-ui/react';
+import { Button } from '@holdr-ui/react';
+import {
+  useCreateRelationshipAction,
+  useRequestRelationshipAction,
+  useUsername,
+} from '../../../hooks';
+import { useProfileContext } from '../../../contexts';
+import { SwitchConditional, SwitchConditionalCase } from '../../utility';
 
 function FollowButton() {
-  const { switchState: isFollowing, toggle } = useSwitch(false);
-  const text = isFollowing ? 'Following' : 'Follow';
+  const username = useUsername();
+  const { follow, loading: loading0 } =
+    useCreateRelationshipAction(username);
+  const { followRequest, loading: loading1 } =
+    useRequestRelationshipAction(username);
+  const { profile } = useProfileContext();
 
   return (
-    <>
-      {isFollowing ? (
-        <Button variant='outline' onClick={toggle} colorTheme='base700'>
-          {text}
+    <SwitchConditional>
+      <SwitchConditionalCase on={!profile.protected}>
+        <Button
+          colorTheme='primary400'
+          isLoading={loading0}
+          loadingText={loading0 ? '' : 'Loading'}
+          onClick={follow}
+        >
+          Follow
         </Button>
-      ) : (
-        <Button onClick={toggle} colorTheme='primary400'>
-          {text}
+      </SwitchConditionalCase>
+      <SwitchConditionalCase on={profile.protected}>
+        <Button
+          colorTheme='primary400'
+          isLoading={loading1}
+          loadingText={loading1 ? '' : 'Loading'}
+          onClick={followRequest}
+        >
+          Follow
         </Button>
-      )}
-    </>
+      </SwitchConditionalCase>
+    </SwitchConditional>
   );
 }
+
 FollowButton.displayName = 'FollowButton';
 
 export default FollowButton;
