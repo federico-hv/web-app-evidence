@@ -49,3 +49,14 @@ export const REMOVE_FOLLOWER = gql`
     removeFollower(username: $username)
   }
 `;
+
+export const UPDATE_PROFILE = gql`
+  mutation updateProfile($payload: UpdateProfileInput!) {
+    updateProfile(payload: $payload) {
+      displayName
+      avatar
+      coverImage
+      bio
+    }
+  }
+`;

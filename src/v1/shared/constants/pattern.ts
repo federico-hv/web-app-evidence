@@ -4,7 +4,7 @@ export const phonePattern =
 export const usernamePatternMsg =
   'Username must only contain letters, numbers and underscores';
 export const phonePatternMsg =
-  'Phone must only contain a valid phone number';
+  'Phone must only contain a valid phone-input number';
 export const passwordPattern =
   '(?=.{10,})(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@#$%^&+=]).*';
 export const emailPatternMsg = 'Enter a valid email address';

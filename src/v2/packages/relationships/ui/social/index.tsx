@@ -1,4 +1,4 @@
-import { Button, HStack, IconButton, Skeleton } from '@holdr-ui/react';
+import { HStack, Skeleton } from '@holdr-ui/react';
 import { useQuery } from '@apollo/client';
 import { motion } from 'framer-motion';
 import { useParams } from 'react-router-dom';
@@ -18,6 +18,8 @@ import BlockButton from '../block';
 import { GET_RELATIONSHIP_STATUS_INFO } from '../../queries';
 import RequestedButton from '../request';
 import EditProfileButton from '../edit';
+import OptionsButton from '../options';
+import NotificationsButton from '../notifications';
 
 const MotionWrapper = motion(HStack);
 
@@ -44,12 +46,7 @@ function SocialButton() {
                 on={!data.relationshipStatusInfo.isOwned}
               >
                 <HStack gap={3}>
-                  <IconButton
-                    colorTheme='primary400'
-                    variant='ghost'
-                    icon='more-outline'
-                    ariaLabel='Open profile options'
-                  />
+                  <OptionsButton />
                   <SwitchConditional>
                     <SwitchConditionalCase
                       on={
@@ -78,11 +75,7 @@ function SocialButton() {
                       }
                     >
                       <MotionWrapper gap={3}>
-                        <IconButton
-                          colorTheme='primary400'
-                          icon='notification-outline'
-                          ariaLabel='Open notification settings'
-                        />
+                        <NotificationsButton />
                         <FollowingButton />
                       </MotionWrapper>
                     </SwitchConditionalCase>

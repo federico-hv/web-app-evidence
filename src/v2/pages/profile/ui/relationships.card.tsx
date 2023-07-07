@@ -35,7 +35,7 @@ function RelationshipsCard() {
         </TextGroup>
         <TextGroup gap={1}>
           <TextGroupSubheading size={4} weight={600}>
-            1000
+            432
           </TextGroupSubheading>
           <TextGroupSubheading weight={500} color='base400'>
             Members

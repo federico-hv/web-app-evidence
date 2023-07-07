@@ -1,7 +1,7 @@
 import { createContext, useState } from 'react';
 import { Toast } from '@holdr-ui/react';
 import { IToastContext, ToastContextState } from './toast.types';
-import { dummyFn } from '../../utility';
+import { dummyFn } from '../../utilities';
 import { GenericProps } from '../../interface';
 
 const ToastContext = createContext<IToastContext>({

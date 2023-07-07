@@ -1,5 +1,5 @@
 import { Box, HStack, Icon, Image, Text, VStack } from '@holdr-ui/react';
-import { TextGroup, TextGroupSubheading } from '../../../packages';
+import { TextGroupSubheading, useProfile } from '../../../packages';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
@@ -9,6 +9,8 @@ import spotifyLogo from '../../../assets/images/spotify-logo.png';
 import appleLogo from '../../../assets/images/apple-logo.png';
 
 function InfoCard() {
+  const { profile } = useProfile();
+
   return (
     <VStack
       gap={4}
@@ -18,21 +20,16 @@ function InfoCard() {
       py={4}
       divider={<Box borderBottom={1} borderColor='primary400' />}
     >
-      <TextGroup px={4}>
-        {/*<TextGroupHeading size={3} color='base400'>*/}
-        {/*  About*/}
-        {/*</TextGroupHeading>*/}
-        <TextGroupSubheading>
-          Emerging artist from vancouver.
-        </TextGroupSubheading>
-      </TextGroup>
-
       <HStack px={4} gap={3}>
         <Icon name='global-outline' />
         <Text>www.artist.com</Text>
       </HStack>
 
-      <HStack gap={5} justify='center'>
+      <Box px={4}>
+        <TextGroupSubheading>{profile.bio}</TextGroupSubheading>
+      </Box>
+
+      <HStack gap={5} css={{ justifyContent: 'space-evenly' }}>
         <Image src={spotifyLogo} size={30} />
         <Image src={appleLogo} size={30} />
       </HStack>

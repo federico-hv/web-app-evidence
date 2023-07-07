@@ -12,7 +12,7 @@ import {
 import { AlertDialogContextState, IAlertDialogContext } from './types';
 import { GenericProps } from '../../interface';
 import { extraBtnPadding } from '../../styles';
-import { dummyFn } from '../../utility';
+import { dummyFn } from '../../utilities';
 
 const AlertDialogContext = createContext<IAlertDialogContext>({
   current: undefined,

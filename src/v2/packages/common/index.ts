@@ -1,4 +1,4 @@
-export * from './utility';
+export * from './utilities';
 export * from './type';
 export * from './interface';
 export * from './constants';

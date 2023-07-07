@@ -4,6 +4,7 @@ import {
   removeRelationshipActions,
   requestRelationshipActions,
 } from '../constants';
+import { IProfile } from '../interfaces';
 
 export type RelationshipStatusCode =
   (typeof relationshipStatusCode)[number];
@@ -16,3 +17,5 @@ export type RemoveRelationshipAction =
 
 export type RequestRelationshipAction =
   (typeof requestRelationshipActions)[number];
+
+export type UpdateProfileData = { updateProfile: IProfile };

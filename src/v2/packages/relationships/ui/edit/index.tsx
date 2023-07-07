@@ -7,15 +7,16 @@ import {
 } from '@holdr-ui/react';
 import { useProfile } from '../../../profile';
 import { Error, Loader } from '../../../core';
+import { useEditProfile } from '../../shared';
 // Change this crap -> use V2
-import { useUpdateProfile } from '../../../../../v1/lib';
-import { ProfileForm } from '../../../../../v1/components';
+
 import { parseToProfileFormData } from '../../../../../v1/utilities';
+import ProfileForm from '../edit-profile-form';
 
 function EditProfileButton() {
   const { switchState, turnOff, turnOn } = useSwitch(false);
   const { profile } = useProfile();
-  const { loading, error, onSubmit, onFinish } = useUpdateProfile();
+  const { loading, error, onSubmit, onFinish } = useEditProfile();
 
   return (
     <Dialog

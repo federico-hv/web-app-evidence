@@ -1,7 +1,7 @@
 import { TemplateUtilityFn } from './template-utility.type';
 
 /**
- * A stub for a utility fn used across the project.
+ * A stub for a utilities fn used across the project.
  *
  * @param param A general parameter
  *

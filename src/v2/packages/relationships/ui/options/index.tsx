@@ -13,11 +13,12 @@ import {
   useDisclosure,
   VStack,
 } from '@holdr-ui/react';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useProfile, useProfileContext } from '../../../profile';
 import {
   RelationshipStatusContext,
   useCreateRelationshipAction,
+  useRemoveFollower,
 } from '../../shared';
 import {
   MenuButton,
@@ -26,7 +27,11 @@ import {
   SwitchConditional,
   SwitchConditionalCase,
 } from '../../../core';
-import { extraBtnPadding } from '../../../common';
+import {
+  extraBtnPadding,
+  useCopyToClipboard,
+  useToast,
+} from '../../../common';
 
 function BlockButton({ close }: { close: VoidFunction }) {
   const { profile } = useProfile();
@@ -116,22 +121,22 @@ function BlockButton({ close }: { close: VoidFunction }) {
 function ProfileOptionsMenu({ close }: { close: VoidFunction }) {
   const { profile } = useProfileContext();
   const { isFollower, isBlocked } = useContext(RelationshipStatusContext);
-  // const copyToClipboard = useCopyToClipboard('Copied link to clipboard.');
-  // const { removeFollower, error } = useRemoveFollower();
+  const copyToClipboard = useCopyToClipboard('Copied link to clipboard.');
+  const { removeFollower, error } = useRemoveFollower();
 
-  // const { set, open } = useToast({
-  //   description:
-  //     error?.message ||
-  //     'Oops! Something went wrong. Totally our fault, but try again later.',
-  //   status: 'danger',
-  // });
+  const { set, open } = useToast({
+    description:
+      error?.message ||
+      'Oops! Something went wrong. Totally our fault, but try again later.',
+    status: 'danger',
+  });
 
-  // useEffect(() => {
-  //   if (error && set) {
-  //     set({ description: error.message, status: 'danger' });
-  //     open();
-  //   }
-  // }, [error, set, open]);
+  useEffect(() => {
+    if (error && set) {
+      set({ description: error.message, status: 'danger' });
+      open();
+    }
+  }, [error, set, open]);
 
   return (
     <VStack divider={<Box borderBottom={1} borderColor='base100' />}>
@@ -140,15 +145,15 @@ function ProfileOptionsMenu({ close }: { close: VoidFunction }) {
         <SwitchConditionalCase on={!isBlocked}>
           <BlockButton close={close} />
         </SwitchConditionalCase>
-        {/*<SwitchConditionalCase on={isBlocked === true}>*/}
-        {/*  <MenuButton label='Unblock' icon='add' />*/}
-        {/*</SwitchConditionalCase>*/}
+        <SwitchConditionalCase on={isBlocked === true}>
+          <MenuButton label='Unblock' icon='add' />
+        </SwitchConditionalCase>
       </SwitchConditional>
       {isFollower && (
         <MenuButton
-          // onClick={async () => {
-          //   await removeFollower(profile.username);
-          // }}
+          onClick={async () => {
+            await removeFollower(profile.username);
+          }}
           label='Remove follower'
           icon='user-unfollow-outline'
         />
@@ -156,14 +161,14 @@ function ProfileOptionsMenu({ close }: { close: VoidFunction }) {
       <MenuButton
         label='Copy profile URL'
         icon='collections-outline'
-        // onClick={() => copyToClipboard(window.location.href).then(close)}
+        onClick={() => copyToClipboard(window.location.href).then(close)}
       />
       <MenuButton label='About this account' icon='information-outline' />
     </VStack>
   );
 }
 
-function ProfileOptionsButton() {
+function OptionsButton() {
   const {
     isOpen: drawerOpen,
     onOpen: openDrawer,
@@ -175,7 +180,7 @@ function ProfileOptionsButton() {
 
   return (
     <Responsive>
-      <ResponsiveItem tablet='show'>
+      <ResponsiveItem tablet='hide'>
         <Popover isOpen={openPopover} onOpenChange={setOpenPopover}>
           <Popover.Trigger>
             <IconButton
@@ -234,6 +239,6 @@ function ProfileOptionsButton() {
     </Responsive>
   );
 }
-ProfileOptionsButton.displayName = 'ProfileOptionsButton';
+OptionsButton.displayName = 'OptionsButton';
 
-export default ProfileOptionsButton;
+export default OptionsButton;
