@@ -1,14 +1,15 @@
 import { BrowserRouter } from 'react-router-dom';
-import { globalStyles } from 'configs';
+import { globalStyles } from './v1/configs';
 import {
   AlertDialogProvider,
   AuthProvider,
   ToastProvider,
-} from 'contexts';
+} from './v2/packages';
 import { CookiesProvider } from 'react-cookie';
 import { ApolloProvider } from '@apollo/client';
-import { GQLClient } from 'lib';
-import Router from './router';
+import { GQLClient } from './v2/lib';
+import { Router } from './v2/routes';
+//import Router from './v1/router';
 
 export function App() {
   globalStyles();

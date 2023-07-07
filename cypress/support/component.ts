@@ -1,5 +1,5 @@
 // ***********************************************************
-// This example support/component.ts is processed and
+// This example support/react.ts is processed and
 // loaded automatically before your test files.
 //
 // This is a great place to put global configuration and
@@ -23,8 +23,8 @@ import { mount } from 'cypress/react18';
 
 // Augment the Cypress namespace to include type definitions for
 // your custom command.
-// Alternatively, can be defined in cypress/support/component.d.ts
-// with a <reference path="./component" /> at the top of your spec.
+// Alternatively, can be defined in cypress/support/react.d.ts
+// with a <reference path="./react" /> at the top of your spec.
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace Cypress {

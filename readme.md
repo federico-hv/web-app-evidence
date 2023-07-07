@@ -217,7 +217,7 @@ and improve the code, progressively.
   we can set a type for the function.
 
 ```ts
-// example.type.ts
+// example.types.ts
 
 interface IExampleReturnType {
   someItem?: any;
@@ -297,7 +297,7 @@ file. This will allow us to import the components as follows:
 // Auth/Login.page.tsx
 
 // ... other imports
-import { LoginForm } from 'components'
+import { LoginForm } from 'react'
 
 function LoginPage (props) {/*...*/}
 
@@ -337,7 +337,7 @@ Similar to components, you can import layouts as follows
 // Auth/Login.page.tsx
 
 // ... other imports
-import { AuthLayout } from 'layouts'
+import { AuthLayout } from 'layout'
 
 function LoginPage (props) {/*...*/}
 
@@ -354,18 +354,18 @@ contexts/
 ├─ theme-context/
 │  ├─ root.tsx                # Context and Provider definition and export
 │  ├─ theme-context.test.ts   # Test for context provider
-│  ├─ theme-context.type.ts   # Types for context
+│  ├─ theme-context.types.ts   # Types for context
 ├─ root.tsx                   # Export for all contexts
 hooks/
 ├─ use-counter/
 │  ├─ root.tsx                # Hook definition and export
 │  ├─ use-counter.test.ts     # Test for hook
-│  ├─ use-counter.type.ts     # Types for hook 
+│  ├─ use-counter.types.ts     # Types for hook 
 ├─ root.tsx                   # Export for all hooks
 utilities/
 ├─ date-utility/
 │  ├─ date-utility.test.ts    # Test for utility methods
-│  ├─ date-utility.type.ts    # Function types
+│  ├─ date-utility.types.ts    # Function types
 │  ├─ root.tsx                # Utilty definition
 ├─ root.tsx                   # Export all utilities
 ```
