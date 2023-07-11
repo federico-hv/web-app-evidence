@@ -1,10 +1,11 @@
-import { useContext, useEffect } from 'react';
+import { useEffect } from 'react';
 import * as querystring from 'querystring';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { AuthContext, Head } from '../../packages';
+import { useCurrentUser } from '../../features';
+import { Head } from '../../shared';
 
 function AuthRedirect() {
-  const { currentUser } = useContext(AuthContext);
+  const currentUser = useCurrentUser();
 
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();

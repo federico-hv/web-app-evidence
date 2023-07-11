@@ -1,9 +1,9 @@
 import { Box, Tabs } from '@holdr-ui/react';
-import { ContextBox } from '../../../packages';
+import { ContextBox } from '../../../shared';
 
 function Content() {
   return (
-    <Box mt={4} px={5}>
+    <Box px={5}>
       <Tabs defaultValue='posts'>
         <Tabs.List variant='link'>
           <Tabs.Trigger value='posts'>Post</Tabs.Trigger>

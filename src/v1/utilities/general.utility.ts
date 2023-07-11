@@ -1,7 +1,7 @@
 import { IProfile, ProfileFormData } from '../shared';
 
 /**
- * Parse profile interface to acceptable form fields
+ * Parse profile interfaces to acceptable form fields
  * @param profile
  */
 export function parseToProfileFormData(

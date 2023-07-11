@@ -1,3 +1,16 @@
+import { Box, VStack } from '@holdr-ui/react';
+import {
+  Content,
+  Header,
+  SocialsCard,
+  RelationshipsCard,
+  ReleasesCard,
+  SuggestionsCard,
+} from './ui';
+import { useParams } from 'react-router-dom';
+import { useQuery } from '@apollo/client';
+import { IProfile } from './shared';
+import { GET_PROFILE } from './queries';
 import {
   ContentLayout,
   ContentLayoutAside,
@@ -6,17 +19,8 @@ import {
   Head,
   Loader,
   NotFoundError,
-} from '../../packages';
-import { VStack } from '@holdr-ui/react';
-import { Content, Header } from './ui';
-import { useParams } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
-import { IProfile } from './shared';
-import { GET_PROFILE } from './queries';
-import { ProfileContextProvider } from '../../packages';
-import SuggestionsCard from './ui/suggestions.card';
-import InfoCard from './ui/info.card';
-import RelationshipsCard from './ui/relationships.card';
+  ProfileContextProvider,
+} from '../../shared';
 
 function ProfilePage() {
   const { username } = useParams();
@@ -49,7 +53,7 @@ function ProfilePage() {
         <Content />
       </ContentLayoutMain>
       <ContentLayoutAside>
-        <Error hasError={!!error} errorEl={<NotFoundError />}>
+        <Error hasError={!!error} errorEl={<SuggestionsCard />}>
           <Loader h='full' loading={loading}>
             {data && (
               <ProfileContextProvider value={{ profile: data.profile }}>
@@ -58,9 +62,10 @@ function ProfilePage() {
                   title={`${data.profile.displayName} (@${data.profile.username})`}
                   description={data.profile.bio || ''}
                 />
-                <VStack gap={4}>
+                <VStack>
                   <RelationshipsCard />
-                  <InfoCard />
+                  <SocialsCard />
+                  <ReleasesCard />
                   <SuggestionsCard />
                 </VStack>
               </ProfileContextProvider>

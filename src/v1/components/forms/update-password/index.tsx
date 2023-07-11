@@ -84,7 +84,7 @@ function UpdatePasswordForm({
       onSubmit={async (data, { resetForm }) => {
         try {
           await onSubmit(data);
-          //  Check if the account-info has been successfully set and reset only then
+          //  Check if the account-info-guard has been successfully set and reset only then
           if (mutationData && !mutationData.status) return;
           onFinish(resetForm);
         } catch (e) {
