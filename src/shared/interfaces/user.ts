@@ -1,4 +1,4 @@
-import { Role } from '../../../v1/shared';
+import { Role } from '../types';
 
 export interface IUser {
   username: string;

@@ -1,4 +1,4 @@
-import { IProfile, ProfileFormData } from '../../../../v1/shared';
+import { IProfile, ProfileFormData } from './interfaces';
 
 export function parseToProfileFormData(
   profile: IProfile,
