@@ -33,9 +33,7 @@ import {
 function RestrictButton({ close }: { close: VoidFunction }) {
   const { profile } = useProfile();
 
-  const { restrict, loading } = useCreateRelationshipAction(
-    profile.username,
-  );
+  const { restrict, loading } = useCreateRelationshipAction();
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -97,7 +95,7 @@ function RestrictButton({ close }: { close: VoidFunction }) {
             <Box pb={4} w='100%'>
               <Button
                 onClick={async () => {
-                  await restrict().then(() => {
+                  await restrict(profile.username).then(() => {
                     onClose();
                     close(); // close popover
                   });
@@ -129,24 +127,16 @@ function FollowingMenu({ close }: { close: VoidFunction }) {
   } = useContext(RelationshipStatusContext);
 
   const { unfollow, unmute, removeFavourite } =
-    useRemoveRelationshipAction(profile.username);
+    useRemoveRelationshipAction();
 
-  const { mute, favourite } = useCreateRelationshipAction(
-    profile.username,
-  );
+  const { mute, favourite } = useCreateRelationshipAction();
 
-  const { friendRequest } = useRequestRelationshipAction(profile.username);
+  const { friendRequest } = useRequestRelationshipAction();
 
   const { removeFriendRequest, removeFriend, removeRestriction } =
-    useRemoveRelationshipAction(profile.username);
+    useRemoveRelationshipAction();
 
-  const { open } = useAlertDialog({
-    actionText: 'Unfollow',
-    onAction: unfollow,
-    title: `Unfollow @${profile.username}`,
-    description:
-      'Their posts will no longer show up in your home feed. You can still view their profile, unless their profile is protected.',
-  });
+  const { openWith } = useAlertDialog();
 
   return (
     <VStack divider={<Box borderBottom={1} borderColor='base100' />}>
@@ -155,21 +145,21 @@ function FollowingMenu({ close }: { close: VoidFunction }) {
           <MenuButton
             label='Add to friends'
             icon='subscriptions-outline'
-            onClick={friendRequest}
+            onClick={async () => friendRequest(profile.username)}
           />
         </SwitchConditionalCase>
         <SwitchConditionalCase on={!!hasFriendRequest}>
           <MenuButton
             label='Cancel Friend Request'
             icon='subscriptions-outline'
-            onClick={removeFriendRequest}
+            onClick={async () => removeFriendRequest(profile.username)}
           />
         </SwitchConditionalCase>
         <SwitchConditionalCase on={!!isFriend}>
           <MenuButton
             label='Remove friend'
             icon='subscriptions-fill'
-            onClick={removeFriend}
+            onClick={async () => removeFriend(profile.username)}
           />
         </SwitchConditionalCase>
       </SwitchConditional>
@@ -179,13 +169,21 @@ function FollowingMenu({ close }: { close: VoidFunction }) {
           isFavourite ? 'Remove from favourites' : 'Add to favourites'
         }
         icon={isFavourite ? 'heart-fill' : 'heart-outline'}
-        onClick={isFavourite ? removeFavourite : favourite}
+        onClick={
+          isFavourite
+            ? async () => removeFavourite(profile.username)
+            : async () => favourite(profile.username)
+        }
       />
 
       <MenuButton
         label={isMuted ? 'Unmute' : 'Mute'}
         icon={isMuted ? 'mute-fill' : 'mute-outline'}
-        onClick={isMuted ? unmute : mute}
+        onClick={
+          isMuted
+            ? async () => unmute(profile.username)
+            : async () => mute(profile.username)
+        }
       />
 
       {isFriend && (
@@ -195,7 +193,7 @@ function FollowingMenu({ close }: { close: VoidFunction }) {
           </SwitchConditionalCase>
           <SwitchConditionalCase on={isRestricted === true}>
             <MenuButton
-              onClick={removeRestriction}
+              onClick={async () => removeRestriction(profile.username)}
               dangerous
               label='Unrestrict'
               icon='check'
@@ -207,7 +205,15 @@ function FollowingMenu({ close }: { close: VoidFunction }) {
       {!isFriend && (
         <MenuButton
           dangerous
-          onClick={open}
+          onClick={() =>
+            openWith({
+              actionText: 'Unfollow',
+              onAction: async () => unfollow(profile.username),
+              title: `Unfollow @${profile.username}`,
+              description:
+                'Their posts will no longer show up in your home feed. You can still view their profile, unless their profile is protected.',
+            })
+          }
           label='Unfollow'
           icon='user-unfollow-outline'
         />

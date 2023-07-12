@@ -2,7 +2,7 @@ import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { AuthGuardProps } from './types';
 import NotFoundError from '../not-found-error';
 import { Paths, prefix } from '../../index';
-import { useCurrentUser } from '../../../features/auth';
+import { useCurrentUser } from '../../../features';
 
 function AuthGuard({ roles = ['general', 'artist'] }: AuthGuardProps) {
   const currentUser = useCurrentUser();

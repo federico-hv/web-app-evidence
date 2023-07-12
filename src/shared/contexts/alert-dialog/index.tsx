@@ -16,6 +16,9 @@ import { dummyFn } from '../../utilities';
 
 const AlertDialogContext = createContext<IAlertDialogContext>({
   current: undefined,
+  set: () => {
+    console.log('set');
+  },
   onClose: dummyFn,
   onOpen: dummyFn,
   isOpen: false,

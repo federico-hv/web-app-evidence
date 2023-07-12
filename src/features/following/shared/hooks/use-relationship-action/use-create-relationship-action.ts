@@ -2,12 +2,7 @@ import { useEffect } from 'react';
 import { useCreateRelationship } from '../use-create-relationship';
 import { useToast } from '../../../../../shared';
 
-/**
- * Create a new relationship
- *
- * @param username
- */
-export function useCreateRelationshipAction(username: string) {
+export function useCreateRelationshipAction() {
   const { createRelationship, error, loading } = useCreateRelationship();
   const { open, set } = useToast({
     status: 'danger',
@@ -22,12 +17,15 @@ export function useCreateRelationshipAction(username: string) {
     }
   }, [error, set, open]);
 
-  const follow = () => createRelationship({ username, action: 'follow' });
-  const mute = () => createRelationship({ username, action: 'mute' });
-  const favourite = () =>
+  const follow = (username: string) =>
+    createRelationship({ username, action: 'follow' });
+  const mute = (username: string) =>
+    createRelationship({ username, action: 'mute' });
+  const favourite = (username: string) =>
     createRelationship({ username, action: 'favourite' });
-  const block = () => createRelationship({ username, action: 'block' });
-  const restrict = () =>
+  const block = (username: string) =>
+    createRelationship({ username, action: 'block' });
+  const restrict = (username: string) =>
     createRelationship({ username, action: 'restrict' });
 
   return { mute, favourite, follow, restrict, block, loading };

@@ -1,17 +1,17 @@
 import { Button } from '@holdr-ui/react';
-import { useParams } from 'react-router-dom';
 import { useRemoveRelationshipAction } from '../../shared';
+import { useProfile } from '../../../../shared';
 
 function BlockButton() {
-  const { username } = useParams();
+  const { profile } = useProfile();
 
   const { removeBlock, loading: loadingRemoval } =
-    useRemoveRelationshipAction(username || '');
+    useRemoveRelationshipAction();
 
   return (
     <Button
       colorTheme='danger'
-      onClick={removeBlock}
+      onClick={() => removeBlock(profile.username)}
       isLoading={loadingRemoval}
       loadingText={loadingRemoval ? '' : 'Unblocking'}
     >

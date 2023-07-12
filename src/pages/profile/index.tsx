@@ -1,4 +1,4 @@
-import { Box, VStack } from '@holdr-ui/react';
+import { VStack } from '@holdr-ui/react';
 import {
   Content,
   Header,

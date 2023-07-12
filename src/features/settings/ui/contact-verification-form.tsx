@@ -27,13 +27,7 @@ function VerifyPhoneAlertDialog({
 
   const value = values.phone;
 
-  const { open: openAlertDialog } = useAlertDialog({
-    title: 'Verification code',
-    description: `We will send you a verification code to ${value}. Standard SMS call and data fees may apply.`,
-    cancelText: 'Edit',
-    actionText: 'Continue',
-    onAction: () => onAction(value as string, 'sms'),
-  });
+  const { openWith } = useAlertDialog();
 
   return (
     <Button
@@ -41,7 +35,15 @@ function VerifyPhoneAlertDialog({
       type='button'
       fullWidth
       className={extraBtnPadding()}
-      onClick={openAlertDialog}
+      onClick={() =>
+        openWith({
+          title: 'Verification code',
+          description: `We will send you a verification code to ${value}. Standard SMS call and data fees may apply.`,
+          cancelText: 'Edit',
+          actionText: 'Continue',
+          onAction: () => onAction(value as string, 'sms'),
+        })
+      }
     >
       Continue
     </Button>
@@ -62,7 +64,7 @@ function ContactVerificationForm() {
     ({ name }) => name.toLowerCase() === data.country.toLowerCase(),
   );
 
-  const { onSubmit, loading, error } = useSendVerificationOTP();
+  const { onSubmit, error } = useSendVerificationOTP();
 
   const handleContinue = async (
     value: string,

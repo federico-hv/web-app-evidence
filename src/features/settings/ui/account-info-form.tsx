@@ -8,7 +8,7 @@ import {
 } from '../shared';
 import { Box, Button, HStack, VStack } from '@holdr-ui/react';
 import { FormInput, isInputDisabled } from '../../../shared';
-import { UpdateAccountInfoSchema } from '../shared/constants';
+import { UpdateAccountInfoSchema } from '../shared';
 import phones from '../../../assets/json/phone.code.json';
 
 function InnerForm() {

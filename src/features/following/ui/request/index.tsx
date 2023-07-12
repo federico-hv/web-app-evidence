@@ -26,14 +26,12 @@ function RequestedButton() {
     onClose: closeDrawer,
   } = useDisclosure();
 
-  const { removeFollowRequest } = useRemoveRelationshipAction(
-    profile.username,
-  );
+  const { removeFollowRequest } = useRemoveRelationshipAction();
 
   const Menu = () => (
     <>
       <MenuButton
-        onClick={removeFollowRequest}
+        onClick={async () => removeFollowRequest(profile.username)}
         dangerous
         label='Cancel Request'
         icon='remove-outline'

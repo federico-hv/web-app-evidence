@@ -269,14 +269,7 @@ function TwoFACheckbox({
   const { switchState, turnOn, turnOff } = useSwitch();
   const { disableTwoFA } = useDisableTwoFA();
 
-  const { open } = useAlertDialog({
-    title: 'Disable Two Factor authentication',
-    description:
-      'Removing this feature, will remove an extra layer of security for your account. Are you sure you want to disable it?',
-
-    actionText: 'Turn off',
-    onAction: () => disableTwoFA(name),
-  });
+  const { openWith } = useAlertDialog();
 
   const close = () => {
     reset();
@@ -290,7 +283,16 @@ function TwoFACheckbox({
           checked={isActive}
           value={`${isActive}`}
           labelledBy={`heading__2fa-${name}`}
-          onClick={open}
+          onClick={() =>
+            openWith({
+              title: 'Disable Two Factor authentication',
+              description:
+                'Removing this feature, will remove an extra layer of security for your account. Are you sure you want to disable it?',
+
+              actionText: 'Turn off',
+              onAction: () => disableTwoFA(name),
+            })
+          }
         />
       </SwitchConditionalCase>
 

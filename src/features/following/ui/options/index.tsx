@@ -35,7 +35,7 @@ import {
 function BlockButton({ close }: { close: VoidFunction }) {
   const { profile } = useProfile();
 
-  const { block, loading } = useCreateRelationshipAction(profile.username);
+  const { block, loading } = useCreateRelationshipAction();
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -97,7 +97,7 @@ function BlockButton({ close }: { close: VoidFunction }) {
             <Box pb={4} w='100%'>
               <Button
                 onClick={async () => {
-                  await block().then(() => {
+                  await block(profile.username).then(() => {
                     onClose();
                     close();
                   });

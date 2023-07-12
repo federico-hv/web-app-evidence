@@ -1,4 +1,3 @@
-import { useParams } from 'react-router-dom';
 import { Button } from '@holdr-ui/react';
 import {
   useCreateRelationshipAction,
@@ -11,13 +10,9 @@ import {
 } from '../../../../shared';
 
 function FollowButton() {
-  const { username } = useParams();
-
-  const { follow, loading: loading0 } = useCreateRelationshipAction(
-    username || '',
-  );
+  const { follow, loading: loading0 } = useCreateRelationshipAction();
   const { followRequest, loading: loading1 } =
-    useRequestRelationshipAction(username || '');
+    useRequestRelationshipAction();
 
   const { profile } = useProfile();
 
@@ -28,7 +23,7 @@ function FollowButton() {
           colorTheme='base800'
           isLoading={loading0}
           loadingText={loading0 ? '' : 'Loading'}
-          onClick={follow}
+          onClick={async () => follow(profile.username)}
         >
           Follow
         </Button>
@@ -38,7 +33,7 @@ function FollowButton() {
           colorTheme='primary400'
           isLoading={loading1}
           loadingText={loading1 ? '' : 'Loading'}
-          onClick={followRequest}
+          onClick={async () => followRequest(profile.username)}
         >
           Follow
         </Button>

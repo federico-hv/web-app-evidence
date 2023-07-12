@@ -2,12 +2,7 @@ import { useEffect } from 'react';
 import { useRequestRelationship } from '../use-request-relationship';
 import { useToast } from '../../../../../shared';
 
-/**
- * Create a relationship requested
- *
- * @param username
- */
-export function useRequestRelationshipAction(username: string) {
+export function useRequestRelationshipAction() {
   const { requestRelationship, loading, error } = useRequestRelationship();
   const { open, set } = useToast({
     status: 'danger',
@@ -22,9 +17,9 @@ export function useRequestRelationshipAction(username: string) {
     }
   }, [error, set, open]);
 
-  const friendRequest = () =>
+  const friendRequest = (username: string) =>
     requestRelationship({ username, action: 'friend request' });
-  const followRequest = () =>
+  const followRequest = (username: string) =>
     requestRelationship({ username, action: 'follow request' });
 
   return { friendRequest, followRequest, loading };

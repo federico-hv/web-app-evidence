@@ -1,5 +1,4 @@
 import { FormikErrors } from 'formik';
-import { StringNumeric } from '../types';
 
 export const minimumLengthMsg = (min: number) =>
   `Requires ${min} characters or more`;

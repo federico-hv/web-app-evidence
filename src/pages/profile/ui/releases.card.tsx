@@ -1,4 +1,4 @@
-import { Box, Heading, HStack, Image, VStack } from '@holdr-ui/react';
+import { Heading, HStack, Image, VStack } from '@holdr-ui/react';
 import {
   Role,
   SwitchConditional,

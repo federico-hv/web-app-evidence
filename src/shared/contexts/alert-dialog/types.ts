@@ -11,7 +11,7 @@ export interface AlertDialogContextState {
 
 export interface IAlertDialogContext {
   current: AlertDialogContextState | undefined;
-  set?: Dispatch<SetStateAction<AlertDialogContextState | undefined>>;
+  set: Dispatch<SetStateAction<AlertDialogContextState | undefined>>;
   onOpen: VoidFunction;
   onClose: VoidFunction;
   isOpen: boolean;

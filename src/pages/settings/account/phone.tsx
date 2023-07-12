@@ -33,20 +33,22 @@ import {
 
 function DeletePhoneNumber() {
   const { onSubmit } = useDeletePhoneNumber();
-  const { open: openAlertDialog } = useAlertDialog({
-    title: 'Delete phone number',
-    description:
-      'Once you delete the phone number, you will no longer receive login codes via the phone number.',
-    actionText: 'Yes, Delete Number',
-    onAction: onSubmit,
-  });
+  const { openWith } = useAlertDialog();
 
   return (
     <Button
       label='Delete'
       variant='ghost'
       colorTheme='danger'
-      onClick={openAlertDialog}
+      onClick={() =>
+        openWith({
+          title: 'Delete phone number',
+          description:
+            'Once you delete the phone number, you will no longer receive login codes via the phone number.',
+          actionText: 'Yes, Delete Number',
+          onAction: onSubmit,
+        })
+      }
     />
   );
 }

@@ -1,15 +1,16 @@
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import {
   AlertDialogContext,
   AlertDialogContextState,
 } from '../../contexts';
 
-export function useAlertDialog(state: AlertDialogContextState) {
-  const { set, onClose, onOpen, isOpen } = useContext(AlertDialogContext);
+export function useAlertDialog() {
+  const { set, onClose, onOpen } = useContext(AlertDialogContext);
 
-  useEffect(() => {
-    if (isOpen && set) set(state);
-  }, [isOpen, set, state]);
+  const openWith = (state: AlertDialogContextState) => {
+    set(state);
+    onOpen();
+  };
 
-  return { open: onOpen, close: onClose };
+  return { onOpen, onClose, set, openWith };
 }

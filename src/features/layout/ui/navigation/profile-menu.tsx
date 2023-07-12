@@ -25,16 +25,8 @@ function ProfileMenu() {
   const currentUser = useCurrentUser();
   const { goto } = useMenuNavigate();
   const [state, set] = useState(false);
+  const { openWith } = useAlertDialog();
   const logout = useLogout();
-
-  const { open } = useAlertDialog({
-    actionText: 'Yes, Logout',
-    onAction: logout,
-    title: 'Log out',
-    description:
-      'If you log out, you will have to manually log in to your account again. ' +
-      'Are you sure you want to log out off your account?',
-  });
 
   const close = () => set(false);
 
@@ -104,7 +96,16 @@ function ProfileMenu() {
               />
               <MenuButton label='Help & Support' icon='question-outline' />
               <MenuButton
-                onClick={open}
+                onClick={() =>
+                  openWith({
+                    actionText: 'Yes, Logout',
+                    onAction: logout,
+                    title: 'Log out',
+                    description:
+                      'If you log out, you will have to manually log in to your account again. ' +
+                      'Are you sure you want to log out off your account?',
+                  })
+                }
                 label='Logout'
                 icon='logout-outline'
               />
