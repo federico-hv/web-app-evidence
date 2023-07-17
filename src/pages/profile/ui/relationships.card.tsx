@@ -13,7 +13,6 @@ import { useQuery } from '@apollo/client';
 import {
   DialogTabContextProvider,
   Error,
-  IUser,
   Loader,
   TextGroup,
   TextGroupSubheading,
@@ -25,6 +24,7 @@ import {
   GET_RELATIONSHIP_COUNT,
   useRelationshipUsers,
 } from '../../../features';
+import { getMutualFollowersText } from '../shared';
 
 function Summary() {
   const { username } = useParams();
@@ -72,15 +72,6 @@ function Summary() {
       </Loader>
     </Error>
   );
-}
-
-function getMutualFollowersText(users: IUser[], total = 0): string {
-  if (total > 2) {
-    return `Followed by ${users[0].displayName}, ${
-      users[1].displayName
-    } and ${total - 2}.`;
-  }
-  return `Followed by ${users[0].displayName} and ${users[1].displayName}.`;
 }
 
 function MutualFollowers() {
