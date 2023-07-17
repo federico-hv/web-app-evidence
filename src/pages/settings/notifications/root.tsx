@@ -1,10 +1,13 @@
 import { Box } from '@holdr-ui/react';
+import { SettingItem } from '../../../features';
+import {
+  Head,
+  Paths,
+  prefix,
+  RootSettingsPath,
+  useMenuNavigate,
+} from '../../../shared';
 import { PageHeader } from '../root';
-import { Head, SettingButton } from 'components';
-import { prefix } from '../../../utilities';
-import { RootSettingsPath } from '../security/root';
-import { Paths } from '../../../shared';
-import { useMenuNavigate } from '../../../hooks';
 
 function NotificationSettingsPage() {
   const { goto } = useMenuNavigate();
@@ -17,7 +20,7 @@ function NotificationSettingsPage() {
       />
       <Box>
         <PageHeader title='Notifications' onBack={goto.settings} />
-        <SettingButton
+        <SettingItem
           path={prefix(
             RootSettingsPath,
             Paths.setting.notifications_filters,
@@ -26,7 +29,7 @@ function NotificationSettingsPage() {
           subheading='Filter your notifications based on what you want to receive.'
           icon='settings-alt-outline'
         />
-        <SettingButton
+        <SettingItem
           path={prefix(
             RootSettingsPath,
             Paths.setting.notifications_preferences,

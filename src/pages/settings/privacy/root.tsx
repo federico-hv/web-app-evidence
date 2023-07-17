@@ -1,10 +1,13 @@
+import { SettingItem } from '../../../features';
+import {
+  Head,
+  Paths,
+  prefix,
+  RootSettingsPath,
+  useMenuNavigate,
+} from '../../../shared';
 import { Box } from '@holdr-ui/react';
 import { PageHeader } from '../root';
-import { Head, SettingButton } from 'components';
-import { Paths } from 'shared';
-import { prefix } from 'utilities';
-import { RootSettingsPath } from '../security/root';
-import { useMenuNavigate } from '../../../hooks';
 
 function PrivacySettingsPage() {
   const { goto } = useMenuNavigate();
@@ -17,7 +20,7 @@ function PrivacySettingsPage() {
       />
       <Box>
         <PageHeader title='Privacy and safety' onBack={goto.settings} />
-        <SettingButton
+        <SettingItem
           path={prefix(
             RootSettingsPath,
             Paths.setting.protection_and_tagging,
@@ -26,7 +29,7 @@ function PrivacySettingsPage() {
           subheading='Manage whether other users can view your information.'
           icon='shield-keyhole-fill'
         />
-        <SettingButton
+        <SettingItem
           path={prefix(RootSettingsPath, Paths.setting.manage_users)}
           heading='Manage users'
           subheading='Manage who can view your content and account.'

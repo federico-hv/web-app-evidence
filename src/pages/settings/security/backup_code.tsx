@@ -8,15 +8,22 @@ import {
   Button,
 } from '@holdr-ui/react';
 import { useQuery } from '@apollo/client';
-import { HeaderLayout } from 'layouts';
-import { Paths } from 'shared';
-import { Head, Error, Loader } from 'components';
-import { prefix } from 'utilities';
-import { RootSettingsPath } from './root';
-import { GET_2FA_RECOVERY_KEY, useRefresh2FARecoveryKey } from 'lib';
-import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useCopyToClipboard } from '../../../hooks';
+import {
+  Error,
+  Head,
+  HeaderLayout,
+  Loader,
+  Paths,
+  prefix,
+  useCopyToClipboard,
+} from '../../../shared';
+import { useEffect } from 'react';
+import { RootSettingsPath } from './root';
+import {
+  GET_2FA_RECOVERY_KEY,
+  useRefresh2FARecoveryKey,
+} from '../../../features';
 
 function BackupCode() {
   const navigate = useNavigate();

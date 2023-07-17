@@ -1,9 +1,7 @@
 import { Box } from '@holdr-ui/react';
+import { Head, Paths, prefix, useMenuNavigate } from '../../../shared';
+import { SettingItem } from '../../../features';
 import { PageHeader } from '../root';
-import { Paths } from 'shared';
-import { prefix } from 'utilities';
-import { Head, SettingButton } from 'components';
-import { useMenuNavigate } from '../../../hooks';
 
 export const RootSettingsPath = `/${Paths.settings}/`;
 function SecuritySettingsPage() {
@@ -20,13 +18,13 @@ function SecuritySettingsPage() {
           title='Security and account access'
           onBack={goto.settings}
         />
-        <SettingButton
+        <SettingItem
           path={prefix(RootSettingsPath, Paths.setting.account_security)}
           icon='lock-outline'
           heading='Security'
           subheading='Manage your account security.'
         />
-        <SettingButton
+        <SettingItem
           path={prefix(RootSettingsPath, Paths.setting.connected_accounts)}
           icon='collections-outline'
           heading='Connected accounts'

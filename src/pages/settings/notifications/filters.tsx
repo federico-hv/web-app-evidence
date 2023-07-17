@@ -1,8 +1,11 @@
-import { HeaderLayout } from 'layouts';
-import { Head, SettingButton } from 'components';
-import { prefix } from '../../../utilities';
-import { RootSettingsPath } from '../security/root';
-import { Paths } from '../../../shared';
+import { SettingItem } from '../../../features';
+import {
+  Head,
+  HeaderLayout,
+  Paths,
+  prefix,
+  RootSettingsPath,
+} from '../../../shared';
 
 function NotificationsFilterSettingsPage() {
   return (
@@ -16,7 +19,7 @@ function NotificationsFilterSettingsPage() {
         title='Filters'
         backLink={prefix(RootSettingsPath, Paths.setting.notifications)}
       >
-        <SettingButton
+        <SettingItem
           path={prefix(
             RootSettingsPath,
             Paths.setting.muted_notifications,

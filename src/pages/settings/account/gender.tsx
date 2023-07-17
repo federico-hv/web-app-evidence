@@ -1,30 +1,41 @@
-import { FormEvent, useContext } from 'react';
 import {
+  Button,
+  HStack,
+  Input,
+  Radio,
   Text,
   VStack,
-  HStack,
-  Button,
-  Radio,
-  Input,
 } from '@holdr-ui/react';
-import { HeaderLayout } from 'layouts';
-import { Head, Error } from 'components';
+import { FormEvent } from 'react';
 import {
-  CustomLabel1,
+  AccountInfoFormData,
   IAccountInfo,
+  useUpdateAccountInfo,
+  UpdateAccountInfoSchema,
+  useAccountInfo,
+} from '../../../features';
+import {
+  Error,
+  Head,
+  HeaderLayout,
+  isInputDisabled,
   Paths,
+  prefix,
   RootSettingsPath,
-} from 'shared';
-import { useUpdateAccountInfo } from 'lib';
+} from '../../../shared';
 import { Formik } from 'formik';
-import { isInputDisabled, prefix } from 'utilities';
 import { isEqual, pick } from 'lodash';
-import { AccountInfoFormData } from '../../../components/forms/account-info/account-info.types';
-import { UpdateAccountInfoSchema } from '../../../components/forms/account-info/account-info.schema';
-import { AccountInfoContext } from '../../../contexts';
+import { styled } from '../../../configs';
+
+const RadioWrapper = styled('label', {
+  display: 'flex',
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+});
 
 function GenderSettingPage() {
-  const { data } = useContext(AccountInfoContext);
+  const { data } = useAccountInfo();
   const {
     loading: loadingMutation,
     error: errorMutation,
@@ -71,7 +82,7 @@ function GenderSettingPage() {
               }
             >
               <VStack as='fieldset' gap={5}>
-                <CustomLabel1>
+                <RadioWrapper>
                   <Text id='Gender_Male'>Male</Text>
                   <Radio
                     onChange={handleChange}
@@ -80,8 +91,8 @@ function GenderSettingPage() {
                     name='gender'
                     value='Male'
                   />
-                </CustomLabel1>
-                <CustomLabel1>
+                </RadioWrapper>
+                <RadioWrapper>
                   <Text id='Gender_Female'>Female</Text>
                   <Radio
                     onChange={handleChange}
@@ -90,8 +101,8 @@ function GenderSettingPage() {
                     name='gender'
                     value='Female'
                   />
-                </CustomLabel1>
-                <CustomLabel1>
+                </RadioWrapper>
+                <RadioWrapper>
                   <Text id='Gender_Specify'>Specify</Text>
                   <Radio
                     onChange={handleChange}
@@ -105,7 +116,7 @@ function GenderSettingPage() {
                     name='gender'
                     value='Specific'
                   />
-                </CustomLabel1>
+                </RadioWrapper>
               </VStack>
               {values.gender &&
                 values.gender?.length > 0 &&

@@ -1,10 +1,16 @@
-import { HeaderLayout } from 'layouts';
-import { Head, Error, UpdatePasswordForm } from 'components';
-import { Paths } from 'shared';
-import { prefix } from 'utilities';
-import { useUpdatePassword } from 'lib';
-import { RootSettingsPath } from '../security/root';
-import { UpdatePasswordContextProvider } from 'contexts';
+import {
+  Error,
+  Head,
+  HeaderLayout,
+  Paths,
+  prefix,
+  RootSettingsPath,
+} from '../../../shared';
+import {
+  useUpdatePassword,
+  UpdatePasswordContextProvider,
+  UpdatePasswordForm,
+} from '../../../features';
 
 function ChangePasswordSettingPage() {
   const { loading, error, data, onFinish, onSubmit } = useUpdatePassword();

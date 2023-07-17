@@ -266,6 +266,7 @@ export const globalStyles = globalCss({
   a: {
     'text-decoration': 'none',
     color: 'inherit',
+    // border: 'inherit',
   },
   textarea: {
     fontFamily: 'inherit',
@@ -279,5 +280,7 @@ export const globalStyles = globalCss({
   button: {
     backgroundColor: 'inherit',
     fontFamily: 'inherit',
+    border: 'inherit',
+    cursor: 'pointer',
   },
 });

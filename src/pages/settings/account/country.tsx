@@ -1,18 +1,21 @@
-import { HeaderLayout } from 'layouts';
-import { Head, Error, AccountInfoForm } from 'components';
-import { Paths } from 'shared';
 import {
-  AccountInfoContext,
+  AccountInfoForm,
   AccountInfoFormContextProvider,
-} from 'contexts';
+  useAccountInfo,
+  useUpdateAccountInfo,
+} from '../../../features';
+import {
+  Error,
+  Head,
+  HeaderLayout,
+  Paths,
+  prefix,
+  RootSettingsPath,
+} from '../../../shared';
 import { isEqual, pick } from 'lodash';
-import { useUpdateAccountInfo } from 'lib';
-import { prefix } from 'utilities';
-import { RootSettingsPath } from '../security/root';
-import { useContext } from 'react';
 
 function CountrySettingPage() {
-  const { data } = useContext(AccountInfoContext);
+  const { data } = useAccountInfo();
   const {
     loading: loadingMutation,
     error: errorMutation,

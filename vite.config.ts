@@ -38,8 +38,8 @@ export default (configEnv: ConfigEnv) => {
           replacement: path.resolve(__dirname, './src/hooks'),
         },
         {
-          find: 'layouts',
-          replacement: path.resolve(__dirname, './src/layouts'),
+          find: 'layout',
+          replacement: path.resolve(__dirname, './src/layout'),
         },
         {
           find: 'utilities',
@@ -59,8 +59,8 @@ export default (configEnv: ConfigEnv) => {
           replacement: path.resolve(__dirname, './src/configs'),
         },
         {
-          find: 'components',
-          replacement: path.resolve(__dirname, './src/components'),
+          find: 'component',
+          replacement: path.resolve(__dirname, './src/react'),
         },
         {
           find: 'shared',

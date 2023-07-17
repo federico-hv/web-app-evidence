@@ -1,30 +1,23 @@
 import {
+  ContentBox,
   ContentLayout,
-  ContentLayoutMain,
   ContentLayoutAside,
-} from 'layouts';
-import { Head, RecommendationListsGroup, MainHeaderSm } from 'components';
-import { HomeContent } from 'content';
+  ContentLayoutMain,
+} from '../../shared';
+import { Box } from '@holdr-ui/react';
 
 function HomePage() {
   return (
-    <>
-      <Head
-        title='Feeds'
-        description='View all the latest articles, posts and more from all the artists that you are following.'
-        url='/feeds'
-      />
-      <ContentLayout>
-        <ContentLayoutMain>
-          <MainHeaderSm />
-          <HomeContent />
-        </ContentLayoutMain>
-        <ContentLayoutAside>
-          <RecommendationListsGroup />
-        </ContentLayoutAside>
-      </ContentLayout>
-    </>
+    <ContentLayout>
+      <ContentLayoutMain>
+        <Box p={2}>
+          <ContentBox>Nothing to display</ContentBox>
+        </Box>
+      </ContentLayoutMain>
+      <ContentLayoutAside></ContentLayoutAside>
+    </ContentLayout>
   );
 }
 HomePage.displayName = 'HomePage';
+
 export default HomePage;

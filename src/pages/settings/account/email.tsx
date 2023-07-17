@@ -1,42 +1,40 @@
-import { useContext, useState } from 'react';
-import { HeaderLayout } from 'layouts';
+import { useState } from 'react';
 import {
   Head,
-  ChangeContactInfoDialog,
+  HeaderLayout,
+  Paths,
+  prefix,
+  RootSettingsPath,
   Stepper,
   StepperStep,
-  ChangeContactInfoDialogBody,
-  ContactVerificationForm,
-  OTPVerificationForm,
-} from 'components';
-import { Paths } from 'shared';
+} from '../../../shared';
 import {
-  AccountInfoContext,
   ChangeContactInfoContextProvider,
-  StepperContextProvider,
-} from 'contexts';
-import { prefix } from 'utilities';
-import { RootSettingsPath } from '../security/root';
+  ContactInfoText,
+  ContactVerificationForm,
+  getHeading,
+  OTPVerificationForm,
+  useAccountInfo,
+} from '../../../features';
 import {
   Box,
+  Button,
+  Dialog,
   FormControl,
+  Heading,
   HStack,
   Input,
   Text,
   useSwitch,
   VStack,
 } from '@holdr-ui/react';
-import { useCounter } from '../../../hooks';
-import { ContactDialogWrapper } from './phone';
 
 function EmailSettingPage() {
-  const { count: step, increment, decrement, reset } = useCounter();
-  const { data } = useContext(AccountInfoContext);
+  const { data } = useAccountInfo();
   const [state, set] = useState(data.email);
   const { switchState, turnOn, turnOff } = useSwitch();
   const close = () => {
     turnOff();
-    reset();
     set(data.email);
   };
   const update = (value: string) => set(value);
@@ -64,46 +62,63 @@ function EmailSettingPage() {
               </FormControl>
             </Box>
           </Box>
-          <HStack justify='flex-end' p={4}>
-            <ChangeContactInfoDialog
-              isOpen={switchState}
-              onOpen={turnOn}
-              onClose={close}
-              name='email'
-              value={data.email}
+          <HStack justify='flex-end' p={4} gap={4}>
+            <ChangeContactInfoContextProvider
+              value={{
+                email: state,
+                update,
+                name: 'email',
+                close: close,
+              }}
             >
-              <ChangeContactInfoContextProvider
-                value={{ email: state, update, name: 'email', close }}
+              <Dialog
+                isOpen={switchState}
+                onOpen={turnOn}
+                onClose={turnOff}
               >
-                <StepperContextProvider
-                  value={{ increment, decrement, step }}
-                >
-                  <Stepper currentStep={step}>
-                    <StepperStep step={0}>
-                      <ContactDialogWrapper>
-                        <ChangeContactInfoDialogBody
-                          name='email'
-                          value={data.email}
-                        />
-                        <ContactVerificationForm />
-                      </ContactDialogWrapper>
-                    </StepperStep>
-                    <StepperStep step={1}>
-                      <ContactDialogWrapper>
-                        <Text>
-                          Enter the code that you was sent to{' '}
-                          <Text weight={500} css={{ display: 'inline' }}>
-                            {state}
-                          </Text>
-                          .
-                        </Text>
-                        <OTPVerificationForm />
-                      </ContactDialogWrapper>
-                    </StepperStep>
-                  </Stepper>
-                </StepperContextProvider>
-              </ChangeContactInfoContextProvider>
-            </ChangeContactInfoDialog>
+                <Dialog.Trigger>
+                  <Button>Update</Button>
+                </Dialog.Trigger>
+                <Dialog.Portal>
+                  <Dialog.Overlay />
+                  <Dialog.Content>
+                    <Dialog.Header borderBottom={2} borderColor='base100'>
+                      <Heading as='h3' size={3} casing='uppercase'>
+                        {getHeading('email', data.email)}
+                      </Heading>
+                    </Dialog.Header>
+                    <Dialog.Body>
+                      <Stepper>
+                        <StepperStep step={0}>
+                          <VStack gap={5} px={3} py={6} h='full'>
+                            <ContactInfoText
+                              type='email'
+                              value={data.email}
+                            />
+                            <ContactVerificationForm />
+                          </VStack>
+                        </StepperStep>
+                        <StepperStep step={1}>
+                          <VStack gap={5} px={3} py={6} h='full'>
+                            <Text>
+                              Enter the code that you was sent to{' '}
+                              <Text
+                                weight={500}
+                                css={{ display: 'inline' }}
+                              >
+                                {state}
+                              </Text>
+                              .
+                            </Text>
+                            <OTPVerificationForm />
+                          </VStack>
+                        </StepperStep>
+                      </Stepper>
+                    </Dialog.Body>
+                  </Dialog.Content>
+                </Dialog.Portal>
+              </Dialog>
+            </ChangeContactInfoContextProvider>
           </HStack>
         </VStack>
       </HeaderLayout>

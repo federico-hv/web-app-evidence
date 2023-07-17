@@ -1,8 +1,11 @@
-import { HeaderLayout } from 'layouts';
-import { Head, SettingButton } from 'components';
-import { prefix } from '../../../utilities';
-import { RootSettingsPath } from '../security/root';
-import { Paths } from '../../../shared';
+import { SettingItem } from '../../../features';
+import {
+  Head,
+  HeaderLayout,
+  Paths,
+  prefix,
+  RootSettingsPath,
+} from '../../../shared';
 
 function ManageUsersSettingsPage() {
   return (
@@ -16,11 +19,11 @@ function ManageUsersSettingsPage() {
         title='Mute and block'
         backLink={prefix(RootSettingsPath, Paths.setting.privacy)}
       >
-        <SettingButton
+        <SettingItem
           path={prefix(RootSettingsPath, Paths.setting.blocked_accounts)}
           heading='Blocked accounts'
         />
-        <SettingButton
+        <SettingItem
           path={prefix(RootSettingsPath, Paths.setting.muted_accounts)}
           heading='Muted accounts'
         />

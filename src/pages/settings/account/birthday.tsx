@@ -1,32 +1,27 @@
-import { useContext } from 'react';
 import { Box, Heading } from '@holdr-ui/react';
-import { HeaderLayout } from 'layouts';
-import { Head, Error, AccountInfoForm } from 'components';
-import { Paths } from 'shared';
-import { useUpdateAccountInfo } from 'lib';
-import { isEqual } from 'lodash';
-import { prefix } from 'utilities';
-import {
-  AccountInfoContext,
-  AccountInfoFormContextProvider,
-} from 'contexts';
-import { RootSettingsPath } from '../security/root';
 import dayjs from 'dayjs';
+import {
+  AccountInfoForm,
+  AccountInfoFormContextProvider,
+  useAccountInfo,
+  useUpdateAccountInfo,
+} from '../../../features';
+import {
+  Error,
+  Head,
+  HeaderLayout,
+  Paths,
+  prefix,
+  RootSettingsPath,
+} from '../../../shared';
+import { isEqual } from 'lodash';
 
 function BirthdaySettingPage() {
-  const { data } = useContext(AccountInfoContext);
-  const {
-    loading: loadingMutation,
-    error: errorMutation,
-    onSubmit,
-    onFinish,
-  } = useUpdateAccountInfo();
+  const { data } = useAccountInfo();
+  const { loading, error, onSubmit, onFinish } = useUpdateAccountInfo();
 
   return (
-    <Error
-      hasError={!!errorMutation}
-      errorMessage={errorMutation?.message}
-    >
+    <Error hasError={!!error} errorMessage={error?.message}>
       <Head
         title='Update birthday'
         description='Change your birthday.'
@@ -43,7 +38,7 @@ function BirthdaySettingPage() {
         </Box>
         <AccountInfoFormContextProvider
           value={{
-            loading: loadingMutation,
+            loading: loading,
             disabled: (values) =>
               isEqual(
                 dayjs(values.birthday).format('YYYY-MM-DD'),

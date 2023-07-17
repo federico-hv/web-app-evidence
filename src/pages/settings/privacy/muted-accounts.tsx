@@ -1,70 +1,40 @@
-import { HeaderLayout } from 'layouts';
+import { useQuery } from '@apollo/client';
 import {
+  GET_MUTED_ACCOUNTS,
+  useRemoveRelationshipAction,
+} from '../../../features';
+import {
+  ActionItemWrapper,
   ContentBox,
+  Error,
   Head,
+  HeaderLayout,
+  IFetchUsersResponse,
+  LinkOverlay,
   Loader,
+  Paths,
+  prefix,
+  RootSettingsPath,
   SwitchConditional,
   SwitchConditionalCase,
-  TextGroup,
-  Error,
-  TextGroupSubheading,
-} from '../../../components';
-import { prefix } from '../../../utilities';
-import { RootSettingsPath } from '../security/root';
-import { IUser, LinkOverlay, Paths } from '../../../shared';
+  UserNamesGroup,
+} from '../../../shared';
 import {
   Avatar,
   Box,
   Button,
-  HStack,
   Icon,
   Input,
   InputGroup,
   VStack,
 } from '@holdr-ui/react';
-import { useQuery } from '@apollo/client';
-import { GET_MUTED_ACCOUNTS } from '../../../lib';
-import { useRemoveRelationshipAction } from '../../../hooks';
-
-function User({ data }: { data: IUser }) {
-  const { unmute, loading } = useRemoveRelationshipAction(data.username);
-
-  return (
-    <HStack
-      gap={3}
-      px={3}
-      py={4}
-      radius={2}
-      items='center'
-      _hover={{ backgroundColor: '$base100' }}
-      position='relative'
-    >
-      <LinkOverlay to={prefix('/', data.username)} />
-      <Avatar src={data.avatar} />
-      <TextGroup gap={0}>
-        <TextGroupSubheading weight={500}>
-          {data.displayName}
-        </TextGroupSubheading>
-        <TextGroup.Subheading color='base400' size={2}>
-          @{data.username}
-        </TextGroup.Subheading>
-      </TextGroup>
-      <Button
-        onClick={unmute}
-        isLoading={loading}
-        loadingText={loading ? '' : 'Unmute'}
-      >
-        Unmute
-      </Button>
-    </HStack>
-  );
-}
 
 function MutedSettingsPage() {
-  const { data, loading, error } = useQuery<{ mutedUsers: IUser[] }>(
-    GET_MUTED_ACCOUNTS,
-    { fetchPolicy: 'cache-and-network' },
-  );
+  const { data, loading, error } = useQuery<{
+    mutedUsers: IFetchUsersResponse;
+  }>(GET_MUTED_ACCOUNTS, { fetchPolicy: 'cache-and-network' });
+
+  const { unmute, loading: muteLoading } = useRemoveRelationshipAction();
 
   return (
     <Error hasError={!!error} errorMessage={error?.message}>
@@ -80,10 +50,12 @@ function MutedSettingsPage() {
         <Loader loading={loading}>
           {data && (
             <SwitchConditional>
-              <SwitchConditionalCase on={data.mutedUsers.length < 1}>
-                <ContentBox>Nothing to display</ContentBox>
+              <SwitchConditionalCase on={data.mutedUsers.total < 1}>
+                <Box px={4}>
+                  <ContentBox>Nothing to display</ContentBox>
+                </Box>
               </SwitchConditionalCase>
-              <SwitchConditionalCase on={data.mutedUsers.length > 0}>
+              <SwitchConditionalCase on={data.mutedUsers.total > 0}>
                 <Box px={4} py={4} borderBottom={2} borderColor='base100'>
                   <InputGroup radius='full'>
                     <InputGroup.LeftElement>
@@ -93,8 +65,22 @@ function MutedSettingsPage() {
                   </InputGroup>
                 </Box>
                 <VStack pt={1} px={4}>
-                  {data.mutedUsers.map((item) => (
-                    <User key={item.id} data={item} />
+                  {data.mutedUsers.users.map((item) => (
+                    <ActionItemWrapper key={item.id}>
+                      <LinkOverlay to={prefix('/', item.username)} />
+                      <Avatar src={item.avatar} />
+                      <UserNamesGroup
+                        displayName={item.displayName}
+                        username={item.username}
+                      />
+                      <Button
+                        onClick={async () => unmute(item.username)}
+                        isLoading={muteLoading}
+                        loadingText={muteLoading ? '' : 'Unmute'}
+                      >
+                        Unmute
+                      </Button>
+                    </ActionItemWrapper>
                   ))}
                 </VStack>
               </SwitchConditionalCase>

@@ -33,8 +33,8 @@ module.exports = {
             replacement: path.resolve(__dirname, "./src/utilities")
           },
           {
-            find: "layouts",
-            replacement: path.resolve(__dirname, "./src/layouts")
+            find: "layout",
+            replacement: path.resolve(__dirname, "./src/layout")
           },
           { find: "lib", replacement: path.resolve(__dirname, "./src/lib") },
           {
@@ -63,7 +63,7 @@ module.exports = {
           },
           {
             find: "components",
-            replacement: path.resolve(__dirname, "./src/components")
+            replacement: path.resolve(__dirname, "./src/react")
           }]
       }
     });

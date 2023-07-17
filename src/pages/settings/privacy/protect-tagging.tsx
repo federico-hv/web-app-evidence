@@ -1,65 +1,75 @@
-import { HeaderLayout } from 'layouts';
-import { Head, SettingCheckbox, Error, Loader } from 'components';
-import { Box } from '@holdr-ui/react';
-import { Paths } from '../../../shared';
-import { useLocation } from 'react-router-dom';
-import { prefix } from '../../../utilities';
-import { RootSettingsPath } from '../security/root';
-import { useAccountInfo, useUpdateAccountInfo } from '../../../lib';
-import { ChangeEvent } from 'react';
-
-function usePrevPath(defaultLocation: string) {
-  const { state } = useLocation();
-  if (state) {
-    return state.prevPath;
-  }
-  return defaultLocation;
-}
+import {
+  GET_ACCOUNT_INFO,
+  IAccountInfo,
+  useUpdateAccountInfo,
+} from '../../../features';
+import {
+  Error,
+  Head,
+  HeaderLayout,
+  Loader,
+  Paths,
+  prefix,
+  RootSettingsPath,
+  TextGroup,
+  TextGroupHeading,
+  TextGroupSubheading,
+  usePrevPath,
+} from '../../../shared';
+import { Box, Checkbox, HStack } from '@holdr-ui/react';
+import { useQuery } from '@apollo/client';
 
 function ProtectAndTaggingSettingsPage() {
   const {
-    loading: queryLoading,
-    data: queryData,
-    error: queryError,
-  } = useAccountInfo();
+    loading: loadingQuery,
+    data,
+    error: errorQuery,
+  } = useQuery<{ accountInfo: IAccountInfo }>(GET_ACCOUNT_INFO);
 
-  const { error: mutationError, onSubmit } = useUpdateAccountInfo();
-  // useful way of checking what the prev path was and whether to go back there or to the default root
+  const { error, onSubmit, loading } = useUpdateAccountInfo();
+
   const to = usePrevPath(prefix(RootSettingsPath, Paths.setting.privacy));
 
   return (
     <Error
-      hasError={!!queryError || !!mutationError}
-      errorEl={<Box>{queryError?.message || mutationError?.message}</Box>}
+      hasError={!!error || !!errorQuery}
+      errorMessage={error?.message || errorQuery?.message}
     >
       <Head
         title='Protection'
         description='Manage whether other users can view your posts, likes and other activity.'
         url={to}
       />
-      <Loader loading={queryLoading}>
-        {queryData && (
-          <HeaderLayout title='Protection' backLink={to}>
-            <Box p={4} borderBottom={2} borderColor='base100'>
-              <SettingCheckbox
-                value={queryData.accountInfo.protected}
-                onChange={async (e: ChangeEvent<HTMLInputElement>) => {
-                  let protectedAccount = false;
-                  if (e.target.value === 'false') {
-                    protectedAccount = true;
-                  }
-
-                  await onSubmit({
-                    protected: protectedAccount,
-                  });
-                }}
-                heading='Protect your account'
-                subheading='When selected, only users that follow you will be allowed to see your likes, posts and account information.'
-              />
-            </Box>
-          </HeaderLayout>
-        )}
-      </Loader>
+      <HeaderLayout title='Protection' backLink={to}>
+        <Box p={4} borderBottom={2} borderColor='base100'>
+          <HStack justify='space-between' items='center'>
+            <TextGroup>
+              <TextGroupHeading size={3} id='protection-checkbox'>
+                Protect your account
+              </TextGroupHeading>
+              <TextGroupSubheading size={2} color='base400'>
+                When selected, only users that follow you will be allowed
+                to see your likes, posts and account information.
+              </TextGroupSubheading>
+            </TextGroup>
+            <Loader loading={loadingQuery}>
+              {data && (
+                <Checkbox
+                  value={`${data.accountInfo.protected}`}
+                  disabled={loading}
+                  checked={data.accountInfo.protected}
+                  labelledBy='protection-checkbox'
+                  onChange={async () => {
+                    await onSubmit({
+                      protected: !data.accountInfo.protected,
+                    });
+                  }}
+                />
+              )}
+            </Loader>
+          </HStack>
+        </Box>
+      </HeaderLayout>
     </Error>
   );
 }

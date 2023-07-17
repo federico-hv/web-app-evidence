@@ -1,9 +1,7 @@
 import { Box, Heading, Text, VStack } from '@holdr-ui/react';
-import { HeaderLayout } from 'layouts';
-import { Paths } from 'shared';
-import { Head, SettingButton } from 'components';
-import { prefix } from 'utilities';
+import { Head, HeaderLayout, Paths, prefix } from '../../../shared';
 import { RootSettingsPath } from './root';
+import { SettingItem } from '../../../features';
 
 function AccountSecuritySettingsPage() {
   return (
@@ -35,7 +33,7 @@ function AccountSecuritySettingsPage() {
             </a>
           </Box>
           <Box pb={2} pt={5}>
-            <SettingButton
+            <SettingItem
               path={prefix(RootSettingsPath, Paths.setting.login_security)}
               heading='Two-factor authentication'
             />

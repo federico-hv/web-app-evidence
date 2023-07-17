@@ -1,8 +1,12 @@
-import { HeaderLayout } from 'layouts';
-import { Head, SettingButton } from 'components';
-import { prefix } from '../../../utilities';
-import { RootSettingsPath } from '../security/root';
-import { Paths } from '../../../shared';
+import {
+  Head,
+  HeaderLayout,
+  Paths,
+  prefix,
+  RootSettingsPath,
+} from '../../../shared';
+
+import { SettingItem } from '../../../features';
 
 function NotificationsPreferenceSettingsPage() {
   return (
@@ -19,7 +23,7 @@ function NotificationsPreferenceSettingsPage() {
         title='Preferences'
         backLink={prefix(RootSettingsPath, Paths.setting.notifications)}
       >
-        <SettingButton
+        <SettingItem
           path={prefix(
             RootSettingsPath,
             Paths.setting.email_notifications,

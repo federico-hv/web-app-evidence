@@ -1,9 +1,18 @@
-import { Text, HStack, Switch, VStack, Heading } from '@holdr-ui/react';
-import { HeaderLayout } from 'layouts';
-import { Head, SettingCheckbox } from 'components';
-import { prefix } from '../../../utilities';
-import { RootSettingsPath } from '../security/root';
-import { Paths } from '../../../shared';
+import {
+  Text,
+  HStack,
+  Switch,
+  VStack,
+  Heading,
+  Checkbox,
+} from '@holdr-ui/react';
+import {
+  Head,
+  HeaderLayout,
+  Paths,
+  prefix,
+  RootSettingsPath,
+} from '../../../shared';
 
 function EmailFiltersSettingsPage() {
   return (
@@ -41,7 +50,12 @@ function EmailFiltersSettingsPage() {
             Related to you
           </Heading>
           <VStack mt={4}>
-            <SettingCheckbox disabled heading='New notifications' />
+            <HStack justify='space-between'>
+              <Text as='label' id='new-notifications-title'>
+                New notifications
+              </Text>
+              <Checkbox labelledBy='new-notifications-title' />
+            </HStack>
           </VStack>
         </VStack>
       </HeaderLayout>

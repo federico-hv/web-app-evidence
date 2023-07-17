@@ -1,9 +1,11 @@
-import { HeaderLayout } from 'layouts';
-import { Head, SettingCheckbox } from 'components';
-import { Heading, VStack } from '@holdr-ui/react';
-import { prefix } from '../../../utilities';
-import { RootSettingsPath } from '../security/root';
-import { Paths } from '../../../shared';
+import {
+  Head,
+  HeaderLayout,
+  Paths,
+  prefix,
+  RootSettingsPath,
+} from '../../../shared';
+import { Checkbox, Heading, HStack, Text, VStack } from '@holdr-ui/react';
 
 function MutedNotificationsSettingsPage() {
   return (
@@ -25,9 +27,24 @@ function MutedNotificationsSettingsPage() {
             Mute notifications from people
           </Heading>
           <VStack gap={5}>
-            <SettingCheckbox heading="Who don't follow you" />
-            <SettingCheckbox heading="Who haven't confirmed their email" />
-            <SettingCheckbox heading="Who haven't confirmed their phone number" />
+            <HStack justify='space-between'>
+              <Text as='label' id='follow-checkbox'>
+                {`Who don't follow you`}
+              </Text>
+              <Checkbox labelledBy='follow' />
+            </HStack>
+            <HStack justify='space-between'>
+              <Text as='label' id='email-checkbox'>
+                {"Who haven't confirmed their email"}
+              </Text>
+              <Checkbox labelledBy='email-checkbox' />
+            </HStack>
+            <HStack justify='space-between'>
+              <Text as='label' id='phone-checkbox'>
+                {"Who haven't confirmed their phone number"}
+              </Text>
+              <Checkbox labelledBy='phone-checkbox' />
+            </HStack>
           </VStack>
         </VStack>
       </HeaderLayout>

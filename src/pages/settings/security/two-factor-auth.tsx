@@ -15,115 +15,38 @@ import {
   useSwitch,
   VStack,
 } from '@holdr-ui/react';
-import { HeaderLayout } from 'layouts';
 import {
+  Error,
+  extraBtnPadding,
   Head,
+  HeaderLayout,
+  Loader,
+  Paths,
+  prefix,
   Stepper,
+  StepperContext,
   SwitchConditional,
   SwitchConditionalCase,
   TextGroup,
   TextGroupHeading,
-  Error,
-  Loader,
   TextGroupSubheading,
-  CommonAlertDialog,
-  SettingButton,
-} from 'components';
-import {
-  EnableTwoFAInput,
-  extraBtnPadding,
-  IStatus,
-  Paths,
-  TwoFAAppRegistrationModel,
-} from 'shared';
-import { prefix } from 'utilities';
-import { RootSettingsPath } from './root';
-import { useCounter } from '../../../hooks';
+  useAlertDialog,
+  useCounter,
+} from '../../../shared';
 import { useState } from 'react';
-import { useMutation, useQuery } from '@apollo/client';
 import {
-  DISABLE_TWO_FA,
-  ENABLE_TWO_FA,
+  useEnableTwoFA,
+  useRegisterTwoFAChannel,
+  TwoFAChannel,
+  useDisableTwoFA,
   GET_TWO_FA_CHANNEL,
-  TWO_FA_APP_REGISTRATION,
-} from '../../../lib';
-
-export type TwoFAChannel = 'app' | 'sms';
-
-export function useDisableTwoFA() {
-  const [mutate, { loading, error, data }] = useMutation<
-    { disableTwoFA: IStatus },
-    { channel: TwoFAChannel }
-  >(DISABLE_TWO_FA);
-
-  const disableTwoFA = async (
-    channel: TwoFAChannel,
-    cb?: VoidFunction,
-  ) => {
-    const { data } = await mutate({
-      variables: {
-        channel: channel,
-      },
-      update: (cache) => {
-        cache.modify({
-          fields: {
-            twoFAChannel() {
-              cache.writeQuery({
-                query: GET_TWO_FA_CHANNEL,
-                data: '',
-              });
-            },
-          },
-        });
-      },
-    });
-
-    if (data && data.disableTwoFA.status) {
-      cb && cb();
-    }
-  };
-
-  return { loading, error, data, disableTwoFA };
-}
-
-export function useEnableTwoFA() {
-  const [mutate, { loading: loading, error, data }] = useMutation<
-    {
-      enableTwoFA: IStatus;
-    },
-    { payload: EnableTwoFAInput }
-  >(ENABLE_TWO_FA);
-
-  const enableTwoFA = async (code: string, cb: VoidFunction) => {
-    const { data } = await mutate({
-      variables: {
-        payload: {
-          code: code,
-          channel: 'app',
-        },
-      },
-      update: (cache, { data }) => {
-        cache.modify({
-          fields: {
-            twoFAChannel(current) {
-              const channel = data?.enableTwoFA.status ? 'app' : current;
-              cache.writeQuery({
-                query: GET_TWO_FA_CHANNEL,
-                data: channel,
-              });
-            },
-          },
-        });
-      },
-    });
-
-    if (data && data.enableTwoFA.status) {
-      cb();
-    }
-  };
-
-  return { enableTwoFA, loading, error, data };
-}
+  SettingItem,
+  TwoFAAppRegistrationModel,
+} from '../../../features';
+import { useQuery } from '@apollo/client';
+import { RootSettingsPath } from './root';
+import pinCode from '../../../assets/images/pin-code.png';
+import qrCode from '../../../assets/images/scan-qrcode.png';
 
 function TwoFAAppStep1({ onContinue }: { onContinue?: VoidFunction }) {
   return (
@@ -132,7 +55,10 @@ function TwoFAAppStep1({ onContinue }: { onContinue?: VoidFunction }) {
         Protect your account in two easy steps.
       </Heading>
       <VStack gap={6}>
-        <HStack py={4} px={6} bgColor='base100' radius={4}>
+        <HStack py={4} px={2} gap={4} bgColor='base100' radius={4}>
+          <Box>
+            <Image size={50} src={qrCode} />
+          </Box>
           <TextGroup>
             <TextGroupSubheading weight={500}>
               Link an authentication app to your Holdr account
@@ -143,7 +69,10 @@ function TwoFAAppStep1({ onContinue }: { onContinue?: VoidFunction }) {
             </TextGroupSubheading>
           </TextGroup>
         </HStack>
-        <HStack py={4} px={6} bgColor='base100' radius={4}>
+        <HStack py={4} px={2} gap={4} bgColor='base100' radius={4}>
+          <Box>
+            <Image size={50} src={pinCode} />
+          </Box>
           <TextGroup>
             <TextGroupSubheading weight={500}>
               Enter the confirmation code
@@ -233,7 +162,7 @@ function TwoFAAppStep2({
 }
 
 function CodeStep({ onContinue }: { onContinue: VoidFunction }) {
-  // TODO: Pass error to a global error context provider
+  // TODO: Pass error to a global error profile provider
   const { loading, data, enableTwoFA } = useEnableTwoFA();
 
   const { value, handleOnChange } = useInputChange('');
@@ -282,39 +211,48 @@ function CodeStep({ onContinue }: { onContinue: VoidFunction }) {
 }
 
 function AppRegistrationStepper({ onClose }: { onClose: VoidFunction }) {
-  const { count: step, increment, reset } = useCounter();
-  // TODO: Pass error to a global error context provider
-  const [register, { loading, error, data }] = useMutation<{
-    twoFAAppRegistration: TwoFAAppRegistrationModel;
-  }>(TWO_FA_APP_REGISTRATION);
+  const { register, loading, error, data } = useRegisterTwoFAChannel();
+  // TODO: Pass error to a global error profile provider
 
   return (
-    <Stepper currentStep={step}>
+    <Stepper>
       <Stepper.Step step={0}>
-        <TwoFAAppStep1
-          onContinue={async () => {
-            await register();
-            if (!error) increment();
-          }}
-        />
-      </Stepper.Step>
-      <Stepper.Step step={1}>
-        <Loader loading={loading}>
-          {data && (
-            <TwoFAAppStep2
-              onContinue={increment}
-              data={data.twoFAAppRegistration}
+        <StepperContext.Consumer>
+          {({ increment }) => (
+            <TwoFAAppStep1
+              onContinue={async () => {
+                await register();
+                if (!error) increment();
+              }}
             />
           )}
-        </Loader>
+        </StepperContext.Consumer>
+      </Stepper.Step>
+      <Stepper.Step step={1}>
+        <StepperContext.Consumer>
+          {({ increment }) => (
+            <Loader loading={loading}>
+              {data && (
+                <TwoFAAppStep2
+                  onContinue={increment}
+                  data={data.twoFAAppRegistration}
+                />
+              )}
+            </Loader>
+          )}
+        </StepperContext.Consumer>
       </Stepper.Step>
       <Stepper.Step step={2}>
-        <CodeStep
-          onContinue={() => {
-            reset();
-            onClose();
-          }}
-        />
+        <StepperContext.Consumer>
+          {({ reset }) => (
+            <CodeStep
+              onContinue={() => {
+                reset();
+                onClose();
+              }}
+            />
+          )}
+        </StepperContext.Consumer>
       </Stepper.Step>
     </Stepper>
   );
@@ -331,38 +269,41 @@ function TwoFACheckbox({
   const { switchState, turnOn, turnOff } = useSwitch();
   const { disableTwoFA } = useDisableTwoFA();
 
+  const { openWith } = useAlertDialog();
+
   const close = () => {
     reset();
     turnOff();
   };
 
-  const Trigger = () => (
-    <Checkbox
-      checked={isActive}
-      value={`${isActive}`}
-      labelledBy={`heading__2fa-${name}`}
-    />
-  );
-
   return (
     <SwitchConditional>
       <SwitchConditionalCase on={isActive}>
-        <CommonAlertDialog
-          heading='Disable Two Factor authentication'
-          description='Removing this feature, will remove an extra layer of
-                security for your account. Are you sure you want to disable
-                it?'
-          actionText='Yes, turn off'
-          onAction={() => disableTwoFA(name)}
-        >
-          <Trigger />
-        </CommonAlertDialog>
+        <Checkbox
+          checked={isActive}
+          value={`${isActive}`}
+          labelledBy={`heading__2fa-${name}`}
+          onClick={() =>
+            openWith({
+              title: 'Disable Two Factor authentication',
+              description:
+                'Removing this feature, will remove an extra layer of security for your account. Are you sure you want to disable it?',
+
+              actionText: 'Turn off',
+              onAction: () => disableTwoFA(name),
+            })
+          }
+        />
       </SwitchConditionalCase>
 
       <SwitchConditionalCase on={!isActive}>
         <Dialog isOpen={switchState} onOpen={turnOn} onClose={close}>
           <Dialog.Trigger>
-            <Trigger />
+            <Checkbox
+              checked={isActive}
+              value={`${isActive}`}
+              labelledBy={`heading__2fa-${name}`}
+            />
           </Dialog.Trigger>
           <Dialog.Portal>
             <Dialog.Overlay />
@@ -375,7 +316,7 @@ function TwoFACheckbox({
                       <AppRegistrationStepper onClose={turnOff} />
                     </SwitchConditionalCase>
                     <SwitchConditionalCase on={name === 'sms'}>
-                      <Stepper currentStep={step}>
+                      <Stepper defaultStep={step}>
                         <Stepper.Step step={0}>
                           <TextGroup>
                             <TextGroupHeading size={5} weight={500}>
@@ -484,7 +425,7 @@ function TwoFactorAuthSettingsPage() {
                       Additional information
                     </Heading>
                   </Box>
-                  <SettingButton
+                  <SettingItem
                     path={prefix(
                       RootSettingsPath,
                       Paths.setting.backup_code,

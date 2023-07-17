@@ -35,10 +35,10 @@ export const Paths = {
   },
   support: 'support',
   messages: 'messages',
-  authRedirect: 'auth/redirect',
+  authRedirect: 'auth-guard/auth-redirect',
 };
 
-export const SettingsParentMap = {
+export const RootSetting = {
   [Paths.setting.account]: Paths.setting.account,
   [Paths.setting.account_info]: Paths.setting.account,
   [Paths.setting.username]: Paths.setting.account,

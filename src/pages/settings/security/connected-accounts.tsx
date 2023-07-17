@@ -1,15 +1,23 @@
 import { useQuery } from '@apollo/client';
 import { VStack } from '@holdr-ui/react';
-import { HeaderLayout } from 'layouts';
-import { ConnectedAccount, Paths } from 'shared';
-import { ConnectedAccountItem, Head, Error, Loader } from 'components';
-import { GET_CONNECTED_ACCOUNTS } from 'lib';
-import { prefix } from 'utilities';
+import {
+  GET_CONNECTED_ACCOUNTS,
+  IConnectedAccount,
+} from '../../../features';
+import {
+  Error,
+  Head,
+  HeaderLayout,
+  Loader,
+  Paths,
+  prefix,
+} from '../../../shared';
 import { RootSettingsPath } from './root';
+import { ConnectedAccount } from '../../../features';
 
 function ConnectedAccountSettingsPage() {
   const { data, loading, error } = useQuery<{
-    connectedAccounts: ConnectedAccount[];
+    connectedAccounts: IConnectedAccount[];
   }>(GET_CONNECTED_ACCOUNTS);
 
   return (
@@ -27,7 +35,7 @@ function ConnectedAccountSettingsPage() {
           >
             <VStack>
               {data.connectedAccounts.map(({ provider, email }) => (
-                <ConnectedAccountItem
+                <ConnectedAccount
                   key={provider}
                   provider={provider}
                   email={email}
