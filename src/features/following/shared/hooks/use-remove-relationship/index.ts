@@ -7,9 +7,10 @@ import { REMOVE_RELATIONSHIP } from '../../../mutations';
 import {
   GET_BLOCKED_ACCOUNTS,
   GET_MUTED_ACCOUNTS,
+  GET_RELATIONSHIP_COUNT,
   GET_RELATIONSHIP_STATUS_INFO,
 } from '../../../queries';
-import { GET_RELATIONSHIP_COUNT } from '../../../../../pages/profile/queries';
+import { omit } from 'lodash';
 
 export function useRemoveRelationship() {
   const [mutation, { loading, error }] = useMutation<
@@ -32,8 +33,18 @@ export function useRemoveRelationship() {
                 query: GET_RELATIONSHIP_STATUS_INFO,
                 data: {
                   relationshipStatusInfo: {
+                    isBlocked: null,
+                    isMuted: null,
+                    isFollower: null,
+                    isFollowing: null,
+                    isFriend: null,
+                    isFavourite: null,
+                    isRestricted: null,
+                    hasFriendRequest: null,
+                    hasFollowRequest: null,
+                    isOwned: null,
                     ...current,
-                    ...data?.removeRelationship,
+                    ...omit(data?.removeRelationship, '__typename'),
                   },
                 },
               });
@@ -58,11 +69,16 @@ export function useRemoveRelationship() {
                 },
               });
             },
-            relationshipCount(current) {
+            followers(current) {
               cache.writeQuery({
                 query: GET_RELATIONSHIP_COUNT,
                 data: {
-                  relationshipCount: current,
+                  followers: {
+                    total: current.total - 1,
+                  },
+                  following: {
+                    total: current.total, // Bug: might get bug here
+                  },
                 },
               });
             },

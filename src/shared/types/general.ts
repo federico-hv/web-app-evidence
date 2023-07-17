@@ -1,4 +1,6 @@
-export type ProviderName = 'google' | 'spotify' | 'apple';
+export type AuthProviderName = 'google' | 'spotify' | 'apple';
+
+export type SocialProviderName = 'spotify' | 'apple' | 'instagram';
 
 export type Role = 'general' | 'artist';
 

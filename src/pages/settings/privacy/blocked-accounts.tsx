@@ -3,7 +3,6 @@ import {
   Error,
   Head,
   HeaderLayout,
-  IUser,
   Loader,
   Paths,
   LinkOverlay,
@@ -13,6 +12,7 @@ import {
   SwitchConditionalCase,
   UserNamesGroup,
   ActionItemWrapper,
+  IFetchUsersResponse,
 } from '../../../shared';
 import {
   Avatar,
@@ -30,10 +30,9 @@ import {
 } from '../../../features';
 
 function BlockedSettingsPage() {
-  const { data, loading, error } = useQuery<{ blockedUsers: IUser[] }>(
-    GET_BLOCKED_ACCOUNTS,
-    { fetchPolicy: 'cache-and-network' },
-  );
+  const { data, loading, error } = useQuery<{
+    blockedUsers: IFetchUsersResponse;
+  }>(GET_BLOCKED_ACCOUNTS, { fetchPolicy: 'cache-and-network' });
 
   const { removeBlock, loading: removalLoading } =
     useRemoveRelationshipAction();
@@ -52,12 +51,12 @@ function BlockedSettingsPage() {
         <Loader loading={loading}>
           {data && (
             <SwitchConditional>
-              <SwitchConditionalCase on={data.blockedUsers.length < 1}>
+              <SwitchConditionalCase on={data.blockedUsers.total < 1}>
                 <Box px={4}>
                   <ContentBox>Nothing to display</ContentBox>
                 </Box>
               </SwitchConditionalCase>
-              <SwitchConditionalCase on={data.blockedUsers.length > 0}>
+              <SwitchConditionalCase on={data.blockedUsers.total > 0}>
                 <Box px={4} py={4} borderBottom={2} borderColor='base100'>
                   <InputGroup radius='full'>
                     <InputGroup.LeftElement>
@@ -67,7 +66,7 @@ function BlockedSettingsPage() {
                   </InputGroup>
                 </Box>
                 <VStack pt={4} px={4} gap={5}>
-                  {data.blockedUsers.map((item) => (
+                  {data.blockedUsers.users.map((item) => (
                     <ActionItemWrapper key={item.id}>
                       <LinkOverlay to={prefix('/', item.username)} />
                       <Avatar src={item.avatar} />

@@ -29,10 +29,10 @@ export interface RelationshipStatusInfo {
 }
 
 export interface CreateRelationshipModel {
-  isBlocked: boolean | null;
-  isMuted: boolean | null;
-  isFollowing: boolean | null;
-  isFavourite: boolean | null;
+  isBlocked?: boolean | null;
+  isMuted?: boolean | null;
+  isFollowing?: boolean | null;
+  isFavourite?: boolean | null;
 }
 
 export interface RequestRelationshipModel {
@@ -41,11 +41,11 @@ export interface RequestRelationshipModel {
 }
 
 export interface RemoveRelationshipModel {
-  isBlocked: boolean | null;
-  isMuted: boolean | null;
-  isFollowing: boolean | null;
-  isFriend: boolean | null;
-  isFavourite: boolean | null;
+  isBlocked?: boolean | null;
+  isMuted?: boolean | null;
+  isFollowing?: boolean | null;
+  isFriend?: boolean | null;
+  isFavourite?: boolean | null;
 }
 
 export interface CreateRelationshipInput {

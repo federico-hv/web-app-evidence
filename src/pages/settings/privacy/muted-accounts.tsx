@@ -9,7 +9,7 @@ import {
   Error,
   Head,
   HeaderLayout,
-  IUser,
+  IFetchUsersResponse,
   LinkOverlay,
   Loader,
   Paths,
@@ -30,10 +30,9 @@ import {
 } from '@holdr-ui/react';
 
 function MutedSettingsPage() {
-  const { data, loading, error } = useQuery<{ mutedUsers: IUser[] }>(
-    GET_MUTED_ACCOUNTS,
-    { fetchPolicy: 'cache-and-network' },
-  );
+  const { data, loading, error } = useQuery<{
+    mutedUsers: IFetchUsersResponse;
+  }>(GET_MUTED_ACCOUNTS, { fetchPolicy: 'cache-and-network' });
 
   const { unmute, loading: muteLoading } = useRemoveRelationshipAction();
 
@@ -51,12 +50,12 @@ function MutedSettingsPage() {
         <Loader loading={loading}>
           {data && (
             <SwitchConditional>
-              <SwitchConditionalCase on={data.mutedUsers.length < 1}>
+              <SwitchConditionalCase on={data.mutedUsers.total < 1}>
                 <Box px={4}>
                   <ContentBox>Nothing to display</ContentBox>
                 </Box>
               </SwitchConditionalCase>
-              <SwitchConditionalCase on={data.mutedUsers.length > 0}>
+              <SwitchConditionalCase on={data.mutedUsers.total > 0}>
                 <Box px={4} py={4} borderBottom={2} borderColor='base100'>
                   <InputGroup radius='full'>
                     <InputGroup.LeftElement>
@@ -66,7 +65,7 @@ function MutedSettingsPage() {
                   </InputGroup>
                 </Box>
                 <VStack pt={1} px={4}>
-                  {data.mutedUsers.map((item) => (
+                  {data.mutedUsers.users.map((item) => (
                     <ActionItemWrapper key={item.id}>
                       <LinkOverlay to={prefix('/', item.username)} />
                       <Avatar src={item.avatar} />

@@ -1,4 +1,4 @@
-import { FormProps, IStatus, ProviderName } from '../../../../shared';
+import { FormProps, IStatus, AuthProviderName } from '../../../../shared';
 import { IconName } from '@holdr-ui/react/dist/shared/types';
 
 export interface IAccountInfo {
@@ -68,7 +68,7 @@ export interface IProviderItem {
 }
 
 export interface IConnectedAccount {
-  provider: ProviderName;
+  provider: AuthProviderName;
   email: string;
 }
 

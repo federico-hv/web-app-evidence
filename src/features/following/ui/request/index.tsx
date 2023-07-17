@@ -41,10 +41,10 @@ function RequestedButton() {
 
   return (
     <Responsive>
-      <ResponsiveItem tablet='show'>
+      <ResponsiveItem tablet='hide'>
         <Popover>
           <Popover.Trigger>
-            <Button colorTheme='base100' rightIcon='caret-down-outline'>
+            <Button colorTheme='base400' rightIcon='caret-down-outline'>
               Requested
             </Button>
           </Popover.Trigger>

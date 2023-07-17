@@ -9,6 +9,7 @@ import {
   useProfile,
 } from '../../../../shared';
 
+// needs a clean up, pass props
 function FollowButton() {
   const { follow, loading: loading0 } = useCreateRelationshipAction();
   const { followRequest, loading: loading1 } =

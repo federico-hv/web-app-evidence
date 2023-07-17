@@ -215,7 +215,7 @@ function OptionsButton() {
             <Drawer.Content>
               <VStack
                 radius={3}
-                bgColor='base800'
+                bgColor='primary400'
                 w='full'
                 h='300px'
                 divider={<Box borderBottom={1} borderColor='base100' />}

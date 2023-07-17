@@ -1,11 +1,14 @@
 import { useMutation } from '@apollo/client';
 import { CREATE_RELATIONSHIP } from '../../../mutations';
-import { GET_RELATIONSHIP_STATUS_INFO } from '../../../queries';
+import {
+  GET_RELATIONSHIP_STATUS_INFO,
+  GET_RELATIONSHIP_COUNT,
+} from '../../../queries';
 import {
   CreateRelationshipInput,
   CreateRelationshipModel,
 } from '../../interfaces';
-import { GET_RELATIONSHIP_COUNT } from '../../../../../pages/profile/queries';
+import { omit } from 'lodash';
 
 export function useCreateRelationship() {
   const [mutation, { loading, error, data }] = useMutation<
@@ -26,17 +29,32 @@ export function useCreateRelationship() {
                 query: GET_RELATIONSHIP_STATUS_INFO,
                 data: {
                   relationshipStatusInfo: {
+                    isBlocked: null,
+                    isMuted: null,
+                    isFollower: null,
+                    isFollowing: null,
+                    isFriend: null,
+                    isFavourite: null,
+                    isRestricted: null,
+                    hasFriendRequest: null,
+                    hasFollowRequest: null,
+                    isOwned: null,
                     ...current,
-                    ...data?.createRelationship,
+                    ...omit(data, '__typename'),
                   },
                 },
               });
             },
-            relationshipCount(current) {
+            followers(current) {
               cache.writeQuery({
                 query: GET_RELATIONSHIP_COUNT,
                 data: {
-                  relationshipCount: current,
+                  followers: {
+                    total: current.total + 1,
+                  },
+                  following: {
+                    total: current.total, // Bug: might get bug here
+                  },
                 },
               });
             },

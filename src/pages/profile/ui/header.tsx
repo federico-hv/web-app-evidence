@@ -17,6 +17,35 @@ import { SocialButton, useCurrentUser } from '../../../features';
 
 import verifiedIcon from '../../../assets/images/verified-icon.png';
 import lightPlaceholder from '../../../assets/images/light-placeholder.jpg';
+import { styled } from '../../../configs';
+
+const StyledAnchor = styled('a', {
+  width: 'fit-content',
+});
+
+function ArtistUrl() {
+  // TODO: Make a query to get the artist's url
+  const { profile } = useProfile();
+
+  return (
+    <>
+      {profile.username === 'seanphillips' && (
+        <StyledAnchor target='_blank' href='https://www.google.com'>
+          <HStack
+            borderBottom={1}
+            borderColor='base100'
+            gap={2}
+            items='center'
+            cursor='pointer'
+          >
+            <Icon name='global-outline' color='base400' />
+            <Text color='base400'>www.seanphillips.com</Text>
+          </HStack>
+        </StyledAnchor>
+      )}
+    </>
+  );
+}
 
 function Header() {
   const { profile } = useProfile();
@@ -105,12 +134,7 @@ function Header() {
               <Text>{profile.bio}</Text>
             </Box>
           )}
-          <a href='https://www.artist.com'>
-            <HStack gap={2} items='center' cursor='pointer'>
-              <Icon name='global-outline' color='base400' />
-              <Text color='base400'>www.artist.com</Text>
-            </HStack>
-          </a>
+          <ArtistUrl />
         </VStack>
         {currentUser && <SocialButton />}
       </HStack>

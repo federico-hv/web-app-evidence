@@ -1,5 +1,13 @@
-import { Box, Heading, IconButton, Popover } from '@holdr-ui/react';
+import {
+  Box,
+  Heading,
+  HStack,
+  IconButton,
+  Popover,
+  Text,
+} from '@holdr-ui/react';
 import { useState } from 'react';
+import { ActionItemWrapper } from '../../../../shared';
 
 function MessagePopover() {
   const [state, set] = useState(false);
@@ -25,6 +33,20 @@ function MessagePopover() {
             <Heading as='h4' size={4} weight={500}>
               Messages
             </Heading>
+          </Box>
+          <Box
+            borderTop={1}
+            borderColor='base100'
+            position='fixed'
+            b={5}
+            l={5}
+            r={5}
+          >
+            <ActionItemWrapper>
+              <HStack w='100%' justify='center'>
+                <Text weight={500}>View all</Text>
+              </HStack>
+            </ActionItemWrapper>
           </Box>
         </Popover.Content>
       </Popover.Portal>

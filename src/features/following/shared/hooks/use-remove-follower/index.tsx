@@ -1,7 +1,9 @@
 import { useMutation } from '@apollo/client';
-import { GET_RELATIONSHIP_STATUS_INFO } from '../../../queries';
+import {
+  GET_RELATIONSHIP_STATUS_INFO,
+  GET_RELATIONSHIP_COUNT,
+} from '../../../queries';
 import { REMOVE_FOLLOWER } from '../../../mutations';
-import { GET_RELATIONSHIP_COUNT } from '../../../../../pages/profile/queries';
 
 export function useRemoveFollower() {
   const [mutation, { loading, error }] = useMutation<
@@ -26,11 +28,13 @@ export function useRemoveFollower() {
                 },
               });
             },
-            relationshipCount(current) {
+            followers(current) {
               cache.writeQuery({
                 query: GET_RELATIONSHIP_COUNT,
                 data: {
-                  relationshipCount: current,
+                  followers: {
+                    total: current.total - 1,
+                  },
                 },
               });
             },

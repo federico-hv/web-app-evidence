@@ -37,7 +37,7 @@ function ProfilePage() {
     <ContentLayout>
       <ContentLayoutMain>
         <Error hasError={!!error} errorEl={<NotFoundError />}>
-          <Loader h='full' loading={loading}>
+          <Loader h={250} loading={loading}>
             {data && (
               <ProfileContextProvider value={{ profile: data.profile }}>
                 <Head
@@ -54,7 +54,7 @@ function ProfilePage() {
       </ContentLayoutMain>
       <ContentLayoutAside>
         <Error hasError={!!error} errorEl={<SuggestionsCard />}>
-          <Loader h='full' loading={loading}>
+          <Loader h={250} loading={loading}>
             {data && (
               <ProfileContextProvider value={{ profile: data.profile }}>
                 <Head

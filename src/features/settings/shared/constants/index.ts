@@ -9,7 +9,7 @@ import {
   passwordPatternMsg,
   phonePattern,
   phonePatternMsg,
-  ProviderName,
+  AuthProviderName,
   requiredField,
   usernamePattern,
   usernamePatternMsg,
@@ -63,7 +63,7 @@ export const UpdatePasswordSchema = object<UpdatePasswordFormData>({
     .required(requiredField('new account-info-guard verification')),
 });
 
-export const Provider: Record<ProviderName, IProviderItem> = {
+export const Provider: Record<AuthProviderName, IProviderItem> = {
   google: {
     image: googleLogo,
     name: 'Google',

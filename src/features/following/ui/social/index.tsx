@@ -1,5 +1,4 @@
 import { HStack, Skeleton } from '@holdr-ui/react';
-import { useQuery } from '@apollo/client';
 import { motion } from 'framer-motion';
 import { useParams } from 'react-router-dom';
 import {
@@ -11,11 +10,10 @@ import {
 import FollowButton from '../follow';
 import {
   RelationshipStatusContextProvider,
-  RelationshipStatusInfo,
+  useRelationshipStatusInfo,
 } from '../../shared';
 import FollowingButton from '../following';
 import BlockButton from '../block';
-import { GET_RELATIONSHIP_STATUS_INFO } from '../../queries';
 import RequestedButton from '../request';
 import EditProfileButton from '../edit';
 import OptionsButton from '../options';
@@ -26,13 +24,7 @@ const MotionWrapper = motion(HStack);
 function SocialButton() {
   const { username } = useParams();
 
-  const { data, loading, error } = useQuery<{
-    relationshipStatusInfo: RelationshipStatusInfo;
-  }>(GET_RELATIONSHIP_STATUS_INFO, {
-    variables: {
-      username: username,
-    },
-  });
+  const { loading, error, data } = useRelationshipStatusInfo(username);
 
   return (
     <Error hasError={!!error} errorMessage={error?.message}>

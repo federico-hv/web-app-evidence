@@ -1,27 +1,40 @@
-import { ChangeEvent } from 'react';
-import { useAccountInfo, useUpdateAccountInfo } from '../../../features';
+import {
+  GET_ACCOUNT_INFO,
+  IAccountInfo,
+  useUpdateAccountInfo,
+} from '../../../features';
 import {
   Error,
   Head,
   HeaderLayout,
+  Loader,
   Paths,
   prefix,
   RootSettingsPath,
+  TextGroup,
   TextGroupHeading,
   TextGroupSubheading,
   usePrevPath,
 } from '../../../shared';
 import { Box, Checkbox, HStack } from '@holdr-ui/react';
+import { useQuery } from '@apollo/client';
 
 function ProtectAndTaggingSettingsPage() {
-  const { data: accountInfo } = useAccountInfo();
+  const {
+    loading: loadingQuery,
+    data,
+    error: errorQuery,
+  } = useQuery<{ accountInfo: IAccountInfo }>(GET_ACCOUNT_INFO);
 
   const { error, onSubmit, loading } = useUpdateAccountInfo();
 
   const to = usePrevPath(prefix(RootSettingsPath, Paths.setting.privacy));
 
   return (
-    <Error hasError={!!error} errorMessage={error?.message}>
+    <Error
+      hasError={!!error || !!errorQuery}
+      errorMessage={error?.message || errorQuery?.message}
+    >
       <Head
         title='Protection'
         description='Manage whether other users can view your posts, likes and other activity.'
@@ -29,30 +42,31 @@ function ProtectAndTaggingSettingsPage() {
       />
       <HeaderLayout title='Protection' backLink={to}>
         <Box p={4} borderBottom={2} borderColor='base100'>
-          <HStack justify='space-between'>
-            <TextGroupHeading id='protection-checkbox'>
-              Protect your account
-            </TextGroupHeading>
-            <TextGroupSubheading>
-              When selected, only users that follow you will be allowed to
-              see your likes, posts and account information.
-            </TextGroupSubheading>
-            <Checkbox
-              value={accountInfo.protected.toString()}
-              disabled={loading}
-              checked={accountInfo.protected}
-              labelledBy='protection-checkbox'
-              onChange={async (e: ChangeEvent<HTMLInputElement>) => {
-                let protectedAccount = false;
-                if (e.target.value === 'false') {
-                  protectedAccount = true;
-                }
-
-                await onSubmit({
-                  protected: protectedAccount,
-                });
-              }}
-            />
+          <HStack justify='space-between' items='center'>
+            <TextGroup>
+              <TextGroupHeading size={3} id='protection-checkbox'>
+                Protect your account
+              </TextGroupHeading>
+              <TextGroupSubheading size={2} color='base400'>
+                When selected, only users that follow you will be allowed
+                to see your likes, posts and account information.
+              </TextGroupSubheading>
+            </TextGroup>
+            <Loader loading={loadingQuery}>
+              {data && (
+                <Checkbox
+                  value={`${data.accountInfo.protected}`}
+                  disabled={loading}
+                  checked={data.accountInfo.protected}
+                  labelledBy='protection-checkbox'
+                  onChange={async () => {
+                    await onSubmit({
+                      protected: !data.accountInfo.protected,
+                    });
+                  }}
+                />
+              )}
+            </Loader>
           </HStack>
         </Box>
       </HeaderLayout>

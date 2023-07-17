@@ -5,9 +5,9 @@ function ActionItemWrapper({ children }: GenericProps) {
   return (
     <HStack
       gap={3}
-      px={3}
-      py={4}
+      p={3}
       radius={2}
+      cursor='pointer'
       items='center'
       _hover={{ backgroundColor: '$base100' }}
       position='relative'

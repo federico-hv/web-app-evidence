@@ -14,3 +14,8 @@ export interface IMe {
   avatar: string;
   role: Role;
 }
+
+export interface IFetchUsersResponse {
+  total: number;
+  users: IUser[];
+}

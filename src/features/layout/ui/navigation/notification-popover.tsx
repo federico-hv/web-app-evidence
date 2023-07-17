@@ -1,5 +1,14 @@
-import { Box, Heading, IconButton, Popover, Tabs } from '@holdr-ui/react';
+import {
+  Box,
+  Heading,
+  HStack,
+  IconButton,
+  Popover,
+  Tabs,
+  Text,
+} from '@holdr-ui/react';
 import { useState } from 'react';
+import { ActionItemWrapper } from '../../../../shared';
 
 function NotificationPopover() {
   const [state, set] = useState(false);
@@ -41,6 +50,20 @@ function NotificationPopover() {
               <Tabs.Content value='all'></Tabs.Content>
               <Tabs.Content value='mentions'></Tabs.Content>
             </Tabs>
+          </Box>
+          <Box
+            borderTop={1}
+            borderColor='base100'
+            position='fixed'
+            b={5}
+            l={5}
+            r={5}
+          >
+            <ActionItemWrapper>
+              <HStack w='100%' justify='center'>
+                <Text weight={500}>View all</Text>
+              </HStack>
+            </ActionItemWrapper>
           </Box>
         </Popover.Content>
       </Popover.Portal>
