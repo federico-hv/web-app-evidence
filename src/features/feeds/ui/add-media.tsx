@@ -1,4 +1,4 @@
-import { CreateDialog, IMAGE_GRID } from '../shared';
+import { CreatePostInput, IMAGE_GRID } from '../shared';
 import {
   Box,
   Image,
@@ -61,7 +61,7 @@ function AddMedia({
 }: {
   remove: VoidFunction;
   reset: VoidFunction;
-  update: (state: Partial<CreateDialog>) => void;
+  update: (state: Partial<CreatePostInput>) => void;
 }) {
   const [images, setImages] = useState<{ file: File }[]>([]);
   const { openWith } = useToast();
