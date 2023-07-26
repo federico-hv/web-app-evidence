@@ -1,4 +1,5 @@
 export * from './layout';
 export * from './auth';
-export * from './following';
-export * from './settings';
+export * from './relationships';
+export * from './settings'; // update to user, notifications etc
+export * from './feeds';

@@ -12,3 +12,19 @@ export function arrayFrom(n: number): Array<number> {
  * @constructor
  */
 export const dummyFn = () => console.log('');
+
+/**
+ *
+ * @param url
+ */
+export function getUrlDomain(url: string) {
+  const urlSplits = url.split('.');
+
+  if (urlSplits && urlSplits[0] === 'www') {
+    return urlSplits.slice(1).join('.');
+  } else if (urlSplits) {
+    return urlSplits.join('.');
+  }
+
+  return;
+}

@@ -5,7 +5,6 @@ import {
   SocialsCard,
   RelationshipsCard,
   ReleasesCard,
-  SuggestionsCard,
 } from './ui';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
@@ -21,6 +20,7 @@ import {
   NotFoundError,
   ProfileContextProvider,
 } from '../../shared';
+import { SuggestionsCard } from '../../features';
 
 function ProfilePage() {
   const { username } = useParams();
@@ -34,46 +34,38 @@ function ProfilePage() {
   );
 
   return (
-    <ContentLayout>
-      <ContentLayoutMain>
-        <Error hasError={!!error} errorEl={<NotFoundError />}>
-          <Loader h={250} loading={loading}>
-            {data && (
-              <ProfileContextProvider value={{ profile: data.profile }}>
-                <Head
-                  prefix=''
-                  title={`${data.profile.displayName} (@${data.profile.username})`}
-                  description={data.profile.bio || ''}
-                />
-                <Header />
-              </ProfileContextProvider>
-            )}
-          </Loader>
-        </Error>
-        <Content />
-      </ContentLayoutMain>
-      <ContentLayoutAside>
-        <Error hasError={!!error} errorEl={<SuggestionsCard />}>
-          <Loader h={250} loading={loading}>
-            {data && (
-              <ProfileContextProvider value={{ profile: data.profile }}>
-                <Head
-                  prefix=''
-                  title={`${data.profile.displayName} (@${data.profile.username})`}
-                  description={data.profile.bio || ''}
-                />
+    <Error hasError={!!error} errorEl={<NotFoundError />}>
+      <Loader h={250} loading={loading}>
+        {data && (
+          <ProfileContextProvider value={{ profile: data.profile }}>
+            <ContentLayout>
+              <ContentLayoutMain>
+                {data && (
+                  <>
+                    <Head
+                      prefix=''
+                      title={`${data.profile.displayName} (@${data.profile.username})`}
+                      description={data.profile.bio || ''}
+                    />
+                    <Header />
+                  </>
+                )}
+
+                <Content />
+              </ContentLayoutMain>
+              <ContentLayoutAside>
                 <VStack>
                   <RelationshipsCard />
                   <SocialsCard />
                   <ReleasesCard />
                   <SuggestionsCard />
                 </VStack>
-              </ProfileContextProvider>
-            )}
-          </Loader>
-        </Error>
-      </ContentLayoutAside>
-    </ContentLayout>
+              </ContentLayoutAside>
+            </ContentLayout>
+          </ProfileContextProvider>
+        )}
+      </Loader>
+    </Error>
   );
 }
 

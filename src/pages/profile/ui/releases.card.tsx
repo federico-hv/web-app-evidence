@@ -1,13 +1,11 @@
 import { Heading, HStack, Image, VStack } from '@holdr-ui/react';
 import {
-  Role,
   SwitchConditional,
   SwitchConditionalCase,
   TextGroup,
   TextGroupSubheading,
+  useProfile,
 } from '../../../shared';
-
-const role: Role = 'general';
 
 const releases = [
   {
@@ -48,7 +46,7 @@ function Release({
 }: {
   title: string;
   artist: { name: string; id: string };
-  coverImage: string;
+  coverImage?: string;
 }) {
   return (
     <VStack gap={2} title={`${title} - ${artist.name}`} w='calc(100%/3)'>
@@ -66,6 +64,7 @@ function Release({
 }
 
 function ReleasesCard() {
+  const { profile } = useProfile();
   return (
     <VStack
       gap={4}
@@ -76,13 +75,13 @@ function ReleasesCard() {
       borderColor='base100'
     >
       <SwitchConditional>
-        <SwitchConditionalCase on={role === 'general'}>
-          <Heading as='h2' size={4}>
+        <SwitchConditionalCase on={profile.role === 'general'}>
+          <Heading as='h2' size={3}>
             Recent Activity
           </Heading>
         </SwitchConditionalCase>
-        <SwitchConditionalCase on={role === 'artist'}>
-          <Heading as='h2' size={4}>
+        <SwitchConditionalCase on={profile.role === 'artist'}>
+          <Heading as='h2' size={3}>
             New Releases
           </Heading>
         </SwitchConditionalCase>
@@ -91,10 +90,16 @@ function ReleasesCard() {
       <HStack gap={4} w='100%' overflow='scroll'>
         {releases.map(({ id, coverImage, title, artist }) => (
           <Release
-            coverImage={coverImage}
+            coverImage={
+              profile.role === 'artist' ? profile.avatar : coverImage
+            }
             title={title}
             key={id}
-            artist={artist}
+            artist={
+              profile.role === 'artist'
+                ? { name: profile.displayName, id: profile.username }
+                : artist
+            }
           />
         ))}
       </HStack>

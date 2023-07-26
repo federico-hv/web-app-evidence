@@ -1,5 +1,5 @@
 import { createContext, useState } from 'react';
-import { Toast } from '@holdr-ui/react';
+import { Box, Toast } from '@holdr-ui/react';
 import { IToastContext, ToastContextState } from './toast.types';
 import { dummyFn } from '../../utilities';
 import { GenericProps } from '../../interfaces';
@@ -21,25 +21,27 @@ function ToastProvider({ children }: GenericProps) {
     <ToastContext.Provider
       value={{ current, isOpen, onClose, onOpen, set }}
     >
-      <Toast.Provider>
-        {children}
-        <Toast.Item
-          position={
-            ['danger', 'info'].includes(current?.status || 'info')
-              ? 'top-center'
-              : 'bottom-center'
-          }
-          open={isOpen}
-          onOpenChange={setOpen}
-        >
-          <Toast.Message
-            status={current?.status}
-            description={current?.description}
-            onCloseClick={onClose}
-          />
-          <Toast.Viewport />
-        </Toast.Item>
-      </Toast.Provider>
+      <Box css={{ zIndex: 200, position: 'relative' }}>
+        <Toast.Provider>
+          <Toast.Item
+            position={
+              ['danger', 'info'].includes(current?.status || 'info')
+                ? 'top-center'
+                : 'bottom-center'
+            }
+            open={isOpen}
+            onOpenChange={setOpen}
+          >
+            <Toast.Message
+              status={current?.status}
+              description={current?.description}
+              onCloseClick={onClose}
+            />
+            <Toast.Viewport />
+          </Toast.Item>
+        </Toast.Provider>
+      </Box>
+      {children}
     </ToastContext.Provider>
   );
 }

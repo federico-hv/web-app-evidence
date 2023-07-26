@@ -23,7 +23,7 @@ function NotificationPopover() {
       </Popover.Trigger>
       <Popover.Portal>
         <Popover.Content
-          alignOffset={-60}
+          alignOffset={-50}
           sideOffset={20}
           align='end'
           h='calc(98.5vh - 68px)'
@@ -60,7 +60,7 @@ function NotificationPopover() {
             r={5}
           >
             <ActionItemWrapper>
-              <HStack w='100%' justify='center'>
+              <HStack py={3} w='100%' justify='center'>
                 <Text weight={500}>View all</Text>
               </HStack>
             </ActionItemWrapper>

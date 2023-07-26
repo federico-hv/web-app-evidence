@@ -1,4 +1,4 @@
-import { Box, Flex, HStack } from '@holdr-ui/react';
+import { Box, Container, Flex, HStack } from '@holdr-ui/react';
 import { Logo } from '../../../../shared/components';
 import Search from '../search';
 import ProfileMenu from './profile-menu';
@@ -35,7 +35,9 @@ function LgNavigation() {
           '@bp7': 'calc(100% - 750px)',
         }}
       >
-        <Search />
+        <Container maxWidth={650}>
+          <Search />
+        </Container>
       </Box>
       <Flex
         py={4}

@@ -6,6 +6,7 @@ import {
   SocialProviderName,
   SwitchConditional,
   SwitchConditionalCase,
+  useProfile,
 } from '../../../shared';
 import { styled } from '../../../configs';
 
@@ -42,13 +43,15 @@ function SocialLink({
 }
 
 function SocialsCard() {
+  const { profile } = useProfile();
   return (
     <SwitchConditional>
       <SwitchConditionalCase
         on={
-          !!socials.appleMusicUrl ||
-          !!socials.spotifyUrl ||
-          !!socials.instagramUrl
+          profile.role === 'artist' &&
+          (!!socials.appleMusicUrl ||
+            !!socials.spotifyUrl ||
+            !!socials.instagramUrl)
         }
       >
         <Box w='100%' py={5} borderBottom={2} borderColor='base100'>

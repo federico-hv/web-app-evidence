@@ -52,7 +52,7 @@ function Header() {
   const currentUser = useCurrentUser();
 
   return (
-    <VStack>
+    <VStack borderBottom={2} borderColor='base100'>
       <Box w='100%' h={175} bgColor='base100'>
         <Box
           role='banner'

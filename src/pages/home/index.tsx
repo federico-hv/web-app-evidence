@@ -1,21 +1,35 @@
 import {
-  ContentBox,
   ContentLayout,
   ContentLayoutAside,
   ContentLayoutMain,
+  Error,
+  Head,
 } from '../../shared';
-import { Box } from '@holdr-ui/react';
+import { Container, VStack } from '@holdr-ui/react';
+import { SuggestionsCard, useCurrentUser } from '../../features';
+import { FeedTabs } from './ui';
 
 function HomePage() {
+  const currentUser = useCurrentUser();
+
   return (
-    <ContentLayout>
-      <ContentLayoutMain>
-        <Box p={2}>
-          <ContentBox>Nothing to display</ContentBox>
-        </Box>
-      </ContentLayoutMain>
-      <ContentLayoutAside></ContentLayoutAside>
-    </ContentLayout>
+    <Error hasError={!currentUser} errorEl={<></>}>
+      <Head prefix='Holdr Base' title='' description='Home page' />
+      {currentUser && (
+        <ContentLayout>
+          <ContentLayoutMain>
+            <Container maxWidth={650} pt={4}>
+              <VStack gap={4} w='100%'>
+                <FeedTabs />
+              </VStack>
+            </Container>
+          </ContentLayoutMain>
+          <ContentLayoutAside>
+            <SuggestionsCard />
+          </ContentLayoutAside>
+        </ContentLayout>
+      )}
+    </Error>
   );
 }
 HomePage.displayName = 'HomePage';

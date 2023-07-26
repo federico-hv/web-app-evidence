@@ -4,23 +4,20 @@ import {
   TextGroupHeadingProps,
   TextGroupProps,
   TextGroupSubheadingProps,
-  TextGroupSCNames,
 } from './types';
-import { getSubComponent } from '../../index';
 
 function TextGroup({ children, ...props }: TextGroupProps) {
-  const TextGroupHeadings = getSubComponent<TextGroupSCNames>(
-    children,
-    'TextGroupHeading',
-  );
-  const TextGroupSubheadings = getSubComponent<TextGroupSCNames>(
-    children,
-    'TextGroupSubheading',
-  );
+  // const TextGroupHeadings = getSubComponent<TextGroupSCNames>(
+  //   children,
+  //   'TextGroupHeading',
+  // );
+  // const TextGroupSubheadings = getSubComponent<TextGroupSCNames>(
+  //   children,
+  //   'TextGroupSubheading',
+  // );
   return (
     <Stack direction='vertical' gap={2} w='100%' {...props}>
-      {TextGroupHeadings}
-      {TextGroupSubheadings}
+      {children}
     </Stack>
   );
 }

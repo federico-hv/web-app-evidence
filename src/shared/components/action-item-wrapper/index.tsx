@@ -6,6 +6,8 @@ function ActionItemWrapper({ children }: GenericProps) {
     <HStack
       gap={3}
       p={3}
+      w='100%'
+      h='100%'
       radius={2}
       cursor='pointer'
       items='center'

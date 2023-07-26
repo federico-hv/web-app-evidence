@@ -1,5 +1,5 @@
 import { object, ref, string } from 'yup';
-import { ProfileFormData } from '../../../following';
+import { ProfileFormData } from '../../../relationships';
 import {
   emailPatternMsg,
   maximumLengthMsg,

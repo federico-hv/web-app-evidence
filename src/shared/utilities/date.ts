@@ -1,5 +1,7 @@
 import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
 import { IDate } from '../interfaces';
+import { StringNumeric } from '../types';
 
 export class DateUtility {
   static allMonths(): string[] {
@@ -29,5 +31,10 @@ export class DateUtility {
       day: `${dayjs(date).get('day')}`,
       year: `${dayjs(date).get('year')}`,
     };
+  }
+
+  static fromNow(date: StringNumeric) {
+    dayjs.extend(relativeTime);
+    return dayjs().from(dayjs(date, 'X'), true);
   }
 }
