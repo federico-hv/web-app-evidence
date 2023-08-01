@@ -19,3 +19,10 @@ export const LinkOverlay = styled(Link, {
 export const StyledLink = styled(Link, {
   width: 'fit-content',
 });
+
+export const StyledVideo = styled('video', {
+  position: 'absolute',
+  height: '100%',
+  width: '100%',
+  objectFit: 'cover',
+});

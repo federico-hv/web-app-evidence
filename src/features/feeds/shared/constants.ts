@@ -17,9 +17,12 @@ const IMAGE_GRID = {
   ],
 };
 
+type ImageSizes = 1 | 2 | 3 | 4;
+
 const DIALOG_CONTENT_HEIGHT = {
   media: 725,
   poll: 650,
 };
 
 export { DIALOG_CONTENT_HEIGHT, IMAGE_GRID };
+export type { ImageSizes };

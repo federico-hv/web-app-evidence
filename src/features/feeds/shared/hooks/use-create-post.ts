@@ -19,9 +19,16 @@ export function useCreatePost() {
         variables: {
           payload,
         },
+        context: {
+          headers: {
+            'apollo-require-preflight': true,
+          },
+        },
       });
     } catch (err) {
-      console.log('error');
+      console.log(
+        'Failed to send data to create a post. Probably a payload issue.',
+      );
       openWith({
         status: 'danger',
         description:

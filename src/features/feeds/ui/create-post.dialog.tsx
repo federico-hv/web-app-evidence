@@ -49,6 +49,8 @@ function CreatePostDialog() {
 
   const removeResponses = () => set((prev) => omit(prev, 'responses'));
 
+  const removeMedia = () => set((prev) => omit(prev, 'media'));
+
   const increaseHeight = (amount: number) =>
     setContentHeight((prev) => prev + amount);
 
@@ -153,7 +155,10 @@ function CreatePostDialog() {
                       >
                         <AddMedia
                           update={update}
-                          remove={turnOff}
+                          remove={() => {
+                            turnOff();
+                            removeMedia();
+                          }}
                           reset={resetHeight}
                         />
                       </SwitchConditionalCase>

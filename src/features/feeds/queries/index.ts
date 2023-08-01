@@ -15,15 +15,20 @@ export const GET_USER_FEEDS = gql`
           avatar
         }
         node {
-          ... on PollModel {
+          ... on PostModel {
+            id
             description
-            responses {
+            media {
+              id
+              url
+              type
+            }
+            polls {
               id
               text
+              count
+              voted
             }
-          }
-          ... on PostModel {
-            description
           }
           ... on ArticleModel {
             id
@@ -58,26 +63,29 @@ export const GET_FEEDS = gql`
           avatar
         }
         node {
-          ... on PollModel {
+          ... on PostModel {
+            id
             description
-            responses {
+            media {
+              id
+              url
+              type
+            }
+            polls {
               id
               text
+              count
+              voted
             }
-          }
-          ... on PostModel {
-            description
           }
           ... on ArticleModel {
             id
             title
             description
             imageUrl
-            url
             source {
               name
               logo
-              url
             }
           }
         }

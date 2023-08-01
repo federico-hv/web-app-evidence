@@ -17,7 +17,7 @@ import {
 function SuggestionsCard() {
   return (
     <VStack
-      gap={5}
+      gap={6}
       w='100%'
       py={5}
       px={4}

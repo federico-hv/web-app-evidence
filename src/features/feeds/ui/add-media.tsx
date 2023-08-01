@@ -1,7 +1,6 @@
-import { CreatePostInput, IMAGE_GRID } from '../shared';
+import { CreatePostInput, IMAGE_GRID, ImageSizes } from '../shared';
 import {
   Box,
-  Image,
   Center,
   Grid,
   Icon,
@@ -12,16 +11,13 @@ import {
   HStack,
 } from '@holdr-ui/react';
 import {
+  FileUtility,
+  MediaItem,
   SwitchConditional,
   SwitchConditionalCase,
   useToast,
 } from '../../../shared';
 import { ChangeEvent, useState } from 'react';
-import { styled } from '../../../configs';
-
-const MAXIMUM_IMAGES = 4;
-
-type ImageSizes = 1 | 2 | 3 | 4;
 
 function Upload({
   onChange,
@@ -48,14 +44,8 @@ function Upload({
   );
 }
 
-const StyledVideo = styled('video', {
-  position: 'absolute',
-  height: '100%',
-  width: '100%',
-  objectFit: 'cover',
-});
-
 function AddMedia({
+  update,
   remove,
   reset,
 }: {
@@ -63,15 +53,29 @@ function AddMedia({
   reset: VoidFunction;
   update: (state: Partial<CreatePostInput>) => void;
 }) {
-  const [images, setImages] = useState<{ file: File }[]>([]);
+  const Maximum = {
+    images: 4,
+    videos: 1,
+  };
+  const [media, setMedia] = useState<{ file: File }[]>([]);
+  const [canAddMore, setCanAddMore] = useState(true);
   const { openWith } = useToast();
 
   const handleOnChange = (event: ChangeEvent<HTMLInputElement>) => {
-    if (
-      (event.target.files &&
-        images.length + event.target.files.length > 4) ||
-      images.length > 4
-    ) {
+    if (!event.target.files) return;
+
+    // merge new files and currently stored files
+    const allFiles = [
+      ...media.map((item) => item.file),
+      ...event.target.files,
+    ];
+
+    //TODO: Ensure that the files are size limited:
+    // 1. 5MB per image max
+    // 2. 25MB per video max
+
+    // ensure that all files are not more than max
+    if (allFiles.length > Maximum.images) {
       openWith({
         description:
           'You can only add 1 video or upto 4 images at a time.',
@@ -80,14 +84,46 @@ function AddMedia({
       return;
     }
 
-    if (event.target.files && event.target.files.length >= 1) {
-      const imageFiles: { file: File }[] = [];
+    if (allFiles.length > 1) {
+      // images only
+      // check if file types are image only
+      for (const file of allFiles) {
+        if (!FileUtility.ofType(file.type, 'image')) {
+          openWith({
+            description:
+              'You can only add 1 video or upto 4 images at a time.',
+            status: 'info',
+          });
+          return;
+        }
+      }
+    }
 
-      for (const imageFile of event.target.files) {
-        imageFiles.push({ file: imageFile });
+    if (allFiles.length <= Maximum.images) {
+      const mediaFiles: { file: File }[] = [];
+
+      for (const mediaFile of event.target.files) {
+        mediaFiles.push({ file: mediaFile });
       }
 
-      setImages((prev) => [...prev, ...imageFiles]);
+      setMedia((prev) => {
+        const newMedia = [...prev, ...mediaFiles];
+
+        update({ media: newMedia });
+
+        return newMedia;
+      });
+    }
+
+    // disable additional media if:
+    // - all files exceed maximum
+    // - the file is a video file
+    if (
+      allFiles.length === Maximum.images ||
+      (allFiles.length === 1 &&
+        FileUtility.ofType(allFiles[0].type, 'video'))
+    ) {
+      setCanAddMore(() => false);
     }
   };
 
@@ -103,7 +139,7 @@ function AddMedia({
     >
       <Box h='full' w='full' radius={2} p={3}>
         <SwitchConditional>
-          <SwitchConditionalCase on={images.length === 0}>
+          <SwitchConditionalCase on={media.length === 0}>
             <Center
               role='button'
               radius={2}
@@ -116,7 +152,7 @@ function AddMedia({
               <Upload onChange={handleOnChange} />
             </Center>
           </SwitchConditionalCase>
-          <SwitchConditionalCase on={images.length > 0}>
+          <SwitchConditionalCase on={media.length > 0}>
             <HStack gap={3} p={3} zIndex={10} position='absolute'>
               <Button
                 colorTheme='primary400'
@@ -124,7 +160,7 @@ function AddMedia({
               >
                 Edit
               </Button>
-              {images.length < MAXIMUM_IMAGES && (
+              {canAddMore && (
                 <Button colorTheme='primary400' leftIcon='add'>
                   <Upload onChange={handleOnChange} />
                   Add more
@@ -137,8 +173,9 @@ function AddMedia({
               templateRows='repeat(2, 1fr)'
               templateColumns='repeat(2, 1fr)'
             >
-              {images.length > 0 &&
-                IMAGE_GRID[images.length as ImageSizes].map(
+              {media.length > 0 &&
+                media.length <= Maximum.images &&
+                IMAGE_GRID[media.length as ImageSizes].map(
                   ({ rowSpan, colSpan }, index) => (
                     <Grid.Item
                       rowSpan={rowSpan}
@@ -146,29 +183,13 @@ function AddMedia({
                       key={`image-grid-${index}`}
                     >
                       <Box radius={2} h='100%' w='100%' overflow='hidden'>
-                        <SwitchConditional>
-                          <SwitchConditionalCase
-                            on={images[index].file.type === 'video/mp4'}
-                          >
-                            <Box h='100%' w='100%' position='relative'>
-                              <StyledVideo controls>
-                                <source
-                                  src={URL.createObjectURL(
-                                    images[index].file,
-                                  )}
-                                />
-                              </StyledVideo>
-                            </Box>
-                          </SwitchConditionalCase>
-                          <SwitchConditionalCase
-                            on={images[index].file.type !== 'video/mp4'}
-                          >
-                            <Image
-                              src={URL.createObjectURL(images[index].file)}
-                              alt={`Post upload ${index + 1}}`}
-                            />
-                          </SwitchConditionalCase>
-                        </SwitchConditional>
+                        <MediaItem
+                          url={URL.createObjectURL(media[index].file)}
+                          type={FileUtility.getType(
+                            media[index].file.type,
+                          )}
+                          title={`Post upload ${index + 1}}`}
+                        />
                       </Box>
                     </Grid.Item>
                   ),

@@ -28,13 +28,16 @@ export const CREATE_POST = gql`
         ... on PostModel {
           id
           description
-        }
-        ... on PollModel {
-          id
-          description
-          responses {
+          media {
+            id
+            url
+            type
+          }
+          polls {
             id
             text
+            count
+            voted
           }
         }
       }

@@ -7,6 +7,7 @@ const PollSchema = object({
 
 const PostSchema = object({
   description: string().min(1).max(150).required(),
+  media: array().of(object()).optional(),
 });
 
 export { PostSchema, PollSchema };

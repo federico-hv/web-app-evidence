@@ -9,3 +9,8 @@ export interface IDate {
   day: string;
   year: string;
 }
+
+export interface ReturnModel<T> {
+  count: number;
+  data: T[];
+}

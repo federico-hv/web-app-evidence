@@ -1,13 +1,15 @@
-interface CreatePostWithPolls {
+interface CreatePoll {
   description: string;
   responses?: string[];
+  media?: never;
 }
 
-interface CreatePostWithoutPolls {
+interface CreatePost {
   description: string;
+  media?: { file: File }[];
   responses?: never;
 }
 
-type CreatePostInput = CreatePostWithoutPolls | CreatePostWithPolls;
+type CreatePostInput = CreatePost | CreatePoll;
 
 export type { CreatePostInput };

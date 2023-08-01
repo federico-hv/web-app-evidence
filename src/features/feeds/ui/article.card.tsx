@@ -1,7 +1,6 @@
 import { ArticleModel, FeedModel } from '../shared';
 import {
   Avatar,
-  AvatarLink,
   Box,
   Button,
   ButtonGroup,
@@ -13,43 +12,59 @@ import {
 } from '@holdr-ui/react';
 import {
   DateUtility,
-  getUrlDomain,
+  Menu,
   prefix,
-  StyledLink,
+  StringNumeric,
   TextGroup,
 } from '../../../shared';
 import { Link } from 'react-router-dom';
 
+function MoreButton({}: { id: StringNumeric }) {
+  return (
+    <Menu>
+      <Menu.Trigger>
+        <IconButton
+          colorTheme='darkTint400'
+          blur='xl'
+          icon='more-fill'
+          boxShadow='none'
+          ariaLabel='view options'
+        />
+      </Menu.Trigger>
+      <Menu.Header />
+      <Menu.Content>
+        <Menu.Item icon='article-read-outline' label='Read article' />
+        <Menu.Item icon='remove-outline' label='Block ""' />
+        <Menu.Item icon='emotion-unhappy-outline' label='Not interested' />
+        <Menu.Item icon='eye-hide' label='Hide article' />
+        <Menu.Item
+          icon='report-outline'
+          label='Report article'
+          dangerous
+        />
+      </Menu.Content>
+    </Menu>
+  );
+}
+
+// `https://logo.clearbit.com/${domainUrl}` logo finder
+
 function ArticleCard({ data }: { data: FeedModel }) {
   const node = data.node as ArticleModel;
-
-  const domainUrl = getUrlDomain(
-    node.source.url || new URL(node.url).hostname,
-  );
 
   return (
     <VStack gap={3}>
       <Card bgImageUrl={node.imageUrl} h='600px'>
         <Card.Header p={4} direction='horizontal' justify='space-between'>
-          <a
-            href={`https://${domainUrl}`}
-            title={node.source.name}
-            target='_blank'
-            rel='noreferrer'
-          >
+          <Link to={prefix('/', data.owner.username)}>
             <Avatar
               size='xl'
               variant='squircle'
-              src={`https://logo.clearbit.com/${domainUrl}`}
+              src={data.owner.avatar}
               name={node.source.name}
             />
-          </a>
-          <IconButton
-            icon='more-fill'
-            ariaLabel='view options'
-            colorTheme='darkTint400'
-            blur='lg'
-          />
+          </Link>
+          <MoreButton id={data.id} />
         </Card.Header>
         <Card.Footer
           p={4}
@@ -61,6 +76,7 @@ function ArticleCard({ data }: { data: FeedModel }) {
           w='100%'
           css={{
             blur: '12px',
+            borderBottomRadius: '$4',
           }}
         >
           <VStack gap={3}>
@@ -68,20 +84,22 @@ function ArticleCard({ data }: { data: FeedModel }) {
               <TextGroup.Subheading size={1} weight={500} color='base200'>
                 {DateUtility.fromNow(data.createdAt)}
               </TextGroup.Subheading>
-              <TextGroup.Heading color='primary400' as='h2' noOfLines={2}>
+              <TextGroup.Heading
+                size={{ '@bp1': 3, '@bp3': 4 }}
+                color='primary400'
+                as='h2'
+                noOfLines={2}
+              >
                 {node.title}
               </TextGroup.Heading>
             </TextGroup>
-
-            <AvatarLink
-              as={<StyledLink to={prefix('/', data.owner.username)} />}
-              color='clear-glass'
-              src={data.owner.avatar}
-              name={data.owner.displayName}
-            />
           </VStack>
           <VStack gap={5}>
-            <Text noOfLines={2} color='base100'>
+            <Text
+              size={{ '@bp1': 2, '@bp3': 3 }}
+              noOfLines={2}
+              color='base100'
+            >
               {node.description}
             </Text>
             <HStack justify='space-between' items='center'>
@@ -104,9 +122,11 @@ function ArticleCard({ data }: { data: FeedModel }) {
           </VStack>
         </Card.Footer>
       </Card>
-      <HStack gap={2} justify='flex-end'>
-        from <Text weight={500}>{node.source.name}</Text>
-      </HStack>
+      <Link to={`https://${node.source.url}`} target='_blank'>
+        <HStack gap={2} justify='flex-end'>
+          from <Text weight={500}>{node.source.name}</Text>
+        </HStack>
+      </Link>
     </VStack>
   );
 }

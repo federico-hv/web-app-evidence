@@ -6,6 +6,18 @@ interface IArticleSource {
   url?: string;
 }
 
+export interface IPostMedia extends GenericItem {
+  url: string;
+  type: 'image' | 'video';
+}
+
+export interface IPoll extends GenericItem {
+  __typename: string;
+  text: string;
+  voted: boolean;
+  count: number;
+}
+
 interface ArticleModel extends GenericItem {
   __typename: string;
   title: string;
@@ -17,23 +29,15 @@ interface ArticleModel extends GenericItem {
 
 interface PostModel extends GenericItem {
   __typename: string;
+  id: number;
   description: string;
-  responses?: never;
-}
-
-interface PollResponse extends GenericItem {
-  text: string;
-}
-
-interface PollModel {
-  __typename: string;
-  description: string;
-  responses: PollResponse[];
+  media?: IPostMedia[];
+  polls?: IPoll[];
 }
 
 interface FeedModel extends GenericItem {
   type: string;
-  node: PostModel | PollModel | ArticleModel;
+  node: PostModel | ArticleModel;
   owner: IUser;
   createdAt: number;
 }
@@ -43,11 +47,4 @@ interface FeedsReturnModel {
   data: FeedModel[];
 }
 
-export type {
-  FeedModel,
-  PostModel,
-  ArticleModel,
-  PollModel,
-  FeedsReturnModel,
-  PollResponse,
-};
+export type { FeedModel, PostModel, ArticleModel, FeedsReturnModel };
