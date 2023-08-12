@@ -2,13 +2,15 @@ import { Avatar, Box, Button, useSwitch, VStack } from '@holdr-ui/react';
 
 import {
   ActionItemWrapper,
-  ContentBox,
   Error,
   LinkOverlay,
   Loader,
   prefix,
   SwitchConditional,
   SwitchConditionalCase,
+  TextGroup,
+  TextGroupHeading,
+  TextGroupSubheading,
   useAlertDialog,
   UserNamesGroup,
 } from '../../../../shared';
@@ -133,9 +135,9 @@ function RelationshipList({
   username = '',
   type,
   onClose,
-  emptyMessage = 'Nothing to display',
+  emptyMessage = { title: 'Empty', subtitle: 'Nothing to display yet.' },
 }: {
-  emptyMessage?: string;
+  emptyMessage?: { title: string; subtitle: string };
   username?: string;
   type: QueryType; // mutual
   onClose?: VoidFunction;
@@ -173,7 +175,12 @@ function RelationshipList({
               </VStack>
             </SwitchConditionalCase>
             <SwitchConditionalCase on={data[type]?.total === 0}>
-              <ContentBox>{emptyMessage}</ContentBox>
+              <TextGroup items='center'>
+                <TextGroupHeading>{emptyMessage.title}</TextGroupHeading>
+                <TextGroupSubheading size={2} color='base400' weight={500}>
+                  {emptyMessage.subtitle}
+                </TextGroupSubheading>
+              </TextGroup>
             </SwitchConditionalCase>
           </SwitchConditional>
         )}

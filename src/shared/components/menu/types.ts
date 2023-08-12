@@ -1,10 +1,12 @@
 import { IconName } from '@holdr-ui/react/dist/shared/types';
+import { ReactNode } from 'react';
 
 export interface MenuItemProps {
-  label: string;
-  icon: IconName;
+  label?: string;
+  icon?: IconName;
   action?: VoidFunction;
   dangerous?: boolean;
+  children?: ReactNode;
 }
 
 export type SCNames =

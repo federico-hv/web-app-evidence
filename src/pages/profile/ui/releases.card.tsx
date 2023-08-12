@@ -1,11 +1,13 @@
 import { Heading, HStack, Image, VStack } from '@holdr-ui/react';
 import {
+  Loader,
   SwitchConditional,
   SwitchConditionalCase,
   TextGroup,
   TextGroupSubheading,
   useProfile,
 } from '../../../shared';
+import { useCanViewProfile } from '../shared';
 
 const releases = [
   {
@@ -65,45 +67,50 @@ function Release({
 
 function ReleasesCard() {
   const { profile } = useProfile();
+  const { loading, canViewProfile } = useCanViewProfile();
   return (
-    <VStack
-      gap={4}
-      w='100%'
-      py={5}
-      px={4}
-      borderBottom={2}
-      borderColor='base100'
-    >
-      <SwitchConditional>
-        <SwitchConditionalCase on={profile.role === 'general'}>
-          <Heading as='h2' size={3}>
-            Recent Activity
-          </Heading>
-        </SwitchConditionalCase>
-        <SwitchConditionalCase on={profile.role === 'artist'}>
-          <Heading as='h2' size={3}>
-            New Releases
-          </Heading>
-        </SwitchConditionalCase>
-      </SwitchConditional>
+    <Loader loading={loading}>
+      {canViewProfile && (
+        <VStack
+          gap={4}
+          w='100%'
+          py={5}
+          px={4}
+          borderBottom={2}
+          borderColor='base100'
+        >
+          <SwitchConditional>
+            <SwitchConditionalCase on={profile.role === 'general'}>
+              <Heading as='h2' size={3}>
+                Release Activity
+              </Heading>
+            </SwitchConditionalCase>
+            <SwitchConditionalCase on={profile.role === 'artist'}>
+              <Heading as='h2' size={3}>
+                New Releases
+              </Heading>
+            </SwitchConditionalCase>
+          </SwitchConditional>
 
-      <HStack gap={4} w='100%' overflow='scroll'>
-        {releases.map(({ id, coverImage, title, artist }) => (
-          <Release
-            coverImage={
-              profile.role === 'artist' ? profile.avatar : coverImage
-            }
-            title={title}
-            key={id}
-            artist={
-              profile.role === 'artist'
-                ? { name: profile.displayName, id: profile.username }
-                : artist
-            }
-          />
-        ))}
-      </HStack>
-    </VStack>
+          <HStack gap={4} w='100%' overflow='scroll'>
+            {releases.map(({ id, coverImage, title, artist }) => (
+              <Release
+                coverImage={
+                  profile.role === 'artist' ? profile.avatar : coverImage
+                }
+                title={title}
+                key={id}
+                artist={
+                  profile.role === 'artist'
+                    ? { name: profile.displayName, id: profile.username }
+                    : artist
+                }
+              />
+            ))}
+          </HStack>
+        </VStack>
+      )}
+    </Loader>
   );
 }
 ReleasesCard.displayName = 'ReleasesCard';

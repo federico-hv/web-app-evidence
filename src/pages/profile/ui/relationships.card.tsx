@@ -17,14 +17,16 @@ import {
   TextGroup,
   TextGroupSubheading,
   useDialogTabContext,
+  useProfile,
 } from '../../../shared';
 import { useParams } from 'react-router-dom';
 import {
   RelationshipList,
   GET_RELATIONSHIP_COUNT,
   useRelationshipUsers,
+  useCurrentUser,
 } from '../../../features';
-import { getMutualFollowersText } from '../shared';
+import { getMutualFollowersText, useCanViewProfile } from '../shared';
 
 function Summary() {
   const { username } = useParams();
@@ -124,6 +126,8 @@ function MutualFollowers() {
 
 function RelationshipDialog() {
   const { username } = useParams();
+  const { profile } = useProfile();
+  const currentUser = useCurrentUser();
   const { isOpen, onOpen, onClose, option } = useDialogTabContext();
 
   return (
@@ -136,7 +140,7 @@ function RelationshipDialog() {
               <Tabs.List
                 css={{
                   py: '0',
-                  '& button': { minWidth: 'unset', flex: 1 },
+                  '& button': { height: '$7', minWidth: 'unset', flex: 1 },
                 }}
                 variant='link'
               >
@@ -145,13 +149,20 @@ function RelationshipDialog() {
                 <Tabs.Trigger value='memberships'>
                   Memberships
                 </Tabs.Trigger>
-                <Tabs.Trigger value='mutual'>Mutual</Tabs.Trigger>
+                {currentUser &&
+                  profile.username !== currentUser.username && (
+                    <Tabs.Trigger value='mutual'>Mutual</Tabs.Trigger>
+                  )}
               </Tabs.List>
               <Tabs.Content value='followers'>
                 <RelationshipList
                   username={username}
                   type='followers'
                   onClose={onClose}
+                  emptyMessage={{
+                    title: 'No followers',
+                    subtitle: 'Not yet followed by any users.',
+                  }}
                 />
               </Tabs.Content>
               <Tabs.Content value='following'>
@@ -159,15 +170,27 @@ function RelationshipDialog() {
                   username={username}
                   type='following'
                   onClose={onClose}
+                  emptyMessage={{
+                    title: 'No followers',
+                    subtitle: 'Not yet following any users.',
+                  }}
                 />
               </Tabs.Content>
-              <Tabs.Content value='mutual'>
-                <RelationshipList
-                  username={username}
-                  type='mutualUsers'
-                  onClose={onClose}
-                />
-              </Tabs.Content>
+              {currentUser &&
+                profile.username !== currentUser.username && (
+                  <Tabs.Content value='mutual'>
+                    <RelationshipList
+                      username={username}
+                      type='mutualUsers'
+                      onClose={onClose}
+                      emptyMessage={{
+                        title: 'No mutual users',
+                        subtitle:
+                          'None of the users you follow are currently following this user.',
+                      }}
+                    />
+                  </Tabs.Content>
+                )}
               <Tabs.Content value='memberships'>Coming soon</Tabs.Content>
             </Tabs>
           </Dialog.Body>
@@ -178,30 +201,46 @@ function RelationshipDialog() {
 }
 
 function RelationshipsCard() {
+  const currentUser = useCurrentUser();
+
+  const { profile } = useProfile();
+  const { loading, canViewProfile } = useCanViewProfile();
+
   const [option, setOption] = useState('');
   const [isOpen, setOpen] = useState(false);
 
   const onOpen = (value: string) => {
+    // Not following and account is protected =>  shouldn't be allowed to see
+    if (!canViewProfile) {
+      return;
+    }
+
     setOption(value);
     setOpen(true);
   };
   const onClose = () => setOpen(false);
 
   return (
-    <DialogTabContextProvider value={{ isOpen, onOpen, onClose, option }}>
-      <VStack
-        w='100%'
-        pb={5}
-        pt={4}
-        px={4}
-        borderBottom={2}
-        borderColor='base100'
+    <Loader loading={loading}>
+      <DialogTabContextProvider
+        value={{ isOpen, onOpen, onClose, option }}
       >
-        <Summary />
-        <MutualFollowers />
-        <RelationshipDialog />
-      </VStack>
-    </DialogTabContextProvider>
+        <VStack
+          w='100%'
+          pb={5}
+          pt={4}
+          px={4}
+          borderBottom={2}
+          borderColor='base100'
+        >
+          <Summary />
+          {currentUser && profile.username !== currentUser.username && (
+            <MutualFollowers />
+          )}
+          <RelationshipDialog />
+        </VStack>
+      </DialogTabContextProvider>
+    </Loader>
   );
 }
 RelationshipsCard.displayName = 'RelationshipsCard';
