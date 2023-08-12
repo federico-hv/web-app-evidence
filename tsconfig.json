@@ -28,13 +28,16 @@
         "src/configs/*"
       ],
       "context/*": [
-        "src/context/*"
+        "src/contexts/*"
       ],
       "hooks/*": [
         "src/hooks/*"
       ],
       "lib/*": [
         "src/lib/*"
+      ],
+      "layouts/*": [
+        "src/layouts/*"
       ],
       "pages/*": [
         "src/pages/*"
@@ -44,8 +47,11 @@
       ],
       "shared/*": [
         "src/shared/*"
+      ],
+      "content/*": [
+        "src/content/*"
       ]
-    },
+    }
   },
   "include": [
     "commitlint.config.cjs",
@@ -54,10 +60,10 @@
     "vite.config.ts",
     "cypress",
     "src"
-, "src/configs/stitches/.ts"  ],
+  ],
   "references": [
     {
       "path": "./tsconfig.node.json"
     }
-  ],
+  ]
 }

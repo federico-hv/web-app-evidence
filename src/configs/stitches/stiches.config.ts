@@ -252,13 +252,35 @@ export const globalStyles = globalCss({
     '-webkit-font-smoothing': 'antialiased',
     '-moz-osx-font-smoothing': 'grayscale',
     '-webkit-text-size-adjust': '100%',
-    height: '100vh',
   },
   '*': {
     margin: 0,
     outline: 0,
     padding: 0,
     border: 0,
-    boxSizing: 'border-box',
+  },
+  body: {
+    backgroundColor: '#fbfbfa',
+    fontFamily: 'Rubik, ui-sans-serif, system-ui',
+  },
+  a: {
+    'text-decoration': 'none',
+    color: 'inherit',
+    // border: 'inherit',
+  },
+  textarea: {
+    fontFamily: 'inherit',
+  },
+  'input[type=date]': {
+    fontFamily: 'inherit',
+  },
+  'input:autofill': {
+    'background-color': 'none',
+  },
+  button: {
+    backgroundColor: 'inherit',
+    fontFamily: 'inherit',
+    border: 'inherit',
+    cursor: 'pointer',
   },
 });

@@ -32,6 +32,10 @@ module.exports = {
             find: "utilities",
             replacement: path.resolve(__dirname, "./src/utilities")
           },
+          {
+            find: "layout",
+            replacement: path.resolve(__dirname, "./src/layout")
+          },
           { find: "lib", replacement: path.resolve(__dirname, "./src/lib") },
           {
             find: "pages",
@@ -50,8 +54,16 @@ module.exports = {
             replacement: path.resolve(__dirname, './src/shared'),
           },
           {
+            find: 'assets',
+            replacement: path.resolve(__dirname, './src/assets'),
+          },
+          {
+            find: 'content',
+            replacement: path.resolve(__dirname, './src/content'),
+          },
+          {
             find: "components",
-            replacement: path.resolve(__dirname, "./src/components")
+            replacement: path.resolve(__dirname, "./src/react")
           }]
       }
     });
