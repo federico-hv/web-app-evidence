@@ -47,7 +47,10 @@ function CreatePostDialog() {
     option ? DIALOG_CONTENT_HEIGHT[option as 'media' | 'poll'] : 450,
   );
 
-  const removeResponses = () => set((prev) => omit(prev, 'responses'));
+  const removeResponses = () =>
+    set(({ responses, ...rest }) => ({
+      ...rest,
+    }));
 
   const removeMedia = () => set((prev) => omit(prev, 'media'));
 
