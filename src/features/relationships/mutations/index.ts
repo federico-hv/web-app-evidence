@@ -50,13 +50,17 @@ export const REMOVE_FOLLOWER = gql`
   }
 `;
 
+// TODO: Move to user
 export const UPDATE_PROFILE = gql`
   mutation updateProfile($payload: UpdateProfileInput!) {
     updateProfile(payload: $payload) {
-      displayName
       avatar
-      coverImage
       bio
+      protected
+      coverImage
+      displayName
+      username
+      role
     }
   }
 `;

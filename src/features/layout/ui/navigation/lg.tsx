@@ -35,7 +35,7 @@ function LgNavigation() {
           '@bp7': 'calc(100% - 750px)',
         }}
       >
-        <Container maxWidth={650}>
+        <Container maxWidth={600}>
           <Search />
         </Container>
       </Box>

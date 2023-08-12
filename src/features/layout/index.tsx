@@ -1,13 +1,15 @@
 import { Box, HStack } from '@holdr-ui/react';
 import { Outlet } from 'react-router-dom';
 import { Navigation, Header } from './ui';
+import { useCurrentUser } from '../auth';
 
 function MainLayout() {
+  const currentUser = useCurrentUser();
   return (
     <Box>
-      <Navigation />
+      {currentUser && <Navigation />}
       <HStack h='100vh' position='relative'>
-        <Header />
+        {currentUser && <Header />}
         <Box w='full' h='full'>
           <Outlet />
         </Box>

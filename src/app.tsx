@@ -6,7 +6,7 @@ import { GQLClient } from './lib';
 import { Router } from './routes';
 import { AlertDialogProvider, ToastProvider } from './shared';
 import { AuthProvider } from './features';
-//import Router from './v1/router';
+import { Tooltip } from '@holdr-ui/react';
 
 export function App() {
   globalStyles();
@@ -17,7 +17,9 @@ export function App() {
           <AlertDialogProvider>
             <BrowserRouter basename={import.meta.env.VITE_APP_BASE_PATH}>
               <ToastProvider>
-                <Router />
+                <Tooltip.Provider>
+                  <Router />
+                </Tooltip.Provider>
               </ToastProvider>
             </BrowserRouter>
           </AlertDialogProvider>

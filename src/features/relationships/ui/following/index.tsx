@@ -249,6 +249,7 @@ function FollowingButton() {
               side='bottom'
               align='end'
               sideOffset={5}
+              zIndex={50}
             >
               <FollowingMenu close={closePopover} />
             </Popover.Content>

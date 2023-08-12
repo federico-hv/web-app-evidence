@@ -3,6 +3,7 @@ import * as querystring from 'querystring';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useCurrentUser } from '../../features';
 import { Head } from '../../shared';
+import { Box } from '@holdr-ui/react';
 
 function AuthRedirect() {
   const currentUser = useCurrentUser();
@@ -29,7 +30,11 @@ function AuthRedirect() {
     }
   });
 
-  return <Head title='Redirecting' description='Going to login page' />;
+  return (
+    <Box>
+      <Head title='Redirecting' description='Going to login page' />
+    </Box>
+  );
 }
 AuthRedirect.displayName = 'AuthRedirect';
 

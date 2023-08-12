@@ -28,3 +28,20 @@ export function getUrlDomain(url: string) {
 
   return;
 }
+
+/**
+ *
+ * @param hex
+ * @param alpha
+ */
+export function hexToRGB(hex: string, alpha = 1) {
+  if (hex === undefined || !/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)) {
+    return hex;
+  }
+
+  const r = parseInt(hex.slice(1, 3), 16),
+    g = parseInt(hex.slice(3, 5), 16),
+    b = parseInt(hex.slice(5, 7), 16);
+
+  return `rgba(${r},${g},${b},${alpha})`;
+}

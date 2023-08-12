@@ -16,9 +16,9 @@ function Router() {
           />
           <Route path='/:username' element={<ProfilePage />} />
         </Route>
-        <Route path={Paths.authRedirect} element={<AuthRedirectPage />} />
         <Route path='*' element={<NotFoundError />} />
       </Route>
+      <Route path={Paths.authRedirect} element={<AuthRedirectPage />} />
     </Routes>
   );
 }

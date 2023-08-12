@@ -1,6 +1,12 @@
 import { ErrorProps } from './types';
+import { Alert } from '@holdr-ui/react';
 
-function Error({ hasError, errorEl: el, children }: ErrorProps) {
+function Error({
+  hasError,
+  errorEl: el,
+  errorMessage,
+  children,
+}: ErrorProps) {
   // const { open } = useToast({
   //   description:
   //     errorMessage ||
@@ -16,6 +22,12 @@ function Error({ hasError, errorEl: el, children }: ErrorProps) {
 
   if (el && hasError) {
     return <>{el}</>;
+  } else if (errorMessage && hasError) {
+    return (
+      <Alert status='error'>
+        <Alert.Description>{errorMessage}</Alert.Description>
+      </Alert>
+    );
   }
 
   return <>{children}</>;

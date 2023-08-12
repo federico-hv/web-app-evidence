@@ -1,5 +1,4 @@
 import {
-  ContentBox,
   Error,
   Head,
   HeaderLayout,
@@ -13,6 +12,9 @@ import {
   UserNamesGroup,
   ActionItemWrapper,
   IFetchUsersResponse,
+  TextGroupHeading,
+  TextGroupSubheading,
+  TextGroup,
 } from '../../../shared';
 import {
   Avatar,
@@ -53,7 +55,16 @@ function BlockedSettingsPage() {
             <SwitchConditional>
               <SwitchConditionalCase on={data.blockedUsers.total < 1}>
                 <Box px={4}>
-                  <ContentBox>Nothing to display</ContentBox>
+                  <TextGroup items='center'>
+                    <TextGroupHeading>No Blocked Users</TextGroupHeading>
+                    <TextGroupSubheading
+                      size={2}
+                      color='base400'
+                      weight={500}
+                    >
+                      All users that you have blocked will appear here.
+                    </TextGroupSubheading>
+                  </TextGroup>
                 </Box>
               </SwitchConditionalCase>
               <SwitchConditionalCase on={data.blockedUsers.total > 0}>
@@ -74,13 +85,15 @@ function BlockedSettingsPage() {
                         displayName={item.displayName}
                         username={item.username}
                       />
-                      <Button
-                        onClick={async () => removeBlock(item.username)}
-                        isLoading={removalLoading}
-                        loadingText={removalLoading ? '' : 'Loading'}
-                      >
-                        Unblock
-                      </Button>
+                      <Box zIndex={10}>
+                        <Button
+                          onClick={async () => removeBlock(item.username)}
+                          isLoading={removalLoading}
+                          loadingText={removalLoading ? '' : 'Loading'}
+                        >
+                          Unblock
+                        </Button>
+                      </Box>
                     </ActionItemWrapper>
                   ))}
                 </VStack>

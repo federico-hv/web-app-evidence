@@ -135,7 +135,7 @@ function AddMedia({
       h={300}
       maxHeight={300}
       w='100%'
-      radius={2}
+      radius={4}
     >
       <Box h='full' w='full' radius={2} p={3}>
         <SwitchConditional>

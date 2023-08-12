@@ -125,7 +125,7 @@ function Preview() {
 
 function AddArticleDialog() {
   const { isOpen, onOpen, onClose } = useDialogTabContext();
-  const { state, update } = useRecordState({});
+  const [state, update] = useRecordState({});
 
   return (
     <Dialog isOpen={isOpen} onOpen={onOpen} onClose={onClose}>

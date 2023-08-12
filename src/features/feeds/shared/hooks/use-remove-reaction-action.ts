@@ -1,0 +1,132 @@
+import { useMutation } from '@apollo/client';
+import { REMOVE_REACTION } from '../../mutations';
+import { FeedReactionName } from '../types';
+import { FeedModel, FeedsReturnModel } from '../interface';
+import { useToast } from '../../../../shared';
+import { GET_FEEDS, GET_USER_FEEDS } from '../../queries';
+import { useParams } from 'react-router-dom';
+
+export function useRemoveReactionAction(): {
+  removeLove: (id: string) => Promise<void>;
+  removeIndifference: (id: string) => Promise<void>;
+  removeSadness: (id: string) => Promise<void>;
+  removeExcitement: (id: string) => Promise<void>;
+  loading: boolean;
+} {
+  const { openWith } = useToast();
+  const { username } = useParams();
+
+  const [mutation, { loading }] = useMutation<
+    { removeReaction: FeedModel },
+    { id: string; reaction: FeedReactionName }
+  >(REMOVE_REACTION);
+
+  const react = async (id: string, reaction: FeedReactionName) => {
+    try {
+      return await mutation({
+        variables: {
+          id,
+          reaction,
+        },
+        update: (cache, { data }) => {
+          cache.modify({
+            fields: {
+              feeds() {
+                const result: { feeds: FeedsReturnModel } | null =
+                  cache.readQuery({
+                    query: GET_FEEDS,
+                    variables: { type: 'all' },
+                  });
+
+                if (result && result.feeds) {
+                  const idx = result.feeds.data.findIndex(
+                    (item) => item.id === data?.removeReaction.id,
+                  );
+
+                  const newData = [
+                    ...result.feeds.data.slice(0, idx),
+                    data?.removeReaction,
+                    ...result.feeds.data.slice(idx + 1),
+                  ];
+
+                  // Update get feeds
+                  cache.writeQuery({
+                    query: GET_FEEDS,
+                    variables: { type: 'all' },
+                    data: {
+                      feeds: {
+                        __typename: 'FeedReturnModel',
+                        count: result.feeds.count,
+                        data: newData,
+                      },
+                    },
+                  });
+                }
+              },
+              userFeeds() {
+                const result: { userFeeds: FeedsReturnModel } | null =
+                  cache.readQuery({
+                    query: GET_USER_FEEDS,
+                    variables: { username, type: 'post' },
+                  });
+
+                if (result && result.userFeeds) {
+                  const idx = result.userFeeds.data.findIndex(
+                    (item) => item.id === data?.removeReaction.id,
+                  );
+
+                  const newData = [
+                    ...result.userFeeds.data.slice(0, idx),
+                    data?.removeReaction,
+                    ...result.userFeeds.data.slice(idx + 1),
+                  ];
+
+                  // Update get feeds
+                  cache.writeQuery({
+                    query: GET_FEEDS,
+                    variables: { type: 'all' },
+                    data: {
+                      feeds: {
+                        __typename: 'FeedReturnModel',
+                        count: result.userFeeds.count,
+                        data: newData,
+                      },
+                    },
+                  });
+                }
+              },
+            },
+          });
+        },
+      });
+    } catch (err) {
+      console.error('Failed to remove reaction.');
+      openWith({
+        status: 'danger',
+        description:
+          'Oops! Something went wrong. Its definitely our fault. Please try again.',
+      });
+    }
+  };
+
+  const removeLove = async (id: string) => {
+    await react(id, 'love');
+  };
+  const removeIndifference = async (id: string) => {
+    await react(id, 'indifferent');
+  };
+  const removeSadness = async (id: string) => {
+    await react(id, 'sad');
+  };
+  const removeExcitement = async (id: string) => {
+    await react(id, 'excited');
+  };
+
+  return {
+    removeLove,
+    removeIndifference,
+    removeSadness,
+    removeExcitement,
+    loading,
+  };
+}
