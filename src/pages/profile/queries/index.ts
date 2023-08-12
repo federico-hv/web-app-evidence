@@ -9,6 +9,7 @@ export const GET_PROFILE = gql`
       avatar
       bio
       protected
+      role
     }
   }
 `;

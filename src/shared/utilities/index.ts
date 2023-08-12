@@ -4,3 +4,4 @@ export * from './string';
 export * from './general';
 export * from './date';
 export * from './form';
+export * from './file';

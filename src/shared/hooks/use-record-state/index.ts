@@ -6,5 +6,5 @@ export function useRecordState<T>(initial: T) {
   const update = (next: Partial<T>) =>
     set((prev) => ({ ...prev, ...next }));
 
-  return { state, update };
+  return { state, update, set };
 }

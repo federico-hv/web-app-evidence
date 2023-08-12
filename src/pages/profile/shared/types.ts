@@ -5,4 +5,5 @@ export interface IProfile {
   coverImage?: string;
   avatar?: string;
   bio?: string;
+  role?: string;
 }

@@ -16,4 +16,5 @@ export interface FormInputProps {
   max?: StringNumeric;
   children?: ReactNode;
   prefix?: string;
+  autoFocus?: boolean;
 }
