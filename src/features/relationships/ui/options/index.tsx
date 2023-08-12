@@ -194,6 +194,7 @@ function OptionsButton() {
               side='bottom'
               align='end'
               sideOffset={5}
+              zIndex={50}
             >
               <ProfileOptionsMenu close={closePopover} />
             </Popover.Content>

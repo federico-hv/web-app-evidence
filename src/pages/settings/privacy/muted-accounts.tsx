@@ -5,7 +5,6 @@ import {
 } from '../../../features';
 import {
   ActionItemWrapper,
-  ContentBox,
   Error,
   Head,
   HeaderLayout,
@@ -17,6 +16,9 @@ import {
   RootSettingsPath,
   SwitchConditional,
   SwitchConditionalCase,
+  TextGroup,
+  TextGroupHeading,
+  TextGroupSubheading,
   UserNamesGroup,
 } from '../../../shared';
 import {
@@ -52,7 +54,16 @@ function MutedSettingsPage() {
             <SwitchConditional>
               <SwitchConditionalCase on={data.mutedUsers.total < 1}>
                 <Box px={4}>
-                  <ContentBox>Nothing to display</ContentBox>
+                  <TextGroup items='center'>
+                    <TextGroupHeading>No Muted Users</TextGroupHeading>
+                    <TextGroupSubheading
+                      size={2}
+                      color='base400'
+                      weight={500}
+                    >
+                      All users that you have muted will appear here.
+                    </TextGroupSubheading>
+                  </TextGroup>
                 </Box>
               </SwitchConditionalCase>
               <SwitchConditionalCase on={data.mutedUsers.total > 0}>
@@ -73,13 +84,15 @@ function MutedSettingsPage() {
                         displayName={item.displayName}
                         username={item.username}
                       />
-                      <Button
-                        onClick={async () => unmute(item.username)}
-                        isLoading={muteLoading}
-                        loadingText={muteLoading ? '' : 'Unmute'}
-                      >
-                        Unmute
-                      </Button>
+                      <Box zIndex={10}>
+                        <Button
+                          onClick={async () => unmute(item.username)}
+                          isLoading={muteLoading}
+                          loadingText={muteLoading ? '' : 'Unmute'}
+                        >
+                          Unmute
+                        </Button>
+                      </Box>
                     </ActionItemWrapper>
                   ))}
                 </VStack>

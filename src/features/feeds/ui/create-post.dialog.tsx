@@ -39,7 +39,7 @@ function CreatePostDialog() {
   const { createPost, loading } = useCreatePost();
   const { isOpen, onOpen, onClose, option } = useDialogTabContext();
   const { switchState, turnOn, turnOff } = useSwitch(!!option);
-  const { state, update, set } = useRecordState<CreatePostInput>({
+  const [state, update, set] = useRecordState<CreatePostInput>({
     description: '',
   });
 
@@ -206,7 +206,7 @@ function CreatePostDialog() {
                       <Box
                         onClick={() => {
                           turnOn();
-                          setContentHeight(725);
+                          setContentHeight(DIALOG_CONTENT_HEIGHT['media']);
                           onOpen('media');
                         }}
                       >
@@ -215,7 +215,7 @@ function CreatePostDialog() {
                       <Box
                         onClick={() => {
                           turnOn();
-                          setContentHeight(650);
+                          setContentHeight(DIALOG_CONTENT_HEIGHT['poll']);
                           onOpen('poll');
                         }}
                       >

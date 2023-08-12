@@ -54,6 +54,7 @@ function RequestedButton() {
               side='bottom'
               align='end'
               sideOffset={5}
+              zIndex={50}
             >
               <Menu />
             </Popover.Content>

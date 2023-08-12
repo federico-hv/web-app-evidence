@@ -1,4 +1,4 @@
-import { ArticleModel, FeedModel } from '../shared';
+import { ArticleModel, Reaction, useFeedContext } from '../shared';
 import {
   Avatar,
   Box,
@@ -12,59 +12,122 @@ import {
 } from '@holdr-ui/react';
 import {
   DateUtility,
+  Loader,
   Menu,
   prefix,
-  StringNumeric,
   TextGroup,
 } from '../../../shared';
 import { Link } from 'react-router-dom';
+import { capitalize } from 'lodash';
+import ReactionPopover from './reaction-popover';
+import {
+  useCreateRelationshipAction,
+  useRelationshipStatusInfo,
+  useRemoveRelationshipAction,
+} from '../../relationships';
 
-function MoreButton({}: { id: StringNumeric }) {
+function MoreButton() {
+  const { owner } = useFeedContext();
+  const { loading, data } = useRelationshipStatusInfo(owner.username);
+  const { mute, follow } = useCreateRelationshipAction();
+  const { unfollow, unmute } = useRemoveRelationshipAction();
+
   return (
-    <Menu>
-      <Menu.Trigger>
-        <IconButton
-          colorTheme='darkTint400'
-          blur='xl'
-          icon='more-fill'
-          boxShadow='none'
-          ariaLabel='view options'
-        />
-      </Menu.Trigger>
-      <Menu.Header />
-      <Menu.Content>
-        <Menu.Item icon='article-read-outline' label='Read article' />
-        <Menu.Item icon='remove-outline' label='Block ""' />
-        <Menu.Item icon='emotion-unhappy-outline' label='Not interested' />
-        <Menu.Item icon='eye-hide' label='Hide article' />
-        <Menu.Item
-          icon='report-outline'
-          label='Report article'
-          dangerous
-        />
-      </Menu.Content>
-    </Menu>
+    <Loader loading={loading}>
+      {data && (
+        <Menu>
+          <Menu.Trigger>
+            <IconButton
+              colorTheme='darkTint400'
+              blur='xl'
+              icon='more-fill'
+              boxShadow='none'
+              ariaLabel='view options'
+            />
+          </Menu.Trigger>
+          <Menu.Header />
+          <Menu.Content>
+            <Menu.Item
+              icon='article-read-outline'
+              label='Already read this'
+            />
+            {data.relationshipStatusInfo.isFollowing ? (
+              <Menu.Item
+                action={() => unfollow(owner.username)}
+                icon='user-unfollow-outline'
+              >
+                <HStack gap={2}>
+                  Unfollow <Text weight={500}>@{owner.username}</Text>
+                </HStack>
+              </Menu.Item>
+            ) : (
+              <Menu.Item
+                action={() => follow(owner.username)}
+                icon='user-unfollow-outline'
+              >
+                <HStack gap={2}>
+                  Follow <Text weight={500}>@{owner.username}</Text>
+                </HStack>
+              </Menu.Item>
+            )}
+            {data.relationshipStatusInfo.isMuted ? (
+              <Menu.Item
+                action={() => unmute(owner.username)}
+                icon='mute-fill'
+              >
+                <HStack gap={2}>
+                  Unmute <Text weight={500}>@{owner.username}</Text>
+                </HStack>
+              </Menu.Item>
+            ) : (
+              <Menu.Item
+                action={() => mute(owner.username)}
+                icon='mute-outline'
+              >
+                <HStack gap={2}>
+                  Mute <Text weight={500}>@{owner.username}</Text>
+                </HStack>
+              </Menu.Item>
+            )}
+            {/*<Menu.Item icon='remove-outline'>*/}
+            {/*  <HStack gap={2}>*/}
+            {/*    Block <Text weight={500}>{source.name}</Text>*/}
+            {/*  </HStack>*/}
+            {/*</Menu.Item>*/}
+            <Menu.Item
+              label='Hide article'
+              action={() => mute(owner.username)}
+              icon='eye-hide'
+            />
+            <Menu.Item
+              icon='report-outline'
+              label='Report article'
+              dangerous
+            />
+          </Menu.Content>
+        </Menu>
+      )}
+    </Loader>
   );
 }
 
 // `https://logo.clearbit.com/${domainUrl}` logo finder
 
-function ArticleCard({ data }: { data: FeedModel }) {
-  const node = data.node as ArticleModel;
-
+function ArticleCard({ data }: { data: ArticleModel }) {
+  const { owner, createdAt, reaction } = useFeedContext();
   return (
     <VStack gap={3}>
-      <Card bgImageUrl={node.imageUrl} h='600px'>
+      <Card bgImageUrl={data.imageUrl} h='600px'>
         <Card.Header p={4} direction='horizontal' justify='space-between'>
-          <Link to={prefix('/', data.owner.username)}>
+          <Link to={prefix('/', owner.username)}>
             <Avatar
               size='xl'
               variant='squircle'
-              src={data.owner.avatar}
-              name={node.source.name}
+              src={owner.avatar}
+              name={data.source.name}
             />
           </Link>
-          <MoreButton id={data.id} />
+          <MoreButton />
         </Card.Header>
         <Card.Footer
           p={4}
@@ -82,7 +145,7 @@ function ArticleCard({ data }: { data: FeedModel }) {
           <VStack gap={3}>
             <TextGroup>
               <TextGroup.Subheading size={1} weight={500} color='base200'>
-                {DateUtility.fromNow(data.createdAt)}
+                {capitalize(DateUtility.fromNow(createdAt))} ago
               </TextGroup.Subheading>
               <TextGroup.Heading
                 size={{ '@bp1': 3, '@bp3': 4 }}
@@ -90,7 +153,7 @@ function ArticleCard({ data }: { data: FeedModel }) {
                 as='h2'
                 noOfLines={2}
               >
-                {node.title}
+                {data.title}
               </TextGroup.Heading>
             </TextGroup>
           </VStack>
@@ -100,31 +163,52 @@ function ArticleCard({ data }: { data: FeedModel }) {
               noOfLines={2}
               color='base100'
             >
-              {node.description}
+              {data.description}
             </Text>
             <HStack justify='space-between' items='center'>
               <ButtonGroup
                 variant='ghost'
                 colorTheme='primary400'
-                size='lg'
-                flex={1}
+                items='center'
               >
                 <IconButton
                   ariaLabel='save article'
                   icon='bookmark-outline'
+                  size='lg'
                 />
-                <IconButton ariaLabel='add reaction' icon='reaction-add' />
+
+                <Box>
+                  <ReactionPopover
+                    alignOffset={-6}
+                    sideOffset={10}
+                    position='right'
+                  >
+                    <IconButton
+                      ariaLabel={
+                        reaction && reaction.name
+                          ? reaction.name
+                          : 'add reaction'
+                      }
+                      icon={
+                        reaction && reaction.name
+                          ? Reaction[reaction.name].icon
+                          : 'reaction-add'
+                      }
+                      size='lg'
+                    />
+                  </ReactionPopover>
+                </Box>
               </ButtonGroup>
-              <Link to={node.url} target='_blank'>
+              <Link to={data.url} target='_blank'>
                 <Button colorTheme='primary400'>Read</Button>
               </Link>
             </HStack>
           </VStack>
         </Card.Footer>
       </Card>
-      <Link to={`https://${node.source.url}`} target='_blank'>
+      <Link to={`https://${data.source.url}`} target='_blank'>
         <HStack gap={2} justify='flex-end'>
-          from <Text weight={500}>{node.source.name}</Text>
+          from <Text weight={500}>{data.source.name}</Text>
         </HStack>
       </Link>
     </VStack>

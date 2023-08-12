@@ -19,7 +19,7 @@ export default (configEnv: ConfigEnv) => {
       watch: {
         usePolling: true,
       },
-      host: true,
+      host: true, // needed for docker port mapping to work
       strictPort: true,
       port: 5173,
     },

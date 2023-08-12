@@ -4,7 +4,7 @@ import { PhoneInputProps, Phone } from './phone.type';
 import { useRecordState } from '../../index';
 
 function PhoneInput({ phone, onChange, prefix }: PhoneInputProps) {
-  const { state, update } = useRecordState<Phone>({
+  const [state, update] = useRecordState<Phone>({
     code: prefix || '',
     digits: phone,
   });

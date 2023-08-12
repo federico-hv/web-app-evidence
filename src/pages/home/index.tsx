@@ -5,7 +5,7 @@ import {
   Error,
   Head,
 } from '../../shared';
-import { Container, VStack } from '@holdr-ui/react';
+import { VStack } from '@holdr-ui/react';
 import { SuggestionsCard, useCurrentUser } from '../../features';
 import { FeedTabs } from './ui';
 
@@ -18,11 +18,9 @@ function HomePage() {
       {currentUser && (
         <ContentLayout>
           <ContentLayoutMain>
-            <Container maxWidth={650} pt={4}>
-              <VStack gap={4} w='100%'>
-                <FeedTabs />
-              </VStack>
-            </Container>
+            <VStack gap={4} w='100%'>
+              <FeedTabs />
+            </VStack>
           </ContentLayoutMain>
           <ContentLayoutAside>
             <SuggestionsCard />

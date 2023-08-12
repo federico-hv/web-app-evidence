@@ -1,4 +1,4 @@
-import { GenericItem, IUser } from '../../../../shared';
+import { GenericItem } from '../../../../shared';
 
 interface IArticleSource {
   name: string;
@@ -31,20 +31,9 @@ interface PostModel extends GenericItem {
   __typename: string;
   id: number;
   description: string;
+  endDate?: Date | null;
   media?: IPostMedia[];
   polls?: IPoll[];
 }
 
-interface FeedModel extends GenericItem {
-  type: string;
-  node: PostModel | ArticleModel;
-  owner: IUser;
-  createdAt: number;
-}
-
-interface FeedsReturnModel {
-  count: number;
-  data: FeedModel[];
-}
-
-export type { FeedModel, PostModel, ArticleModel, FeedsReturnModel };
+export type { PostModel, ArticleModel, IArticleSource };

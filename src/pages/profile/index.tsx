@@ -24,6 +24,7 @@ import { SuggestionsCard } from '../../features';
 
 function ProfilePage() {
   const { username } = useParams();
+
   const { data, loading, error } = useQuery<{ profile: IProfile }>(
     GET_PROFILE,
     {
@@ -50,7 +51,6 @@ function ProfilePage() {
                     <Header />
                   </>
                 )}
-
                 <Content />
               </ContentLayoutMain>
               <ContentLayoutAside>

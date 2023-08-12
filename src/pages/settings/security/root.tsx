@@ -9,7 +9,7 @@ function SecuritySettingsPage() {
   return (
     <>
       <Head
-        title='Settings and account accesss'
+        title='Security and account accesss'
         description='See account info like your phone number and email.'
         url={prefix(RootSettingsPath, Paths.setting.account_info)}
       />

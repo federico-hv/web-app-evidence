@@ -7,6 +7,10 @@ export const GET_USER_FEEDS = gql`
       data {
         id
         type
+        reaction {
+          name
+          count
+        }
         createdAt
         owner {
           id
@@ -17,6 +21,7 @@ export const GET_USER_FEEDS = gql`
         node {
           ... on PostModel {
             id
+            endDate
             description
             media {
               id
@@ -55,6 +60,10 @@ export const GET_FEEDS = gql`
       data {
         id
         type
+        reaction {
+          name
+          count
+        }
         createdAt
         owner {
           id
@@ -65,6 +74,60 @@ export const GET_FEEDS = gql`
         node {
           ... on PostModel {
             id
+            endDate
+            description
+            media {
+              id
+              url
+              type
+            }
+            polls {
+              id
+              text
+              count
+              voted
+            }
+          }
+          ... on ArticleModel {
+            id
+            title
+            description
+            url
+            imageUrl
+            source {
+              name
+              url
+              logo
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
+export const GET_REACTED_FEEDS = gql`
+  query reactedFeeds($username: String!) {
+    reactedFeeds(username: $username) {
+      count
+      data {
+        id
+        type
+        reaction {
+          name
+          count
+        }
+        createdAt
+        owner {
+          id
+          displayName
+          username
+          avatar
+        }
+        node {
+          ... on PostModel {
+            id
+            endDate
             description
             media {
               id

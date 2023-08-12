@@ -10,7 +10,7 @@ export interface IDate {
   year: string;
 }
 
-export interface ReturnModel<T> {
+export interface IReturnMany<T> {
   count: number;
   data: T[];
 }
