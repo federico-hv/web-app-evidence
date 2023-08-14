@@ -11,7 +11,7 @@ const uploadLink = createUploadLink({
 
 const cookie = new Cookies();
 
-// Useful: Required to upload images/videos
+// Required to upload images/videos
 const authLink = setContext((_, { headers }) => {
   const token = cookie.get('access_token');
   // return the headers to the profile so httpLink can read them
