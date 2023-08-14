@@ -5,8 +5,8 @@ import {
   PostModel,
 } from '../shared';
 import { SwitchConditional, SwitchConditionalCase } from '../../../shared';
-import PostCard from './post.card';
-import ArticleCard from './article.card';
+import PostCard from './post-card';
+import ArticleCard from './article-card';
 
 function FeedCard({ data }: { data: FeedModel }) {
   return (
