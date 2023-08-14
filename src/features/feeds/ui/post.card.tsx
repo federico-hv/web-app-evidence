@@ -179,9 +179,7 @@ function Polls({
         <VStack gap={3} mt={5}>
           {items.map((data) => (
             <SwitchConditional key={`poll-${data.id}`}>
-              <SwitchConditionalCase
-                on={!voted && !notExpired && !endDate}
-              >
+              <SwitchConditionalCase on={!voted}>
                 <PollAnswer
                   action={async () =>
                     votePoll(feedId, id, data.id as number)
