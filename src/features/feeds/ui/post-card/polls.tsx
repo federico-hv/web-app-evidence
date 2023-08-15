@@ -126,7 +126,7 @@ function Polls({
   // total number of votes
   const total = items.reduce((prev, curr) => prev + curr.count, 0);
 
-  const notExpired = dayjs(dayjs()).isBefore(endDate);
+  const expired = dayjs(dayjs()).isAfter(endDate);
 
   return (
     <Loader
@@ -151,7 +151,7 @@ function Polls({
         <VStack gap={3} mt={5}>
           {items.map((data) => (
             <SwitchConditional key={`poll-${data.id}`}>
-              <SwitchConditionalCase on={!voted}>
+              <SwitchConditionalCase on={!voted && !expired}>
                 <PollAnswer
                   action={async () =>
                     votePoll(feedId, id, data.id as number)
@@ -159,15 +159,13 @@ function Polls({
                   data={data}
                 />
               </SwitchConditionalCase>
-              <SwitchConditionalCase
-                on={voted || (!!endDate && !notExpired)}
-              >
+              <SwitchConditionalCase on={voted || expired}>
                 <PollResponse total={total} data={data} />
               </SwitchConditionalCase>
             </SwitchConditional>
           ))}
         </VStack>
-        {voted || !notExpired ? (
+        {voted || expired ? (
           <HStack
             fontSize={2}
             gap={2}
