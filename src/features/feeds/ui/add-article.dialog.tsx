@@ -131,7 +131,12 @@ function AddArticleDialog() {
     <Dialog isOpen={isOpen} onOpen={onOpen} onClose={onClose}>
       <Dialog.Portal>
         <Dialog.Overlay />
-        <Dialog.Content h='37.5vh'>
+        <Dialog.Content
+          h={{ '@bp1': '100vh', '@bp3': '37.5vh' }}
+          maxHeight={{ '@bp1': '100vh', '@bp3': '85vh' }}
+          radius={{ '@bp1': 0, '@bp3': 3 }}
+          w={{ '@bp1': '100vw', '@bp3': '90vw' }}
+        >
           <Dialog.Header
             position='fixed'
             t={0}

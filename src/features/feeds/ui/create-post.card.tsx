@@ -42,7 +42,7 @@ function ActionButton({
     >
       <Image size={20} src={logo} alt='media icon' />
       <Responsive>
-        <ResponsiveItem tablet='show'>
+        <ResponsiveItem tablet='show' laptop='show' desktop='show'>
           <Text color='base400' weight={500}>
             {label}
           </Text>
