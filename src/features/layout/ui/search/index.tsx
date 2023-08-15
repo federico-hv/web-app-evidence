@@ -22,7 +22,6 @@ import {
   Loader,
   SwitchConditional,
   SwitchConditionalCase,
-  LinkOverlay,
   IReturnMany,
   Paths,
 } from '../../../../shared';
@@ -39,11 +38,15 @@ import { useNavigate } from 'react-router-dom';
 function ResultItem({ data }: { data: IUser; display?: string[] }) {
   return (
     <HStack gap={3} items='center' py={3} px={2}>
-      <LinkOverlay to={prefix('/', data.username)} />
       {data.avatar ? (
         <Avatar src={data.avatar} name={data.displayName} />
       ) : (
-        <Circle size={40} bgColor='base800' color='primary400'>
+        <Circle
+          size={40}
+          bgColor='base800'
+          color='primary400'
+          css={{ flexShrink: 0 }}
+        >
           <Icon name='search-outline' />
         </Circle>
       )}
@@ -69,12 +72,16 @@ function HistoryItem({ data }: { data: IUser }) {
       justify='space-between'
       px={2}
     >
-      <LinkOverlay to={prefix('/', data.username)} />
       <HStack gap={3} items='center' py={3}>
         {data.avatar ? (
           <Avatar src={data.avatar} name={data.displayName} />
         ) : (
-          <Circle size={40} bgColor='base800' color='primary400'>
+          <Circle
+            size={40}
+            bgColor='base800'
+            color='primary400'
+            css={{ flexShrink: 0 }}
+          >
             <Icon name='search-outline' />
           </Circle>
         )}
@@ -90,7 +97,10 @@ function HistoryItem({ data }: { data: IUser }) {
       <Box position='relative' zIndex={10}>
         <CloseButton
           variant='ghost'
-          onClick={async () => await remove(data.id)}
+          onClick={async (e) => {
+            e.stopPropagation();
+            await remove(data.id);
+          }}
         />
       </Box>
     </HStack>
