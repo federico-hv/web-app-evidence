@@ -62,12 +62,17 @@ function ArtistContent() {
         variant='link'
         css={{
           position: 'sticky',
-          top: '65px',
           backgroundColor: '$clearTint500',
           blur: '12px',
           zIndex: 11,
           '& button': {
             height: '$7',
+          },
+          '@bp1': {
+            top: '57px',
+          },
+          '@bp3': {
+            top: '65px',
           },
         }}
       >
@@ -122,12 +127,17 @@ function GeneralUserContent() {
         variant='link'
         css={{
           position: 'sticky',
-          top: '65px',
           backgroundColor: '$clearTint500',
           blur: '12px',
           zIndex: 11,
           '& button': {
             height: '$7',
+          },
+          '@bp1': {
+            top: '57px',
+          },
+          '@bp3': {
+            top: '65px',
           },
         }}
       >
