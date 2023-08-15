@@ -1,6 +1,6 @@
 import { Box, Container, Flex, HStack } from '@holdr-ui/react';
 import { Logo } from '../../../../shared/components';
-import Search from '../search';
+import { Search } from '../../../search';
 import ProfileMenu from './profile-menu';
 import NotificationPopover from './notification-popover';
 import MessagePopover from './message-popver';

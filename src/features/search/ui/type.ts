@@ -1,3 +1,3 @@
-import { IUser } from '../../../../shared';
+import { IUser } from '../../../shared';
 
 export type Item = { item: IUser; index: number };

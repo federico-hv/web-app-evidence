@@ -20,6 +20,9 @@ import {
 } from '../../../../shared';
 import pollAlt from '../../../../assets/images/poll-alt.png';
 
+/*
+  
+ */
 function PollResponse({ data, total }: { data: IPoll; total: number }) {
   const percentage = !total ? 0 : (data.count / total) * 100;
 
@@ -43,7 +46,6 @@ function PollResponse({ data, total }: { data: IPoll; total: number }) {
           border={1}
           borderColor='secondary400'
           size={20}
-          // bgColor='base100'
         />
       )}
       <Box
@@ -72,6 +74,9 @@ function PollResponse({ data, total }: { data: IPoll; total: number }) {
   );
 }
 
+/*
+
+ */
 function PollAnswer({
   data,
   action,
@@ -109,6 +114,9 @@ function PollAnswer({
   );
 }
 
+/*
+
+ */
 function Polls({
   id,
   items,
