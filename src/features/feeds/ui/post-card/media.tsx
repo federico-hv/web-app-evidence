@@ -6,7 +6,7 @@ function Media({ items }: { items: IPostMedia[] }) {
   return (
     <>
       {items.length > 0 && (
-        <Box h={350} mt={5}>
+        <Box h={{ '@bp1': 250, '@bp3': 350 }} mt={5}>
           <Grid
             gap={3}
             h='100%'
