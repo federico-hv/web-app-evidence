@@ -1,5 +1,10 @@
 import { Route, Routes } from 'react-router';
-import { ProfilePage, AuthRedirectPage, HomePage } from '../pages';
+import {
+  ProfilePage,
+  AuthRedirectPage,
+  HomePage,
+  FeedPage,
+} from '../pages';
 import { AuthGuard, NotFoundError, Paths, prefix } from '../shared';
 import { MainLayout } from '../features';
 import SettingsRoutes from './settings.routes';
@@ -14,7 +19,10 @@ function Router() {
             path={prefix(Paths.settings, '/*')}
             element={<SettingsRoutes />}
           />
-          <Route path='/:username' element={<ProfilePage />} />
+          <Route path='/:username'>
+            <Route path='' element={<ProfilePage />} />
+            <Route path='feeds/:id' element={<FeedPage />} />
+          </Route>
         </Route>
         <Route path='*' element={<NotFoundError />} />
       </Route>

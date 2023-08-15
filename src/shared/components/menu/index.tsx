@@ -142,9 +142,9 @@ function MenuItem({
       radius={2}
       cursor='pointer'
       p={4}
-      color={dangerous ? 'danger' : 'base800'}
       _hover={{
         backgroundColor: dangerous ? 'rgba(255,205,205,0.38)' : '$base100',
+        color: dangerous ? '$danger' : '$base800',
       }}
       onClick={action}
     >

@@ -5,7 +5,6 @@ import {
   HStack,
   Icon,
   Popover,
-  Text,
   useKeyBind,
 } from '@holdr-ui/react';
 import { GenericProps } from '../../../shared';
@@ -18,7 +17,6 @@ import { useRemoveReactionAction } from '../shared/hooks/use-remove-reaction-act
 function ReactionButton({
   onClick,
   active,
-  count,
   name,
   icon,
   colorCode,
@@ -53,14 +51,19 @@ function ReactionButton({
         name={active ? icon.active : icon.inactive}
         aria-label={name}
       />
-      {count !== undefined && count > 0 && active && (
-        <Box ml={3}>
-          <Text size={2}>{count}</Text>
-        </Box>
-      )}
+      {/*{count !== undefined && count > 0 && active && (*/}
+      {/*  <Box ml={3}>*/}
+      {/*    <Text size={2}>{count}</Text>*/}
+      {/*  </Box>*/}
+      {/*)}*/}
     </Center>
   );
 }
+
+// TODO: Store the current reaction locally
+// - Click reaction => Update local state, run mutation
+// - Consider passing th e current reaction as an arg to mutation hook,
+//    can use that to optimistically update state.
 
 function ReactionPopover({
   children,
@@ -103,7 +106,7 @@ function ReactionPopover({
   return (
     <Popover isOpen={isOpen} onOpenChange={set}>
       <Popover.Trigger asChild>
-        <Box w='100%'>{children}</Box>
+        <Box>{children}</Box>
       </Popover.Trigger>
       <Popover.Portal>
         <Popover.Content

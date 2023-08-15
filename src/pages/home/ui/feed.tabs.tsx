@@ -53,7 +53,6 @@ function FeedTabs() {
       <Tabs.List
         css={{
           position: 'sticky',
-          top: '65px',
           backgroundColor: '$clearTint500',
           blur: '14px',
           zIndex: 11,
@@ -61,6 +60,12 @@ function FeedTabs() {
           py: '$4',
           '& button:not(:last-child)': {
             marginRight: '$4',
+          },
+          '@bp1': {
+            top: '57px',
+          },
+          '@bp3': {
+            top: '65px',
           },
         }}
       >

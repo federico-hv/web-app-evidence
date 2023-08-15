@@ -21,7 +21,12 @@ function ToastProvider({ children }: GenericProps) {
     <ToastContext.Provider
       value={{ current, isOpen, onClose, onOpen, set }}
     >
-      <Box css={{ zIndex: 200, position: 'relative' }}>
+      <Box
+        css={{
+          zIndex: 200,
+          position: 'relative',
+        }}
+      >
         <Toast.Provider>
           <Toast.Item
             position={

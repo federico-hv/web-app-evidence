@@ -1,10 +1,20 @@
 import { PostModel, useFeedContext, Reaction } from '../../shared';
-import { Avatar, Button, Card, HStack, Text } from '@holdr-ui/react';
+import {
+  Avatar,
+  Box,
+  Button,
+  Card,
+  HStack,
+  IconButton,
+  Text,
+} from '@holdr-ui/react';
 import {
   DateUtility,
   extraBtnPadding,
   LinkOverlay,
   prefix,
+  Responsive,
+  ResponsiveItem,
   TextGroup,
 } from '../../../../shared';
 import { capitalize } from 'lodash';
@@ -51,39 +61,91 @@ function PostCard({ data }: { data: PostModel }) {
         borderTop={1}
         borderColor='base100'
         direction='horizontal'
-        justify='evenly'
+        items='center'
+        justify='space-between'
+        w='100%'
       >
-        <ReactionPopover>
-          <Button
-            fullWidth
-            leftIcon={
-              reaction ? Reaction[reaction.name].icon : 'reaction-add'
-            }
-            className={extraBtnPadding()}
-            variant='ghost'
-            colorTheme='base600'
-          >
-            {reaction ? Reaction[reaction.name].name : 'React'}
-          </Button>
-        </ReactionPopover>
-        <Button
-          fullWidth
-          leftIcon='bookmark-outline'
-          className={extraBtnPadding()}
-          variant='ghost'
-          colorTheme='base600'
-        >
-          Bookmark
-        </Button>
-        <Button
-          fullWidth
-          leftIcon='share-outline'
-          className={extraBtnPadding()}
-          variant='ghost'
-          colorTheme='base600'
-        >
-          Share
-        </Button>
+        <Box w={{ '@bp3': '100%', '@bp1': undefined }}>
+          <ReactionPopover>
+            <Responsive>
+              <ResponsiveItem mobile='show'>
+                <IconButton
+                  size='lg'
+                  icon={
+                    reaction
+                      ? Reaction[reaction.name].icon
+                      : 'reaction-add'
+                  }
+                  variant='ghost'
+                  colorTheme='base600'
+                  ariaLabel={
+                    reaction ? Reaction[reaction.name].name : 'React'
+                  }
+                />
+              </ResponsiveItem>
+              <ResponsiveItem fullWidth mobile='hide' tablet='show'>
+                <Button
+                  fullWidth
+                  leftIcon={
+                    reaction
+                      ? Reaction[reaction.name].icon
+                      : 'reaction-add'
+                  }
+                  className={extraBtnPadding()}
+                  variant='ghost'
+                  colorTheme='base600'
+                >
+                  {reaction ? Reaction[reaction.name].name : 'React'}
+                </Button>
+              </ResponsiveItem>
+            </Responsive>
+          </ReactionPopover>
+        </Box>
+
+        <Responsive>
+          <ResponsiveItem mobile='show'>
+            <IconButton
+              icon='bookmark-outline'
+              ariaLabel='Bookmark'
+              variant='ghost'
+              colorTheme='base600'
+              size='lg'
+            />
+          </ResponsiveItem>
+          <ResponsiveItem fullWidth mobile='hide' tablet='show'>
+            <Button
+              fullWidth
+              leftIcon='bookmark-outline'
+              className={extraBtnPadding()}
+              variant='ghost'
+              colorTheme='base600'
+            >
+              Bookmark
+            </Button>
+          </ResponsiveItem>
+        </Responsive>
+        <Responsive>
+          <ResponsiveItem mobile='show'>
+            <IconButton
+              size='lg'
+              icon='share-outline'
+              ariaLabel='Bookmark'
+              variant='ghost'
+              colorTheme='base600'
+            />
+          </ResponsiveItem>
+          <ResponsiveItem fullWidth mobile='hide' tablet='show'>
+            <Button
+              leftIcon='share-outline'
+              fullWidth
+              className={extraBtnPadding()}
+              variant='ghost'
+              colorTheme='base600'
+            >
+              Share
+            </Button>
+          </ResponsiveItem>
+        </Responsive>
       </Card.Footer>
     </Card>
   );

@@ -27,6 +27,7 @@ import {
   useCurrentUser,
 } from '../../../features';
 import { getMutualFollowersText, useCanViewProfile } from '../shared';
+import millify from 'millify';
 
 function Summary() {
   const { username } = useParams();
@@ -47,7 +48,7 @@ function Summary() {
           <HStack>
             <TextGroup onClick={() => onOpen('followers')} gap={1}>
               <TextGroupSubheading size={4} weight={600}>
-                {data.followers.total}
+                {millify(data.followers.total)}
               </TextGroupSubheading>
               <TextGroupSubheading weight={500} color='base400'>
                 Followers
@@ -55,7 +56,7 @@ function Summary() {
             </TextGroup>
             <TextGroup onClick={() => onOpen('following')} gap={1}>
               <TextGroupSubheading size={4} weight={600}>
-                {data.following.total}
+                {millify(data.following.total)}
               </TextGroupSubheading>
               <TextGroupSubheading weight={500} color='base400'>
                 Following
