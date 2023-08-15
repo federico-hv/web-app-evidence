@@ -128,6 +128,7 @@ function AddPoll({
       w='100%'
       radius={4}
       overflow='hidden'
+      css={{ flexShrink: 0 }}
     >
       <VStack>
         <VStack h='full' w='full' gap={3} radius={2} p={3}>

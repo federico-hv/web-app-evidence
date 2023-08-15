@@ -77,7 +77,13 @@ function CreatePostDialog() {
         <Dialog isOpen={isOpen} onOpen={onOpen} onClose={onClose}>
           <Dialog.Portal>
             <Dialog.Overlay />
-            <Dialog.Content maxHeight='90vh' h={contentHeight}>
+            <Dialog.Content
+              position='relative'
+              h={{ '@bp1': '100vh', '@bp3': contentHeight }}
+              maxHeight={{ '@bp1': '100vh', '@bp3': '85vh' }}
+              radius={{ '@bp1': 0, '@bp3': 3 }}
+              w={{ '@bp1': '100vw', '@bp3': '90vw' }}
+            >
               <Dialog.Header
                 position='fixed'
                 t={0}

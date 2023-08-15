@@ -8,7 +8,12 @@ import {
   VStack,
 } from '@holdr-ui/react';
 import { useCurrentUser } from '../../auth';
-import { Error, useDialogTabContext } from '../../../shared';
+import {
+  Error,
+  Responsive,
+  ResponsiveItem,
+  useDialogTabContext,
+} from '../../../shared';
 
 import MediaIcon from '../../../assets/images/media.png';
 import PollIcon from '../../../assets/images/poll.png';
@@ -36,9 +41,13 @@ function ActionButton({
       _hover={{ backgroundColor: '$base100' }}
     >
       <Image size={20} src={logo} alt='media icon' />
-      <Text color='base400' weight={500}>
-        {label}
-      </Text>
+      <Responsive>
+        <ResponsiveItem tablet='show'>
+          <Text color='base400' weight={500}>
+            {label}
+          </Text>
+        </ResponsiveItem>
+      </Responsive>
     </HStack>
   );
 }
@@ -61,7 +70,9 @@ function CreatePostPlaceholder({
       cursor='pointer'
       onClick={() => onClick('')}
     >
-      <Text color='base400'>What do you want your fans to know?</Text>
+      <Text color='base400' size={{ '@bp1': 2, '@bp3': 3 }}>
+        What do you want your fans to know?
+      </Text>
     </VStack>
   );
 }
