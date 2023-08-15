@@ -9,6 +9,8 @@ import {
   VStack,
 } from '@holdr-ui/react';
 import {
+  Responsive,
+  ResponsiveItem,
   TextGroup,
   TextGroupHeading,
   TextGroupSubheading,
@@ -19,6 +21,7 @@ import { SocialButton, useCurrentUser } from '../../../features';
 import verifiedIcon from '../../../assets/images/verified-icon.png';
 import lightPlaceholder from '../../../assets/images/light-placeholder.jpg';
 import { styled } from '../../../configs';
+import { RelationshipsCard } from './index';
 
 const StyledAnchor = styled('a', {
   width: 'fit-content',
@@ -135,23 +138,31 @@ function Header() {
         </Box>
       </Box>
       <Stack
-        direction={{ '@bp1': 'vertical', '@bp4': 'horizontal' }}
+        direction={{ '@bp1': 'vertical', '@bp3': 'horizontal' }}
         px={{ '@bp1': 3, '@bp4': 5 }}
         gap={{ '@bp1': 4, '@bp4': 0 }}
-        my={5}
+        my={{ '@bp1': 3, '@bp3': 5 }}
         justify='space-between'
       >
-        {profile.bio && (
-          <VStack gap={3}>
-            {profile.bio && (
-              <Box borderTop={1} borderColor='primary400'>
-                <Text>{profile.bio}</Text>
-              </Box>
-            )}
-            <ArtistUrl />
+        <VStack gap={3} minHeight={0}>
+          {profile.bio && (
+            <Box borderTop={1} borderColor='primary400'>
+              <Text>{profile.bio}</Text>
+            </Box>
+          )}
+          <ArtistUrl />
+        </VStack>
+
+        {currentUser && (
+          <VStack gap={4}>
+            <SocialButton />
+            <Responsive>
+              <ResponsiveItem mobile='show'>
+                <RelationshipsCard />
+              </ResponsiveItem>
+            </Responsive>
           </VStack>
         )}
-        {currentUser && <SocialButton />}
       </Stack>
     </VStack>
   );

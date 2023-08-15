@@ -45,31 +45,67 @@ function Summary() {
     <Error hasError={!!error} errorEl={<></>}>
       <Loader h={90} loading={loading}>
         {data && (
-          <HStack>
-            <TextGroup onClick={() => onOpen('followers')} gap={1}>
-              <TextGroupSubheading size={4} weight={600}>
+          <HStack gap={{ '@bp1': 3, '@bp3': 0 }}>
+            <TextGroup
+              w={{ '@bp1': 'fit-content', '@bp3': '100%' }}
+              onClick={() => onOpen('followers')}
+              direction={{ '@bp1': 'horizontal', '@bp3': 'vertical' }}
+              gap={{ '@bp1': 2, '@bp3': 1 }}
+            >
+              <TextGroupSubheading
+                size={{ '@bp1': 2, '@bp3': 4 }}
+                weight={600}
+              >
                 {millify(data.followers.total)}
               </TextGroupSubheading>
-              <TextGroupSubheading weight={500} color='base400'>
+              <TextGroupSubheading
+                size={{ '@bp1': 2, '@bp3': 4 }}
+                weight={500}
+                color='base400'
+              >
                 Followers
               </TextGroupSubheading>
             </TextGroup>
-            <TextGroup onClick={() => onOpen('following')} gap={1}>
-              <TextGroupSubheading size={4} weight={600}>
+            <TextGroup
+              w={{ '@bp1': 'fit-content', '@bp3': '100%' }}
+              onClick={() => onOpen('following')}
+              direction={{ '@bp1': 'horizontal', '@bp3': 'vertical' }}
+              gap={{ '@bp1': 2, '@bp3': 1 }}
+            >
+              <TextGroupSubheading
+                size={{ '@bp1': 2, '@bp3': 4 }}
+                weight={600}
+              >
                 {millify(data.following.total)}
               </TextGroupSubheading>
-              <TextGroupSubheading weight={500} color='base400'>
+              <TextGroupSubheading
+                size={{ '@bp1': 2, '@bp3': 4 }}
+                weight={500}
+                color='base400'
+              >
                 Following
               </TextGroupSubheading>
             </TextGroup>
-            <TextGroup onClick={() => onOpen('memberships')} gap={1}>
-              <TextGroupSubheading size={4} weight={600}>
-                0
-              </TextGroupSubheading>
-              <TextGroupSubheading weight={500} color='base400'>
-                Memberships
-              </TextGroupSubheading>
-            </TextGroup>
+            {/*<TextGroup*/}
+            {/*  w={{ '@bp1': 'fit-content', '@bp3': '100%' }}*/}
+            {/*  onClick={() => onOpen('memberships')}*/}
+            {/*  direction={{ '@bp1': 'horizontal', '@bp3': 'vertical' }}*/}
+            {/*  gap={{ '@bp1': 2, '@bp3': 1 }}*/}
+            {/*>*/}
+            {/*  <TextGroupSubheading*/}
+            {/*    size={{ '@bp1': 2, '@bp3': 4 }}*/}
+            {/*    weight={600}*/}
+            {/*  >*/}
+            {/*    0*/}
+            {/*  </TextGroupSubheading>*/}
+            {/*  <TextGroupSubheading*/}
+            {/*    size={{ '@bp1': 2, '@bp3': 4 }}*/}
+            {/*    weight={500}*/}
+            {/*    color='base400'*/}
+            {/*  >*/}
+            {/*    Memberships*/}
+            {/*  </TextGroupSubheading>*/}
+            {/*</TextGroup>*/}
           </HStack>
         )}
       </Loader>
@@ -135,8 +171,26 @@ function RelationshipDialog() {
     <Dialog isOpen={isOpen} onOpen={onOpen} onClose={onClose}>
       <Dialog.Portal>
         <Dialog.Overlay />
-        <Dialog.Content w={450}>
-          <Dialog.Body pt={4}>
+        <Dialog.Content
+          h={{ '@bp1': '100vh', '@bp3': '80vh' }}
+          maxHeight={{ '@bp1': '100vh', '@bp3': '85vh' }}
+          radius={{ '@bp1': 0, '@bp3': 3 }}
+          w={{ '@bp1': '100vw', '@bp3': '450px' }}
+        >
+          <Dialog.Header
+            display={{ '@bp1': 'flex', '@bp3': 'none' }}
+            css={{ flexShrink: 0 }}
+          >
+            <TextGroup gap={0}>
+              <TextGroup.Heading size={3} weight={500}>
+                {profile.displayName}
+              </TextGroup.Heading>
+              <TextGroup.Subheading size={2} color='base400' weight={500}>
+                @{profile.username}
+              </TextGroup.Subheading>
+            </TextGroup>
+          </Dialog.Header>
+          <Dialog.Body pt={4} mt={{ '@bp1': 68, '@bp3': 0 }}>
             <Tabs defaultValue={option}>
               <Tabs.List
                 css={{
@@ -147,9 +201,9 @@ function RelationshipDialog() {
               >
                 <Tabs.Trigger value='followers'>Followers</Tabs.Trigger>
                 <Tabs.Trigger value='following'>Following</Tabs.Trigger>
-                <Tabs.Trigger value='memberships'>
-                  Memberships
-                </Tabs.Trigger>
+                {/*<Tabs.Trigger value='memberships'>*/}
+                {/*  Memberships*/}
+                {/*</Tabs.Trigger>*/}
                 {currentUser &&
                   profile.username !== currentUser.username && (
                     <Tabs.Trigger value='mutual'>Mutual</Tabs.Trigger>
@@ -192,7 +246,7 @@ function RelationshipDialog() {
                     />
                   </Tabs.Content>
                 )}
-              <Tabs.Content value='memberships'>Coming soon</Tabs.Content>
+              {/*<Tabs.Content value='memberships'>Coming soon</Tabs.Content>*/}
             </Tabs>
           </Dialog.Body>
         </Dialog.Content>
@@ -228,9 +282,9 @@ function RelationshipsCard() {
       >
         <VStack
           w='100%'
-          pb={5}
-          pt={4}
-          px={4}
+          px={{ '@bp1': 3, '@bp3': 4 }}
+          pt={{ '@bp1': 3, '@bp3': 4 }}
+          pb={{ '@bp1': 4, '@bp3': 5 }}
           borderBottom={2}
           borderColor='base100'
         >
