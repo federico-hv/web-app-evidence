@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { Cookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
-import { AuthContext } from '../../../features/auth';
+import { AuthContext } from '../../../features';
 import { prefix } from '../../utilities';
 import { Paths } from '../../constants';
 

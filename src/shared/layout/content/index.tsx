@@ -30,7 +30,7 @@ const ContentLayoutMain = ({ children }: BaseContentLayoutProps) => {
         '@bp4': 'calc(100% - 160px)',
         '@bp5': 'calc(100% - 375px)',
       }}
-      t={{ '@bp1': 57, '@bp3': 65 }}
+      t={{ '@bp1': 69, '@bp3': 65 }}
       borderRight={2}
       borderLeft={2}
       h='fit-content'

@@ -53,13 +53,13 @@ function Summary() {
               gap={{ '@bp1': 2, '@bp3': 1 }}
             >
               <TextGroupSubheading
-                size={{ '@bp1': 2, '@bp3': 4 }}
+                size={{ '@bp1': 2, '@bp3': 5 }}
                 weight={600}
               >
                 {millify(data.followers.total)}
               </TextGroupSubheading>
               <TextGroupSubheading
-                size={{ '@bp1': 2, '@bp3': 4 }}
+                size={{ '@bp1': 2, '@bp3': 3 }}
                 weight={500}
                 color='base400'
               >
@@ -73,13 +73,13 @@ function Summary() {
               gap={{ '@bp1': 2, '@bp3': 1 }}
             >
               <TextGroupSubheading
-                size={{ '@bp1': 2, '@bp3': 4 }}
+                size={{ '@bp1': 2, '@bp3': 5 }}
                 weight={600}
               >
                 {millify(data.following.total)}
               </TextGroupSubheading>
               <TextGroupSubheading
-                size={{ '@bp1': 2, '@bp3': 4 }}
+                size={{ '@bp1': 2, '@bp3': 3 }}
                 weight={500}
                 color='base400'
               >

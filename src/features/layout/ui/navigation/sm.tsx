@@ -20,7 +20,10 @@ import {
   GeneralContextProvider,
   LinkOverlay,
   prefix,
+  useAlertDialog,
   useGeneralContext,
+  useLogout,
+  useMenuNavigate,
   useRecordState,
   UserNamesGroup,
 } from '../../../../shared';
@@ -30,13 +33,21 @@ function MenuButton({
   label,
   icon,
   centered,
+  onClick,
 }: {
+  onClick?: VoidFunction;
   centered?: boolean;
   label: string;
   icon: IconName;
 }) {
+  const { update } = useGeneralContext();
+
   return (
     <HStack
+      onClick={() => {
+        onClick && onClick();
+        update({ on: false, menu: undefined });
+      }}
       p={4}
       gap={centered ? 4 : 3}
       items='center'
@@ -52,6 +63,7 @@ function MenuButton({
 
 function MenuDrawer() {
   const { update, state } = useGeneralContext();
+  const { goto } = useMenuNavigate();
 
   return (
     <Fragment>
@@ -100,14 +112,31 @@ function MenuDrawer() {
                     borderTop={2}
                     borderColor='base100'
                   >
-                    <MenuButton label='Home' icon='home-outline' />
                     <MenuButton
+                      onClick={goto.home}
+                      label='Home'
+                      icon='home-outline'
+                    />
+                    <MenuButton
+                      onClick={goto.bookmarks}
                       label='Bookmarks'
                       icon='bookmark-outline'
                     />
-                    <MenuButton label='Channels' icon='channels-outline' />
-                    <MenuButton label='Discover' icon='discover-outline' />
-                    <MenuButton label='Releases' icon='releases-outline' />
+                    <MenuButton
+                      onClick={goto.channels}
+                      label='Channels'
+                      icon='channels-outline'
+                    />
+                    <MenuButton
+                      onClick={goto.discover}
+                      label='Discover'
+                      icon='discover-outline'
+                    />
+                    <MenuButton
+                      onClick={goto.discover}
+                      label='Releases'
+                      icon='releases-outline'
+                    />
                   </VStack>
                   <VStack h='100%' justify='flex-end'>
                     <Box px={4} py={5} borderTop={2} borderColor='base100'>
@@ -131,8 +160,12 @@ function MenuDrawer() {
 }
 
 function ProfileDrawer() {
+  const logout = useLogout();
   const currentUser = useCurrentUser();
+
   const { update, state } = useGeneralContext();
+  const { goto } = useMenuNavigate();
+  const { openWith } = useAlertDialog();
 
   return (
     <Fragment>
@@ -215,18 +248,34 @@ function ProfileDrawer() {
                     borderColor='base100'
                   >
                     <MenuButton
+                      onClick={goto.notifications}
                       label='Notifications'
                       icon='notification-outline'
                     />
                     <MenuButton
+                      onClick={goto.settings}
                       label='Privacy & Settings'
                       icon='settings-outline'
                     />
                     <MenuButton
+                      onClick={goto.support}
                       label='Help & Support'
                       icon='question-outline'
                     />
-                    <MenuButton label='Logout' icon='logout-outline' />
+                    <MenuButton
+                      onClick={() =>
+                        openWith({
+                          actionText: 'Yes, Logout',
+                          onAction: logout,
+                          title: 'Log out',
+                          description:
+                            'If you log out, you will have to manually log in to your account again. ' +
+                            'Are you sure you want to log out off your account?',
+                        })
+                      }
+                      label='Logout'
+                      icon='logout-outline'
+                    />
                   </VStack>
                   <VStack h='100%' justify='flex-end'>
                     <Box
