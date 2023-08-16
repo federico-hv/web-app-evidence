@@ -1,4 +1,4 @@
-import { FormEvent } from 'react';
+import { FormEvent, useRef } from 'react';
 import {
   Avatar,
   Box,
@@ -14,6 +14,7 @@ import {
   extraBtnPadding,
   FormInput,
   ImageUpload,
+  useDimensions,
 } from '../../../../shared';
 import { ImageUploadContext } from '../../../../shared/components/image-upload/context';
 import { ProfileFormProps } from './profile.types';
@@ -24,6 +25,9 @@ import { ProfileSchema } from './profile.schema';
 import lightPlaceholder from '../../../../assets/images/light-placeholder.jpg';
 
 function InnerForm() {
+  const ref = useRef<HTMLDivElement>(null);
+  const dimensions = useDimensions(ref);
+
   const { profile, loading } = useProfile();
   const { handleSubmit } = useFormikContext<ProfileFormData>();
 
@@ -50,8 +54,10 @@ function InnerForm() {
                 <Avatar
                   name={name}
                   variant='squircle'
-                  size='2xl'
-                  css={{ height: 150, width: 150 }}
+                  css={{
+                    '@bp1': { height: 75, width: 75 },
+                    '@bp3': { height: 125, width: 125 },
+                  }}
                   src={src}
                 />
               )}
@@ -60,20 +66,25 @@ function InnerForm() {
         </HStack>
       </VStack>
 
-      <VStack>
+      <VStack innerRef={ref}>
         <Text as='label' color='base400' size={2}>
           Cover Image
         </Text>
         <Box my={3}>
           <ImageUpload
-            aspect={3.45}
-            title='Edit Avatar'
+            aspect={3}
+            title='Edit Cover Image'
             name='coverImage'
             placeholder={profile.coverImage || lightPlaceholder}
           >
             <ImageUploadContext.Consumer>
               {({ src }) => (
-                <Image w='100%' h={150} alt='cover image' src={src} />
+                <Image
+                  w='100%'
+                  h={dimensions ? dimensions.width / 3.25 : 0}
+                  alt='cover image'
+                  src={src}
+                />
               )}
             </ImageUploadContext.Consumer>
           </ImageUpload>

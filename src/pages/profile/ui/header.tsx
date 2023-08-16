@@ -14,6 +14,7 @@ import {
   TextGroup,
   TextGroupHeading,
   TextGroupSubheading,
+  useDimensions,
   useProfile,
 } from '../../../shared';
 import { SocialButton, useCurrentUser } from '../../../features';
@@ -22,6 +23,7 @@ import verifiedIcon from '../../../assets/images/verified-icon.png';
 import lightPlaceholder from '../../../assets/images/light-placeholder.jpg';
 import { styled } from '../../../configs';
 import { RelationshipsCard } from './index';
+import { useRef } from 'react';
 
 const StyledAnchor = styled('a', {
   width: 'fit-content',
@@ -52,15 +54,29 @@ function ArtistUrl() {
 }
 
 function Header() {
+  const ref = useRef<HTMLDivElement>(null);
+  const dimensions = useDimensions(ref);
   const { profile } = useProfile();
   const currentUser = useCurrentUser();
 
   return (
-    <VStack borderBottom={2} borderColor='base100'>
-      <Box w='100%' h={{ '@bp1': 125, '@bp3': 175 }} bgColor='base100'>
+    <VStack innerRef={ref} borderBottom={2} borderColor='base100'>
+      <Box
+        w='100%'
+        h={
+          dimensions
+            ? dimensions.width / 3.25
+            : { '@bp1': 125, '@bp3': 175 }
+        }
+        bgColor='base100'
+      >
         <Box
           role='banner'
-          h={{ '@bp1': 125, '@bp3': 175 }}
+          h={
+            dimensions
+              ? dimensions.width / 3.25
+              : { '@bp1': 125, '@bp3': 175 }
+          }
           t={0}
           w='100%'
           bgColor='base300'
@@ -78,7 +94,11 @@ function Header() {
           <Image
             src={profile.coverImage}
             w='100%'
-            h={{ '@bp1': 125, '@bp3': 175 }}
+            h={
+              dimensions
+                ? dimensions.width / 3.25
+                : { '@bp1': 125, '@bp3': 175 }
+            }
             fallbackSrc={lightPlaceholder}
           />
           <HStack
@@ -90,7 +110,7 @@ function Header() {
             w='100%'
             px={{ '@bp1': 3, '@bp4': 5 }}
           >
-            <HStack w='100%' gap={4}>
+            <HStack w='100%' gap={{ '@bp1': 3, '@bp4': 4 }}>
               <Box>
                 <Avatar
                   variant='squircle'
@@ -124,10 +144,17 @@ function Header() {
                     </HStack>
                   )}
                   <TextGroup gap={1} color='primary400'>
-                    <TextGroupHeading weight={600} size={5}>
+                    <TextGroupHeading
+                      weight={600}
+                      size={{ '@bp1': 4, '@bp3': 5 }}
+                    >
                       {profile.displayName}
                     </TextGroupHeading>
-                    <TextGroupSubheading weight={500} color='base100'>
+                    <TextGroupSubheading
+                      size={{ '@bp1': 2, '@bp3': 3 }}
+                      weight={500}
+                      color='base100'
+                    >
                       @{profile.username}
                     </TextGroupSubheading>
                   </TextGroup>
