@@ -64,13 +64,13 @@ function CreatePostPlaceholder({
       w='full'
       px={4}
       radius={4}
-      h={40}
+      h={{ '@bp1': 32, '@bp3': 40 }}
       border={1}
       borderColor='base200'
       cursor='pointer'
       onClick={() => onClick('')}
     >
-      <Text color='base400' size={{ '@bp1': 2, '@bp3': 3 }}>
+      <Text noOfLines={1} color='base400' size={{ '@bp1': 2, '@bp3': 3 }}>
         What do you want your fans to know?
       </Text>
     </VStack>
@@ -98,7 +98,11 @@ function CreatePostCard() {
             gap={3}
             items='center'
           >
-            <Avatar variant='squircle' src={currentUser.avatar} />
+            <Avatar
+              size={{ '@bp1': 'sm', '@bp3': 'base' }}
+              variant='squircle'
+              src={currentUser.avatar}
+            />
             <CreatePostPlaceholder onClick={onOpen} />
           </Card.Body>
           <Card.Footer

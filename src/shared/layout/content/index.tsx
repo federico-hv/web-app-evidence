@@ -37,6 +37,7 @@ const ContentLayoutMain = ({ children }: BaseContentLayoutProps) => {
       minHeight='calc(100vh - 65px)'
       borderColor='base100'
       position='relative'
+      pb={{ '@bp1': 56, '@bp3': 0 }}
     >
       {children}
     </Box>

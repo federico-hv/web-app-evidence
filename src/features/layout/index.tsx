@@ -1,6 +1,6 @@
 import { Box, HStack } from '@holdr-ui/react';
 import { Outlet } from 'react-router-dom';
-import { Navigation, Header } from './ui';
+import { Navigation, Header, Footer } from './ui';
 import { useCurrentUser } from '../auth';
 
 function MainLayout() {
@@ -13,6 +13,7 @@ function MainLayout() {
         <Box w='full' h='full'>
           <Outlet />
         </Box>
+        <Footer />
       </HStack>
     </Box>
   );
