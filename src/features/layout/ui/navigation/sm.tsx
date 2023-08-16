@@ -48,7 +48,8 @@ function MenuButton({
         onClick && onClick();
         update({ on: false, menu: undefined });
       }}
-      p={4}
+      px={4}
+      h={60}
       gap={centered ? 4 : 3}
       items='center'
       cursor='pointer'
@@ -96,10 +97,11 @@ function MenuDrawer() {
                 t={69}
                 l={0}
                 h='calc(100% - 66px)'
-                w='65vw'
+                w='80vw'
                 css={{
                   backgroundColor: '#fcfbfa',
                   borderTopRightRadius: '$4',
+                  borderBottomRightRadius: '$4',
                 }}
               >
                 <VStack h='100%'>
@@ -208,11 +210,12 @@ function ProfileDrawer() {
                 t={69}
                 r={0}
                 h='calc(100% - 66px)'
-                w='65vw'
+                w='80vw'
                 overflow='hidden'
                 css={{
                   backgroundColor: '#fcfbfa',
                   borderTopLeftRadius: '$4',
+                  borderBottomLeftRadius: '$4',
                 }}
               >
                 <VStack h='100%'>
