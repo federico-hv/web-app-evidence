@@ -147,7 +147,7 @@ function MenuDrawer() {
                         fullWidth
                         className={extraBtnPadding()}
                       >
-                        Marketplace
+                        Holdr Club
                       </Button>
                     </Box>
                   </VStack>
