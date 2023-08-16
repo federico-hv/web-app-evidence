@@ -22,7 +22,10 @@ function ArticleCard({ data }: { data: ArticleModel }) {
   const { owner, createdAt, reaction } = useFeedContext();
   return (
     <VStack gap={3}>
-      <Card bgImageUrl={data.imageUrl} h='600px'>
+      <Card
+        bgImageUrl={data.imageUrl}
+        h={{ '@bp1': '450px', '@bp3': '550px' }}
+      >
         <Card.Header p={4} direction='horizontal' justify='space-between'>
           <Link to={prefix('/', owner.username)}>
             <Avatar
@@ -89,6 +92,8 @@ function ArticleCard({ data }: { data: ArticleModel }) {
                     position='right'
                   >
                     <IconButton
+                      variant='ghost'
+                      colorTheme='primary400'
                       ariaLabel={
                         reaction && reaction.name
                           ? reaction.name
