@@ -10,7 +10,7 @@ function CropperBody({
   setCroppedAreaPixels,
 }: CropperBodyProps) {
   return (
-    <Box w='100%' h={420} position='relative'>
+    <Box w='100%' h={'calc(100% - 100px)'} position='relative'>
       <ImageCropper
         aspect={aspect}
         image={chosenImage}

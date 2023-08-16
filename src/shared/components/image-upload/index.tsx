@@ -140,10 +140,11 @@ function ImageUpload({
         <Dialog.Portal>
           <Dialog.Overlay />
           <Dialog.Content
-            h={{ '@bp1': '100vh', '@bp3': 650 }}
-            maxHeight={{ '@bp1': '100vh', '@bp3': '85vh' }}
+            h={{ '@bp1': 'calc(100vh - 100px)', '@bp3': 650 }}
+            maxHeight={{ '@bp1': 'calc(100vh - 100px)', '@bp3': '85vh' }}
             radius={{ '@bp1': 0, '@bp2': 3 }}
             maxWidth={650}
+            t={{ '@bp3': '50%', '@bp1': 'calc(50% + 30px)' }}
             w={{ '@bp1': '100vw', '@bp2': '95vw', '@bp3': '90vw' }}
           >
             <Dialog.Header>
