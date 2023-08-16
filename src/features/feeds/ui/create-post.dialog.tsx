@@ -133,7 +133,7 @@ function CreatePostDialog() {
                     h='100%'
                     justify='space-between'
                     overflowY='auto'
-                    pb={70}
+                    pb={4}
                     gap={4}
                   >
                     <Box flex={1} as='label' minHeight={75}>

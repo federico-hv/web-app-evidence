@@ -132,8 +132,7 @@ function AddMedia({
       position='relative'
       border={1}
       borderColor='base200'
-      h={300}
-      maxHeight={300}
+      minHeight={350}
       w='100%'
       radius={4}
     >
