@@ -61,12 +61,7 @@ function FeedTabs() {
           '& button:not(:last-child)': {
             marginRight: '$4',
           },
-          '@bp1': {
-            top: '57px',
-          },
-          '@bp3': {
-            top: '65px',
-          },
+          t: '65px',
         }}
       >
         <Container maxWidth={600}>

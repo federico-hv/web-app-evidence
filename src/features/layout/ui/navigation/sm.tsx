@@ -1,5 +1,32 @@
-import { Flex, HStack } from '@holdr-ui/react';
+import { Avatar, Circle, Flex, HStack, Image } from '@holdr-ui/react';
 import { Logo } from '../../../../shared/components';
+import menuIcon from '../../../../assets/images/menu.png';
+import { useCurrentUser } from '../../../auth';
+
+function MenuDrawer() {
+  return (
+    <Flex flex={1}>
+      <Image size={24} src={menuIcon} alt='menu icon' />
+    </Flex>
+  );
+}
+
+function ProfileDrawer() {
+  const currentUser = useCurrentUser();
+  return (
+    <HStack flex={1} justify='flex-end'>
+      {currentUser ? (
+        <Avatar
+          size='sm'
+          src={currentUser?.avatar}
+          name={currentUser?.displayName}
+        />
+      ) : (
+        <Circle size={24} />
+      )}
+    </HStack>
+  );
+}
 
 function SmNavigation() {
   return (
@@ -18,9 +45,9 @@ function SmNavigation() {
         zIndex: 15,
       }}
     >
-      <Flex flex={1}></Flex>
+      <MenuDrawer />
       <Logo />
-      <Flex flex={1}></Flex>
+      <ProfileDrawer />
     </HStack>
   );
 }

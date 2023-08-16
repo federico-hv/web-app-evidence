@@ -65,14 +65,9 @@ function ArtistContent() {
           backgroundColor: '$clearTint500',
           blur: '12px',
           zIndex: 11,
+          t: '65px',
           '& button': {
             height: '$7',
-          },
-          '@bp1': {
-            top: '57px',
-          },
-          '@bp3': {
-            top: '65px',
           },
         }}
       >
@@ -130,14 +125,9 @@ function GeneralUserContent() {
           backgroundColor: '$clearTint500',
           blur: '12px',
           zIndex: 11,
+          t: '65px',
           '& button': {
             height: '$7',
-          },
-          '@bp1': {
-            top: '57px',
-          },
-          '@bp3': {
-            top: '65px',
           },
         }}
       >
