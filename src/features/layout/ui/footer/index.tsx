@@ -67,9 +67,9 @@ function Footer() {
             <NavigationLink
               as={<Link to={prefix('/', Paths.discover)} />}
               isActive={!!matchPath(Paths.discover, pathname)}
-              activeIcon='discover-fill'
+              activeIcon='search-outline'
               size='sm'
-              inactiveIcon='discover-outline'
+              inactiveIcon='search-outline'
               css={{
                 padding: 0,
                 size: '2rem',
