@@ -6,6 +6,7 @@ import {
   IconButton,
   Input,
   InputGroup,
+  useWindowSize,
   VStack,
 } from '@holdr-ui/react';
 import {
@@ -203,15 +204,21 @@ export function SettingsLg() {
 }
 
 function SettingsPage() {
+  const windowSize = useWindowSize();
+
   return (
-    <>
+    <Box>
       <Head
         title='Settings'
         description='Configure your notifications, update your privacy settings, security settings and more.'
       />
-      <SettingsSm />
-      <SettingsLg />
-    </>
+      {windowSize && windowSize.width && windowSize.width <= 768 && (
+        <SettingsSm />
+      )}
+      {windowSize && windowSize.width && windowSize.width > 768 && (
+        <SettingsLg />
+      )}
+    </Box>
   );
 }
 SettingsPage.displayName = 'SettingsPage';

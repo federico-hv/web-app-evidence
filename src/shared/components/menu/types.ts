@@ -3,7 +3,7 @@ import { ReactNode } from 'react';
 
 export interface MenuItemProps {
   label?: string;
-  icon?: IconName;
+  icon?: JSX.Element | IconName;
   action?: VoidFunction;
   dangerous?: boolean;
   children?: ReactNode;

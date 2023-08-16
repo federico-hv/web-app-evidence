@@ -125,19 +125,19 @@ function MenuDrawer() {
                       icon='bookmark-outline'
                     />
                     <MenuButton
-                      onClick={goto.channels}
-                      label='Channels'
-                      icon='channels-outline'
+                      onClick={goto.discover}
+                      label='Releases'
+                      icon='releases-outline'
                     />
                     <MenuButton
                       onClick={goto.discover}
                       label='Discover'
-                      icon='discover-outline'
+                      icon='search-outline'
                     />
                     <MenuButton
-                      onClick={goto.discover}
-                      label='Releases'
-                      icon='releases-outline'
+                      onClick={goto.channels}
+                      label='Channels'
+                      icon='channels-outline'
                     />
                   </VStack>
                   <VStack h='100%' justify='flex-end'>

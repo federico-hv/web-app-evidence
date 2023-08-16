@@ -1,3 +1,4 @@
+import { HStack, IconButton, Text } from '@holdr-ui/react';
 import { useFeedContext } from '../../shared';
 import {
   useCreateRelationshipAction,
@@ -5,9 +6,8 @@ import {
   useRemoveRelationshipAction,
 } from '../../../relationships';
 import { Loader, Menu } from '../../../../shared';
-import { HStack, Text } from '@holdr-ui/react';
 
-function MoreButton() {
+function GeneralMoreButton() {
   const { owner } = useFeedContext();
   const { loading, data } = useRelationshipStatusInfo(owner.username);
   const { mute, follow } = useCreateRelationshipAction();
@@ -17,9 +17,21 @@ function MoreButton() {
     <Loader loading={loading}>
       {data && (
         <Menu>
-          <Menu.Trigger />
+          <Menu.Trigger>
+            <IconButton
+              colorTheme='darkTint400'
+              blur='xl'
+              icon='more-fill'
+              boxShadow='none'
+              ariaLabel='view options'
+            />
+          </Menu.Trigger>
           <Menu.Header />
           <Menu.Content>
+            <Menu.Item
+              icon='article-read-outline'
+              label='Already read this'
+            />
             {data.relationshipStatusInfo.isFollowing ? (
               <Menu.Item
                 action={() => unfollow(owner.username)}
@@ -58,10 +70,19 @@ function MoreButton() {
                 </HStack>
               </Menu.Item>
             )}
-            <Menu.Item icon='eye-hide' label='Hide post' />
+            {/*<Menu.Item icon='remove-outline'>*/}
+            {/*  <HStack gap={2}>*/}
+            {/*    Block <Text weight={500}>{source.name}</Text>*/}
+            {/*  </HStack>*/}
+            {/*</Menu.Item>*/}
+            <Menu.Item
+              label='Hide article'
+              action={() => mute(owner.username)}
+              icon='eye-hide'
+            />
             <Menu.Item
               icon='report-outline'
-              label='Report post'
+              label='Report article'
               dangerous
             />
           </Menu.Content>
@@ -70,6 +91,6 @@ function MoreButton() {
     </Loader>
   );
 }
-MoreButton.displayName = 'MoreButton';
+GeneralMoreButton.displayName = 'GeneralMoreButton';
 
-export default MoreButton;
+export default GeneralMoreButton;

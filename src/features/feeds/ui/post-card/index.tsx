@@ -19,11 +19,14 @@ import {
 } from '../../../../shared';
 import { capitalize } from 'lodash';
 import ReactionPopover from '../reaction-popover';
-import MoreButton from './more.button';
+import GeneralMoreButton from './general-more.button';
 import Media from './media';
 import Polls from './polls';
+import { useCurrentUser } from '../../../auth';
+import OwnerMoreButton from '../owner-more.button';
 
 function PostCard({ data }: { data: PostModel }) {
+  const currentUser = useCurrentUser();
   const { owner, createdAt, reaction } = useFeedContext();
   return (
     <Card>
@@ -46,7 +49,12 @@ function PostCard({ data }: { data: PostModel }) {
             </TextGroup.Subheading>
           </TextGroup>
         </HStack>
-        <MoreButton />
+
+        {currentUser && currentUser.id === owner.id ? (
+          <OwnerMoreButton />
+        ) : (
+          <GeneralMoreButton />
+        )}
       </Card.Header>
       <Card.Body px={4} py={6}>
         <Text>{data.description}</Text>

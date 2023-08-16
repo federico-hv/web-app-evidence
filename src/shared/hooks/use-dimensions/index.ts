@@ -5,8 +5,8 @@ import { useWindowSize } from '@holdr-ui/react';
  * Get a HTML element's width and height
  * @param ref
  */
-export function useDimensions<T extends HTMLDivElement>(
-  ref: RefObject<T>,
+export function useDimensions<T extends HTMLDivElement | undefined>(
+  ref?: RefObject<T>,
 ) {
   const windowSize = useWindowSize();
   const [dimensions, setHeight] = useState<{

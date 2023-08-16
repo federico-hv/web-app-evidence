@@ -81,7 +81,7 @@ function InnerForm() {
               {({ src }) => (
                 <Image
                   w='100%'
-                  h={dimensions ? dimensions.width / 3.25 : 0}
+                  h={dimensions ? dimensions.width / 3 : 0}
                   alt='cover image'
                   src={src}
                 />

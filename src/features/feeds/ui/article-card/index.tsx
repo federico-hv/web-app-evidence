@@ -11,14 +11,17 @@ import {
 } from '@holdr-ui/react';
 import { Link } from 'react-router-dom';
 import { capitalize } from 'lodash';
-import MoreButton from './more.button';
+import GeneralMoreButton from './general-more.button';
 import { DateUtility, prefix, TextGroup } from '../../../../shared';
 import ReactionPopover from '../reaction-popover';
 import { ArticleModel, Reaction, useFeedContext } from '../../shared';
+import OwnerMoreButton from '../owner-more.button';
+import { useCurrentUser } from '../../../auth';
 
 // `https://logo.clearbit.com/${domainUrl}` logo finder
 
 function ArticleCard({ data }: { data: ArticleModel }) {
+  const currentUser = useCurrentUser();
   const { owner, createdAt, reaction } = useFeedContext();
   return (
     <VStack gap={3}>
@@ -35,7 +38,11 @@ function ArticleCard({ data }: { data: ArticleModel }) {
               name={data.source.name}
             />
           </Link>
-          <MoreButton />
+          {currentUser && currentUser.id === owner.id ? (
+            <OwnerMoreButton ghost />
+          ) : (
+            <GeneralMoreButton />
+          )}
         </Card.Header>
         <Card.Footer
           p={4}

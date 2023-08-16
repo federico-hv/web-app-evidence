@@ -74,37 +74,35 @@ function CreatePostDialog() {
   return (
     <>
       {currentUser && (
-        <Dialog isOpen={isOpen} onOpen={onOpen} onClose={onClose}>
+        <Dialog
+          ariaDescribedBy='create-post-dialog__title'
+          isOpen={isOpen}
+          onOpen={() => onOpen(option)}
+          onClose={onClose}
+        >
           <Dialog.Portal>
             <Dialog.Overlay />
             <Dialog.Content
               position='relative'
+              t={{ '@bp1': 69, '@bp3': '50%' }}
               h={{ '@bp1': '100vh', '@bp3': contentHeight }}
               maxHeight={{ '@bp1': '100vh', '@bp3': '85vh' }}
               radius={{ '@bp1': 0, '@bp3': 3 }}
               w={{ '@bp1': '100vw', '@bp3': '90vw' }}
             >
-              <Dialog.Header
-                position='fixed'
-                t={0}
-                borderBottom={1}
-                borderColor='base100'
-              >
-                <Box p='relative'>
+              <Dialog.Header borderBottom={1} borderColor='base100'>
+                <Box w='full' position='relative'>
                   <HStack
-                    position='absolute'
-                    l={0}
-                    r={0}
-                    t={0}
-                    b={0}
                     flex={1}
                     items='center'
-                    justify='center'
+                    ml={{ '@bp1': 0, '@bp3': -32 }}
+                    justify={{ '@bp1': 'flex-start', '@bp3': 'center' }}
                     css={{ zIndex: -1 }}
                   >
                     <Heading
+                      id='create-post-dialog__title'
                       as='h2'
-                      size={4}
+                      size={{ '@bp1': 3, '@bp3': 4 }}
                       css={{ textAlign: 'center' }}
                     >
                       Create Post
@@ -134,9 +132,11 @@ function CreatePostDialog() {
                   <VStack
                     h='100%'
                     justify='space-between'
-                    overflowY='scroll'
+                    overflowY='auto'
+                    pb={70}
+                    gap={4}
                   >
-                    <Box flex={1} as='label'>
+                    <Box flex={1} as='label' minHeight={75}>
                       <StyledTextarea
                         autoFocus
                         css={{ padding: 0 }}

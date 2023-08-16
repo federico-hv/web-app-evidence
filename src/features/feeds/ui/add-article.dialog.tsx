@@ -124,38 +124,41 @@ function Preview() {
 }
 
 function AddArticleDialog() {
-  const { isOpen, onOpen, onClose } = useDialogTabContext();
+  const { isOpen, onOpen, onClose, option } = useDialogTabContext();
   const [state, update] = useRecordState({});
 
   return (
-    <Dialog isOpen={isOpen} onOpen={onOpen} onClose={onClose}>
+    <Dialog
+      ariaDescribedBy='create-article-dialog__title'
+      isOpen={isOpen}
+      onOpen={() => onOpen(option)}
+      onClose={onClose}
+    >
       <Dialog.Portal>
         <Dialog.Overlay />
         <Dialog.Content
+          position='relative'
+          t={{ '@bp1': 69, '@bp3': '50%' }}
           h={{ '@bp1': '100vh', '@bp3': '37.5vh' }}
           maxHeight={{ '@bp1': '100vh', '@bp3': '85vh' }}
           radius={{ '@bp1': 0, '@bp3': 3 }}
           w={{ '@bp1': '100vw', '@bp3': '90vw' }}
         >
-          <Dialog.Header
-            position='fixed'
-            t={0}
-            borderBottom={1}
-            borderColor='base100'
-          >
-            <Box p='relative'>
+          <Dialog.Header borderBottom={1} borderColor='base100'>
+            <Box w='calc(100% - 32px)' p='relative'>
               <HStack
-                position='absolute'
-                l={0}
-                r={0}
-                t={0}
-                b={0}
                 flex={1}
                 items='center'
-                justify='center'
+                ml={{ '@bp1': 0, '@bp3': -32 }}
+                justify={{ '@bp1': 'flex-start', '@bp3': 'center' }}
                 css={{ zIndex: -1 }}
               >
-                <Heading as='h2' size={4} css={{ textAlign: 'center' }}>
+                <Heading
+                  id='create-article-dialog__title'
+                  as='h2'
+                  size={{ '@bp1': 3, '@bp3': 4 }}
+                  css={{ textAlign: 'center' }}
+                >
                   Add Article
                 </Heading>
               </HStack>

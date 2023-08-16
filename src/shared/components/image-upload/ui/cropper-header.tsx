@@ -3,7 +3,12 @@ import { Button, Heading, HStack } from '@holdr-ui/react';
 
 function CropperHeader({ saveImage, title }: CropperHeaderProps) {
   return (
-    <HStack items='center' flex={1} justify='space-between'>
+    <HStack
+      items='center'
+      flex={1}
+      justify='space-between'
+      css={{ borderTopLeftRadius: '$3' }}
+    >
       <Heading casing='capitalize' id='channels-modal__heading' as='h5'>
         {title}
       </Heading>

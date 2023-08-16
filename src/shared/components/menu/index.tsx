@@ -20,6 +20,7 @@ import { MenuContextProvider } from './context';
 import { useState } from 'react';
 import Responsive, { ResponsiveItem } from '../responsive';
 import { extraBtnPadding } from '../../styles';
+import { IconName } from '@holdr-ui/react/dist/shared/types';
 
 function Menu({ children }: GenericProps) {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -155,7 +156,11 @@ function MenuItem({
       ) : (
         <>{children}</>
       )}
-      {icon && <Icon name={icon} size='lg' />}
+      {icon && !(icon as JSX.Element).props ? (
+        <Icon name={icon as IconName} size='lg' />
+      ) : (
+        <>{icon}</>
+      )}
     </HStack>
   );
 }

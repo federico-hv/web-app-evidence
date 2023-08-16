@@ -20,7 +20,7 @@ function EditProfileButton() {
       isOpen={switchState}
       onOpen={turnOn}
       onClose={turnOff}
-      ariaDescribedBy='edit-profile-modal__heading'
+      ariaDescribedBy='edit-profile-dialog__heading'
     >
       <Dialog.Trigger>
         <Button size={{ '@bp1': 'base', '@bp4': 'base' }} label='Edit' />
@@ -28,30 +28,28 @@ function EditProfileButton() {
       <Dialog.Portal>
         <Dialog.Overlay />
         <Dialog.Content
-          position='relative'
-          h={{ '@bp1': '100vh', '@bp3': 550 }}
+          // position='relative'
+          t={{ '@bp1': 69, '@bp3': '50%' }}
+          h={{ '@bp1': '100vh', '@bp3': 650 }}
           maxHeight={{ '@bp1': '100vh', '@bp3': '85vh' }}
           radius={{ '@bp1': 0, '@bp3': 3 }}
           w={{ '@bp1': '100vw', '@bp3': '90vw' }}
         >
-          <Dialog.Header
-            borderBottom={2}
-            borderColor='base100'
-            position='fixed'
-          >
-            <Box p='relative'>
+          <Dialog.Header borderBottom={2} borderColor='base100'>
+            <Box w='full' position='relative'>
               <HStack
-                position='absolute'
-                l={0}
-                r={0}
-                t={0}
-                b={0}
                 flex={1}
                 items='center'
-                justify='center'
+                ml={{ '@bp1': 0, '@bp3': -32 }}
+                justify={{ '@bp1': 'flex-start', '@bp3': 'center' }}
                 css={{ zIndex: -1 }}
               >
-                <Heading as='h2' size={4} css={{ textAlign: 'center' }}>
+                <Heading
+                  id={'edit-profile-dialog__heading'}
+                  as='h2'
+                  size={{ '@bp1': 3, '@bp3': 4 }}
+                  css={{ textAlign: 'center' }}
+                >
                   Edit Profile
                 </Heading>
               </HStack>
