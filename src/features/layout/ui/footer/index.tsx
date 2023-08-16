@@ -17,6 +17,7 @@ function Footer() {
           position='fixed'
           b={0}
           l={0}
+          zIndex={50}
           w='100%'
           p={3}
           css={{
