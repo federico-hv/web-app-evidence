@@ -3,11 +3,11 @@ import { useField } from 'formik';
 import { Input, Select, Textarea } from '@holdr-ui/react';
 import { textareaCSS } from './form-input.style';
 import React from 'react';
-import { css } from '../../../configs';
+import { styled } from '../../../configs';
 import DatePicker from '../date-picker';
 import PhoneInput from '../phone-input';
 
-export const selectCss = css({
+export const selectCss = styled('select', {
   'box-sizing': 'border-box',
 });
 
@@ -52,7 +52,6 @@ function FormField({
           placeholder={placeholder}
           {...field}
           {...others}
-          className={selectCss()}
         />
       )}
       {type === 'date' && (

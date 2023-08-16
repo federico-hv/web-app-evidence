@@ -85,7 +85,7 @@ function CreatePostCard() {
     <Error hasError={!currentUser} errorEl={<></>}>
       {currentUser && (
         <Card
-          bgColor='primary400'
+          css={{ backgroundColor: '#fbfaf2' }}
           minHeight={100}
           w='full'
           gap={4}

@@ -4,7 +4,6 @@ import {
   Button,
   CircularProgress,
   Dialog,
-  Heading,
   HStack,
   Image,
   Text,
@@ -12,6 +11,7 @@ import {
   VStack,
 } from '@holdr-ui/react';
 import {
+  DialogHeading,
   extraBtnPadding,
   SwitchConditional,
   SwitchConditionalCase,
@@ -91,24 +91,10 @@ function CreatePostDialog() {
               w={{ '@bp1': '100vw', '@bp3': '90vw' }}
             >
               <Dialog.Header borderBottom={1} borderColor='base100'>
-                <Box w='full' position='relative'>
-                  <HStack
-                    flex={1}
-                    items='center'
-                    ml={{ '@bp1': 0, '@bp3': -32 }}
-                    justify={{ '@bp1': 'flex-start', '@bp3': 'center' }}
-                    css={{ zIndex: -1 }}
-                  >
-                    <Heading
-                      id='create-post-dialog__title'
-                      as='h2'
-                      size={{ '@bp1': 3, '@bp3': 4 }}
-                      css={{ textAlign: 'center' }}
-                    >
-                      Create Post
-                    </Heading>
-                  </HStack>
-                </Box>
+                <DialogHeading
+                  title='Create Post'
+                  id='create-post-dialog__title'
+                />
               </Dialog.Header>
               <Dialog.Body>
                 <VStack py={4} gap={4} h='calc(100% - 128px)'>

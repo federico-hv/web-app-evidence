@@ -1,12 +1,10 @@
+import { Box, Button, Dialog, useSwitch } from '@holdr-ui/react';
 import {
-  Box,
-  Button,
-  Dialog,
-  Heading,
-  HStack,
-  useSwitch,
-} from '@holdr-ui/react';
-import { Error, Loader, useProfile } from '../../../../shared';
+  DialogHeading,
+  Error,
+  Loader,
+  useProfile,
+} from '../../../../shared';
 import { parseToProfileFormData, useEditProfile } from '../../shared';
 import ProfileForm from '../edit-profile-form';
 
@@ -28,7 +26,6 @@ function EditProfileButton() {
       <Dialog.Portal>
         <Dialog.Overlay />
         <Dialog.Content
-          // position='relative'
           t={{ '@bp1': 69, '@bp3': '50%' }}
           h={{ '@bp1': '100vh', '@bp3': 650 }}
           maxHeight={{ '@bp1': '100vh', '@bp3': '85vh' }}
@@ -36,31 +33,13 @@ function EditProfileButton() {
           w={{ '@bp1': '100vw', '@bp3': '90vw' }}
         >
           <Dialog.Header borderBottom={2} borderColor='base100'>
-            <Box w='full' position='relative'>
-              <HStack
-                flex={1}
-                items='center'
-                ml={{ '@bp1': 0, '@bp3': -32 }}
-                justify={{ '@bp1': 'flex-start', '@bp3': 'center' }}
-                css={{ zIndex: -1 }}
-              >
-                <Heading
-                  id={'edit-profile-dialog__heading'}
-                  as='h2'
-                  size={{ '@bp1': 3, '@bp3': 4 }}
-                  css={{ textAlign: 'center' }}
-                >
-                  Edit Profile
-                </Heading>
-              </HStack>
-            </Box>
+            <DialogHeading
+              title='Edit Profile'
+              id='edit-profile-dialog__heading'
+            />
           </Dialog.Header>
           <Dialog.Body pb={70}>
-            <Error
-              errorEl={<></>}
-              hasError={!!error}
-              errorMessage={error?.message}
-            >
+            <Error hasError={!!error} errorMessage={error?.message}>
               <Loader loading={loading}>
                 <ProfileForm
                   initialValues={parseToProfileFormData(profile)}

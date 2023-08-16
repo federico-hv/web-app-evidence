@@ -49,24 +49,34 @@ function OTPVerificationForm() {
           </Text>
         </Box>
       </VStack>
-      <Button
-        type='button'
-        isLoading={loading}
-        loadingText={loading ? '' : 'Updating'}
-        onClick={async () => {
-          await onSubmit({
-            contact: (name === 'email' ? email : phone) || '',
-            code: code,
-            type: name,
-          });
-
-          if (!error) close();
-        }}
-        fullWidth
-        className={extraBtnPadding()}
+      <Box
+        position='fixed'
+        bgColor='primary400'
+        px={4}
+        l={0}
+        r={0}
+        zIndex={100}
+        b='20px'
       >
-        Update
-      </Button>
+        <Button
+          type='button'
+          isLoading={loading}
+          loadingText={loading ? '' : 'Updating'}
+          onClick={async () => {
+            await onSubmit({
+              contact: (name === 'email' ? email : phone) || '',
+              code: code,
+              type: name,
+            });
+
+            if (!error) close();
+          }}
+          fullWidth
+          className={extraBtnPadding()}
+        >
+          Update
+        </Button>
+      </Box>
     </VStack>
   );
 }

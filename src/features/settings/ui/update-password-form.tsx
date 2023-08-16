@@ -1,4 +1,4 @@
-import { Button, HStack, Toast, Text, VStack } from '@holdr-ui/react';
+import { Button, HStack, Text, VStack } from '@holdr-ui/react';
 import { Formik, useFormikContext } from 'formik';
 import {
   UpdatePasswordContext,
@@ -7,11 +7,12 @@ import {
   UpdatePasswordSchema,
   updatePasswordValues,
 } from '../shared';
-import { FormEvent, useContext, useEffect, useState } from 'react';
+import { FormEvent, useContext } from 'react';
 import {
   ForgotPasswordLink,
   FormInput,
   isInputDisabled,
+  useToast,
 } from '../../../shared';
 
 function InnerForm() {
@@ -69,17 +70,9 @@ function InnerForm() {
   );
 }
 
-function UpdatePasswordForm({
-  onSubmit,
-  onFinish,
-}: UpdatePasswordFormProps) {
+function UpdatePasswordForm({ onSubmit }: UpdatePasswordFormProps) {
   const { data: mutationData } = useContext(UpdatePasswordContext);
-
-  const [open, setOpen] = useState(false);
-
-  useEffect(() => {
-    if (mutationData && mutationData.status) setOpen(true);
-  }, [setOpen, mutationData]);
+  const { openWith } = useToast();
 
   return (
     <Formik
@@ -88,26 +81,23 @@ function UpdatePasswordForm({
       onSubmit={async (data, { resetForm }) => {
         try {
           await onSubmit(data);
-          //  Check if the account-info-guard has been successfully set and reset only then
-          if (mutationData && !mutationData.status) return;
-          onFinish(resetForm);
+
+          openWith({
+            status:
+              mutationData && mutationData.status ? 'success' : 'danger',
+            description: mutationData
+              ? mutationData.message
+              : 'Something went wrong. Its definitely not your fault. Please try again later.',
+          });
+
+          resetForm();
         } catch (e) {
           console.error(e);
           return;
         }
       }}
     >
-      <>
-        <Toast.Item open={open} onOpenChange={setOpen}>
-          <Toast.Message
-            status='success'
-            description={mutationData?.message}
-            onCloseClick={() => setOpen(false)}
-          />
-          <Toast.Viewport />
-        </Toast.Item>
-        <InnerForm />
-      </>
+      <InnerForm />
     </Formik>
   );
 }

@@ -1,13 +1,6 @@
+import { Alert, Button, Dialog, VStack } from '@holdr-ui/react';
 import {
-  Alert,
-  Box,
-  Button,
-  Dialog,
-  Heading,
-  HStack,
-  VStack,
-} from '@holdr-ui/react';
-import {
+  DialogHeading,
   extraBtnPadding,
   FormInput,
   GeneralContextProvider,
@@ -129,7 +122,7 @@ function AddArticleDialog() {
 
   return (
     <Dialog
-      ariaDescribedBy='create-article-dialog__title'
+      ariaDescribedBy='add-article-dialog__title'
       isOpen={isOpen}
       onOpen={() => onOpen(option)}
       onClose={onClose}
@@ -145,24 +138,10 @@ function AddArticleDialog() {
           w={{ '@bp1': '100vw', '@bp3': '90vw' }}
         >
           <Dialog.Header borderBottom={1} borderColor='base100'>
-            <Box w='calc(100% - 32px)' p='relative'>
-              <HStack
-                flex={1}
-                items='center'
-                ml={{ '@bp1': 0, '@bp3': -32 }}
-                justify={{ '@bp1': 'flex-start', '@bp3': 'center' }}
-                css={{ zIndex: -1 }}
-              >
-                <Heading
-                  id='create-article-dialog__title'
-                  as='h2'
-                  size={{ '@bp1': 3, '@bp3': 4 }}
-                  css={{ textAlign: 'center' }}
-                >
-                  Add Article
-                </Heading>
-              </HStack>
-            </Box>
+            <DialogHeading
+              title='Add Article'
+              id='add-article-dialog__title'
+            />
           </Dialog.Header>
           <Dialog.Body>
             <GeneralContextProvider

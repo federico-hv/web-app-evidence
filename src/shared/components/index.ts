@@ -34,4 +34,5 @@ export {
   MenuHeader,
   MenuContent,
 } from './menu';
+export { default as DialogHeading } from './dialog-heading';
 // export { default as Form, FormInput } from './form';

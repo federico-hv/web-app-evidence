@@ -1,5 +1,5 @@
 import { useMutation } from '@apollo/client';
-import { IStatus } from '../../../../shared';
+import { IStatus, useToast } from '../../../../shared';
 import {
   EnableTwoFAInput,
   TwoFAAppRegistrationModel,
@@ -16,9 +16,15 @@ import { GET_TWO_FA_CHANNEL } from '../../queries';
  *
  */
 export function useRegisterTwoFAChannel() {
+  const { openWith } = useToast();
+
   const [register, { loading, error, data }] = useMutation<{
     twoFAAppRegistration: TwoFAAppRegistrationModel;
   }>(TWO_FA_APP_REGISTRATION);
+
+  if (error) {
+    openWith({ description: error.message });
+  }
 
   return { register, loading, error, data };
 }
