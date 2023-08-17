@@ -57,7 +57,10 @@ function Search() {
   };
 
   const onClickSearchItem = (searchText: string) => {
-    navigate(prefix('/', `${Paths.discover}?q=${searchText}`));
+    navigate({
+      pathname: prefix('/', Paths.discover),
+      search: `?q=${searchText}`,
+    });
   };
 
   return (

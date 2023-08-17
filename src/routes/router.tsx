@@ -4,6 +4,7 @@ import {
   AuthRedirectPage,
   HomePage,
   FeedPage,
+  DiscoverPage,
 } from '../pages';
 import { AuthGuard, NotFoundError, Paths, prefix } from '../shared';
 import { MainLayout } from '../features';
@@ -15,6 +16,7 @@ function Router() {
       <Route path='/' element={<MainLayout />}>
         <Route element={<AuthGuard />}>
           <Route path='' element={<HomePage />} />
+          <Route path={Paths.discover} element={<DiscoverPage />} />
           <Route
             path={prefix(Paths.settings, '/*')}
             element={<SettingsRoutes />}
