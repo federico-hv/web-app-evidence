@@ -13,6 +13,8 @@ function Footer() {
     <Responsive>
       <ResponsiveItem mobile='show'>
         <Box
+          borderTop={2}
+          borderColor='base100'
           as='footer'
           position='fixed'
           b={0}

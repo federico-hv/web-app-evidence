@@ -1,9 +1,9 @@
-import { IReturnMany, IUser } from '../../../shared';
+import { IReturnMany, UserModel } from '../../../shared';
 import { useRemoveSearchHistoryItems } from '../shared';
 import { Fragment } from 'react';
 import { Button, Center, Heading, HStack, Text } from '@holdr-ui/react';
 
-function HistoryHeader({ history }: { history: IReturnMany<IUser> }) {
+function HistoryHeader({ history }: { history: IReturnMany<UserModel> }) {
   const { removeAll } = useRemoveSearchHistoryItems();
 
   return (

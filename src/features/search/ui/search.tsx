@@ -3,7 +3,7 @@ import { Spotlight, Box } from '@holdr-ui/react';
 
 import {
   prefix,
-  IUser,
+  UserModel,
   Loader,
   SwitchConditional,
   SwitchConditionalCase,
@@ -24,12 +24,13 @@ function Search() {
   const navigate = useNavigate();
   const [value, setValue] = useState('');
   // get ui history
-  const { history, loading: historyLoading } = useSearchHistory<IUser>();
+  const { history, loading: historyLoading } =
+    useSearchHistory<UserModel>();
 
   const { save } = useSaveSearchHistory();
 
   // using a lazy query we can call whenever.
-  const [search, { results, loading, error }] = useSearch<IUser>();
+  const [search, { results, loading, error }] = useSearch<UserModel>();
   const handleValueChange = async (newValue: string) => {
     setValue(newValue);
 

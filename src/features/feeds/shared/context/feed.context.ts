@@ -1,9 +1,9 @@
 import { createContext, useContext } from 'react';
-import { IUser } from '../../../../shared';
+import { UserModel } from '../../../../shared';
 import { IReaction } from '../interface';
 
 interface IFeedContext {
-  owner: IUser;
+  owner: UserModel;
   feedId: string;
   reaction: IReaction | null;
   createdAt: string;

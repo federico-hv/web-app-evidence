@@ -1,12 +1,12 @@
 import {
-  IUser,
+  UserModel,
   TextGroup,
   TextGroupHeading,
   TextGroupSubheading,
 } from '../../../shared';
 import { Avatar, Circle, HStack, Icon } from '@holdr-ui/react';
 
-function ResultItem({ data }: { data: IUser; display?: string[] }) {
+function ResultItem({ data }: { data: UserModel; display?: string[] }) {
   return (
     <HStack gap={3} items='center' py={3} px={2}>
       {data.avatar ? (

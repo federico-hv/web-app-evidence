@@ -1,5 +1,5 @@
 import { FeedReactionName } from '../types';
-import { GenericItem, IUser } from '../../../../shared';
+import { GenericItem, UserModel } from '../../../../shared';
 import { ArticleModel, PostModel } from './post.interface';
 
 export interface IReaction {
@@ -8,10 +8,10 @@ export interface IReaction {
 }
 
 export interface FeedModel extends GenericItem {
-  type: string;
+  type: 'article' | 'post';
   node: PostModel | ArticleModel;
   reaction: IReaction | null;
-  owner: IUser;
+  owner: UserModel;
   createdAt: string;
 }
 

@@ -15,7 +15,7 @@ import {
   Error,
   Head,
   IReturnMany,
-  IUser,
+  UserModel,
   LinkOverlay,
   Loader,
   prefix,
@@ -29,7 +29,7 @@ import { useQuery } from '@apollo/client';
 function useSearchResults(queryString: string) {
   const { data, loading, error } = useQuery<
     {
-      search: IReturnMany<IUser>;
+      search: IReturnMany<UserModel>;
     },
     { queryString: string }
   >(SEARCH, { variables: { queryString: queryString } });

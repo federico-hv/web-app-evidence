@@ -117,7 +117,7 @@ function ReactionPopover({
           minWidth={1}
           minHeight={48}
           radius='full'
-          css={{ backgroundColor: '#FFF' }}
+          css={{ backgroundColor: '#FFF', zIndex: 20 }}
         >
           <HStack
             p={2}

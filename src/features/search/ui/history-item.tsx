@@ -1,5 +1,5 @@
 import {
-  IUser,
+  UserModel,
   TextGroup,
   TextGroupHeading,
   TextGroupSubheading,
@@ -14,8 +14,8 @@ import {
   Icon,
 } from '@holdr-ui/react';
 
-function HistoryItem({ data }: { data: IUser }) {
-  const { remove } = useRemoveSearchHistoryItem<IUser>();
+function HistoryItem({ data }: { data: UserModel }) {
+  const { remove } = useRemoveSearchHistoryItem<UserModel>();
 
   return (
     <HStack

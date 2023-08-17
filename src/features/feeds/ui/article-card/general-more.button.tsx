@@ -7,7 +7,7 @@ import {
 } from '../../../relationships';
 import { Loader, Menu } from '../../../../shared';
 
-function GeneralMoreButton() {
+function GeneralMoreButton({ tinted = true }: { tinted?: boolean }) {
   const { owner } = useFeedContext();
   const { loading, data } = useRelationshipStatusInfo(owner.username);
   const { mute, follow } = useCreateRelationshipAction();
@@ -19,7 +19,8 @@ function GeneralMoreButton() {
         <Menu>
           <Menu.Trigger>
             <IconButton
-              colorTheme='darkTint400'
+              variant={tinted ? 'filled' : 'ghost'}
+              colorTheme={tinted ? 'darkTint400' : 'base800'}
               blur='xl'
               icon='more-fill'
               boxShadow='none'

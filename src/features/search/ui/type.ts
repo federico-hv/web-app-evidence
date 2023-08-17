@@ -1,3 +1,3 @@
-import { IUser } from '../../../shared';
+import { UserModel } from '../../../shared';
 
-export type Item = { item: IUser; index: number };
+export type Item = { item: UserModel; index: number };

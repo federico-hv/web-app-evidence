@@ -13,6 +13,7 @@ import SettingsRoutes from './settings.routes';
 function Router() {
   return (
     <Routes>
+      <Route path={Paths.authRedirect} element={<AuthRedirectPage />} />
       <Route path='/' element={<MainLayout />}>
         <Route element={<AuthGuard />}>
           <Route path='' element={<HomePage />} />
@@ -28,7 +29,6 @@ function Router() {
         </Route>
         <Route path='*' element={<NotFoundError />} />
       </Route>
-      <Route path={Paths.authRedirect} element={<AuthRedirectPage />} />
     </Routes>
   );
 }

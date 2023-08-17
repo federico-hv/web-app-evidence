@@ -156,3 +156,53 @@ export const GET_REACTED_FEEDS = gql`
     }
   }
 `;
+
+export const GET_FEED = gql`
+  query feed($id: String!) {
+    feed(id: $id) {
+      id
+      type
+      reaction {
+        name
+        count
+      }
+      createdAt
+      owner {
+        id
+        displayName
+        username
+        avatar
+      }
+      node {
+        ... on PostModel {
+          id
+          endDate
+          description
+          media {
+            id
+            url
+            type
+          }
+          polls {
+            id
+            text
+            count
+            voted
+          }
+        }
+        ... on ArticleModel {
+          id
+          title
+          url
+          description
+          imageUrl
+          source {
+            name
+            url
+            logo
+          }
+        }
+      }
+    }
+  }
+`;

@@ -1,6 +1,6 @@
 import { Role } from '../types';
 
-export interface IUser {
+export interface UserModel {
   username: string;
   displayName: string;
   id: string;
@@ -17,5 +17,5 @@ export interface IMe {
 
 export interface IFetchUsersResponse {
   total: number;
-  users: IUser[];
+  users: UserModel[];
 }

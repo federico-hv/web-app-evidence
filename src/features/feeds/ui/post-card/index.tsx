@@ -39,7 +39,12 @@ function PostCard({ data }: { data: PostModel }) {
       >
         <HStack gap={4} position='relative'>
           <LinkOverlay to={prefix('/', owner.username)} />
-          <Avatar size='xl' variant='squircle' src={owner.avatar} />
+          <Avatar
+            size='xl'
+            variant='squircle'
+            src={owner.avatar}
+            name={owner.displayName}
+          />
           <TextGroup gap={1}>
             <TextGroup.Heading size={3}>
               {owner.displayName}
@@ -50,11 +55,13 @@ function PostCard({ data }: { data: PostModel }) {
           </TextGroup>
         </HStack>
 
-        {currentUser && currentUser.id === owner.id ? (
-          <OwnerMoreButton />
-        ) : (
-          <GeneralMoreButton />
-        )}
+        <Box position='relative' css={{ zIndex: 5 }}>
+          {currentUser && currentUser.id === owner.id ? (
+            <OwnerMoreButton />
+          ) : (
+            <GeneralMoreButton />
+          )}
+        </Box>
       </Card.Header>
       <Card.Body px={4} py={6}>
         <Text>{data.description}</Text>
@@ -73,7 +80,7 @@ function PostCard({ data }: { data: PostModel }) {
         justify='space-between'
         w='100%'
       >
-        <Box w={{ '@bp3': '100%', '@bp1': undefined }}>
+        <Box w={{ '@bp3': '100%', '@bp1': undefined }} css={{ zIndex: 5 }}>
           <ReactionPopover>
             <Responsive>
               <ResponsiveItem mobile='show'>
@@ -110,50 +117,63 @@ function PostCard({ data }: { data: PostModel }) {
           </ReactionPopover>
         </Box>
 
-        <Responsive>
-          <ResponsiveItem mobile='show'>
-            <IconButton
-              icon='bookmark-outline'
-              ariaLabel='Bookmark'
-              variant='ghost'
-              colorTheme='base600'
-              size='lg'
-            />
-          </ResponsiveItem>
-          <ResponsiveItem fullWidth mobile='hide' tablet='show'>
-            <Button
-              fullWidth
-              leftIcon='bookmark-outline'
-              className={extraBtnPadding()}
-              variant='ghost'
-              colorTheme='base600'
-            >
-              Bookmark
-            </Button>
-          </ResponsiveItem>
-        </Responsive>
-        <Responsive>
-          <ResponsiveItem mobile='show'>
-            <IconButton
-              size='lg'
-              icon='share-outline'
-              ariaLabel='Bookmark'
-              variant='ghost'
-              colorTheme='base600'
-            />
-          </ResponsiveItem>
-          <ResponsiveItem fullWidth mobile='hide' tablet='show'>
-            <Button
-              leftIcon='share-outline'
-              fullWidth
-              className={extraBtnPadding()}
-              variant='ghost'
-              colorTheme='base600'
-            >
-              Share
-            </Button>
-          </ResponsiveItem>
-        </Responsive>
+        <Box
+          w={{ '@bp3': '100%', '@bp1': undefined }}
+          position='relative'
+          css={{ zIndex: 5 }}
+        >
+          <Responsive>
+            <ResponsiveItem mobile='show'>
+              <IconButton
+                icon='bookmark-outline'
+                ariaLabel='Bookmark'
+                variant='ghost'
+                colorTheme='base600'
+                size='lg'
+              />
+            </ResponsiveItem>
+            <ResponsiveItem fullWidth mobile='hide' tablet='show'>
+              <Button
+                fullWidth
+                leftIcon='bookmark-outline'
+                className={extraBtnPadding()}
+                variant='ghost'
+                colorTheme='base600'
+              >
+                Bookmark
+              </Button>
+            </ResponsiveItem>
+          </Responsive>
+        </Box>
+
+        <Box
+          w={{ '@bp3': '100%', '@bp1': undefined }}
+          position='relative'
+          css={{ zIndex: 5 }}
+        >
+          <Responsive>
+            <ResponsiveItem mobile='show'>
+              <IconButton
+                size='lg'
+                icon='share-outline'
+                ariaLabel='Bookmark'
+                variant='ghost'
+                colorTheme='base600'
+              />
+            </ResponsiveItem>
+            <ResponsiveItem fullWidth mobile='hide' tablet='show'>
+              <Button
+                leftIcon='share-outline'
+                fullWidth
+                className={extraBtnPadding()}
+                variant='ghost'
+                colorTheme='base600'
+              >
+                Share
+              </Button>
+            </ResponsiveItem>
+          </Responsive>
+        </Box>
       </Card.Footer>
     </Card>
   );

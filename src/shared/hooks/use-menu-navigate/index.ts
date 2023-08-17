@@ -18,6 +18,7 @@ export const useMenuNavigate: UseMenuNavigate = () => {
     channels: () => navigate(prefix('/', Paths.channels)),
     bookmarks: () => navigate(prefix('/', Paths.bookmarks)),
     profile: () => navigate(prefix('/', currentUser?.username || '')),
+    back: () => navigate(-1),
   };
 
   return { goto };

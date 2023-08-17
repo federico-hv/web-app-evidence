@@ -12,7 +12,12 @@ import {
 import { Link } from 'react-router-dom';
 import { capitalize } from 'lodash';
 import GeneralMoreButton from './general-more.button';
-import { DateUtility, prefix, TextGroup } from '../../../../shared';
+import {
+  DateUtility,
+  LinkOverlay,
+  prefix,
+  TextGroup,
+} from '../../../../shared';
 import ReactionPopover from '../reaction-popover';
 import { ArticleModel, Reaction, useFeedContext } from '../../shared';
 import OwnerMoreButton from '../owner-more.button';
@@ -22,22 +27,29 @@ import { useCurrentUser } from '../../../auth';
 
 function ArticleCard({ data }: { data: ArticleModel }) {
   const currentUser = useCurrentUser();
-  const { owner, createdAt, reaction } = useFeedContext();
+  const { owner, createdAt, reaction, feedId } = useFeedContext();
   return (
     <VStack gap={3}>
       <Card
         bgImageUrl={data.imageUrl}
         h={{ '@bp1': '450px', '@bp3': '550px' }}
       >
-        <Card.Header p={4} direction='horizontal' justify='space-between'>
+        <Card.Header
+          p={4}
+          direction='horizontal'
+          justify='space-between'
+          position='relative'
+          css={{ zIndex: 5 }}
+        >
           <Link to={prefix('/', owner.username)}>
             <Avatar
               size='xl'
               variant='squircle'
               src={owner.avatar}
-              name={data.source.name}
+              name={owner.displayName}
             />
           </Link>
+
           {currentUser && currentUser.id === owner.id ? (
             <OwnerMoreButton ghost />
           ) : (
@@ -46,8 +58,6 @@ function ArticleCard({ data }: { data: ArticleModel }) {
         </Card.Header>
         <Card.Footer
           p={4}
-          gap={4}
-          divider={<Box borderBottom={1} borderColor='base500' />}
           bgColor='darkTint400'
           position='absolute'
           b={0}
@@ -55,72 +65,91 @@ function ArticleCard({ data }: { data: ArticleModel }) {
           css={{
             blur: '12px',
             borderBottomRadius: '$4',
+            zIndex: 5,
           }}
         >
-          <VStack gap={3}>
-            <TextGroup>
-              <TextGroup.Subheading size={1} weight={500} color='base200'>
-                {capitalize(DateUtility.fromNow(createdAt))} ago
-              </TextGroup.Subheading>
-              <TextGroup.Heading
-                size={{ '@bp1': 3, '@bp3': 4 }}
-                color='primary400'
-                as='h2'
-                noOfLines={2}
-              >
-                {data.title}
-              </TextGroup.Heading>
-            </TextGroup>
-          </VStack>
-          <VStack gap={5}>
-            <Text
-              size={{ '@bp1': 2, '@bp3': 3 }}
-              noOfLines={2}
-              color='base100'
+          <Box position='relative'>
+            <LinkOverlay to={`/${owner.username}/feeds/${feedId}`} />
+            <VStack
+              gap={4}
+              divider={<Box borderBottom={1} borderColor='base500' />}
             >
-              {data.description}
-            </Text>
-            <HStack justify='space-between' items='center'>
-              <ButtonGroup
-                variant='ghost'
-                colorTheme='primary400'
-                items='center'
-              >
-                <IconButton
-                  ariaLabel='save article'
-                  icon='bookmark-outline'
-                  size='lg'
-                />
-
-                <Box>
-                  <ReactionPopover
-                    alignOffset={-6}
-                    sideOffset={10}
-                    position='right'
+              <VStack gap={3}>
+                <TextGroup>
+                  <TextGroup.Subheading
+                    size={1}
+                    weight={500}
+                    color='base200'
+                  >
+                    {capitalize(DateUtility.fromNow(createdAt))} ago
+                  </TextGroup.Subheading>
+                  <TextGroup.Heading
+                    size={{ '@bp1': 3, '@bp3': 4 }}
+                    color='primary400'
+                    as='h2'
+                    noOfLines={2}
+                  >
+                    {data.title}
+                  </TextGroup.Heading>
+                </TextGroup>
+              </VStack>
+              <VStack gap={5}>
+                <Text
+                  size={{ '@bp1': 2, '@bp3': 3 }}
+                  noOfLines={2}
+                  color='base100'
+                >
+                  {data.description}
+                </Text>
+                <HStack
+                  justify='space-between'
+                  items='center'
+                  position='relative'
+                  zIndex={5}
+                >
+                  <ButtonGroup
+                    variant='ghost'
+                    colorTheme='primary400'
+                    items='center'
                   >
                     <IconButton
-                      variant='ghost'
-                      colorTheme='primary400'
-                      ariaLabel={
-                        reaction && reaction.name
-                          ? reaction.name
-                          : 'add reaction'
-                      }
-                      icon={
-                        reaction && reaction.name
-                          ? Reaction[reaction.name].icon
-                          : 'reaction-add'
-                      }
+                      ariaLabel='save article'
+                      icon='bookmark-outline'
                       size='lg'
                     />
-                  </ReactionPopover>
-                </Box>
-              </ButtonGroup>
-              <Link to={data.url} target='_blank'>
-                <Button colorTheme='primary400'>Read</Button>
-              </Link>
-            </HStack>
-          </VStack>
+                    <Box>
+                      <ReactionPopover
+                        alignOffset={-6}
+                        sideOffset={10}
+                        position='right'
+                      >
+                        <IconButton
+                          variant='ghost'
+                          colorTheme='primary400'
+                          ariaLabel={
+                            reaction && reaction.name
+                              ? reaction.name
+                              : 'add reaction'
+                          }
+                          icon={
+                            reaction && reaction.name
+                              ? Reaction[reaction.name].icon
+                              : 'reaction-add'
+                          }
+                          size='lg'
+                        />
+                      </ReactionPopover>
+                    </Box>
+                  </ButtonGroup>
+                  <Box>
+                    <Link to={data.url} target='_blank'>
+                      <Button colorTheme='primary400'>Read</Button>
+                    </Link>
+                  </Box>
+                </HStack>
+              </VStack>
+            </VStack>
+          </Box>
         </Card.Footer>
       </Card>
       <Link to={`https://${data.source.url}`} target='_blank'>

@@ -10,10 +10,10 @@ export const extraBtnPadding = css({
 export const LinkOverlay = styled(Link, {
   position: 'absolute',
   left: 0,
-  right: 0,
+  top: 0,
   width: '100%',
   height: '100%',
-  zIndex: 10,
+  zIndex: 1,
 });
 
 export const StyledLink = styled(Link, {
