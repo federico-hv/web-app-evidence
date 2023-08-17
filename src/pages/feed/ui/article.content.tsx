@@ -24,7 +24,7 @@ function ArticleContent({ data }: { data: ArticleModel }) {
       <Card.Footer pt={4} pb={2} gap={4}>
         <VStack>
           <Link to={`https://${data.source.url}`} target='_blank'>
-            <Heading color='base400' size={3}>
+            <Heading color='base400' size={{ '@bp1': 2, '@bp3': 3 }}>
               {data.source.name}
             </Heading>
           </Link>
