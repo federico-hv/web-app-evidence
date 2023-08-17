@@ -21,9 +21,13 @@ function ContentLayout({ children }: BaseContentLayoutProps) {
 }
 ContentLayout.displayName = 'ContentLayout';
 
-const ContentLayoutMain = ({ children }: BaseContentLayoutProps) => {
+const ContentLayoutMain = ({
+  children,
+  innerRef,
+}: BaseContentLayoutProps) => {
   return (
     <Box
+      innerRef={innerRef}
       as='main'
       w={{
         '@bp1': 'full',

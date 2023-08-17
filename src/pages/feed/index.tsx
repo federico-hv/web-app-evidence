@@ -2,12 +2,15 @@ import {
   ContentLayout,
   ContentLayoutAside,
   ContentLayoutMain,
+  useScrollToTop,
 } from '../../shared';
 import { Card, Container, Text, VStack } from '@holdr-ui/react';
 import { SuggestionsCard } from '../../features';
 import FeedContent from './ui/feed.content';
 
 function FeedPage() {
+  useScrollToTop(document.querySelector('#root'));
+
   return (
     <ContentLayout>
       <ContentLayoutMain>

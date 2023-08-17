@@ -9,7 +9,7 @@ import {
   Text,
   VStack,
 } from '@holdr-ui/react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { capitalize } from 'lodash';
 import GeneralMoreButton from './general-more.button';
 import {
@@ -26,6 +26,7 @@ import { useCurrentUser } from '../../../auth';
 // `https://logo.clearbit.com/${domainUrl}` logo finder
 
 function ArticleCard({ data }: { data: ArticleModel }) {
+  const location = useLocation();
   const currentUser = useCurrentUser();
   const { owner, createdAt, reaction, feedId } = useFeedContext();
   return (
@@ -142,7 +143,11 @@ function ArticleCard({ data }: { data: ArticleModel }) {
                     </Box>
                   </ButtonGroup>
                   <Box>
-                    <Link to={data.url} target='_blank'>
+                    <Link
+                      to={data.url}
+                      target='_blank'
+                      state={{ from: location }}
+                    >
                       <Button colorTheme='primary400'>Read</Button>
                     </Link>
                   </Box>

@@ -18,7 +18,7 @@ import {
   NotFoundError,
   prefix,
   TextGroup,
-  useMenuNavigate,
+  useGoBack,
 } from '../../../shared';
 import {
   Avatar,
@@ -37,12 +37,11 @@ import MoreOptionsButton from './more-options.button';
 
 function FeedContent() {
   const { id } = useParams();
+  const goBack = useGoBack();
   const { loading, error, data } = useQuery<
     { feed: FeedModel },
     { id: string }
   >(GET_FEED, { variables: { id: id || '' } });
-
-  const { goto } = useMenuNavigate();
 
   return (
     <Error hasError={!!error} errorEl={<NotFoundError />}>
@@ -76,7 +75,7 @@ function FeedContent() {
                 <HStack gap={3}>
                   <IconButton
                     size='lg'
-                    onClick={goto.back}
+                    onClick={goBack}
                     variant='ghost'
                     icon='arrow-left-outline'
                     ariaLabel='go back'

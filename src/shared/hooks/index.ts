@@ -14,3 +14,4 @@ export * from './use-dialog-tab-context';
 export * from './use-stepper-context';
 export * from './use-general-context';
 export * from './use-dimensions';
+export * from './use-scroll-to-top';
