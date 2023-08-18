@@ -63,6 +63,9 @@ export function useAddReactionAction(): {
                   });
                 }
               },
+              feed() {
+                // TODO: Add feed cache update
+              },
               userFeeds() {
                 const result: { userFeeds: FeedsReturnModel } | null =
                   cache.readQuery({
@@ -100,7 +103,9 @@ export function useAddReactionAction(): {
         },
       });
     } catch (err) {
-      console.error('Failed to add user vote.');
+      if (import.meta.env.DEV) {
+        console.error(err);
+      }
       openWith({
         status: 'danger',
         description:

@@ -63,6 +63,9 @@ export function useRemoveReactionAction(): {
                   });
                 }
               },
+              feed() {
+                // TODO: Add feed cache update
+              },
               userFeeds() {
                 const result: { userFeeds: FeedsReturnModel } | null =
                   cache.readQuery({

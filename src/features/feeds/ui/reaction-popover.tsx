@@ -23,7 +23,6 @@ function ReactionButton({
 }: {
   onClick: (id: string) => Promise<void>;
   active?: boolean;
-  count?: number;
   name: string;
   icon: { active: IconName; inactive: IconName };
   colorCode: { hover: string; active: string };
@@ -93,11 +92,7 @@ function ReactionPopover({
   };
 
   const reactionIs = (name: FeedReactionName): boolean => {
-    return !!reaction && reaction.name === name;
-  };
-
-  const getCount = () => {
-    return reaction ? reaction.count : undefined;
+    return reaction === name;
   };
 
   // close with ESC key
@@ -131,7 +126,6 @@ function ReactionPopover({
                 closeAfter(id, reactionIs('love') ? removeLove : love)
               }
               active={reactionIs('love')}
-              count={getCount()}
               icon={{ inactive: 'heart-outline', active: 'heart-fill' }}
               colorCode={{ active: '#de4747', hover: '#f4525226' }}
             />
@@ -144,7 +138,6 @@ function ReactionPopover({
                 )
               }
               active={reactionIs('excited')}
-              count={getCount()}
               icon={{
                 inactive: 'emotion-happy-outline',
                 active: 'emotion-happy-fill',
@@ -163,7 +156,6 @@ function ReactionPopover({
                 )
               }
               active={reactionIs('sad')}
-              count={getCount()}
               icon={{
                 inactive: 'emotion-sad-outline',
                 active: 'emotion-sad-fill',
@@ -184,7 +176,6 @@ function ReactionPopover({
                 )
               }
               active={reactionIs('indifferent')}
-              count={getCount()}
               icon={{
                 inactive: 'emotion-normal-outline',
                 active: 'emotion-normal-fill',

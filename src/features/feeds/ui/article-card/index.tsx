@@ -127,14 +127,10 @@ function ArticleCard({ data }: { data: ArticleModel }) {
                         <IconButton
                           variant='ghost'
                           colorTheme='primary400'
-                          ariaLabel={
-                            reaction && reaction.name
-                              ? reaction.name
-                              : 'add reaction'
-                          }
+                          ariaLabel={reaction ? reaction : 'add reaction'}
                           icon={
-                            reaction && reaction.name
-                              ? Reaction[reaction.name].icon
+                            reaction
+                              ? Reaction[reaction].icon
                               : 'reaction-add'
                           }
                           size='lg'

@@ -95,6 +95,7 @@ export const REMOVE_REACTION = gql`
       id
       type
       createdAt
+      reaction
       owner {
         id
         displayName
@@ -141,10 +142,7 @@ export const ADD_REACTION = gql`
       id
       type
       createdAt
-      reaction {
-        name
-        count
-      }
+      reaction
       owner {
         id
         displayName

@@ -149,14 +149,14 @@ function FeedContent() {
                           size={{ '@bp1': 'base', '@bp4': 'lg' }}
                           icon={
                             data.feed.reaction
-                              ? Reaction[data.feed.reaction.name].icon
+                              ? Reaction[data.feed.reaction].icon
                               : 'reaction-add'
                           }
                           variant='ghost'
                           colorTheme='base600'
                           ariaLabel={
                             data.feed.reaction
-                              ? Reaction[data.feed.reaction.name].name
+                              ? Reaction[data.feed.reaction].name
                               : 'React'
                           }
                         />

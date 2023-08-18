@@ -93,7 +93,7 @@ function RelationshipActionButton({ username }: { username: string }) {
   return (
     <Error hasError={!!error} errorMessage={error?.message}>
       <Loader loading={loading}>
-        <Box position='relative' zIndex={50}>
+        <Box position='relative' zIndex={5}>
           {data && (
             <SwitchConditional>
               <SwitchConditionalCase

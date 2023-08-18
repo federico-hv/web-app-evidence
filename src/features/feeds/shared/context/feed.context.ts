@@ -1,11 +1,11 @@
 import { createContext, useContext } from 'react';
 import { UserModel } from '../../../../shared';
-import { IReaction } from '../interface';
+import { FeedReactionName } from '../types';
 
 interface IFeedContext {
   owner: UserModel;
   feedId: string;
-  reaction: IReaction | null;
+  reaction: FeedReactionName | null;
   createdAt: string;
 }
 

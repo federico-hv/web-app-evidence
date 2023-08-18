@@ -63,7 +63,7 @@ function PostCard({ data }: { data: PostModel }) {
           )}
         </Box>
       </Card.Header>
-      <Card.Body px={4} py={6}>
+      <Card.Body px={4} py={6} zIndex={5} position='relative'>
         <Text>{data.description}</Text>
         {data.media && <Media items={data.media} />}
         {data.polls && (
@@ -87,30 +87,24 @@ function PostCard({ data }: { data: PostModel }) {
                 <IconButton
                   size='lg'
                   icon={
-                    reaction
-                      ? Reaction[reaction.name].icon
-                      : 'reaction-add'
+                    reaction ? Reaction[reaction].icon : 'reaction-add'
                   }
                   variant='ghost'
                   colorTheme='base600'
-                  ariaLabel={
-                    reaction ? Reaction[reaction.name].name : 'React'
-                  }
+                  ariaLabel={reaction ? Reaction[reaction].name : 'React'}
                 />
               </ResponsiveItem>
               <ResponsiveItem fullWidth mobile='hide' tablet='show'>
                 <Button
                   fullWidth
                   leftIcon={
-                    reaction
-                      ? Reaction[reaction.name].icon
-                      : 'reaction-add'
+                    reaction ? Reaction[reaction].icon : 'reaction-add'
                   }
                   className={extraBtnPadding()}
                   variant='ghost'
                   colorTheme='base600'
                 >
-                  {reaction ? Reaction[reaction.name].name : 'React'}
+                  {reaction ? Reaction[reaction].name : 'React'}
                 </Button>
               </ResponsiveItem>
             </Responsive>

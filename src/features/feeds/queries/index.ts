@@ -7,10 +7,7 @@ export const GET_USER_FEEDS = gql`
       data {
         id
         type
-        reaction {
-          name
-          count
-        }
+        reaction
         createdAt
         owner {
           id
@@ -60,10 +57,7 @@ export const GET_FEEDS = gql`
       data {
         id
         type
-        reaction {
-          name
-          count
-        }
+        reaction
         createdAt
         owner {
           id
@@ -113,10 +107,7 @@ export const GET_REACTED_FEEDS = gql`
       data {
         id
         type
-        reaction {
-          name
-          count
-        }
+        reaction
         createdAt
         owner {
           id
@@ -162,10 +153,7 @@ export const GET_FEED = gql`
     feed(id: $id) {
       id
       type
-      reaction {
-        name
-        count
-      }
+      reaction
       createdAt
       owner {
         id
