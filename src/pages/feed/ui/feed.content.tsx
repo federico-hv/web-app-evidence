@@ -139,9 +139,9 @@ function FeedContent() {
                       w='full'
                       radius={3}
                     >
-                      <Statistic value={5000003} label='Views' />
-                      <Statistic value={100000} label='Reactions' />
-                      <Statistic value={4093} label='Bookmarks' />
+                      <Statistic name='views' />
+                      <Statistic name='reactions' />
+                      <Statistic name='bookmarks' />
                     </HStack>
                     <HStack gap={5}>
                       <ReactionPopover>

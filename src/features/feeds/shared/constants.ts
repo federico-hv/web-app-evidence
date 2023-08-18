@@ -49,3 +49,23 @@ export const Reaction: Record<
   sad: { icon: 'emotion-sad-fill', name: 'Sad' },
   excited: { icon: 'emotion-happy-fill', name: 'Excited' },
 };
+
+export const FeedStatisticArr = ['views', 'bookmarks', 'reactions'];
+
+export const feedStatistic = ['views', 'bookmarks', 'reactions'] as const;
+
+export const FeedReactionFetchTypeArr = [
+  'love',
+  'indifferent',
+  'excited',
+  'sad',
+  'all',
+];
+
+export const feedReactionFetchType = [
+  'love',
+  'indifferent',
+  'excited',
+  'sad',
+  'all',
+] as const;
