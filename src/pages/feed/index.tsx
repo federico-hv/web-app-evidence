@@ -6,7 +6,7 @@ import {
 } from '../../shared';
 import { Card, Container, Text, VStack } from '@holdr-ui/react';
 import { SuggestionsCard } from '../../features';
-import FeedContent from './ui/feed.content';
+import { FeedContent } from './ui';
 
 function FeedPage() {
   useScrollToTop(document.querySelector('#root'));

@@ -200,3 +200,20 @@ export const GET_FEED_STATISTIC = gql`
     feedStatistic(id: $id, name: $name) # count, i.e number of items.
   }
 `;
+
+export const GET_FEED_REACTION_USERS = gql`
+  query feedReactionUsers($id: String!, $type: FeedReactionFetchType!) {
+    feedReactionUsers(id: $id, type: $type) {
+      count # Number of reactions
+      data {
+        name # Reaction name
+        user {
+          id
+          displayName
+          username
+          avatar
+        }
+      }
+    }
+  }
+`;

@@ -1,19 +1,15 @@
-import { Avatar, Box, VStack } from '@holdr-ui/react';
+import { Box, VStack } from '@holdr-ui/react';
 import {
-  ActionItemWrapper,
   Error,
-  LinkOverlay,
   Loader,
-  prefix,
   SwitchConditional,
   SwitchConditionalCase,
   TextGroup,
   TextGroupHeading,
   TextGroupSubheading,
-  UserNamesGroup,
 } from '../../../../shared';
 import { QueryType, useRelationshipUsers } from '../../shared';
-import RelationshipActionButton from '../relationship-action-button';
+import UserWithRelationshipAction from '../user-with-relationship-action';
 
 // Move this outside
 
@@ -40,23 +36,11 @@ function RelationshipList({
             >
               <VStack>
                 {data[type]?.users.map((user) => (
-                  <ActionItemWrapper key={user.id}>
-                    <LinkOverlay
-                      onClick={onClose}
-                      to={prefix('/', user.username)}
-                    />
-                    <Avatar
-                      variant='squircle'
-                      src={user.avatar}
-                      name={user.displayName}
-                    />
-                    <UserNamesGroup
-                      displayName={user.displayName}
-                      username={user.displayName}
-                    />
-
-                    <RelationshipActionButton username={user.username} />
-                  </ActionItemWrapper>
+                  <UserWithRelationshipAction
+                    key={user.id}
+                    onClose={onClose}
+                    data={user}
+                  />
                 ))}
               </VStack>
             </SwitchConditionalCase>

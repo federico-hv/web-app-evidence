@@ -12,6 +12,7 @@ import {
 import {
   DateUtility,
   Error,
+  GeneralContextProvider,
   Head,
   LinkText,
   Loader,
@@ -34,14 +35,34 @@ import Statistic from './statistic';
 import PostContent from './post.content';
 import ArticleContent from './article.content';
 import MoreOptionsButton from './more-options.button';
+import { FeedReactionUsersDialog } from './index';
+import { useState } from 'react';
+
+type Options = 'reactions' | 'views' | undefined;
+function Statistics() {
+  const [state, setState] = useState<Options>();
+
+  const update = (newState: Options) => setState(newState);
+
+  return (
+    <GeneralContextProvider value={{ state, update }}>
+      <Statistic name='views' />
+      <Statistic name='reactions' action={() => update('reactions')} />
+      <Statistic name='bookmarks' />
+      <FeedReactionUsersDialog />
+    </GeneralContextProvider>
+  );
+}
 
 function FeedContent() {
   const { id } = useParams();
-  const goBack = useGoBack();
+
   const { loading, error, data } = useQuery<
     { feed: FeedModel },
     { id: string }
   >(GET_FEED, { variables: { id: id || '' } });
+
+  const goBack = useGoBack();
 
   return (
     <Error hasError={!!error} errorEl={<NotFoundError />}>
@@ -139,9 +160,7 @@ function FeedContent() {
                       w='full'
                       radius={3}
                     >
-                      <Statistic name='views' />
-                      <Statistic name='reactions' />
-                      <Statistic name='bookmarks' />
+                      <Statistics />
                     </HStack>
                     <HStack gap={5}>
                       <ReactionPopover>

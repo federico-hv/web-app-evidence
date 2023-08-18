@@ -1,12 +1,21 @@
-import { Loader, TextGroup, TextGroupSubheading } from '../../../shared';
+import { Loader } from '../../../shared';
 import millify from 'millify';
-import { FeedStatistic } from '../../../features/feeds/shared/types';
 import { useQuery } from '@apollo/client';
-import { GET_FEED_STATISTIC, useFeedContext } from '../../../features';
+import {
+  GET_FEED_STATISTIC,
+  useFeedContext,
+  FeedStatistic,
+} from '../../../features';
 import { capitalize } from 'lodash';
-import { Skeleton } from '@holdr-ui/react';
+import { Box, Skeleton, Text } from '@holdr-ui/react';
 
-function Statistic({ name }: { name: FeedStatistic }) {
+function Statistic({
+  name,
+  action,
+}: {
+  name: FeedStatistic;
+  action?: VoidFunction;
+}) {
   const { feedId } = useFeedContext();
   const { loading, data, error } = useQuery<
     { feedStatistic: number },
@@ -24,22 +33,27 @@ function Statistic({ name }: { name: FeedStatistic }) {
 
   return (
     <Loader loading={loading} as={<Skeleton h={3} w={8} />}>
-      <TextGroup
-        direction='horizontal'
-        gap={{ '@bp1': 1, '@bp3': 2 }}
+      <Box
+        onClick={action}
         flex={0}
-        items='flex-end'
+        _hover={
+          action
+            ? {
+                textDecoration: 'underline',
+              }
+            : undefined
+        }
+        css={{ userSelect: 'none' }}
       >
-        <TextGroupSubheading size={{ '@bp1': 2, '@bp3': 3 }} weight={500}>
-          {data && data.feedStatistic ? millify(data.feedStatistic) : 0}
-        </TextGroupSubheading>{' '}
-        <TextGroupSubheading
-          size={{ '@bp1': 2, '@bp3': 3 }}
-          color='base400'
-        >
-          {capitalize(name)}
-        </TextGroupSubheading>
-      </TextGroup>
+        <Text size={{ '@bp1': 2, '@bp3': 3 }}>
+          <Text weight={500} css={{ display: 'inline' }}>
+            {data && data.feedStatistic ? millify(data.feedStatistic) : 0}{' '}
+            <Text color='base400' css={{ display: 'inline' }}>
+              {capitalize(name)}
+            </Text>
+          </Text>
+        </Text>
+      </Box>
     </Loader>
   );
 }
