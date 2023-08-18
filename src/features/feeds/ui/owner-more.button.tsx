@@ -39,6 +39,7 @@ import { GET_FEED_AUDIENCE } from '../queries';
 import stats from '../../../assets/images/stats.png';
 import pinOutlined from '../../../assets/images/pin-outlined.png';
 import pinFilled from '../../../assets/images/pin-filled.png';
+import { useDeleteFeed } from '../shared/hooks/use-delete-feed';
 
 function AudienceDialog() {
   const { feedId } = useFeedContext();
@@ -176,6 +177,7 @@ function OwnerMoreButton({ ghost }: { ghost?: boolean }) {
 
   const { pin } = usePinFeed();
   const { unpin } = useUnpinFeed();
+  const { deleteFeed } = useDeleteFeed();
 
   return (
     <Loader loading={loading}>
@@ -227,7 +229,7 @@ function OwnerMoreButton({ ghost }: { ghost?: boolean }) {
                 action={() =>
                   openWith({
                     actionText: 'Yes, delete',
-                    onAction: () => console.log('Delete'),
+                    onAction: async () => await deleteFeed(feedId),
                     title: 'Delete feed',
                     description:
                       'If you delete this feed, you will you will lose all the data associated with this feed.' +
