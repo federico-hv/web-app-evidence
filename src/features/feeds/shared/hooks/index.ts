@@ -6,3 +6,4 @@ export * from './use-vote-poll';
 export * from './use-add-reaction-action';
 export * from './use-pin-feed';
 export * from './use-unpin-feed';
+export * from './use-change-audience';

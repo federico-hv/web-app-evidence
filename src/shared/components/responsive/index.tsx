@@ -15,6 +15,11 @@ function Responsive({ children }: GenericProps) {
 }
 Responsive.displayName = 'Responsive';
 
+/*
+TODO: Fix this component
+ - Use the useWindow hook instead.
+*/
+
 const ResponsiveItem = ({
   children,
   laptop,

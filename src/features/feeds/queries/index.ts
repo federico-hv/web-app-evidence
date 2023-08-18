@@ -221,3 +221,9 @@ export const GET_FEED_REACTION_USERS = gql`
     }
   }
 `;
+
+export const GET_FEED_AUDIENCE = gql`
+  query feedAudience($id: String!) {
+    feedAudience(id: $id) # FeedAudience
+  }
+`;

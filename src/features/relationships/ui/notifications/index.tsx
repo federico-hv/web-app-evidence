@@ -4,6 +4,7 @@ import {
   Center,
   Dialog,
   Drawer,
+  Heading,
   HStack,
   Icon,
   IconButton,
@@ -71,9 +72,15 @@ function NotificationsButton() {
             <Dialog.Content w={400} h={300}>
               <Dialog.Body css={{ padding: 0 }}>
                 <Center p={5} borderBottom={1} borderColor='base100'>
-                  <Text size={4} weight={500}>
+                  <Heading
+                    as='h2'
+                    size={{ '@bp1': 3, '@bp3': 4 }}
+                    css={{ textAlign: 'center' }}
+                    casing='uppercase'
+                    weight={500}
+                  >
                     Notifications
-                  </Text>
+                  </Heading>
                 </Center>
                 <NotificationSettings />
               </Dialog.Body>

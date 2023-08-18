@@ -21,18 +21,11 @@ import {
   isInputDisabled,
   Paths,
   prefix,
+  RadioWrapper,
   RootSettingsPath,
 } from '../../../../shared';
 import { Formik } from 'formik';
 import { isEqual, pick } from 'lodash';
-import { styled } from '../../../../configs';
-
-const RadioWrapper = styled('label', {
-  display: 'flex',
-  flexDirection: 'row',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-});
 
 function GenderSettingPage() {
   const { data } = useAccountInfo();
@@ -83,27 +76,27 @@ function GenderSettingPage() {
             >
               <VStack as='fieldset' gap={5}>
                 <RadioWrapper>
-                  <Text id='Gender_Male'>Male</Text>
+                  <Text id='gender:male'>Male</Text>
                   <Radio
                     onChange={handleChange}
                     checked={values.gender === 'Male'}
-                    labelledBy='Gender_Male'
+                    labelledBy='gender:male'
                     name='gender'
                     value='Male'
                   />
                 </RadioWrapper>
                 <RadioWrapper>
-                  <Text id='Gender_Female'>Female</Text>
+                  <Text id='gender:female'>Female</Text>
                   <Radio
                     onChange={handleChange}
                     checked={values.gender === 'Female'}
-                    labelledBy='Gender_Male'
+                    labelledBy='gender:female'
                     name='gender'
                     value='Female'
                   />
                 </RadioWrapper>
                 <RadioWrapper>
-                  <Text id='Gender_Specify'>Specify</Text>
+                  <Text id='gender:specify'>Specify</Text>
                   <Radio
                     onChange={handleChange}
                     checked={
@@ -112,7 +105,7 @@ function GenderSettingPage() {
                       values.gender !== 'Male' &&
                       values.gender !== 'Female'
                     }
-                    labelledBy='Gender_Male'
+                    labelledBy='gender:specify'
                     name='gender'
                     value='Specific'
                   />

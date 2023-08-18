@@ -26,3 +26,10 @@ export const StyledVideo = styled('video', {
   width: '100%',
   objectFit: 'cover',
 });
+
+export const RadioWrapper = styled('label', {
+  display: 'flex',
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+});
