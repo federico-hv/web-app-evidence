@@ -76,6 +76,11 @@ export function useDeleteFeed() {
           });
         },
       });
+
+      openWith({
+        status: 'success',
+        description: 'Successfully deleted feed.',
+      });
     } catch (e) {
       if (import.meta.env.DEV) {
         console.error(e);
