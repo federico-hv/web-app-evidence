@@ -7,6 +7,7 @@ interface IFeedContext {
   feedId: string;
   reaction: FeedReactionName | null;
   createdAt: string;
+  isPinned: boolean;
 }
 
 const FeedContext = createContext<IFeedContext>({
@@ -14,6 +15,7 @@ const FeedContext = createContext<IFeedContext>({
   feedId: '',
   reaction: null,
   createdAt: '',
+  isPinned: false,
 });
 
 const FeedContextProvider = FeedContext.Provider;

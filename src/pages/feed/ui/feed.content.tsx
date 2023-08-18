@@ -14,6 +14,7 @@ import {
   Error,
   GeneralContextProvider,
   Head,
+  LinkOverlay,
   LinkText,
   Loader,
   NotFoundError,
@@ -70,6 +71,7 @@ function FeedContent() {
         {data && data.feed ? (
           <FeedContextProvider
             value={{
+              isPinned: data.feed.isPinned,
               owner: data.feed.owner,
               feedId: data.feed.id as string,
               reaction: data.feed.reaction,
@@ -121,7 +123,10 @@ function FeedContent() {
                 <Container maxWidth={600} py={4} borderColor='base100'>
                   <VStack gap={{ '@bp1': 3, '@bp3': 5 }} w='full'>
                     <HStack justify='space-between'>
-                      <HStack gap={3}>
+                      <HStack gap={3} position='relative'>
+                        <LinkOverlay
+                          to={prefix('/', data.feed.owner.username)}
+                        />
                         <Avatar
                           variant='squircle'
                           size='xl'

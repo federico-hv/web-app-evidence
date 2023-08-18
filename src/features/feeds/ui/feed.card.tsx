@@ -28,6 +28,7 @@ function FeedCard({ data }: { data: FeedModel }) {
           owner: data.owner,
           feedId: data.id as string,
           reaction: data.reaction,
+          isPinned: data.isPinned,
           createdAt: data.createdAt,
         }}
       >

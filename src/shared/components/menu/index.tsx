@@ -148,6 +148,7 @@ function MenuItem({
         color: dangerous ? '$danger' : '$base800',
       }}
       onClick={action}
+      css={{ userSelect: 'none' }}
     >
       {!children ? (
         <>

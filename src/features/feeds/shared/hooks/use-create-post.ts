@@ -14,8 +14,6 @@ export function useCreatePost() {
   >(CREATE_POST);
 
   const createPost = async (payload: CreatePostInput) => {
-    console.log(payload);
-
     try {
       return await mutation({
         variables: {

@@ -4,6 +4,7 @@ import { ArticleModel, PostModel } from './post.interface';
 
 export interface FeedModel extends GenericItem {
   type: 'article' | 'post';
+  isPinned: boolean;
   node: PostModel | ArticleModel;
   reaction: FeedReactionName | null;
   owner: UserModel;

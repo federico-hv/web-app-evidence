@@ -8,6 +8,7 @@ export const GET_USER_FEEDS = gql`
         id
         type
         reaction
+        isPinned
         createdAt
         owner {
           id
@@ -57,6 +58,7 @@ export const GET_FEEDS = gql`
       data {
         id
         type
+        isPinned
         reaction
         createdAt
         owner {
@@ -108,6 +110,7 @@ export const GET_REACTED_FEEDS = gql`
         id
         type
         reaction
+        isPinned
         createdAt
         owner {
           id
@@ -153,6 +156,7 @@ export const GET_FEED = gql`
     feed(id: $id) {
       id
       type
+      isPinned
       reaction
       createdAt
       owner {
