@@ -182,7 +182,7 @@ function Polls({
           >
             <Image size={16} alt='' src={pollAlt} />
             <Text color='base400'>
-              {total} {total > 1 ? 'people' : 'person'} voted
+              {total} {total > 1 ? 'votes' : 'vote'}
             </Text>
           </HStack>
         ) : (

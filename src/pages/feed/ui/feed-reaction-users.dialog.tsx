@@ -61,7 +61,7 @@ function ReactionUsers({ type }: { type: FeedReactionFetchType }) {
           </VStack>
         ) : (
           <TextGroup items='center'>
-            <TextGroupHeading>Nothing reaction yet</TextGroupHeading>
+            <TextGroupHeading>No reaction yet</TextGroupHeading>
             <TextGroupSubheading size={2} color='base400' weight={500}>
               Nobody has expressed {readable[type]} for this feed yet.
             </TextGroupSubheading>
