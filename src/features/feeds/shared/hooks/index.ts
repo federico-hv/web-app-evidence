@@ -7,3 +7,4 @@ export * from './use-add-reaction-action';
 export * from './use-pin-feed';
 export * from './use-unpin-feed';
 export * from './use-change-audience';
+export * from './use-hide-feed';

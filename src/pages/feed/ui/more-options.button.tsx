@@ -22,7 +22,7 @@ function MoreOptionsButton({ type }: { type: 'article' | 'post' }) {
             <ArticleGeneralMoreButton tinted={false} />
           </SwitchConditionalCase>
           <SwitchConditionalCase on={type === 'post'}>
-            <PostGeneralMoreButton />
+            <PostGeneralMoreButton hidden={{ notInterested: true }} />
           </SwitchConditionalCase>
         </SwitchConditional>
       )}

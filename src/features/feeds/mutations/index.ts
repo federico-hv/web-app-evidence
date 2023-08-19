@@ -212,3 +212,9 @@ export const CHANGE_AUDIENCE = gql`
     }
   }
 `;
+
+export const HIDE_FEED = gql`
+  mutation hideFeed($id: String!, $reason: String!) {
+    hideFeed(id: $id, reason: $reason) # returns Feed Id, ["nullable", "string"]
+  }
+`;

@@ -1,4 +1,4 @@
-import { useFeedContext } from '../../shared';
+import { useFeedContext, useHideFeed } from '../../shared';
 import {
   useCreateRelationshipAction,
   useRelationshipStatusInfo,
@@ -7,11 +7,20 @@ import {
 import { Loader, Menu } from '../../../../shared';
 import { HStack, Text } from '@holdr-ui/react';
 
-function GeneralMoreButton() {
+function GeneralMoreButton({
+  hidden = { notInterested: false },
+}: {
+  hidden?: {
+    notInterested?: boolean;
+  };
+}) {
+  const { feedId } = useFeedContext();
   const { owner } = useFeedContext();
+
   const { loading, data } = useRelationshipStatusInfo(owner.username);
   const { mute, follow } = useCreateRelationshipAction();
   const { unfollow, unmute } = useRemoveRelationshipAction();
+  const { hideFeed } = useHideFeed();
 
   return (
     <Loader loading={loading}>
@@ -20,6 +29,13 @@ function GeneralMoreButton() {
           <Menu.Trigger />
           <Menu.Header />
           <Menu.Content>
+            {!hidden.notInterested && (
+              <Menu.Item
+                label='Not interested'
+                icon='emotion-unhappy-outline'
+                action={() => hideFeed(feedId, 'Not interested')}
+              />
+            )}
             {data.relationshipStatusInfo.isFollowing ? (
               <Menu.Item
                 action={() => unfollow(owner.username)}
@@ -58,7 +74,6 @@ function GeneralMoreButton() {
                 </HStack>
               </Menu.Item>
             )}
-            <Menu.Item icon='eye-hide' label='Hide post' />
             <Menu.Item
               icon='report-outline'
               label='Report post'
