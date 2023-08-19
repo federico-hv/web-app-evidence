@@ -169,28 +169,32 @@ function DiscoverPage() {
   const goBack = useGoBack();
   const [searchParams] = useSearchParams();
 
+  const query = searchParams.get('q');
+
   return (
     <Fragment>
       <ContentLayout>
         <ContentLayoutMain>
           <Box as='header'>
-            <Container maxWidth={600}>
-              <HStack gap={3} py={4} items='center'>
-                <IconButton
-                  icon='arrow-left-outline'
-                  ariaLabel='go back'
-                  variant='ghost'
-                  size='lg'
-                  onClick={goBack}
-                />
-                <Text>
-                  Search results for{' '}
-                  <Text weight={500} css={{ display: 'inline' }}>
-                    {searchParams.get('q')}
+            {query && (
+              <Container maxWidth={600}>
+                <HStack gap={3} py={4} items='center'>
+                  <IconButton
+                    icon='arrow-left-outline'
+                    ariaLabel='go back'
+                    variant='ghost'
+                    size='lg'
+                    onClick={goBack}
+                  />
+                  <Text>
+                    Search results for{' '}
+                    <Text weight={500} css={{ display: 'inline' }}>
+                      {searchParams.get('q')}
+                    </Text>
                   </Text>
-                </Text>
-              </HStack>
-            </Container>
+                </HStack>
+              </Container>
+            )}
             <Container
               py={3}
               maxWidth={600}
@@ -198,11 +202,7 @@ function DiscoverPage() {
             >
               <Search />
             </Container>
-            {searchParams.get('q') ? (
-              <SearchResults />
-            ) : (
-              <DiscoverContent />
-            )}
+            {query ? <SearchResults /> : <DiscoverContent />}
           </Box>
         </ContentLayoutMain>
         <ContentLayoutAside></ContentLayoutAside>
