@@ -20,11 +20,17 @@ import {
   Loader,
   prefix,
   UserNamesGroup,
+  useGoBack,
 } from '../../shared';
 import { RelationshipActionButton, SEARCH, Search } from '../../features';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Fragment } from 'react';
 import { useQuery } from '@apollo/client';
+
+/*
+TODO:
+  - [ ] UI is wrong, Search results header must appear before the search item
+ */
 
 function useSearchResults(queryString: string) {
   const { data, loading, error } = useQuery<
@@ -98,22 +104,6 @@ function SearchResults() {
 
   return (
     <VStack>
-      <Container maxWidth={600}>
-        <HStack gap={3} py={3} items='center'>
-          <IconButton
-            icon='arrow-left-outline'
-            ariaLabel='go back'
-            variant='ghost'
-            onClick={() => navigate(-1)}
-          />
-          <Text>
-            Search results for{' '}
-            <Text weight={500} css={{ display: 'inline' }}>
-              {searchParams.get('q')}
-            </Text>
-          </Text>
-        </HStack>
-      </Container>
       <Tabs defaultValue='for-you'>
         <Tabs.List
           variant='link'
@@ -176,6 +166,7 @@ function DiscoverContent() {
 }
 
 function DiscoverPage() {
+  const goBack = useGoBack();
   const [searchParams] = useSearchParams();
 
   return (
@@ -183,6 +174,23 @@ function DiscoverPage() {
       <ContentLayout>
         <ContentLayoutMain>
           <Box as='header'>
+            <Container maxWidth={600}>
+              <HStack gap={3} py={4} items='center'>
+                <IconButton
+                  icon='arrow-left-outline'
+                  ariaLabel='go back'
+                  variant='ghost'
+                  size='lg'
+                  onClick={goBack}
+                />
+                <Text>
+                  Search results for{' '}
+                  <Text weight={500} css={{ display: 'inline' }}>
+                    {searchParams.get('q')}
+                  </Text>
+                </Text>
+              </HStack>
+            </Container>
             <Container
               py={3}
               maxWidth={600}
