@@ -103,7 +103,7 @@ function FeedReactionUsersDialog() {
             </Heading>
           </Dialog.Header>
           <Dialog.Body pt={{ '@bp3': 4 }} mt={{ '@bp1': 48, '@bp3': 0 }}>
-            <Tabs>
+            <Tabs defaultValue='all'>
               <Tabs.List
                 variant='link'
                 css={{
