@@ -19,6 +19,12 @@ import EditProfileButton from '../edit-profile-dialog';
 import OptionsButton from '../options';
 import NotificationsButton from '../notifications';
 
+/*
+TODO:
+ -[ ] Move to /pages/profile/ui - Button is not used anywhere else, apart from there
+ -[ ] Use in pages/profile, separate it from the previous architecture
+ */
+
 const MotionWrapper = motion(HStack);
 
 function SocialButton() {

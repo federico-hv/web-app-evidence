@@ -19,6 +19,12 @@ import {
   extraBtnPadding,
 } from '../../../../shared';
 
+/*
+TODO:
+ -[ ] Move to /features/notifications/ui
+ -[ ] Use in pages/profile, separate it from the previous architecture
+ */
+
 function NotificationSettings() {
   return (
     <VStack
