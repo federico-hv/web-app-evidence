@@ -1,11 +1,13 @@
 export const Paths = {
-  home: '',
+  root: '',
   discover: 'discover',
   channels: 'channels',
   bookmarks: 'bookmarks',
   releases: 'releases',
   notifications: 'notifications',
   settings: 'settings',
+  username: ':username',
+  feed: 'feeds/:id',
   setting: {
     account: 'account',
     username: 'username',

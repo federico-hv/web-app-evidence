@@ -1,14 +1,8 @@
 import { Route, Routes } from 'react-router';
-import {
-  ProfilePage,
-  AuthRedirectPage,
-  HomePage,
-  FeedPage,
-  DiscoverPage,
-} from '../pages';
+import { AuthRedirectPage, HomePage, DiscoverPage } from '../pages';
 import { AuthGuard, NotFoundError, Paths, prefix } from '../shared';
 import { MainLayout } from '../features';
-import SettingsRoutes from './settings.routes';
+import { BookmarksRoutes, SettingsRoutes, UserRoutes } from './routes';
 
 function Router() {
   return (
@@ -16,16 +10,25 @@ function Router() {
       <Route path={Paths.authRedirect} element={<AuthRedirectPage />} />
       <Route path='/' element={<MainLayout />}>
         <Route element={<AuthGuard />}>
-          <Route path='' element={<HomePage />} />
+          {/* Home Route*/}
+          <Route path={Paths.root} element={<HomePage />} />
+          {/* Discover Route*/}
           <Route path={Paths.discover} element={<DiscoverPage />} />
+          {/* Settings Route*/}
           <Route
             path={prefix(Paths.settings, '/*')}
             element={<SettingsRoutes />}
           />
-          <Route path='/:username'>
-            <Route path='' element={<ProfilePage />} />
-            <Route path='feeds/:id' element={<FeedPage />} />
-          </Route>
+          {/* Profile Route*/}
+          <Route
+            path={prefix(Paths.username, '/*')}
+            element={<UserRoutes />}
+          />
+          {/* Bookmarks Route*/}
+          <Route
+            path={prefix(Paths.bookmarks, '/*')}
+            element={<BookmarksRoutes />}
+          />
         </Route>
         <Route path='*' element={<NotFoundError />} />
       </Route>

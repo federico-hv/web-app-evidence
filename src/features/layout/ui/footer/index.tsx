@@ -35,7 +35,7 @@ function Footer() {
             p={2}
           >
             <NavigationLink
-              as={<Link to={prefix('/', Paths.home)} />}
+              as={<Link to={prefix('/', Paths.root)} />}
               isActive={!!matchPath('', pathname)}
               activeIcon='home-fill'
               size='sm'

@@ -1,5 +1,5 @@
 import { Route, Routes } from 'react-router';
-import { NotFoundError, Paths } from '../shared';
+import { NotFoundError, Paths } from '../../shared';
 import {
   AccountInfoSettingsPage,
   AccountSecuritySettingsPage,
@@ -26,8 +26,8 @@ import {
   SettingsPage,
   TwoFactorAuthSettingsPage,
   UsernameSettingPage,
-} from '../pages/settings';
-import { AccountInfoGuard } from '../features';
+} from '../../pages/settings';
+import { AccountInfoGuard } from '../../features';
 
 /**
  * Responsive:
