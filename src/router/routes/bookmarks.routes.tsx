@@ -1,13 +1,14 @@
 import { Route, Routes } from 'react-router';
 import { Paths } from '../../shared';
-import { BookmarksPage } from '../../pages';
-import { AllBookmarks } from '../../pages/bookmark/ui';
-import BookmarkPage from '../../pages/bookmark';
-
+import {
+  AllBookmarksPage,
+  BookmarkPage,
+  BookmarksPage,
+} from '../../pages';
 const BookmarksRoutes = () => (
   <Routes>
     <Route path={Paths.root} element={<BookmarksPage />}>
-      <Route path='all' element={<AllBookmarks />} />
+      <Route path='all' element={<AllBookmarksPage />} />
       <Route path=':id' element={<BookmarkPage />} />
     </Route>
   </Routes>

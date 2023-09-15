@@ -63,7 +63,7 @@ function PostCard({ data }: { data: PostModel }) {
           )}
         </Box>
       </Card.Header>
-      <Card.Body px={4} py={6} zIndex={5} position='relative'>
+      <Card.Body px={4} py={6} position='relative'>
         <Text>{data.description}</Text>
         {data.media && <Media items={data.media} />}
         {data.polls && (

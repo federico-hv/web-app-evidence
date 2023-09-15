@@ -4,7 +4,7 @@ import { MediaItem } from '../../../../shared';
 
 function Media({ items }: { items: IPostMedia[] }) {
   return (
-    <>
+    <Box zIndex={5}>
       {items.length > 0 && (
         <Box h={{ '@bp1': 250, '@bp3': 350 }} mt={5}>
           <Grid
@@ -33,7 +33,7 @@ function Media({ items }: { items: IPostMedia[] }) {
           </Grid>
         </Box>
       )}
-    </>
+    </Box>
   );
 }
 Media.displayName = 'Media';
