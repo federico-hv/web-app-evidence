@@ -3,8 +3,6 @@ import {
   ACCEPT_RELATIONSHIP_REQUEST,
   DECLINE_RELATIONSHIP_REQUEST,
 } from '../../../mutations';
-import { RelationshipRequest } from '../../interfaces';
-import { GET_RELATIONSHIP_REQUESTS } from '../../../queries';
 
 export function useAcceptRelationshipRequest() {
   const [mutation, { loading, error, data }] = useMutation<
@@ -15,24 +13,24 @@ export function useAcceptRelationshipRequest() {
   const accept = async (id: number) => {
     await mutation({
       variables: { id },
-      update: (cache, { data }) => {
-        cache.modify({
-          fields: {
-            relationshipRequests(current: RelationshipRequest[]) {
-              const id = data?.acceptRelationshipRequest;
-
-              const newData = current.filter((item) => item.id === id);
-
-              cache.writeQuery({
-                query: GET_RELATIONSHIP_REQUESTS,
-                data: {
-                  relationshipRequests: newData,
-                },
-              });
-            },
-          },
-        });
-      },
+      // update: (cache, { data }) => {
+      //   cache.modify({
+      //     fields: {
+      //       relationshipRequests(current: RelationshipRequest[]) {
+      //         const id = data?.acceptRelationshipRequest;
+      //
+      //         const newData = current.filter((item) => item.id === id);
+      //
+      //         cache.writeQuery({
+      //           query: GET_RELATIONSHIP_REQUESTS,
+      //           data: {
+      //             relationshipRequests: newData,
+      //           },
+      //         });
+      //       },
+      //     },
+      //   });
+      // },
     });
   };
 
@@ -48,24 +46,24 @@ export function useDeclineRelationshipRequest() {
   const decline = async (id: number) => {
     await mutation({
       variables: { id },
-      update: (cache, { data }) => {
-        cache.modify({
-          fields: {
-            relationshipRequests(current: RelationshipRequest[]) {
-              const id = data?.declineRelationshipRequest;
-
-              const newData = current.filter((item) => item.id === id);
-
-              cache.writeQuery({
-                query: GET_RELATIONSHIP_REQUESTS,
-                data: {
-                  relationshipRequests: newData,
-                },
-              });
-            },
-          },
-        });
-      },
+      // update: (cache, { data }) => {
+      //   cache.modify({
+      //     fields: {
+      //       relationshipRequests(current: RelationshipRequest[]) {
+      //         const id = data?.declineRelationshipRequest;
+      //
+      //         const newData = current.filter((item) => item.id === id);
+      //
+      //         cache.writeQuery({
+      //           query: GET_RELATIONSHIP_REQUESTS,
+      //           data: {
+      //             relationshipRequests: newData,
+      //           },
+      //         });
+      //       },
+      //     },
+      //   });
+      // },
     });
   };
 
