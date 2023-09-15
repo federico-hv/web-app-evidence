@@ -1,4 +1,11 @@
-import { Box } from '@holdr-ui/react';
+import {
+  Box,
+  HStack,
+  Icon,
+  IconButton,
+  Input,
+  InputGroup,
+} from '@holdr-ui/react';
 import {
   Head,
   PageLayout,
@@ -7,12 +14,13 @@ import {
   Paths,
   ShelfLayout,
   ShelfLayoutShelf,
-  TextGroup,
-  TextGroupHeading,
-  TextGroupSubheading,
+  ErrorFallback,
+  Loader,
 } from '../../shared';
 import { Outlet, useNavigate, useParams } from 'react-router-dom';
-import { useEffect } from 'react';
+import { Suspense, useEffect } from 'react';
+import BookmarkGroupsList from './ui/bookmark-groups.list';
+import { ErrorBoundary } from 'react-error-boundary';
 
 function BookmarksPage() {
   const params = useParams();
@@ -42,16 +50,30 @@ function BookmarksPage() {
           }}
         >
           <PageLayout>
-            <PageLayoutHeader>Bookmarks</PageLayoutHeader>
+            <PageLayoutHeader>
+              <HStack w='100%' justify='space-between' items='center'>
+                Bookmarks
+                <IconButton
+                  variant='ghost'
+                  icon='add'
+                  ariaLabel='Create bookmark group'
+                />
+              </HStack>
+            </PageLayoutHeader>
             <PageLayoutContent>
-              <TextGroup p={4} borderBottom={2} borderColor='base100'>
-                <TextGroupHeading as='h3' size={3}>
-                  Bookmark Name
-                </TextGroupHeading>
-                <TextGroupSubheading size={2} color='base300' weight={500}>
-                  0 posts
-                </TextGroupSubheading>
-              </TextGroup>
+              <Box px={4} py={4} borderBottom={2} borderColor='base100'>
+                <InputGroup radius='full'>
+                  <InputGroup.LeftElement>
+                    <Icon name='search-outline' />
+                  </InputGroup.LeftElement>
+                  <Input placeholder='Search bookamarks' />
+                </InputGroup>
+              </Box>
+              <ErrorBoundary FallbackComponent={ErrorFallback}>
+                <Suspense fallback={<Loader loading={true} />}>
+                  <BookmarkGroupsList />
+                </Suspense>
+              </ErrorBoundary>
             </PageLayoutContent>
           </PageLayout>
         </ShelfLayoutShelf>

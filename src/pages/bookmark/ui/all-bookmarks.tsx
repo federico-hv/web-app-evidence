@@ -1,7 +1,5 @@
-import Content from './content';
-
 function AllBookmarks() {
-  return <Content />;
+  return <div>Fix coming soon</div>;
 }
 AllBookmarks.displayName = 'All Bookmarks';
 

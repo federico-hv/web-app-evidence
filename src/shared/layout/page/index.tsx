@@ -42,7 +42,11 @@ function PageLayoutHeader({ children, onBack }: PageLayoutHeaderProps) {
             />
           </Box>
         )}
-        <Box fontSize={4} css={{ fontSize: 'large', fontWeight: 500 }}>
+        <Box
+          w='100%'
+          fontSize={4}
+          css={{ fontSize: 'large', fontWeight: 500 }}
+        >
           {children}
         </Box>
       </HStack>

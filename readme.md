@@ -217,7 +217,7 @@ and improve the code, progressively.
   we can set a type for the function.
 
 ```ts
-// example.types.ts
+// example.interface.ts
 
 interface IExampleReturnType {
   someItem?: any;
