@@ -8,7 +8,11 @@ import {
   TextGroupSubheading,
 } from '../../../shared';
 import { useSuspenseQuery } from '@apollo/client';
-import { GET_BOOKMARK_GROUPS, IBookmarkGroup } from '../../../features';
+import {
+  GET_ALL_BOOKMARKS_TOTAL,
+  GET_BOOKMARK_GROUPS,
+  IBookmarkGroup,
+} from '../../../features';
 import { Box, HStack, Icon, VStack } from '@holdr-ui/react';
 import { useParams } from 'react-router-dom';
 
@@ -41,7 +45,7 @@ function BookmarkGroupItem({ data }: { data: IBookmarkGroup }) {
             {data.name}
           </TextGroupHeading>
           <TextGroupSubheading size={2} color='base400'>
-            {data.total} post{data.total > 1 ? 's' : ''}
+            {data.total} item{data.total > 1 ? 's' : ''}
           </TextGroupSubheading>
         </TextGroup>
         <Icon name='lock-fill' color='base400' />
@@ -52,7 +56,7 @@ function BookmarkGroupItem({ data }: { data: IBookmarkGroup }) {
 BookmarkGroupItem.displayName = 'BookmarkGroupItem';
 
 function BookmarkGroupsList() {
-  const { data } = useSuspenseQuery<
+  const { data: data1 } = useSuspenseQuery<
     { bookmarkGroups: IConnection<IBookmarkGroup, string> },
     {
       feedId?: string;
@@ -60,12 +64,20 @@ function BookmarkGroupsList() {
     }
   >(GET_BOOKMARK_GROUPS);
 
+  const { data: data2 } = useSuspenseQuery<{ allBookmarkTotal: number }>(
+    GET_ALL_BOOKMARKS_TOTAL,
+  );
+
   return (
     <VStack divider={<Box borderBottom={2} borderColor='base100' />}>
       <BookmarkGroupItem
-        data={{ id: 'all', name: 'All Bookmarks', total: 0 }}
+        data={{
+          id: 'all',
+          name: 'All Bookmarks',
+          total: data2.allBookmarkTotal,
+        }}
       />
-      {data.bookmarkGroups.edges.map((edge) => (
+      {data1.bookmarkGroups.edges.map((edge) => (
         <BookmarkGroupItem key={edge.node.id} data={edge.node} />
       ))}
     </VStack>

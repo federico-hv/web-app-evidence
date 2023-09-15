@@ -1,5 +1,11 @@
 import { gql } from '@apollo/client';
 
+export const GET_ALL_BOOKMARKS_TOTAL = gql`
+  query allBookmarkTotal {
+    allBookmarkTotal
+  }
+`;
+
 export const GET_BOOKMARK_GROUPS = gql`
   query bookmarkGroups(
     $feedId: String
