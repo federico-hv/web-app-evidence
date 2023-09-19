@@ -4,16 +4,6 @@ import { Search } from '../../../search';
 import ProfileMenu from './profile-menu';
 import NotificationPopover from './notification-popover';
 import MessagePopover from './message-popver';
-import { matchPath, useLocation } from 'react-router-dom';
-
-/**
- * Returns a function that verifies that the browser is on the current path.
- */
-export function useIsCurrentPath(): (path: string) => boolean {
-  const { pathname } = useLocation();
-
-  return (path: string) => !!matchPath(path, pathname);
-}
 
 function LgNavigation() {
   return (

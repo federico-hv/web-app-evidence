@@ -94,7 +94,7 @@ function PostCard({ data }: { data: PostModel }) {
                   ariaLabel={reaction ? Reaction[reaction].name : 'React'}
                 />
               </ResponsiveItem>
-              <ResponsiveItem fullWidth mobile='hide' laptop='show'>
+              <ResponsiveItem fullWidth laptop='show' desktop='show'>
                 <Button
                   fullWidth
                   leftIcon={
@@ -126,7 +126,7 @@ function PostCard({ data }: { data: PostModel }) {
                 size='lg'
               />
             </ResponsiveItem>
-            <ResponsiveItem fullWidth mobile='hide' laptop='show'>
+            <ResponsiveItem fullWidth laptop='show' desktop='show'>
               <Button
                 fullWidth
                 leftIcon='bookmark-outline'
@@ -155,7 +155,7 @@ function PostCard({ data }: { data: PostModel }) {
                 colorTheme='base600'
               />
             </ResponsiveItem>
-            <ResponsiveItem fullWidth mobile='hide' laptop='show'>
+            <ResponsiveItem fullWidth laptop='show' desktop='show'>
               <Button
                 leftIcon='share-outline'
                 fullWidth

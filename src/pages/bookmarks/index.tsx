@@ -1,16 +1,10 @@
 import {
   Box,
-  Button,
-  Dialog,
-  FormControl,
-  Heading,
   HStack,
   Icon,
-  IconButton,
   Input,
   InputGroup,
-  Switch,
-  VStack,
+  useDisclosure,
 } from '@holdr-ui/react';
 import {
   Head,
@@ -22,82 +16,26 @@ import {
   ShelfLayoutShelf,
   ErrorFallback,
   Loader,
-  TextGroup,
-  TextGroupHeading,
-  TextGroupSubheading,
+  DialogContextProvider,
 } from '../../shared';
 import { Outlet, useNavigate, useParams } from 'react-router-dom';
 import { Suspense, useEffect } from 'react';
-import BookmarkGroupsList from './ui/bookmark-groups.list';
 import { ErrorBoundary } from 'react-error-boundary';
-
-function CreateBookmarkGroupDialog() {
-  return (
-    <Dialog>
-      <Dialog.Trigger>
-        <IconButton
-          variant='ghost'
-          icon='add'
-          ariaLabel='Create bookmark group'
-        />
-      </Dialog.Trigger>
-      <Dialog.Portal>
-        <Dialog.Overlay />
-        <Dialog.Content
-          css={{ backgroundColor: '#FFF', borderRadius: '25px' }}
-          h={250}
-        >
-          <Dialog.Header
-            justify='space-between'
-            borderBottom={1}
-            borderColor='base100'
-            css={{ backgroundColor: '#FFF' }}
-          >
-            <HStack
-              justify='center'
-              position='absolute'
-              l={0}
-              r={0}
-              p={4}
-              css={{
-                zIndex: -1,
-              }}
-            >
-              <Heading as='h1' size={4} weight={500}>
-                Create new group
-              </Heading>
-            </HStack>
-            <Button disabled={true}>Save</Button>
-          </Dialog.Header>
-          <Dialog.Body h='100%'>
-            <VStack gap={5} h='100%' pt={4} px={3}>
-              <Box>
-                <FormControl>
-                  <Input variant='flushed' placeholder='Group Name' />
-                  <FormControl.HelperText>0 / 60</FormControl.HelperText>
-                </FormControl>
-              </Box>
-              <HStack>
-                <TextGroup>
-                  <TextGroupHeading as='h2' size={3}>
-                    Public
-                  </TextGroupHeading>
-                  <TextGroupSubheading size={2} color='base400'>
-                    Anyone will be able to view this bookmark group on your
-                    profile
-                  </TextGroupSubheading>
-                </TextGroup>
-                <Switch />
-              </HStack>
-            </VStack>
-          </Dialog.Body>
-        </Dialog.Content>
-      </Dialog.Portal>
-    </Dialog>
-  );
-}
+import {
+  CreateBookmarkSchema,
+  ICreateBookmarkGroup,
+  useCreateBookmarkGroup,
+} from '../../features';
+import { Formik } from 'formik';
+import { CreateBookmarkGroupValues } from './constants';
+import { CreateBookmarkGroupDialog } from './ui';
+import BookmarkGroupsList from './ui/bookmark-groups.list';
 
 function BookmarksPage() {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const { createBookmarkGroup } = useCreateBookmarkGroup();
+
   const params = useParams();
   const navigate = useNavigate();
 
@@ -126,7 +64,10 @@ function BookmarksPage() {
           }}
         >
           <PageLayout
+            className='no-scrollbar'
             position='fixed'
+            overflowY='auto'
+            h='100%'
             w={{
               '@bp4': 300,
               '@bp5': 350,
@@ -135,7 +76,26 @@ function BookmarksPage() {
             <PageLayoutHeader>
               <HStack w='100%' justify='space-between' items='center'>
                 Bookmarks
-                <CreateBookmarkGroupDialog />
+                <DialogContextProvider value={{ isOpen, onOpen, onClose }}>
+                  <Formik<ICreateBookmarkGroup>
+                    initialValues={CreateBookmarkGroupValues}
+                    validationSchema={CreateBookmarkSchema}
+                    onSubmit={async (values, { resetForm }) => {
+                      const id = await createBookmarkGroup(
+                        values.name,
+                        values.isPrivate,
+                      );
+
+                      if (id) {
+                        onClose();
+                        resetForm();
+                        navigate(`/${Paths.bookmarks}/${id}`);
+                      }
+                    }}
+                  >
+                    <CreateBookmarkGroupDialog />
+                  </Formik>
+                </DialogContextProvider>
               </HStack>
             </PageLayoutHeader>
             <PageLayoutContent>
@@ -144,7 +104,7 @@ function BookmarksPage() {
                   <InputGroup.LeftElement>
                     <Icon name='search-outline' />
                   </InputGroup.LeftElement>
-                  <Input placeholder='Search bookamarks' />
+                  <Input placeholder='Search bookmarks' />
                 </InputGroup>
               </Box>
               <ErrorBoundary FallbackComponent={ErrorFallback}>

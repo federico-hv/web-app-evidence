@@ -138,6 +138,7 @@ function MenuItem({
 }: MenuItemProps) {
   return (
     <HStack
+      as='button'
       justify='space-between'
       role='button'
       items='center'

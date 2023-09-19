@@ -48,7 +48,10 @@ function BookmarkGroupItem({ data }: { data: IBookmarkGroup }) {
             {data.total} item{data.total > 1 ? 's' : ''}
           </TextGroupSubheading>
         </TextGroup>
-        <Icon name='lock-fill' color='base400' />
+        <Icon
+          name={data.private ? 'lock-fill' : 'global-outline'}
+          color='base400'
+        />
       </HStack>
     </Box>
   );
@@ -73,8 +76,9 @@ function BookmarkGroupsList() {
       <BookmarkGroupItem
         data={{
           id: 'all',
-          name: 'All Bookmarks',
+          name: 'All bookmarks',
           total: data2.allBookmarkTotal,
+          private: true,
         }}
       />
       {data1.bookmarkGroups.edges.map((edge) => (

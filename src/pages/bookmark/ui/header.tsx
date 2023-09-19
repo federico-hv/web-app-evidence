@@ -1,75 +1,29 @@
-import {
-  Box,
-  Button,
-  Dialog,
-  FormControl,
-  Heading,
-  HStack,
-  Input,
-  useDisclosure,
-  VStack,
-} from '@holdr-ui/react';
-import { useParams } from 'react-router-dom';
+import { Heading, HStack, useDisclosure } from '@holdr-ui/react';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   DialogContextProvider,
   Menu,
+  Paths,
   useAlertDialog,
-  useDialogContext,
 } from '../../../shared';
 import { useSuspenseQuery } from '@apollo/client';
-import { GET_BOOKMARK_GROUP, IBookmarkGroup } from '../../../features';
+import {
+  GET_BOOKMARK_GROUP,
+  IBookmarkGroup,
+  IUpdateBookmarkGroup,
+  UpdateBookmarkSchema,
+  useRemoveBookmarkGroup,
+  useRenameBookmarkGroup,
+} from '../../../features';
 import { Fragment } from 'react';
-
-function RenameBookmarkGroupDialog() {
-  const { isOpen, onOpen, onClose } = useDialogContext();
-  return (
-    <Dialog isOpen={isOpen} onOpen={onOpen} onClose={onClose}>
-      <Dialog.Portal>
-        <Dialog.Overlay />
-        <Dialog.Content
-          css={{ backgroundColor: '#FFF', borderRadius: '25px' }}
-          h={200}
-        >
-          <Dialog.Header
-            justify='space-between'
-            borderBottom={1}
-            borderColor='base100'
-            css={{ backgroundColor: '#FFF' }}
-          >
-            <HStack
-              justify='center'
-              position='absolute'
-              l={0}
-              r={0}
-              p={4}
-              css={{
-                zIndex: -1,
-              }}
-            >
-              <Heading as='h1' size={4} weight={500}>
-                Rename group
-              </Heading>
-            </HStack>
-            <Button disabled={true}>Save</Button>
-          </Dialog.Header>
-          <Dialog.Body h='100%'>
-            <VStack gap={4} justify='center' h='100%' pb={7}>
-              <Box>
-                <FormControl>
-                  <Input variant='flushed' placeholder='Group Name' />
-                  <FormControl.HelperText>0 / 60</FormControl.HelperText>
-                </FormControl>
-              </Box>
-            </VStack>
-          </Dialog.Body>
-        </Dialog.Content>
-      </Dialog.Portal>
-    </Dialog>
-  );
-}
+import RenameBookmarkGroupDialog from './rename-bookmark-group.dialog';
+import { Formik } from 'formik';
+import { UpdateBookmarkGroupValues } from '../constants';
 
 function Header() {
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const navigate = useNavigate();
 
   const { openWith } = useAlertDialog();
 
@@ -83,6 +37,9 @@ function Header() {
       id: params.id || '',
     },
   });
+
+  const { removeBookmarkGroup } = useRemoveBookmarkGroup();
+  const { renameBookmarkGroup } = useRenameBookmarkGroup();
 
   return (
     <Fragment>
@@ -117,6 +74,16 @@ function Header() {
               dangerous
               action={() =>
                 openWith({
+                  onAction: async () => {
+                    const success = await removeBookmarkGroup(
+                      data.bookmarkGroup.id,
+                    );
+
+                    if (success) {
+                      // navigate to all bookmarks
+                      navigate(`/${Paths.bookmarks}/all`);
+                    }
+                  },
                   actionText: 'Remove',
                   title: 'Remove bookmark group',
                   description:
@@ -130,7 +97,23 @@ function Header() {
         </Menu>
       </HStack>
       <DialogContextProvider value={{ isOpen, onOpen, onClose }}>
-        <RenameBookmarkGroupDialog />
+        <Formik<IUpdateBookmarkGroup>
+          initialValues={UpdateBookmarkGroupValues}
+          validationSchema={UpdateBookmarkSchema}
+          onSubmit={async (values, { resetForm }) => {
+            const success = await renameBookmarkGroup(
+              data.bookmarkGroup.id,
+              values.name,
+            );
+
+            if (success) {
+              onClose();
+              resetForm();
+            }
+          }}
+        >
+          <RenameBookmarkGroupDialog />
+        </Formik>
       </DialogContextProvider>
     </Fragment>
   );

@@ -5,6 +5,7 @@ import { FeedCard, useGetBookmarks } from '../../../features';
 function Content() {
   const params = useParams();
   const { data } = useGetBookmarks(params.id || '');
+
   return (
     <VStack p={4} gap={5}>
       {data.bookmarks.edges.map((item) => (

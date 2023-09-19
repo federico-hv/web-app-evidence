@@ -17,6 +17,7 @@ export const GET_BOOKMARK_GROUPS = gql`
           id
           name
           total
+          private
           saved
         }
         cursor
@@ -37,6 +38,7 @@ export const GET_BOOKMARK_GROUP = gql`
       id
       name
       total
+      private
     }
   }
 `;

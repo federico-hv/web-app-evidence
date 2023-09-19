@@ -11,8 +11,6 @@ import { extraBtnPadding, Paths, prefix } from '../../../../shared';
 function LgHeader() {
   const { pathname } = useLocation();
 
-  console.log(!!matchPath('bookmarks/*', pathname));
-
   return (
     <VStack
       as='header'

@@ -1,6 +1,6 @@
 import { useSuspenseQuery } from '@apollo/client';
 import { IConnection, IPaginationParams } from '../../../../shared';
-import { IBookmark } from '../../interface';
+import { IBookmark } from '../interface';
 import { GET_BOOKMARKS } from '../../queries';
 
 export function useGetBookmarks(id?: string) {
@@ -11,5 +11,6 @@ export function useGetBookmarks(id?: string) {
     variables: {
       id,
     },
+    fetchPolicy: 'network-only',
   });
 }
