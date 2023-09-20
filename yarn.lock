@@ -1815,10 +1815,10 @@
   resolved "https://registry.yarnpkg.com/@holdr-ui/icons/-/icons-2.2.1.tgz#958449613166f79b3edf15e80bc4f29412410575"
   integrity sha512-VFoGpp3GN721U1HeEA3zEWSMZzzE7tQtdLlkzWWxC0SWcTwkSsGSzTio9KUIgTS3BnzhrlebLqi3kD7WweNB8w==
 
-"@holdr-ui/react@^1.1.2":
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/@holdr-ui/react/-/react-1.1.2.tgz#539e5c85c92d54e85c961d8230defb35b11620dd"
-  integrity sha512-HD6gyeiytBQN1sLsFquPtEGtOmWLXk7EHbxLWjPQwhqyz8v95Y5vWK6jkF7h8cnIOSz0XKs0nM6OoAvdbt8z/w==
+"@holdr-ui/react@^1.1.4":
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/@holdr-ui/react/-/react-1.1.4.tgz#a5086c61b15847ea622df4e77025902ba56d1339"
+  integrity sha512-D0RvKKd+WQn2fukZ51ch+azMoSHG0C/mBqW6sa2MbLLwCwv0rz8wsuuVLU4Tq41m5cKOtOYCwlk64qFrDO3iaQ==
   dependencies:
     "@holdr-ui/icons" "^2.2.1"
     "@radix-ui/react-accordion" "^1.0.1"

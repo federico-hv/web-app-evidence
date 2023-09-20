@@ -24,6 +24,7 @@ import Media from './media';
 import Polls from './polls';
 import { useCurrentUser } from '../../../auth';
 import OwnerMoreButton from '../owner-more.button';
+import { BookmarkPopover } from '../../../bookmarks';
 
 function PostCard({ data }: { data: PostModel }) {
   const currentUser = useCurrentUser();
@@ -116,28 +117,30 @@ function PostCard({ data }: { data: PostModel }) {
           position='relative'
           css={{ zIndex: 5 }}
         >
-          <Responsive>
-            <ResponsiveItem mobile='show'>
-              <IconButton
-                icon='bookmark-outline'
-                ariaLabel='Bookmark'
-                variant='ghost'
-                colorTheme='base600'
-                size='lg'
-              />
-            </ResponsiveItem>
-            <ResponsiveItem fullWidth laptop='show' desktop='show'>
-              <Button
-                fullWidth
-                leftIcon='bookmark-outline'
-                className={extraBtnPadding()}
-                variant='ghost'
-                colorTheme='base600'
-              >
-                Bookmark
-              </Button>
-            </ResponsiveItem>
-          </Responsive>
+          <BookmarkPopover>
+            <Responsive>
+              <ResponsiveItem mobile='show'>
+                <IconButton
+                  icon='bookmark-outline'
+                  ariaLabel='Bookmark'
+                  variant='ghost'
+                  colorTheme='base600'
+                  size='lg'
+                />
+              </ResponsiveItem>
+              <ResponsiveItem fullWidth laptop='show' desktop='show'>
+                <Button
+                  fullWidth
+                  leftIcon='bookmark-outline'
+                  className={extraBtnPadding()}
+                  variant='ghost'
+                  colorTheme='base600'
+                >
+                  Bookmark
+                </Button>
+              </ResponsiveItem>
+            </Responsive>
+          </BookmarkPopover>
         </Box>
 
         <Box

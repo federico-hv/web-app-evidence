@@ -11,8 +11,8 @@ import {
   VStack,
 } from '@holdr-ui/react';
 import { useFormikContext } from 'formik';
-import { IUpdateBookmarkGroup } from '../../../features';
 import { FormEvent } from 'react';
+import { IUpdateBookmarkGroup } from '../shared';
 
 function RenameBookmarkGroupDialog() {
   const { isOpen, onOpen, onClose } = useDialogContext();

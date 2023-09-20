@@ -32,3 +32,113 @@ export const CREATE_BOOKMARK_GROUP = gql`
     }
   }
 `;
+
+export const REMOVE_BOOKMARK = gql`
+  mutation removeBookmark($feedId: String!, $bookmarkGroupId: String) {
+    removeBookmark(feedId: $feedId, bookmarkGroupId: $bookmarkGroupId) {
+      bookmarkGroup {
+        id
+        total
+        name
+        private
+        saved
+      }
+      feed {
+        id
+        type
+        isPinned
+        reaction
+        createdAt
+        owner {
+          id
+          displayName
+          username
+          avatar
+        }
+        node {
+          ... on PostModel {
+            id
+            endDate
+            description
+            media {
+              id
+              url
+              type
+            }
+            polls {
+              id
+              text
+              count
+              voted
+            }
+          }
+          ... on ArticleModel {
+            id
+            title
+            description
+            imageUrl
+            source {
+              name
+              logo
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
+export const CREATE_BOOKMARK = gql`
+  mutation createBookmark($feedId: String!, $bookmarkGroupId: String) {
+    createBookmark(feedId: $feedId, bookmarkGroupId: $bookmarkGroupId) {
+      bookmarkGroup {
+        id
+        total
+        name
+        private
+        saved
+      }
+      feed {
+        id
+        type
+        isPinned
+        reaction
+        createdAt
+        owner {
+          id
+          displayName
+          username
+          avatar
+        }
+        node {
+          ... on PostModel {
+            id
+            endDate
+            description
+            media {
+              id
+              url
+              type
+            }
+            polls {
+              id
+              text
+              count
+              voted
+            }
+          }
+          ... on ArticleModel {
+            id
+            title
+            description
+            imageUrl
+            source {
+              name
+              logo
+            }
+          }
+        }
+      }
+    }
+  }
+`;

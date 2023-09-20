@@ -1,6 +1,4 @@
 import {
-  IConnection,
-  IPaginationParams,
   LinkOverlay,
   Paths,
   TextGroup,
@@ -10,8 +8,8 @@ import {
 import { useSuspenseQuery } from '@apollo/client';
 import {
   GET_ALL_BOOKMARKS_TOTAL,
-  GET_BOOKMARK_GROUPS,
   IBookmarkGroup,
+  useGetBookmarkGroups,
 } from '../../../features';
 import { Box, HStack, Icon, VStack } from '@holdr-ui/react';
 import { useParams } from 'react-router-dom';
@@ -59,13 +57,7 @@ function BookmarkGroupItem({ data }: { data: IBookmarkGroup }) {
 BookmarkGroupItem.displayName = 'BookmarkGroupItem';
 
 function BookmarkGroupsList() {
-  const { data: data1 } = useSuspenseQuery<
-    { bookmarkGroups: IConnection<IBookmarkGroup, string> },
-    {
-      feedId?: string;
-      params?: IPaginationParams<string>;
-    }
-  >(GET_BOOKMARK_GROUPS);
+  const { data: data1 } = useGetBookmarkGroups();
 
   const { data: data2 } = useSuspenseQuery<{ allBookmarkTotal: number }>(
     GET_ALL_BOOKMARKS_TOTAL,

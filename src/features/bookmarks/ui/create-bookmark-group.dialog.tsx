@@ -1,12 +1,11 @@
 import {
+  GenericProps,
   isInputDisabled,
   TextGroup,
   TextGroupHeading,
   TextGroupSubheading,
-  useDialogContext,
 } from '../../../shared';
 import { useFormikContext } from 'formik';
-import { ICreateBookmarkGroup } from '../../../features';
 import {
   Box,
   Button,
@@ -15,16 +14,23 @@ import {
   FormControl,
   Heading,
   HStack,
-  IconButton,
   Input,
   Switch,
   VStack,
 } from '@holdr-ui/react';
 import { FormEvent } from 'react';
+import { ICreateBookmarkGroup } from '../shared';
 
-function CreateBookmarkGroupDialog() {
-  const { isOpen, onClose, onOpen } = useDialogContext();
-
+function CreateBookmarkGroupDialog({
+  children,
+  isOpen,
+  onClose,
+  onOpen,
+}: GenericProps & {
+  isOpen: boolean;
+  onOpen: VoidFunction;
+  onClose: VoidFunction;
+}) {
   const { handleSubmit, values, errors, getFieldHelpers } =
     useFormikContext<ICreateBookmarkGroup>();
 
@@ -33,14 +39,7 @@ function CreateBookmarkGroupDialog() {
 
   return (
     <Dialog isOpen={isOpen} onClose={onClose} onOpen={onOpen}>
-      <Dialog.Trigger>
-        <IconButton
-          role='button'
-          variant='ghost'
-          icon='add'
-          ariaLabel='Create bookmark group'
-        />
-      </Dialog.Trigger>
+      <Dialog.Trigger>{children}</Dialog.Trigger>
       <Dialog.Portal>
         <Dialog.Overlay />
         <Dialog.Content

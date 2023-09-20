@@ -11,12 +11,12 @@ import {
   GET_BOOKMARK_GROUP,
   IBookmarkGroup,
   IUpdateBookmarkGroup,
+  RenameBookmarkGroupDialog,
   UpdateBookmarkSchema,
   useRemoveBookmarkGroup,
   useRenameBookmarkGroup,
 } from '../../../features';
 import { Fragment } from 'react';
-import RenameBookmarkGroupDialog from './rename-bookmark-group.dialog';
 import { Formik } from 'formik';
 import { UpdateBookmarkGroupValues } from '../constants';
 

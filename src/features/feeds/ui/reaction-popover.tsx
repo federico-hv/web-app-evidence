@@ -9,9 +9,8 @@ import {
 } from '@holdr-ui/react';
 import { GenericProps } from '../../../shared';
 import { useFeedContext, useAddReactionAction } from '../shared';
-
 import { IconName } from '@holdr-ui/react/dist/shared/types';
-import { FeedReactionName } from '../shared/types';
+import { FeedReactionName } from '../shared';
 import { useRemoveReactionAction } from '../shared/hooks/use-remove-reaction-action';
 
 function ReactionButton({
@@ -50,11 +49,6 @@ function ReactionButton({
         name={active ? icon.active : icon.inactive}
         aria-label={name}
       />
-      {/*{count !== undefined && count > 0 && active && (*/}
-      {/*  <Box ml={3}>*/}
-      {/*    <Text size={2}>{count}</Text>*/}
-      {/*  </Box>*/}
-      {/*)}*/}
     </Center>
   );
 }

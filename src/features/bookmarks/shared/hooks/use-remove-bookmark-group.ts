@@ -17,6 +17,7 @@ export function useRemoveBookmarkGroup() {
         cache.modify({
           fields: {
             bookmarkGroups(current) {
+              // TODO: Update this method - see create bookmark group
               if (!data) return;
 
               const oldData = current as IConnection<

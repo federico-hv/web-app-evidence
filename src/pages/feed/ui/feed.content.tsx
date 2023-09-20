@@ -2,6 +2,7 @@ import { useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import {
   ArticleModel,
+  BookmarkPopover,
   FeedContextProvider,
   FeedModel,
   GET_FEED,
@@ -185,12 +186,14 @@ function FeedContent() {
                           }
                         />
                       </ReactionPopover>
-                      <IconButton
-                        variant='ghost'
-                        icon='bookmark-outline'
-                        ariaLabel='bookmark'
-                        size={{ '@bp1': 'base', '@bp4': 'lg' }}
-                      />
+                      <BookmarkPopover alignOffset={20}>
+                        <IconButton
+                          variant='ghost'
+                          icon='bookmark-outline'
+                          ariaLabel='bookmark'
+                          size={{ '@bp1': 'base', '@bp4': 'lg' }}
+                        />
+                      </BookmarkPopover>
                       <IconButton
                         variant='ghost'
                         icon='share-outline'
