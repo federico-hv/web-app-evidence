@@ -65,7 +65,9 @@ function BookmarksPage() {
         >
           <PageLayout
             className='no-scrollbar'
-            position='fixed'
+            position='absolute'
+            t={0}
+            b={0}
             overflowY='auto'
             h='100%'
             w={{
@@ -73,7 +75,13 @@ function BookmarksPage() {
               '@bp5': 350,
             }}
           >
-            <PageLayoutHeader>
+            <PageLayoutHeader
+              position='sticky'
+              borderRight={2}
+              borderColor='base100'
+              t={0}
+              css={{ backgroundColor: '#FFF', zIndex: 10 }}
+            >
               <HStack w='100%' justify='space-between' items='center'>
                 Bookmarks
                 <DialogContextProvider value={{ isOpen, onOpen, onClose }}>
@@ -99,7 +107,16 @@ function BookmarksPage() {
               </HStack>
             </PageLayoutHeader>
             <PageLayoutContent>
-              <Box px={4} py={4} borderBottom={2} borderColor='base100'>
+              <Box
+                position='sticky'
+                borderRight={2}
+                t={58}
+                px={4}
+                py={4}
+                borderBottom={2}
+                borderColor='base100'
+                css={{ backgroundColor: '#FFF', zIndex: 10 }}
+              >
                 <InputGroup radius='full'>
                   <InputGroup.LeftElement>
                     <Icon name='search-outline' />

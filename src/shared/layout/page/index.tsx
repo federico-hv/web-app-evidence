@@ -3,6 +3,7 @@ import { Box, HStack, IconButton, VStack } from '@holdr-ui/react';
 import { getSubComponent } from '../../utilities';
 import { PageLayoutHeaderProps, PageLayoutSCNames } from './types';
 import { VStackProps } from '@holdr-ui/react/dist/components/stack/src/stack.types';
+import { BoxProps } from '@holdr-ui/react/dist/components/box/src/box.types';
 
 function PageLayout({ children, ...props }: VStackProps) {
   const Header = getSubComponent<PageLayoutSCNames>(
@@ -23,7 +24,11 @@ function PageLayout({ children, ...props }: VStackProps) {
 }
 PageLayout.displayName = 'Page Layout';
 
-function PageLayoutHeader({ children, onBack }: PageLayoutHeaderProps) {
+function PageLayoutHeader({
+  children,
+  onBack,
+  ...props
+}: PageLayoutHeaderProps) {
   return (
     <VStack
       justify='center'
@@ -31,6 +36,7 @@ function PageLayoutHeader({ children, onBack }: PageLayoutHeaderProps) {
       borderBottom={2}
       borderColor='base100'
       h={58}
+      {...props}
     >
       <HStack items='center' gap={4}>
         {onBack && (
@@ -56,8 +62,12 @@ function PageLayoutHeader({ children, onBack }: PageLayoutHeaderProps) {
 }
 PageLayoutHeader.displayName = 'PageLayoutHeader';
 
-function PageLayoutContent({ children }: GenericProps) {
-  return <Box w='100%'>{children}</Box>;
+function PageLayoutContent({ children, ...props }: BoxProps) {
+  return (
+    <Box w='100%' {...props}>
+      {children}
+    </Box>
+  );
 }
 PageLayoutContent.displayName = 'PageLayoutContent';
 
