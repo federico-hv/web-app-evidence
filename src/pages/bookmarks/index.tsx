@@ -47,16 +47,14 @@ function BookmarksPage() {
             '@bp4': 300,
             '@bp5': 350,
           }}
-          borderRight={2}
           borderColor='base100'
           css={{
             flexShrink: 0,
           }}
         >
           <PageLayout
-            className='no-scrollbar'
-            position='absolute'
-            t={0}
+            position='fixed'
+            t={65}
             b={0}
             overflowY='auto'
             h='100%'
@@ -67,8 +65,6 @@ function BookmarksPage() {
           >
             <PageLayoutHeader
               position='sticky'
-              borderRight={2}
-              borderColor='base100'
               t={0}
               css={{ backgroundColor: '#FFF', zIndex: 10 }}
             >
@@ -91,7 +87,6 @@ function BookmarksPage() {
             <PageLayoutContent>
               <Box
                 position='sticky'
-                borderRight={2}
                 t={58}
                 px={4}
                 py={4}

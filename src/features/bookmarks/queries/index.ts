@@ -7,11 +7,8 @@ export const GET_ALL_BOOKMARKS_TOTAL = gql`
 `;
 
 export const GET_BOOKMARK_GROUPS = gql`
-  query bookmarkGroups(
-    $feedId: String
-    $params: StringPaginationParamsInput
-  ) {
-    bookmarkGroups(feedId: $feedId, params: $params) {
+  query bookmarkGroups($payload: GetBookmarkGroupsInput) {
+    bookmarkGroups(payload: $payload) {
       edges {
         node {
           id

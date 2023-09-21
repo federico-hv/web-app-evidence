@@ -1,4 +1,3 @@
-import { GenericProps } from '../../interfaces';
 import { Box, HStack, IconButton, VStack } from '@holdr-ui/react';
 import { getSubComponent } from '../../utilities';
 import { PageLayoutHeaderProps, PageLayoutSCNames } from './types';

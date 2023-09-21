@@ -1,8 +1,8 @@
-import { useMutation } from '@apollo/client';
+import { gql, useMutation } from '@apollo/client';
 import { CREATE_BOOKMARK } from '../../mutations';
-import { FeedModel } from '../../../feeds';
-import { IBookmarkGroup } from '../interface';
+import { IBookmark, IBookmarkGroup } from '../interface';
 import { useToast } from '../../../../shared';
+import { GET_ALL_BOOKMARKS_TOTAL } from '../../queries';
 
 export function useCreateBookmark() {
   const { openWith } = useToast();
@@ -10,7 +10,7 @@ export function useCreateBookmark() {
   const [mutation, { loading, error }] = useMutation<
     {
       createBookmark: {
-        feed: FeedModel | null;
+        bookmark: IBookmark | null;
         bookmarkGroup: IBookmarkGroup | null;
       };
     },
@@ -21,23 +21,65 @@ export function useCreateBookmark() {
     feedId: string,
     bookmarkGroupId?: string,
   ): Promise<boolean> => {
-    const res = await mutation({ variables: { feedId, bookmarkGroupId } });
+    const res = await mutation({
+      variables: { feedId, bookmarkGroupId },
+      update: (cache, { data }) => {
+        cache.modify({
+          fields: {
+            // update bookmark groups
+            bookmarkGroups(existingBookmarkGroups) {
+              if (!data || !data.createBookmark.bookmarkGroup) return;
 
-    if (!res.data) {
-      return false;
-    }
+              const newBookmarkGroupRef = cache.writeFragment({
+                id: data.createBookmark.bookmarkGroup.id,
+                data: data,
+                fragment: gql`
+                  fragment NewBookmarkGroupModel on BookmarkGroupModel {
+                    id
+                    type
+                  }
+                `,
+              });
 
-    if (
-      res.data.createBookmark.feed &&
-      res.data.createBookmark.bookmarkGroup
-    ) {
-      openWith({
-        status: 'success',
-        description: 'We saved the feed to to your bookmarks.',
-      });
-    }
+              return {
+                ...existingBookmarkGroups,
+                edges: [
+                  ...existingBookmarkGroups.edges,
+                  {
+                    node: newBookmarkGroupRef,
+                    cursor: data.createBookmark.bookmarkGroup.id,
+                  },
+                ],
+                pageInfo: {
+                  ...existingBookmarkGroups.pageInfo,
+                  // endCursor: data.createBookmark.bookmarkGroup.id, // This wi
+                },
+              };
+            },
+            allBookmarkTotal(current) {
+              if (!bookmarkGroupId) {
+                cache.writeQuery({
+                  query: GET_ALL_BOOKMARKS_TOTAL,
+                  data: { allBookmarksTotal: current + 1 },
+                });
+              }
+            },
+            // update feeds
+            feeds(current) {
+              console.log(current);
+              return;
+            },
+            //update feed
+            feed(current) {
+              console.log(current);
+              return;
+            },
+          },
+        });
+      },
+    });
 
-    return true;
+    return !!res.data;
   };
 
   if (error) {

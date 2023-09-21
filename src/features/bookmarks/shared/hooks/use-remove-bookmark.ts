@@ -1,17 +1,13 @@
 import { useMutation } from '@apollo/client';
-import { FeedModel } from '../../../feeds';
-import { IBookmarkGroup } from '../interface';
 import { REMOVE_BOOKMARK } from '../../mutations';
-import { useToast } from '../../../../shared';
+import { IStatus, useToast } from '../../../../shared';
+import { GET_ALL_BOOKMARKS_TOTAL } from '../../queries';
 
 export function useRemoveBookmark() {
   const { openWith } = useToast();
   const [mutation, { loading, error }] = useMutation<
     {
-      removeBookmarkGroup: {
-        feed: FeedModel;
-        bookmarkGroup: IBookmarkGroup;
-      };
+      removeBookmark: IStatus;
     },
     { feedId: string; bookmarkGroupId?: string }
   >(REMOVE_BOOKMARK);
@@ -20,11 +16,33 @@ export function useRemoveBookmark() {
     feedId: string,
     bookmarkGroupId?: string,
   ): Promise<boolean> => {
-    await mutation({ variables: { feedId, bookmarkGroupId } });
-
-    openWith({
-      description: 'We removed the feed from your bookmarks.',
-      status: 'success',
+    await mutation({
+      variables: { feedId, bookmarkGroupId },
+      update: (cache, { data }) => {
+        cache.modify({
+          fields: {
+            bookmarks() {
+              if (!data || !data.removeBookmark.status) return;
+              // Need a solution to update cache
+              // For some reason, it currently removes the bookmark, but seems like patchwork
+              return;
+            },
+            bookmarkGroups() {
+              if (!data || !data.removeBookmark.status) return;
+              // Need a solution to update cache
+              return;
+            },
+            allBookmarkTotal(current) {
+              if (!bookmarkGroupId) {
+                cache.writeQuery({
+                  query: GET_ALL_BOOKMARKS_TOTAL,
+                  data: { allBookmarksTotal: current - 1 },
+                });
+              }
+            },
+          },
+        });
+      },
     });
 
     return true;

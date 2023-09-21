@@ -12,6 +12,7 @@ function BookmarkPage() {
         <Box
           w={{ '@bp4': '100%', '@bp5': 'calc(100% - 120px)' }}
           borderRight={2}
+          borderLeft={2}
           borderColor='base100'
           minHeight='100%'
         >

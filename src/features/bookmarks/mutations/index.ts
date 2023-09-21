@@ -36,54 +36,8 @@ export const CREATE_BOOKMARK_GROUP = gql`
 export const REMOVE_BOOKMARK = gql`
   mutation removeBookmark($feedId: String!, $bookmarkGroupId: String) {
     removeBookmark(feedId: $feedId, bookmarkGroupId: $bookmarkGroupId) {
-      bookmarkGroup {
-        id
-        total
-        name
-        private
-        saved
-      }
-      feed {
-        id
-        type
-        isPinned
-        reaction
-        createdAt
-        owner {
-          id
-          displayName
-          username
-          avatar
-        }
-        node {
-          ... on PostModel {
-            id
-            endDate
-            description
-            media {
-              id
-              url
-              type
-            }
-            polls {
-              id
-              text
-              count
-              voted
-            }
-          }
-          ... on ArticleModel {
-            id
-            title
-            description
-            imageUrl
-            source {
-              name
-              logo
-            }
-          }
-        }
-      }
+      status
+      message
     }
   }
 `;
@@ -98,43 +52,46 @@ export const CREATE_BOOKMARK = gql`
         private
         saved
       }
-      feed {
+      bookmark {
         id
-        type
-        isPinned
-        reaction
-        createdAt
-        owner {
+        feed {
           id
-          displayName
-          username
-          avatar
-        }
-        node {
-          ... on PostModel {
+          type
+          isPinned
+          reaction
+          createdAt
+          owner {
             id
-            endDate
-            description
-            media {
-              id
-              url
-              type
-            }
-            polls {
-              id
-              text
-              count
-              voted
-            }
+            displayName
+            username
+            avatar
           }
-          ... on ArticleModel {
-            id
-            title
-            description
-            imageUrl
-            source {
-              name
-              logo
+          node {
+            ... on PostModel {
+              id
+              endDate
+              description
+              media {
+                id
+                url
+                type
+              }
+              polls {
+                id
+                text
+                count
+                voted
+              }
+            }
+            ... on ArticleModel {
+              id
+              title
+              description
+              imageUrl
+              source {
+                name
+                logo
+              }
             }
           }
         }

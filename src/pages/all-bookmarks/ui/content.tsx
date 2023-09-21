@@ -2,7 +2,7 @@ import { VStack } from '@holdr-ui/react';
 import { FeedCard, useGetBookmarks } from '../../../features';
 
 function Content() {
-  const { data } = useGetBookmarks();
+  const { data } = useGetBookmarks({ fetchPolicy: 'cache-and-network' });
 
   return (
     <VStack p={4} gap={5}>

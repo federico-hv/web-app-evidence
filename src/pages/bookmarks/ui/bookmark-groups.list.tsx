@@ -61,6 +61,7 @@ function BookmarkGroupsList() {
 
   const { data: data2 } = useSuspenseQuery<{ allBookmarkTotal: number }>(
     GET_ALL_BOOKMARKS_TOTAL,
+    { fetchPolicy: 'cache-and-network' },
   );
 
   return (

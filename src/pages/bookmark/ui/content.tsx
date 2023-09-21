@@ -4,7 +4,10 @@ import { FeedCard, useGetBookmarks } from '../../../features';
 
 function Content() {
   const params = useParams();
-  const { data } = useGetBookmarks(params.id || '');
+  const { data } = useGetBookmarks({
+    id: params.id,
+    fetchPolicy: 'network-only',
+  });
 
   return (
     <VStack p={4} gap={5}>

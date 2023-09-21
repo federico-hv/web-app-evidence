@@ -20,6 +20,7 @@ import {
   useDisclosure,
   useKeyBind,
   useSwitch,
+  VStack,
 } from '@holdr-ui/react';
 import CreateBookmarkGroup, {
   CreateBookmarkGroupTrigger,
@@ -101,12 +102,25 @@ function SelectBookmarkGroup({ data }: { data: IBookmarkGroup }) {
   );
 }
 
-function BookmarkGroupDialog() {
-  const { isOpen, onOpen, onClose } = useDialogContext();
-
+function SelectionList() {
   const { feedId } = useFeedContext();
 
-  const { data } = useGetBookmarkGroups(feedId);
+  const { data } = useGetBookmarkGroups({
+    feedId,
+    fetchPolicy: 'network-only',
+  });
+
+  return (
+    <VStack divider={<Box borderBottom={1} borderColor='base100' />}>
+      {data.bookmarkGroups.edges.map(({ node }) => (
+        <SelectBookmarkGroup key={node.id} data={node} />
+      ))}
+    </VStack>
+  );
+}
+
+function BookmarkGroupDialog() {
+  const { isOpen, onOpen, onClose } = useDialogContext();
 
   return (
     <Dialog isOpen={isOpen} onOpen={onOpen} onClose={onClose}>
@@ -141,13 +155,8 @@ function BookmarkGroupDialog() {
               </CreateBookmarkGroupTrigger>
             </CreateBookmarkGroup>
           </Dialog.Header>
-          <Dialog.Body
-            direction='vertical'
-            divider={<Box borderBottom={1} borderColor='base100' />}
-          >
-            {data.bookmarkGroups.edges.map(({ node }) => (
-              <SelectBookmarkGroup key={node.id} data={node} />
-            ))}
+          <Dialog.Body>
+            <SelectionList />
           </Dialog.Body>
         </Dialog.Content>
       </Dialog.Portal>
