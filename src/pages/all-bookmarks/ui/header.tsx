@@ -17,7 +17,7 @@ function Header() {
       }}
     >
       <Heading as='h2' size={4}>
-        All Bookmarks
+        All bookmarks
       </Heading>
     </Box>
   );
