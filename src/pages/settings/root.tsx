@@ -149,7 +149,6 @@ export function SettingsLg() {
           w={{
             '@bp4': 300,
             '@bp5': 350,
-            // '@bp4': 375,
           }}
           borderRight={2}
           borderColor='base100'

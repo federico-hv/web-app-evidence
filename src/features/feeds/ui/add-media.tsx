@@ -86,7 +86,7 @@ function AddMedia({
 
     if (allFiles.length > 1) {
       // images only
-      // check if file types are image only
+      // check if file interface are image only
       for (const file of allFiles) {
         if (!FileUtility.ofType(file.type, 'image')) {
           openWith({

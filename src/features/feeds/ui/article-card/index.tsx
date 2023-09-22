@@ -2,7 +2,6 @@ import {
   Avatar,
   Box,
   Button,
-  ButtonGroup,
   Card,
   HStack,
   IconButton,
@@ -22,13 +21,15 @@ import ReactionPopover from '../reaction-popover';
 import { ArticleModel, Reaction, useFeedContext } from '../../shared';
 import OwnerMoreButton from '../owner-more.button';
 import { useCurrentUser } from '../../../auth';
+import { BookmarkPopover } from '../../../bookmarks';
 
 // `https://logo.clearbit.com/${domainUrl}` logo finder
 
 function ArticleCard({ data }: { data: ArticleModel }) {
   const location = useLocation();
   const currentUser = useCurrentUser();
-  const { owner, createdAt, reaction, feedId } = useFeedContext();
+  const { owner, createdAt, reaction, feedId, bookmarked } =
+    useFeedContext();
   return (
     <VStack gap={3}>
       <Card
@@ -108,16 +109,24 @@ function ArticleCard({ data }: { data: ArticleModel }) {
                   position='relative'
                   zIndex={5}
                 >
-                  <ButtonGroup
-                    variant='ghost'
-                    colorTheme='primary400'
-                    items='center'
-                  >
-                    <IconButton
-                      ariaLabel='save article'
-                      icon='bookmark-outline'
-                      size='lg'
-                    />
+                  <HStack items='center'>
+                    <BookmarkPopover position='right' sideOffset={0}>
+                      <IconButton
+                        variant='ghost'
+                        colorTheme='primary400'
+                        ariaLabel={
+                          !bookmarked
+                            ? 'create bookmark'
+                            : 'remove bookmark'
+                        }
+                        icon={
+                          !bookmarked
+                            ? 'bookmark-outline'
+                            : 'bookmark-fill'
+                        }
+                        size='lg'
+                      />
+                    </BookmarkPopover>
                     <Box>
                       <ReactionPopover
                         alignOffset={-6}
@@ -137,7 +146,7 @@ function ArticleCard({ data }: { data: ArticleModel }) {
                         />
                       </ReactionPopover>
                     </Box>
-                  </ButtonGroup>
+                  </HStack>
                   <Box>
                     <Link
                       to={data.url}

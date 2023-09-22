@@ -25,8 +25,10 @@ function FeedCard({ data }: { data: FeedModel }) {
       />
       <FeedContextProvider
         value={{
+          // TODO: use a lodash pick and cast result
           owner: data.owner,
           feedId: data.id as string,
+          bookmarked: data.bookmarked,
           reaction: data.reaction,
           isPinned: data.isPinned,
           createdAt: data.createdAt,

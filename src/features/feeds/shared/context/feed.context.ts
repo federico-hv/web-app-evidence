@@ -8,12 +8,14 @@ interface IFeedContext {
   reaction: FeedReactionName | null;
   createdAt: string;
   isPinned: boolean;
+  bookmarked: boolean;
 }
 
 const FeedContext = createContext<IFeedContext>({
   owner: { id: '', avatar: '', displayName: '', username: '' },
   feedId: '',
   reaction: null,
+  bookmarked: false,
   createdAt: '',
   isPinned: false,
 });

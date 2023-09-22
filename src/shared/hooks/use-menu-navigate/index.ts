@@ -9,7 +9,7 @@ export const useMenuNavigate: UseMenuNavigate = () => {
   const navigate = useNavigate();
 
   const goto = {
-    home: () => navigate(prefix('/', Paths.home)),
+    home: () => navigate(prefix('/', Paths.root)),
     notifications: () => navigate(prefix('/', Paths.notifications)),
     discover: () => navigate(prefix('/', Paths.discover)),
     settings: () => navigate(prefix('/', Paths.settings)),

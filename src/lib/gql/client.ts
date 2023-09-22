@@ -4,7 +4,7 @@ import { createUploadLink } from 'apollo-upload-client';
 import { GQLCache } from './cache';
 import { Cookies } from 'react-cookie';
 
-// workaround links types errors
+// workaround links interface errors
 const uploadLink = createUploadLink({
   uri: import.meta.env.VITE_GQL_API_URL,
 });

@@ -24,10 +24,11 @@ import Media from './media';
 import Polls from './polls';
 import { useCurrentUser } from '../../../auth';
 import OwnerMoreButton from '../owner-more.button';
+import { BookmarkPopover } from '../../../bookmarks';
 
 function PostCard({ data }: { data: PostModel }) {
   const currentUser = useCurrentUser();
-  const { owner, createdAt, reaction } = useFeedContext();
+  const { owner, createdAt, reaction, bookmarked } = useFeedContext();
   return (
     <Card>
       <Card.Header
@@ -63,7 +64,7 @@ function PostCard({ data }: { data: PostModel }) {
           )}
         </Box>
       </Card.Header>
-      <Card.Body px={4} py={6} zIndex={5} position='relative'>
+      <Card.Body px={4} py={6} position='relative'>
         <Text>{data.description}</Text>
         {data.media && <Media items={data.media} />}
         {data.polls && (
@@ -94,7 +95,7 @@ function PostCard({ data }: { data: PostModel }) {
                   ariaLabel={reaction ? Reaction[reaction].name : 'React'}
                 />
               </ResponsiveItem>
-              <ResponsiveItem fullWidth mobile='hide' tablet='show'>
+              <ResponsiveItem fullWidth laptop='show' desktop='show'>
                 <Button
                   fullWidth
                   leftIcon={
@@ -116,28 +117,34 @@ function PostCard({ data }: { data: PostModel }) {
           position='relative'
           css={{ zIndex: 5 }}
         >
-          <Responsive>
-            <ResponsiveItem mobile='show'>
-              <IconButton
-                icon='bookmark-outline'
-                ariaLabel='Bookmark'
-                variant='ghost'
-                colorTheme='base600'
-                size='lg'
-              />
-            </ResponsiveItem>
-            <ResponsiveItem fullWidth mobile='hide' tablet='show'>
-              <Button
-                fullWidth
-                leftIcon='bookmark-outline'
-                className={extraBtnPadding()}
-                variant='ghost'
-                colorTheme='base600'
-              >
-                Bookmark
-              </Button>
-            </ResponsiveItem>
-          </Responsive>
+          <BookmarkPopover>
+            <Responsive>
+              <ResponsiveItem mobile='show'>
+                <IconButton
+                  ariaLabel={
+                    !bookmarked ? 'create bookmark' : 'remove bookmark'
+                  }
+                  icon={!bookmarked ? 'bookmark-outline' : 'bookmark-fill'}
+                  variant='ghost'
+                  colorTheme='base600'
+                  size='lg'
+                />
+              </ResponsiveItem>
+              <ResponsiveItem fullWidth laptop='show' desktop='show'>
+                <Button
+                  fullWidth
+                  leftIcon={
+                    !bookmarked ? 'bookmark-outline' : 'bookmark-fill'
+                  }
+                  className={extraBtnPadding()}
+                  variant='ghost'
+                  colorTheme='base600'
+                >
+                  Bookmark
+                </Button>
+              </ResponsiveItem>
+            </Responsive>
+          </BookmarkPopover>
         </Box>
 
         <Box
@@ -155,7 +162,7 @@ function PostCard({ data }: { data: PostModel }) {
                 colorTheme='base600'
               />
             </ResponsiveItem>
-            <ResponsiveItem fullWidth mobile='hide' tablet='show'>
+            <ResponsiveItem fullWidth laptop='show' desktop='show'>
               <Button
                 leftIcon='share-outline'
                 fullWidth

@@ -48,6 +48,7 @@ function Menu({ children }: GenericProps) {
                 align='end'
                 sideOffset={5}
                 boxShadow='rgba(99, 99, 99, 0.2) 0px 2px 8px 0px'
+                css={{ backgroundColor: '#fff' }}
               >
                 {Content}
               </Popover.Content>
@@ -62,10 +63,10 @@ function Menu({ children }: GenericProps) {
               <Drawer.Content>
                 <VStack
                   radius={3}
-                  bgColor='primary400'
                   w='full'
                   minHeight='1px'
                   divider={<Box borderBottom={1} borderColor='base100' />}
+                  css={{ backgroundColor: '#fff' }}
                 >
                   {Header}
                   {Content}
@@ -137,6 +138,7 @@ function MenuItem({
 }: MenuItemProps) {
   return (
     <HStack
+      as='button'
       justify='space-between'
       role='button'
       items='center'

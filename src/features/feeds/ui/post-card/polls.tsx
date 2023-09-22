@@ -155,7 +155,7 @@ function Polls({
         </VStack>
       }
     >
-      <VStack gap={5}>
+      <VStack zIndex={5} gap={5}>
         <VStack gap={3} mt={5}>
           {items.map((data) => (
             <SwitchConditional key={`poll-${data.id}`}>

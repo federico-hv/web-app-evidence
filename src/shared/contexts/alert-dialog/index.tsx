@@ -62,6 +62,9 @@ function AlertDialogProvider({ children }: GenericProps) {
             <Dialog.Content
               h={{ '@bp1': 325, '@bp3': 225 }}
               w={{ '@bp1': '90vw', '@bp3': 400 }}
+              css={{
+                backgroundColor: '#FFF',
+              }}
             >
               <Dialog.Body pt={5}>
                 <VStack

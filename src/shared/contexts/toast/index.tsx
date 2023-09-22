@@ -30,7 +30,9 @@ function ToastProvider({ children }: GenericProps) {
         <Toast.Provider>
           <Toast.Item
             position={
-              ['danger', 'info'].includes(current?.status || 'info')
+              ['danger', 'info', 'success'].includes(
+                current?.status || 'info',
+              )
                 ? 'top-center'
                 : 'bottom-center'
             }
