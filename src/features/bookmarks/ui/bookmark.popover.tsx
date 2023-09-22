@@ -2,38 +2,19 @@ import {
   DialogContextProvider,
   GenericProps,
   Loader,
-  TextGroup,
-  TextGroupHeading,
-  TextGroupSubheading,
-  useDialogContext,
 } from '../../../shared';
 import { Suspense, useState } from 'react';
 import {
   Box,
-  Button,
-  Checkbox,
-  CloseButton,
-  Dialog,
-  Heading,
   HStack,
   Popover,
   useDisclosure,
   useKeyBind,
-  useSwitch,
-  VStack,
 } from '@holdr-ui/react';
-import CreateBookmarkGroup, {
-  CreateBookmarkGroupTrigger,
-} from './create-bookmark-group';
 import { ErrorBoundary } from 'react-error-boundary';
-import {
-  IBookmarkGroup,
-  useCreateBookmark,
-  useGetBookmarkGroups,
-  useRemoveBookmark,
-} from '../shared';
+import { useCreateBookmark, useRemoveBookmark } from '../shared';
 import { useFeedContext } from '../../feeds';
-import { styled } from '../../../configs';
+import BookmarkGroupDialog from './bookmark-group.dialog';
 
 function PopoverItem({
   children,
@@ -52,115 +33,6 @@ function PopoverItem({
         {children}
       </Box>
     </button>
-  );
-}
-
-const FlexLabel = styled('label', {
-  display: 'flex',
-  flex: 1,
-});
-
-function SelectBookmarkGroup({ data }: { data: IBookmarkGroup }) {
-  const { switchState, turnOn, turnOff } = useSwitch(!!data.saved);
-
-  const { feedId } = useFeedContext();
-
-  const { removeBookmark, loading: loadingRemove } = useRemoveBookmark();
-  const { createBookmark, loading: loadingCreate } = useCreateBookmark();
-
-  return (
-    <HStack key={data.id} px={3} py={4}>
-      <FlexLabel htmlFor={data.id}>
-        <TextGroup
-          cursor='pointer'
-          id='bookmark-item'
-          css={{ userSelect: 'none' }}
-        >
-          <TextGroupHeading size={3}>{data.name}</TextGroupHeading>
-          <TextGroupSubheading size={2} color='base400'>
-            {data.total} item{data.total > 0 ? 's' : ''}
-          </TextGroupSubheading>
-        </TextGroup>
-      </FlexLabel>
-      <Checkbox
-        id={data.id}
-        onChange={async () => {
-          if (switchState) {
-            turnOff(); // optimistic
-            await removeBookmark(feedId, data.id);
-          } else {
-            turnOn(); // optimistic
-            await createBookmark(feedId, data.id);
-          }
-        }}
-        disabled={loadingCreate || loadingRemove}
-        value={`${switchState}`}
-        checked={switchState}
-        labelledBy='bookmark-item'
-      />
-    </HStack>
-  );
-}
-
-function SelectionList() {
-  const { feedId } = useFeedContext();
-
-  const { data } = useGetBookmarkGroups({
-    feedId,
-    fetchPolicy: 'network-only',
-  });
-
-  return (
-    <VStack divider={<Box borderBottom={1} borderColor='base100' />}>
-      {data.bookmarkGroups.edges.map(({ node }) => (
-        <SelectBookmarkGroup key={node.id} data={node} />
-      ))}
-    </VStack>
-  );
-}
-
-function BookmarkGroupDialog() {
-  const { isOpen, onOpen, onClose } = useDialogContext();
-
-  return (
-    <Dialog isOpen={isOpen} onOpen={onOpen} onClose={onClose}>
-      <Dialog.Portal>
-        <Dialog.Overlay />
-        <Dialog.Content w={425} css={{ backgroundColor: '#FFF' }}>
-          <Dialog.Header
-            justify='space-between'
-            borderBottom={1}
-            borderColor='base100'
-            css={{ backgroundColor: '#FFF' }}
-          >
-            <Dialog.Close>
-              <CloseButton type='button' variant='ghost' />
-            </Dialog.Close>
-            <HStack
-              position='absolute'
-              l={40}
-              r={0}
-              p={4}
-              css={{
-                zIndex: -1,
-              }}
-            >
-              <Heading as='h1' casing='uppercase' size={3} weight={500}>
-                Bookmark groups
-              </Heading>
-            </HStack>
-            <CreateBookmarkGroup>
-              <CreateBookmarkGroupTrigger>
-                <Button rightIcon='add'>Create</Button>
-              </CreateBookmarkGroupTrigger>
-            </CreateBookmarkGroup>
-          </Dialog.Header>
-          <Dialog.Body>
-            <SelectionList />
-          </Dialog.Body>
-        </Dialog.Content>
-      </Dialog.Portal>
-    </Dialog>
   );
 }
 
@@ -186,10 +58,13 @@ function BookmarkPopover({
   const [popoverOpen, set] = useState(false);
   const closePopover = () => set(false);
 
-  // const closeAfter = async (id: string, cb: (id: string) => void) => {
-  //   cb(id);
-  //   onClose();
-  // };
+  const closeAfter = async (
+    id: string,
+    cb: (...args: any[]) => Promise<boolean>,
+  ) => {
+    await cb(id);
+    set(false);
+  };
 
   // close with ESC key
   useKeyBind(27, closePopover);
@@ -219,7 +94,7 @@ function BookmarkPopover({
             >
               <PopoverItem
                 disabled={removeBookmarkLoading}
-                onClick={() => removeBookmark(feedId)}
+                onClick={() => closeAfter(feedId, removeBookmark)}
               >
                 Remove bookmark
               </PopoverItem>

@@ -27,6 +27,12 @@ export function useRemoveBookmark() {
               // For some reason, it currently removes the bookmark, but seems like patchwork
               return;
             },
+            feeds() {
+              return;
+            },
+            feed() {
+              return;
+            },
             bookmarkGroups() {
               if (!data || !data.removeBookmark.status) return;
               // Need a solution to update cache

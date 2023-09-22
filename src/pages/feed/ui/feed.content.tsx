@@ -66,8 +66,6 @@ function FeedContent() {
 
   const goBack = useGoBack();
 
-  console.log(data);
-
   return (
     <Error hasError={!!error} errorEl={<NotFoundError />}>
       <Loader loading={loading}>

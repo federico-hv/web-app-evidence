@@ -17,8 +17,6 @@ import { useLocation } from 'react-router-dom';
 function FeedCard({ data }: { data: FeedModel }) {
   const location = useLocation();
 
-  console.log(data.bookmarked);
-
   return (
     <Box position='relative' h='fit-content'>
       <LinkOverlay

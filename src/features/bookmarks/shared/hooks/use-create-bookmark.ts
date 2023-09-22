@@ -65,13 +65,11 @@ export function useCreateBookmark() {
               }
             },
             // update feeds
-            feeds(current) {
-              console.log(current);
+            feeds() {
               return;
             },
             //update feed
-            feed(current) {
-              console.log(current);
+            feed() {
               return;
             },
           },
