@@ -7,6 +7,7 @@ export interface FeedModel extends GenericItem {
   isPinned: boolean;
   node: PostModel | ArticleModel;
   reaction: FeedReactionName | null;
+  bookmarked: boolean;
   owner: UserModel;
   createdAt: string;
 }

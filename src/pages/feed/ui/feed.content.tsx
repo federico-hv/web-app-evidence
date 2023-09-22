@@ -66,12 +66,15 @@ function FeedContent() {
 
   const goBack = useGoBack();
 
+  console.log(data);
+
   return (
     <Error hasError={!!error} errorEl={<NotFoundError />}>
       <Loader loading={loading}>
         {data && data.feed ? (
           <FeedContextProvider
             value={{
+              bookmarked: data.feed.bookmarked,
               isPinned: data.feed.isPinned,
               owner: data.feed.owner,
               feedId: data.feed.id as string,
@@ -189,8 +192,16 @@ function FeedContent() {
                       <BookmarkPopover alignOffset={20}>
                         <IconButton
                           variant='ghost'
-                          icon='bookmark-outline'
-                          ariaLabel='bookmark'
+                          ariaLabel={
+                            !data.feed.bookmarked
+                              ? 'create bookmark'
+                              : 'remove bookmark'
+                          }
+                          icon={
+                            !data.feed.bookmarked
+                              ? 'bookmark-outline'
+                              : 'bookmark-fill'
+                          }
                           size={{ '@bp1': 'base', '@bp4': 'lg' }}
                         />
                       </BookmarkPopover>

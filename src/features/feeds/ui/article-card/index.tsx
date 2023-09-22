@@ -28,7 +28,8 @@ import { BookmarkPopover } from '../../../bookmarks';
 function ArticleCard({ data }: { data: ArticleModel }) {
   const location = useLocation();
   const currentUser = useCurrentUser();
-  const { owner, createdAt, reaction, feedId } = useFeedContext();
+  const { owner, createdAt, reaction, feedId, bookmarked } =
+    useFeedContext();
   return (
     <VStack gap={3}>
       <Card
@@ -113,8 +114,16 @@ function ArticleCard({ data }: { data: ArticleModel }) {
                       <IconButton
                         variant='ghost'
                         colorTheme='primary400'
-                        ariaLabel='save article'
-                        icon='bookmark-outline'
+                        ariaLabel={
+                          !bookmarked
+                            ? 'create bookmark'
+                            : 'remove bookmark'
+                        }
+                        icon={
+                          !bookmarked
+                            ? 'bookmark-outline'
+                            : 'bookmark-fill'
+                        }
                         size='lg'
                       />
                     </BookmarkPopover>

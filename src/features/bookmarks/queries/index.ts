@@ -51,6 +51,7 @@ export const GET_BOOKMARKS = gql`
             type
             isPinned
             reaction
+            bookmarked
             createdAt
             owner {
               id
@@ -112,6 +113,7 @@ export const GET_ALL_BOOKMARKS = gql`
             type
             isPinned
             reaction
+            bookmarked
             createdAt
             owner {
               id

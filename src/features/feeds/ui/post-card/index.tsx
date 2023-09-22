@@ -28,7 +28,7 @@ import { BookmarkPopover } from '../../../bookmarks';
 
 function PostCard({ data }: { data: PostModel }) {
   const currentUser = useCurrentUser();
-  const { owner, createdAt, reaction } = useFeedContext();
+  const { owner, createdAt, reaction, bookmarked } = useFeedContext();
   return (
     <Card>
       <Card.Header
@@ -121,8 +121,10 @@ function PostCard({ data }: { data: PostModel }) {
             <Responsive>
               <ResponsiveItem mobile='show'>
                 <IconButton
-                  icon='bookmark-outline'
-                  ariaLabel='Bookmark'
+                  ariaLabel={
+                    !bookmarked ? 'create bookmark' : 'remove bookmark'
+                  }
+                  icon={!bookmarked ? 'bookmark-outline' : 'bookmark-fill'}
                   variant='ghost'
                   colorTheme='base600'
                   size='lg'
@@ -131,7 +133,9 @@ function PostCard({ data }: { data: PostModel }) {
               <ResponsiveItem fullWidth laptop='show' desktop='show'>
                 <Button
                   fullWidth
-                  leftIcon='bookmark-outline'
+                  leftIcon={
+                    !bookmarked ? 'bookmark-outline' : 'bookmark-fill'
+                  }
                   className={extraBtnPadding()}
                   variant='ghost'
                   colorTheme='base600'

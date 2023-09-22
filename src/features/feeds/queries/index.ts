@@ -1,13 +1,14 @@
 import { gql } from '@apollo/client';
 
 export const GET_USER_FEEDS = gql`
-  query userFeeds($payload: UserFeedsInput!) {
+  query userFeeds($payload: FeedInput!) {
     userFeeds(payload: $payload) {
       count
       data {
         id
         type
         reaction
+        bookmarked
         isPinned
         createdAt
         owner {
@@ -60,6 +61,7 @@ export const GET_FEEDS = gql`
         type
         isPinned
         reaction
+        bookmarked
         createdAt
         owner {
           id
@@ -111,6 +113,7 @@ export const GET_REACTED_FEEDS = gql`
         type
         reaction
         isPinned
+        bookmarked
         createdAt
         owner {
           id
@@ -158,6 +161,7 @@ export const GET_FEED = gql`
       type
       isPinned
       reaction
+      bookmarked
       createdAt
       owner {
         id
