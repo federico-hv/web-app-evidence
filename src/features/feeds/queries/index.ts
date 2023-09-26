@@ -204,7 +204,7 @@ export const GET_FEED = gql`
 `;
 
 export const GET_FEED_STATISTIC = gql`
-  query feedStatistics($id: String!, $name: FeedStatistic!) {
+  query feedStatistic($id: String!, $name: FeedStatistic!) {
     feedStatistic(id: $id, name: $name) # count, i.e number of items.
   }
 `;

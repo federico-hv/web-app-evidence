@@ -11,9 +11,13 @@ import {
   ReactionPopover,
 } from '../../../features';
 import {
+  arrayFrom,
   DateUtility,
   Error,
+  ErrorFallback,
   GeneralContextProvider,
+  GenericProps,
+  GQLRenderer,
   Head,
   LinkOverlay,
   LinkText,
@@ -30,6 +34,7 @@ import {
   Heading,
   HStack,
   IconButton,
+  Skeleton,
   VStack,
 } from '@holdr-ui/react';
 import { capitalize } from 'lodash';
@@ -40,19 +45,49 @@ import MoreOptionsButton from './more-options.button';
 import { FeedReactionUsersDialog } from './index';
 import { useState } from 'react';
 
-type Options = 'reactions' | 'views' | undefined;
+type Options = 'reactions' | 'views' | 'bookmarks' | undefined;
+
+function StatisticsWrapper({ children }: GenericProps) {
+  return (
+    <HStack
+      gap={{ '@bp1': 3, '@bp3': 5 }}
+      p={{ '@bp1': 4, '@bp3': 5 }}
+      bgColor='base100'
+      w='full'
+      radius={3}
+    >
+      {children}
+    </HStack>
+  );
+}
+
 function Statistics() {
   const [state, setState] = useState<Options>();
 
   const update = (newState: Options) => setState(newState);
 
+  const LoadingFallback = (
+    <StatisticsWrapper>
+      {arrayFrom(3).map((n) => (
+        <Skeleton key={`skeleton-loader-${n}`} h='1.25rem' w='6rem' />
+      ))}
+    </StatisticsWrapper>
+  );
+
   return (
-    <GeneralContextProvider value={{ state, update }}>
-      <Statistic name='views' />
-      <Statistic name='reactions' action={() => update('reactions')} />
-      <Statistic name='bookmarks' />
-      <FeedReactionUsersDialog />
-    </GeneralContextProvider>
+    <GQLRenderer
+      ErrorFallback={ErrorFallback}
+      LoadingFallback={LoadingFallback}
+    >
+      <GeneralContextProvider value={{ state, update }}>
+        <StatisticsWrapper>
+          <Statistic name='views' />
+          <Statistic name='reactions' action={() => update('reactions')} />
+          <Statistic name='bookmarks' />
+        </StatisticsWrapper>
+        <FeedReactionUsersDialog />
+      </GeneralContextProvider>
+    </GQLRenderer>
   );
 }
 
@@ -160,15 +195,9 @@ function FeedContent() {
                         data={data.feed.node as ArticleModel}
                       />
                     )}
-                    <HStack
-                      gap={{ '@bp1': 3, '@bp3': 5 }}
-                      p={{ '@bp1': 4, '@bp3': 5 }}
-                      bgColor='base100'
-                      w='full'
-                      radius={3}
-                    >
-                      <Statistics />
-                    </HStack>
+
+                    <Statistics />
+
                     <HStack gap={5}>
                       <ReactionPopover>
                         <IconButton
