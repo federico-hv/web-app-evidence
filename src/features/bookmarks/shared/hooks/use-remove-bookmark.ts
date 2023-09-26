@@ -2,6 +2,7 @@ import { useMutation } from '@apollo/client';
 import { REMOVE_BOOKMARK } from '../../mutations';
 import { IStatus, useToast } from '../../../../shared';
 import { GET_ALL_BOOKMARKS_TOTAL } from '../../queries';
+import { GET_FEED_STATISTIC } from '../../../feeds';
 
 export function useRemoveBookmark() {
   const { openWith } = useToast();
@@ -30,6 +31,9 @@ export function useRemoveBookmark() {
             feeds() {
               return;
             },
+            userFeeds() {
+              return;
+            },
             feed() {
               return;
             },
@@ -37,6 +41,26 @@ export function useRemoveBookmark() {
               if (!data || !data.removeBookmark.status) return;
               // Need a solution to update cache
               return;
+            },
+            feedStatistic() {
+              const data: number | null = cache.readQuery({
+                query: GET_FEED_STATISTIC,
+                variables: { id: feedId, name: 'bookmarks' },
+              });
+
+              // just null, avoid 0 case
+              if (!data && typeof data === 'object') return;
+
+              cache.writeQuery({
+                query: GET_FEED_STATISTIC,
+                variables: {
+                  id: feedId,
+                  name: 'bookmarks',
+                },
+                data: {
+                  feedStatistics: data - 1,
+                },
+              });
             },
             allBookmarkTotal(current) {
               if (!bookmarkGroupId) {

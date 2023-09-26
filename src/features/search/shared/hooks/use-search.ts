@@ -34,6 +34,5 @@ export function useSearch<T>(): [
     [],
   );
 
-  // TODO: use this method to return data from mutations
   return [search, { results, error, loading }];
 }

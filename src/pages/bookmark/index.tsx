@@ -7,20 +7,20 @@ import { Box } from '@holdr-ui/react';
 function BookmarkPage() {
   // const params = useParams();
   return (
-    <ErrorBoundary FallbackComponent={ErrorFallback}>
-      <Suspense>
-        <Box
-          w={{ '@bp4': '100%', '@bp5': 'calc(100% - 120px)' }}
-          borderRight={2}
-          borderLeft={2}
-          borderColor='base100'
-          minHeight='100%'
-        >
+    <Box
+      w={{ '@bp4': '100%', '@bp5': 'calc(100% - 120px)' }}
+      borderRight={2}
+      borderLeft={2}
+      borderColor='base100'
+      minHeight='100%'
+    >
+      <ErrorBoundary FallbackComponent={ErrorFallback}>
+        <Suspense>
           <Header />
           <Content />
-        </Box>
-      </Suspense>
-    </ErrorBoundary>
+        </Suspense>
+      </ErrorBoundary>
+    </Box>
   );
 }
 BookmarkPage.dipsplayName = 'Bookmark Page';

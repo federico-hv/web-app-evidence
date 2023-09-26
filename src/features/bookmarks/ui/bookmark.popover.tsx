@@ -1,9 +1,5 @@
-import {
-  DialogContextProvider,
-  GenericProps,
-  Loader,
-} from '../../../shared';
-import { Suspense, useState } from 'react';
+import { DialogContextProvider, GenericProps } from '../../../shared';
+import { Fragment, Suspense, useState } from 'react';
 import {
   Box,
   HStack,
@@ -103,8 +99,8 @@ function BookmarkPopover({
           </Popover.Content>
         </Popover.Portal>
       </Popover>
-      <ErrorBoundary fallback={<></>}>
-        <Suspense fallback={<Loader loading={true} />}>
+      <ErrorBoundary fallback={<Fragment />}>
+        <Suspense fallback={<Fragment />}>
           <BookmarkGroupDialog />
         </Suspense>
       </ErrorBoundary>

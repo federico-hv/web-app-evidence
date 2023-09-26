@@ -3,6 +3,7 @@ import { CREATE_BOOKMARK } from '../../mutations';
 import { IBookmark, IBookmarkGroup } from '../interface';
 import { useToast } from '../../../../shared';
 import { GET_ALL_BOOKMARKS_TOTAL } from '../../queries';
+import { GET_FEED_STATISTIC } from '../../../feeds';
 
 export function useCreateBookmark() {
   const { openWith } = useToast();
@@ -64,12 +65,35 @@ export function useCreateBookmark() {
                 });
               }
             },
+            feedStatistic() {
+              const data: number | null = cache.readQuery({
+                query: GET_FEED_STATISTIC,
+                variables: { id: feedId, name: 'bookmarks' },
+              });
+
+              // just null, avoid 0 case
+              if (!data && typeof data === 'object') return;
+
+              cache.writeQuery({
+                query: GET_FEED_STATISTIC,
+                variables: {
+                  id: feedId,
+                  name: 'bookmarks',
+                },
+                data: {
+                  feedStatistics: data + 1,
+                },
+              });
+            },
             // update feeds
             feeds() {
               return;
             },
             //update feed
             feed() {
+              return;
+            },
+            userFeeds() {
               return;
             },
           },
