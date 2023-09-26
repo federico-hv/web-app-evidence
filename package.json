@@ -33,7 +33,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.8.3",
-    "@holdr-ui/react": "^1.1.4",
+    "@holdr-ui/react": "^1.1.6",
     "@stitches/react": "^1.2.8",
     "@storybook/addon-docs": "^6.5.16",
     "@types/country-list": "^2.1.1",
