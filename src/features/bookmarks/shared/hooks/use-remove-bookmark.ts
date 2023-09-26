@@ -30,6 +30,9 @@ export function useRemoveBookmark() {
             feeds() {
               return;
             },
+            userFeeds() {
+              return;
+            },
             feed() {
               return;
             },

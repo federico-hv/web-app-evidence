@@ -72,6 +72,9 @@ export function useCreateBookmark() {
             feed() {
               return;
             },
+            userFeeds() {
+              return;
+            },
           },
         });
       },

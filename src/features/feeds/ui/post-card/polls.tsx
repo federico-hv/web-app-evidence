@@ -20,9 +20,6 @@ import {
 } from '../../../../shared';
 import pollAlt from '../../../../assets/images/poll-alt.png';
 
-/*
-  
- */
 function PollResponse({ data, total }: { data: IPoll; total: number }) {
   const percentage = !total ? 0 : (data.count / total) * 100;
 
@@ -74,9 +71,6 @@ function PollResponse({ data, total }: { data: IPoll; total: number }) {
   );
 }
 
-/*
-
- */
 function PollAnswer({
   data,
   action,
@@ -155,7 +149,7 @@ function Polls({
         </VStack>
       }
     >
-      <VStack zIndex={5} gap={5}>
+      <VStack position='relative' zIndex={5} gap={5}>
         <VStack gap={3} mt={5}>
           {items.map((data) => (
             <SwitchConditional key={`poll-${data.id}`}>

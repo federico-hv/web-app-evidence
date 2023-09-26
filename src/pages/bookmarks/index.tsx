@@ -7,23 +7,23 @@ import {
   InputGroup,
 } from '@holdr-ui/react';
 import {
+  ErrorFallback,
   Head,
+  Loader,
   PageLayout,
   PageLayoutContent,
   PageLayoutHeader,
   Paths,
   ShelfLayout,
   ShelfLayoutShelf,
-  ErrorFallback,
-  Loader,
 } from '../../shared';
 import { Outlet, useNavigate, useParams } from 'react-router-dom';
 import { Suspense, useEffect } from 'react';
-import { ErrorBoundary } from 'react-error-boundary';
-import BookmarkGroupsList from './ui/bookmark-groups.list';
 import CreateBookmarkGroup, {
   CreateBookmarkGroupTrigger,
 } from '../../features/bookmarks/ui/create-bookmark-group';
+import { ErrorBoundary } from 'react-error-boundary';
+import BookmarkGroupsList from './ui/bookmark-groups.list';
 
 function BookmarksPage() {
   const params = useParams();
