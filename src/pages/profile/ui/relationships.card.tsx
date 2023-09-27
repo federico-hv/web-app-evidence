@@ -282,7 +282,7 @@ function RelationshipsCard() {
       >
         <VStack
           w='100%'
-          px={{ '@bp1': 3, '@bp3': 4 }}
+          px={{ '@bp1': 0, '@bp3': 4 }}
           pt={{ '@bp1': 3, '@bp3': 4 }}
           pb={{ '@bp1': 4, '@bp3': 5 }}
           borderBottom={2}

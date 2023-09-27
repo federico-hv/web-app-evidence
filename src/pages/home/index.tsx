@@ -4,10 +4,15 @@ import {
   ContentLayoutMain,
   Error,
   Head,
+  Responsive,
+  ResponsiveItem,
 } from '../../shared';
 import { VStack } from '@holdr-ui/react';
 import { SuggestionsCard, useCurrentUser } from '../../features';
 import { FeedTabs } from './ui';
+import SmNavigation from '../../features/layout/ui/navigation/sm';
+
+//TODO: Rename move
 
 function HomePage() {
   const currentUser = useCurrentUser();
@@ -15,6 +20,11 @@ function HomePage() {
   return (
     <Error hasError={!currentUser} errorEl={<></>}>
       <Head prefix='Holdr Base' title='' description='Home page' />
+      <Responsive>
+        <ResponsiveItem mobile='show'>
+          <SmNavigation />
+        </ResponsiveItem>
+      </Responsive>
       {currentUser && (
         <ContentLayout>
           <ContentLayoutMain>

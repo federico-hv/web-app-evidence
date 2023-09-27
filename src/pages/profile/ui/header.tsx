@@ -172,25 +172,25 @@ function Header() {
         my={{ '@bp1': 3, '@bp3': 5 }}
         justify='space-between'
       >
-        <VStack gap={3} minHeight={0}>
-          {profile.bio && (
-            <Box borderTop={1} borderColor='primary400'>
-              <Text>{profile.bio}</Text>
-            </Box>
-          )}
-          <ArtistUrl />
-        </VStack>
-
         {currentUser && (
-          <VStack gap={4}>
-            <SocialButton />
+          <HStack gap={4} justify='space-between'>
             <Responsive>
               <ResponsiveItem mobile='show'>
                 <RelationshipsCard />
               </ResponsiveItem>
             </Responsive>
-          </VStack>
+            <SocialButton />
+          </HStack>
         )}
+
+        <VStack gap={3} minHeight={0}>
+          {profile.bio && (
+            <Box borderTop={1} borderColor='primary400'>
+              <Text size={{ '@bp1': 2, '@bp3': 3 }}>{profile.bio}</Text>
+            </Box>
+          )}
+          <ArtistUrl />
+        </VStack>
       </Stack>
     </VStack>
   );

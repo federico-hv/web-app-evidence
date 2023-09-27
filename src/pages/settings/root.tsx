@@ -3,13 +3,13 @@ import {
   Heading,
   HStack,
   Icon,
-  IconButton,
   Input,
   InputGroup,
   useWindowSize,
   VStack,
 } from '@holdr-ui/react';
 import {
+  BackButton,
   Head,
   Paths,
   RootSetting,
@@ -37,20 +37,19 @@ export function PageHeader({
       py={4}
       borderBottom={2}
       borderColor='base100'
-      h={58}
+      maxHeight={58}
     >
       <HStack items='center' gap={4}>
         {onBack && (
           <Box display={{ '@bp4': 'none' }}>
-            <IconButton
-              variant='ghost'
-              icon='arrow-left-outline'
-              ariaLabel='go back'
-              onClick={onBack}
-            />
+            <BackButton />
           </Box>
         )}
-        <Heading size={4} weight={500} css={{ fontSize: 'large' }}>
+        <Heading
+          casing='uppercase'
+          size={{ '@bp1': 3, '@bp3': 4 }}
+          weight={500}
+        >
           {title}
         </Heading>
       </HStack>
@@ -70,6 +69,7 @@ function SettingNavigationLink({
   return (
     <Link to={to}>
       <HStack
+        fontSize={{ '@bp1': 2, '@bp3': 3 }}
         justify='space-between'
         p={4}
         bgColor={active ? 'base100' : 'transparent'}
@@ -91,7 +91,6 @@ export function SettingsSm() {
   return (
     <Box
       display={{ '@bp4': 'none' }}
-      pt={{ '@bp1': 69 }}
       borderLeft={2}
       borderColor='base100'
       h='100vh'

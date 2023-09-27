@@ -1,8 +1,9 @@
-import { Box, HStack, IconButton, VStack } from '@holdr-ui/react';
+import { Box, HStack, VStack } from '@holdr-ui/react';
 import { getSubComponent } from '../../utilities';
 import { PageLayoutHeaderProps, PageLayoutSCNames } from './types';
 import { VStackProps } from '@holdr-ui/react/dist/components/stack/src/stack.types';
 import { BoxProps } from '@holdr-ui/react/dist/components/box/src/box.types';
+import { BackButton } from '../../components';
 
 function PageLayout({ children, ...props }: VStackProps) {
   const Header = getSubComponent<PageLayoutSCNames>(
@@ -40,18 +41,17 @@ function PageLayoutHeader({
       <HStack items='center' gap={4}>
         {onBack && (
           <Box display={{ '@bp4': 'none' }}>
-            <IconButton
-              variant='ghost'
-              icon='arrow-left-outline'
-              ariaLabel='go back'
-              onClick={onBack}
-            />
+            <BackButton />
           </Box>
         )}
         <Box
           w='100%'
           fontSize={4}
-          css={{ fontSize: 'large', fontWeight: 500 }}
+          css={{
+            fontSize: 'large',
+            fontWeight: 500,
+            textTransform: 'uppercase',
+          }}
         >
           {children}
         </Box>

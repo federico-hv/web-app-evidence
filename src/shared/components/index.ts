@@ -12,6 +12,7 @@ export {
   TextGroupHeading,
   TextGroupSubheading,
 } from './text-group';
+export { default as BackButton } from './back-button';
 export { default as NotFoundError } from './not-found-error';
 export { default as ContextBox } from './content-box';
 export { default as AuthGuard } from './auth-guard';

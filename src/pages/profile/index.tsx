@@ -1,4 +1,4 @@
-import { VStack } from '@holdr-ui/react';
+import { Box, HStack, Icon, Stack, VStack } from '@holdr-ui/react';
 import {
   Content,
   Header,
@@ -11,6 +11,7 @@ import { useQuery } from '@apollo/client';
 import { IProfile } from './shared';
 import { GET_PROFILE } from './queries';
 import {
+  BackButton,
   ContentLayout,
   ContentLayoutAside,
   ContentLayoutMain,
@@ -19,8 +20,35 @@ import {
   Loader,
   NotFoundError,
   ProfileContextProvider,
+  UserNamesGroup,
+  useScrollDirection,
 } from '../../shared';
 import { SuggestionsCard } from '../../features';
+import { Fragment } from 'react';
+import { StackProps } from '@holdr-ui/react/dist/components/stack/src/stack.types';
+
+function SmHeaderWrapper({ children, ...props }: StackProps) {
+  const { direction, delta } = useScrollDirection('#root');
+
+  return (
+    <Box
+      display={direction === 'down' && delta > 0 ? 'none' : 'block'}
+      position='fixed'
+      t={0}
+      w='100%'
+      bgColor='clearTint500'
+      css={{
+        blur: '12px',
+        zIndex: 50,
+      }}
+      maxHeight={58}
+    >
+      <Stack direction='horizontal' px={4} pt={4} pb={2} {...props}>
+        {children}
+      </Stack>
+    </Box>
+  );
+}
 
 function ProfilePage() {
   const { username } = useParams();
@@ -38,31 +66,48 @@ function ProfilePage() {
     <Error hasError={!!error} errorEl={<NotFoundError />}>
       <Loader h={250} loading={loading}>
         {data && (
-          <ProfileContextProvider value={{ profile: data.profile }}>
-            <ContentLayout>
-              <ContentLayoutMain>
-                {data && (
-                  <>
-                    <Head
-                      prefix=''
-                      title={`${data.profile.displayName} (@${data.profile.username})`}
-                      description={data.profile.bio || ''}
-                    />
-                    <Header />
-                  </>
+          <Fragment>
+            <SmHeaderWrapper gap={3}>
+              <BackButton />
+              <HStack gap={2}>
+                <UserNamesGroup
+                  displayName={data.profile.displayName}
+                  username={data.profile.username}
+                />
+                {data.profile.protected && (
+                  <Box h='fit-content' fontSize={2}>
+                    <Icon name='lock-fill' />
+                  </Box>
                 )}
-                <Content />
-              </ContentLayoutMain>
-              <ContentLayoutAside>
-                <VStack>
-                  <RelationshipsCard />
-                  <SocialsCard />
-                  <ReleasesCard />
-                  <SuggestionsCard />
-                </VStack>
-              </ContentLayoutAside>
-            </ContentLayout>
-          </ProfileContextProvider>
+              </HStack>
+            </SmHeaderWrapper>
+
+            <ProfileContextProvider value={{ profile: data.profile }}>
+              <ContentLayout>
+                <ContentLayoutMain>
+                  {data && (
+                    <>
+                      <Head
+                        prefix=''
+                        title={`${data.profile.displayName} (@${data.profile.username})`}
+                        description={data.profile.bio || ''}
+                      />
+                      <Header />
+                    </>
+                  )}
+                  <Content />
+                </ContentLayoutMain>
+                <ContentLayoutAside>
+                  <VStack>
+                    <RelationshipsCard />
+                    <SocialsCard />
+                    <ReleasesCard />
+                    <SuggestionsCard />
+                  </VStack>
+                </ContentLayoutAside>
+              </ContentLayout>
+            </ProfileContextProvider>
+          </Fragment>
         )}
       </Loader>
     </Error>
