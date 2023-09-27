@@ -41,13 +41,13 @@ function PostCard({ data }: { data: PostModel }) {
         <HStack gap={4} position='relative'>
           <LinkOverlay to={prefix('/', owner.username)} />
           <Avatar
-            size='xl'
+            size={{ '@bp1': 'base', '@bp3': 'xl' }}
             variant='squircle'
             src={owner.avatar}
             name={owner.displayName}
           />
           <TextGroup gap={1}>
-            <TextGroup.Heading size={3}>
+            <TextGroup.Heading size={{ '@bp1': 2, '@bp3': 3 }}>
               {owner.displayName}
             </TextGroup.Heading>
             <TextGroup.Subheading color='base400' size={1} weight={500}>
@@ -65,7 +65,7 @@ function PostCard({ data }: { data: PostModel }) {
         </Box>
       </Card.Header>
       <Card.Body px={4} py={6} position='relative'>
-        <Text>{data.description}</Text>
+        <Text size={{ '@bp1': 2, '@bp3': 3 }}>{data.description}</Text>
         {data.media && <Media items={data.media} />}
         {data.polls && (
           <Polls id={data.id} endDate={data.endDate} items={data.polls} />
@@ -86,7 +86,6 @@ function PostCard({ data }: { data: PostModel }) {
             <Responsive>
               <ResponsiveItem mobile='show'>
                 <IconButton
-                  size='lg'
                   icon={
                     reaction ? Reaction[reaction].icon : 'reaction-add'
                   }
@@ -127,7 +126,6 @@ function PostCard({ data }: { data: PostModel }) {
                   icon={!bookmarked ? 'bookmark-outline' : 'bookmark-fill'}
                   variant='ghost'
                   colorTheme='base600'
-                  size='lg'
                 />
               </ResponsiveItem>
               <ResponsiveItem fullWidth laptop='show' desktop='show'>
@@ -155,7 +153,6 @@ function PostCard({ data }: { data: PostModel }) {
           <Responsive>
             <ResponsiveItem mobile='show'>
               <IconButton
-                size='lg'
                 icon='share-outline'
                 ariaLabel='Bookmark'
                 variant='ghost'

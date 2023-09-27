@@ -1,13 +1,25 @@
-import { Suspense } from 'react';
+import { Fragment, Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { Loader } from '../index';
 import { GQLRendererProps } from './types';
 
-function GQLRenderer({ children, ErrorFallback }: GQLRendererProps) {
+function GQLRenderer({
+  children,
+  LoadingFallback,
+  ErrorFallback,
+}: GQLRendererProps) {
   return (
-    <ErrorBoundary FallbackComponent={ErrorFallback}>
-      <Suspense fallback={<Loader loading={true} />}>{children}</Suspense>
-    </ErrorBoundary>
+    <Fragment>
+      <ErrorBoundary FallbackComponent={ErrorFallback}>
+        <Suspense
+          fallback={
+            LoadingFallback ? LoadingFallback : <Loader loading={true} />
+          }
+        >
+          {children}
+        </Suspense>
+      </ErrorBoundary>
+    </Fragment>
   );
 }
 GQLRenderer.displayName = 'GQLRenderer';

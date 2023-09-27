@@ -59,10 +59,18 @@ function PollResponse({ data, total }: { data: IPoll; total: number }) {
       />
       <VStack w='100%' gap={2} zIndex={10}>
         <HStack justify='space-between'>
-          <Text color='secondary400' weight={data.voted ? 500 : 400}>
+          <Text
+            size={{ '@bp1': 2, '@bp3': 3 }}
+            color='secondary400'
+            weight={data.voted ? 500 : 400}
+          >
             {data.text}
           </Text>
-          <Text weight={500} color='base400'>
+          <Text
+            size={{ '@bp1': 2, '@bp3': 3 }}
+            weight={500}
+            color='base400'
+          >
             {percentage.toFixed(0)}%
           </Text>
         </HStack>
@@ -101,7 +109,12 @@ function PollAnswer({
       }}
     >
       {/** 👇🏾 Label */}
-      <Text weight={500} noOfLines={1} css={{ zIndex: 10 }}>
+      <Text
+        size={{ '@bp1': 2, '@bp3': 3 }}
+        weight={500}
+        noOfLines={1}
+        css={{ zIndex: 10 }}
+      >
         {data.text}
       </Text>
     </Center>
@@ -174,8 +187,12 @@ function Polls({
             items='flex-end'
             css={{ userSelect: 'none' }}
           >
-            <Image size={16} alt='' src={pollAlt} />
-            <Text color='base400'>
+            <Image
+              size={{ '@bp1': 13, '@bp3': 16 }}
+              alt=''
+              src={pollAlt}
+            />
+            <Text size={{ '@bp1': 1, '@bp3': 2 }} color='base400'>
               {total} {total > 1 ? 'votes' : 'vote'}
             </Text>
           </HStack>

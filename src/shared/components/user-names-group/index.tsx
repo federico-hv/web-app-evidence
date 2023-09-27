@@ -4,8 +4,13 @@ import { UserNamesGroupProps } from './types';
 function UserNamesGroup({ displayName, username }: UserNamesGroupProps) {
   return (
     <TextGroup gap={0}>
-      <TextGroupSubheading weight={500}>{displayName}</TextGroupSubheading>
-      <TextGroup.Subheading color='base400' size={2}>
+      <TextGroupSubheading size={{ '@bp1': 2, '@bp3': 3 }} weight={500}>
+        {displayName}
+      </TextGroupSubheading>
+      <TextGroup.Subheading
+        size={{ '@bp1': 1, '@bp3': 2 }}
+        color='base400'
+      >
         @{username}
       </TextGroup.Subheading>
     </TextGroup>
