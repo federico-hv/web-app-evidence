@@ -164,6 +164,7 @@ function Header() {
           </HStack>
         </Box>
       </Box>
+
       <Stack
         direction={{ '@bp1': 'vertical', '@bp3': 'horizontal' }}
         px={{ '@bp1': 3, '@bp4': 5 }}

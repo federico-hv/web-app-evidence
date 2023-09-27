@@ -1,18 +1,28 @@
-import { Box, NavigationLink, NavigationLinkGroup } from '@holdr-ui/react';
+import { Box, HStack, NavigationLink } from '@holdr-ui/react';
 import {
   Paths,
   prefix,
   Responsive,
   ResponsiveItem,
+  useIsBottomOf,
+  useScrollDirection,
 } from '../../../../shared';
 import { Link, matchPath, useLocation } from 'react-router-dom';
 
 function Footer() {
+  const isBottom = useIsBottomOf('#root');
+  const { direction, delta } = useScrollDirection('#root');
   const { pathname } = useLocation();
+
   return (
     <Responsive>
       <ResponsiveItem mobile='show'>
         <Box
+          display={
+            !isBottom && direction === 'down' && delta > 0
+              ? 'none'
+              : 'block'
+          }
           borderTop={2}
           borderColor='base100'
           as='footer'
@@ -27,14 +37,9 @@ function Footer() {
             boxShadow: 'rgba(0, 0, 0, 0.15) 0px 4px 12px',
           }}
         >
-          <NavigationLinkGroup
-            direction='horizontal'
-            justify='space-between'
-            variant='ghost'
-            as='nav'
-            p={2}
-          >
+          <HStack justify='space-between' as='nav' p={2}>
             <NavigationLink
+              variant='ghost'
               as={<Link to={prefix('/', Paths.root)} />}
               isActive={!!matchPath('', pathname)}
               activeIcon='home-fill'
@@ -42,10 +47,11 @@ function Footer() {
               inactiveIcon='home-outline'
               css={{
                 padding: 0,
-                size: '2rem',
+                size: '2.5rem',
               }}
             />
             <NavigationLink
+              variant='ghost'
               as={<Link to={prefix('/', Paths.bookmarks)} />}
               isActive={!!matchPath(Paths.bookmarks, pathname)}
               activeIcon='bookmark-fill'
@@ -53,10 +59,11 @@ function Footer() {
               inactiveIcon='bookmark-outline'
               css={{
                 padding: 0,
-                size: '2rem',
+                size: '2.5rem',
               }}
             />
             <NavigationLink
+              variant='ghost'
               as={<Link to={prefix('/', Paths.releases)} />}
               isActive={!!matchPath(Paths.releases, pathname)}
               activeIcon='releases-fill'
@@ -64,10 +71,11 @@ function Footer() {
               inactiveIcon='releases-outline'
               css={{
                 padding: 0,
-                size: '2rem',
+                size: '2.5rem',
               }}
             />
             <NavigationLink
+              variant='ghost'
               as={<Link to={prefix('/', Paths.discover)} />}
               isActive={!!matchPath(Paths.discover, pathname)}
               activeIcon='search-outline'
@@ -75,10 +83,10 @@ function Footer() {
               inactiveIcon='search-outline'
               css={{
                 padding: 0,
-                size: '2rem',
+                size: '2.5rem',
               }}
             />
-          </NavigationLinkGroup>
+          </HStack>
         </Box>
       </ResponsiveItem>
     </Responsive>

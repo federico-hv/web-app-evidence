@@ -187,6 +187,7 @@ function OwnerMoreButton({ ghost }: { ghost?: boolean }) {
             {ghost ? (
               <Menu.Trigger>
                 <IconButton
+                  size={{ '@bp1': 'sm', '@bp3': 'base' }}
                   colorTheme='darkTint400'
                   blur='xl'
                   icon='more-fill'

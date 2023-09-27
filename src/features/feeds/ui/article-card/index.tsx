@@ -45,7 +45,7 @@ function ArticleCard({ data }: { data: ArticleModel }) {
         >
           <Link to={prefix('/', owner.username)}>
             <Avatar
-              size='xl'
+              size={{ '@bp1': 'base', '@bp3': 'xl' }}
               variant='squircle'
               src={owner.avatar}
               name={owner.displayName}
@@ -124,7 +124,7 @@ function ArticleCard({ data }: { data: ArticleModel }) {
                             ? 'bookmark-outline'
                             : 'bookmark-fill'
                         }
-                        size='lg'
+                        size={{ '@bp1': 'base', '@bp3': 'lg' }}
                       />
                     </BookmarkPopover>
                     <Box>
@@ -142,7 +142,7 @@ function ArticleCard({ data }: { data: ArticleModel }) {
                               ? Reaction[reaction].icon
                               : 'reaction-add'
                           }
-                          size='lg'
+                          size={{ '@bp1': 'base', '@bp3': 'lg' }}
                         />
                       </ReactionPopover>
                     </Box>
@@ -153,7 +153,12 @@ function ArticleCard({ data }: { data: ArticleModel }) {
                       target='_blank'
                       state={{ from: location }}
                     >
-                      <Button colorTheme='primary400'>Read</Button>
+                      <Button
+                        size={{ '@bp1': 'sm', '@bp3': 'base' }}
+                        colorTheme='primary400'
+                      >
+                        Read
+                      </Button>
                     </Link>
                   </Box>
                 </HStack>
@@ -163,7 +168,11 @@ function ArticleCard({ data }: { data: ArticleModel }) {
         </Card.Footer>
       </Card>
       <Link to={`https://${data.source.url}`} target='_blank'>
-        <HStack gap={2} justify='flex-end'>
+        <HStack
+          fontSize={{ '@bp1': 2, '@bp3': 3 }}
+          gap={2}
+          justify='flex-end'
+        >
           from <Text weight={500}>{data.source.name}</Text>
         </HStack>
       </Link>

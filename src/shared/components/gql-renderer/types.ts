@@ -4,5 +4,5 @@ import { FallbackProps } from 'react-error-boundary';
 
 export interface GQLRendererProps extends GenericProps {
   ErrorFallback: ComponentType<FallbackProps>;
-  LoadingFallback: ReactNode;
+  LoadingFallback?: ReactNode;
 }

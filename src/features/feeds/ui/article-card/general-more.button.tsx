@@ -21,6 +21,7 @@ function GeneralMoreButton({ tinted = true }: { tinted?: boolean }) {
         <Menu>
           <Menu.Trigger>
             <IconButton
+              size={{ '@bp1': 'sm', '@bp3': 'base' }}
               variant={tinted ? 'filled' : 'ghost'}
               colorTheme={tinted ? 'darkTint400' : 'base800'}
               blur='xl'
@@ -46,7 +47,7 @@ function GeneralMoreButton({ tinted = true }: { tinted?: boolean }) {
                 action={() => unfollow(owner.username)}
                 icon='user-unfollow-outline'
               >
-                <HStack gap={2}>
+                <HStack fontSize={{ '@bp1': 2, '@bp3': 3 }} gap={2}>
                   Unfollow <Text weight={500}>@{owner.username}</Text>
                 </HStack>
               </Menu.Item>
@@ -55,7 +56,7 @@ function GeneralMoreButton({ tinted = true }: { tinted?: boolean }) {
                 action={() => follow(owner.username)}
                 icon='user-unfollow-outline'
               >
-                <HStack gap={2}>
+                <HStack fontSize={{ '@bp1': 2, '@bp3': 3 }} gap={2}>
                   Follow <Text weight={500}>@{owner.username}</Text>
                 </HStack>
               </Menu.Item>
@@ -65,7 +66,7 @@ function GeneralMoreButton({ tinted = true }: { tinted?: boolean }) {
                 action={() => unmute(owner.username)}
                 icon='mute-fill'
               >
-                <HStack gap={2}>
+                <HStack fontSize={{ '@bp1': 2, '@bp3': 3 }} gap={2}>
                   Unmute <Text weight={500}>@{owner.username}</Text>
                 </HStack>
               </Menu.Item>
@@ -74,7 +75,7 @@ function GeneralMoreButton({ tinted = true }: { tinted?: boolean }) {
                 action={() => mute(owner.username)}
                 icon='mute-outline'
               >
-                <HStack gap={2}>
+                <HStack fontSize={{ '@bp1': 2, '@bp3': 3 }} gap={2}>
                   Mute <Text weight={500}>@{owner.username}</Text>
                 </HStack>
               </Menu.Item>

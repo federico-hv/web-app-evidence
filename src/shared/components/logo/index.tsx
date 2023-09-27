@@ -10,7 +10,7 @@ function Logo() {
   return (
     <Link to='/'>
       <Box as='span'>
-        <Image size={{ '@bp1': 2, '@bp4': 30 }} src={logoDark} />
+        <Image size={{ '@bp1': '16px', '@bp4': '30px' }} src={logoDark} />
       </Box>
     </Link>
   );

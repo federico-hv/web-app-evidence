@@ -72,6 +72,7 @@ function Menu({ children }: GenericProps) {
                   {Content}
                   <VStack px={4} py={4} flex={1} justify='center'>
                     <Button
+                      size={{ '@bp1': 'sm', '@bp3': 'base' }}
                       className={extraBtnPadding()}
                       fullWidth
                       onClick={onClose}
@@ -97,6 +98,7 @@ function MenuTrigger({ children }: GenericProps) {
         <>{children}</>
       ) : (
         <IconButton
+          size={{ '@bp1': 'sm', '@bp3': 'base' }}
           variant='ghost'
           icon='more-fill'
           ariaLabel='view options'
@@ -154,13 +156,13 @@ function MenuItem({
     >
       {!children ? (
         <>
-          <Text>{label}</Text>
+          <Text size={{ '@bp1': 2, '@bp3': 3 }}>{label}</Text>
         </>
       ) : (
         <>{children}</>
       )}
       {icon && !(icon as JSX.Element).props ? (
-        <Icon name={icon as IconName} size='lg' />
+        <Icon name={icon as IconName} />
       ) : (
         <>{icon}</>
       )}

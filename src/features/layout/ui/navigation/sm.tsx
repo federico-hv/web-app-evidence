@@ -7,142 +7,201 @@ import {
   Flex,
   HStack,
   Icon,
-  Image,
   Text,
+  useDisclosure,
   VStack,
 } from '@holdr-ui/react';
-import { Logo } from '../../../../shared/components';
-import menuIcon from '../../../../assets/images/menu.png';
+import { Logo, TextGroupSubheading } from '../../../../shared/components';
 import { useCurrentUser } from '../../../auth';
 import { Fragment } from 'react';
 import {
   extraBtnPadding,
-  GeneralContextProvider,
+  GQLRenderer,
   LinkOverlay,
   prefix,
-  useAlertDialog,
-  useGeneralContext,
+  TextGroup,
   useLogout,
   useMenuNavigate,
-  useRecordState,
   UserNamesGroup,
+  useScrollDirection,
 } from '../../../../shared';
 import { IconName } from '@holdr-ui/react/dist/shared/types';
+import { useSuspenseQuery } from '@apollo/client';
+import { GET_RELATIONSHIP_COUNT } from '../../../relationships';
 
 function MenuButton({
   label,
   icon,
-  centered,
   onClick,
 }: {
   onClick?: VoidFunction;
-  centered?: boolean;
   label: string;
   icon: IconName;
 }) {
-  const { update } = useGeneralContext();
-
   return (
     <HStack
       onClick={() => {
         onClick && onClick();
-        update({ on: false, menu: undefined });
       }}
-      px={4}
-      h={60}
-      gap={centered ? 4 : 3}
+      p={4}
+      gap={3}
       items='center'
       cursor='pointer'
-      justify={centered ? 'center' : 'flex-start'}
       _hover={{ backgroundColor: '$base100' }}
     >
-      <Icon size='xl' name={icon} />
-      <Text>{label}</Text>
+      <Icon name={icon} />
+      <Text size={2}>{label}</Text>
     </HStack>
   );
 }
 
-function MenuDrawer() {
-  const { update, state } = useGeneralContext();
+function ProfileDrawer() {
+  const logout = useLogout();
+  const currentUser = useCurrentUser();
+
+  const { data } = useSuspenseQuery<
+    {
+      followers: { total: number };
+      following: { total: number };
+    },
+    { username: string }
+  >(GET_RELATIONSHIP_COUNT, {
+    variables: { username: currentUser?.username || '' },
+  });
+
+  const { onOpen, isOpen, onClose } = useDisclosure();
   const { goto } = useMenuNavigate();
 
   return (
     <Fragment>
-      <Flex flex={1} css={{ userSelect: 'none' }}>
-        <Box
-          onClick={() => {
-            if (!state.on) {
-              update({ name: 'menu', on: true });
-            } else if (state.on && state.name === 'menu') {
-              update({ on: false });
-            } else {
-              update({ name: 'menu', on: true });
-            }
-          }}
-        >
-          <Image size={24} src={menuIcon} alt='menu icon' />
+      <Flex css={{ userSelect: 'none' }}>
+        <Box onClick={onOpen}>
+          {currentUser ? (
+            <Avatar
+              size='sm'
+              src={currentUser?.avatar}
+              name={currentUser?.displayName}
+            />
+          ) : (
+            <Circle size={24} />
+          )}
         </Box>
       </Flex>
-      <Drawer
-        isOpen={state.on && state.name === 'menu'}
-        onClose={() => update({ on: false })}
-        placement='left'
-      >
+
+      <Drawer isOpen={isOpen} onClose={onClose} placement='right'>
         <Drawer.Portal>
           <Drawer.Overlay />
           <Drawer.Content>
             <Box minWidth={1} position='relative' h='100%'>
               <Box
                 position='absolute'
-                t={69}
-                l={0}
-                h='calc(100% - 66px)'
+                t={0}
+                r={0}
+                h='100%'
                 w='80vw'
+                overflow='hidden'
                 css={{
                   backgroundColor: '#fcfbfa',
-                  borderTopRightRadius: '$4',
-                  borderBottomRightRadius: '$4',
+                  borderTopLeftRadius: '$3',
+                  borderBottomLeftRadius: '$3',
                 }}
               >
                 <VStack h='100%'>
-                  <VStack
-                    pt={4}
-                    divider={
-                      <Box borderBottom={2} borderColor='base100' />
-                    }
-                    borderBottom={2}
-                    borderTop={2}
-                    borderColor='base100'
-                  >
-                    <MenuButton
-                      onClick={goto.home}
-                      label='Home'
-                      icon='home-outline'
-                    />
+                  <VStack pb={4}>
+                    {currentUser && (
+                      <HStack gap={3} p={4} position='relative'>
+                        <LinkOverlay
+                          onClick={onClose}
+                          to={prefix('/', currentUser.username)}
+                        />
+                        <Avatar
+                          size='sm'
+                          variant='squircle'
+                          src={currentUser.avatar}
+                          name={currentUser.displayName}
+                        />
+                        <UserNamesGroup
+                          displayName={currentUser.displayName}
+                          username={currentUser.username}
+                        />
+                      </HStack>
+                    )}
+                    <HStack gap={4} px={4}>
+                      <TextGroup
+                        w='fit-content'
+                        fontSize={2}
+                        direction='horizontal'
+                      >
+                        <TextGroupSubheading weight={500}>
+                          {data.followers.total}
+                        </TextGroupSubheading>
+                        <TextGroupSubheading color='base400' weight={500}>
+                          Followers
+                        </TextGroupSubheading>
+                      </TextGroup>
+                      <TextGroup
+                        w='fit-content'
+                        fontSize={2}
+                        direction='horizontal'
+                      >
+                        <TextGroupSubheading weight={500}>
+                          {data.followers.total}
+                        </TextGroupSubheading>
+                        <TextGroupSubheading color='base400' weight={500}>
+                          Following
+                        </TextGroupSubheading>
+                      </TextGroup>
+                    </HStack>
+                  </VStack>
+
+                  <VStack borderTop={1} borderColor='base100'>
                     <MenuButton
                       onClick={goto.bookmarks}
                       label='Bookmarks'
                       icon='bookmark-outline'
                     />
                     <MenuButton
-                      onClick={goto.discover}
-                      label='Releases'
-                      icon='releases-outline'
-                    />
-                    <MenuButton
-                      onClick={goto.discover}
-                      label='Discover'
-                      icon='search-outline'
-                    />
-                    <MenuButton
                       onClick={goto.channels}
                       label='Channels'
                       icon='channels-outline'
                     />
+                    <MenuButton
+                      onClick={goto.releases}
+                      label='Releases'
+                      icon='releases-outline'
+                    />
+                    <MenuButton
+                      label='Events'
+                      icon='calendar-event-outline'
+                    />
                   </VStack>
+
+                  <VStack borderTop={1} borderColor='base100'>
+                    <MenuButton
+                      onClick={goto.settings}
+                      label='Privacy & settings'
+                      icon='settings-outline'
+                    />
+                    <MenuButton
+                      onClick={goto.support}
+                      label='Help & support'
+                      icon='question-outline'
+                    />
+                    <MenuButton label='Display' icon='night-mode' />
+                  </VStack>
+                  <VStack borderTop={1} borderColor='base100'>
+                    <MenuButton
+                      onClick={logout}
+                      label='Logout'
+                      icon='logout-outline'
+                    />
+                  </VStack>
+
                   <VStack h='100%' justify='flex-end'>
-                    <Box px={4} py={5} borderTop={2} borderColor='base100'>
+                    <Box px={2} py={3} borderTop={2} borderColor='base100'>
                       <Button
+                        radius={4}
+                        size='sm'
                         colorTheme='secondary400'
                         fullWidth
                         className={extraBtnPadding()}
@@ -161,171 +220,40 @@ function MenuDrawer() {
   );
 }
 
-function ProfileDrawer() {
-  const logout = useLogout();
-  const currentUser = useCurrentUser();
-
-  const { update, state } = useGeneralContext();
-  const { goto } = useMenuNavigate();
-  const { openWith } = useAlertDialog();
-
-  return (
-    <Fragment>
-      <Flex flex={1} justify='flex-end' css={{ userSelect: 'none' }}>
-        <Box
-          onClick={() => {
-            if (!state.on) {
-              update({ name: 'profile', on: true });
-            } else if (state.on && state.name === 'profile') {
-              update({ on: false });
-            } else {
-              update({ name: 'profile', on: true });
-            }
-          }}
-          w={24}
-        >
-          {currentUser ? (
-            <Avatar
-              size='sm'
-              src={currentUser?.avatar}
-              name={currentUser?.displayName}
-            />
-          ) : (
-            <Circle size={24} />
-          )}
-        </Box>
-      </Flex>
-
-      <Drawer
-        isOpen={state.on && state.name === 'profile'}
-        onClose={() => update({ on: false })}
-        placement='right'
-      >
-        <Drawer.Portal>
-          <Drawer.Overlay />
-          <Drawer.Content>
-            <Box minWidth={1} position='relative' h='100%'>
-              <Box
-                position='absolute'
-                t={69}
-                r={0}
-                h='calc(100% - 66px)'
-                w='80vw'
-                overflow='hidden'
-                css={{
-                  backgroundColor: '#fcfbfa',
-                  borderTopLeftRadius: '$4',
-                  borderBottomLeftRadius: '$4',
-                }}
-              >
-                <VStack h='100%'>
-                  {currentUser && (
-                    <HStack
-                      gap={3}
-                      p={4}
-                      position='relative'
-                      _hover={{ backgroundColor: '$base100' }}
-                    >
-                      <LinkOverlay
-                        onClick={() => update({ on: false })}
-                        to={prefix('/', currentUser.username)}
-                      />
-                      <Avatar
-                        variant='squircle'
-                        src={currentUser.avatar}
-                        name={currentUser.displayName}
-                      />
-                      <UserNamesGroup
-                        displayName={currentUser.displayName}
-                        username={currentUser.username}
-                      />
-                    </HStack>
-                  )}
-
-                  <VStack
-                    divider={
-                      <Box borderBottom={2} borderColor='base100' />
-                    }
-                    borderBottom={2}
-                    borderTop={2}
-                    borderColor='base100'
-                  >
-                    <MenuButton
-                      onClick={goto.notifications}
-                      label='Notifications'
-                      icon='notification-outline'
-                    />
-                    <MenuButton
-                      onClick={goto.settings}
-                      label='Privacy & Settings'
-                      icon='settings-outline'
-                    />
-                    <MenuButton
-                      onClick={goto.support}
-                      label='Help & Support'
-                      icon='question-outline'
-                    />
-                    <MenuButton
-                      onClick={() =>
-                        openWith({
-                          actionText: 'Yes, Logout',
-                          onAction: logout,
-                          title: 'Log out',
-                          description:
-                            'If you log out, you will have to manually log in to your account again. ' +
-                            'Are you sure you want to log out off your account?',
-                        })
-                      }
-                      label='Logout'
-                      icon='logout-outline'
-                    />
-                  </VStack>
-                  <VStack h='100%' justify='flex-end'>
-                    <Box
-                      px={4}
-                      py={5}
-                      borderTop={2}
-                      borderColor='base100'
-                    ></Box>
-                  </VStack>
-                </VStack>
-              </Box>
-            </Box>
-          </Drawer.Content>
-        </Drawer.Portal>
-      </Drawer>
-    </Fragment>
-  );
-}
-
 function SmNavigation() {
-  const [active, update] = useRecordState<{
-    name?: 'menu' | 'profile';
-    on?: false;
-  }>({});
+  const { direction, delta } = useScrollDirection('#root');
 
   return (
-    <HStack
-      as='header'
-      items='center'
+    <Box
+      display={direction === 'down' && delta > 0 ? 'none' : 'block'}
       position='fixed'
-      p={4}
       t={0}
       w='100%'
-      borderBottom={1}
-      borderColor='base100'
-      boxShadow='0px 3px 3px rgba(0, 0, 0, 0.1)'
+      bgColor='clearTint500'
       css={{
-        backgroundColor: '#fbfbfa',
-        zIndex: 101,
+        blur: '12px',
+        zIndex: 50,
       }}
     >
-      <GeneralContextProvider value={{ update, state: active }}>
-        <MenuDrawer />
+      <HStack
+        px={4}
+        pt={4}
+        pb={2}
+        as='header'
+        justify='space-between'
+        items='center'
+        w='100%'
+      >
         <Logo />
-        <ProfileDrawer />
-      </GeneralContextProvider>
-    </HStack>
+
+        <GQLRenderer
+          ErrorFallback={() => <Fragment />}
+          LoadingFallback={<Fragment />}
+        >
+          <ProfileDrawer />
+        </GQLRenderer>
+      </HStack>
+    </Box>
   );
 }
 
