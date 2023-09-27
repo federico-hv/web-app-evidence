@@ -156,17 +156,26 @@ function ProfileDrawer() {
 
                   <VStack borderTop={1} borderColor='base100'>
                     <MenuButton
-                      onClick={goto.bookmarks}
+                      onClick={() => {
+                        onClose();
+                        goto.bookmarks();
+                      }}
                       label='Bookmarks'
                       icon='bookmark-outline'
                     />
                     <MenuButton
-                      onClick={goto.channels}
+                      onClick={() => {
+                        onClose();
+                        goto.channels();
+                      }}
                       label='Channels'
                       icon='channels-outline'
                     />
                     <MenuButton
-                      onClick={goto.releases}
+                      onClick={() => {
+                        onClose();
+                        goto.releases();
+                      }}
                       label='Releases'
                       icon='releases-outline'
                     />
@@ -178,12 +187,18 @@ function ProfileDrawer() {
 
                   <VStack borderTop={1} borderColor='base100'>
                     <MenuButton
-                      onClick={goto.settings}
+                      onClick={() => {
+                        onClose();
+                        goto.settings();
+                      }}
                       label='Privacy & settings'
                       icon='settings-outline'
                     />
                     <MenuButton
-                      onClick={goto.support}
+                      onClick={() => {
+                        onClose();
+                        goto.support();
+                      }}
                       label='Help & support'
                       icon='question-outline'
                     />
@@ -191,7 +206,10 @@ function ProfileDrawer() {
                   </VStack>
                   <VStack borderTop={1} borderColor='base100'>
                     <MenuButton
-                      onClick={logout}
+                      onClick={() => {
+                        onClose();
+                        logout();
+                      }}
                       label='Logout'
                       icon='logout-outline'
                     />
