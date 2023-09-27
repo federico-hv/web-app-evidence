@@ -13,7 +13,7 @@ import { GET_ACCOUNT_INFO } from '../queries';
 import PasswordConfirmation from './password-confimation';
 
 /**
- * This react is responsible for protecting the account info routes.
+ * This react is responsible for protecting the account info router.
  *
  * A user must enter a password and have the account info scope in their
  * access token.

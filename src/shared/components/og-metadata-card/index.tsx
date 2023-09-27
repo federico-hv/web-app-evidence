@@ -1,4 +1,4 @@
-import { Box, HStack, Image } from '@holdr-ui/react';
+import { Box, Image, Stack } from '@holdr-ui/react';
 import { LinkOverlay } from '../../styles';
 import {
   TextGroup,
@@ -9,7 +9,11 @@ import { OgMetadata } from '../../interfaces';
 
 function OgMetadataCard({ data }: { data: OgMetadata }) {
   return (
-    <HStack
+    <Stack
+      direction={{
+        '@bp1': 'vertical',
+        '@bp3': 'horizontal',
+      }}
       border={1}
       borderColor='base100'
       position='relative'
@@ -20,8 +24,13 @@ function OgMetadataCard({ data }: { data: OgMetadata }) {
     >
       <LinkOverlay target='_blank' to={data.url} />
 
-      <Box p={3}>
-        <Image size={100} src={data.images[0].url} alt={data.title} />
+      <Box p={3} w={{ '@bp1': '100%', '@bp3': 'fit-content' }}>
+        <Image
+          w={{ '@bp1': '100%', '@bp3': '100px' }}
+          h={{ '@bp1': '250px', '@bp3': '100px' }}
+          src={data.images[0].url}
+          alt={data.title}
+        />
       </Box>
 
       <TextGroup p={3}>
@@ -44,7 +53,7 @@ function OgMetadataCard({ data }: { data: OgMetadata }) {
           {data.site.name}
         </TextGroupSubheading>
       </TextGroup>
-    </HStack>
+    </Stack>
   );
 }
 OgMetadataCard.displayName = 'OgMetadataCard';

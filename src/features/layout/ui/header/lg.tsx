@@ -10,6 +10,7 @@ import { extraBtnPadding, Paths, prefix } from '../../../../shared';
 
 function LgHeader() {
   const { pathname } = useLocation();
+
   return (
     <VStack
       as='header'
@@ -36,7 +37,7 @@ function LgHeader() {
           p={4}
         >
           <NavigationLink
-            as={<Link to={prefix('/', Paths.home)} />}
+            as={<Link to={prefix('/', Paths.root)} />}
             isActive={!!matchPath('', pathname)}
             text='Home'
             activeIcon='home-fill'
@@ -47,7 +48,7 @@ function LgHeader() {
           />
           <NavigationLink
             as={<Link to={prefix('/', Paths.discover)} />}
-            isActive={!!matchPath('discover', pathname)}
+            isActive={!!matchPath('discover/*', pathname)}
             text='Discover'
             activeIcon='discover-fill'
             inactiveIcon='discover-outline'
@@ -57,7 +58,7 @@ function LgHeader() {
           />
           <NavigationLink
             as={<Link to={prefix('/', Paths.channels)} />}
-            isActive={!!matchPath('channels', pathname)}
+            isActive={!!matchPath('channels/*', pathname)}
             text='Channels'
             activeIcon='channels-fill'
             inactiveIcon='channels-outline'
@@ -67,7 +68,7 @@ function LgHeader() {
           />
           <NavigationLink
             as={<Link to={prefix('/', Paths.bookmarks)} />}
-            isActive={!!matchPath('bookmarks', pathname)}
+            isActive={!!matchPath('bookmarks/*', pathname)}
             text='Bookmarks'
             activeIcon='bookmark-fill'
             inactiveIcon='bookmark-outline'
@@ -77,7 +78,7 @@ function LgHeader() {
           />
           <NavigationLink
             as={<Link to={prefix('/', Paths.releases)} />}
-            isActive={!!matchPath('releases', pathname)}
+            isActive={!!matchPath('releases/*', pathname)}
             text='Releases'
             activeIcon='releases-fill'
             inactiveIcon='releases-outline'

@@ -6,6 +6,7 @@ type locations =
   | 'releases'
   | 'channels'
   | 'bookmarks'
+  | 'back'
   | 'notifications'
   | 'profile';
 

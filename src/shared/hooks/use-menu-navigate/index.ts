@@ -9,7 +9,7 @@ export const useMenuNavigate: UseMenuNavigate = () => {
   const navigate = useNavigate();
 
   const goto = {
-    home: () => navigate(prefix('/', Paths.home)),
+    home: () => navigate(prefix('/', Paths.root)),
     notifications: () => navigate(prefix('/', Paths.notifications)),
     discover: () => navigate(prefix('/', Paths.discover)),
     settings: () => navigate(prefix('/', Paths.settings)),
@@ -18,6 +18,7 @@ export const useMenuNavigate: UseMenuNavigate = () => {
     channels: () => navigate(prefix('/', Paths.channels)),
     bookmarks: () => navigate(prefix('/', Paths.bookmarks)),
     profile: () => navigate(prefix('/', currentUser?.username || '')),
+    back: () => navigate(-1),
   };
 
   return { goto };

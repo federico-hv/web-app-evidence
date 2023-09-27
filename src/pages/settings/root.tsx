@@ -6,6 +6,7 @@ import {
   IconButton,
   Input,
   InputGroup,
+  useWindowSize,
   VStack,
 } from '@holdr-ui/react';
 import {
@@ -90,7 +91,7 @@ export function SettingsSm() {
   return (
     <Box
       display={{ '@bp4': 'none' }}
-      pt={{ '@bp3': '67px' }}
+      pt={{ '@bp1': 69 }}
       borderLeft={2}
       borderColor='base100'
       h='100vh'
@@ -148,7 +149,6 @@ export function SettingsLg() {
           w={{
             '@bp4': 300,
             '@bp5': 350,
-            // '@bp4': 375,
           }}
           borderRight={2}
           borderColor='base100'
@@ -203,15 +203,21 @@ export function SettingsLg() {
 }
 
 function SettingsPage() {
+  const windowSize = useWindowSize();
+
   return (
-    <>
+    <Box>
       <Head
         title='Settings'
         description='Configure your notifications, update your privacy settings, security settings and more.'
       />
-      <SettingsSm />
-      <SettingsLg />
-    </>
+      {windowSize && windowSize.width && windowSize.width <= 768 && (
+        <SettingsSm />
+      )}
+      {windowSize && windowSize.width && windowSize.width > 768 && (
+        <SettingsLg />
+      )}
+    </Box>
   );
 }
 SettingsPage.displayName = 'SettingsPage';

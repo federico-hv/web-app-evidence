@@ -5,27 +5,23 @@ import {
   HStack,
   Icon,
   Popover,
-  Text,
   useKeyBind,
 } from '@holdr-ui/react';
 import { GenericProps } from '../../../shared';
 import { useFeedContext, useAddReactionAction } from '../shared';
-
 import { IconName } from '@holdr-ui/react/dist/shared/types';
-import { FeedReactionName } from '../shared/types';
+import { FeedReactionName } from '../shared';
 import { useRemoveReactionAction } from '../shared/hooks/use-remove-reaction-action';
 
 function ReactionButton({
   onClick,
   active,
-  count,
   name,
   icon,
   colorCode,
 }: {
   onClick: (id: string) => Promise<void>;
   active?: boolean;
-  count?: number;
   name: string;
   icon: { active: IconName; inactive: IconName };
   colorCode: { hover: string; active: string };
@@ -53,14 +49,14 @@ function ReactionButton({
         name={active ? icon.active : icon.inactive}
         aria-label={name}
       />
-      {count !== undefined && count > 0 && active && (
-        <Box ml={3}>
-          <Text size={2}>{count}</Text>
-        </Box>
-      )}
     </Center>
   );
 }
+
+// TODO: Store the current reaction locally
+// - Click reaction => Update local state, run mutation
+// - Consider passing th e current reaction as an arg to mutation hook,
+//    can use that to optimistically update state.
 
 function ReactionPopover({
   children,
@@ -90,11 +86,7 @@ function ReactionPopover({
   };
 
   const reactionIs = (name: FeedReactionName): boolean => {
-    return !!reaction && reaction.name === name;
-  };
-
-  const getCount = () => {
-    return reaction ? reaction.count : undefined;
+    return reaction === name;
   };
 
   // close with ESC key
@@ -103,7 +95,7 @@ function ReactionPopover({
   return (
     <Popover isOpen={isOpen} onOpenChange={set}>
       <Popover.Trigger asChild>
-        <Box w='100%'>{children}</Box>
+        <Box>{children}</Box>
       </Popover.Trigger>
       <Popover.Portal>
         <Popover.Content
@@ -114,7 +106,7 @@ function ReactionPopover({
           minWidth={1}
           minHeight={48}
           radius='full'
-          css={{ backgroundColor: '#FFF' }}
+          css={{ backgroundColor: '#FFF', zIndex: 20 }}
         >
           <HStack
             p={2}
@@ -128,7 +120,6 @@ function ReactionPopover({
                 closeAfter(id, reactionIs('love') ? removeLove : love)
               }
               active={reactionIs('love')}
-              count={getCount()}
               icon={{ inactive: 'heart-outline', active: 'heart-fill' }}
               colorCode={{ active: '#de4747', hover: '#f4525226' }}
             />
@@ -141,7 +132,6 @@ function ReactionPopover({
                 )
               }
               active={reactionIs('excited')}
-              count={getCount()}
               icon={{
                 inactive: 'emotion-happy-outline',
                 active: 'emotion-happy-fill',
@@ -160,7 +150,6 @@ function ReactionPopover({
                 )
               }
               active={reactionIs('sad')}
-              count={getCount()}
               icon={{
                 inactive: 'emotion-sad-outline',
                 active: 'emotion-sad-fill',
@@ -181,7 +170,6 @@ function ReactionPopover({
                 )
               }
               active={reactionIs('indifferent')}
-              count={getCount()}
               icon={{
                 inactive: 'emotion-normal-outline',
                 active: 'emotion-normal-fill',

@@ -9,6 +9,7 @@ import {
   CreateRelationshipModel,
 } from '../../interfaces';
 import { omit } from 'lodash';
+import { GET_FEEDS } from '../../../../feeds';
 
 export function useCreateRelationship() {
   const [mutation, { loading, error, data }] = useMutation<
@@ -21,6 +22,7 @@ export function useCreateRelationship() {
       variables: {
         payload,
       },
+      refetchQueries: [{ query: GET_FEEDS, variables: { type: 'all' } }],
       update: (cache, { data }) => {
         cache.modify({
           fields: {

@@ -21,11 +21,18 @@ function ToastProvider({ children }: GenericProps) {
     <ToastContext.Provider
       value={{ current, isOpen, onClose, onOpen, set }}
     >
-      <Box css={{ zIndex: 200, position: 'relative' }}>
+      <Box
+        css={{
+          zIndex: 200,
+          position: 'relative',
+        }}
+      >
         <Toast.Provider>
           <Toast.Item
             position={
-              ['danger', 'info'].includes(current?.status || 'info')
+              ['danger', 'info', 'success'].includes(
+                current?.status || 'info',
+              )
                 ? 'top-center'
                 : 'bottom-center'
             }

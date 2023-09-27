@@ -29,6 +29,7 @@ import {
   extraBtnPadding,
   useAlertDialog,
 } from '../../../../shared';
+import { useCurrentUser } from '../../../auth';
 
 function RestrictButton({ close }: { close: VoidFunction }) {
   const { profile } = useProfile();
@@ -116,6 +117,7 @@ function RestrictButton({ close }: { close: VoidFunction }) {
 }
 
 function FollowingMenu({ close }: { close: VoidFunction }) {
+  const currentUser = useCurrentUser();
   const { profile } = useContext(ProfileContext);
 
   const {
@@ -141,7 +143,13 @@ function FollowingMenu({ close }: { close: VoidFunction }) {
   return (
     <VStack divider={<Box borderBottom={1} borderColor='base100' />}>
       <SwitchConditional>
-        <SwitchConditionalCase on={!hasFriendRequest && !isFriend}>
+        <SwitchConditionalCase
+          on={
+            !hasFriendRequest &&
+            !isFriend &&
+            profile.role === currentUser?.role
+          }
+        >
           <MenuButton
             label='Add to friends'
             icon='subscriptions-outline'

@@ -1,17 +1,14 @@
 import { FeedReactionName } from '../types';
-import { GenericItem, IUser } from '../../../../shared';
+import { GenericItem, UserModel } from '../../../../shared';
 import { ArticleModel, PostModel } from './post.interface';
 
-export interface IReaction {
-  name: FeedReactionName;
-  count: number;
-}
-
 export interface FeedModel extends GenericItem {
-  type: string;
+  type: 'article' | 'post';
+  isPinned: boolean;
   node: PostModel | ArticleModel;
-  reaction: IReaction | null;
-  owner: IUser;
+  reaction: FeedReactionName | null;
+  bookmarked: boolean;
+  owner: UserModel;
   createdAt: string;
 }
 

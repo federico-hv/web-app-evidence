@@ -5,7 +5,7 @@ function ActionItemWrapper({ children }: GenericProps) {
   return (
     <HStack
       gap={3}
-      p={3}
+      p={4}
       w='100%'
       h='100%'
       radius={2}

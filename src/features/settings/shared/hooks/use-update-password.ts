@@ -5,8 +5,10 @@ import {
   UpdatePasswordFormData,
   UpdatePasswordPayload,
 } from '../types';
+import { useToast } from '../../../../shared';
 
 export const useUpdatePassword = () => {
+  const { openWith } = useToast();
   const [updatePassword, { data, loading, error }] = useMutation<
     UpdatePasswordData,
     UpdatePasswordPayload
@@ -17,6 +19,13 @@ export const useUpdatePassword = () => {
       variables: { payload: formData },
     });
   };
+
+  if (error) {
+    openWith({
+      status: 'danger',
+      description: error.message,
+    });
+  }
 
   const onFinish = (cb: VoidFunction) => {
     cb();

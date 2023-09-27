@@ -1,16 +1,15 @@
 import { gql } from '@apollo/client';
 
 export const GET_USER_FEEDS = gql`
-  query userFeeds($payload: UserFeedsInput!) {
+  query userFeeds($payload: FeedInput!) {
     userFeeds(payload: $payload) {
       count
       data {
         id
         type
-        reaction {
-          name
-          count
-        }
+        reaction
+        bookmarked
+        isPinned
         createdAt
         owner {
           id
@@ -60,10 +59,9 @@ export const GET_FEEDS = gql`
       data {
         id
         type
-        reaction {
-          name
-          count
-        }
+        isPinned
+        reaction
+        bookmarked
         createdAt
         owner {
           id
@@ -113,10 +111,9 @@ export const GET_REACTED_FEEDS = gql`
       data {
         id
         type
-        reaction {
-          name
-          count
-        }
+        reaction
+        isPinned
+        bookmarked
         createdAt
         owner {
           id
@@ -154,5 +151,83 @@ export const GET_REACTED_FEEDS = gql`
         }
       }
     }
+  }
+`;
+
+export const GET_FEED = gql`
+  query feed($id: String!) {
+    feed(id: $id) {
+      id
+      type
+      isPinned
+      reaction
+      bookmarked
+      createdAt
+      owner {
+        id
+        displayName
+        username
+        avatar
+      }
+      node {
+        ... on PostModel {
+          id
+          endDate
+          description
+          media {
+            id
+            url
+            type
+          }
+          polls {
+            id
+            text
+            count
+            voted
+          }
+        }
+        ... on ArticleModel {
+          id
+          title
+          url
+          description
+          imageUrl
+          source {
+            name
+            url
+            logo
+          }
+        }
+      }
+    }
+  }
+`;
+
+export const GET_FEED_STATISTIC = gql`
+  query feedStatistic($id: String!, $name: FeedStatistic!) {
+    feedStatistic(id: $id, name: $name) # count, i.e number of items.
+  }
+`;
+
+export const GET_FEED_REACTION_USERS = gql`
+  query feedReactionUsers($id: String!, $type: FeedReactionFetchType!) {
+    feedReactionUsers(id: $id, type: $type) {
+      count # Number of reactions
+      data {
+        name # Reaction name
+        user {
+          id
+          displayName
+          username
+          avatar
+        }
+      }
+    }
+  }
+`;
+
+export const GET_FEED_AUDIENCE = gql`
+  query feedAudience($id: String!) {
+    feedAudience(id: $id) # FeedAudience
   }
 `;

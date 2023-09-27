@@ -9,8 +9,6 @@ export function useSaveSearchHistory<T>() {
     { id: string; entity: string }
   >(SAVE_SEARCH_HISTORY);
 
-  console.log(error);
-
   const save = async (id: string, entity: 'account') => {
     return await mutation({
       variables: { id, entity },

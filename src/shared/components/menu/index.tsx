@@ -20,6 +20,7 @@ import { MenuContextProvider } from './context';
 import { useState } from 'react';
 import Responsive, { ResponsiveItem } from '../responsive';
 import { extraBtnPadding } from '../../styles';
+import { IconName } from '@holdr-ui/react/dist/shared/types';
 
 function Menu({ children }: GenericProps) {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -47,6 +48,7 @@ function Menu({ children }: GenericProps) {
                 align='end'
                 sideOffset={5}
                 boxShadow='rgba(99, 99, 99, 0.2) 0px 2px 8px 0px'
+                css={{ backgroundColor: '#fff' }}
               >
                 {Content}
               </Popover.Content>
@@ -61,15 +63,16 @@ function Menu({ children }: GenericProps) {
               <Drawer.Content>
                 <VStack
                   radius={3}
-                  bgColor='primary400'
                   w='full'
                   minHeight='1px'
                   divider={<Box borderBottom={1} borderColor='base100' />}
+                  css={{ backgroundColor: '#fff' }}
                 >
                   {Header}
                   {Content}
                   <VStack px={4} py={4} flex={1} justify='center'>
                     <Button
+                      size={{ '@bp1': 'sm', '@bp3': 'base' }}
                       className={extraBtnPadding()}
                       fullWidth
                       onClick={onClose}
@@ -95,6 +98,7 @@ function MenuTrigger({ children }: GenericProps) {
         <>{children}</>
       ) : (
         <IconButton
+          size={{ '@bp1': 'sm', '@bp3': 'base' }}
           variant='ghost'
           icon='more-fill'
           ariaLabel='view options'
@@ -136,26 +140,32 @@ function MenuItem({
 }: MenuItemProps) {
   return (
     <HStack
+      as='button'
       justify='space-between'
       role='button'
       items='center'
       radius={2}
       cursor='pointer'
       p={4}
-      color={dangerous ? 'danger' : 'base800'}
       _hover={{
         backgroundColor: dangerous ? 'rgba(255,205,205,0.38)' : '$base100',
+        color: dangerous ? '$danger' : '$base800',
       }}
       onClick={action}
+      css={{ userSelect: 'none' }}
     >
       {!children ? (
         <>
-          <Text>{label}</Text>
+          <Text size={{ '@bp1': 2, '@bp3': 3 }}>{label}</Text>
         </>
       ) : (
         <>{children}</>
       )}
-      {icon && <Icon name={icon} size='lg' />}
+      {icon && !(icon as JSX.Element).props ? (
+        <Icon name={icon as IconName} />
+      ) : (
+        <>{icon}</>
+      )}
     </HStack>
   );
 }

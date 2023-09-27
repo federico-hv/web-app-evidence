@@ -259,6 +259,9 @@ export const globalStyles = globalCss({
     padding: 0,
     border: 0,
   },
+  html: {
+    unset: 'all !important',
+  },
   body: {
     backgroundColor: '#fbfbfa',
     fontFamily: 'Rubik, ui-sans-serif, system-ui',
@@ -274,8 +277,16 @@ export const globalStyles = globalCss({
   'input[type=date]': {
     fontFamily: 'inherit',
   },
-  'input:autofill': {
-    'background-color': 'none',
+  'input:autofill, input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:focus, input:-webkit-autofill:active':
+    {
+      background: '#fff',
+    },
+  'input, select': {
+    boxSizing: 'border-box',
+    width: '100%',
+  },
+  'select, option': {
+    '-webkit-appearance': 'none',
   },
   button: {
     backgroundColor: 'inherit',

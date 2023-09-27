@@ -1,5 +1,5 @@
 import { ErrorProps } from './types';
-import { Alert } from '@holdr-ui/react';
+import { Alert, VStack } from '@holdr-ui/react';
 
 function Error({
   hasError,
@@ -7,30 +7,20 @@ function Error({
   errorMessage,
   children,
 }: ErrorProps) {
-  // const { open } = useToast({
-  //   description:
-  //     errorMessage ||
-  //     'Oops, something went wrong. It looks like its our fault. Please try again later.',
-  //   status: 'danger',
-  // });
-
-  // useEffect(() => {
-  //   if (hasError && errorMessage && open) {
-  //     // open();
-  //   }
-  // }, [hasError, errorMessage, open]);
-
   if (el && hasError) {
     return <>{el}</>;
-  } else if (errorMessage && hasError) {
-    return (
-      <Alert status='error'>
-        <Alert.Description>{errorMessage}</Alert.Description>
-      </Alert>
-    );
   }
 
-  return <>{children}</>;
+  return (
+    <VStack gap={3}>
+      {errorMessage && (
+        <Alert status='error'>
+          <Alert.Description>{errorMessage}</Alert.Description>
+        </Alert>
+      )}
+      {children}
+    </VStack>
+  );
 }
 Error.displayName = 'Error';
 

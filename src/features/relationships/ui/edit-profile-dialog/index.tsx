@@ -1,12 +1,10 @@
+import { Box, Button, Dialog, useSwitch } from '@holdr-ui/react';
 import {
-  Box,
-  Button,
-  Dialog,
-  Heading,
-  HStack,
-  useSwitch,
-} from '@holdr-ui/react';
-import { Error, Loader, useProfile } from '../../../../shared';
+  DialogHeading,
+  Error,
+  Loader,
+  useProfile,
+} from '../../../../shared';
 import { parseToProfileFormData, useEditProfile } from '../../shared';
 import ProfileForm from '../edit-profile-form';
 
@@ -20,7 +18,7 @@ function EditProfileButton() {
       isOpen={switchState}
       onOpen={turnOn}
       onClose={turnOff}
-      ariaDescribedBy='edit-profile-modal__heading'
+      ariaDescribedBy='edit-profile-dialog__heading'
     >
       <Dialog.Trigger>
         <Button size={{ '@bp1': 'base', '@bp4': 'base' }} label='Edit' />
@@ -28,41 +26,20 @@ function EditProfileButton() {
       <Dialog.Portal>
         <Dialog.Overlay />
         <Dialog.Content
-          position='relative'
-          h={{ '@bp1': '100vh', '@bp3': 550 }}
+          t={{ '@bp1': 69, '@bp3': '50%' }}
+          h={{ '@bp1': '100vh', '@bp3': 650 }}
           maxHeight={{ '@bp1': '100vh', '@bp3': '85vh' }}
           radius={{ '@bp1': 0, '@bp3': 3 }}
           w={{ '@bp1': '100vw', '@bp3': '90vw' }}
         >
-          <Dialog.Header
-            borderBottom={2}
-            borderColor='base100'
-            position='fixed'
-          >
-            <Box p='relative'>
-              <HStack
-                position='absolute'
-                l={0}
-                r={0}
-                t={0}
-                b={0}
-                flex={1}
-                items='center'
-                justify='center'
-                css={{ zIndex: -1 }}
-              >
-                <Heading as='h2' size={4} css={{ textAlign: 'center' }}>
-                  Edit Profile
-                </Heading>
-              </HStack>
-            </Box>
+          <Dialog.Header borderBottom={2} borderColor='base100'>
+            <DialogHeading
+              title='Edit Profile'
+              id='edit-profile-dialog__heading'
+            />
           </Dialog.Header>
           <Dialog.Body pb={70}>
-            <Error
-              errorEl={<></>}
-              hasError={!!error}
-              errorMessage={error?.message}
-            >
+            <Error hasError={!!error} errorMessage={error?.message}>
               <Loader loading={loading}>
                 <ProfileForm
                   initialValues={parseToProfileFormData(profile)}

@@ -29,7 +29,7 @@ function MdHeader() {
             p={4}
           >
             <NavigationLink
-              as={<Link to={prefix('/', Paths.home)} />}
+              as={<Link to={prefix('/', Paths.root)} />}
               isActive={!!matchPath('', pathname)}
               activeIcon='home-fill'
               inactiveIcon='home-outline'
@@ -40,7 +40,7 @@ function MdHeader() {
             />
             <NavigationLink
               as={<Link to={prefix('/', Paths.discover)} />}
-              isActive={!!matchPath('discover', pathname)}
+              isActive={!!matchPath('discover/*', pathname)}
               activeIcon='discover-fill'
               inactiveIcon='discover-outline'
               css={{
@@ -50,7 +50,7 @@ function MdHeader() {
             />
             <NavigationLink
               as={<Link to={prefix('/', Paths.channels)} />}
-              isActive={!!matchPath('channels', pathname)}
+              isActive={!!matchPath('channels/*', pathname)}
               activeIcon='channels-fill'
               inactiveIcon='channels-outline'
               css={{
@@ -60,7 +60,7 @@ function MdHeader() {
             />
             <NavigationLink
               as={<Link to={prefix('/', Paths.bookmarks)} />}
-              isActive={!!matchPath('bookmarks', pathname)}
+              isActive={!!matchPath('bookmarks/*', pathname)}
               activeIcon='bookmark-fill'
               inactiveIcon='bookmark-outline'
               css={{
@@ -70,7 +70,7 @@ function MdHeader() {
             />
             <NavigationLink
               as={<Link to={prefix('/', Paths.releases)} />}
-              isActive={!!matchPath('releases', pathname)}
+              isActive={!!matchPath('releases/*', pathname)}
               activeIcon='releases-fill'
               inactiveIcon='releases-outline'
               css={{

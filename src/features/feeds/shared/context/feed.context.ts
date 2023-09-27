@@ -1,19 +1,23 @@
 import { createContext, useContext } from 'react';
-import { IUser } from '../../../../shared';
-import { IReaction } from '../interface';
+import { UserModel } from '../../../../shared';
+import { FeedReactionName } from '../types';
 
 interface IFeedContext {
-  owner: IUser;
+  owner: UserModel;
   feedId: string;
-  reaction: IReaction | null;
+  reaction: FeedReactionName | null;
   createdAt: string;
+  isPinned: boolean;
+  bookmarked: boolean;
 }
 
 const FeedContext = createContext<IFeedContext>({
   owner: { id: '', avatar: '', displayName: '', username: '' },
   feedId: '',
   reaction: null,
+  bookmarked: false,
   createdAt: '',
+  isPinned: false,
 });
 
 const FeedContextProvider = FeedContext.Provider;

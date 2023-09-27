@@ -1,14 +1,18 @@
 import { createContext } from 'react';
+import { StringNumeric } from '../../types';
 
-const GeneralContext = createContext<{
-  state: any;
-  update: (next: Partial<any>) => void;
-}>({
-  state: {},
-  update: (next) => {
-    console.log(next);
-  },
-});
+type GeneralContextType = {
+  state: StringNumeric | Record<StringNumeric, StringNumeric> | any;
+  update: (next: Partial<StringNumeric> | StringNumeric | any) => void;
+};
+
+const GeneralContext: React.Context<GeneralContextType> =
+  createContext<GeneralContextType>({
+    state: {},
+    update: (next) => {
+      console.log(next);
+    },
+  });
 
 const GeneralContextProvider = GeneralContext.Provider;
 

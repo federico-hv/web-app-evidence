@@ -1,4 +1,4 @@
-import { IUser } from '../../../shared';
+import { UserModel } from '../../../shared';
 
 /**
  * Get text to display next to the mutual user avatars
@@ -6,7 +6,10 @@ import { IUser } from '../../../shared';
  * @param users mutual users
  * @param total total number of mutual users
  */
-export function getMutualFollowersText(users: IUser[], total = 0): string {
+export function getMutualFollowersText(
+  users: UserModel[],
+  total = 0,
+): string {
   if (total > 2) {
     return `Followed by ${users[0].displayName}, ${
       users[1].displayName

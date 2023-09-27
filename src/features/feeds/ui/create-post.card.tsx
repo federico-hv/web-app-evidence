@@ -8,7 +8,12 @@ import {
   VStack,
 } from '@holdr-ui/react';
 import { useCurrentUser } from '../../auth';
-import { Error, useDialogTabContext } from '../../../shared';
+import {
+  Error,
+  Responsive,
+  ResponsiveItem,
+  useDialogTabContext,
+} from '../../../shared';
 
 import MediaIcon from '../../../assets/images/media.png';
 import PollIcon from '../../../assets/images/poll.png';
@@ -36,9 +41,13 @@ function ActionButton({
       _hover={{ backgroundColor: '$base100' }}
     >
       <Image size={20} src={logo} alt='media icon' />
-      <Text color='base400' weight={500}>
-        {label}
-      </Text>
+      <Responsive>
+        <ResponsiveItem tablet='show' laptop='show' desktop='show'>
+          <Text color='base400' weight={500}>
+            {label}
+          </Text>
+        </ResponsiveItem>
+      </Responsive>
     </HStack>
   );
 }
@@ -55,13 +64,15 @@ function CreatePostPlaceholder({
       w='full'
       px={4}
       radius={4}
-      h={40}
+      h={{ '@bp1': 32, '@bp3': 40 }}
       border={1}
       borderColor='base200'
       cursor='pointer'
       onClick={() => onClick('')}
     >
-      <Text color='base400'>What do you want your fans to know?</Text>
+      <Text noOfLines={1} color='base400' size={{ '@bp1': 2, '@bp3': 3 }}>
+        What do you want your fans to know?
+      </Text>
     </VStack>
   );
 }
@@ -74,7 +85,7 @@ function CreatePostCard() {
     <Error hasError={!currentUser} errorEl={<></>}>
       {currentUser && (
         <Card
-          bgColor='primary400'
+          css={{ backgroundColor: '#fbfaf2' }}
           minHeight={100}
           w='full'
           gap={4}
@@ -87,7 +98,11 @@ function CreatePostCard() {
             gap={3}
             items='center'
           >
-            <Avatar variant='squircle' src={currentUser.avatar} />
+            <Avatar
+              size={{ '@bp1': 'sm', '@bp3': 'base' }}
+              variant='squircle'
+              src={currentUser.avatar}
+            />
             <CreatePostPlaceholder onClick={onOpen} />
           </Card.Body>
           <Card.Footer

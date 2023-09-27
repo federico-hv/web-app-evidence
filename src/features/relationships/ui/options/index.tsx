@@ -32,6 +32,12 @@ import {
   useToast,
 } from '../../../../shared';
 
+/*
+TODO:
+ -[ ] Move to /features/user/ui
+ -[ ] Use in pages/profile, separate it from the previous architecture
+ */
+
 function BlockButton({ close }: { close: VoidFunction }) {
   const { profile } = useProfile();
 
@@ -165,6 +171,8 @@ function ProfileOptionsMenu({ close }: { close: VoidFunction }) {
     </VStack>
   );
 }
+
+// TODO: Use Menu Instead of this.
 
 function OptionsButton() {
   const {

@@ -1,5 +1,5 @@
 import { Formik, useFormikContext } from 'formik';
-import { Button, VStack, Alert } from '@holdr-ui/react';
+import { Button, VStack, Alert, Box } from '@holdr-ui/react';
 import { FormEvent, useContext } from 'react';
 import {
   extraBtnPadding,
@@ -70,11 +70,12 @@ function ContactVerificationForm() {
     value: string,
     channel: 'sms' | 'email' = 'sms',
   ) => {
-    await onSubmit({
+    const res = await onSubmit({
       contact: value,
       channel: channel,
     });
-    if (!error) {
+
+    if (res && res.data && res.data.sendVerificationOTP.status) {
       update(value);
       increment();
     }
@@ -95,7 +96,7 @@ function ContactVerificationForm() {
       {({ values, handleSubmit, errors }) => (
         <VStack
           as='form'
-          h='full'
+          h={{ '@bp1': 'calc(100% - 120px)', '@bp3': 'full' }}
           justify='space-between'
           onSubmit={(e) => handleSubmit(e as FormEvent<HTMLFormElement>)}
         >
@@ -122,17 +123,27 @@ function ContactVerificationForm() {
             <VerifyPhoneAlertDialog onAction={handleContinue} />
           )}
           {name === 'email' && (
-            <Button
-              type='button'
-              disabled={isInputDisabled(values, errors, ['email'])}
-              fullWidth
-              className={extraBtnPadding()}
-              onClick={async () =>
-                handleContinue(values.email as string, 'email')
-              }
+            <Box
+              position='fixed'
+              bgColor='primary400'
+              px={4}
+              l={0}
+              r={0}
+              zIndex={100}
+              b='20px'
             >
-              Continue
-            </Button>
+              <Button
+                type='button'
+                disabled={isInputDisabled(values, errors, ['email'])}
+                fullWidth
+                className={extraBtnPadding()}
+                onClick={async () =>
+                  handleContinue(values.email as string, 'email')
+                }
+              >
+                Continue
+              </Button>
+            </Box>
           )}
         </VStack>
       )}

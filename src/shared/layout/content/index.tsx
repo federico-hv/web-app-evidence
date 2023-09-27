@@ -21,22 +21,27 @@ function ContentLayout({ children }: BaseContentLayoutProps) {
 }
 ContentLayout.displayName = 'ContentLayout';
 
-const ContentLayoutMain = ({ children }: BaseContentLayoutProps) => {
+const ContentLayoutMain = ({
+  children,
+  innerRef,
+}: BaseContentLayoutProps) => {
   return (
     <Box
+      innerRef={innerRef}
       as='main'
       w={{
         '@bp1': 'full',
         '@bp4': 'calc(100% - 160px)',
         '@bp5': 'calc(100% - 375px)',
       }}
-      t={{ '@bp3': 65 }}
+      t={{ '@bp1': 57, '@bp3': 65 }}
       borderRight={2}
       borderLeft={2}
       h='fit-content'
       minHeight='calc(100vh - 65px)'
       borderColor='base100'
       position='relative'
+      pb={{ '@bp1': 56, '@bp3': 0 }}
     >
       {children}
     </Box>

@@ -6,7 +6,7 @@ import {
   useCurrentUser,
   FeedCard,
 } from '../../../features';
-import { Error, Loader } from '../../../shared';
+import { Error, Loader, useScrollDirection } from '../../../shared';
 import { Alert, Container, Tabs, VStack } from '@holdr-ui/react';
 
 function Feeds({ type = 'all' }: { type: 'all' | 'article' | 'post' }) {
@@ -48,20 +48,22 @@ function Feeds({ type = 'all' }: { type: 'all' | 'article' | 'post' }) {
 }
 
 function FeedTabs() {
+  const { direction, delta } = useScrollDirection('#root');
+
   return (
     <Tabs defaultValue='all'>
       <Tabs.List
         css={{
           position: 'sticky',
-          top: '65px',
           backgroundColor: '$clearTint500',
           blur: '14px',
           zIndex: 11,
-          px: '$1',
           py: '$4',
+          px: '$1',
           '& button:not(:last-child)': {
             marginRight: '$4',
           },
+          t: direction === 'down' && delta > 0 ? 0 : '56px',
         }}
       >
         <Container maxWidth={600}>

@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 
 export interface LoaderProps {
-  children: ReactNode;
+  children?: ReactNode;
   loading: boolean;
   as?: JSX.Element;
   h?: any;

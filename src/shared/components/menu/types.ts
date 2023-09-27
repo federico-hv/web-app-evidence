@@ -2,8 +2,9 @@ import { IconName } from '@holdr-ui/react/dist/shared/types';
 import { ReactNode } from 'react';
 
 export interface MenuItemProps {
+  disabled?: boolean;
   label?: string;
-  icon?: IconName;
+  icon?: JSX.Element | IconName;
   action?: VoidFunction;
   dangerous?: boolean;
   children?: ReactNode;

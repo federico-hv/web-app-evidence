@@ -95,6 +95,8 @@ export const REMOVE_REACTION = gql`
       id
       type
       createdAt
+      isPinned
+      reaction
       owner {
         id
         displayName
@@ -141,10 +143,8 @@ export const ADD_REACTION = gql`
       id
       type
       createdAt
-      reaction {
-        name
-        count
-      }
+      isPinned
+      reaction
       owner {
         id
         displayName
@@ -183,5 +183,38 @@ export const ADD_REACTION = gql`
         }
       }
     }
+  }
+`;
+
+export const PIN_FEED = gql`
+  mutation pinFeed($id: String!) {
+    pinFeed(id: $id) # feed ID [nullable, string]
+  }
+`;
+
+export const UNPIN_FEED = gql`
+  mutation unpinFeed($id: String!) {
+    unpinFeed(id: $id) # feed ID [nullable, string]
+  }
+`;
+
+export const DELETE_FEED = gql`
+  mutation deleteFeed($id: String!) {
+    deleteFeed(id: $id) # feed id, [nullable, string]
+  }
+`;
+
+export const CHANGE_AUDIENCE = gql`
+  mutation changeFeedAudience($id: String!, $audience: FeedAudience!) {
+    changeFeedAudience(id: $id, audience: $audience) {
+      status
+      message
+    }
+  }
+`;
+
+export const HIDE_FEED = gql`
+  mutation hideFeed($id: String!, $reason: String!) {
+    hideFeed(id: $id, reason: $reason) # returns Feed Id, ["nullable", "string"]
   }
 `;

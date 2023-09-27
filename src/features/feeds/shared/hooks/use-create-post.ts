@@ -2,6 +2,7 @@ import { useMutation } from '@apollo/client';
 import { CREATE_POST } from '../../mutations';
 import { CreatePostInput, FeedModel } from '../interface';
 import { useToast } from '../../../../shared';
+import { GET_FEEDS } from '../../queries';
 
 /**
  *
@@ -14,13 +15,15 @@ export function useCreatePost() {
   >(CREATE_POST);
 
   const createPost = async (payload: CreatePostInput) => {
-    console.log(payload);
-
     try {
       return await mutation({
         variables: {
           payload,
         },
+        refetchQueries: [
+          { query: GET_FEEDS, variables: { type: 'all' } },
+          { query: GET_FEEDS, variables: { type: 'post' } },
+        ],
         context: {
           headers: {
             'apollo-require-preflight': true,

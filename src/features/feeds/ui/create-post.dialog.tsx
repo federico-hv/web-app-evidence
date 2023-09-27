@@ -4,7 +4,6 @@ import {
   Button,
   CircularProgress,
   Dialog,
-  Heading,
   HStack,
   Image,
   Text,
@@ -12,6 +11,7 @@ import {
   VStack,
 } from '@holdr-ui/react';
 import {
+  DialogHeading,
   extraBtnPadding,
   SwitchConditional,
   SwitchConditionalCase,
@@ -74,37 +74,27 @@ function CreatePostDialog() {
   return (
     <>
       {currentUser && (
-        <Dialog isOpen={isOpen} onOpen={onOpen} onClose={onClose}>
+        <Dialog
+          ariaDescribedBy='create-post-dialog__title'
+          isOpen={isOpen}
+          onOpen={() => onOpen(option)}
+          onClose={onClose}
+        >
           <Dialog.Portal>
             <Dialog.Overlay />
-            <Dialog.Content maxHeight='90vh' h={contentHeight}>
-              <Dialog.Header
-                position='fixed'
-                t={0}
-                borderBottom={1}
-                borderColor='base100'
-              >
-                <Box p='relative'>
-                  <HStack
-                    position='absolute'
-                    l={0}
-                    r={0}
-                    t={0}
-                    b={0}
-                    flex={1}
-                    items='center'
-                    justify='center'
-                    css={{ zIndex: -1 }}
-                  >
-                    <Heading
-                      as='h2'
-                      size={4}
-                      css={{ textAlign: 'center' }}
-                    >
-                      Create Post
-                    </Heading>
-                  </HStack>
-                </Box>
+            <Dialog.Content
+              position='relative'
+              t={{ '@bp1': 69, '@bp3': '50%' }}
+              h={{ '@bp1': '100vh', '@bp3': contentHeight }}
+              maxHeight={{ '@bp1': '100vh', '@bp3': '85vh' }}
+              radius={{ '@bp1': 0, '@bp3': 3 }}
+              w={{ '@bp1': '100vw', '@bp3': '90vw' }}
+            >
+              <Dialog.Header borderBottom={1} borderColor='base100'>
+                <DialogHeading
+                  title='Create Post'
+                  id='create-post-dialog__title'
+                />
               </Dialog.Header>
               <Dialog.Body>
                 <VStack py={4} gap={4} h='calc(100% - 128px)'>
@@ -128,9 +118,11 @@ function CreatePostDialog() {
                   <VStack
                     h='100%'
                     justify='space-between'
-                    overflowY='scroll'
+                    overflowY='auto'
+                    pb={4}
+                    gap={4}
                   >
-                    <Box flex={1} as='label'>
+                    <Box flex={1} as='label' minHeight={75}>
                       <StyledTextarea
                         autoFocus
                         css={{ padding: 0 }}

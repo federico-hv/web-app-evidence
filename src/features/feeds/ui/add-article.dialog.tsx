@@ -1,13 +1,6 @@
+import { Alert, Button, Dialog, VStack } from '@holdr-ui/react';
 import {
-  Alert,
-  Box,
-  Button,
-  Dialog,
-  Heading,
-  HStack,
-  VStack,
-} from '@holdr-ui/react';
-import {
+  DialogHeading,
   extraBtnPadding,
   FormInput,
   GeneralContextProvider,
@@ -124,37 +117,31 @@ function Preview() {
 }
 
 function AddArticleDialog() {
-  const { isOpen, onOpen, onClose } = useDialogTabContext();
+  const { isOpen, onOpen, onClose, option } = useDialogTabContext();
   const [state, update] = useRecordState({});
 
   return (
-    <Dialog isOpen={isOpen} onOpen={onOpen} onClose={onClose}>
+    <Dialog
+      ariaDescribedBy='add-article-dialog__title'
+      isOpen={isOpen}
+      onOpen={() => onOpen(option)}
+      onClose={onClose}
+    >
       <Dialog.Portal>
         <Dialog.Overlay />
-        <Dialog.Content h='37.5vh'>
-          <Dialog.Header
-            position='fixed'
-            t={0}
-            borderBottom={1}
-            borderColor='base100'
-          >
-            <Box p='relative'>
-              <HStack
-                position='absolute'
-                l={0}
-                r={0}
-                t={0}
-                b={0}
-                flex={1}
-                items='center'
-                justify='center'
-                css={{ zIndex: -1 }}
-              >
-                <Heading as='h2' size={4} css={{ textAlign: 'center' }}>
-                  Add Article
-                </Heading>
-              </HStack>
-            </Box>
+        <Dialog.Content
+          position='relative'
+          t={{ '@bp1': 69, '@bp3': '50%' }}
+          h={{ '@bp1': '100vh', '@bp3': '37.5vh' }}
+          maxHeight={{ '@bp1': '100vh', '@bp3': '85vh' }}
+          radius={{ '@bp1': 0, '@bp3': 3 }}
+          w={{ '@bp1': '100vw', '@bp3': '90vw' }}
+        >
+          <Dialog.Header borderBottom={1} borderColor='base100'>
+            <DialogHeading
+              title='Add Article'
+              id='add-article-dialog__title'
+            />
           </Dialog.Header>
           <Dialog.Body>
             <GeneralContextProvider
