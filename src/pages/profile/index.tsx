@@ -27,12 +27,20 @@ import { SuggestionsCard } from '../../features';
 import { Fragment } from 'react';
 import { StackProps } from '@holdr-ui/react/dist/components/stack/src/stack.types';
 
-function SmHeaderWrapper({ children, ...props }: StackProps) {
+export function SmHeaderWrapper({
+  hideOnScroll = true,
+  children,
+  ...props
+}: StackProps & { hideOnScroll?: boolean }) {
   const { direction, delta } = useScrollDirection('#root');
 
   return (
     <Box
-      display={direction === 'down' && delta > 0 ? 'none' : 'block'}
+      display={
+        hideOnScroll && direction === 'down' && delta > 0
+          ? 'none'
+          : 'block'
+      }
       position='fixed'
       t={0}
       w='100%'
@@ -41,9 +49,9 @@ function SmHeaderWrapper({ children, ...props }: StackProps) {
         blur: '12px',
         zIndex: 50,
       }}
-      maxHeight={58}
+      h={58}
     >
-      <Stack direction='horizontal' px={4} pt={4} pb={2} {...props}>
+      <Stack h='100%' direction='horizontal' p={3} {...props}>
         {children}
       </Stack>
     </Box>

@@ -54,7 +54,11 @@ function Statistic({
       >
         {data.feedStatistic ? millify(data.feedStatistic) : 0}{' '}
       </Text>
-      <Text color='base400' css={{ display: 'inline' }}>
+      <Text
+        size={{ '@bp1': 2, '@bp3': 3 }}
+        color='base400'
+        css={{ display: 'inline' }}
+      >
         {capitalize(
           `${Readable[name]}${data.feedStatistic !== 1 ? 's' : ''}`,
         )}

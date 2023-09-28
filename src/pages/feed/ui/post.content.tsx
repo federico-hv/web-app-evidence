@@ -8,10 +8,14 @@ import {
 import { Text, VStack } from '@holdr-ui/react';
 import { SwitchConditional, SwitchConditionalCase } from '../../../shared';
 
+/**
+ * TODO: Can I reuse this?
+ */
+
 function PostContent({ data }: { data: PostModel }) {
   return (
     <VStack>
-      <Text>{data.description}</Text>
+      <Text size={{ '@bp1': 2, '@bp3': 3 }}>{data.description}</Text>
       <SwitchConditional>
         <SwitchConditionalCase on={data.media && data.media.length > 0}>
           <Media items={data.media as IPostMedia[]} />

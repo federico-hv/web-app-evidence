@@ -1,11 +1,8 @@
-import { useParams } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
 import {
   ArticleModel,
   BookmarkPopover,
   FeedContextProvider,
   FeedModel,
-  GET_FEED,
   PostModel,
   Reaction,
   ReactionPopover,
@@ -13,25 +10,20 @@ import {
 import {
   arrayFrom,
   DateUtility,
-  Error,
   ErrorFallback,
   GeneralContextProvider,
   GenericProps,
   GQLRenderer,
   Head,
   LinkOverlay,
-  LinkText,
-  Loader,
-  NotFoundError,
   prefix,
   TextGroup,
-  useGoBack,
+  useGeneralContext,
 } from '../../../shared';
 import {
   Avatar,
   Box,
   Container,
-  Heading,
   HStack,
   IconButton,
   Skeleton,
@@ -92,163 +84,107 @@ function Statistics() {
 }
 
 function FeedContent() {
-  const { id } = useParams();
-
-  const { loading, error, data } = useQuery<
-    { feed: FeedModel },
-    { id: string }
-  >(GET_FEED, { variables: { id: id || '' } });
-
-  const goBack = useGoBack();
+  const { state } = useGeneralContext<FeedModel>();
 
   return (
-    <Error hasError={!!error} errorEl={<NotFoundError />}>
-      <Loader loading={loading}>
-        {data && data.feed ? (
-          <FeedContextProvider
-            value={{
-              bookmarked: data.feed.bookmarked,
-              isPinned: data.feed.isPinned,
-              owner: data.feed.owner,
-              feedId: data.feed.id as string,
-              reaction: data.feed.reaction,
-              createdAt: data.feed.createdAt,
-            }}
-          >
-            <Head
-              prefix={`${data.feed.owner.displayName} -`}
-              title={data.feed.node.description}
-              description={data.feed.node.description}
-            />
-            <Box
-              borderBottom={2}
-              bgColor='clearTint500'
-              borderColor='base100'
-              position='sticky'
-              t={65}
-              css={{
-                zIndex: 10,
-                blur: '12px',
-              }}
-            >
-              <Container maxWidth={600} py={4}>
-                <HStack gap={3}>
-                  <IconButton
-                    size='lg'
-                    onClick={goBack}
-                    variant='ghost'
-                    icon='arrow-left-outline'
-                    ariaLabel='go back'
+    <FeedContextProvider
+      value={{
+        bookmarked: state.bookmarked,
+        isPinned: state.isPinned,
+        owner: state.owner,
+        feedId: state.id as string,
+        reaction: state.reaction,
+        createdAt: state.createdAt,
+      }}
+    >
+      <Head
+        prefix={`${state.owner.displayName} -`}
+        title={state.node.description}
+        description={state.node.description}
+      />
+      <VStack>
+        <Box borderBottom={2} borderColor='base100'>
+          <Container maxWidth={600} py={4} borderColor='base100'>
+            <VStack gap={{ '@bp1': 5, '@bp3': 5 }} w='full'>
+              <HStack justify='space-between'>
+                <HStack gap={3} position='relative'>
+                  <LinkOverlay to={prefix('/', state.owner.username)} />
+                  <Avatar
+                    variant='squircle'
+                    size={{ '@bp1': 'base', '@bp3': 'xl' }}
+                    src={state.owner.avatar}
+                    name={state.owner.displayName}
                   />
-                  <VStack>
-                    <Heading size={4} weight={500} as='h2'>
-                      Feed
-                    </Heading>
-                    <LinkText
-                      to={prefix('/', data.feed.owner.username)}
-                      size={1}
+                  <TextGroup gap={1}>
+                    <TextGroup.Heading weight={500} size={3}>
+                      {state.owner.displayName}
+                    </TextGroup.Heading>
+                    <TextGroup.Subheading
                       color='base400'
+                      size={1}
+                      weight={500}
                     >
-                      @{data.feed.owner.username}
-                    </LinkText>
-                  </VStack>
+                      {capitalize(DateUtility.fromNow(state.createdAt))}{' '}
+                      ago
+                    </TextGroup.Subheading>
+                  </TextGroup>
                 </HStack>
-              </Container>
-            </Box>
-            <VStack>
-              <Box borderBottom={2} borderColor='base100'>
-                <Container maxWidth={600} py={4} borderColor='base100'>
-                  <VStack gap={{ '@bp1': 3, '@bp3': 5 }} w='full'>
-                    <HStack justify='space-between'>
-                      <HStack gap={3} position='relative'>
-                        <LinkOverlay
-                          to={prefix('/', data.feed.owner.username)}
-                        />
-                        <Avatar
-                          variant='squircle'
-                          size='xl'
-                          src={data.feed.owner.avatar}
-                          name={data.feed.owner.displayName}
-                        />
-                        <TextGroup gap={1}>
-                          <TextGroup.Heading weight={500} size={3}>
-                            {data.feed.owner.displayName}
-                          </TextGroup.Heading>
-                          <TextGroup.Subheading
-                            color='base400'
-                            size={1}
-                            weight={500}
-                          >
-                            {capitalize(
-                              DateUtility.fromNow(data.feed.createdAt),
-                            )}{' '}
-                            ago
-                          </TextGroup.Subheading>
-                        </TextGroup>
-                      </HStack>
-                      <MoreOptionsButton type={data.feed.type} />
-                    </HStack>
-                    {data.feed.type === 'post' ? (
-                      <PostContent data={data.feed.node as PostModel} />
-                    ) : (
-                      <ArticleContent
-                        data={data.feed.node as ArticleModel}
-                      />
-                    )}
+                <MoreOptionsButton type={state.type} />
+              </HStack>
+              {state.type === 'post' ? (
+                <PostContent data={state.node as PostModel} />
+              ) : (
+                <ArticleContent data={state.node as ArticleModel} />
+              )}
 
-                    <Statistics />
+              <Statistics />
 
-                    <HStack gap={5}>
-                      <ReactionPopover>
-                        <IconButton
-                          size={{ '@bp1': 'base', '@bp4': 'lg' }}
-                          icon={
-                            data.feed.reaction
-                              ? Reaction[data.feed.reaction].icon
-                              : 'reaction-add'
-                          }
-                          variant='ghost'
-                          colorTheme='base600'
-                          ariaLabel={
-                            data.feed.reaction
-                              ? Reaction[data.feed.reaction].name
-                              : 'React'
-                          }
-                        />
-                      </ReactionPopover>
-                      <BookmarkPopover alignOffset={20}>
-                        <IconButton
-                          variant='ghost'
-                          ariaLabel={
-                            !data.feed.bookmarked
-                              ? 'create bookmark'
-                              : 'remove bookmark'
-                          }
-                          icon={
-                            !data.feed.bookmarked
-                              ? 'bookmark-outline'
-                              : 'bookmark-fill'
-                          }
-                          size={{ '@bp1': 'base', '@bp4': 'lg' }}
-                        />
-                      </BookmarkPopover>
-                      <IconButton
-                        variant='ghost'
-                        icon='share-outline'
-                        ariaLabel='share'
-                        size={{ '@bp1': 'base', '@bp4': 'lg' }}
-                      />
-                    </HStack>
-                  </VStack>
-                </Container>
-              </Box>
+              <HStack gap={5}>
+                <ReactionPopover>
+                  <IconButton
+                    size={{ '@bp1': 'base', '@bp4': 'lg' }}
+                    icon={
+                      state.reaction
+                        ? Reaction[state.reaction].icon
+                        : 'reaction-add'
+                    }
+                    variant='ghost'
+                    colorTheme='base600'
+                    ariaLabel={
+                      state.reaction
+                        ? Reaction[state.reaction].name
+                        : 'React'
+                    }
+                  />
+                </ReactionPopover>
+                <BookmarkPopover alignOffset={20}>
+                  <IconButton
+                    variant='ghost'
+                    ariaLabel={
+                      !state.bookmarked
+                        ? 'create bookmark'
+                        : 'remove bookmark'
+                    }
+                    icon={
+                      !state.bookmarked
+                        ? 'bookmark-outline'
+                        : 'bookmark-fill'
+                    }
+                    size={{ '@bp1': 'base', '@bp4': 'lg' }}
+                  />
+                </BookmarkPopover>
+                <IconButton
+                  variant='ghost'
+                  icon='share-outline'
+                  ariaLabel='share'
+                  size={{ '@bp1': 'base', '@bp4': 'lg' }}
+                />
+              </HStack>
             </VStack>
-          </FeedContextProvider>
-        ) : (
-          <NotFoundError />
-        )}
-      </Loader>
-    </Error>
+          </Container>
+        </Box>
+      </VStack>
+    </FeedContextProvider>
   );
 }
 FeedContent.displayName = 'FeedContent';
