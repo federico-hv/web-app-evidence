@@ -56,7 +56,7 @@ function FeedTabs() {
         css={{
           position: 'sticky',
           backgroundColor: '$clearTint500',
-          blur: '14px',
+          blur: '12px',
           zIndex: 11,
           py: '$4',
           px: '$1',
