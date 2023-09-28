@@ -10,7 +10,11 @@ function Content() {
   });
 
   return (
-    <VStack p={4} gap={5} mb={{ '@bp1': 58, '@bp3': 0 }}>
+    <VStack
+      p={{ '@bp1': 2, '@bp3': 4 }}
+      gap={5}
+      mb={{ '@bp1': 58, '@bp3': 0 }}
+    >
       {data.bookmarks.edges.map((item) => (
         <FeedCard key={item.node.id} data={item.node.feed} />
       ))}

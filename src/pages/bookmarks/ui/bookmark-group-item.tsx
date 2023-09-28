@@ -34,10 +34,13 @@ function BookmarkGroupItem({ data }: { data: IBookmarkGroup }) {
       <LinkOverlay to={`/${Paths.bookmarks}/${data.id}`} />
       <HStack items='flex-start'>
         <TextGroup>
-          <TextGroupHeading as='h3' size={3}>
+          <TextGroupHeading as='h2' size={{ '@bp1': 2, '@bp3': 3 }}>
             {data.name}
           </TextGroupHeading>
-          <TextGroupSubheading size={2} color='base400'>
+          <TextGroupSubheading
+            size={{ '@bp1': 1, '@bp3': 2 }}
+            color='base400'
+          >
             {data.total} item{data.total > 1 ? 's' : ''}
           </TextGroupSubheading>
         </TextGroup>

@@ -204,6 +204,8 @@ export function SettingsLg() {
 function SettingsPage() {
   const windowSize = useWindowSize();
 
+  // TODO: Remove SettingsSm and SettingsLg components. Refer to pages/bookmarks/index.tsx for pattern.
+
   return (
     <Box>
       <Head

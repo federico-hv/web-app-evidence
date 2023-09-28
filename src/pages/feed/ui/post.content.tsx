@@ -9,7 +9,7 @@ import { Text, VStack } from '@holdr-ui/react';
 import { SwitchConditional, SwitchConditionalCase } from '../../../shared';
 
 /**
- * TODO: Can I reuse this?
+ * TODO: Answer: Can I reuse this?
  */
 
 function PostContent({ data }: { data: PostModel }) {

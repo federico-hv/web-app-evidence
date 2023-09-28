@@ -26,25 +26,34 @@ PageLayout.displayName = 'Page Layout';
 
 function PageLayoutHeader({
   children,
-  onBack,
+  fallbackPath,
+  css,
   ...props
 }: PageLayoutHeaderProps) {
   return (
     <VStack
+      position='sticky'
+      t={{ '@bp1': 0, '@bp3': 65 }}
+      bgColor='clearTint500'
       justify='center'
-      p={4}
+      p={{ '@bp1': 2, '@bp3': 4 }}
       borderBottom={2}
       borderColor='base100'
       h={58}
+      zIndex={10}
+      css={{
+        blur: '12px',
+        ...css,
+      }}
       {...props}
     >
-      <HStack items='center' gap={4}>
-        {onBack && (
-          <Box display={{ '@bp4': 'none' }}>
-            <BackButton />
-          </Box>
-        )}
-        <Box
+      <HStack items='center' gap={3}>
+        <Box display={{ '@bp1': 'block', '@bp4': 'none' }}>
+          <BackButton fallbackPath={fallbackPath} />
+        </Box>
+        <HStack
+          items={'center'}
+          justify='space-between'
           w='100%'
           fontSize={4}
           css={{
@@ -54,7 +63,7 @@ function PageLayoutHeader({
           }}
         >
           {children}
-        </Box>
+        </HStack>
       </HStack>
     </VStack>
   );

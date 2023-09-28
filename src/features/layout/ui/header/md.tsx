@@ -41,8 +41,8 @@ function MdHeader() {
             <NavigationLink
               as={<Link to={prefix('/', Paths.discover)} />}
               isActive={!!matchPath('discover/*', pathname)}
-              activeIcon='discover-fill'
-              inactiveIcon='discover-outline'
+              activeIcon='search-outline'
+              inactiveIcon='search-outline'
               css={{
                 padding: 0,
                 size: '2.5rem',

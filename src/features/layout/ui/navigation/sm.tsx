@@ -243,7 +243,6 @@ function SmNavigation() {
 
   return (
     <Box
-      display={direction === 'down' && delta > 0 ? 'none' : 'block'}
       position='fixed'
       t={0}
       w='100%'
@@ -251,6 +250,9 @@ function SmNavigation() {
       css={{
         blur: '12px',
         zIndex: 50,
+        '@bp1': {
+          display: direction === 'down' && delta > 0 ? 'none' : 'block',
+        },
       }}
     >
       <HStack

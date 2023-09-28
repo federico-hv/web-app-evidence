@@ -36,20 +36,24 @@ export function SmHeaderWrapper({
 
   return (
     <Box
-      display={
-        hideOnScroll && direction === 'down' && delta > 0
-          ? 'none'
-          : 'block'
-      }
       position='fixed'
       t={0}
       w='100%'
       bgColor='clearTint500'
+      h={58}
       css={{
         blur: '12px',
         zIndex: 50,
+        '@bp1': {
+          display:
+            hideOnScroll && direction === 'down' && delta > 0
+              ? 'none'
+              : 'block',
+        },
+        '@bp3': {
+          display: 'none',
+        },
       }}
-      h={58}
     >
       <Stack h='100%' direction='horizontal' p={3} {...props}>
         {children}

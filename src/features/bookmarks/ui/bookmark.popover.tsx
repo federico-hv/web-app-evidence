@@ -1,5 +1,15 @@
-import { DialogContextProvider, GenericProps } from '../../../shared';
-import { Fragment, Suspense, useState } from 'react';
+import {
+  DialogContextProvider,
+  GenericProps,
+  useScrollDirection,
+} from '../../../shared';
+import {
+  Fragment,
+  Suspense,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
 import {
   Box,
   HStack,
@@ -20,11 +30,12 @@ function PopoverItem({
   return (
     <button disabled={disabled} onClick={onClick}>
       <Box
+        color='base800'
         cursor='pointer'
         radius='full'
         _hover={{ backgroundColor: '$base100' }}
         p={3}
-        fontSize={2}
+        fontSize={{ '@bp1': 1, '@bp3': 2 }}
       >
         {children}
       </Box>
@@ -44,6 +55,8 @@ function BookmarkPopover({
 }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
+  const { delta } = useScrollDirection('#root');
+
   const { feedId } = useFeedContext();
 
   const { removeBookmark, loading: removeBookmarkLoading } =
@@ -52,7 +65,8 @@ function BookmarkPopover({
   const { createBookmark } = useCreateBookmark();
 
   const [popoverOpen, set] = useState(false);
-  const closePopover = () => set(false);
+
+  const closePopover = useCallback(() => set(false), []);
 
   const closeAfter = async (
     id: string,
@@ -64,6 +78,23 @@ function BookmarkPopover({
 
   // close with ESC key
   useKeyBind(27, closePopover);
+
+  // close when scrolling
+  useEffect(() => {
+    const node = document.querySelector('#root');
+
+    const close = () => {
+      if (delta > 10) {
+        closePopover();
+      }
+    };
+
+    if (node) {
+      node.addEventListener('scroll', close);
+
+      return () => node.removeEventListener('scroll', close);
+    }
+  }, [delta, closePopover]);
 
   return (
     <DialogContextProvider value={{ isOpen, onOpen, onClose }}>
@@ -83,7 +114,7 @@ function BookmarkPopover({
             css={{ backgroundColor: '#FFF', zIndex: 20 }}
           >
             <HStack
-              p={2}
+              p={{ '@bp1': 1, '@bp3': 2 }}
               gap={3}
               items='center'
               divider={<Box h={1} w='1px' bgColor='base100' />}
