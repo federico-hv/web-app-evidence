@@ -16,7 +16,7 @@ function Summary() {
   const { state: profile } = useGeneralContext<IProfile>();
 
   return (
-    <Box position='relative' h={{ '@bp1': 100, '@bp3': 150 }} w='100%'>
+    <Box position='relative' h={{ '@bp1': 125, '@bp3': 175 }} w='100%'>
       <Image
         src={profile.coverImage}
         alt={`${profile.displayName} cover`}

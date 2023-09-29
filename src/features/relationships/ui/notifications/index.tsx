@@ -21,8 +21,7 @@ import {
 
 /*
 TODO:
- -[ ] Move to /features/notifications/ui
- -[ ] Use in pages/profile, separate it from the previous architecture
+  -[ ] Import and use Menu from shared/components
  */
 
 function NotificationSettings() {
@@ -32,21 +31,21 @@ function NotificationSettings() {
       divider={<Box borderBottom={1} borderColor='base100' />}
     >
       <HStack p={4} justify='space-between'>
-        <Text>Posts</Text>
-        <Switch />
+        <Text size={{ '@bp1': 2, '@bp3': 3 }}>Posts</Text>
+        <Switch size={{ '@bp1': 'sm', '@bp3': 'base' }} />
       </HStack>
       <HStack p={4} justify='space-between'>
-        <Text>Releases</Text>
-        <Switch />
+        <Text size={{ '@bp1': 2, '@bp3': 3 }}>Releases</Text>
+        <Switch size={{ '@bp1': 'sm', '@bp3': 'base' }} />
       </HStack>
       <HStack p={4} justify='space-between'>
-        <Text>Events</Text>
-        <Switch />
+        <Text size={{ '@bp1': 2, '@bp3': 3 }}>Events</Text>
+        <Switch size={{ '@bp1': 'sm', '@bp3': 'base' }} />
       </HStack>
       <VStack p={4} justify='center' color='base400'>
         <HStack gap={4}>
           <Icon name='information-outline' />
-          <Text size={2}>
+          <Text size={{ '@bp1': 1, '@bp3': 2 }}>
             Get notifications whenever user shares new feeds, events and
             music releases
           </Text>
@@ -83,7 +82,6 @@ function NotificationsButton() {
                     as='h2'
                     size={{ '@bp1': 3, '@bp3': 4 }}
                     css={{ textAlign: 'center' }}
-                    casing='uppercase'
                     weight={500}
                   >
                     Notifications
@@ -108,17 +106,18 @@ function NotificationsButton() {
             <Drawer.Content>
               <VStack
                 radius={3}
-                bgColor='primary400'
                 w='full'
-                h='380px'
+                minHeight='1px'
                 divider={<Box borderBottom={1} borderColor='base100' />}
+                css={{ backgroundColor: '#fff' }}
               >
-                <Center p={4} borderBottom={1} borderColor='base100'>
+                <HStack justify='center' items='center' minHeight={40}>
                   <Text weight={500}>Notifications</Text>
-                </Center>
+                </HStack>
                 <NotificationSettings />
-                <VStack flex={1} px={4} justify='center'>
+                <VStack px={4} py={4} flex={1} justify='center'>
                   <Button
+                    size={{ '@bp1': 'sm', '@bp3': 'base' }}
                     className={extraBtnPadding()}
                     fullWidth
                     onClick={closeDrawer}

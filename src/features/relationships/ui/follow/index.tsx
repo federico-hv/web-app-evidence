@@ -4,43 +4,28 @@ import {
   useCreateRelationshipAction,
   useRequestRelationshipAction,
 } from '../../shared';
-import {
-  SwitchConditional,
-  SwitchConditionalCase,
-  useGeneralContext,
-} from '../../../../shared';
+import { useGeneralContext } from '../../../../shared';
 
 function FollowButton() {
-  const { follow, loading: loading0 } = useCreateRelationshipAction();
-  const { followRequest, loading: loading1 } =
+  const { follow, loading: loadingFollow } = useCreateRelationshipAction();
+  const { followRequest, loading: loadingRequest } =
     useRequestRelationshipAction();
 
   const { state: profile } = useGeneralContext<IProfile>();
 
   return (
-    <SwitchConditional>
-      <SwitchConditionalCase on={!profile.protected}>
-        <Button
-          colorTheme='base800'
-          isLoading={loading0}
-          loadingText={loading0 ? '' : 'Loading'}
-          onClick={async () => follow(profile.username)}
-        >
-          Follow
-        </Button>
-      </SwitchConditionalCase>
-      <SwitchConditionalCase on={profile.protected}>
-        <Button
-          size={{ '@bp1': 'sm', '@bp3': 'base' }}
-          colorTheme='primary400'
-          isLoading={loading1}
-          loadingText={loading1 ? '' : 'Loading'}
-          onClick={async () => followRequest(profile.username)}
-        >
-          Follow
-        </Button>
-      </SwitchConditionalCase>
-    </SwitchConditional>
+    <Button
+      colorTheme={profile.protected ? 'primary400' : 'base800'}
+      isLoading={profile.protected ? loadingRequest : loadingFollow}
+      loadingText={loadingRequest || loadingFollow ? '' : 'Loading'}
+      onClick={
+        profile.protected
+          ? () => followRequest(profile.username)
+          : () => follow(profile.username)
+      }
+    >
+      Follow
+    </Button>
   );
 }
 

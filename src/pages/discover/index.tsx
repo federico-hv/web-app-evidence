@@ -29,6 +29,12 @@ import {
   ContentLayoutMain,
 } from '../../layout';
 
+/**
+ * TODO:
+    -[ ] Refactor
+    -[ ] Add PageLayout
+ */
+
 function useSearchResults(queryString: string) {
   const { data, loading, error } = useQuery<
     {

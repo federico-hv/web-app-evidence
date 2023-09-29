@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 export const useCroppedImage = () => {
   // cropped image state
   const [zoom, setZoom] = useState(1);
@@ -24,7 +24,7 @@ export const useImageUpload = (currentImage: string) => {
   const resetChosenImage = () => setChosenImage('');
   const removeDisplayedImage = () => setDisplayedImage('');
 
-  const onChange = (event: any) => {
+  const onChange = (event: ChangeEvent<any>) => {
     const imageUpload = event.target.files[0];
     // manage internal state
     setImageType(imageUpload.type);

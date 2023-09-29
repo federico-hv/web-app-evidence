@@ -2,7 +2,7 @@ import { Button } from '@holdr-ui/react';
 import { IProfile, useRemoveRelationshipAction } from '../../shared';
 import { useGeneralContext } from '../../../../shared';
 
-function BlockButton() {
+function UnblockButton() {
   const { state: profile } = useGeneralContext<IProfile>();
 
   const { removeBlock, loading: loadingRemoval } =
@@ -19,6 +19,6 @@ function BlockButton() {
     </Button>
   );
 }
-BlockButton.displayName = 'BlockButton';
+UnblockButton.displayName = 'UnblockButton';
 
-export default BlockButton;
+export default UnblockButton;

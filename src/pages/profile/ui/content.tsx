@@ -8,6 +8,7 @@ import {
 } from '@holdr-ui/react';
 import {
   Error,
+  GQLRenderer,
   Loader,
   SwitchConditional,
   SwitchConditionalCase,
@@ -85,7 +86,7 @@ function ArtistContent() {
           position: 'sticky',
           backgroundColor: '$clearTint500',
           blur: '12px',
-          zIndex: 11,
+          zIndex: 7,
           '& button': {
             height: '$7',
           },
@@ -134,13 +135,11 @@ function ArtistContent() {
         />
       </Tabs.Content>
       <Tabs.Content value='cosign'>
-        <TextGroup items='center'>
-          <TextGroupHeading>No co-signs</TextGroupHeading>
-          <TextGroupSubheading size={2} color='base400' weight={500}>
-            {profile.displayName} has not yet received any music release
-            co-signs.
-          </TextGroupSubheading>
-        </TextGroup>
+        <Empty
+          title='No co-signs'
+          subtitle={`${profile.displayName} has not yet received any music release
+            co-signs.`}
+        />
       </Tabs.Content>
     </Tabs>
   );
@@ -222,15 +221,20 @@ function ProtectedAccount() {
   return (
     <VStack py='70px' gap={5}>
       <Center fontSize='36px'>
-        <Icon name='lock-fill' />
+        <Icon size={{ '@bp1': 'lg', '@bp3': 'xl' }} name='lock-fill' />
       </Center>
       <TextGroup items='center'>
-        <TextGroup.Heading size={5}>Protected Account</TextGroup.Heading>
+        <TextGroup.Heading size={{ '@bp1': 3, '@bp3': 4 }}>
+          Protected Account
+        </TextGroup.Heading>
         <TextGroup.Subheading
-          size={2}
           color='base400'
           weight={500}
-          css={{ maxWidth: '60%', textAlign: 'center' }}
+          css={{
+            textAlign: 'center',
+            '@bp1': { fontSize: '$2', maxWidth: '100%' },
+            '@bp3': { fontSize: '$3', maxWidth: '60%' },
+          }}
         >
           This account is protected. Request to follow @{profile.username}{' '}
           to view their activity and cosigns.
@@ -251,10 +255,14 @@ function Content() {
       ) : (
         <SwitchConditional>
           <SwitchConditionalCase on={profile.role === 'artist'}>
-            <ArtistContent />
+            <GQLRenderer ErrorFallback={() => <Fragment />}>
+              <ArtistContent />
+            </GQLRenderer>
           </SwitchConditionalCase>
           <SwitchConditionalCase on={profile.role === 'general'}>
-            <GeneralUserContent />
+            <GQLRenderer ErrorFallback={() => <Fragment />}>
+              <GeneralUserContent />
+            </GQLRenderer>
           </SwitchConditionalCase>
         </SwitchConditional>
       )}

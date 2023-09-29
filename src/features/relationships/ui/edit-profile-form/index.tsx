@@ -8,7 +8,7 @@ import {
   Text,
   VStack,
 } from '@holdr-ui/react';
-import { Formik, useFormikContext } from 'formik';
+import { Formik, useField, useFormikContext } from 'formik';
 import { IProfile, ProfileFormData } from '../../shared';
 import {
   extraBtnPadding,
@@ -24,6 +24,9 @@ import { ProfileSchema } from './profile.schema';
 
 import lightPlaceholder from '../../../../assets/images/light-placeholder.jpg';
 
+/**
+ TODO: Move this to the profile page
+ */
 function InnerForm() {
   const ref = useRef<HTMLDivElement>(null);
   const dimensions = useDimensions(ref);
@@ -31,20 +34,26 @@ function InnerForm() {
   const { state: profile } = useGeneralContext<IProfile>();
   const { handleSubmit } = useFormikContext<ProfileFormData>();
 
+  const [avatarField, , avatarHelper] = useField('avatar');
+  const [coverImageField, , coverImageHelper] = useField('coverImage');
+
   return (
     <VStack
+      w='100%'
       pt={4}
       pb='80px'
       gap={3}
       as='form'
       onSubmit={(e) => handleSubmit(e as FormEvent<HTMLFormElement>)}
     >
-      <VStack>
+      <VStack w='100%'>
         <Text as='label' color='base400' size={2}>
           Avatar
         </Text>
         <HStack w='100%' justify='center' my={3}>
           <ImageUpload
+            value={avatarField.value}
+            onChange={(item) => avatarHelper.setValue(item)}
             title='Edit Avatar'
             name='avatar'
             placeholder={profile.avatar}
@@ -66,12 +75,14 @@ function InnerForm() {
         </HStack>
       </VStack>
 
-      <VStack innerRef={ref}>
+      <VStack w='100%' innerRef={ref}>
         <Text as='label' color='base400' size={2}>
           Cover Image
         </Text>
         <Box my={3}>
           <ImageUpload
+            value={coverImageField.value}
+            onChange={(item) => coverImageHelper.setValue(item)}
             aspect={3}
             title='Edit Cover Image'
             name='coverImage'
@@ -106,13 +117,16 @@ function InnerForm() {
       />
 
       <Box
+        w='100%'
+        borderTop={1}
+        borderColor='base100'
         position='fixed'
-        bgColor='primary400'
-        px={4}
+        px={{ '@bp1': 2, '@bp3': 4 }}
+        py={4}
         l={0}
-        r={0}
-        zIndex={100}
-        b='20px'
+        b={0}
+        zIndex={10}
+        css={{ backgroundColor: '#FFF' }}
       >
         <Button
           fullWidth

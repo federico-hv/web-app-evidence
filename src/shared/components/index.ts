@@ -39,4 +39,12 @@ export { default as DialogHeading } from './dialog-heading';
 export { default as LinkText } from './link-text';
 export { default as ErrorFallback } from './error-fallback';
 export { default as GQLRenderer } from './gql-renderer';
+export {
+  default as CommonDialog,
+  CommonDialogContent,
+  CommonDialogHeader,
+  CommonDialogActionButton,
+  CommonDialogTrigger,
+} from './common-dialog';
+
 // export { default as Form, FormInput } from './form';

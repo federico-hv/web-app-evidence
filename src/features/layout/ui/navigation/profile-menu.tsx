@@ -52,7 +52,13 @@ function ProfileMenu() {
         </Center>
       </Popover.Trigger>
       <Popover.Portal>
-        <Popover.Content w={325} zIndex={50} sideOffset={20} align='end'>
+        <Popover.Content
+          w={325}
+          zIndex={50}
+          sideOffset={20}
+          align='end'
+          css={{ backgroundColor: '#FFF' }}
+        >
           <VStack>
             <Link
               onClick={close}

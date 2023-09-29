@@ -33,7 +33,6 @@ import { capitalize } from 'lodash';
 import Statistic from './statistic';
 import PostContent from './post.content';
 import ArticleContent from './article.content';
-import MoreOptionsButton from './more-options.button';
 import { FeedReactionUsersDialog } from './index';
 import { useState } from 'react';
 
@@ -132,7 +131,7 @@ function FeedContent() {
                     </TextGroup.Subheading>
                   </TextGroup>
                 </HStack>
-                <MoreOptionsButton type={state.type} />
+                {/*<MoreOptionsButton type={state.type} />*/}
               </HStack>
               {state.type === 'post' ? (
                 <PostContent data={state.node as PostModel} />

@@ -10,13 +10,14 @@ import {
 import React, { ChangeEvent, useCallback } from 'react';
 import { ImageUploadProps } from './types/image-upload.types';
 import { CropperBody, CropperFooter, CropperHeader } from './ui';
-import { useField } from 'formik';
 import { removeButtonCSS } from './styles/image-upload.styles';
 import { ImageUploadContextProvider } from './context';
 import { useCroppedImage, useImageUpload } from './hooks';
 import { getCroppedImage, imageFileToUrl } from './utilities';
 
 function ImageUpload({
+  value,
+  onChange,
   aspect,
   name,
   title,
@@ -25,18 +26,17 @@ function ImageUpload({
 }: ImageUploadProps) {
   // used for dialog control
   const { isOpen, onOpen, onClose } = useDisclosure(false);
-  // handle updating image file in global form-input state
-  const [field, meta, helpers] = useField(name);
-  const setAvatarValue = helpers.setValue;
-  // use hook to control image
+
+  // use hook to control image upload
   const {
     displayedImage,
     setDisplayedImage,
     imageType,
     chosenImage,
-    onChange,
+    onChange: imageUploadOnChange,
     resetChosenImage,
-  } = useImageUpload(imageFileToUrl(field.value) || placeholder);
+  } = useImageUpload(imageFileToUrl(value) || placeholder);
+
   // use hook to control cropper
   const {
     zoom,
@@ -62,7 +62,7 @@ function ImageUpload({
         imageType,
       );
       if (croppedImage) {
-        setAvatarValue(croppedImage.file);
+        if (onChange) onChange(croppedImage.file);
         setDisplayedImage(croppedImage.url);
       }
     } catch (e) {
@@ -77,7 +77,7 @@ function ImageUpload({
     chosenImage,
     croppedAreaPixels,
     imageType,
-    setAvatarValue,
+    onChange,
     setDisplayedImage,
   ]);
 
@@ -93,7 +93,7 @@ function ImageUpload({
             css={{ display: 'none' }}
             accept='image/jpeg,image/png,image/webp'
             onChange={(event: ChangeEvent<HTMLInputElement>) => {
-              onChange(event);
+              imageUploadOnChange(event);
               onOpen(); // open dialog
             }}
           />
@@ -123,7 +123,6 @@ function ImageUpload({
             value={{
               src: displayedImage,
               name: name,
-              error: meta.error,
             }}
           >
             {children}

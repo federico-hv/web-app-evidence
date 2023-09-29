@@ -81,23 +81,12 @@ function ProfilePage() {
               </PageLayoutHeader>
               <PageLayoutContent>
                 <Summary />
-                <Container
-                  borderBottom={1}
-                  borderColor='base100'
-                  px={{ '@bp1': 2, '@bp3': 4 }}
-                  pt={4}
-                  w='100%'
-                  maxWidth={{ '@bp1': '100%', '@bp3': 600 }}
-                >
-                  <VStack
-                    w='100%'
-                    divider={<Box borderTop={1} borderColor='base100' />}
-                  >
-                    <Controls />
-                    <Info />
-                    <Relationships />
-                  </VStack>
-                </Container>
+                <VStack w='100%' css={{ backgroundColor: '#FFF' }}>
+                  <Controls />
+                  <Info />
+                  <Relationships />
+                </VStack>
+                <Box borderBottom={1} borderColor='base100' />
                 <Content />
               </PageLayoutContent>
             </PageLayout>

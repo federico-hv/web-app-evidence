@@ -1,7 +1,9 @@
-import { Box, Button, Dialog, useSwitch } from '@holdr-ui/react';
+import { Button, useDisclosure, VStack } from '@holdr-ui/react';
 import {
-  DialogHeading,
-  Error,
+  CommonDialog,
+  CommonDialogContent,
+  CommonDialogHeader,
+  CommonDialogTrigger,
   Loader,
   useGeneralContext,
 } from '../../../../shared';
@@ -10,61 +12,34 @@ import {
   parseToProfileFormData,
   useEditProfile,
 } from '../../shared';
-import ProfileForm from '../edit-profile-form';
+import { Fragment } from 'react';
+import EditProfileForm from '../edit-profile-form';
 
 function EditProfileButton() {
-  const { switchState, turnOff, turnOn } = useSwitch(false);
+  const disclosure = useDisclosure();
   const { state: profile } = useGeneralContext<IProfile>();
-  const { loading, error, onSubmit, onFinish } = useEditProfile();
+  const { loading, onSubmit, onFinish } = useEditProfile();
 
   return (
-    <Dialog
-      isOpen={switchState}
-      onOpen={turnOn}
-      onClose={turnOff}
-      ariaDescribedBy='edit-profile-dialog__heading'
-    >
-      <Dialog.Trigger>
-        <Button size={{ '@bp1': 'base', '@bp4': 'base' }} label='Edit' />
-      </Dialog.Trigger>
-      <Dialog.Portal>
-        <Dialog.Overlay />
-        <Dialog.Content
-          t={{ '@bp1': 69, '@bp3': '50%' }}
-          h={{ '@bp1': '100vh', '@bp3': 650 }}
-          maxHeight={{ '@bp1': '100vh', '@bp3': '85vh' }}
-          radius={{ '@bp1': 0, '@bp3': 3 }}
-          w={{ '@bp1': '100vw', '@bp3': '90vw' }}
-        >
-          <Dialog.Header borderBottom={2} borderColor='base100'>
-            <DialogHeading
-              title='Edit Profile'
-              id='edit-profile-dialog__heading'
-            />
-          </Dialog.Header>
-          <Dialog.Body pb={70}>
-            <Error hasError={!!error} errorMessage={error?.message}>
-              <Loader loading={loading}>
-                <ProfileForm
-                  initialValues={parseToProfileFormData(profile)}
-                  onFinish={() => onFinish(turnOff)}
-                  onSubmit={onSubmit}
-                />
-              </Loader>
-            </Error>
-          </Dialog.Body>
-          <Dialog.Footer>
-            <Box
-              h={80}
-              w='100%'
-              bgColor='primary400'
-              position='fixed'
-              b={0}
-            ></Box>
-          </Dialog.Footer>
-        </Dialog.Content>
-      </Dialog.Portal>
-    </Dialog>
+    <Fragment>
+      <CommonDialog minHeight={600} {...disclosure}>
+        <CommonDialogTrigger>
+          <Button size={{ '@bp1': 'base', '@bp4': 'base' }} label='Edit' />
+        </CommonDialogTrigger>
+        <CommonDialogHeader label='Edit profile' />
+        <CommonDialogContent>
+          <Loader loading={loading}>
+            <VStack w='100%'>
+              <EditProfileForm
+                initialValues={parseToProfileFormData(profile)}
+                onFinish={() => onFinish(disclosure.onClose)}
+                onSubmit={onSubmit}
+              />
+            </VStack>
+          </Loader>
+        </CommonDialogContent>
+      </CommonDialog>
+    </Fragment>
   );
 }
 EditProfileButton.displayName = 'EditProfileButton';

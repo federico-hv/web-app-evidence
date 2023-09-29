@@ -1,15 +1,9 @@
 import {
   DialogContextProvider,
   GenericProps,
-  useScrollDirection,
+  useActOnScroll,
 } from '../../../shared';
-import {
-  Fragment,
-  Suspense,
-  useCallback,
-  useEffect,
-  useState,
-} from 'react';
+import { Fragment, Suspense, useCallback, useState } from 'react';
 import {
   Box,
   HStack,
@@ -55,8 +49,6 @@ function BookmarkPopover({
 }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const { delta } = useScrollDirection('#root');
-
   const { feedId } = useFeedContext();
 
   const { removeBookmark, loading: removeBookmarkLoading } =
@@ -80,21 +72,7 @@ function BookmarkPopover({
   useKeyBind(27, closePopover);
 
   // close when scrolling
-  useEffect(() => {
-    const node = document.querySelector('#root');
-
-    const close = () => {
-      if (delta > 10) {
-        closePopover();
-      }
-    };
-
-    if (node) {
-      node.addEventListener('scroll', close);
-
-      return () => node.removeEventListener('scroll', close);
-    }
-  }, [delta, closePopover]);
+  useActOnScroll('#root', 10, closePopover);
 
   return (
     <DialogContextProvider value={{ isOpen, onOpen, onClose }}>

@@ -6,12 +6,15 @@ import {
   UpdateProfilePayload,
 } from '../../index';
 import { GET_ME, GET_PROFILE } from '../../../queries';
+import { useToast } from '../../../../../shared';
 
 export const useEditProfile = () => {
   const [updateProfile, { loading, error }] = useMutation<
     UpdateProfileData,
     UpdateProfilePayload
   >(UPDATE_PROFILE);
+
+  const { openWith } = useToast();
 
   const onSubmit = async (formData: ProfileFormData) => {
     await updateProfile({
@@ -43,6 +46,13 @@ export const useEditProfile = () => {
       },
     });
   };
+
+  if (error) {
+    openWith({
+      description: 'Oops! Something went wrong. Please try again.',
+      status: 'danger',
+    });
+  }
 
   const onFinish = (cb: VoidFunction) => {
     cb();

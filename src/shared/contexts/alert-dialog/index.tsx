@@ -75,12 +75,14 @@ function AlertDialogProvider({ children }: GenericProps) {
                   <Heading
                     id='alert-dialog__heading'
                     as='h2'
-                    size={3}
+                    size={{ '@bp1': 2, '@bp3': 4 }}
                     casing='uppercase'
                   >
                     {current.title}
                   </Heading>
-                  <Text>{current.description}</Text>
+                  <Text size={{ '@bp1': 2, '@bp3': 3 }}>
+                    {current.description}
+                  </Text>
                 </VStack>
               </Dialog.Body>
               <Dialog.Footer
@@ -91,6 +93,7 @@ function AlertDialogProvider({ children }: GenericProps) {
                   onClick={close}
                   variant='ghost'
                   fullWidth
+                  size={{ '@bp1': 'sm', '@bp3': 'base' }}
                   className={extraBtnPadding()}
                 >
                   {current.cancelText || 'Close'}
@@ -98,6 +101,7 @@ function AlertDialogProvider({ children }: GenericProps) {
                 <Button
                   onClick={action}
                   fullWidth
+                  size={{ '@bp1': 'sm', '@bp3': 'base' }}
                   className={extraBtnPadding()}
                 >
                   {current.actionText}

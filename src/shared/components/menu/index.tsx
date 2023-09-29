@@ -21,8 +21,16 @@ import { useState } from 'react';
 import Responsive, { ResponsiveItem } from '../responsive';
 import { extraBtnPadding } from '../../styles';
 import { IconName } from '@holdr-ui/react/dist/shared/types';
+import { useActOnScroll } from '../../hooks';
 
-function Menu({ children }: GenericProps) {
+function Menu({
+  children,
+  align = 'end',
+  offset = 5,
+}: GenericProps & {
+  align?: 'start' | 'end' | 'center';
+  offset?: number;
+}) {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [isPopoverOpen, setIsOpenPopover] = useState(false);
@@ -33,7 +41,11 @@ function Menu({ children }: GenericProps) {
   const Trigger = getSubComponent<SCNames>(children, 'MenuTrigger');
   const Content = getSubComponent<SCNames>(children, 'MenuContent');
 
+  // close on clicking ESCAPE key
   useKeyBind(27, closePopover);
+
+  // close popover after scroll
+  useActOnScroll('#root', 10, closePopover);
 
   return (
     <MenuContextProvider value={{ isOpen, onOpen, onClose }}>
@@ -45,8 +57,8 @@ function Menu({ children }: GenericProps) {
               <Popover.Content
                 minWidth={325}
                 side='bottom'
-                align='end'
-                sideOffset={5}
+                align={align}
+                sideOffset={offset}
                 boxShadow='rgba(99, 99, 99, 0.2) 0px 2px 8px 0px'
                 css={{ backgroundColor: '#fff' }}
               >
@@ -62,11 +74,14 @@ function Menu({ children }: GenericProps) {
               <Drawer.Overlay />
               <Drawer.Content>
                 <VStack
-                  radius={3}
                   w='full'
                   minHeight='1px'
                   divider={<Box borderBottom={1} borderColor='base100' />}
-                  css={{ backgroundColor: '#fff' }}
+                  css={{
+                    backgroundColor: '#fff',
+                    borderTopLeftRadius: '$3',
+                    borderTopRightRadius: '$3',
+                  }}
                 >
                   {Header}
                   {Content}
@@ -110,11 +125,9 @@ function MenuTrigger({ children }: GenericProps) {
 MenuTrigger.displayName = 'MenuTrigger';
 
 function MenuHeader({ children, ...props }: StackProps) {
-  const Header = getSubComponent<SCNames>(children, 'MenuHeader');
-
   return (
     <Stack minHeight={40} {...props}>
-      {Header}
+      {children}
     </Stack>
   );
 }

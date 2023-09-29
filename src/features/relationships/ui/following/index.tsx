@@ -1,14 +1,10 @@
-import { useContext, useState } from 'react';
+import { Fragment, useContext } from 'react';
 import {
   Avatar,
-  Box,
   Button,
-  Dialog,
-  Drawer,
   Heading,
   HStack,
   Icon,
-  Popover,
   Text,
   useDisclosure,
   VStack,
@@ -21,107 +17,74 @@ import {
   useRequestRelationshipAction,
 } from '../../shared';
 import {
-  MenuButton,
-  Responsive,
-  ResponsiveItem,
-  SwitchConditional,
-  SwitchConditionalCase,
-  extraBtnPadding,
   useAlertDialog,
   useGeneralContext,
+  Menu,
+  MenuTrigger,
+  MenuHeader,
+  MenuContent,
+  MenuItem,
+  useDialogContext,
+  DialogContextProvider,
+  CommonDialogHeader,
+  CommonDialog,
+  CommonDialogContent,
+  CommonDialogActionButton,
+  RestrictAccountInfoPoints,
 } from '../../../../shared';
 import { useCurrentUser } from '../../../auth';
 
-function RestrictButton({ close }: { close: VoidFunction }) {
+function RestrictAccountDialog() {
   const { state: profile } = useGeneralContext<IProfile>();
 
   const { restrict, loading } = useCreateRelationshipAction();
 
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const dialogContext = useDialogContext();
 
   return (
-    <Dialog isOpen={isOpen} onOpen={onOpen} onClose={onClose}>
-      <Dialog.Trigger>
-        <MenuButton dangerous label='Restrict' icon='close' />
-      </Dialog.Trigger>
-      <Dialog.Portal>
-        <Dialog.Overlay />
-        <Dialog.Content
-          w={{ '@bp1': '100vw', '@bp3': '90vw' }}
-          maxWidth={500}
-          h={{ '@bp1': '100vh', '@bp3': 500 }}
-          maxHeight={{ '@bp1': '100vh', '@bp3': '85vh' }}
-          radius={{ '@bp1': 0, '@bp3': 4 }}
-        >
-          <Dialog.Header>
-            <Heading as='h2' size={4}>
-              Restrict
-            </Heading>
-          </Dialog.Header>
-          <Dialog.Body
-            justify={{
-              '@bp1': 'space-around',
-              '@bp3': 'space-between',
-            }}
+    <CommonDialog {...dialogContext}>
+      <CommonDialogHeader label='Restrict' />
+      <CommonDialogContent>
+        <VStack items='center' gap={3} pb={{ '@bp1': 4, '@bp3': 0 }}>
+          <Avatar src={profile.avatar} size='2xl' />
+          <Text size={2} weight={500} color='base500'>
+            @{profile.username}
+          </Text>
+        </VStack>
+        {RestrictAccountInfoPoints.map(({ icon, label }, idx) => (
+          <HStack
+            key={`restriction-item-${idx}`}
             items='center'
+            gap={{ '@bp1': 4, '@bp3': 5 }}
           >
-            <VStack items='center' gap={3}>
-              <Avatar src={profile.avatar} size='2xl' />
-              <Text size={2} weight={500} color='base500'>
-                @{profile.username}
-              </Text>
-            </VStack>
-            <VStack gap={5}>
-              <HStack items='center' gap={5}>
-                <Icon name='shield-keyhole-fill' size='xl' />
-                <Text>
-                  Limit interactions without you having to block or
-                  unfollow someone.
-                </Text>
-              </HStack>
-              <HStack items='center' gap={5}>
-                <Icon name='at' size='xl' />
-                <Text>
-                  Mentions about yourself from the user will not be visible
-                  to you and you will not be notified about them.
-                </Text>
-              </HStack>
-              <HStack items='center' gap={5}>
-                <Icon name='send-outline' size='xl' />
-                <Text>
-                  Their chat will be moved to your hidden messages, so the
-                  won&apos;t be able to know when you have read it.
-                </Text>
-              </HStack>
-            </VStack>
-            <Box pb={4} w='100%'>
-              <Button
-                onClick={async () => {
-                  await restrict(profile.username).then(() => {
-                    onClose();
-                    close(); // close popover
-                  });
-                }}
-                className={extraBtnPadding()}
-                fullWidth
-                loadingText={loading ? '' : 'Restricting'}
-                isLoading={loading}
-              >
-                Restrict
-              </Button>
-            </Box>
-          </Dialog.Body>
-        </Dialog.Content>
-      </Dialog.Portal>
-    </Dialog>
+            <Icon name={icon} size={{ '@bp1': 'lg', '@bp3': 'xl' }} />
+            <Text size={{ '@bp1': 2, '@bp3': 3 }}>{label}</Text>
+          </HStack>
+        ))}
+      </CommonDialogContent>
+      <CommonDialogActionButton
+        loading={loading}
+        loadingText='Restricting'
+        label='Restrict'
+        onClick={async () => {
+          await restrict(profile.username).then(() => {
+            dialogContext.onClose(); // close the dialog
+          });
+        }}
+      />
+    </CommonDialog>
   );
 }
 
-function FollowingMenu({ close }: { close: VoidFunction }) {
-  const currentUser = useCurrentUser();
+function FollowingButton() {
   const { state: profile } = useGeneralContext<IProfile>();
+  const currentUser = useCurrentUser();
+
+  const { openWith } = useAlertDialog();
+  const disclosure = useDisclosure();
 
   const {
+    isFollowing,
     isFriend,
     hasFriendRequest,
     isRestricted,
@@ -139,174 +102,116 @@ function FollowingMenu({ close }: { close: VoidFunction }) {
   const { removeFriendRequest, removeFriend, removeRestriction } =
     useRemoveRelationshipAction();
 
-  const { openWith } = useAlertDialog();
-
   return (
-    <VStack divider={<Box borderBottom={1} borderColor='base100' />}>
-      <SwitchConditional>
-        <SwitchConditionalCase
-          on={
-            !hasFriendRequest &&
-            !isFriend &&
-            profile.role === currentUser?.role
-          }
+    <Fragment>
+      <Menu align='start'>
+        <MenuTrigger>
+          <Button rightIcon='caret-down-outline' colorTheme='base800'>
+            Following
+          </Button>
+        </MenuTrigger>
+        <MenuHeader
+          items='center'
+          justify='center'
+          css={{ userSelect: 'none' }}
         >
-          <MenuButton
-            label='Add to friends'
-            icon='subscriptions-outline'
-            onClick={async () => friendRequest(profile.username)}
-          />
-        </SwitchConditionalCase>
-        <SwitchConditionalCase on={!!hasFriendRequest}>
-          <MenuButton
-            label='Cancel Friend Request'
-            icon='subscriptions-outline'
-            onClick={async () => removeFriendRequest(profile.username)}
-          />
-        </SwitchConditionalCase>
-        <SwitchConditionalCase on={!!isFriend}>
-          <MenuButton
-            label='Remove friend'
-            icon='subscriptions-fill'
-            onClick={async () => removeFriend(profile.username)}
-          />
-        </SwitchConditionalCase>
-      </SwitchConditional>
+          <Heading
+            as='h2'
+            size={{ '@bp1': 3, '@bp3': 4 }}
+            css={{ textAlign: 'center' }}
+            weight={500}
+          >
+            @{profile.username}
+          </Heading>
+        </MenuHeader>
+        <MenuContent>
+          {!hasFriendRequest &&
+            !isFriend &&
+            profile.role === currentUser?.role && (
+              <MenuItem
+                label='Add to friends'
+                icon='subscriptions-outline'
+                action={async () => friendRequest(profile.username)}
+              />
+            )}
 
-      <MenuButton
-        label={
-          isFavourite ? 'Remove from favourites' : 'Add to favourites'
-        }
-        icon={isFavourite ? 'heart-fill' : 'heart-outline'}
-        onClick={
-          isFavourite
-            ? async () => removeFavourite(profile.username)
-            : async () => favourite(profile.username)
-        }
-      />
+          {hasFriendRequest && (
+            <MenuItem
+              label='Cancel Friend Request'
+              icon='subscriptions-outline'
+              action={async () => removeFriendRequest(profile.username)}
+            />
+          )}
 
-      <MenuButton
-        label={isMuted ? 'Unmute' : 'Mute'}
-        icon={isMuted ? 'mute-fill' : 'mute-outline'}
-        onClick={
-          isMuted
-            ? async () => unmute(profile.username)
-            : async () => mute(profile.username)
-        }
-      />
+          {isFriend && (
+            <MenuItem
+              label='Remove friend'
+              icon='subscriptions-fill'
+              action={async () => removeFriend(profile.username)}
+            />
+          )}
 
-      {isFriend && (
-        <SwitchConditional>
-          <SwitchConditionalCase on={!isRestricted}>
-            <RestrictButton close={close} />
-          </SwitchConditionalCase>
-          <SwitchConditionalCase on={isRestricted === true}>
-            <MenuButton
-              onClick={async () => removeRestriction(profile.username)}
+          <MenuItem
+            label={
+              isFavourite ? 'Remove from favourites' : 'Add to favourites'
+            }
+            icon={isFavourite ? 'heart-fill' : 'heart-outline'}
+            action={
+              isFavourite
+                ? async () => removeFavourite(profile.username)
+                : async () => favourite(profile.username)
+            }
+          />
+
+          <MenuItem
+            label={isMuted ? 'Unmute' : 'Mute'}
+            icon={isMuted ? 'mute-fill' : 'mute-outline'}
+            action={
+              isMuted
+                ? async () => unmute(profile.username)
+                : async () => mute(profile.username)
+            }
+          />
+
+          {isFriend && (
+            <MenuItem
+              action={disclosure.onOpen}
               dangerous
+              label='Restrict'
+              icon='close'
+            />
+          )}
+
+          {isFriend && isRestricted && (
+            <MenuItem
+              action={async () => removeRestriction(profile.username)}
               label='Unrestrict'
               icon='check'
             />
-          </SwitchConditionalCase>
-        </SwitchConditional>
-      )}
+          )}
 
-      {!isFriend && (
-        <MenuButton
-          dangerous
-          onClick={() =>
-            openWith({
-              actionText: 'Unfollow',
-              onAction: async () => unfollow(profile.username),
-              title: `Unfollow @${profile.username}`,
-              description:
-                'Their posts will no longer show up in your home feed. You can still view their profile, unless their profile is protected.',
-            })
-          }
-          label='Unfollow'
-          icon='user-unfollow-outline'
-        />
-      )}
-    </VStack>
-  );
-}
-
-function FollowingButton() {
-  const { state: profile } = useGeneralContext<IProfile>();
-  // const {data, loading, error} = useQuery(GET_RELATIONSHIP_INFO)
-  const {
-    isOpen: drawerOpen,
-    onOpen: openDrawer,
-    onClose: closeDrawer,
-  } = useDisclosure();
-
-  const [openPopover, setOpenPopover] = useState(false);
-  const closePopover = () => setOpenPopover(false);
-
-  return (
-    <Responsive>
-      <ResponsiveItem tablet='hide'>
-        <Popover isOpen={openPopover} onOpenChange={setOpenPopover}>
-          <Popover.Trigger>
-            <Button
-              size={{ '@bp1': 'sm', '@bp3': 'base' }}
-              rightIcon='caret-down-outline'
-              colorTheme='base800'
-            >
-              Following
-            </Button>
-          </Popover.Trigger>
-          <Popover.Portal>
-            <Popover.Content
-              minWidth={275}
-              side='bottom'
-              align='end'
-              sideOffset={5}
-              zIndex={50}
-            >
-              <FollowingMenu close={closePopover} />
-            </Popover.Content>
-          </Popover.Portal>
-        </Popover>
-      </ResponsiveItem>
-      <ResponsiveItem mobile='show' tablet='show'>
-        <Button
-          onClick={openDrawer}
-          rightIcon='caret-down-outline'
-          colorTheme='base800'
-        >
-          Following
-        </Button>
-        <Drawer isOpen={drawerOpen} onClose={closeDrawer}>
-          <Drawer.Portal>
-            <Drawer.Overlay />
-            <Drawer.Content>
-              <VStack
-                radius={3}
-                bgColor='primary400'
-                w='full'
-                h='390px'
-                divider={<Box borderBottom={1} borderColor='base100' />}
-              >
-                <HStack justify='center' p={4}>
-                  <Text weight={500}>{profile.displayName}</Text>
-                </HStack>
-                <FollowingMenu close={closeDrawer} />
-                <VStack px={4} flex={1} justify='center'>
-                  <Button
-                    className={extraBtnPadding()}
-                    fullWidth
-                    onClick={closeDrawer}
-                  >
-                    Close
-                  </Button>
-                </VStack>
-              </VStack>
-            </Drawer.Content>
-          </Drawer.Portal>
-        </Drawer>
-      </ResponsiveItem>
-    </Responsive>
+          {isFollowing && (
+            <MenuItem
+              dangerous
+              action={() =>
+                openWith({
+                  actionText: 'Unfollow',
+                  onAction: async () => unfollow(profile.username),
+                  title: `Unfollow @${profile.username}`,
+                  description:
+                    'Their posts will no longer show up in your home feed. You can still view their profile, unless their profile is protected.',
+                })
+              }
+              label='Unfollow'
+              icon='user-unfollow-outline'
+            />
+          )}
+        </MenuContent>
+      </Menu>
+      <DialogContextProvider value={disclosure}>
+        <RestrictAccountDialog />
+      </DialogContextProvider>
+    </Fragment>
   );
 }
 
