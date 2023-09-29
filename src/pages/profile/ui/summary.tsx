@@ -25,15 +25,17 @@ function Summary() {
           zIndex: 1,
         }}
       />
-      <Box
+
+      <Box // overlay
         h='100%'
         w='100%'
         position='absolute'
         t={0}
-        bgColor={profile.coverImage ? 'clearTint300' : 'transparent'}
+        bgColor={profile.coverImage ? 'darkTint400' : 'transparent'}
         l={0}
         zIndex={5}
       />
+
       <Box
         p={{ '@bp1': 2, '@bp3': 4 }}
         h='100%'
@@ -70,7 +72,7 @@ function Summary() {
                     src={verifiedIcon}
                   />
                   <Text
-                    color='base200'
+                    color='base100'
                     size={{ '@bp1': 1, '@bp3': 2 }}
                     weight={500}
                   >
@@ -79,7 +81,7 @@ function Summary() {
                 </HStack>
               ) : (
                 <Text
-                  color='base200'
+                  color='base100'
                   size={{ '@bp1': 1, '@bp3': 2 }}
                   weight={500}
                 >
