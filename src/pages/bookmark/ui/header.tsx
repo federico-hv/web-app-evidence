@@ -1,9 +1,11 @@
-import { useDisclosure } from '@holdr-ui/react';
+import { Heading, useDisclosure } from '@holdr-ui/react';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
   DialogContextProvider,
   Head,
   Menu,
+  MenuHeader,
+  MenuTrigger,
   Paths,
   useAlertDialog,
 } from '../../../shared';
@@ -48,14 +50,21 @@ function Header() {
       <Fragment>
         {data.bookmarkGroup.name}
         <Menu>
-          <Menu.Trigger />
-          <Menu.Header>{data.bookmarkGroup.name}</Menu.Header>
+          <MenuTrigger />
+          <MenuHeader items='center' justify='center'>
+            <Heading size={3} weight={500}>
+              {data.bookmarkGroup.name}
+            </Heading>
+          </MenuHeader>
           <Menu.Content>
-            <Menu.Item icon='edit-box-outline' action={onOpen}>
-              Rename group
-            </Menu.Item>
+            <Menu.Item
+              label='Rename bookmark'
+              icon='edit-box-outline'
+              action={onOpen}
+            />
             <Menu.Item
               icon='close'
+              label='Remove group'
               dangerous
               action={() =>
                 openWith({
@@ -75,9 +84,7 @@ function Header() {
                     'Removing this bookmark group will remove all bookmarks in the group. Are you sure you want to remove the group?',
                 })
               }
-            >
-              Remove group
-            </Menu.Item>
+            />
           </Menu.Content>
         </Menu>
 

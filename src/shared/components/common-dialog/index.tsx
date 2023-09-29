@@ -34,7 +34,7 @@ function CommonDialog({
   children,
   minHeight = 500,
 }: CommonDialogProps) {
-  const { width } = useWindowSize();
+  const { width, height } = useWindowSize();
 
   const Header = getSubComponent<CommonDialogSCNames>(
     children,
@@ -60,10 +60,10 @@ function CommonDialog({
         <Dialog.Overlay />
         <Dialog.Content
           position='relative'
-          w={{ '@bp1': '100vw', '@bp3': '90vw' }}
+          w={{ '@bp1': width, '@bp3': '90vw' }}
           maxWidth={500}
           minHeight={minHeight}
-          h={{ '@bp1': '100vh', '@bp3': 1 }}
+          h={{ '@bp1': height, '@bp3': 1 }}
           maxHeight={{ '@bp1': '100vh', '@bp3': '85vh' }}
           radius={{ '@bp1': 0, '@bp3': 4 }}
           css={{

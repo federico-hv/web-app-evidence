@@ -60,22 +60,23 @@ function AlertDialogProvider({ children }: GenericProps) {
           <Dialog.Portal>
             <Dialog.Overlay />
             <Dialog.Content
-              h={{ '@bp1': 325, '@bp3': 225 }}
+              h={{ '@bp1': 275, '@bp3': 225 }}
               w={{ '@bp1': '90vw', '@bp3': 400 }}
               css={{
                 backgroundColor: '#FFF',
               }}
             >
-              <Dialog.Body pt={5}>
+              <Dialog.Body pt={5} px={0}>
                 <VStack
                   gap={4}
-                  px={2}
+                  px={4}
                   divider={<Box borderBottom={1} borderColor='base100' />}
                 >
                   <Heading
                     id='alert-dialog__heading'
                     as='h2'
-                    size={{ '@bp1': 2, '@bp3': 4 }}
+                    weight={500}
+                    size={{ '@bp1': 2, '@bp3': 3 }}
                     casing='uppercase'
                   >
                     {current.title}
