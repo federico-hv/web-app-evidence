@@ -1,9 +1,8 @@
 import { Box, HStack, VStack } from '@holdr-ui/react';
-import { getSubComponent } from '../../utilities';
+import { getSubComponent, BackButton } from '../../shared';
 import { PageLayoutHeaderProps, PageLayoutSCNames } from './types';
 import { VStackProps } from '@holdr-ui/react/dist/components/stack/src/stack.types';
 import { BoxProps } from '@holdr-ui/react/dist/components/box/src/box.types';
-import { BackButton } from '../../components';
 
 function PageLayout({ children, ...props }: VStackProps) {
   const Header = getSubComponent<PageLayoutSCNames>(
@@ -59,7 +58,6 @@ function PageLayoutHeader({
           css={{
             fontSize: 'large',
             fontWeight: 500,
-            textTransform: 'uppercase',
           }}
         >
           {children}

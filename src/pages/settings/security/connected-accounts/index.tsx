@@ -4,16 +4,10 @@ import {
   GET_CONNECTED_ACCOUNTS,
   IConnectedAccount,
 } from '../../../../features';
-import {
-  Error,
-  Head,
-  HeaderLayout,
-  Loader,
-  Paths,
-  prefix,
-} from '../../../../shared';
+import { Error, Head, Loader, Paths, prefix } from '../../../../shared';
 import { RootSettingsPath } from '../root';
 import { ConnectedAccount } from '../../../../features';
+import { HeaderLayout } from '../../../../layout';
 
 function ConnectedAccountSettingsPage() {
   const { data, loading, error } = useQuery<{

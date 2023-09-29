@@ -1,14 +1,5 @@
 import { Box, IconButton, useWindowSize } from '@holdr-ui/react';
-import {
-  ErrorFallback,
-  Loader,
-  PageLayout,
-  PageLayoutContent,
-  PageLayoutHeader,
-  Paths,
-  ShelfLayout,
-  ShelfLayoutShelf,
-} from '../../shared';
+import { ErrorFallback, Loader, Paths } from '../../shared';
 import { Outlet, useNavigate, useParams } from 'react-router-dom';
 import { Suspense, useEffect } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
@@ -17,6 +8,13 @@ import {
   CreateBookmarkGroup,
   CreateBookmarkGroupTrigger,
 } from '../../features';
+import {
+  PageLayout,
+  PageLayoutContent,
+  PageLayoutHeader,
+  ShelfLayout,
+  ShelfLayoutShelf,
+} from '../../layout';
 
 function BookmarksPage() {
   const { width } = useWindowSize();
@@ -24,11 +22,15 @@ function BookmarksPage() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // only navigate to `/all` when screen size is > tablet and there is no bookmark id
-    if (!params.id && width && width > 768) {
-      navigate(`/${Paths.bookmarks}/all`);
+    // only navigate to `/all` when screen size is > tablet and there is no bookmark id/ no
+    // specified path param
+
+    if (!params.id && !params['*']) {
+      if (width && width > 768) {
+        navigate(`/${Paths.bookmarks}/all`);
+      }
     }
-  }, [width]);
+  }, [width, params.id, params, navigate]);
 
   return (
     <Box h='100%'>

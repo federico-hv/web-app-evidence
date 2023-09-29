@@ -7,12 +7,12 @@ import {
 import {
   Error,
   Head,
-  HeaderLayout,
   Paths,
   prefix,
   RootSettingsPath,
 } from '../../../../shared';
 import { isEqual, pick } from 'lodash';
+import { HeaderLayout } from '../../../../layout';
 
 function CountrySettingPage() {
   const { data } = useAccountInfo();

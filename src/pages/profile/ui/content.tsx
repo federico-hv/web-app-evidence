@@ -7,7 +7,7 @@ import {
   TextGroup,
   TextGroupHeading,
   TextGroupSubheading,
-  useProfile,
+  useGeneralContext,
 } from '../../../shared';
 import {
   FeedCard,
@@ -16,7 +16,8 @@ import {
   useUserFeeds,
 } from '../../../features';
 import { useQuery } from '@apollo/client';
-import { useCanViewProfile } from '../shared';
+import { IProfile, useCanViewProfile } from '../shared';
+import { Fragment } from 'react';
 
 function Feeds({
   type,
@@ -25,7 +26,7 @@ function Feeds({
   type: 'article' | 'post';
   emptyMessage: { title: string; subtitle: string };
 }) {
-  const { profile } = useProfile();
+  const { state: profile } = useGeneralContext<IProfile>();
 
   const { loading, data, error } = useUserFeeds(profile.username, type);
 
@@ -54,7 +55,7 @@ function Feeds({
 }
 
 function ArtistContent() {
-  const { profile } = useProfile();
+  const { state: profile } = useGeneralContext<IProfile>();
 
   return (
     <Tabs defaultValue='posts'>
@@ -65,9 +66,14 @@ function ArtistContent() {
           backgroundColor: '$clearTint500',
           blur: '12px',
           zIndex: 11,
-          t: '65px',
           '& button': {
             height: '$7',
+          },
+          '@bp1': {
+            t: 0,
+          },
+          '@bp3': {
+            t: '65px',
           },
         }}
       >
@@ -109,7 +115,7 @@ function ArtistContent() {
 }
 
 function GeneralUserContent() {
-  const { profile } = useProfile();
+  const { state: profile } = useGeneralContext<IProfile>();
 
   const { data, error, loading } = useQuery<
     { reactedFeeds: FeedsReturnModel },
@@ -125,9 +131,14 @@ function GeneralUserContent() {
           backgroundColor: '$clearTint500',
           blur: '12px',
           zIndex: 11,
-          t: '65px',
           '& button': {
             height: '$7',
+          },
+          '@bp1': {
+            t: 0,
+          },
+          '@bp3': {
+            t: '65px',
           },
         }}
       >
@@ -174,45 +185,48 @@ function GeneralUserContent() {
   );
 }
 
+function ProtectedAccount() {
+  const { state: profile } = useGeneralContext<IProfile>();
+  return (
+    <VStack py='70px' gap={5}>
+      <Center fontSize='36px'>
+        <Icon name='lock-fill' />
+      </Center>
+      <TextGroup items='center'>
+        <TextGroup.Heading size={5}>Protected Account</TextGroup.Heading>
+        <TextGroup.Subheading
+          size={2}
+          color='base400'
+          weight={500}
+          css={{ maxWidth: '60%', textAlign: 'center' }}
+        >
+          This account is protected. Request to follow @{profile.username}{' '}
+          to view their activity and cosigns.
+        </TextGroup.Subheading>
+      </TextGroup>
+    </VStack>
+  );
+}
+
 function Content() {
-  const { profile } = useProfile();
-  const { loading, error, canViewProfile } = useCanViewProfile();
+  const { state: profile } = useGeneralContext<IProfile>();
+  const { canViewProfile } = useCanViewProfile();
 
   return (
-    <Error hasError={!!error} errorMessage={error?.message}>
-      <Loader loading={loading}>
-        {!canViewProfile ? (
-          <VStack py='70px' gap={5} h='calc(100vh - 322px)'>
-            <Center fontSize='36px'>
-              <Icon name='lock-fill' />
-            </Center>
-            <TextGroup items='center'>
-              <TextGroup.Heading size={5}>
-                Protected Account
-              </TextGroup.Heading>
-              <TextGroup.Subheading
-                size={2}
-                color='base400'
-                weight={500}
-                css={{ maxWidth: '60%', textAlign: 'center' }}
-              >
-                This account is protected. Request to follow @
-                {profile.username} to view their activity and cosigns.
-              </TextGroup.Subheading>
-            </TextGroup>
-          </VStack>
-        ) : (
-          <SwitchConditional>
-            <SwitchConditionalCase on={profile.role === 'artist'}>
-              <ArtistContent />
-            </SwitchConditionalCase>
-            <SwitchConditionalCase on={profile.role === 'general'}>
-              <GeneralUserContent />
-            </SwitchConditionalCase>
-          </SwitchConditional>
-        )}
-      </Loader>
-    </Error>
+    <Fragment>
+      {!canViewProfile ? (
+        <ProtectedAccount />
+      ) : (
+        <SwitchConditional>
+          <SwitchConditionalCase on={profile.role === 'artist'}>
+            <ArtistContent />
+          </SwitchConditionalCase>
+          <SwitchConditionalCase on={profile.role === 'general'}>
+            <GeneralUserContent />
+          </SwitchConditionalCase>
+        </SwitchConditional>
+      )}
+    </Fragment>
   );
 }
 Content.displayName = 'Content';

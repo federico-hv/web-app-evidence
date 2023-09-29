@@ -1,5 +1,5 @@
 import { Box, Stack } from '@holdr-ui/react';
-import { getSubComponent } from '../../utilities';
+import { getSubComponent } from '../../shared';
 import { ShelfSCNames } from './types';
 import { BoxProps } from '@holdr-ui/react/dist/components/box/src/box.types';
 import { StackProps } from '@holdr-ui/react/dist/components/stack/src/stack.types';

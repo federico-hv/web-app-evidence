@@ -45,3 +45,10 @@ export function hexToRGB(hex: string, alpha = 1) {
 
   return `rgba(${r},${g},${b},${alpha})`;
 }
+
+/**
+ * Dummy function
+ */
+export function voidFn() {
+  return;
+}

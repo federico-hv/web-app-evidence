@@ -59,7 +59,7 @@ function MdHeader() {
               }}
             />
             <NavigationLink
-              as={<Link to={prefix('/', Paths.bookmarks)} />}
+              as={<Link to={prefix('/', Paths.allBookmarks)} />}
               isActive={!!matchPath('bookmarks/*', pathname)}
               activeIcon='bookmark-fill'
               inactiveIcon='bookmark-outline'

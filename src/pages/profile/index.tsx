@@ -1,38 +1,45 @@
-import { Box, HStack, Icon, Stack, VStack } from '@holdr-ui/react';
+import { Box, Container, Stack, VStack } from '@holdr-ui/react';
 import {
   Content,
-  Header,
   SocialsCard,
   RelationshipsCard,
   ReleasesCard,
+  Controls,
+  Header,
+  Summary,
+  Info,
 } from './ui';
-import { useParams } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
-import { IProfile } from './shared';
-import { GET_PROFILE } from './queries';
 import {
-  BackButton,
-  ContentLayout,
-  ContentLayoutAside,
-  ContentLayoutMain,
-  Error,
-  Head,
-  Loader,
-  NotFoundError,
-  ProfileContextProvider,
-  UserNamesGroup,
+  ErrorFallback,
+  GQLRenderer,
   useScrollDirection,
 } from '../../shared';
 import { SuggestionsCard } from '../../features';
-import { Fragment } from 'react';
 import { StackProps } from '@holdr-ui/react/dist/components/stack/src/stack.types';
+import {
+  ContentLayout,
+  ContentLayoutAside,
+  ContentLayoutMain,
+  PageLayout,
+  PageLayoutContent,
+  PageLayoutHeader,
+} from '../../layout';
+import { ProfileProvider } from './shared/context';
 
-export function SmHeaderWrapper({
+export function DisappearingHeader({
   hideOnScroll = true,
+  sensitivity = 0,
+  afterScrolling,
   children,
   ...props
-}: StackProps & { hideOnScroll?: boolean }) {
+}: StackProps & {
+  hideOnScroll?: boolean;
+  afterScrolling?: number;
+  sensitivity?: number;
+}) {
   const { direction, delta } = useScrollDirection('#root');
+
+  console.log(delta < sensitivity, afterScrolling);
 
   return (
     <Box
@@ -45,10 +52,7 @@ export function SmHeaderWrapper({
         blur: '12px',
         zIndex: 50,
         '@bp1': {
-          display:
-            hideOnScroll && direction === 'down' && delta > 0
-              ? 'none'
-              : 'block',
+          display: hideOnScroll && direction === 'down' ? 'none' : 'block',
         },
         '@bp3': {
           display: 'none',
@@ -63,66 +67,44 @@ export function SmHeaderWrapper({
 }
 
 function ProfilePage() {
-  const { username } = useParams();
-
-  const { data, loading, error } = useQuery<{ profile: IProfile }>(
-    GET_PROFILE,
-    {
-      variables: {
-        username: username,
-      },
-    },
-  );
-
   return (
-    <Error hasError={!!error} errorEl={<NotFoundError />}>
-      <Loader h={250} loading={loading}>
-        {data && (
-          <Fragment>
-            <SmHeaderWrapper gap={3}>
-              <BackButton />
-              <HStack gap={2}>
-                <UserNamesGroup
-                  displayName={data.profile.displayName}
-                  username={data.profile.username}
-                />
-                {data.profile.protected && (
-                  <Box h='fit-content' fontSize={2}>
-                    <Icon name='lock-fill' />
-                  </Box>
-                )}
-              </HStack>
-            </SmHeaderWrapper>
-
-            <ProfileContextProvider value={{ profile: data.profile }}>
-              <ContentLayout>
-                <ContentLayoutMain>
-                  {data && (
-                    <>
-                      <Head
-                        prefix=''
-                        title={`${data.profile.displayName} (@${data.profile.username})`}
-                        description={data.profile.bio || ''}
-                      />
-                      <Header />
-                    </>
-                  )}
-                  <Content />
-                </ContentLayoutMain>
-                <ContentLayoutAside>
-                  <VStack>
-                    <RelationshipsCard />
-                    <SocialsCard />
-                    <ReleasesCard />
-                    <SuggestionsCard />
-                  </VStack>
-                </ContentLayoutAside>
-              </ContentLayout>
-            </ProfileContextProvider>
-          </Fragment>
-        )}
-      </Loader>
-    </Error>
+    <GQLRenderer ErrorFallback={ErrorFallback}>
+      <ProfileProvider>
+        <ContentLayout>
+          <ContentLayoutMain>
+            <PageLayout>
+              <PageLayoutHeader>
+                <Container maxWidth={{ '@bp1': '100%', '@bp3': 600 }}>
+                  <Header />
+                </Container>
+              </PageLayoutHeader>
+              <PageLayoutContent>
+                <Summary />
+                <VStack
+                  borderBottom={1}
+                  borderColor='base100'
+                  px={{ '@bp1': 2, '@bp3': 4 }}
+                  py={4}
+                  w='100%'
+                >
+                  <Controls />
+                  <Info />
+                </VStack>
+                <Content />
+              </PageLayoutContent>
+            </PageLayout>
+          </ContentLayoutMain>
+          <ContentLayoutAside>
+            <VStack>
+              <RelationshipsCard />
+              <SocialsCard />
+              <ReleasesCard />
+              <SuggestionsCard />
+            </VStack>
+          </ContentLayoutAside>
+        </ContentLayout>
+      </ProfileProvider>
+    </GQLRenderer>
   );
 }
 

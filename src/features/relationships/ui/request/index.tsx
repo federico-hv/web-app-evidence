@@ -8,17 +8,17 @@ import {
   useDisclosure,
   VStack,
 } from '@holdr-ui/react';
-import { useRemoveRelationshipAction } from '../../shared';
+import { IProfile, useRemoveRelationshipAction } from '../../shared';
 import {
   MenuButton,
   Responsive,
   ResponsiveItem,
-  useProfile,
   extraBtnPadding,
+  useGeneralContext,
 } from '../../../../shared';
 
 function RequestedButton() {
-  const { profile } = useProfile();
+  const { state: profile } = useGeneralContext<IProfile>();
 
   const {
     isOpen: drawerOpen,

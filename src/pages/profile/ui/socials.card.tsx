@@ -6,9 +6,10 @@ import {
   SocialProviderName,
   SwitchConditional,
   SwitchConditionalCase,
-  useProfile,
+  useGeneralContext,
 } from '../../../shared';
 import { styled } from '../../../configs';
+import { IProfile } from '../shared';
 
 // only appears if the user is an artist and has socials
 
@@ -43,7 +44,7 @@ function SocialLink({
 }
 
 function SocialsCard() {
-  const { profile } = useProfile();
+  const { state: profile } = useGeneralContext<IProfile>();
   return (
     <SwitchConditional>
       <SwitchConditionalCase

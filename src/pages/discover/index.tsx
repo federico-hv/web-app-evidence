@@ -9,9 +9,6 @@ import {
   VStack,
 } from '@holdr-ui/react';
 import {
-  ContentLayout,
-  ContentLayoutAside,
-  ContentLayoutMain,
   Error,
   Head,
   IReturnMany,
@@ -23,14 +20,14 @@ import {
   useGoBack,
 } from '../../shared';
 import { RelationshipActionButton, SEARCH, Search } from '../../features';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { Fragment } from 'react';
 import { useQuery } from '@apollo/client';
-
-/*
-TODO:
-  - [ ] UI is wrong, Search results header must appear before the search item
- */
+import {
+  ContentLayout,
+  ContentLayoutAside,
+  ContentLayoutMain,
+} from '../../layout';
 
 function useSearchResults(queryString: string) {
   const { data, loading, error } = useQuery<
@@ -100,7 +97,6 @@ function PeopleTab({ query }: { query: string }) {
 
 function SearchResults() {
   const [searchParams] = useSearchParams();
-  const navigate = useNavigate();
 
   return (
     <VStack>

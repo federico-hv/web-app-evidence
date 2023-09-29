@@ -67,7 +67,7 @@ function LgHeader() {
             }}
           />
           <NavigationLink
-            as={<Link to={prefix('/', Paths.bookmarks)} />}
+            as={<Link to={prefix('/', Paths.allBookmarks)} />}
             isActive={!!matchPath('bookmarks/*', pathname)}
             text='Bookmarks'
             activeIcon='bookmark-fill'

@@ -1,7 +1,8 @@
 import { Box, Heading, Text, VStack } from '@holdr-ui/react';
-import { Head, HeaderLayout, Paths, prefix } from '../../../../shared';
+import { Head, Paths, prefix } from '../../../../shared';
 import { RootSettingsPath } from '../root';
 import { SettingItem } from '../../../../features';
+import { HeaderLayout } from '../../../../layout';
 
 function AccountSecuritySettingsPage() {
   return (

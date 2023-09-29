@@ -1,95 +1,16 @@
+import { ErrorFallback, GQLRenderer, useScrollToTop } from '../../shared';
+import { Card, Container, Text, VStack } from '@holdr-ui/react';
+import { SuggestionsCard } from '../../features';
+import { Content, Header } from './ui';
 import {
-  BackButton,
   ContentLayout,
   ContentLayoutAside,
   ContentLayoutMain,
-  ErrorFallback,
-  GeneralContextProvider,
-  GenericProps,
-  GQLRenderer,
-  LinkText,
-  prefix,
-  useGeneralContext,
-  useScrollToTop,
-} from '../../shared';
-import {
-  Box,
-  Card,
-  Container,
-  Heading,
-  HStack,
-  Text,
-  VStack,
-} from '@holdr-ui/react';
-import { FeedModel, GET_FEED, SuggestionsCard } from '../../features';
-import { Content } from './ui';
-import { useSuspenseQuery } from '@apollo/client';
-import { useParams } from 'react-router-dom';
-
-function Header() {
-  const { state }: { state: FeedModel } = useGeneralContext<FeedModel>();
-
-  return (
-    <Box
-      borderBottom={1}
-      bgColor='clearTint500'
-      borderColor='base100'
-      css={{
-        zIndex: 10,
-        blur: '12px',
-        '@bp1': {
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          width: '100%',
-        },
-        '@bp3': {
-          position: 'sticky',
-          top: 65,
-        },
-      }}
-    >
-      <Container maxWidth={600} py={3} maxHeight={58}>
-        <HStack gap={3}>
-          <BackButton />
-          <VStack>
-            <Heading size={{ '@bp1': 3, '@bp3': 4 }} weight={500} as='h2'>
-              Feed
-            </Heading>
-            <LinkText
-              to={prefix('/', state.owner.username)}
-              size={1}
-              color='base400'
-            >
-              @{state.owner.username}
-            </LinkText>
-          </VStack>
-        </HStack>
-      </Container>
-    </Box>
-  );
-}
-
-function ContextWrapper({ children }: GenericProps) {
-  const { id } = useParams();
-  const { data } = useSuspenseQuery<{ feed: FeedModel }, { id: string }>(
-    GET_FEED,
-    { variables: { id: id || '' } },
-  );
-
-  return (
-    <GeneralContextProvider
-      value={{
-        state: data.feed,
-        update: () => {
-          return;
-        },
-      }}
-    >
-      {children}
-    </GeneralContextProvider>
-  );
-}
+  PageLayout,
+  PageLayoutContent,
+  PageLayoutHeader,
+} from '../../layout';
+import { FeedProvider } from './shared';
 
 function FeedPage() {
   useScrollToTop(document.querySelector('#root'));
@@ -98,10 +19,18 @@ function FeedPage() {
     <ContentLayout>
       <ContentLayoutMain>
         <GQLRenderer ErrorFallback={ErrorFallback}>
-          <ContextWrapper>
-            <Header />
-            <Content />
-          </ContextWrapper>
+          <FeedProvider>
+            <PageLayout>
+              <PageLayoutHeader>
+                <Container maxWidth={{ '@bp1': '100%', '@bp3': 600 }}>
+                  <Header />
+                </Container>
+              </PageLayoutHeader>
+              <PageLayoutContent>
+                <Content />
+              </PageLayoutContent>
+            </PageLayout>
+          </FeedProvider>
         </GQLRenderer>
         <Container maxWidth={600}>
           <VStack py={5}>

@@ -9,16 +9,16 @@ import {
   VStack,
 } from '@holdr-ui/react';
 import { Formik, useFormikContext } from 'formik';
-import { ProfileFormData } from '../../shared';
+import { IProfile, ProfileFormData } from '../../shared';
 import {
   extraBtnPadding,
   FormInput,
   ImageUpload,
   useDimensions,
+  useGeneralContext,
 } from '../../../../shared';
 import { ImageUploadContext } from '../../../../shared/components/image-upload/context';
 import { ProfileFormProps } from './profile.types';
-import { useProfile } from '../../../../shared';
 import { profileValues } from './data';
 import { ProfileSchema } from './profile.schema';
 
@@ -28,7 +28,7 @@ function InnerForm() {
   const ref = useRef<HTMLDivElement>(null);
   const dimensions = useDimensions(ref);
 
-  const { profile, loading } = useProfile();
+  const { state: profile } = useGeneralContext<IProfile>();
   const { handleSubmit } = useFormikContext<ProfileFormData>();
 
   return (
@@ -117,8 +117,6 @@ function InnerForm() {
         <Button
           fullWidth
           type='submit'
-          isLoading={loading}
-          loadingText={loading ? '' : 'Saving'}
           className={extraBtnPadding()}
           label='Save'
         />

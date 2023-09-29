@@ -6,13 +6,8 @@ import {
   Heading,
   Checkbox,
 } from '@holdr-ui/react';
-import {
-  Head,
-  HeaderLayout,
-  Paths,
-  prefix,
-  RootSettingsPath,
-} from '../../../../shared';
+import { Head, Paths, prefix, RootSettingsPath } from '../../../../shared';
+import { HeaderLayout } from '../../../../layout';
 
 function EmailFiltersSettingsPage() {
   return (

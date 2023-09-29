@@ -13,7 +13,6 @@ import {
 import {
   DialogHeading,
   Head,
-  HeaderLayout,
   Paths,
   prefix,
   RootSettingsPath,
@@ -30,6 +29,7 @@ import {
   useAccountInfo,
   useDeletePhoneNumber,
 } from '../../../../features';
+import { HeaderLayout } from '../../../../layout';
 
 function DeletePhoneNumber() {
   const { onSubmit } = useDeletePhoneNumber();

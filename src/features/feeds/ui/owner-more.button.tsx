@@ -173,14 +173,14 @@ function OwnerMoreButton({ ghost }: { ghost?: boolean }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { owner, isPinned, feedId } = useFeedContext();
 
-  const { loading, data } = useRelationshipStatusInfo(owner.username);
+  const { data } = useRelationshipStatusInfo(owner.username);
 
   const { pin } = usePinFeed();
   const { unpin } = useUnpinFeed();
   const { deleteFeed } = useDeleteFeed();
 
   return (
-    <Loader loading={loading}>
+    <Fragment>
       <DialogContextProvider value={{ isOpen, onOpen, onClose }}>
         {data && (
           <Menu>
@@ -243,7 +243,7 @@ function OwnerMoreButton({ ghost }: { ghost?: boolean }) {
         )}
         <AudienceDialog />
       </DialogContextProvider>
-    </Loader>
+    </Fragment>
   );
 }
 OwnerMoreButton.displayName = 'OwnerMoreButton';

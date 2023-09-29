@@ -3,14 +3,18 @@ import {
   DialogHeading,
   Error,
   Loader,
-  useProfile,
+  useGeneralContext,
 } from '../../../../shared';
-import { parseToProfileFormData, useEditProfile } from '../../shared';
+import {
+  IProfile,
+  parseToProfileFormData,
+  useEditProfile,
+} from '../../shared';
 import ProfileForm from '../edit-profile-form';
 
 function EditProfileButton() {
   const { switchState, turnOff, turnOn } = useSwitch(false);
-  const { profile } = useProfile();
+  const { state: profile } = useGeneralContext<IProfile>();
   const { loading, error, onSubmit, onFinish } = useEditProfile();
 
   return (

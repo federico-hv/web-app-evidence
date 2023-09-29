@@ -6,7 +6,8 @@ import {
   Text,
   VStack,
 } from '@holdr-ui/react';
-import { HeaderLayout, ForgotPasswordLink } from '../../../shared';
+import { ForgotPasswordLink } from '../../../shared';
+import { HeaderLayout } from '../../../layout';
 
 interface Props {
   backLink: string;

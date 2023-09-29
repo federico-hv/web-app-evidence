@@ -1,11 +1,6 @@
 import { SettingItem } from '../../../../features';
-import {
-  Head,
-  HeaderLayout,
-  Paths,
-  prefix,
-  RootSettingsPath,
-} from '../../../../shared';
+import { Head, Paths, prefix, RootSettingsPath } from '../../../../shared';
+import { HeaderLayout } from '../../../../layout';
 
 function ManageUsersSettingsPage() {
   return (

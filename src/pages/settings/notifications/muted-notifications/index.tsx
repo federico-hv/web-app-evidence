@@ -1,11 +1,6 @@
-import {
-  Head,
-  HeaderLayout,
-  Paths,
-  prefix,
-  RootSettingsPath,
-} from '../../../../shared';
+import { Head, Paths, prefix, RootSettingsPath } from '../../../../shared';
 import { Checkbox, Heading, HStack, Text, VStack } from '@holdr-ui/react';
+import { HeaderLayout } from '../../../../layout';
 
 function MutedNotificationsSettingsPage() {
   return (

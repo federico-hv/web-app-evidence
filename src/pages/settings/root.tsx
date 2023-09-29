@@ -3,8 +3,6 @@ import {
   Heading,
   HStack,
   Icon,
-  Input,
-  InputGroup,
   useWindowSize,
   VStack,
 } from '@holdr-ui/react';
@@ -12,13 +10,18 @@ import {
   BackButton,
   Head,
   Paths,
+  prefix,
   RootSetting,
-  ShelfLayout,
-  ShelfLayoutShelf,
-  useMenuNavigate,
 } from '../../shared';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
+import {
+  PageLayout,
+  PageLayoutContent,
+  PageLayoutHeader,
+  ShelfLayout,
+  ShelfLayoutShelf,
+} from '../../layout';
 
 /**
  * TODO: Deprecate, use a component that wraps a page with header and body SCs
@@ -42,7 +45,7 @@ export function PageHeader({
       <HStack items='center' gap={4}>
         {onBack && (
           <Box display={{ '@bp4': 'none' }}>
-            <BackButton />
+            <BackButton fallbackPath={prefix('/', Paths.settings)} />
           </Box>
         )}
         <Heading
@@ -87,7 +90,7 @@ function SettingNavigationLink({
 export function SettingsSm() {
   const location = useLocation();
   const currentSetting = location.pathname.split('/')[2];
-  const { goto } = useMenuNavigate();
+
   return (
     <Box
       display={{ '@bp4': 'none' }}
@@ -97,29 +100,40 @@ export function SettingsSm() {
     >
       {!currentSetting && (
         <>
-          <PageHeader title='Settings' onBack={goto.home} />
-          <SettingNavigationLink
-            to={Paths.setting.account}
-            label='Your account'
-            active={RootSetting[currentSetting] === Paths.setting.account}
-          />
-          <SettingNavigationLink
-            to={Paths.setting.security}
-            label='Security and account access'
-            active={RootSetting[currentSetting] === Paths.setting.security}
-          />
-          <SettingNavigationLink
-            to={Paths.setting.privacy}
-            label='Privacy and safety'
-            active={RootSetting[currentSetting] === Paths.setting.privacy}
-          />
-          <SettingNavigationLink
-            to={Paths.setting.notifications}
-            label='Notifications'
-            active={
-              RootSetting[currentSetting] === Paths.setting.notifications
-            }
-          />
+          <PageLayout>
+            <PageLayoutHeader>Settings</PageLayoutHeader>
+            <PageLayoutContent>
+              <SettingNavigationLink
+                to={Paths.setting.account}
+                label='Your account'
+                active={
+                  RootSetting[currentSetting] === Paths.setting.account
+                }
+              />
+              <SettingNavigationLink
+                to={Paths.setting.security}
+                label='Security and account access'
+                active={
+                  RootSetting[currentSetting] === Paths.setting.security
+                }
+              />
+              <SettingNavigationLink
+                to={Paths.setting.privacy}
+                label='Privacy and safety'
+                active={
+                  RootSetting[currentSetting] === Paths.setting.privacy
+                }
+              />
+              <SettingNavigationLink
+                to={Paths.setting.notifications}
+                label='Notifications'
+                active={
+                  RootSetting[currentSetting] ===
+                  Paths.setting.notifications
+                }
+              />
+            </PageLayoutContent>
+          </PageLayout>
         </>
       )}
       <Outlet />
@@ -152,37 +166,42 @@ export function SettingsLg() {
           borderRight={2}
           borderColor='base100'
         >
-          <PageHeader title='Settings' />
-          <Box px={4} py={4} borderBottom={2} borderColor='base100'>
-            <InputGroup radius='full'>
-              <InputGroup.LeftElement>
-                <Icon name='search-outline' />
-              </InputGroup.LeftElement>
-              <Input placeholder='Search settings' />
-            </InputGroup>
-          </Box>
-          <SettingNavigationLink
-            to={Paths.setting.account}
-            label='Your account'
-            active={RootSetting[currentSetting] === Paths.setting.account}
-          />
-          <SettingNavigationLink
-            to={Paths.setting.security}
-            label='Security and account access'
-            active={RootSetting[currentSetting] === Paths.setting.security}
-          />
-          <SettingNavigationLink
-            to={Paths.setting.privacy}
-            label='Privacy and safety'
-            active={RootSetting[currentSetting] === Paths.setting.privacy}
-          />
-          <SettingNavigationLink
-            to={Paths.setting.notifications}
-            label='Notifications'
-            active={
-              RootSetting[currentSetting] === Paths.setting.notifications
-            }
-          />
+          <PageLayout>
+            <PageLayoutHeader fallbackPath={'/'}>
+              Settings
+            </PageLayoutHeader>
+            <PageLayoutContent>
+              <SettingNavigationLink
+                to={Paths.setting.account}
+                label='Your account'
+                active={
+                  RootSetting[currentSetting] === Paths.setting.account
+                }
+              />
+              <SettingNavigationLink
+                to={Paths.setting.security}
+                label='Security and account access'
+                active={
+                  RootSetting[currentSetting] === Paths.setting.security
+                }
+              />
+              <SettingNavigationLink
+                to={Paths.setting.privacy}
+                label='Privacy and safety'
+                active={
+                  RootSetting[currentSetting] === Paths.setting.privacy
+                }
+              />
+              <SettingNavigationLink
+                to={Paths.setting.notifications}
+                label='Notifications'
+                active={
+                  RootSetting[currentSetting] ===
+                  Paths.setting.notifications
+                }
+              />
+            </PageLayoutContent>
+          </PageLayout>
         </ShelfLayoutShelf>
         <ShelfLayoutShelf
           role='contentinfo'

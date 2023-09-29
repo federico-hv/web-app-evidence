@@ -1,13 +1,14 @@
 import { Heading, HStack, Image, VStack } from '@holdr-ui/react';
+import darkPlaceholder from '../../../assets/images/dark-placeholder.jpg';
 import {
-  Loader,
   SwitchConditional,
   SwitchConditionalCase,
   TextGroup,
   TextGroupSubheading,
-  useProfile,
+  useGeneralContext,
 } from '../../../shared';
-import { useCanViewProfile } from '../shared';
+import { IProfile, useCanViewProfile } from '../shared';
+import { Fragment } from 'react';
 
 const releases = [
   {
@@ -52,7 +53,12 @@ function Release({
 }) {
   return (
     <VStack gap={2} title={`${title} - ${artist.name}`} w='calc(100%/3)'>
-      <Image size={100} radius={2} src={coverImage} />
+      <Image
+        size={100}
+        radius={2}
+        src={coverImage}
+        fallbackSrc={darkPlaceholder}
+      />
       <TextGroup gap={1}>
         <TextGroupSubheading size={2} noOfLines={1}>
           {title}
@@ -66,10 +72,10 @@ function Release({
 }
 
 function ReleasesCard() {
-  const { profile } = useProfile();
-  const { loading, canViewProfile } = useCanViewProfile();
+  const { state: profile } = useGeneralContext<IProfile>();
+  const { canViewProfile } = useCanViewProfile();
   return (
-    <Loader loading={loading}>
+    <Fragment>
       {canViewProfile && (
         <VStack
           gap={4}
@@ -110,7 +116,7 @@ function ReleasesCard() {
           </HStack>
         </VStack>
       )}
-    </Loader>
+    </Fragment>
   );
 }
 ReleasesCard.displayName = 'ReleasesCard';

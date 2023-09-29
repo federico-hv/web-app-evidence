@@ -6,13 +6,15 @@ import {
   GQLRenderer,
   Head,
   Loader,
-  PageLayout,
-  PageLayoutContent,
-  PageLayoutHeader,
   Paths,
   prefix,
 } from '../../shared';
 import { useParams } from 'react-router-dom';
+import {
+  PageLayout,
+  PageLayoutContent,
+  PageLayoutHeader,
+} from '../../layout';
 
 function BookmarkPage() {
   const params = useParams();

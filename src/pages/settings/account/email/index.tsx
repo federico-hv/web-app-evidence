@@ -2,7 +2,6 @@ import { useState } from 'react';
 import {
   DialogHeading,
   Head,
-  HeaderLayout,
   Paths,
   prefix,
   RootSettingsPath,
@@ -28,6 +27,7 @@ import {
   useSwitch,
   VStack,
 } from '@holdr-ui/react';
+import { HeaderLayout } from '../../../../layout';
 
 function EmailSettingPage() {
   const { data } = useAccountInfo();

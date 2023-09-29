@@ -5,14 +5,13 @@ import {
   useRequestRelationshipAction,
 } from '../../shared';
 import {
-  Error,
-  Loader,
   SwitchConditional,
   SwitchConditionalCase,
   useAlertDialog,
 } from '../../../../shared';
 import { Box, Button, useSwitch } from '@holdr-ui/react';
 import { css } from '../../../../configs';
+import { Fragment } from 'react';
 
 const flex = css({
   flexShrink: 0,
@@ -88,37 +87,35 @@ function FollowButton({ username }: { username: string }) {
 }
 
 function RelationshipActionButton({ username }: { username: string }) {
-  const { loading, error, data } = useRelationshipStatusInfo(username);
+  const { data } = useRelationshipStatusInfo(username);
 
   return (
-    <Error hasError={!!error} errorMessage={error?.message}>
-      <Loader loading={loading}>
-        <Box position='relative' zIndex={5}>
-          {data && (
-            <SwitchConditional>
-              <SwitchConditionalCase
-                on={
-                  !data.relationshipStatusInfo.isFollowing &&
-                  !data.relationshipStatusInfo.isOwned &&
-                  !data.relationshipStatusInfo.hasFollowRequest &&
-                  !data.relationshipStatusInfo.isBlocked
-                }
-              >
-                <FollowButton username={username} />
-              </SwitchConditionalCase>
-              <SwitchConditionalCase
-                on={
-                  !!data.relationshipStatusInfo.isFollowing &&
-                  !data.relationshipStatusInfo.isBlocked
-                }
-              >
-                <UnfollowButton username={username} />
-              </SwitchConditionalCase>
-            </SwitchConditional>
-          )}
-        </Box>
-      </Loader>
-    </Error>
+    <Fragment>
+      <Box position='relative' zIndex={5}>
+        {data && (
+          <SwitchConditional>
+            <SwitchConditionalCase
+              on={
+                !data.relationshipStatusInfo.isFollowing &&
+                !data.relationshipStatusInfo.isOwned &&
+                !data.relationshipStatusInfo.hasFollowRequest &&
+                !data.relationshipStatusInfo.isBlocked
+              }
+            >
+              <FollowButton username={username} />
+            </SwitchConditionalCase>
+            <SwitchConditionalCase
+              on={
+                !!data.relationshipStatusInfo.isFollowing &&
+                !data.relationshipStatusInfo.isBlocked
+              }
+            >
+              <UnfollowButton username={username} />
+            </SwitchConditionalCase>
+          </SwitchConditional>
+        )}
+      </Box>
+    </Fragment>
   );
 }
 RelationshipActionButton.displayName = 'RelationshipActionButton';

@@ -6,7 +6,6 @@ import {
 import {
   Error,
   Head,
-  HeaderLayout,
   Loader,
   Paths,
   prefix,
@@ -18,6 +17,7 @@ import {
 } from '../../../../shared';
 import { Box, Checkbox, HStack } from '@holdr-ui/react';
 import { useQuery } from '@apollo/client';
+import { HeaderLayout } from '../../../../layout';
 
 function ProtectAndTaggingSettingsPage() {
   const {

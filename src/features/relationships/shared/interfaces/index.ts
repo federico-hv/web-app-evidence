@@ -3,6 +3,7 @@ import {
   RemoveRelationshipAction,
   RequestRelationshipAction,
 } from '../types';
+import { Role } from '../../../../shared';
 
 export interface RelationshipRequest {
   id: number;
@@ -64,6 +65,7 @@ export interface RequestRelationshipInput {
 }
 
 export interface IProfile {
+  role: Role;
   username: string;
   protected: boolean;
   displayName: string;

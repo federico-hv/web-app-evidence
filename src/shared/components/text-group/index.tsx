@@ -1,5 +1,4 @@
 import { Stack, Text, Heading } from '@holdr-ui/react';
-// Need to start exporting this properly
 import {
   TextGroupHeadingProps,
   TextGroupProps,
@@ -7,14 +6,6 @@ import {
 } from './types';
 
 function TextGroup({ children, ...props }: TextGroupProps) {
-  // const TextGroupHeadings = getSubComponent<TextGroupSCNames>(
-  //   children,
-  //   'TextGroupHeading',
-  // );
-  // const TextGroupSubheadings = getSubComponent<TextGroupSCNames>(
-  //   children,
-  //   'TextGroupSubheading',
-  // );
   return (
     <Stack direction='vertical' gap={2} w='100%' {...props}>
       {children}

@@ -1,21 +1,21 @@
 import { Button } from '@holdr-ui/react';
 import {
+  IProfile,
   useCreateRelationshipAction,
   useRequestRelationshipAction,
 } from '../../shared';
 import {
   SwitchConditional,
   SwitchConditionalCase,
-  useProfile,
+  useGeneralContext,
 } from '../../../../shared';
 
-// needs a clean up, pass props
 function FollowButton() {
   const { follow, loading: loading0 } = useCreateRelationshipAction();
   const { followRequest, loading: loading1 } =
     useRequestRelationshipAction();
 
-  const { profile } = useProfile();
+  const { state: profile } = useGeneralContext<IProfile>();
 
   return (
     <SwitchConditional>
@@ -31,6 +31,7 @@ function FollowButton() {
       </SwitchConditionalCase>
       <SwitchConditionalCase on={profile.protected}>
         <Button
+          size={{ '@bp1': 'sm', '@bp3': 'base' }}
           colorTheme='primary400'
           isLoading={loading1}
           loadingText={loading1 ? '' : 'Loading'}

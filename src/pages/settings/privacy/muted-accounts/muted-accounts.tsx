@@ -7,7 +7,6 @@ import {
   ActionItemWrapper,
   Error,
   Head,
-  HeaderLayout,
   IFetchUsersResponse,
   LinkOverlay,
   Loader,
@@ -30,6 +29,7 @@ import {
   InputGroup,
   VStack,
 } from '@holdr-ui/react';
+import { HeaderLayout } from '../../../../layout';
 
 function MutedSettingsPage() {
   const { data, loading, error } = useQuery<{

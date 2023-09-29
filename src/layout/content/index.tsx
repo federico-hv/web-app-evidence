@@ -1,5 +1,5 @@
 import { Box, HStack } from '@holdr-ui/react';
-import { getSubComponent } from '../../index';
+import { getSubComponent } from '../../shared';
 import { BaseContentLayoutProps, ContentLayoutSCNames } from './types';
 
 function ContentLayout({ children }: BaseContentLayoutProps) {
@@ -34,7 +34,7 @@ const ContentLayoutMain = ({
         '@bp4': 'calc(100% - 160px)',
         '@bp5': 'calc(100% - 375px)',
       }}
-      t={{ '@bp1': 57, '@bp3': 65 }}
+      t={{ '@bp1': 0, '@bp3': 65 }}
       borderRight={2}
       borderLeft={2}
       h='fit-content'

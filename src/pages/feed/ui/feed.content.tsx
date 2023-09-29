@@ -107,7 +107,7 @@ function FeedContent() {
           <Container maxWidth={600} py={4} borderColor='base100'>
             <VStack gap={{ '@bp1': 5, '@bp3': 5 }} w='full'>
               <HStack justify='space-between'>
-                <HStack gap={3} position='relative'>
+                <HStack gap={4} position='relative'>
                   <LinkOverlay to={prefix('/', state.owner.username)} />
                   <Avatar
                     variant='squircle'
@@ -115,8 +115,11 @@ function FeedContent() {
                     src={state.owner.avatar}
                     name={state.owner.displayName}
                   />
-                  <TextGroup gap={1}>
-                    <TextGroup.Heading weight={500} size={3}>
+                  <TextGroup gap={0}>
+                    <TextGroup.Heading
+                      weight={500}
+                      size={{ '@bp1': 2, '@bp3': 3 }}
+                    >
                       {state.owner.displayName}
                     </TextGroup.Heading>
                     <TextGroup.Subheading

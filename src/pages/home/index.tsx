@@ -1,8 +1,7 @@
 import {
-  ContentLayout,
-  ContentLayoutAside,
-  ContentLayoutMain,
   Error,
+  ErrorFallback,
+  GQLRenderer,
   Head,
   Responsive,
   ResponsiveItem,
@@ -10,7 +9,12 @@ import {
 import { VStack } from '@holdr-ui/react';
 import { SuggestionsCard, useCurrentUser } from '../../features';
 import { FeedTabs } from './ui';
-import SmNavigation from '../../features/layout/ui/navigation/sm';
+import {
+  ContentLayout,
+  ContentLayoutAside,
+  ContentLayoutMain,
+  SmNavigation,
+} from '../../layout';
 
 //TODO: Rename move
 
@@ -18,26 +22,28 @@ function HomePage() {
   const currentUser = useCurrentUser();
 
   return (
-    <Error hasError={!currentUser} errorEl={<></>}>
-      <Head prefix='Holdr Base' title='' description='Home page' />
-      <Responsive>
-        <ResponsiveItem mobile='show'>
-          <SmNavigation />
-        </ResponsiveItem>
-      </Responsive>
-      {currentUser && (
-        <ContentLayout>
-          <ContentLayoutMain>
-            <VStack gap={4} w='100%'>
-              <FeedTabs />
-            </VStack>
-          </ContentLayoutMain>
-          <ContentLayoutAside>
-            <SuggestionsCard />
-          </ContentLayoutAside>
-        </ContentLayout>
-      )}
-    </Error>
+    <GQLRenderer ErrorFallback={ErrorFallback}>
+      <Error hasError={!currentUser} errorEl={<></>}>
+        <Head prefix='Holdr Base' title='' description='Home page' />
+        <Responsive>
+          <ResponsiveItem mobile='show'>
+            <SmNavigation />
+          </ResponsiveItem>
+        </Responsive>
+        {currentUser && (
+          <ContentLayout>
+            <ContentLayoutMain>
+              <VStack gap={4} mt={{ '@bp1': 56, '@bp3': 0 }} w='100%'>
+                <FeedTabs />
+              </VStack>
+            </ContentLayoutMain>
+            <ContentLayoutAside>
+              <SuggestionsCard />
+            </ContentLayoutAside>
+          </ContentLayout>
+        )}
+      </Error>
+    </GQLRenderer>
   );
 }
 HomePage.displayName = 'HomePage';

@@ -68,6 +68,7 @@ function NotificationsButton() {
         <Dialog>
           <Dialog.Trigger>
             <IconButton
+              size={{ '@bp1': 'sm', '@bp3': 'base' }}
               colorTheme='base800'
               icon='notification-outline'
               ariaLabel='open profile options'

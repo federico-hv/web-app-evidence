@@ -15,6 +15,7 @@ import {
 } from '@holdr-ui/react';
 import { useContext, useEffect, useState } from 'react';
 import {
+  IProfile,
   RelationshipStatusContext,
   useCreateRelationshipAction,
   useRemoveFollower,
@@ -27,9 +28,9 @@ import {
   SwitchConditionalCase,
   extraBtnPadding,
   useCopyToClipboard,
-  useProfile,
   useProfileContext,
   useToast,
+  useGeneralContext,
 } from '../../../../shared';
 
 /*
@@ -39,7 +40,7 @@ TODO:
  */
 
 function BlockButton({ close }: { close: VoidFunction }) {
-  const { profile } = useProfile();
+  const { state: profile } = useGeneralContext<IProfile>();
 
   const { block, loading } = useCreateRelationshipAction();
 

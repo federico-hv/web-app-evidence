@@ -2,14 +2,13 @@ import {
   useCurrentUser,
   useRelationshipStatusInfo,
 } from '../../../features';
-import { useProfile } from '../../../shared';
+import { useGeneralContext } from '../../../shared';
+import { IProfile } from './types';
 
 export function useCanViewProfile() {
   const currentUser = useCurrentUser();
-  const { profile } = useProfile();
-  const { loading, error, data } = useRelationshipStatusInfo(
-    profile.username,
-  );
+  const { state: profile } = useGeneralContext<IProfile>();
+  const { data } = useRelationshipStatusInfo(profile.username);
 
   let canViewProfile = true; // lenient
 
@@ -23,5 +22,5 @@ export function useCanViewProfile() {
     }
   }
 
-  return { canViewProfile, loading, error };
+  return { canViewProfile };
 }

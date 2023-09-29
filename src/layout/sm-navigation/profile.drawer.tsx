@@ -1,3 +1,4 @@
+import { useSuspenseQuery } from '@apollo/client';
 import {
   Avatar,
   Box,
@@ -6,54 +7,24 @@ import {
   Drawer,
   Flex,
   HStack,
-  Icon,
-  Text,
   useDisclosure,
   VStack,
 } from '@holdr-ui/react';
-import { Logo, TextGroupSubheading } from '../../../../shared/components';
-import { useCurrentUser } from '../../../auth';
 import { Fragment } from 'react';
+import { GET_RELATIONSHIP_COUNT, useCurrentUser } from '../../features';
+import ProfileDrawerOption from './profile-drawer-option';
+import {
+  TextGroup,
+  TextGroupSubheading,
+  UserNamesGroup,
+} from '../../shared/components';
 import {
   extraBtnPadding,
-  GQLRenderer,
   LinkOverlay,
+  Paths,
   prefix,
-  TextGroup,
   useLogout,
-  useMenuNavigate,
-  UserNamesGroup,
-  useScrollDirection,
-} from '../../../../shared';
-import { IconName } from '@holdr-ui/react/dist/shared/types';
-import { useSuspenseQuery } from '@apollo/client';
-import { GET_RELATIONSHIP_COUNT } from '../../../relationships';
-
-function MenuButton({
-  label,
-  icon,
-  onClick,
-}: {
-  onClick?: VoidFunction;
-  label: string;
-  icon: IconName;
-}) {
-  return (
-    <HStack
-      onClick={() => {
-        onClick && onClick();
-      }}
-      p={4}
-      gap={3}
-      items='center'
-      cursor='pointer'
-      _hover={{ backgroundColor: '$base100' }}
-    >
-      <Icon name={icon} />
-      <Text size={2}>{label}</Text>
-    </HStack>
-  );
-}
+} from '../../shared';
 
 function ProfileDrawer() {
   const logout = useLogout();
@@ -70,7 +41,6 @@ function ProfileDrawer() {
   });
 
   const { onOpen, isOpen, onClose } = useDisclosure();
-  const { goto } = useMenuNavigate();
 
   return (
     <Fragment>
@@ -155,57 +125,52 @@ function ProfileDrawer() {
                   </VStack>
 
                   <VStack borderTop={1} borderColor='base100'>
-                    <MenuButton
-                      onClick={() => {
-                        onClose();
-                        goto.bookmarks();
-                      }}
+                    <ProfileDrawerOption
+                      onClick={onClose}
+                      to={Paths.allBookmarks}
                       label='Bookmarks'
                       icon='bookmark-outline'
                     />
-                    <MenuButton
-                      onClick={() => {
-                        onClose();
-                        goto.channels();
-                      }}
+                    <ProfileDrawerOption
+                      onClick={onClose}
+                      to={Paths.channels}
                       label='Channels'
                       icon='channels-outline'
                     />
-                    <MenuButton
-                      onClick={() => {
-                        onClose();
-                        goto.releases();
-                      }}
+                    <ProfileDrawerOption
+                      onClick={onClose}
+                      to={Paths.releases}
                       label='Releases'
                       icon='releases-outline'
                     />
-                    <MenuButton
+                    <ProfileDrawerOption
+                      onClick={onClose}
+                      to='/events'
                       label='Events'
                       icon='calendar-event-outline'
                     />
                   </VStack>
 
                   <VStack borderTop={1} borderColor='base100'>
-                    <MenuButton
-                      onClick={() => {
-                        onClose();
-                        goto.settings();
-                      }}
+                    <ProfileDrawerOption
+                      onClick={onClose}
+                      to={Paths.settings}
                       label='Privacy & settings'
                       icon='settings-outline'
                     />
-                    <MenuButton
-                      onClick={() => {
-                        onClose();
-                        goto.support();
-                      }}
+                    <ProfileDrawerOption
+                      onClick={onClose}
+                      to={Paths.support}
                       label='Help & support'
                       icon='question-outline'
                     />
-                    <MenuButton label='Display' icon='night-mode' />
+                    <ProfileDrawerOption
+                      label='Display'
+                      icon='night-mode'
+                    />
                   </VStack>
                   <VStack borderTop={1} borderColor='base100'>
-                    <MenuButton
+                    <ProfileDrawerOption
                       onClick={() => {
                         onClose();
                         logout();
@@ -238,45 +203,6 @@ function ProfileDrawer() {
   );
 }
 
-function SmNavigation() {
-  const { direction, delta } = useScrollDirection('#root');
+ProfileDrawer.displayName = 'ProfileDrawer';
 
-  return (
-    <Box
-      position='fixed'
-      t={0}
-      w='100%'
-      bgColor='clearTint500'
-      css={{
-        blur: '12px',
-        zIndex: 50,
-        '@bp1': {
-          display: direction === 'down' && delta > 0 ? 'none' : 'block',
-        },
-      }}
-    >
-      <HStack
-        px={4}
-        pt={4}
-        pb={2}
-        as='header'
-        justify='space-between'
-        items='center'
-        w='100%'
-      >
-        <Logo />
-
-        <GQLRenderer
-          ErrorFallback={() => <Fragment />}
-          LoadingFallback={<Fragment />}
-        >
-          <ProfileDrawer />
-        </GQLRenderer>
-      </HStack>
-    </Box>
-  );
-}
-
-SmNavigation.displayName = 'SmNavigation';
-
-export default SmNavigation;
+export default ProfileDrawer;

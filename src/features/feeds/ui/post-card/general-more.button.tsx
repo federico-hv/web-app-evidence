@@ -1,10 +1,11 @@
+import { Fragment } from 'react';
 import { useFeedContext, useHideFeed } from '../../shared';
 import {
   useCreateRelationshipAction,
   useRelationshipStatusInfo,
   useRemoveRelationshipAction,
 } from '../../../relationships';
-import { Loader, Menu } from '../../../../shared';
+import { Menu } from '../../../../shared';
 import { HStack, Text } from '@holdr-ui/react';
 
 function GeneralMoreButton({
@@ -17,13 +18,13 @@ function GeneralMoreButton({
   const { feedId } = useFeedContext();
   const { owner } = useFeedContext();
 
-  const { loading, data } = useRelationshipStatusInfo(owner.username);
+  const { data } = useRelationshipStatusInfo(owner.username);
   const { mute, follow } = useCreateRelationshipAction();
   const { unfollow, unmute } = useRemoveRelationshipAction();
   const { hideFeed } = useHideFeed();
 
   return (
-    <Loader loading={loading}>
+    <Fragment>
       {data && (
         <Menu>
           <Menu.Trigger />
@@ -82,7 +83,7 @@ function GeneralMoreButton({
           </Menu.Content>
         </Menu>
       )}
-    </Loader>
+    </Fragment>
   );
 }
 GeneralMoreButton.displayName = 'GeneralMoreButton';

@@ -20,7 +20,6 @@ import {
   extraBtnPadding,
   GenericProps,
   Head,
-  HeaderLayout,
   Loader,
   Paths,
   prefix,
@@ -48,6 +47,7 @@ import { useQuery } from '@apollo/client';
 import { RootSettingsPath } from '../root';
 import pinCode from '../../../../assets/images/pin-code.png';
 import qrCode from '../../../../assets/images/scan-qrcode.png';
+import { HeaderLayout } from '../../../../layout';
 
 function DialogFooterWrapper({ children }: GenericProps) {
   return (

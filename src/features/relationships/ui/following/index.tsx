@@ -13,8 +13,8 @@ import {
   useDisclosure,
   VStack,
 } from '@holdr-ui/react';
-import { ProfileContext, useProfile } from '../../../../shared';
 import {
+  IProfile,
   RelationshipStatusContext,
   useCreateRelationshipAction,
   useRemoveRelationshipAction,
@@ -28,11 +28,12 @@ import {
   SwitchConditionalCase,
   extraBtnPadding,
   useAlertDialog,
+  useGeneralContext,
 } from '../../../../shared';
 import { useCurrentUser } from '../../../auth';
 
 function RestrictButton({ close }: { close: VoidFunction }) {
-  const { profile } = useProfile();
+  const { state: profile } = useGeneralContext<IProfile>();
 
   const { restrict, loading } = useCreateRelationshipAction();
 
@@ -118,7 +119,7 @@ function RestrictButton({ close }: { close: VoidFunction }) {
 
 function FollowingMenu({ close }: { close: VoidFunction }) {
   const currentUser = useCurrentUser();
-  const { profile } = useContext(ProfileContext);
+  const { state: profile } = useGeneralContext<IProfile>();
 
   const {
     isFriend,
@@ -231,7 +232,7 @@ function FollowingMenu({ close }: { close: VoidFunction }) {
 }
 
 function FollowingButton() {
-  const { profile } = useProfile();
+  const { state: profile } = useGeneralContext<IProfile>();
   // const {data, loading, error} = useQuery(GET_RELATIONSHIP_INFO)
   const {
     isOpen: drawerOpen,
@@ -247,7 +248,11 @@ function FollowingButton() {
       <ResponsiveItem tablet='hide'>
         <Popover isOpen={openPopover} onOpenChange={setOpenPopover}>
           <Popover.Trigger>
-            <Button rightIcon='caret-down-outline' colorTheme='base800'>
+            <Button
+              size={{ '@bp1': 'sm', '@bp3': 'base' }}
+              rightIcon='caret-down-outline'
+              colorTheme='base800'
+            >
               Following
             </Button>
           </Popover.Trigger>

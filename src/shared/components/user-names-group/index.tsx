@@ -3,7 +3,7 @@ import { UserNamesGroupProps } from './types';
 
 function UserNamesGroup({ displayName, username }: UserNamesGroupProps) {
   return (
-    <TextGroup w='fit-content' gap={0}>
+    <TextGroup w='fit-content' gap={0} p={0}>
       <TextGroupSubheading size={{ '@bp1': 2, '@bp3': 3 }} weight={500}>
         {displayName}
       </TextGroupSubheading>

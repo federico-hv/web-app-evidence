@@ -17,7 +17,7 @@ import {
   TextGroup,
   TextGroupSubheading,
   useDialogTabContext,
-  useProfile,
+  useGeneralContext,
 } from '../../../shared';
 import { useParams } from 'react-router-dom';
 import {
@@ -26,7 +26,11 @@ import {
   useRelationshipUsers,
   useCurrentUser,
 } from '../../../features';
-import { getMutualFollowersText, useCanViewProfile } from '../shared';
+import {
+  getMutualFollowersText,
+  IProfile,
+  useCanViewProfile,
+} from '../shared';
 import millify from 'millify';
 
 function Summary() {
@@ -162,8 +166,7 @@ function MutualFollowers() {
 }
 
 function RelationshipDialog() {
-  const { username } = useParams();
-  const { profile } = useProfile();
+  const { state: profile } = useGeneralContext<IProfile>();
   const currentUser = useCurrentUser();
   const { isOpen, onOpen, onClose, option } = useDialogTabContext();
 
@@ -211,7 +214,7 @@ function RelationshipDialog() {
               </Tabs.List>
               <Tabs.Content value='followers'>
                 <RelationshipList
-                  username={username}
+                  username={profile.username}
                   type='followers'
                   onClose={onClose}
                   emptyMessage={{
@@ -222,7 +225,7 @@ function RelationshipDialog() {
               </Tabs.Content>
               <Tabs.Content value='following'>
                 <RelationshipList
-                  username={username}
+                  username={profile.username}
                   type='following'
                   onClose={onClose}
                   emptyMessage={{
@@ -235,7 +238,7 @@ function RelationshipDialog() {
                 profile.username !== currentUser.username && (
                   <Tabs.Content value='mutual'>
                     <RelationshipList
-                      username={username}
+                      username={profile.username}
                       type='mutualUsers'
                       onClose={onClose}
                       emptyMessage={{
@@ -258,8 +261,8 @@ function RelationshipDialog() {
 function RelationshipsCard() {
   const currentUser = useCurrentUser();
 
-  const { profile } = useProfile();
-  const { loading, canViewProfile } = useCanViewProfile();
+  const { state: profile } = useGeneralContext<IProfile>();
+  const { canViewProfile } = useCanViewProfile();
 
   const [option, setOption] = useState('');
   const [isOpen, setOpen] = useState(false);
@@ -276,26 +279,22 @@ function RelationshipsCard() {
   const onClose = () => setOpen(false);
 
   return (
-    <Loader loading={loading}>
-      <DialogTabContextProvider
-        value={{ isOpen, onOpen, onClose, option }}
+    <DialogTabContextProvider value={{ isOpen, onOpen, onClose, option }}>
+      <VStack
+        w='100%'
+        px={{ '@bp1': 0, '@bp3': 4 }}
+        pt={{ '@bp1': 3, '@bp3': 4 }}
+        pb={{ '@bp1': 4, '@bp3': 5 }}
+        borderBottom={2}
+        borderColor='base100'
       >
-        <VStack
-          w='100%'
-          px={{ '@bp1': 0, '@bp3': 4 }}
-          pt={{ '@bp1': 3, '@bp3': 4 }}
-          pb={{ '@bp1': 4, '@bp3': 5 }}
-          borderBottom={2}
-          borderColor='base100'
-        >
-          <Summary />
-          {currentUser && profile.username !== currentUser.username && (
-            <MutualFollowers />
-          )}
-          <RelationshipDialog />
-        </VStack>
-      </DialogTabContextProvider>
-    </Loader>
+        <Summary />
+        {currentUser && profile.username !== currentUser.username && (
+          <MutualFollowers />
+        )}
+        <RelationshipDialog />
+      </VStack>
+    </DialogTabContextProvider>
   );
 }
 RelationshipsCard.displayName = 'RelationshipsCard';

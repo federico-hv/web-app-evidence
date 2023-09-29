@@ -1,9 +1,9 @@
 import { Button } from '@holdr-ui/react';
-import { useRemoveRelationshipAction } from '../../shared';
-import { useProfile } from '../../../../shared';
+import { IProfile, useRemoveRelationshipAction } from '../../shared';
+import { useGeneralContext } from '../../../../shared';
 
 function BlockButton() {
-  const { profile } = useProfile();
+  const { state: profile } = useGeneralContext<IProfile>();
 
   const { removeBlock, loading: loadingRemoval } =
     useRemoveRelationshipAction();
