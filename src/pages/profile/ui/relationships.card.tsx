@@ -283,10 +283,17 @@ function RelationshipsCard() {
       <VStack
         w='100%'
         px={{ '@bp1': 0, '@bp3': 4 }}
-        pt={{ '@bp1': 3, '@bp3': 4 }}
+        pt={{ '@bp1': 4, '@bp3': 4 }}
         pb={{ '@bp1': 4, '@bp3': 5 }}
-        borderBottom={2}
         borderColor='base100'
+        css={{
+          '@bp1': {
+            borderBottom: 0,
+          },
+          '@bp3': {
+            borderBottom: 1,
+          },
+        }}
       >
         <Summary />
         {currentUser && profile.username !== currentUser.username && (
