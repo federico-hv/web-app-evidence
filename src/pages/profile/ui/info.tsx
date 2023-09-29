@@ -9,7 +9,7 @@ function Info() {
     <Container maxWidth={{ '@bp1': '100%', '@bp3': 600 }}>
       {profile.bio && (
         <VStack mt={5}>
-          <Text>{profile.bio}</Text>
+          <Text size={{ '@bp1': 2, '@bp3': 3 }}>{profile.bio}</Text>
         </VStack>
       )}
     </Container>

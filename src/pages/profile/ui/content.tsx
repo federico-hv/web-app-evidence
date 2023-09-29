@@ -1,4 +1,11 @@
-import { Center, Container, Icon, Tabs, VStack } from '@holdr-ui/react';
+import {
+  Center,
+  Container,
+  Icon,
+  Tabs,
+  Text,
+  VStack,
+} from '@holdr-ui/react';
 import {
   Error,
   Loader,
@@ -18,6 +25,24 @@ import {
 import { useQuery } from '@apollo/client';
 import { IProfile, useCanViewProfile } from '../shared';
 import { Fragment } from 'react';
+
+function Empty({ title, subtitle }: { title: string; subtitle: string }) {
+  return (
+    <TextGroup items='center'>
+      <TextGroupHeading size={{ '@bp1': 3, '@bp3': 4 }}>
+        {title}
+      </TextGroupHeading>
+      <TextGroupSubheading
+        size={{ '@bp1': 2, '@bp3': 3 }}
+        color='base400'
+        weight={500}
+        css={{ textAlign: 'center' }}
+      >
+        {subtitle}
+      </TextGroupSubheading>
+    </TextGroup>
+  );
+}
 
 function Feeds({
   type,
@@ -41,12 +66,7 @@ function Feeds({
               ))}
             </VStack>
           ) : (
-            <TextGroup items='center'>
-              <TextGroupHeading>{emptyMessage.title}</TextGroupHeading>
-              <TextGroupSubheading size={2} color='base400' weight={500}>
-                {emptyMessage.subtitle}
-              </TextGroupSubheading>
-            </TextGroup>
+            <Empty {...emptyMessage} />
           )}
         </Container>
       </Loader>
@@ -78,9 +98,21 @@ function ArtistContent() {
         }}
       >
         <Container maxWidth={600}>
-          <Tabs.Trigger value='posts'>Posts</Tabs.Trigger>
-          <Tabs.Trigger value='articles'>Articles</Tabs.Trigger>
-          <Tabs.Trigger value='cosign'>Co-signs</Tabs.Trigger>
+          <Tabs.Trigger value='posts'>
+            <Text weight={500} size={{ '@bp1': 2, '@bp3': 3 }}>
+              Posts
+            </Text>
+          </Tabs.Trigger>
+          <Tabs.Trigger value='articles'>
+            <Text weight={500} size={{ '@bp1': 2, '@bp3': 3 }}>
+              Articles
+            </Text>
+          </Tabs.Trigger>
+          <Tabs.Trigger value='cosign'>
+            <Text weight={500} size={{ '@bp1': 2, '@bp3': 3 }}>
+              Co-signs
+            </Text>
+          </Tabs.Trigger>
         </Container>
       </Tabs.List>
       <Tabs.Content value='posts'>
@@ -143,8 +175,16 @@ function GeneralUserContent() {
         }}
       >
         <Container maxWidth={600}>
-          <Tabs.Trigger value='activity'>Activity</Tabs.Trigger>
-          <Tabs.Trigger value='cosigns'>Co-signs</Tabs.Trigger>
+          <Tabs.Trigger value='activity'>
+            <Text weight={500} size={{ '@bp1': 2, '@bp3': 3 }}>
+              Activity
+            </Text>
+          </Tabs.Trigger>
+          <Tabs.Trigger value='cosigns'>
+            <Text weight={500} size={{ '@bp1': 2, '@bp3': 3 }}>
+              Co-signs
+            </Text>
+          </Tabs.Trigger>
         </Container>
       </Tabs.List>
       <Tabs.Content value='activity'>
@@ -158,28 +198,20 @@ function GeneralUserContent() {
                   ))}
                 </VStack>
               ) : (
-                <TextGroup items='center'>
-                  <TextGroupHeading>No activity yet</TextGroupHeading>
-                  <TextGroupSubheading
-                    size={2}
-                    color='base400'
-                    weight={500}
-                  >
-                    {profile.displayName} has not yet reacted to anything.
-                  </TextGroupSubheading>
-                </TextGroup>
+                <Empty
+                  title='No activity yet'
+                  subtitle={`${profile.displayName} has not yet reacted to anything.`}
+                />
               )}
             </Container>
           </Loader>
         </Error>
       </Tabs.Content>
       <Tabs.Content value='cosigns'>
-        <TextGroup items='center'>
-          <TextGroupHeading>No co-signs yet</TextGroupHeading>
-          <TextGroupSubheading size={2} color='base400' weight={500}>
-            {profile.displayName} has not yet co-signed any music release.
-          </TextGroupSubheading>
-        </TextGroup>
+        <Empty
+          title='No co-signs yet'
+          subtitle={`${profile.displayName} has not yet co-signed any music release.`}
+        />
       </Tabs.Content>
     </Tabs>
   );
