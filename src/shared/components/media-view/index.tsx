@@ -65,11 +65,12 @@ function MediaView({ children }: GenericProps) {
                 <Box position='relative' w='100%' h='100%'>
                   <Box
                     position='absolute'
-                    t='1rem'
-                    l='1rem'
+                    t={{ '@bp1': '0.25rem', '@bp3': '1rem' }}
+                    l={{ '@bp1': '0.25rem', '@bp3': '1rem' }}
                     css={{ zIndex: 51 }}
                   >
                     <CloseButton
+                      colorTheme='primary400'
                       onClick={onClose}
                       size={{ '@bp1': 'base', '@bp3': 'lg' }}
                     />

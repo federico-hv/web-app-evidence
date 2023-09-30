@@ -27,7 +27,7 @@ function MediaItem({ url, type, title = '' }: MediaItemProps) {
           <MediaViewContent>
             <MediaViewImage
               className={CenteredImage()}
-              size='85%'
+              size={{ '@bp1': '95%', '@bp3': '85%' }}
               src={url}
               alt={title}
             />
