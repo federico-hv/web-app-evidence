@@ -3,6 +3,7 @@ import { AvatarProps } from '@holdr-ui/react/dist/components/avatar/src/avatar.t
 import {
   Avatar,
   Box,
+  CloseButton,
   Image,
   useDisclosure,
   useKeyBind,
@@ -14,13 +15,7 @@ import { getSubComponent } from '../../utilities';
 import { Fragment } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { createPortal } from 'react-dom';
-
-export type MediaViewSCNames =
-  | 'MediaView'
-  | 'MediaViewAvatar'
-  | 'MediaViewImage'
-  | 'MediaViewContent'
-  | 'MediaViewTrigger';
+import { MediaViewSCNames } from './type';
 
 /*
   Anatomy:
@@ -68,6 +63,17 @@ function MediaView({ children }: GenericProps) {
                 zIndex={100}
               >
                 <Box position='relative' w='100%' h='100%'>
+                  <Box
+                    position='absolute'
+                    t='1rem'
+                    l='1rem'
+                    css={{ zIndex: 51 }}
+                  >
+                    <CloseButton
+                      onClick={onClose}
+                      size={{ '@bp1': 'base', '@bp3': 'lg' }}
+                    />
+                  </Box>
                   <Box // Overlay
                     position='absolute'
                     l={0}
@@ -75,10 +81,18 @@ function MediaView({ children }: GenericProps) {
                     w='100%'
                     h='100%'
                     bgColor='darkTint400'
-                    onClick={onClose}
                     css={{
                       blur: '12px',
                     }}
+                  />
+                  <Box // Overlay for closing -- Hack for image hack SMH (See centered image hack in shared/styles)
+                    position='absolute'
+                    l={0}
+                    t={0}
+                    w='100%'
+                    h='100%'
+                    onClick={onClose}
+                    zIndex={50}
                   />
                   <VStack
                     h='100%'

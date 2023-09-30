@@ -34,7 +34,7 @@ function PostCard({ data }: { data: PostModel }) {
       <Card.Header
         borderBottom={1}
         borderColor='base100'
-        p={4}
+        p={{ '@bp1': 3, '@bp3': 4 }}
         direction='horizontal'
         justify='space-between'
       >
@@ -64,7 +64,11 @@ function PostCard({ data }: { data: PostModel }) {
           )}
         </Box>
       </Card.Header>
-      <Card.Body px={4} py={6} position='relative'>
+      <Card.Body
+        px={{ '@bp1': 3, '@bp3': 4 }}
+        py={{ '@bp1': 4, '@bp3': 6 }}
+        position='relative'
+      >
         <Text size={{ '@bp1': 2, '@bp3': 3 }}>{data.description}</Text>
         {data.media && <Media items={data.media} />}
         {data.polls && (
@@ -72,8 +76,8 @@ function PostCard({ data }: { data: PostModel }) {
         )}
       </Card.Body>
       <Card.Footer
-        px={4}
-        py={3}
+        px={{ '@bp1': 3, '@bp3': 4 }}
+        py={{ '@bp1': 2, '@bp3': 3 }}
         borderTop={1}
         borderColor='base100'
         direction='horizontal'

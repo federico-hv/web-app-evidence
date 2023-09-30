@@ -6,11 +6,10 @@ import {
 } from '../index';
 import { Box, Image } from '@holdr-ui/react';
 import { MediaItemProps } from './types';
-import { StyledVideo } from '../../styles';
+import { CenteredImage, StyledVideo } from '../../styles';
 import { Fragment } from 'react';
 
 function MediaItem({ url, type, title = '' }: MediaItemProps) {
-  console.log({ url });
   return (
     <Fragment>
       {type === 'video' && (
@@ -26,7 +25,12 @@ function MediaItem({ url, type, title = '' }: MediaItemProps) {
             <Image src={url} alt={title} />
           </MediaViewTrigger>
           <MediaViewContent>
-            <MediaViewImage size='80%' src={url} alt={title} />
+            <MediaViewImage
+              className={CenteredImage()}
+              size='85%'
+              src={url}
+              alt={title}
+            />
           </MediaViewContent>
         </MediaView>
       )}
