@@ -4,13 +4,11 @@ import {
   LinkOverlay,
   Loader,
   prefix,
-  TextGroup,
-  TextGroupHeading,
-  TextGroupSubheading,
   UserNamesGroup,
 } from '../../../../shared';
 import { QueryType, useRelationshipUsers } from '../../shared';
 import RelationshipActionButton from '../relationship-action-button';
+import { EmptyMessage } from '../../../../pages/profile/ui/content';
 
 // Move this outside
 
@@ -31,9 +29,14 @@ function RelationshipList({
     <Error hasError={!!error} errorEl={<Box>Error</Box>}>
       <Loader h={100} loading={loading}>
         {data && data[type] && data[type]!.total > 0 ? (
-          <VStack gap={{ '@bp1': 3, '@bp3': 4 }}>
+          <VStack gap={{ '@bp1': 4, '@bp3': 5 }}>
             {data[type]?.users.map((user) => (
-              <HStack key={user.id} w='100%' justify='space-between'>
+              <HStack
+                key={user.id}
+                w='100%'
+                justify='space-between'
+                position='relative'
+              >
                 <HStack gap={3}>
                   <LinkOverlay
                     onClick={onClose}
@@ -56,12 +59,7 @@ function RelationshipList({
           </VStack>
         ) : (
           // TODO: Replace with empty
-          <TextGroup items='center'>
-            <TextGroupHeading>{emptyMessage.title}</TextGroupHeading>
-            <TextGroupSubheading size={2} color='base400' weight={500}>
-              {emptyMessage.subtitle}
-            </TextGroupSubheading>
-          </TextGroup>
+          <EmptyMessage {...emptyMessage} />
         )}
       </Loader>
     </Error>

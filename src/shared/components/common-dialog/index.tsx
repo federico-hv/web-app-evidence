@@ -67,43 +67,42 @@ function CommonDialog({
             backgroundColor: '#FFF',
           }}
         >
-          {hasChildren(ActionButton) && (
-            <Dialog.Header
-              borderBottom={1}
-              borderColor='base100'
-              position='sticky'
-              t={0}
-              bgColor='clearTint500'
-              justify='space-between'
-              css={{
-                blur: '12px',
-                '@bp1': {
-                  paddingLeft: '$2',
-                  paddingRight: '$2',
-                },
-                '@bp3': {
-                  paddingLeft: '$4',
-                  paddingRight: '$4',
-                },
-              }}
-            >
-              <Dialog.Close css={{ zIndex: 10 }}>
-                {width && width > 768 && <CloseButton variant='ghost' />}
-                {width && width <= 768 && (
-                  <IconButton
-                    icon='arrow-left-outline'
-                    ariaLabel='go back'
-                    variant='ghost'
-                  />
-                )}
-              </Dialog.Close>
-              {Header}
-            </Dialog.Header>
-          )}
+          <Dialog.Header
+            borderBottom={1}
+            borderColor='base100'
+            position='sticky'
+            t={0}
+            bgColor='clearTint500'
+            justify='space-between'
+            css={{
+              blur: '12px',
+              '@bp1': {
+                paddingLeft: '$2',
+                paddingRight: '$2',
+              },
+              '@bp3': {
+                paddingLeft: '$4',
+                paddingRight: '$4',
+              },
+            }}
+          >
+            <Dialog.Close css={{ zIndex: 10 }}>
+              {width && width > 768 && <CloseButton variant='ghost' />}
+              {width && width <= 768 && (
+                <IconButton
+                  icon='arrow-left-outline'
+                  ariaLabel='go back'
+                  variant='ghost'
+                />
+              )}
+            </Dialog.Close>
+            {Header}
+          </Dialog.Header>
+
           <Dialog.Body
             items='center'
             px={0}
-            pt={hasChildren(ActionButton) ? '65px' : 0}
+            // pt={hasChildren(ActionButton) ? '65px' : 0}
           >
             <VStack w='100%' h='100%' justify='space-between'>
               {Content}

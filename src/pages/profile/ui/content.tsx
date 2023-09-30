@@ -27,7 +27,13 @@ import { useQuery } from '@apollo/client';
 import { IProfile, useCanViewProfile } from '../shared';
 import { Fragment } from 'react';
 
-function Empty({ title, subtitle }: { title: string; subtitle: string }) {
+export function EmptyMessage({
+  title,
+  subtitle,
+}: {
+  title: string;
+  subtitle: string;
+}) {
   return (
     <TextGroup items='center'>
       <TextGroupHeading size={{ '@bp1': 3, '@bp3': 4 }}>
@@ -67,7 +73,7 @@ function Feeds({
               ))}
             </VStack>
           ) : (
-            <Empty {...emptyMessage} />
+            <EmptyMessage {...emptyMessage} />
           )}
         </Container>
       </Loader>
@@ -135,7 +141,7 @@ function ArtistContent() {
         />
       </Tabs.Content>
       <Tabs.Content value='cosign'>
-        <Empty
+        <EmptyMessage
           title='No co-signs'
           subtitle={`${profile.displayName} has not yet received any music release
             co-signs.`}
@@ -197,7 +203,7 @@ function GeneralUserContent() {
                   ))}
                 </VStack>
               ) : (
-                <Empty
+                <EmptyMessage
                   title='No activity yet'
                   subtitle={`${profile.displayName} has not yet reacted to anything.`}
                 />
@@ -207,7 +213,7 @@ function GeneralUserContent() {
         </Error>
       </Tabs.Content>
       <Tabs.Content value='cosigns'>
-        <Empty
+        <EmptyMessage
           title='No co-signs yet'
           subtitle={`${profile.displayName} has not yet co-signed any music release.`}
         />

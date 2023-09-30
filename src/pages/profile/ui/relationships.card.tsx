@@ -22,6 +22,7 @@ import {
   useDialogTabContext,
   useGeneralContext,
   UserNamesGroup,
+  voidFn,
 } from '../../../shared';
 import { useParams } from 'react-router-dom';
 import {
@@ -153,14 +154,12 @@ function RelationshipDialog() {
   const { width } = useWindowSize();
   const { state: profile } = useGeneralContext<IProfile>();
   const currentUser = useCurrentUser();
+
   const { option, ...dialogContext } = useDialogTabContext();
 
   return (
-    <CommonDialog
-      {...dialogContext}
-      onOpen={() => dialogContext.onOpen(option)}
-    >
-      {width && width <= 768 && (
+    <CommonDialog {...dialogContext} onOpen={voidFn}>
+      {width && width < 768 && (
         <CommonDialogHeader justify='flex-start'>
           <UserNamesGroup
             displayName={profile.displayName}
@@ -168,6 +167,7 @@ function RelationshipDialog() {
           />
         </CommonDialogHeader>
       )}
+
       <CommonDialogContent>
         <Tabs defaultValue={option}>
           <Tabs.List
