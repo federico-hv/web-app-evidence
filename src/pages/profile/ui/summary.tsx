@@ -90,7 +90,7 @@ function Summary() {
                       name={profile.displayName}
                       css={{
                         '@bp1': {
-                          size: 60,
+                          size: 175,
                         },
                         '@bp3': { size: 250 },
                       }}
