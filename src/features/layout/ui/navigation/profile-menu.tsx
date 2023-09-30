@@ -9,12 +9,11 @@ import {
   VStack,
 } from '@holdr-ui/react';
 import {
-  MenuButton,
+  MenuItem,
   prefix,
   TextGroup,
   TextGroupHeading,
   TextGroupSubheading,
-  useAlertDialog,
   useLogout,
   useMenuNavigate,
 } from '../../../../shared';
@@ -25,7 +24,6 @@ function ProfileMenu() {
   const currentUser = useCurrentUser();
   const { goto } = useMenuNavigate();
   const [state, set] = useState(false);
-  const { openWith } = useAlertDialog();
   const logout = useLogout();
 
   const close = () => set(false);
@@ -96,23 +94,14 @@ function ProfileMenu() {
               </HStack>
             </Link>
             <VStack pt={3}>
-              <MenuButton
-                onClick={navigateTo.settings}
+              <MenuItem
+                action={navigateTo.settings}
                 label='Privacy & Settings'
                 icon='settings-outline'
               />
-              <MenuButton label='Help & Support' icon='question-outline' />
-              <MenuButton
-                onClick={() =>
-                  openWith({
-                    actionText: 'Yes, Logout',
-                    onAction: logout,
-                    title: 'Log out',
-                    description:
-                      'If you log out, you will have to manually log in to your account again. ' +
-                      'Are you sure you want to log out off your account?',
-                  })
-                }
+              <MenuItem label='Help & Support' icon='question-outline' />
+              <MenuItem
+                action={logout}
                 label='Logout'
                 icon='logout-outline'
               />

@@ -37,3 +37,11 @@ export function getSubComponentExcluding<T>(
       : null;
   });
 }
+
+/**
+ * Check if react node has children
+ * @param node react node
+ */
+export function hasChildren(node: any): boolean {
+  return node && Array.isArray(node) && node.length > 0;
+}

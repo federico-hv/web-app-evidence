@@ -1,4 +1,10 @@
-import { useGeneralContext } from '../../../shared';
+import {
+  MediaView,
+  MediaViewAvatar,
+  MediaViewContent,
+  MediaViewTrigger,
+  useGeneralContext,
+} from '../../../shared';
 import { IProfile } from '../shared';
 import {
   Avatar,
@@ -53,17 +59,35 @@ function Summary() {
             h='100%'
             w='100%'
           >
-            <Avatar
-              variant='squircle'
-              src={profile.avatar}
-              name={profile.displayName}
-              css={{
-                '@bp1': {
-                  size: 60,
-                },
-                '@bp3': { size: 90 },
-              }}
-            />
+            <MediaView>
+              <MediaViewTrigger>
+                <Avatar
+                  variant='squircle'
+                  src={profile.avatar}
+                  name={profile.displayName}
+                  css={{
+                    '@bp1': {
+                      size: 60,
+                    },
+                    '@bp3': { size: 90 },
+                  }}
+                />
+              </MediaViewTrigger>
+              <MediaViewContent>
+                <MediaViewAvatar
+                  variant='squircle'
+                  src={profile.avatar}
+                  name={profile.displayName}
+                  css={{
+                    '@bp1': {
+                      size: 60,
+                    },
+                    '@bp3': { size: 250 },
+                  }}
+                />
+              </MediaViewContent>
+            </MediaView>
+
             <VStack gap={1}>
               {profile.role === 'artist' ? (
                 <HStack gap={2} items='center'>

@@ -181,7 +181,20 @@ function AddMedia({
                       colSpan={colSpan}
                       key={`image-grid-${index}`}
                     >
-                      <Box radius={2} h='100%' w='100%' overflow='hidden'>
+                      <Box
+                        radius={2}
+                        h='100%'
+                        w='100%'
+                        overflow='hidden'
+                        position='relative'
+                      >
+                        <Box // block image from showing media view
+                          borderColor='base400'
+                          position='absolute'
+                          h='100%'
+                          w='100%'
+                          zIndex={50}
+                        />
                         <MediaItem
                           url={URL.createObjectURL(media[index].file)}
                           type={FileUtility.getType(

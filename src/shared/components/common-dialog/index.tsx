@@ -14,6 +14,7 @@ import { GenericProps } from '../../interfaces';
 import {
   getSubComponent,
   getSubComponentExcluding,
+  hasChildren,
 } from '../../utilities';
 import { VStackProps } from '@holdr-ui/react/dist/components/stack/src/stack.types';
 import {
@@ -22,10 +23,6 @@ import {
   CommonDialogSCNames,
 } from './types';
 import { Fragment } from 'react';
-
-function hasChildren(node: any): boolean {
-  return node && Array.isArray(node) && node.length > 0;
-}
 
 function CommonDialog({
   isOpen,
@@ -73,10 +70,12 @@ function CommonDialog({
           <Dialog.Header
             borderBottom={1}
             borderColor='base100'
-            position='relative'
+            position='sticky'
+            t={0}
+            bgColor='clearTint500'
             justify='space-between'
             css={{
-              backgroundColor: '#FFF',
+              blur: '12px',
               '@bp1': {
                 paddingLeft: '$2',
                 paddingRight: '$2',
@@ -176,7 +175,7 @@ function CommonDialogContent({ children, ...props }: VStackProps) {
   return (
     <VStack
       w='100%'
-      px={{ '@bp1': 2, '@bp3': 4 }}
+      px={{ '@bp1': 3, '@bp3': 4 }}
       gap={{ '@bp1': 4, '@bp3': 5 }}
       {...props}
     >

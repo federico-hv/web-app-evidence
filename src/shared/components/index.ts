@@ -47,4 +47,12 @@ export {
   CommonDialogTrigger,
 } from './common-dialog';
 
+export {
+  default as MediaView,
+  MediaViewAvatar,
+  MediaViewImage,
+  MediaViewTrigger,
+  MediaViewContent,
+} from './media-view';
+
 // export { default as Form, FormInput } from './form';
