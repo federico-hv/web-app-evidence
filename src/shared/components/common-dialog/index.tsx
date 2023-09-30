@@ -67,39 +67,45 @@ function CommonDialog({
             backgroundColor: '#FFF',
           }}
         >
-          <Dialog.Header
-            borderBottom={1}
-            borderColor='base100'
-            position='sticky'
-            t={0}
-            bgColor='clearTint500'
-            justify='space-between'
-            css={{
-              blur: '12px',
-              '@bp1': {
-                paddingLeft: '$2',
-                paddingRight: '$2',
-              },
-              '@bp3': {
-                paddingLeft: '$4',
-                paddingRight: '$4',
-              },
-            }}
+          {hasChildren(ActionButton) && (
+            <Dialog.Header
+              borderBottom={1}
+              borderColor='base100'
+              position='sticky'
+              t={0}
+              bgColor='clearTint500'
+              justify='space-between'
+              css={{
+                blur: '12px',
+                '@bp1': {
+                  paddingLeft: '$2',
+                  paddingRight: '$2',
+                },
+                '@bp3': {
+                  paddingLeft: '$4',
+                  paddingRight: '$4',
+                },
+              }}
+            >
+              <Dialog.Close css={{ zIndex: 10 }}>
+                {width && width > 768 && <CloseButton variant='ghost' />}
+                {width && width <= 768 && (
+                  <IconButton
+                    icon='arrow-left-outline'
+                    ariaLabel='go back'
+                    variant='ghost'
+                  />
+                )}
+              </Dialog.Close>
+              {Header}
+            </Dialog.Header>
+          )}
+          <Dialog.Body
+            items='center'
+            px={0}
+            pt={hasChildren(ActionButton) ? '65px' : 0}
           >
-            <Dialog.Close css={{ zIndex: 10 }}>
-              {width && width > 768 && <CloseButton variant='ghost' />}
-              {width && width <= 768 && (
-                <IconButton
-                  icon='arrow-left-outline'
-                  ariaLabel='go back'
-                  variant='ghost'
-                />
-              )}
-            </Dialog.Close>
-            {Header}
-          </Dialog.Header>
-          <Dialog.Body items='center' px={0}>
-            <VStack w='100%' mt={6} h='100%' justify='space-between'>
+            <VStack w='100%' h='100%' justify='space-between'>
               {Content}
               {hasChildren(ActionButton) && (
                 <Box
@@ -130,9 +136,13 @@ function CommonDialogTrigger({ children }: GenericProps) {
 CommonDialogTrigger.displayName = 'CommonDialogTrigger';
 
 function CommonDialogHeader({
+  justify = 'center',
   children,
   label,
-}: GenericProps & { label?: string }) {
+}: GenericProps & {
+  label?: string;
+  justify?: 'center' | 'flex-start';
+}) {
   const ActionButton = getSubComponent<CommonDialogSCNames>(
     children,
     'CommonDialogActionButton',
@@ -146,12 +156,12 @@ function CommonDialogHeader({
     <Fragment>
       <HStack
         position='absolute'
-        l={0}
+        l={justify === 'center' ? 0 : '3rem'}
         t={0}
-        w='100%'
+        r={0}
         h='100%'
         items='center'
-        justify={'center'}
+        justify={justify}
       >
         {children ? (
           <Fragment>{Others}</Fragment>

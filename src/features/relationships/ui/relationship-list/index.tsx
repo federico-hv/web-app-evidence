@@ -1,15 +1,16 @@
-import { Box, VStack } from '@holdr-ui/react';
+import { Avatar, Box, HStack, VStack } from '@holdr-ui/react';
 import {
   Error,
+  LinkOverlay,
   Loader,
-  SwitchConditional,
-  SwitchConditionalCase,
+  prefix,
   TextGroup,
   TextGroupHeading,
   TextGroupSubheading,
+  UserNamesGroup,
 } from '../../../../shared';
 import { QueryType, useRelationshipUsers } from '../../shared';
-import UserWithRelationshipAction from '../user-with-relationship-action';
+import RelationshipActionButton from '../relationship-action-button';
 
 // Move this outside
 
@@ -29,30 +30,38 @@ function RelationshipList({
   return (
     <Error hasError={!!error} errorEl={<Box>Error</Box>}>
       <Loader h={100} loading={loading}>
-        {data && (
-          <SwitchConditional>
-            <SwitchConditionalCase
-              on={data[type] && data[type]!.total > 0}
-            >
-              <VStack>
-                {data[type]?.users.map((user) => (
-                  <UserWithRelationshipAction
-                    key={user.id}
-                    onClose={onClose}
-                    data={user}
+        {data && data[type] && data[type]!.total > 0 ? (
+          <VStack gap={{ '@bp1': 3, '@bp3': 4 }}>
+            {data[type]?.users.map((user) => (
+              <HStack key={user.id} w='100%' justify='space-between'>
+                <HStack gap={3}>
+                  <LinkOverlay
+                    onClick={onClose}
+                    to={prefix('/', user.username)}
                   />
-                ))}
-              </VStack>
-            </SwitchConditionalCase>
-            <SwitchConditionalCase on={data[type]?.total === 0}>
-              <TextGroup items='center'>
-                <TextGroupHeading>{emptyMessage.title}</TextGroupHeading>
-                <TextGroupSubheading size={2} color='base400' weight={500}>
-                  {emptyMessage.subtitle}
-                </TextGroupSubheading>
-              </TextGroup>
-            </SwitchConditionalCase>
-          </SwitchConditional>
+                  <Avatar
+                    size={{ '@bp1': 'sm', '@bp3': 'base' }}
+                    variant='squircle'
+                    src={user.avatar}
+                    name={user.displayName}
+                  />
+                  <UserNamesGroup
+                    displayName={user.displayName}
+                    username={user.displayName}
+                  />
+                </HStack>
+                <RelationshipActionButton username={user.username} />
+              </HStack>
+            ))}
+          </VStack>
+        ) : (
+          // TODO: Replace with empty
+          <TextGroup items='center'>
+            <TextGroupHeading>{emptyMessage.title}</TextGroupHeading>
+            <TextGroupSubheading size={2} color='base400' weight={500}>
+              {emptyMessage.subtitle}
+            </TextGroupSubheading>
+          </TextGroup>
         )}
       </Loader>
     </Error>

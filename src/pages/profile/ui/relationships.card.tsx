@@ -3,14 +3,17 @@ import {
   Avatar,
   AvatarGroup,
   Box,
-  Dialog,
   HStack,
   Tabs,
   Text,
+  useWindowSize,
   VStack,
 } from '@holdr-ui/react';
 import { useQuery } from '@apollo/client';
 import {
+  CommonDialog,
+  CommonDialogContent,
+  CommonDialogHeader,
   DialogTabContextProvider,
   Error,
   Loader,
@@ -18,6 +21,7 @@ import {
   TextGroupSubheading,
   useDialogTabContext,
   useGeneralContext,
+  UserNamesGroup,
 } from '../../../shared';
 import { useParams } from 'react-router-dom';
 import {
@@ -90,26 +94,6 @@ function Summary() {
                 Following
               </TextGroupSubheading>
             </TextGroup>
-            {/*<TextGroup*/}
-            {/*  w={{ '@bp1': 'fit-content', '@bp3': '100%' }}*/}
-            {/*  onClick={() => onOpen('memberships')}*/}
-            {/*  direction={{ '@bp1': 'horizontal', '@bp3': 'vertical' }}*/}
-            {/*  gap={{ '@bp1': 2, '@bp3': 1 }}*/}
-            {/*>*/}
-            {/*  <TextGroupSubheading*/}
-            {/*    size={{ '@bp1': 2, '@bp3': 4 }}*/}
-            {/*    weight={600}*/}
-            {/*  >*/}
-            {/*    0*/}
-            {/*  </TextGroupSubheading>*/}
-            {/*  <TextGroupSubheading*/}
-            {/*    size={{ '@bp1': 2, '@bp3': 4 }}*/}
-            {/*    weight={500}*/}
-            {/*    color='base400'*/}
-            {/*  >*/}
-            {/*    Memberships*/}
-            {/*  </TextGroupSubheading>*/}
-            {/*</TextGroup>*/}
           </HStack>
         )}
       </Loader>
@@ -166,95 +150,91 @@ function MutualFollowers() {
 }
 
 function RelationshipDialog() {
+  const { width } = useWindowSize();
   const { state: profile } = useGeneralContext<IProfile>();
   const currentUser = useCurrentUser();
-  const { isOpen, onOpen, onClose, option } = useDialogTabContext();
+  const { option, ...dialogContext } = useDialogTabContext();
 
   return (
-    <Dialog isOpen={isOpen} onOpen={onOpen} onClose={onClose}>
-      <Dialog.Portal>
-        <Dialog.Overlay />
-        <Dialog.Content
-          h={{ '@bp1': '100vh', '@bp3': '80vh' }}
-          maxHeight={{ '@bp1': '100vh', '@bp3': '85vh' }}
-          radius={{ '@bp1': 0, '@bp3': 3 }}
-          w={{ '@bp1': '100vw', '@bp3': '450px' }}
-        >
-          <Dialog.Header
-            display={{ '@bp1': 'flex', '@bp3': 'none' }}
-            css={{ flexShrink: 0 }}
+    <CommonDialog
+      {...dialogContext}
+      onOpen={() => dialogContext.onOpen(option)}
+    >
+      {width && width <= 768 && (
+        <CommonDialogHeader justify='flex-start'>
+          <UserNamesGroup
+            displayName={profile.displayName}
+            username={profile.username}
+          />
+        </CommonDialogHeader>
+      )}
+      <CommonDialogContent>
+        <Tabs defaultValue={option}>
+          <Tabs.List
+            css={{
+              py: '0',
+              '& button': { height: '$7', minWidth: 'unset', flex: 1 },
+            }}
+            variant='link'
           >
-            <TextGroup gap={0}>
-              <TextGroup.Heading size={3} weight={500}>
-                {profile.displayName}
-              </TextGroup.Heading>
-              <TextGroup.Subheading size={2} color='base400' weight={500}>
-                @{profile.username}
-              </TextGroup.Subheading>
-            </TextGroup>
-          </Dialog.Header>
-          <Dialog.Body pt={4} mt={{ '@bp1': 68, '@bp3': 0 }}>
-            <Tabs defaultValue={option}>
-              <Tabs.List
-                css={{
-                  py: '0',
-                  '& button': { height: '$7', minWidth: 'unset', flex: 1 },
+            <Tabs.Trigger value='followers'>
+              <Text weight={500} size={{ '@bp1': 2, '@bp3': 3 }}>
+                Followers
+              </Text>
+            </Tabs.Trigger>
+            <Tabs.Trigger value='following'>
+              <Text weight={500} size={{ '@bp1': 2, '@bp3': 3 }}>
+                Following
+              </Text>
+            </Tabs.Trigger>
+            {currentUser && profile.username !== currentUser.username && (
+              <Tabs.Trigger value='mutual'>
+                <Text weight={500} size={{ '@bp1': 2, '@bp3': 3 }}>
+                  Mutual
+                </Text>
+              </Tabs.Trigger>
+            )}
+          </Tabs.List>
+          <Tabs.Content value='followers'>
+            <RelationshipList
+              username={profile.username}
+              type='followers'
+              onClose={dialogContext.onClose}
+              emptyMessage={{
+                title: 'No followers',
+                subtitle: 'Not yet followed by any users.',
+              }}
+            />
+          </Tabs.Content>
+          <Tabs.Content value='following'>
+            <RelationshipList
+              username={profile.username}
+              type='following'
+              onClose={dialogContext.onClose}
+              emptyMessage={{
+                title: 'No followers',
+                subtitle: 'Not yet following any users.',
+              }}
+            />
+          </Tabs.Content>
+          {currentUser && profile.username !== currentUser.username && (
+            <Tabs.Content value='mutual'>
+              <RelationshipList
+                username={profile.username}
+                type='mutualUsers'
+                onClose={dialogContext.onClose}
+                emptyMessage={{
+                  title: 'No mutual users',
+                  subtitle:
+                    'None of the users you follow are currently following this user.',
                 }}
-                variant='link'
-              >
-                <Tabs.Trigger value='followers'>Followers</Tabs.Trigger>
-                <Tabs.Trigger value='following'>Following</Tabs.Trigger>
-                {/*<Tabs.Trigger value='memberships'>*/}
-                {/*  Memberships*/}
-                {/*</Tabs.Trigger>*/}
-                {currentUser &&
-                  profile.username !== currentUser.username && (
-                    <Tabs.Trigger value='mutual'>Mutual</Tabs.Trigger>
-                  )}
-              </Tabs.List>
-              <Tabs.Content value='followers'>
-                <RelationshipList
-                  username={profile.username}
-                  type='followers'
-                  onClose={onClose}
-                  emptyMessage={{
-                    title: 'No followers',
-                    subtitle: 'Not yet followed by any users.',
-                  }}
-                />
-              </Tabs.Content>
-              <Tabs.Content value='following'>
-                <RelationshipList
-                  username={profile.username}
-                  type='following'
-                  onClose={onClose}
-                  emptyMessage={{
-                    title: 'No followers',
-                    subtitle: 'Not yet following any users.',
-                  }}
-                />
-              </Tabs.Content>
-              {currentUser &&
-                profile.username !== currentUser.username && (
-                  <Tabs.Content value='mutual'>
-                    <RelationshipList
-                      username={profile.username}
-                      type='mutualUsers'
-                      onClose={onClose}
-                      emptyMessage={{
-                        title: 'No mutual users',
-                        subtitle:
-                          'None of the users you follow are currently following this user.',
-                      }}
-                    />
-                  </Tabs.Content>
-                )}
-              {/*<Tabs.Content value='memberships'>Coming soon</Tabs.Content>*/}
-            </Tabs>
-          </Dialog.Body>
-        </Dialog.Content>
-      </Dialog.Portal>
-    </Dialog>
+              />
+            </Tabs.Content>
+          )}
+          {/*<Tabs.Content value='memberships'>Coming soon</Tabs.Content>*/}
+        </Tabs>
+      </CommonDialogContent>
+    </CommonDialog>
   );
 }
 

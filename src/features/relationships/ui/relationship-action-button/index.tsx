@@ -1,4 +1,5 @@
 import {
+  getRelationshipButton,
   useCreateRelationshipAction,
   useRelationshipStatusInfo,
   useRemoveRelationshipAction,
@@ -53,67 +54,37 @@ function UnfollowButton({ username }: { username: string }) {
   );
 }
 
-const protectedAccount = false; // use query
-
 function FollowButton({ username }: { username: string }) {
-  const { follow, loading: loading0 } = useCreateRelationshipAction();
-  const { followRequest, loading: loading1 } =
+  const { follow, loading: loadingFollow } = useCreateRelationshipAction();
+  const { followRequest, loading: loadingRequest } =
     useRequestRelationshipAction();
 
+  // TODO: Use profile in some way
+
   return (
-    <SwitchConditional>
-      <SwitchConditionalCase on={!protectedAccount}>
-        <Button
-          colorTheme='base800'
-          isLoading={loading0}
-          loadingText={loading0 ? '' : 'Loading'}
-          onClick={async () => follow(username)}
-        >
-          Follow
-        </Button>
-      </SwitchConditionalCase>
-      <SwitchConditionalCase on={protectedAccount}>
-        <Button
-          colorTheme='primary400'
-          isLoading={loading1}
-          loadingText={loading1 ? '' : 'Loading'}
-          onClick={async () => followRequest(username)}
-        >
-          Follow
-        </Button>
-      </SwitchConditionalCase>
-    </SwitchConditional>
+    <Button
+      colorTheme={true ? 'primary400' : 'base800'}
+      isLoading={true ? loadingRequest : loadingFollow}
+      loadingText={loadingRequest || loadingFollow ? '' : 'Loading'}
+      onClick={
+        true ? () => followRequest(username) : () => follow(username)
+      }
+    >
+      Follow
+    </Button>
   );
 }
 
 function RelationshipActionButton({ username }: { username: string }) {
   const { data } = useRelationshipStatusInfo(username);
 
+  const type = getRelationshipButton(data.relationshipStatusInfo);
+
   return (
     <Fragment>
       <Box position='relative' zIndex={5}>
-        {data && (
-          <SwitchConditional>
-            <SwitchConditionalCase
-              on={
-                !data.relationshipStatusInfo.isFollowing &&
-                !data.relationshipStatusInfo.isOwned &&
-                !data.relationshipStatusInfo.hasFollowRequest &&
-                !data.relationshipStatusInfo.isBlocked
-              }
-            >
-              <FollowButton username={username} />
-            </SwitchConditionalCase>
-            <SwitchConditionalCase
-              on={
-                !!data.relationshipStatusInfo.isFollowing &&
-                !data.relationshipStatusInfo.isBlocked
-              }
-            >
-              <UnfollowButton username={username} />
-            </SwitchConditionalCase>
-          </SwitchConditional>
-        )}
+        {type === 'follow' && <FollowButton username={username} />}
+        {type === 'following' && <UnfollowButton username={username} />}
       </Box>
     </Fragment>
   );
