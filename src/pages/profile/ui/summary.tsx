@@ -21,6 +21,21 @@ import verifiedIcon from '../../../assets/images/verified-icon.png';
 function Summary() {
   const { state: profile } = useGeneralContext<IProfile>();
 
+  const ProfileAvatar = () => (
+    <Avatar
+      variant='squircle'
+      src={profile.avatar}
+      name={profile.displayName}
+      css={{
+        userSelect: 'none',
+        '@bp1': {
+          size: 60,
+        },
+        '@bp3': { size: 90 },
+      }}
+    />
+  );
+
   return (
     <Box position='relative' h={{ '@bp1': 125, '@bp3': 175 }} w='100%'>
       <Image
@@ -59,34 +74,31 @@ function Summary() {
             h='100%'
             w='100%'
           >
-            <MediaView>
-              <MediaViewTrigger>
-                <Avatar
-                  variant='squircle'
-                  src={profile.avatar}
-                  name={profile.displayName}
-                  css={{
-                    '@bp1': {
-                      size: 60,
-                    },
-                    '@bp3': { size: 90 },
-                  }}
-                />
-              </MediaViewTrigger>
-              <MediaViewContent>
-                <MediaViewAvatar
-                  variant='squircle'
-                  src={profile.avatar}
-                  name={profile.displayName}
-                  css={{
-                    '@bp1': {
-                      size: 60,
-                    },
-                    '@bp3': { size: 250 },
-                  }}
-                />
-              </MediaViewContent>
-            </MediaView>
+            <Box>
+              {!profile.avatar ||
+              (!profile.avatar && profile.avatar.length > 0) ? (
+                <ProfileAvatar />
+              ) : (
+                <MediaView>
+                  <MediaViewTrigger>
+                    <ProfileAvatar />
+                  </MediaViewTrigger>
+                  <MediaViewContent>
+                    <MediaViewAvatar
+                      variant='squircle'
+                      src={profile.avatar}
+                      name={profile.displayName}
+                      css={{
+                        '@bp1': {
+                          size: 60,
+                        },
+                        '@bp3': { size: 250 },
+                      }}
+                    />
+                  </MediaViewContent>
+                </MediaView>
+              )}
+            </Box>
 
             <VStack gap={1}>
               {profile.role === 'artist' ? (
