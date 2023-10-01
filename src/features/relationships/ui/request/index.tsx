@@ -21,7 +21,7 @@ function RequestedButton() {
     <Menu align='start'>
       <MenuTrigger>
         <Button colorTheme='base500' rightIcon='caret-down-outline'>
-          Requested
+          Pending
         </Button>
       </MenuTrigger>
       <MenuHeader justify='center' items='center'>
