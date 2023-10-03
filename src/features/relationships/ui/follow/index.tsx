@@ -1,27 +1,30 @@
 import { Button } from '@holdr-ui/react';
 import {
-  IProfile,
+  BaseRelationshipButtonProps,
   useCreateRelationshipAction,
   useRequestRelationshipAction,
 } from '../../shared';
-import { useGeneralContext } from '../../../../shared';
 
-function FollowButton() {
+interface FollowButtonProps extends BaseRelationshipButtonProps {
+  type: 'follow_request' | 'follow';
+}
+
+function FollowButton({ type, username }: FollowButtonProps) {
   const { follow, loading: loadingFollow } = useCreateRelationshipAction();
   const { followRequest, loading: loadingRequest } =
     useRequestRelationshipAction();
 
-  const { state: profile } = useGeneralContext<IProfile>();
-
   return (
     <Button
-      colorTheme={profile.protected ? 'primary400' : 'base800'}
-      isLoading={profile.protected ? loadingRequest : loadingFollow}
+      colorTheme={type === 'follow_request' ? 'primary400' : 'base800'}
+      isLoading={
+        type === 'follow_request' ? loadingRequest : loadingFollow
+      }
       loadingText={loadingRequest || loadingFollow ? '' : 'Loading'}
       onClick={
-        profile.protected
-          ? () => followRequest(profile.username)
-          : () => follow(profile.username)
+        type === 'follow_request'
+          ? () => followRequest(username)
+          : () => follow(username)
       }
     >
       Follow

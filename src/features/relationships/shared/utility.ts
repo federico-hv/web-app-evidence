@@ -1,19 +1,4 @@
-import {
-  IProfile,
-  ProfileFormData,
-  RelationshipStatusInfo,
-} from './interfaces';
-
-export function parseToProfileFormData(
-  profile: IProfile,
-): ProfileFormData {
-  return {
-    displayName: profile.displayName,
-    bio: profile.bio || '',
-    avatar: undefined,
-    coverImage: undefined,
-  };
-}
+import { RelationshipStatusInfo } from './interfaces';
 
 /**
  * parses the relationship status information

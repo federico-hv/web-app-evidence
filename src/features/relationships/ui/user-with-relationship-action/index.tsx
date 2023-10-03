@@ -1,6 +1,6 @@
 import { LinkOverlay, prefix, UserNamesGroup } from '../../../../shared';
 import { Avatar, HStack } from '@holdr-ui/react';
-import RelationshipActionButton from '../relationship-action-button';
+import CommonRelationshipButton from '../common-relationship';
 import { UserWithRelationshipProps } from './types';
 
 function UserWithRelationshipAction({
@@ -8,7 +8,7 @@ function UserWithRelationshipAction({
   onClose,
 }: UserWithRelationshipProps) {
   return (
-    <HStack w='100%' justify='space-between'>
+    <HStack w='100%' justify='space-between' position='relative'>
       <HStack gap={3}>
         <LinkOverlay onClick={onClose} to={prefix('/', data.username)} />
         <Avatar
@@ -22,7 +22,8 @@ function UserWithRelationshipAction({
           username={data.displayName}
         />
       </HStack>
-      <RelationshipActionButton username={data.username} />
+
+      <CommonRelationshipButton username={data.username} />
     </HStack>
   );
 }

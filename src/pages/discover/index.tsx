@@ -18,8 +18,10 @@ import {
   prefix,
   UserNamesGroup,
   useGoBack,
+  ErrorFallback,
+  GQLRenderer,
 } from '../../shared';
-import { RelationshipActionButton, SEARCH, Search } from '../../features';
+import { CommonRelationshipButton, SEARCH, Search } from '../../features';
 import { useSearchParams } from 'react-router-dom';
 import { Fragment } from 'react';
 import { useQuery } from '@apollo/client';
@@ -83,7 +85,12 @@ function PeopleTab({ query }: { query: string }) {
                     displayName={user.displayName}
                     username={user.displayName}
                   />
-                  <RelationshipActionButton username={user.username} />
+                  <GQLRenderer
+                    ErrorFallback={ErrorFallback}
+                    LoadingFallback={<Fragment />}
+                  >
+                    <CommonRelationshipButton username={user.username} />
+                  </GQLRenderer>
                 </HStack>
               ))}
             </VStack>

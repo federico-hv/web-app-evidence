@@ -1,7 +1,9 @@
 import { Button, Heading } from '@holdr-ui/react';
-import { IProfile, useRemoveRelationshipAction } from '../../shared';
 import {
-  useGeneralContext,
+  BaseRelationshipButtonProps,
+  useRemoveRelationshipAction,
+} from '../../shared';
+import {
   MenuItem,
   MenuTrigger,
   MenuContent,
@@ -10,9 +12,7 @@ import {
   useAlertDialog,
 } from '../../../../shared';
 
-function RequestedButton() {
-  const { state: profile } = useGeneralContext<IProfile>();
-
+function RequestedButton({ username }: BaseRelationshipButtonProps) {
   const { openWith } = useAlertDialog();
 
   const { removeFollowRequest } = useRemoveRelationshipAction();
@@ -26,7 +26,7 @@ function RequestedButton() {
       </MenuTrigger>
       <MenuHeader justify='center' items='center'>
         <Heading as='h2' weight={500} size={3}>
-          @{profile.username}
+          @{username}
         </Heading>
       </MenuHeader>
       <MenuContent>
@@ -34,7 +34,7 @@ function RequestedButton() {
           action={() =>
             openWith({
               actionText: 'Cancel request',
-              onAction: () => removeFollowRequest(profile.username),
+              onAction: () => removeFollowRequest(username),
               title: 'Cancel request',
               description:
                 'If you cancel your follow request, you will have to make another request to follow the user. Are you sure you want to cancel it?',

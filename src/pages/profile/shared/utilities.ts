@@ -1,4 +1,6 @@
 import { UserModel } from '../../../shared';
+import { IProfile } from '../../../features';
+import { ProfileFormData } from '../ui/forms/edit-profile-form/profile.types';
 
 /**
  * Get text to display next to the mutual user avatars
@@ -20,4 +22,15 @@ export function getMutualFollowersText(
     return `Followed by ${users[0].displayName}.`;
   }
   return '';
+}
+
+export function parseToProfileFormData(
+  profile: IProfile,
+): ProfileFormData {
+  return {
+    displayName: profile.displayName,
+    bio: profile.bio || '',
+    avatar: undefined,
+    coverImage: undefined,
+  };
 }

@@ -6,7 +6,10 @@ import { useEffect } from 'react';
  *
  * @param selectors CSS selectors.
  */
-export function useScrollPosition(selectors: string) {
+export function useScrollPosition(selectors: string): {
+  top: number;
+  left: number;
+} {
   const [state, update] = useRecordState<{
     top: 0;
     left: 0;

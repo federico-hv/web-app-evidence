@@ -1,17 +1,17 @@
 import { Button } from '@holdr-ui/react';
-import { IProfile, useRemoveRelationshipAction } from '../../shared';
-import { useGeneralContext } from '../../../../shared';
+import {
+  BaseRelationshipButtonProps,
+  useRemoveRelationshipAction,
+} from '../../shared';
 
-function UnblockButton() {
-  const { state: profile } = useGeneralContext<IProfile>();
-
+function UnblockButton({ username }: BaseRelationshipButtonProps) {
   const { removeBlock, loading: loadingRemoval } =
     useRemoveRelationshipAction();
 
   return (
     <Button
       colorTheme='danger'
-      onClick={() => removeBlock(profile.username)}
+      onClick={() => removeBlock(username)}
       isLoading={loadingRemoval}
       loadingText={loadingRemoval ? '' : 'Unblocking'}
     >

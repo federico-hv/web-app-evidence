@@ -265,7 +265,7 @@ The `src` has the following structure:
 ├─ shared/          # constants, types, props and interfaces that are shared
 ├─ utilities/       # helper functions
 app.tsx             # Main app
-main.tsx            # Similar to index.tsx (for React)
+main.tsx            # Similar to edit-profile.button.tsx (for React)
 setup.ts            # Setup testing library
 vite-env.d.ts       # Do not touch
 ```
@@ -279,18 +279,18 @@ of our `components/` as seen below:
 components/
 ├─ forms/                         # Subdirectory for all forms
 │  ├─ login-form/                 # Subdirectory for login form
-│  │  ├─ index.tsx                # Component's defintion
+│  │  ├─ edit-profile.button.tsx                # Component's defintion
 │  │  ├─ login-form.stories.tsx   # Component's stories (Storybook)
 │  │  ├─ login-form.test.tsx      # Component's tests
 │  │  ├─ login-form.style.ts      # Compnents' styles (Stitches JS)
 │  ├─ registration-form/          # Subdirectory for reg form
-│  ├─ index.tsx                    # Export's all forms
-├─ index.tsx                       # Export's all components
+│  ├─ edit-profile.button.tsx                    # Export's all forms
+├─ edit-profile.button.tsx                       # Export's all components
 ```
 
 From the illustration above, we see that the component's code is defined
-in the `login-form/index.tsx` file. The function will be export from the
-`forms/index.tsx` which in turn will be exported from the `components/index.tsx`
+in the `login-form/edit-profile.button.tsx` file. The function will be export from the
+`forms/edit-profile.button.tsx` which in turn will be exported from the `components/edit-profile.button.tsx`
 file. This will allow us to import the components as follows:
 
 ```tsx
@@ -323,12 +323,12 @@ to **arrange** interactive components in Page components.
 ```
 layouts/
 ├─ auth-layout/
-│  ├─ index.tsx                   # Export the main layout
+│  ├─ edit-profile.button.tsx                   # Export the main layout
 │  ├─ auth-layout.stories.tsx
 │  ├─ auth-layout.test.tsx
 │  ├─ auth-layout.styles.ts
 │  ├─ auth-layout.common.ts
-├─ index.tsx                       # Exports all layout components 
+├─ edit-profile.button.tsx                       # Exports all layout components 
 ```
 
 Similar to components, you can import layouts as follows
@@ -352,22 +352,22 @@ they use barrel exports as. See structure below:
 ```
 contexts/
 ├─ theme-context/
-│  ├─ index.tsx                # Context and Provider definition and export
+│  ├─ edit-profile.button.tsx                # Context and Provider definition and export
 │  ├─ theme-context.test.ts   # Test for context provider
 │  ├─ theme-context.types.ts   # Types for context
-├─ index.tsx                   # Export for all contexts
+├─ edit-profile.button.tsx                   # Export for all contexts
 hooks/
 ├─ use-counter/
-│  ├─ index.tsx                # Hook definition and export
+│  ├─ edit-profile.button.tsx                # Hook definition and export
 │  ├─ use-counter.test.ts     # Test for hook
 │  ├─ use-counter.types.ts     # Types for hook 
-├─ index.tsx                   # Export for all hooks
+├─ edit-profile.button.tsx                   # Export for all hooks
 utilities/
 ├─ date-utility/
 │  ├─ date-utility.test.ts    # Test for utility methods
 │  ├─ date-utility.types.ts    # Function types
-│  ├─ index.tsx                # Utilty definition
-├─ index.tsx                   # Export all utilities
+│  ├─ edit-profile.button.tsx                # Utilty definition
+├─ edit-profile.button.tsx                   # Export all utilities
 ```
 
 The structure shown above allows us to import the files as shown below:
@@ -387,12 +387,12 @@ export default WeirdComponent;
 
 The shared directory is the only directory that does not contain
 subdirectories, rather it contains files with code that is shared across
-the app. All the code is exported in the `shared/index.tsx` file.
+the app. All the code is exported in the `shared/edit-profile.button.tsx` file.
 
 ```
 shared/
 ├─ general.ts     # Shared constants
-├─ index.tsx         # Export all shared type, interface, props, and constants
+├─ edit-profile.button.tsx         # Export all shared type, interface, props, and constants
 ├─ props.ts         # Shared base props
 ├─ styles.ts        # Shared styles
 ├─ common.ts         # Shared types

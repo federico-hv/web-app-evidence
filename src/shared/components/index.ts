@@ -55,4 +55,4 @@ export {
   MediaViewContent,
 } from './media-view';
 
-// export { default as Form, FormInput } from './form';
+// export { default as Form, FormInput } from './forms';

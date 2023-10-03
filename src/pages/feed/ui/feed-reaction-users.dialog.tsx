@@ -21,7 +21,6 @@ import {
   GET_FEED_REACTION_USERS,
   IFeedReactionUser,
   useFeedContext,
-  UserWithRelationshipAction,
 } from '../../../features';
 import { useQuery } from '@apollo/client';
 
@@ -35,8 +34,6 @@ function ReactionUsers({ type }: { type: FeedReactionFetchType }) {
     variables: { id: feedId, type: type },
     fetchPolicy: 'network-only',
   });
-
-  const { update } = useGeneralContext();
 
   const readable: Record<FeedReactionFetchType, string> = {
     all: 'any sentiment',
@@ -52,11 +49,12 @@ function ReactionUsers({ type }: { type: FeedReactionFetchType }) {
         {data && data.feedReactionUsers.count > 0 ? (
           <VStack>
             {data.feedReactionUsers.data.map((item) => (
-              <UserWithRelationshipAction
-                key={item.user.id}
-                data={item.user}
-                onClose={() => update(undefined)}
-              />
+              // <UserWithRelationshipAction
+              //   key={item.user.id}
+              //   data={item.user}
+              //   onClose={() => update(undefined)}
+              // />
+              <Box key={item.user.id}>{item.user.username}</Box>
             ))}
           </VStack>
         ) : (

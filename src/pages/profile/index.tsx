@@ -1,21 +1,11 @@
-import { Box, Container, Stack, VStack } from '@holdr-ui/react';
-import {
-  Content,
-  SocialsCard,
-  RelationshipsCard,
-  ReleasesCard,
-  Controls,
-  Header,
-  Summary,
-  Info,
-} from './ui';
+import { Box, Container, useWindowSize, VStack } from '@holdr-ui/react';
 import {
   ErrorFallback,
+  GenericProps,
   GQLRenderer,
-  useScrollDirection,
+  useScrollPosition,
 } from '../../shared';
-import { SuggestionsCard } from '../../features';
-import { StackProps } from '@holdr-ui/react/dist/components/stack/src/stack.types';
+import { ProfileProvider } from './shared';
 import {
   ContentLayout,
   ContentLayoutAside,
@@ -24,70 +14,74 @@ import {
   PageLayoutContent,
   PageLayoutHeader,
 } from '../../layout';
-import { ProfileProvider } from './shared/context';
-import Relationships from './ui/relationships';
+import { SuggestionsCard } from '../../features';
+import {
+  DetailsHeader,
+  InfoGroup,
+  ProfileActionsGroup,
+  ProfileContent,
+  RelationshipsCard,
+  RelationshipsGroup,
+  ReleasesCard,
+  SocialsCard,
+  TitleHeader,
+} from './ui';
+import { AnimatePresence } from 'framer-motion';
+import { useEffect, useRef, useState } from 'react';
 
-export function DisappearingHeader({
-  hideOnScroll = true,
-  sensitivity = 0,
-  afterScrolling,
+function CustomPageLayoutHeader({
   children,
-  ...props
-}: StackProps & {
-  hideOnScroll?: boolean;
-  afterScrolling?: number;
-  sensitivity?: number;
-}) {
-  const { direction, delta } = useScrollDirection('#root');
+  appearAfter,
+}: GenericProps & { appearAfter: number }) {
+  const [containerWidth, setContainerWidth] = useState(0);
+  const ref = useRef<HTMLDivElement>();
+  const { top } = useScrollPosition('#root');
+  const { width } = useWindowSize();
 
-  console.log(delta < sensitivity, afterScrolling);
+  useEffect(() => {
+    if (ref && ref.current) setContainerWidth(ref.current.clientWidth);
+  }, [width]);
 
   return (
-    <Box
-      position='fixed'
-      t={0}
-      w='100%'
-      bgColor='clearTint500'
-      h={58}
-      css={{
-        blur: '12px',
-        zIndex: 50,
-        '@bp1': {
-          display: hideOnScroll && direction === 'down' ? 'none' : 'block',
-        },
-        '@bp3': {
-          display: 'none',
-        },
-      }}
-    >
-      <Stack h='100%' direction='horizontal' p={3} {...props}>
-        {children}
-      </Stack>
-    </Box>
+    <AnimatePresence>
+      <Box innerRef={ref} w='100%' h={0} aria-hidden={false} />
+      {top >= appearAfter && (
+        <PageLayoutHeader position='fixed' w={containerWidth}>
+          {children}
+        </PageLayoutHeader>
+      )}
+    </AnimatePresence>
   );
 }
 
+CustomPageLayoutHeader.displayName = 'PageLayoutHeader';
+
 function ProfilePage() {
+  const { width } = useWindowSize();
+
   return (
     <GQLRenderer ErrorFallback={ErrorFallback}>
       <ProfileProvider>
         <ContentLayout>
           <ContentLayoutMain>
             <PageLayout>
-              <PageLayoutHeader>
+              <CustomPageLayoutHeader
+                appearAfter={width && width > 768 ? 150 : 75}
+              >
                 <Container maxWidth={{ '@bp1': '100%', '@bp3': 600 }}>
-                  <Header />
+                  <TitleHeader />
                 </Container>
-              </PageLayoutHeader>
+              </CustomPageLayoutHeader>
+
               <PageLayoutContent>
-                <Summary />
+                <DetailsHeader />
                 <VStack w='100%' css={{ backgroundColor: '#FFF' }}>
-                  <Controls />
-                  <Info />
-                  <Relationships />
+                  <ProfileActionsGroup />
+                  <InfoGroup />
+                  <RelationshipsGroup />
                 </VStack>
                 <Box borderBottom={1} borderColor='base100' />
-                <Content />
+                <ProfileContent />
               </PageLayoutContent>
             </PageLayout>
           </ContentLayoutMain>

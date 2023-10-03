@@ -223,7 +223,7 @@ export function SettingsLg() {
 function SettingsPage() {
   const windowSize = useWindowSize();
 
-  // TODO: Remove SettingsSm and SettingsLg components. Refer to pages/bookmarks/index.tsx for pattern.
+  // TODO: Remove SettingsSm and SettingsLg components. Refer to pages/bookmarks/edit-profile.button.tsx for pattern.
 
   return (
     <Box>

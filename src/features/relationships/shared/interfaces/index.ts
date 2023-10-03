@@ -74,13 +74,6 @@ export interface IProfile {
   bio?: string;
 }
 
-export interface ProfileFormData {
-  displayName: string;
-  bio?: string;
-  avatar?: File;
-  coverImage?: File;
-}
-
-export interface UpdateProfilePayload {
-  payload: ProfileFormData;
+export interface BaseRelationshipButtonProps {
+  username: string;
 }
