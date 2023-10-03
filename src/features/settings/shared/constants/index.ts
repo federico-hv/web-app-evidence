@@ -1,5 +1,4 @@
 import { object, ref, string } from 'yup';
-import { ProfileFormData } from '../../../relationships';
 import {
   emailPatternMsg,
   maximumLengthMsg,
@@ -19,6 +18,7 @@ import { IProviderItem, UpdatePasswordFormData } from '../types';
 import googleLogo from '../../../../assets/images/google-logo.png';
 import appleLogo from '../../../../assets/images/apple-logo.png';
 import spotifyLogo from '../../../../assets/images/spotify-logo.png';
+import { ProfileFormData } from '../../../user';
 
 export const UpdateAccountInfoSchema = object<ProfileFormData>({
   country: string().optional(),

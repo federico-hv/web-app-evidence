@@ -1,4 +1,4 @@
-import { ProfileFormData } from '../../../../../features/relationships/shared';
+import { ProfileFormData } from '../../../../../features';
 
 export const profileValues: ProfileFormData = {
   avatar: undefined,

@@ -1,6 +1,6 @@
 import { object, string } from 'yup';
 import { maximumLengthMsg, minimumLengthMsg } from '../../../../../shared';
-import { ProfileFormData } from './profile.types';
+import { ProfileFormData } from '../../../../../features';
 
 export const ProfileSchema = object<ProfileFormData>({
   displayName: string()

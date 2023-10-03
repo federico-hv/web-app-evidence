@@ -17,12 +17,13 @@ import {
   useDimensions,
   useGeneralContext,
 } from '../../../../../shared';
-import { ProfileFormData, ProfileFormProps } from './profile.types';
+import { ProfileFormProps } from './profile.types';
 import { profileValues } from './data';
 import { ProfileSchema } from './profile.schema';
 import { IProfile } from '../../../shared';
 import { ImageUploadContext } from '../../../../../shared/components/image-upload/context';
 import lightPlaceholder from '../../../../../assets/images/light-placeholder.jpg';
+import { ProfileFormData } from '../../../../../features';
 
 function InnerForm() {
   const ref = useRef<HTMLDivElement>(null);

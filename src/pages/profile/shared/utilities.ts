@@ -1,6 +1,5 @@
 import { UserModel } from '../../../shared';
-import { IProfile } from '../../../features';
-import { ProfileFormData } from '../ui/forms/edit-profile-form/profile.types';
+import { IProfile, ProfileFormData } from '../../../features';
 
 /**
  * Get text to display next to the mutual user avatars
