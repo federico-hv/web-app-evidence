@@ -21,7 +21,7 @@ function RequestedButton({ username }: BaseRelationshipButtonProps) {
     <Menu align='start'>
       <MenuTrigger>
         <Button colorTheme='base500' rightIcon='caret-down-outline'>
-          Pending
+          Requested
         </Button>
       </MenuTrigger>
       <MenuHeader justify='center' items='center'>
