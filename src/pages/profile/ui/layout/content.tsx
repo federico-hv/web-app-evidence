@@ -10,8 +10,6 @@ import {
   Error,
   GQLRenderer,
   Loader,
-  SwitchConditional,
-  SwitchConditionalCase,
   TextGroup,
   TextGroupHeading,
   TextGroupSubheading,
@@ -21,11 +19,13 @@ import {
   FeedCard,
   FeedsReturnModel,
   GET_REACTED_FEEDS,
+  useRelationshipStatusInfo,
   useUserFeeds,
 } from '../../../../features';
 import { useQuery } from '@apollo/client';
 import { IProfile, useCanViewProfile } from '../../shared';
 import { Fragment } from 'react';
+import { IconName } from '@holdr-ui/react/dist/shared/types';
 
 export function EmptyMessage({
   title,
@@ -222,16 +222,23 @@ function GeneralUserContent() {
   );
 }
 
-function ProtectedAccount() {
-  const { state: profile } = useGeneralContext<IProfile>();
+function AccountUnavailable({
+  icon,
+  title,
+  subtitle,
+}: {
+  icon: IconName;
+  title: string;
+  subtitle: string;
+}) {
   return (
     <VStack py='70px' gap={5}>
       <Center fontSize='36px'>
-        <Icon size={{ '@bp1': 'lg', '@bp3': 'xl' }} name='lock-fill' />
+        <Icon size={{ '@bp1': 'lg', '@bp3': 'xl' }} name={icon} />
       </Center>
       <TextGroup items='center'>
         <TextGroup.Heading size={{ '@bp1': 3, '@bp3': 4 }}>
-          Protected Account
+          {title}
         </TextGroup.Heading>
         <TextGroup.Subheading
           color='base400'
@@ -242,8 +249,7 @@ function ProtectedAccount() {
             '@bp3': { fontSize: '$3', maxWidth: '60%' },
           }}
         >
-          This account is protected. Request to follow @{profile.username}{' '}
-          to view their activity and cosigns.
+          {subtitle}
         </TextGroup.Subheading>
       </TextGroup>
     </VStack>
@@ -254,23 +260,28 @@ function Content() {
   const { state: profile } = useGeneralContext<IProfile>();
   const { canViewProfile } = useCanViewProfile();
 
+  const { data } = useRelationshipStatusInfo(profile.username);
+
   return (
     <Fragment>
-      {!canViewProfile ? (
-        <ProtectedAccount />
+      {!canViewProfile && (
+        <AccountUnavailable
+          icon='lock-fill'
+          title='Protected Account'
+          subtitle={` This account is protected. Request to follow @${profile.username} to view their activity and cosigns.`}
+        />
+      )}
+      {canViewProfile && !data.relationshipStatusInfo.isBlocked ? (
+        <GQLRenderer ErrorFallback={() => <Fragment />}>
+          {profile.role === 'artist' && <ArtistContent />}
+          {profile.role === 'general' && <GeneralUserContent />}
+        </GQLRenderer>
       ) : (
-        <SwitchConditional>
-          <SwitchConditionalCase on={profile.role === 'artist'}>
-            <GQLRenderer ErrorFallback={() => <Fragment />}>
-              <ArtistContent />
-            </GQLRenderer>
-          </SwitchConditionalCase>
-          <SwitchConditionalCase on={profile.role === 'general'}>
-            <GQLRenderer ErrorFallback={() => <Fragment />}>
-              <GeneralUserContent />
-            </GQLRenderer>
-          </SwitchConditionalCase>
-        </SwitchConditional>
+        <AccountUnavailable
+          icon='information-fill'
+          title='Blocked Account'
+          subtitle={` This account is blocked. Unblock @${profile.username} to view their profile.`}
+        />
       )}
     </Fragment>
   );

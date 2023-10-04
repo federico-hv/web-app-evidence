@@ -16,7 +16,7 @@ import {
   PageLayoutContent,
   PageLayoutHeader,
 } from '../../layout';
-import { SuggestionsCard } from '../../features';
+import { RelationshipProvider, SuggestionsCard } from '../../features';
 import {
   DetailsHeader,
   InfoGroup,
@@ -30,6 +30,7 @@ import {
 } from './ui';
 import { AnimatePresence } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 function CustomPageLayoutHeader({
   children,
@@ -69,49 +70,52 @@ function CustomHead() {
 }
 
 function ProfilePage() {
+  const { username } = useParams();
   const { width } = useWindowSize();
 
   return (
     <GQLRenderer ErrorFallback={ErrorFallback}>
       <ProfileProvider>
-        <CustomHead />
-        <ContentLayout>
-          <ContentLayoutMain>
-            <PageLayout>
-              {width && width > 768 ? (
-                <CustomPageLayoutHeader appearAfter={150}>
-                  <Container maxWidth={{ '@bp1': '100%', '@bp3': 600 }}>
-                    <TitleHeader />
-                  </Container>
-                </CustomPageLayoutHeader>
-              ) : (
-                <PageLayoutHeader>
-                  <Container maxWidth={{ '@bp1': '100%', '@bp3': 600 }}>
-                    <TitleHeader />
-                  </Container>
-                </PageLayoutHeader>
-              )}
-              <PageLayoutContent>
-                <DetailsHeader />
-                <VStack w='100%' css={{ backgroundColor: '#FFF' }}>
-                  <ProfileActionsGroup />
-                  <InfoGroup />
-                  <RelationshipsGroup />
-                </VStack>
-                <Box borderBottom={1} borderColor='base100' />
-                <ProfileContent />
-              </PageLayoutContent>
-            </PageLayout>
-          </ContentLayoutMain>
-          <ContentLayoutAside>
-            <VStack>
-              <RelationshipsCard />
-              <SocialsCard />
-              <ReleasesCard />
-              <SuggestionsCard />
-            </VStack>
-          </ContentLayoutAside>
-        </ContentLayout>
+        <RelationshipProvider username={username || ''}>
+          <CustomHead />
+          <ContentLayout>
+            <ContentLayoutMain>
+              <PageLayout>
+                {width && width > 768 ? (
+                  <CustomPageLayoutHeader appearAfter={150}>
+                    <Container maxWidth={{ '@bp1': '100%', '@bp3': 600 }}>
+                      <TitleHeader />
+                    </Container>
+                  </CustomPageLayoutHeader>
+                ) : (
+                  <PageLayoutHeader>
+                    <Container maxWidth={{ '@bp1': '100%', '@bp3': 600 }}>
+                      <TitleHeader />
+                    </Container>
+                  </PageLayoutHeader>
+                )}
+                <PageLayoutContent>
+                  <DetailsHeader />
+                  <VStack w='100%' css={{ backgroundColor: '#FFF' }}>
+                    <ProfileActionsGroup />
+                    <InfoGroup />
+                    <RelationshipsGroup />
+                  </VStack>
+                  <Box borderBottom={1} borderColor='base100' />
+                  <ProfileContent />
+                </PageLayoutContent>
+              </PageLayout>
+            </ContentLayoutMain>
+            <ContentLayoutAside>
+              <VStack>
+                <RelationshipsCard />
+                <SocialsCard />
+                <ReleasesCard />
+                <SuggestionsCard />
+              </VStack>
+            </ContentLayoutAside>
+          </ContentLayout>
+        </RelationshipProvider>
       </ProfileProvider>
     </GQLRenderer>
   );

@@ -32,6 +32,7 @@ import {
   useRelationshipUsers,
   useCurrentUser,
   QueryType,
+  useRelationshipStatus,
 } from '../../../../features';
 import {
   getMutualFollowersText,
@@ -114,26 +115,35 @@ function MutualFollowers() {
   const data = useRelationshipUsers('mutualUsers', username || '');
 
   return (
-    <HStack onClick={() => onOpen('mutual')} mt={5} items='center' gap={3}>
-      <AvatarGroup size='xs'>
-        {data.users.map((item) => (
-          <Avatar
-            key={`avatar-${item.id}`}
-            name={item.displayName}
-            src={item.avatar}
-          />
-        ))}
-      </AvatarGroup>
-      <Box
-        w='calc(100%-70px)'
-        title='Slim Jackson, Key Manko & 76 others follow this
+    <Fragment>
+      {data.users.length > 0 && (
+        <HStack
+          onClick={() => onOpen('mutual')}
+          mt={5}
+          items='center'
+          gap={3}
+        >
+          <AvatarGroup size='xs'>
+            {data.users.map((item) => (
+              <Avatar
+                key={`avatar-${item.id}`}
+                name={item.displayName}
+                src={item.avatar}
+              />
+            ))}
+          </AvatarGroup>
+          <Box
+            w='calc(100%-70px)'
+            title='Slim Jackson, Key Manko & 76 others follow this
                           artist'
-      >
-        <Text size={1} noOfLines={1}>
-          {getMutualFollowersText(data.users || [], data.total)}
-        </Text>
-      </Box>
-    </HStack>
+          >
+            <Text size={1} noOfLines={1}>
+              {getMutualFollowersText(data.users || [], data.total)}
+            </Text>
+          </Box>
+        </HStack>
+      )}
+    </Fragment>
   );
 }
 
@@ -258,9 +268,11 @@ function RelationshipsCard() {
   const [option, setOption] = useState('');
   const [isOpen, setOpen] = useState(false);
 
+  const { isBlocked } = useRelationshipStatus();
+
   const onOpen = (value: string) => {
     // Not following and account is protected =>  shouldn't be allowed to see
-    if (!canViewProfile) {
+    if (!canViewProfile || isBlocked) {
       return;
     }
 
@@ -279,10 +291,10 @@ function RelationshipsCard() {
         borderColor='base100'
         css={{
           '@bp1': {
-            borderBottom: 0,
+            borderBottomWidth: 0,
           },
           '@bp3': {
-            borderBottom: 1,
+            borderBottomWidth: 1,
           },
         }}
       >

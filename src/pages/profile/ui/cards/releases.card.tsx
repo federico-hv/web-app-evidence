@@ -9,6 +9,7 @@ import {
 } from '../../../../shared';
 import { IProfile, useCanViewProfile } from '../../shared';
 import { Fragment } from 'react';
+import { useRelationshipStatus } from '../../../../features';
 
 const releases = [
   {
@@ -74,9 +75,12 @@ function Release({
 function ReleasesCard() {
   const { state: profile } = useGeneralContext<IProfile>();
   const { canViewProfile } = useCanViewProfile();
+
+  const { isBlocked } = useRelationshipStatus();
+
   return (
     <Fragment>
-      {canViewProfile && (
+      {canViewProfile && !isBlocked && (
         <VStack
           gap={4}
           w='100%'

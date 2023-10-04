@@ -79,8 +79,9 @@ function BlockAccountDialog() {
 
 function ProfileOptionsButton() {
   const currentUser = useCurrentUser();
+
   const { state: profile } = useGeneralContext<IProfile>();
-  const { isFollower } = useRelationshipStatus();
+  const { isFollower, isBlocked } = useRelationshipStatus();
 
   const { removeFollower } = useRemoveFollower();
 
@@ -137,12 +138,14 @@ function ProfileOptionsButton() {
               icon='user-unfollow-outline'
             />
           )}
-          <MenuItem
-            action={disclosure.onOpen}
-            dangerous
-            label='Block'
-            icon='remove-outline'
-          />
+          {!isBlocked && (
+            <MenuItem
+              action={disclosure.onOpen}
+              dangerous
+              label='Block'
+              icon='remove-outline'
+            />
+          )}
         </MenuContent>
       </Menu>
       <DialogContextProvider value={disclosure}>
