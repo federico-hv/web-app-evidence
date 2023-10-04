@@ -1,12 +1,12 @@
 import {
-  ArticleGeneralMoreButton,
-  OwnerMoreButton,
-  PostGeneralMoreButton,
+  FeedOwnerMoreButton,
+  GeneralArticleMoreButton,
+  GeneralPostMoreButton,
   useCurrentUser,
   useFeedContext,
 } from '../../../features';
 import { Box } from '@holdr-ui/react';
-import { SwitchConditional, SwitchConditionalCase } from '../../../shared';
+import { Fragment } from 'react';
 
 function MoreOptionsButton({ type }: { type: 'article' | 'post' }) {
   const { owner } = useFeedContext();
@@ -15,16 +15,16 @@ function MoreOptionsButton({ type }: { type: 'article' | 'post' }) {
   return (
     <Box position='relative' css={{ zIndex: 5 }}>
       {currentUser && currentUser.id === owner.id ? (
-        <OwnerMoreButton />
+        <FeedOwnerMoreButton />
       ) : (
-        <SwitchConditional>
-          <SwitchConditionalCase on={type === 'article'}>
-            <ArticleGeneralMoreButton tinted={false} />
-          </SwitchConditionalCase>
-          <SwitchConditionalCase on={type === 'post'}>
-            <PostGeneralMoreButton hidden={{ notInterested: true }} />
-          </SwitchConditionalCase>
-        </SwitchConditional>
+        <Fragment>
+          {type === 'article' && (
+            <GeneralArticleMoreButton tinted={false} />
+          )}
+          {type === 'post' && (
+            <GeneralPostMoreButton hidden={{ notInterested: true }} />
+          )}
+        </Fragment>
       )}
     </Box>
   );

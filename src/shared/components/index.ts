@@ -41,6 +41,7 @@ export { default as ErrorFallback } from './error-fallback';
 export { default as GQLRenderer } from './gql-renderer';
 export {
   default as CommonDialog,
+  CustomCommonDialogButtonWrapper,
   CommonDialogContent,
   CommonDialogHeader,
   CommonDialogActionButton,

@@ -33,6 +33,7 @@ import {
   useCurrentUser,
   QueryType,
   useRelationshipStatus,
+  UserWithRelationshipAction,
 } from '../../../../features';
 import {
   getMutualFollowersText,
@@ -40,7 +41,6 @@ import {
   useCanViewProfile,
 } from '../../shared';
 import millify from 'millify';
-import UserWithRelationshipAction from '../../../../features/relationships/ui/user-with-relationship-action';
 import { EmptyMessage } from '../layout/content';
 
 function RelationshipSummary() {

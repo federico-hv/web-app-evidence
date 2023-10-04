@@ -8,3 +8,5 @@ export * from './use-pin-feed';
 export * from './use-unpin-feed';
 export * from './use-change-audience';
 export * from './use-hide-feed';
+export * from './use-delete-feed';
+export * from './use-remove-reaction-action';

@@ -131,7 +131,7 @@ function FeedContent() {
                     </TextGroup.Subheading>
                   </TextGroup>
                 </HStack>
-                {/*<MoreOptionsButton type={state.type} />*/}
+                {/*<MoreOptionsButton type.ts={state.type.ts} />*/}
               </HStack>
               {state.type === 'post' ? (
                 <PostContent data={state.node as PostModel} />

@@ -5,3 +5,4 @@ export { default as UnblockButton } from './unblock';
 export { default as UnfollowButton } from './unfollow';
 export { default as RequestedButton } from './request';
 export { default as SuggestionsCard } from './suggestions.card';
+export { default as UserWithRelationshipAction } from './user-with-relationship-action';

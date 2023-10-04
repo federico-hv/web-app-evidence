@@ -1,16 +1,12 @@
 import {
   IPoll,
   IPostMedia,
-  Media,
+  PostMedia,
   Polls,
   PostModel,
 } from '../../../features';
 import { Text, VStack } from '@holdr-ui/react';
 import { SwitchConditional, SwitchConditionalCase } from '../../../shared';
-
-/**
- * TODO: Answer: Can I reuse this?
- */
 
 function PostContent({ data }: { data: PostModel }) {
   return (
@@ -18,7 +14,7 @@ function PostContent({ data }: { data: PostModel }) {
       <Text size={{ '@bp1': 2, '@bp3': 3 }}>{data.description}</Text>
       <SwitchConditional>
         <SwitchConditionalCase on={data.media && data.media.length > 0}>
-          <Media items={data.media as IPostMedia[]} />
+          <PostMedia items={data.media as IPostMedia[]} />
         </SwitchConditionalCase>
         <SwitchConditionalCase on={data.polls && data.polls.length > 0}>
           <Polls

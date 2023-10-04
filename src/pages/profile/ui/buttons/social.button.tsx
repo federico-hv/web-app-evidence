@@ -61,7 +61,7 @@ function SocialButton() {
                   sameRole={profile.role === currentUser?.role}
                 />
               </RelationshipProvider>
-              <NotificationOptionButton />
+              {profile.role === 'artist' && <NotificationOptionButton />}
             </MotionWrapper>
           )}
         </Fragment>

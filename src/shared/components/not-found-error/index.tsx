@@ -8,11 +8,11 @@ import {
 } from '@holdr-ui/react';
 import Head from '../head';
 import { useNavigate } from 'react-router-dom';
-import { Paths, prefix } from '../../index';
+import { Paths } from '../../constants';
 
-function NotFoundError() {
+function NotFoundError({ q }: { q?: string }) {
   const navigate = useNavigate();
-  const openDiscover = () => navigate(prefix('/', Paths.discover));
+  const query = q ? `?q=${q}` : '';
   return (
     <>
       <Head
@@ -42,7 +42,7 @@ function NotFoundError() {
             </Text>
           </VStack>
           <Button
-            onClick={openDiscover}
+            onClick={() => navigate(`/${Paths.discover}${query}`)}
             variant='outline'
             label='Search'
           />
