@@ -6,7 +6,6 @@ import {
 import { Fragment, Suspense, useCallback, useState } from 'react';
 import {
   Box,
-  Button,
   HStack,
   Popover,
   useDisclosure,
@@ -16,16 +15,7 @@ import { ErrorBoundary } from 'react-error-boundary';
 import { useCreateBookmark, useRemoveBookmark } from '../../shared';
 import { useFeedContext } from '../../../feeds';
 import { BookmarkGroupDialog } from '../dialogs';
-import { css } from '../../../../configs';
 import { PopoverButton } from '../buttons';
-
-const popoverButton = css({
-  height: 'fit-content !important',
-  padding: '$3 !important',
-  '@bp1': { fontSize: '$1' },
-  '@bp3': { fontSize: '$2' },
-});
-
 function BookmarkPopover({
   children,
   position = 'top',
@@ -40,8 +30,7 @@ function BookmarkPopover({
 
   const { feedId } = useFeedContext();
 
-  const { removeBookmark, loading: removeBookmarkLoading } =
-    useRemoveBookmark();
+  const { removeBookmark } = useRemoveBookmark();
 
   const { createBookmark } = useCreateBookmark();
 
@@ -86,14 +75,11 @@ function BookmarkPopover({
               items='center'
               divider={<Box h={1} w='1px' bgColor='base100' />}
             >
-              <Button
-                variant='ghost'
-                disabled={removeBookmarkLoading}
+              <PopoverButton
                 onClick={() => closeAfter(feedId, removeBookmark)}
-                className={popoverButton()}
               >
                 Remove bookmark
-              </Button>
+              </PopoverButton>
               <PopoverButton onClick={onOpen}>Add to group</PopoverButton>
             </HStack>
           </Popover.Content>
