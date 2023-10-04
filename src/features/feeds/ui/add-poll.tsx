@@ -117,7 +117,7 @@ function AddPoll({
 
   useEffect(() => {
     update({ responses });
-  }, [update, responses]);
+  }, []);
 
   return (
     <VStack
