@@ -18,12 +18,16 @@ function UnfollowButton({ username }: { username: string }) {
   return (
     <Fragment>
       {switchState ? (
-        <Button onMouseEnter={turnOn} variant='outline' className={flex()}>
+        <Button
+          onPointerEnter={turnOn}
+          variant='outline'
+          className={flex()}
+        >
           Following
         </Button>
       ) : (
         <Button
-          onMouseLeave={turnOff}
+          onPointerLeave={turnOff}
           variant='outline'
           className={flex()}
           onClick={() =>

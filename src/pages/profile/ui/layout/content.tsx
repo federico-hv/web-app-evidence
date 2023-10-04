@@ -92,7 +92,7 @@ function ArtistContent() {
           position: 'sticky',
           backgroundColor: '$clearTint500',
           blur: '12px',
-          zIndex: 7,
+          zIndex: 5,
           '& button': {
             height: '$7',
           },
@@ -167,7 +167,7 @@ function GeneralUserContent() {
           position: 'sticky',
           backgroundColor: '$clearTint500',
           blur: '12px',
-          zIndex: 11,
+          zIndex: 5,
           '& button': {
             height: '$7',
           },

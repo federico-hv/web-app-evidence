@@ -46,7 +46,7 @@ function CustomPageLayoutHeader({
     <AnimatePresence>
       <Box innerRef={ref} w='100%' h={0} aria-hidden={false} />
       {top >= appearAfter && (
-        <PageLayoutHeader position='fixed' w={containerWidth}>
+        <PageLayoutHeader zIndex={10} position='fixed' w={containerWidth}>
           {children}
         </PageLayoutHeader>
       )}
