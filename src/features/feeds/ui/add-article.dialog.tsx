@@ -1,13 +1,17 @@
-import { Alert, Button, Dialog, VStack } from '@holdr-ui/react';
+import { Alert, Box, Button, IconButton, VStack } from '@holdr-ui/react';
 import {
-  DialogHeading,
+  CommonDialog,
+  CommonDialogContent,
+  CommonDialogHeader,
   extraBtnPadding,
   FormInput,
   GeneralContextProvider,
+  GenericProps,
   isInputDisabled,
   OgMetadata,
   OgMetadataCard,
   Stepper,
+  useCounter,
   useDialogTabContext,
   useRecordState,
   useStepperContext,
@@ -18,7 +22,23 @@ import { useCreateArticle, useCreateOgMetadata } from '../shared';
 import { URLSchema } from '../shared';
 import { FormEvent } from 'react';
 
-// TODO: Use common dialog
+function CustomCommonDialogButtonWrapper({ children }: GenericProps) {
+  return (
+    <Box
+      w='100%'
+      borderTop={1}
+      borderColor='base100'
+      position='fixed'
+      p={4}
+      l={0}
+      b={0}
+      zIndex={10}
+      css={{ backgroundColor: '#FFF' }}
+    >
+      {children}
+    </Box>
+  );
+}
 
 function ConvertUrlForm() {
   const { error, createOgMetadata, loading } = useCreateOgMetadata();
@@ -65,16 +85,18 @@ function ConvertUrlForm() {
               type='text'
               autoFocus
             />
-            <Button
-              type='submit'
-              isLoading={loading}
-              loadingText={loading ? '' : 'Generating'}
-              disabled={isInputDisabled(values, errors, ['url'])}
-              className={extraBtnPadding()}
-              fullWidth
-            >
-              Generate
-            </Button>
+            <CustomCommonDialogButtonWrapper>
+              <Button
+                type='submit'
+                isLoading={loading}
+                loadingText={loading ? '' : 'Generating'}
+                disabled={isInputDisabled(values, errors, ['url'])}
+                className={extraBtnPadding()}
+                fullWidth
+              >
+                Generate
+              </Button>
+            </CustomCommonDialogButtonWrapper>
           </VStack>
         )}
       </Formik>
@@ -90,81 +112,91 @@ function Preview() {
   return (
     <VStack py={4} h='full' justify='space-between'>
       <OgMetadataCard data={state.data} />
-      <Button
-        isLoading={loading}
-        loadingText={loading ? '' : 'Posting'}
-        onClick={async () => {
-          await createArticle({
-            title: state.data.title,
-            description: state.data.description,
-            imageUrl: state.data.images[0].url,
-            url: state.data.url,
-            site: {
-              name: state.data.site.name,
-              logo: state.data.site.logo,
-            },
-          });
+      <CustomCommonDialogButtonWrapper>
+        <Button
+          isLoading={loading}
+          loadingText={loading ? '' : 'Posting'}
+          onClick={async () => {
+            await createArticle({
+              title: state.data.title,
+              description: state.data.description,
+              imageUrl: state.data.images[0].url,
+              url: state.data.url,
+              site: {
+                name: state.data.site.name,
+                logo: state.data.site.logo,
+              },
+            });
 
-          if (!error) {
-            onClose();
-          }
-        }}
-        className={extraBtnPadding()}
-        fullWidth
-      >
-        Post
-      </Button>
+            if (!error) {
+              onClose();
+            }
+          }}
+          className={extraBtnPadding()}
+          fullWidth
+        >
+          Post
+        </Button>
+      </CustomCommonDialogButtonWrapper>
     </VStack>
+  );
+}
+
+function BackButton() {
+  const { decrement } = useStepperContext();
+
+  return (
+    <Box
+      zIndex={100}
+      t='1rem'
+      l={{ '@bp1': '0.25rem', '@bp3': '1rem' }}
+      position='fixed'
+      css={{ backgroundColor: '#FFF' }}
+    >
+      <IconButton
+        onClick={decrement}
+        variant='ghost'
+        icon='arrow-left-outline'
+        ariaLabel='go back'
+      />
+    </Box>
   );
 }
 
 function AddArticleDialog() {
   const { isOpen, onOpen, onClose, option } = useDialogTabContext();
+  const { increment, decrement, count: step } = useCounter();
   const [state, update] = useRecordState({});
 
+  console.log(step);
+
   return (
-    <Dialog
+    <CommonDialog
       ariaDescribedBy='add-article-dialog__title'
       isOpen={isOpen}
       onOpen={() => onOpen(option)}
       onClose={onClose}
     >
-      <Dialog.Portal>
-        <Dialog.Overlay />
-        <Dialog.Content
-          position='relative'
-          t={{ '@bp1': 69, '@bp3': '50%' }}
-          h={{ '@bp1': '100vh', '@bp3': '37.5vh' }}
-          maxHeight={{ '@bp1': '100vh', '@bp3': '85vh' }}
-          radius={{ '@bp1': 0, '@bp3': 3 }}
-          w={{ '@bp1': '100vw', '@bp3': '90vw' }}
+      <CommonDialogHeader label='Add Article' />
+      <CommonDialogContent>
+        <GeneralContextProvider
+          value={{
+            state: state,
+            update: update,
+          }}
         >
-          <Dialog.Header borderBottom={1} borderColor='base100'>
-            <DialogHeading
-              title='Add Article'
-              id='add-article-dialog__title'
-            />
-          </Dialog.Header>
-          <Dialog.Body>
-            <GeneralContextProvider
-              value={{
-                state: state,
-                update: update,
-              }}
-            >
-              <Stepper>
-                <Stepper.Step step={0}>
-                  <ConvertUrlForm />
-                </Stepper.Step>
-                <Stepper.Step step={1}>
-                  <Preview />
-                </Stepper.Step>
-              </Stepper>
-            </GeneralContextProvider>
-          </Dialog.Body>
-        </Dialog.Content>
-      </Dialog.Portal>
-    </Dialog>
+          <Stepper increment={increment} decrement={decrement} step={step}>
+            <Stepper.Step step={0}>
+              <ConvertUrlForm />
+            </Stepper.Step>
+            <Stepper.Step step={1}>
+              <BackButton />
+              <Preview />
+            </Stepper.Step>
+          </Stepper>
+        </GeneralContextProvider>
+      </CommonDialogContent>
+    </CommonDialog>
   );
 }
 

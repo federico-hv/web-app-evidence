@@ -1,9 +1,5 @@
 import CreatePostCard from './create-post.card';
-import {
-  DialogTabContextProvider,
-  SwitchConditional,
-  SwitchConditionalCase,
-} from '../../../shared';
+import { DialogTabContextProvider } from '../../../shared';
 import { useDisclosure } from '@holdr-ui/react';
 import { useState } from 'react';
 
@@ -23,15 +19,8 @@ function CreatePost() {
   return (
     <DialogTabContextProvider value={{ isOpen, onOpen, option, onClose }}>
       <CreatePostCard />
-      {/*Investigate this code. Why am I using switch conditionals here?*/}
-      <SwitchConditional>
-        <SwitchConditionalCase on={isOpen && option !== 'article'}>
-          <CreatePostDialog />
-        </SwitchConditionalCase>
-        <SwitchConditionalCase on={isOpen && option === 'article'}>
-          <AddArticleDialog />
-        </SwitchConditionalCase>
-      </SwitchConditional>
+      {isOpen && option !== 'article' && <CreatePostDialog />}
+      {isOpen && option === 'article' && <AddArticleDialog />}
     </DialogTabContextProvider>
   );
 }
