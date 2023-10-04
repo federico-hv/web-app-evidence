@@ -18,7 +18,7 @@ import {
   TextGroup,
 } from '../../../../shared';
 import { capitalize } from 'lodash';
-import ReactionPopover from '../reaction-popover';
+import ReactionPopover from '../reaction.popover';
 import GeneralMoreButton from './general-more.button';
 import Media from './media';
 import Polls from './polls';

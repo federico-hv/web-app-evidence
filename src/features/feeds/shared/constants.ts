@@ -1,4 +1,4 @@
-import { FeedReactionName } from './types';
+import { FeedReactionAction, FeedReactionName } from './types';
 import { IconName } from '@holdr-ui/react/dist/shared/types';
 
 const IMAGE_GRID = {
@@ -61,3 +61,52 @@ export const feedReactionFetchType = [
 ] as const;
 
 export const feedAudience = ['members', 'everyone'] as const;
+
+export const FeedReactionActions: Array<FeedReactionAction> = [
+  {
+    name: 'love',
+    icon: {
+      name: {
+        inactive: 'heart-outline',
+        active: 'heart-fill',
+      },
+      color: { active: '#de4747', hover: '#f4525226' },
+    },
+  },
+  {
+    name: 'excited',
+    icon: {
+      name: {
+        inactive: 'emotion-happy-outline',
+        active: 'emotion-happy-fill',
+      },
+      color: { active: '#c2c05a', hover: 'rgba(229,193,31,0.15)' },
+    },
+  },
+  {
+    name: 'sad',
+    icon: {
+      name: {
+        inactive: 'emotion-sad-outline',
+        active: 'emotion-sad-fill',
+      },
+      color: {
+        active: '#2468c4',
+        hover: 'rgba(72,158,173,0.15)',
+      },
+    },
+  },
+  {
+    name: 'indifferent',
+    icon: {
+      name: {
+        inactive: 'emotion-normal-outline',
+        active: 'emotion-normal-fill',
+      },
+      color: {
+        active: '#1c9110',
+        hover: 'rgba(93,204,52,0.15)',
+      },
+    },
+  },
+];

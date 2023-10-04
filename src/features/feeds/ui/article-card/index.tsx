@@ -17,7 +17,7 @@ import {
   prefix,
   TextGroup,
 } from '../../../../shared';
-import ReactionPopover from '../reaction-popover';
+import ReactionPopover from '../reaction.popover';
 import { ArticleModel, Reaction, useFeedContext } from '../../shared';
 import OwnerMoreButton from '../owner-more.button';
 import { useCurrentUser } from '../../../auth';

@@ -11,6 +11,7 @@ import {
 import { useParams } from 'react-router-dom';
 
 export function useAddReactionAction(): {
+  addReaction: (id: string, reaction: FeedReactionName) => Promise<void>;
   love: (id: string) => Promise<void>;
   indifference: (id: string) => Promise<void>;
   saddened: (id: string) => Promise<void>;
@@ -25,9 +26,12 @@ export function useAddReactionAction(): {
     { id: string; reaction: FeedReactionName }
   >(ADD_REACTION);
 
-  const react = async (id: string, reaction: FeedReactionName) => {
+  const addReaction = async (
+    id: string,
+    reaction: FeedReactionName,
+  ): Promise<void> => {
     try {
-      return await mutation({
+      await mutation({
         variables: {
           id,
           reaction,
@@ -125,17 +129,17 @@ export function useAddReactionAction(): {
   };
 
   const love = async (id: string) => {
-    await react(id, 'love');
+    await addReaction(id, 'love');
   };
   const indifference = async (id: string) => {
-    await react(id, 'indifferent');
+    await addReaction(id, 'indifferent');
   };
   const saddened = async (id: string) => {
-    await react(id, 'sad');
+    await addReaction(id, 'sad');
   };
   const excited = async (id: string) => {
-    await react(id, 'excited');
+    await addReaction(id, 'excited');
   };
 
-  return { love, indifference, saddened, excited, loading };
+  return { addReaction, love, indifference, saddened, excited, loading };
 }

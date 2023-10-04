@@ -12,4 +12,4 @@ export { default as PostGeneralMoreButton } from './post-card/general-more.butto
 export { default as OwnerMoreButton } from './owner-more.button';
 export { default as Polls } from './post-card/polls';
 export { default as Media } from './post-card/media';
-export { default as ReactionPopover } from './reaction-popover';
+export { default as ReactionPopover } from './reaction.popover';

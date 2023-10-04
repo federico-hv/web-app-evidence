@@ -11,6 +11,10 @@ import {
 import { useParams } from 'react-router-dom';
 
 export function useRemoveReactionAction(): {
+  removeReaction: (
+    id: string,
+    reaction: FeedReactionName,
+  ) => Promise<void>;
   removeLove: (id: string) => Promise<void>;
   removeIndifference: (id: string) => Promise<void>;
   removeSadness: (id: string) => Promise<void>;
@@ -25,9 +29,12 @@ export function useRemoveReactionAction(): {
     { id: string; reaction: FeedReactionName }
   >(REMOVE_REACTION);
 
-  const react = async (id: string, reaction: FeedReactionName) => {
+  const removeReaction = async (
+    id: string,
+    reaction: FeedReactionName,
+  ) => {
     try {
-      return await mutation({
+      await mutation({
         variables: {
           id,
           reaction,
@@ -123,19 +130,20 @@ export function useRemoveReactionAction(): {
   };
 
   const removeLove = async (id: string) => {
-    await react(id, 'love');
+    await removeReaction(id, 'love');
   };
   const removeIndifference = async (id: string) => {
-    await react(id, 'indifferent');
+    await removeReaction(id, 'indifferent');
   };
   const removeSadness = async (id: string) => {
-    await react(id, 'sad');
+    await removeReaction(id, 'sad');
   };
   const removeExcitement = async (id: string) => {
-    await react(id, 'excited');
+    await removeReaction(id, 'excited');
   };
 
   return {
+    removeReaction,
     removeLove,
     removeIndifference,
     removeSadness,
