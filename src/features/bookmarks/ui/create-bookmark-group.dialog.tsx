@@ -44,11 +44,17 @@ function CreateBookmarkGroupDialog({
         <Dialog.Overlay />
         <Dialog.Content
           as='form'
+          // w={{ '@bp1': 3, '@bp3': 4 }}
           onSubmit={(e) => handleSubmit(e as FormEvent<HTMLFormElement>)}
-          css={{ backgroundColor: '#FFF', borderRadius: '25px' }}
+          css={{
+            backgroundColor: '#FFF',
+            '@bp1': { borderRadius: '16px' },
+            '@bp3': { borderRadius: '25px' },
+          }}
           h={250}
         >
           <Dialog.Header
+            p={{ '@bp1': 2, '@bp3': 4 }}
             justify='space-between'
             borderBottom={1}
             borderColor='base100'
@@ -58,17 +64,21 @@ function CreateBookmarkGroupDialog({
               <CloseButton type='button' variant='ghost' />
             </Dialog.Close>
             <HStack
-              justify='center'
+              justify={{ '@bp1': 'flex-start', '@bp3': 'center' }}
               position='absolute'
-              l={0}
+              l={{ '@bp1': 24, '@bp3': 0 }}
               r={0}
               p={4}
               css={{
                 zIndex: -1,
               }}
             >
-              <Heading as='h1' size={4} weight={500}>
-                Create new group
+              <Heading
+                as='h1'
+                size={{ '@bp1': 3, '@bp3': 4 }}
+                weight={500}
+              >
+                Create group
               </Heading>
             </HStack>
             <Button
@@ -82,7 +92,12 @@ function CreateBookmarkGroupDialog({
             </Button>
           </Dialog.Header>
           <Dialog.Body h='100%'>
-            <VStack gap={5} h='100%' pt={4} px={3}>
+            <VStack
+              gap={5}
+              h='100%'
+              pt={{ '@bp1': 0, '@bp3': 4 }}
+              px={{ '@bp1': 0, '@bp3': 3 }}
+            >
               <Box>
                 <FormControl>
                   <Input
@@ -102,15 +117,22 @@ function CreateBookmarkGroupDialog({
               </Box>
               <HStack>
                 <TextGroup>
-                  <TextGroupHeading as='h2' size={3}>
+                  <TextGroupHeading
+                    as='h2'
+                    size={{ '@bp1': 2, '@bp3': 3 }}
+                  >
                     Public
                   </TextGroupHeading>
-                  <TextGroupSubheading size={2} color='base400'>
+                  <TextGroupSubheading
+                    size={{ '@bp1': 1, '@bp3': 2 }}
+                    color='base400'
+                  >
                     Anyone will be able to view this bookmark group on your
                     profile
                   </TextGroupSubheading>
                 </TextGroup>
                 <Switch
+                  size={{ '@bp1': 'sm', '@bp3': 'base' }}
                   name='isPrivate'
                   onChange={() => setIsPrivateValue(!values.isPrivate)}
                   defaultChecked={false}

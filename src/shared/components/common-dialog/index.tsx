@@ -161,6 +161,7 @@ function CommonDialogHeader({
     <Fragment>
       <HStack
         position='absolute'
+        w='100%'
         l={justify === 'center' ? 0 : '3rem'}
         t={0}
         r={0}
