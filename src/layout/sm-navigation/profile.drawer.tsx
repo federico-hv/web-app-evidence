@@ -115,7 +115,7 @@ function ProfileDrawer() {
                         direction='horizontal'
                       >
                         <TextGroupSubheading weight={500}>
-                          {data.followers.total}
+                          {data.following.total}
                         </TextGroupSubheading>
                         <TextGroupSubheading color='base400' weight={500}>
                           Following
