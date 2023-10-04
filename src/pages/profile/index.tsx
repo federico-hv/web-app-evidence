@@ -78,13 +78,19 @@ function ProfilePage() {
         <ContentLayout>
           <ContentLayoutMain>
             <PageLayout>
-              <CustomPageLayoutHeader
-                appearAfter={width && width > 768 ? 150 : 75}
-              >
-                <Container maxWidth={{ '@bp1': '100%', '@bp3': 600 }}>
-                  <TitleHeader />
-                </Container>
-              </CustomPageLayoutHeader>
+              {width && width > 768 ? (
+                <CustomPageLayoutHeader appearAfter={150}>
+                  <Container maxWidth={{ '@bp1': '100%', '@bp3': 600 }}>
+                    <TitleHeader />
+                  </Container>
+                </CustomPageLayoutHeader>
+              ) : (
+                <PageLayoutHeader>
+                  <Container maxWidth={{ '@bp1': '100%', '@bp3': 600 }}>
+                    <TitleHeader />
+                  </Container>
+                </PageLayoutHeader>
+              )}
               <PageLayoutContent>
                 <DetailsHeader />
                 <VStack w='100%' css={{ backgroundColor: '#FFF' }}>
