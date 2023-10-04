@@ -1,9 +1,5 @@
 import { Center, HStack, Icon } from '@holdr-ui/react';
-import {
-  Head,
-  useGeneralContext,
-  UserNamesGroup,
-} from '../../../../shared';
+import { useGeneralContext, UserNamesGroup } from '../../../../shared';
 import { useCurrentUser } from '../../../../features';
 import { Fragment } from 'react';
 import { IProfile } from '../../shared';
@@ -15,12 +11,6 @@ function TitleHeader() {
 
   return (
     <Fragment>
-      <Head
-        prefix=''
-        title={`${profile.displayName} (@${profile.username})`}
-        description={profile.bio || ''}
-      />
-
       <HStack w='100%' justify='space-between' items='flex-start'>
         <HStack gap={3}>
           <UserNamesGroup

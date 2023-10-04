@@ -1,9 +1,4 @@
-import {
-  UserModel,
-  TextGroup,
-  TextGroupHeading,
-  TextGroupSubheading,
-} from '../../../shared';
+import { UserModel, UserNamesGroup } from '../../../shared';
 import { Avatar, Circle, HStack, Icon } from '@holdr-ui/react';
 
 function ResultItem({ data }: { data: UserModel; display?: string[] }) {
@@ -13,7 +8,7 @@ function ResultItem({ data }: { data: UserModel; display?: string[] }) {
         <Avatar src={data.avatar} name={data.displayName} />
       ) : (
         <Circle
-          size={40}
+          size={{ '@bp1': 30, '@bp3': 40 }}
           bgColor='base800'
           color='primary400'
           css={{ flexShrink: 0 }}
@@ -21,14 +16,10 @@ function ResultItem({ data }: { data: UserModel; display?: string[] }) {
           <Icon name='search-outline' />
         </Circle>
       )}
-      <TextGroup gap={0}>
-        <TextGroupHeading as='h5' size={3}>
-          {data.displayName}
-        </TextGroupHeading>
-        <TextGroupSubheading size={2} color='base400'>
-          @{data.username}
-        </TextGroupSubheading>
-      </TextGroup>
+      <UserNamesGroup
+        displayName={data.displayName}
+        username={data.username}
+      />
     </HStack>
   );
 }

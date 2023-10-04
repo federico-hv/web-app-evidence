@@ -1,9 +1,4 @@
-import {
-  UserModel,
-  TextGroup,
-  TextGroupHeading,
-  TextGroupSubheading,
-} from '../../../shared';
+import { UserModel, UserNamesGroup } from '../../../shared';
 import { useRemoveSearchHistoryItem } from '../shared';
 import {
   Avatar,
@@ -29,7 +24,7 @@ function HistoryItem({ data }: { data: UserModel }) {
           <Avatar src={data.avatar} name={data.displayName} />
         ) : (
           <Circle
-            size={40}
+            size={{ '@bp1': 30, '@bp3': 40 }}
             bgColor='base800'
             color='primary400'
             css={{ flexShrink: 0 }}
@@ -37,17 +32,14 @@ function HistoryItem({ data }: { data: UserModel }) {
             <Icon name='search-outline' />
           </Circle>
         )}
-        <TextGroup gap={0}>
-          <TextGroupHeading as='h5' size={3}>
-            {data.displayName}
-          </TextGroupHeading>
-          <TextGroupSubheading size={2} color='base400'>
-            @{data.username}
-          </TextGroupSubheading>
-        </TextGroup>
+        <UserNamesGroup
+          displayName={data.displayName}
+          username={data.username}
+        />
       </HStack>
       <Box position='relative' zIndex={10}>
         <CloseButton
+          size={{ '@bp1': 'sm', '@bp3': 'base' }}
           variant='ghost'
           onClick={async (e) => {
             e.stopPropagation();
