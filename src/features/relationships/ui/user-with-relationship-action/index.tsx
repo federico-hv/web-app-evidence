@@ -2,11 +2,14 @@ import { LinkOverlay, prefix, UserNamesGroup } from '../../../../shared';
 import { Avatar, HStack } from '@holdr-ui/react';
 import CommonRelationshipButton from '../common-relationship';
 import { UserWithRelationshipProps } from './types';
+import { useCurrentUser } from '../../../auth';
 
 function UserWithRelationshipAction({
   data,
   onClose,
 }: UserWithRelationshipProps) {
+  const currentUser = useCurrentUser();
+
   return (
     <HStack w='100%' justify='space-between' position='relative'>
       <HStack gap={3}>
@@ -23,7 +26,9 @@ function UserWithRelationshipAction({
         />
       </HStack>
 
-      <CommonRelationshipButton username={data.username} />
+      {currentUser && currentUser.username !== data.username && (
+        <CommonRelationshipButton username={data.username} />
+      )}
     </HStack>
   );
 }
