@@ -16,7 +16,7 @@ function FollowButton({ type, username }: FollowButtonProps) {
 
   return (
     <Button
-      colorTheme={type === 'follow_request' ? 'primary400' : 'base800'}
+      colorTheme='base800'
       isLoading={
         type === 'follow_request' ? loadingRequest : loadingFollow
       }
