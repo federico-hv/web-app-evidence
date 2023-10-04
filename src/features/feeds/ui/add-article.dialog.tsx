@@ -168,8 +168,6 @@ function AddArticleDialog() {
   const { increment, decrement, count: step } = useCounter();
   const [state, update] = useRecordState({});
 
-  console.log(step);
-
   return (
     <CommonDialog
       ariaDescribedBy='add-article-dialog__title'
