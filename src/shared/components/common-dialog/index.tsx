@@ -28,6 +28,7 @@ function CommonDialog({
   isOpen,
   onOpen,
   onClose,
+  ariaDescribedBy,
   children,
   minHeight = 500,
 }: CommonDialogProps) {
@@ -51,7 +52,12 @@ function CommonDialog({
   );
 
   return (
-    <Dialog isOpen={isOpen} onOpen={onOpen} onClose={onClose}>
+    <Dialog
+      ariaDescribedBy={ariaDescribedBy}
+      isOpen={isOpen}
+      onOpen={onOpen}
+      onClose={onClose}
+    >
       {hasChildren(Trigger) && <Dialog.Trigger>{Trigger}</Dialog.Trigger>}
       <Dialog.Portal>
         <Dialog.Overlay />
@@ -59,7 +65,7 @@ function CommonDialog({
           position='relative'
           w={{ '@bp1': width, '@bp3': '90vw' }}
           maxWidth={500}
-          minHeight={minHeight}
+          minHeight={{ '@bp1': '100%', '@bp3': minHeight }}
           h={{ '@bp1': height, '@bp3': 1 }}
           maxHeight={{ '@bp1': '100vh', '@bp3': '85vh' }}
           radius={{ '@bp1': 0, '@bp3': 4 }}
@@ -197,11 +203,13 @@ CommonDialogContent.displayName = 'CommonDialogContent';
 function CommonDialogActionButton({
   label,
   onClick,
+  disabled,
   loading,
   loadingText,
 }: CommonDialogActionButtonProps) {
   return (
     <Button
+      disabled={disabled}
       onClick={onClick}
       className={extraBtnPadding()}
       fullWidth

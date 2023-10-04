@@ -3,7 +3,6 @@ import {
   Box,
   Button,
   CircularProgress,
-  Dialog,
   HStack,
   Image,
   Text,
@@ -11,8 +10,10 @@ import {
   VStack,
 } from '@holdr-ui/react';
 import {
-  DialogHeading,
-  extraBtnPadding,
+  CommonDialog,
+  CommonDialogActionButton,
+  CommonDialogContent,
+  CommonDialogHeader,
   SwitchConditional,
   SwitchConditionalCase,
   useDialogTabContext,
@@ -33,6 +34,8 @@ import MediaIcon from '../../../assets/images/media.png';
 import PollIcon from '../../../assets/images/poll.png';
 import { omit } from 'lodash';
 import { useCreatePost } from '../shared';
+
+// TODO: Use common dialog
 
 function CreatePostDialog() {
   const currentUser = useCurrentUser();
@@ -74,177 +77,169 @@ function CreatePostDialog() {
   return (
     <>
       {currentUser && (
-        <Dialog
+        <CommonDialog
+          minHeight={contentHeight}
           ariaDescribedBy='create-post-dialog__title'
           isOpen={isOpen}
           onOpen={() => onOpen(option)}
           onClose={onClose}
         >
-          <Dialog.Portal>
-            <Dialog.Overlay />
-            <Dialog.Content
-              position='relative'
-              t={{ '@bp1': 69, '@bp3': '50%' }}
-              h={{ '@bp1': '100vh', '@bp3': contentHeight }}
-              maxHeight={{ '@bp1': '100vh', '@bp3': '85vh' }}
-              radius={{ '@bp1': 0, '@bp3': 3 }}
-              w={{ '@bp1': '100vw', '@bp3': '90vw' }}
+          <CommonDialogHeader label='Create Post' />
+          <CommonDialogContent>
+            <VStack
+              py={4}
+              gap={4}
+              h={{ '@bp1': 'calc(100% - 68px)', '@bp3': '100%' }}
             >
-              <Dialog.Header borderBottom={1} borderColor='base100'>
-                <DialogHeading
-                  title='Create Post'
-                  id='create-post-dialog__title'
+              <HStack gap={3}>
+                <Avatar
+                  size='lg'
+                  variant='squircle'
+                  src={currentUser.avatar}
                 />
-              </Dialog.Header>
-              <Dialog.Body>
-                <VStack py={4} gap={4} h='calc(100% - 128px)'>
-                  <HStack gap={3}>
-                    <Avatar
-                      size='lg'
-                      variant='squircle'
-                      src={currentUser.avatar}
-                    />
-                    <VStack gap={1}>
-                      <Text weight={500}>{currentUser.displayName}</Text>
-                      <Button
-                        leftIcon='global-outline'
-                        size='sm'
-                        variant='ghost'
-                      >
-                        Everyone
-                      </Button>
-                    </VStack>
-                  </HStack>
-                  <VStack
-                    h='100%'
-                    justify='space-between'
-                    overflowY='auto'
-                    pb={4}
-                    gap={4}
+                <VStack gap={1}>
+                  <Text weight={500}>{currentUser.displayName}</Text>
+                  <Button
+                    leftIcon='global-outline'
+                    size='sm'
+                    variant='ghost'
                   >
-                    <Box flex={1} as='label' minHeight={75}>
-                      <StyledTextarea
-                        autoFocus
-                        css={{ padding: 0 }}
-                        value={state.description}
-                        onChange={(
-                          e: ChangeEvent<HTMLTextAreaElement>,
-                        ) => {
-                          update({ description: e.target.value });
-                        }}
-                        fontSize={switchState ? 'sm' : 'lg'}
-                        minLines={1}
-                        maxLines={3}
-                        maxLength={150}
-                        variant='unstyled'
-                        placeholder={
-                          option === 'poll'
-                            ? 'What do you want to find out from your fans?'
-                            : 'What do you want your fans to know?'
-                        }
+                    Everyone
+                  </Button>
+                </VStack>
+              </HStack>
+              <VStack
+                h='100%'
+                justify='space-between'
+                overflowY='auto'
+                pb={4}
+                gap={4}
+              >
+                <Box flex={1} as='label' minHeight={75}>
+                  <StyledTextarea
+                    autoFocus
+                    css={{ padding: 0 }}
+                    value={state.description}
+                    onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
+                      update({ description: e.target.value });
+                    }}
+                    fontSize={switchState ? 'sm' : 'lg'}
+                    minLines={1}
+                    maxLines={3}
+                    maxLength={150}
+                    variant='unstyled'
+                    placeholder={
+                      option === 'poll'
+                        ? 'What do you want to find out from your fans?'
+                        : 'What do you want your fans to know?'
+                    }
+                  />
+                </Box>
+                <SwitchConditional>
+                  <SwitchConditionalCase
+                    on={switchState && option === 'media'}
+                  >
+                    <AddMedia
+                      update={update}
+                      remove={() => {
+                        turnOff();
+                        removeMedia();
+                      }}
+                      reset={resetHeight}
+                    />
+                  </SwitchConditionalCase>
+                  <SwitchConditionalCase
+                    on={switchState && option === 'poll'}
+                  >
+                    <AddPoll
+                      update={update}
+                      remove={() => {
+                        turnOff();
+                        removeResponses();
+                      }}
+                      reset={resetHeight}
+                      increaseHeight={increaseHeight}
+                    />
+                  </SwitchConditionalCase>
+                </SwitchConditional>
+              </VStack>
+            </VStack>
+            <VStack // Footer
+              position='fixed'
+              b={81}
+              w='100%'
+              gap={4}
+              px={0}
+              css={{
+                backgroundColor: '#FFF',
+              }}
+            >
+              <HStack
+                items='center'
+                justify='space-between'
+                py={3}
+                px={5}
+                gap={4}
+                borderTop={1}
+                borderBottom={1}
+                borderColor='base200'
+                divider={
+                  <Box h={16} borderRight={1} borderColor='base200' />
+                }
+              >
+                <HStack items='center' justify='space-between' flex={1}>
+                  <Text weight={500} size={{ '@bp1': 2, '@bp3': 3 }}>
+                    Add to your post
+                  </Text>
+                  <HStack gap={4}>
+                    <Box
+                      onClick={() => {
+                        turnOn();
+                        setContentHeight(DIALOG_CONTENT_HEIGHT['media']);
+                        onOpen('media');
+                      }}
+                    >
+                      <Image
+                        size={{ '@bp1': 18, '@bp3': 30 }}
+                        src={MediaIcon}
+                        alt=''
                       />
                     </Box>
-                    <SwitchConditional>
-                      <SwitchConditionalCase
-                        on={switchState && option === 'media'}
-                      >
-                        <AddMedia
-                          update={update}
-                          remove={() => {
-                            turnOff();
-                            removeMedia();
-                          }}
-                          reset={resetHeight}
-                        />
-                      </SwitchConditionalCase>
-                      <SwitchConditionalCase
-                        on={switchState && option === 'poll'}
-                      >
-                        <AddPoll
-                          update={update}
-                          remove={() => {
-                            turnOff();
-                            removeResponses();
-                          }}
-                          reset={resetHeight}
-                          increaseHeight={increaseHeight}
-                        />
-                      </SwitchConditionalCase>
-                    </SwitchConditional>
-                  </VStack>
-                </VStack>
-              </Dialog.Body>
-              <Dialog.Footer
-                position='fixed'
-                b={0}
-                bgColor='primary400'
-                direction='vertical'
-                gap={4}
-                px={0}
-              >
-                <HStack
-                  items='center'
-                  justify='space-between'
-                  py={3}
-                  px={5}
-                  gap={4}
-                  borderTop={1}
-                  borderBottom={1}
-                  borderColor='base200'
-                  divider={
-                    <Box h={16} borderRight={1} borderColor='base200' />
-                  }
-                >
-                  <HStack items='center' justify='space-between' flex={1}>
-                    <Text weight={500}>Add to your post</Text>
-                    <HStack gap={4}>
-                      <Box
-                        onClick={() => {
-                          turnOn();
-                          setContentHeight(DIALOG_CONTENT_HEIGHT['media']);
-                          onOpen('media');
-                        }}
-                      >
-                        <Image size={30} src={MediaIcon} alt='' />
-                      </Box>
-                      <Box
-                        onClick={() => {
-                          turnOn();
-                          setContentHeight(DIALOG_CONTENT_HEIGHT['poll']);
-                          onOpen('poll');
-                        }}
-                      >
-                        <Image size={30} src={PollIcon} alt='' />
-                      </Box>
-                    </HStack>
+                    <Box
+                      onClick={() => {
+                        turnOn();
+                        setContentHeight(DIALOG_CONTENT_HEIGHT['poll']);
+                        onOpen('poll');
+                      }}
+                    >
+                      <Image
+                        size={{ '@bp1': 18, '@bp3': 30 }}
+                        src={PollIcon}
+                        alt=''
+                      />
+                    </Box>
                   </HStack>
-                  <CircularProgress
-                    value={Math.ceil(
-                      (state.description.length / 150) * 100,
-                    )}
-                  />
                 </HStack>
-                <Box px={4}>
-                  <Button
-                    isLoading={loading}
-                    loadingText={loading ? '' : 'Posting'}
-                    disabled={checkIsDisabled()}
-                    fullWidth
-                    onClick={async () => {
-                      const data = await createPost(state);
-                      if (data) {
-                        onClose();
-                      }
-                    }}
-                    className={extraBtnPadding()}
-                  >
-                    Post
-                  </Button>
-                </Box>
-              </Dialog.Footer>
-            </Dialog.Content>
-          </Dialog.Portal>
-        </Dialog>
+                <CircularProgress
+                  size={{ '@bp1': 18, '@bp3': 30 }}
+                  value={Math.ceil((state.description.length / 150) * 100)}
+                />
+              </HStack>
+            </VStack>
+          </CommonDialogContent>
+          <CommonDialogActionButton
+            loading={loading}
+            loadingText={loading ? '' : 'Posting'}
+            disabled={checkIsDisabled()}
+            onClick={async () => {
+              const data = await createPost(state);
+              if (data) {
+                onClose();
+              }
+            }}
+            label='Post'
+          />
+        </CommonDialog>
       )}
     </>
   );

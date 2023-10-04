@@ -3,9 +3,11 @@ import {
   ErrorFallback,
   GenericProps,
   GQLRenderer,
+  Head,
+  useGeneralContext,
   useScrollPosition,
 } from '../../shared';
-import { ProfileProvider } from './shared';
+import { IProfile, ProfileProvider } from './shared';
 import {
   ContentLayout,
   ContentLayoutAside,
@@ -53,8 +55,18 @@ function CustomPageLayoutHeader({
     </AnimatePresence>
   );
 }
-
 CustomPageLayoutHeader.displayName = 'PageLayoutHeader';
+
+function CustomHead() {
+  const { state: profile } = useGeneralContext<IProfile>();
+
+  return (
+    <Head
+      title={`${profile.displayName} (@${profile.username})`}
+      description={profile.bio || ''}
+    />
+  );
+}
 
 function ProfilePage() {
   const { width } = useWindowSize();
@@ -62,6 +74,7 @@ function ProfilePage() {
   return (
     <GQLRenderer ErrorFallback={ErrorFallback}>
       <ProfileProvider>
+        <CustomHead />
         <ContentLayout>
           <ContentLayoutMain>
             <PageLayout>
@@ -72,7 +85,6 @@ function ProfilePage() {
                   <TitleHeader />
                 </Container>
               </CustomPageLayoutHeader>
-
               <PageLayoutContent>
                 <DetailsHeader />
                 <VStack w='100%' css={{ backgroundColor: '#FFF' }}>

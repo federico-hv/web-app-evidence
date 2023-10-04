@@ -8,6 +8,7 @@ export type CommonDialogSCNames =
   | 'CommonDialogInfoItem';
 
 export interface CommonDialogProps {
+  ariaDescribedBy?: string;
   minHeight?: number;
   children?: ReactNode;
   isOpen: boolean;
@@ -17,6 +18,7 @@ export interface CommonDialogProps {
 
 export interface CommonDialogActionButtonProps {
   label: string;
+  disabled?: boolean;
   onClick: VoidFunction;
   loading?: boolean;
   loadingText?: string;

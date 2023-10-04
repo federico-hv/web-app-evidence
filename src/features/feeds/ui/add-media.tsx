@@ -19,6 +19,8 @@ import {
 } from '../../../shared';
 import { ChangeEvent, useState } from 'react';
 
+// TODO: Clean up
+
 function Upload({
   onChange,
 }: {
@@ -188,13 +190,16 @@ function AddMedia({
                         overflow='hidden'
                         position='relative'
                       >
-                        <Box // block image from showing media view
-                          borderColor='base400'
-                          position='absolute'
-                          h='100%'
-                          w='100%'
-                          zIndex={50}
-                        />
+                        {FileUtility.getType(media[index].file.type) ===
+                          'image' && (
+                          <Box // block image from showing media view
+                            borderColor='base400'
+                            position='absolute'
+                            h='100%'
+                            w='100%'
+                            zIndex={5}
+                          />
+                        )}
                         <MediaItem
                           url={URL.createObjectURL(media[index].file)}
                           type={FileUtility.getType(
