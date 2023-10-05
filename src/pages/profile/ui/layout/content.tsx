@@ -237,22 +237,26 @@ function Content() {
 
   const { data } = useRelationshipStatusInfo(profile.username);
 
+  if (data.relationshipStatusInfo.isBlocked) {
+    return (
+      <AccountUnavailable
+        icon='information-fill'
+        title='Blocked Account'
+        subtitle={` This account is blocked. Unblock @${profile.username} to view their profile.`}
+      />
+    );
+  } else if (!canViewProfile && !data.relationshipStatusInfo.isBlocked) {
+    return (
+      <AccountUnavailable
+        icon='lock-fill'
+        title='Protected Account'
+        subtitle={` This account is protected. Request to follow @${profile.username} to view their activity and cosigns.`}
+      />
+    );
+  }
+
   return (
     <Fragment>
-      {!canViewProfile && !data.relationshipStatusInfo.isBlocked ? (
-        <AccountUnavailable
-          icon='lock-fill'
-          title='Protected Account'
-          subtitle={` This account is protected. Request to follow @${profile.username} to view their activity and cosigns.`}
-        />
-      ) : (
-        <AccountUnavailable
-          icon='information-fill'
-          title='Blocked Account'
-          subtitle={` This account is blocked. Unblock @${profile.username} to view their profile.`}
-        />
-      )}
-
       {canViewProfile && !data.relationshipStatusInfo.isBlocked && (
         <GQLRenderer ErrorFallback={() => <Fragment />}>
           {profile.role === 'artist' && <ArtistContent />}
