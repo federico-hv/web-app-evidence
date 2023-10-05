@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import { IconName } from '@holdr-ui/react/dist/shared/types';
 
 export interface GenericProps {
   children?: ReactNode;
@@ -14,4 +15,9 @@ export interface IDate {
 export interface IReturnMany<T> {
   count: number;
   data: T[];
+}
+
+export interface LabelWithIcon {
+  label: string;
+  icon: IconName;
 }

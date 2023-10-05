@@ -9,9 +9,6 @@ import {
   VStack,
 } from '@holdr-ui/react';
 import {
-  ContentLayout,
-  ContentLayoutAside,
-  ContentLayoutMain,
   Error,
   Head,
   IReturnMany,
@@ -21,15 +18,23 @@ import {
   prefix,
   UserNamesGroup,
   useGoBack,
+  ErrorFallback,
+  GQLRenderer,
 } from '../../shared';
-import { RelationshipActionButton, SEARCH, Search } from '../../features';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { CommonRelationshipButton, SEARCH, Search } from '../../features';
+import { useSearchParams } from 'react-router-dom';
 import { Fragment } from 'react';
 import { useQuery } from '@apollo/client';
+import {
+  ContentLayout,
+  ContentLayoutAside,
+  ContentLayoutMain,
+} from '../../layout';
 
-/*
-TODO:
-  - [ ] UI is wrong, Search results header must appear before the search item
+/**
+ * TODO:
+    -[ ] Refactor
+    -[ ] Add PageLayout
  */
 
 function useSearchResults(queryString: string) {
@@ -80,7 +85,12 @@ function PeopleTab({ query }: { query: string }) {
                     displayName={user.displayName}
                     username={user.displayName}
                   />
-                  <RelationshipActionButton username={user.username} />
+                  <GQLRenderer
+                    ErrorFallback={ErrorFallback}
+                    LoadingFallback={<Fragment />}
+                  >
+                    <CommonRelationshipButton username={user.username} />
+                  </GQLRenderer>
                 </HStack>
               ))}
             </VStack>
@@ -100,7 +110,6 @@ function PeopleTab({ query }: { query: string }) {
 
 function SearchResults() {
   const [searchParams] = useSearchParams();
-  const navigate = useNavigate();
 
   return (
     <VStack>

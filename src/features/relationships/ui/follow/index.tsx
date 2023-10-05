@@ -1,45 +1,34 @@
 import { Button } from '@holdr-ui/react';
 import {
+  BaseRelationshipButtonProps,
   useCreateRelationshipAction,
   useRequestRelationshipAction,
 } from '../../shared';
-import {
-  SwitchConditional,
-  SwitchConditionalCase,
-  useProfile,
-} from '../../../../shared';
 
-// needs a clean up, pass props
-function FollowButton() {
-  const { follow, loading: loading0 } = useCreateRelationshipAction();
-  const { followRequest, loading: loading1 } =
+interface FollowButtonProps extends BaseRelationshipButtonProps {
+  type: 'follow_request' | 'follow';
+}
+
+function FollowButton({ type, username }: FollowButtonProps) {
+  const { follow, loading: loadingFollow } = useCreateRelationshipAction();
+  const { followRequest, loading: loadingRequest } =
     useRequestRelationshipAction();
 
-  const { profile } = useProfile();
-
   return (
-    <SwitchConditional>
-      <SwitchConditionalCase on={!profile.protected}>
-        <Button
-          colorTheme='base800'
-          isLoading={loading0}
-          loadingText={loading0 ? '' : 'Loading'}
-          onClick={async () => follow(profile.username)}
-        >
-          Follow
-        </Button>
-      </SwitchConditionalCase>
-      <SwitchConditionalCase on={profile.protected}>
-        <Button
-          colorTheme='primary400'
-          isLoading={loading1}
-          loadingText={loading1 ? '' : 'Loading'}
-          onClick={async () => followRequest(profile.username)}
-        >
-          Follow
-        </Button>
-      </SwitchConditionalCase>
-    </SwitchConditional>
+    <Button
+      colorTheme='base800'
+      isLoading={
+        type === 'follow_request' ? loadingRequest : loadingFollow
+      }
+      loadingText={loadingRequest || loadingFollow ? '' : 'Loading'}
+      onClick={
+        type === 'follow_request'
+          ? () => followRequest(username)
+          : () => follow(username)
+      }
+    >
+      Follow
+    </Button>
   );
 }
 

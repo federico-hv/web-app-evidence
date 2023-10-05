@@ -1,14 +1,9 @@
 import { VStack } from '@holdr-ui/react';
 import { SettingItem, useAccountInfo } from '../../../../features';
-import {
-  Head,
-  HeaderLayout,
-  Paths,
-  prefix,
-  RootSettingsPath,
-} from '../../../../shared';
+import { Head, Paths, prefix, RootSettingsPath } from '../../../../shared';
 import { capitalize } from 'lodash';
 import dayjs from 'dayjs';
+import { HeaderLayout } from '../../../../layout';
 
 function AccountInfoPage() {
   const { data } = useAccountInfo();

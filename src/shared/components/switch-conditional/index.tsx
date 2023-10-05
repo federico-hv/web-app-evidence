@@ -5,6 +5,11 @@ import {
 } from './types';
 import { getSubComponent } from '../../index';
 
+/* NOTE: DOES NOT WORK AS INTENDED */
+
+// Supposed to switch between components based on some case. Will redo this (FUCK)
+// Might deprecate it, though.
+
 function SwitchConditional({ children }: SwitchConditionalProps) {
   const SwitchConditionalCases = getSubComponent<'SwitchConditionalCase'>(
     children,

@@ -50,8 +50,8 @@ function LgHeader() {
             as={<Link to={prefix('/', Paths.discover)} />}
             isActive={!!matchPath('discover/*', pathname)}
             text='Discover'
-            activeIcon='discover-fill'
-            inactiveIcon='discover-outline'
+            activeIcon='search-outline'
+            inactiveIcon='search-outline'
             css={{
               height: '2.5rem',
             }}
@@ -67,7 +67,7 @@ function LgHeader() {
             }}
           />
           <NavigationLink
-            as={<Link to={prefix('/', Paths.bookmarks)} />}
+            as={<Link to={prefix('/', Paths.allBookmarks)} />}
             isActive={!!matchPath('bookmarks/*', pathname)}
             text='Bookmarks'
             activeIcon='bookmark-fill'

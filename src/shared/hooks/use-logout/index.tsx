@@ -17,6 +17,8 @@ export const useLogout = () => {
     cookie.remove('refresh_token');
     setCurrentUser(null);
 
+    console.log('logged out');
+
     navigate(prefix('/', Paths.root));
   };
 

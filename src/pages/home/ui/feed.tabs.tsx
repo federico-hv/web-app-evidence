@@ -56,14 +56,19 @@ function FeedTabs() {
         css={{
           position: 'sticky',
           backgroundColor: '$clearTint500',
-          blur: '14px',
+          blur: '12px',
           zIndex: 11,
           py: '$4',
           px: '$1',
           '& button:not(:last-child)': {
             marginRight: '$4',
           },
-          t: direction === 'down' && delta > 0 ? 0 : '56px',
+          '@bp1': {
+            top: direction === 'down' && delta > 0 ? 0 : '56px',
+          },
+          '@bp3': {
+            top: 65,
+          },
         }}
       >
         <Container maxWidth={600}>

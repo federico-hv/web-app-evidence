@@ -3,6 +3,7 @@ export const Paths = {
   discover: 'discover',
   channels: 'channels',
   bookmarks: 'bookmarks',
+  allBookmarks: 'bookmarks/all',
   releases: 'releases',
   notifications: 'notifications',
   settings: 'settings',

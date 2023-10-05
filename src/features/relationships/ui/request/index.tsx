@@ -1,104 +1,51 @@
+import { Button, Heading } from '@holdr-ui/react';
 import {
-  Box,
-  Button,
-  Drawer,
-  HStack,
-  Popover,
-  Text,
-  useDisclosure,
-  VStack,
-} from '@holdr-ui/react';
-import { useRemoveRelationshipAction } from '../../shared';
+  BaseRelationshipButtonProps,
+  useRemoveRelationshipAction,
+} from '../../shared';
 import {
-  MenuButton,
-  Responsive,
-  ResponsiveItem,
-  useProfile,
-  extraBtnPadding,
+  MenuItem,
+  MenuTrigger,
+  MenuContent,
+  MenuHeader,
+  Menu,
+  useAlertDialog,
 } from '../../../../shared';
 
-function RequestedButton() {
-  const { profile } = useProfile();
-
-  const {
-    isOpen: drawerOpen,
-    onOpen: openDrawer,
-    onClose: closeDrawer,
-  } = useDisclosure();
+function RequestedButton({ username }: BaseRelationshipButtonProps) {
+  const { openWith } = useAlertDialog();
 
   const { removeFollowRequest } = useRemoveRelationshipAction();
 
-  const Menu = () => (
-    <>
-      <MenuButton
-        onClick={async () => removeFollowRequest(profile.username)}
-        dangerous
-        label='Cancel Request'
-        icon='remove-outline'
-      />
-    </>
-  );
-
   return (
-    <Responsive>
-      <ResponsiveItem tablet='hide'>
-        <Popover>
-          <Popover.Trigger>
-            <Button colorTheme='base400' rightIcon='caret-down-outline'>
-              Requested
-            </Button>
-          </Popover.Trigger>
-          <Popover.Portal>
-            <Popover.Content
-              minWidth={275}
-              side='bottom'
-              align='end'
-              sideOffset={5}
-              zIndex={50}
-            >
-              <Menu />
-            </Popover.Content>
-          </Popover.Portal>
-        </Popover>
-      </ResponsiveItem>
-      <ResponsiveItem mobile='show' tablet='show'>
-        <Button
-          onClick={openDrawer}
-          colorTheme='base100'
-          rightIcon='caret-down-outline'
-        >
+    <Menu align='start'>
+      <MenuTrigger>
+        <Button colorTheme='base500' rightIcon='caret-down-outline'>
           Requested
         </Button>
-        <Drawer isOpen={drawerOpen} onClose={closeDrawer}>
-          <Drawer.Portal>
-            <Drawer.Overlay />
-            <Drawer.Content>
-              <VStack
-                radius={3}
-                bgColor='primary400'
-                w='full'
-                h='200px'
-                divider={<Box borderBottom={1} borderColor='base100' />}
-              >
-                <HStack justify='center' p={4}>
-                  <Text weight={500}>{profile.displayName}</Text>
-                </HStack>
-                <Menu />
-                <VStack px={4} flex={1} justify='center'>
-                  <Button
-                    className={extraBtnPadding()}
-                    fullWidth
-                    onClick={closeDrawer}
-                  >
-                    Close
-                  </Button>
-                </VStack>
-              </VStack>
-            </Drawer.Content>
-          </Drawer.Portal>
-        </Drawer>
-      </ResponsiveItem>
-    </Responsive>
+      </MenuTrigger>
+      <MenuHeader justify='center' items='center'>
+        <Heading as='h2' weight={500} size={3}>
+          @{username}
+        </Heading>
+      </MenuHeader>
+      <MenuContent>
+        <MenuItem
+          action={() =>
+            openWith({
+              actionText: 'Cancel request',
+              onAction: () => removeFollowRequest(username),
+              title: 'Cancel request',
+              description:
+                'If you cancel your follow request, you will have to make another request to follow the user. Are you sure you want to cancel it?',
+            })
+          }
+          dangerous
+          label='Cancel Request'
+          icon='remove-outline'
+        />
+      </MenuContent>
+    </Menu>
   );
 }
 RequestedButton.displayName = 'RequestedButton';

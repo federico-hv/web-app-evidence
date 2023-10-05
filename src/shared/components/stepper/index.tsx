@@ -30,7 +30,7 @@ const StepperStep = ({
   const { currentStep } = useContext(StepperContext);
   return <>{currentStep === step ? <>{children}</> : <></>}</>;
 };
-StepperStep.displayNaeme = 'StepperStep';
+StepperStep.displayName = 'StepperStep';
 
 Stepper.Step = StepperStep;
 

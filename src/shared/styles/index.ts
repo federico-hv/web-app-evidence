@@ -33,3 +33,16 @@ export const RadioWrapper = styled('label', {
   justifyContent: 'space-between',
   alignItems: 'center',
 });
+
+export const CenteredImage = css({
+  '& span': {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  '& img': {
+    height: 'auto',
+    width: '100%',
+    minHeight: 'unset',
+  },
+});

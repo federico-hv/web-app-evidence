@@ -17,7 +17,6 @@ import {
 import {
   Error,
   Head,
-  HeaderLayout,
   isInputDisabled,
   Paths,
   prefix,
@@ -26,6 +25,7 @@ import {
 } from '../../../../shared';
 import { Formik } from 'formik';
 import { isEqual, pick } from 'lodash';
+import { HeaderLayout } from '../../../../layout';
 
 function GenderSettingPage() {
   const { data } = useAccountInfo();

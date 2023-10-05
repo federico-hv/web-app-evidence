@@ -3,8 +3,11 @@ import { CREATE_ARTICLE } from '../../mutations';
 import { FeedModel } from '../interface';
 import { CreateArticleInput } from '../interface';
 import { GET_FEEDS } from '../../queries';
+import { useToast } from '../../../../shared';
 
 export function useCreateArticle() {
+  const { openWith } = useToast();
+
   const [mutation, { loading, error }] = useMutation<
     { createArticle: FeedModel },
     { payload: CreateArticleInput }
@@ -19,6 +22,13 @@ export function useCreateArticle() {
       ],
     });
   };
+
+  if (error) {
+    openWith({
+      status: 'danger',
+      description: 'Oops, something went wrong. Please try again later.',
+    });
+  }
 
   return { loading, error, createArticle };
 }

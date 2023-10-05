@@ -12,7 +12,6 @@ import { useNavigate } from 'react-router-dom';
 import {
   Error,
   Head,
-  HeaderLayout,
   Loader,
   Paths,
   prefix,
@@ -24,6 +23,7 @@ import {
   GET_2FA_RECOVERY_KEY,
   useRefresh2FARecoveryKey,
 } from '../../../../features';
+import { HeaderLayout } from '../../../../layout';
 
 function BackupCodeSettingsPage() {
   const navigate = useNavigate();

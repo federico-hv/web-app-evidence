@@ -1,7 +1,6 @@
 import {
   Error,
   Head,
-  HeaderLayout,
   Paths,
   prefix,
   RootSettingsPath,
@@ -11,6 +10,7 @@ import {
   UpdatePasswordContextProvider,
   UpdatePasswordForm,
 } from '../../../../features';
+import { HeaderLayout } from '../../../../layout';
 
 function ChangePasswordSettingPage() {
   const { loading, error, data, onFinish, onSubmit } = useUpdatePassword();

@@ -1,12 +1,7 @@
-import {
-  Head,
-  HeaderLayout,
-  Paths,
-  prefix,
-  RootSettingsPath,
-} from '../../../../shared';
+import { Head, Paths, prefix, RootSettingsPath } from '../../../../shared';
 
 import { SettingItem } from '../../../../features';
+import { HeaderLayout } from '../../../../layout';
 
 function NotificationsPreferenceSettingsPage() {
   return (

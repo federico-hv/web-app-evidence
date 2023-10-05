@@ -1,9 +1,9 @@
-import { useQuery } from '@apollo/client';
+import { useSuspenseQuery } from '@apollo/client';
 import { RelationshipStatusInfo } from '../../interfaces';
 import { GET_RELATIONSHIP_STATUS_INFO } from '../../../queries';
 
 export function useRelationshipStatusInfo(username = '') {
-  const { data, loading, error } = useQuery<{
+  const { data } = useSuspenseQuery<{
     relationshipStatusInfo: RelationshipStatusInfo;
   }>(GET_RELATIONSHIP_STATUS_INFO, {
     variables: {
@@ -11,5 +11,5 @@ export function useRelationshipStatusInfo(username = '') {
     },
   });
 
-  return { data, loading, error };
+  return { data };
 }

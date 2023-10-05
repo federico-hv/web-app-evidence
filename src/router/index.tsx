@@ -24,7 +24,7 @@ function Router() {
             path={prefix(Paths.username, '/*')}
             element={<UserRoutes />}
           />
-          {/* Bookmarks Route*/}
+          {/*/!* Bookmarks Route*!/*/}
           <Route
             path={prefix(Paths.bookmarks, '/*')}
             element={<BookmarksRoutes />}

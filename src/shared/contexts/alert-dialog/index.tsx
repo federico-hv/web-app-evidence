@@ -60,27 +60,30 @@ function AlertDialogProvider({ children }: GenericProps) {
           <Dialog.Portal>
             <Dialog.Overlay />
             <Dialog.Content
-              h={{ '@bp1': 325, '@bp3': 225 }}
+              h={{ '@bp1': 275, '@bp3': 225 }}
               w={{ '@bp1': '90vw', '@bp3': 400 }}
               css={{
                 backgroundColor: '#FFF',
               }}
             >
-              <Dialog.Body pt={5}>
+              <Dialog.Body pt={5} px={0}>
                 <VStack
                   gap={4}
-                  px={2}
+                  px={4}
                   divider={<Box borderBottom={1} borderColor='base100' />}
                 >
                   <Heading
                     id='alert-dialog__heading'
                     as='h2'
-                    size={3}
+                    weight={500}
+                    size={{ '@bp1': 2, '@bp3': 3 }}
                     casing='uppercase'
                   >
                     {current.title}
                   </Heading>
-                  <Text>{current.description}</Text>
+                  <Text size={{ '@bp1': 2, '@bp3': 3 }}>
+                    {current.description}
+                  </Text>
                 </VStack>
               </Dialog.Body>
               <Dialog.Footer
@@ -91,6 +94,7 @@ function AlertDialogProvider({ children }: GenericProps) {
                   onClick={close}
                   variant='ghost'
                   fullWidth
+                  size={{ '@bp1': 'sm', '@bp3': 'base' }}
                   className={extraBtnPadding()}
                 >
                   {current.cancelText || 'Close'}
@@ -98,6 +102,7 @@ function AlertDialogProvider({ children }: GenericProps) {
                 <Button
                   onClick={action}
                   fullWidth
+                  size={{ '@bp1': 'sm', '@bp3': 'base' }}
                   className={extraBtnPadding()}
                 >
                   {current.actionText}

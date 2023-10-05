@@ -1,32 +1,35 @@
-import {
-  ActionItemWrapper,
-  LinkOverlay,
-  prefix,
-  UserNamesGroup,
-} from '../../../../shared';
-import { Avatar } from '@holdr-ui/react';
-import RelationshipActionButton from '../relationship-action-button';
+import { LinkOverlay, prefix, UserNamesGroup } from '../../../../shared';
+import { Avatar, HStack } from '@holdr-ui/react';
+import CommonRelationshipButton from '../common-relationship';
 import { UserWithRelationshipProps } from './types';
+import { useCurrentUser } from '../../../auth';
 
 function UserWithRelationshipAction({
   data,
   onClose,
 }: UserWithRelationshipProps) {
-  return (
-    <ActionItemWrapper key={data.id}>
-      <LinkOverlay onClick={onClose} to={prefix('/', data.username)} />
-      <Avatar
-        variant='squircle'
-        src={data.avatar}
-        name={data.displayName}
-      />
-      <UserNamesGroup
-        displayName={data.displayName}
-        username={data.displayName}
-      />
+  const currentUser = useCurrentUser();
 
-      <RelationshipActionButton username={data.username} />
-    </ActionItemWrapper>
+  return (
+    <HStack w='100%' justify='space-between' position='relative'>
+      <HStack gap={3}>
+        <LinkOverlay onClick={onClose} to={prefix('/', data.username)} />
+        <Avatar
+          size={{ '@bp1': 'sm', '@bp3': 'base' }}
+          variant='squircle'
+          src={data.avatar}
+          name={data.displayName}
+        />
+        <UserNamesGroup
+          displayName={data.displayName}
+          username={data.displayName}
+        />
+      </HStack>
+
+      {currentUser && currentUser.username !== data.username && (
+        <CommonRelationshipButton username={data.username} />
+      )}
+    </HStack>
   );
 }
 UserWithRelationshipAction.displayName = 'UserWithRelationship';

@@ -1,12 +1,16 @@
+import { ErrorFallback, GQLRenderer, useScrollToTop } from '../../shared';
+import { Card, Container, Text, VStack } from '@holdr-ui/react';
+import { SuggestionsCard } from '../../features';
 import {
   ContentLayout,
   ContentLayoutAside,
   ContentLayoutMain,
-  useScrollToTop,
-} from '../../shared';
-import { Card, Container, Text, VStack } from '@holdr-ui/react';
-import { SuggestionsCard } from '../../features';
-import { FeedContent } from './ui';
+  PageLayout,
+  PageLayoutContent,
+  PageLayoutHeader,
+} from '../../layout';
+import { FeedProvider } from './shared';
+import { Header, Content } from './ui';
 
 function FeedPage() {
   useScrollToTop(document.querySelector('#root'));
@@ -14,7 +18,20 @@ function FeedPage() {
   return (
     <ContentLayout>
       <ContentLayoutMain>
-        <FeedContent />
+        <GQLRenderer ErrorFallback={ErrorFallback}>
+          <FeedProvider>
+            <PageLayout>
+              <PageLayoutHeader>
+                <Container maxWidth={{ '@bp1': '100%', '@bp3': 600 }}>
+                  <Header />
+                </Container>
+              </PageLayoutHeader>
+              <PageLayoutContent>
+                <Content />
+              </PageLayoutContent>
+            </PageLayout>
+          </FeedProvider>
+        </GQLRenderer>
         <Container maxWidth={600}>
           <VStack py={5}>
             <Card>

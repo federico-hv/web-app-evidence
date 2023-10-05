@@ -1,26 +1,52 @@
-import { Content, Header } from './ui';
+import { Content, Header, Wrapper } from './ui';
 import { ErrorBoundary } from 'react-error-boundary';
-import { Suspense } from 'react';
-import { ErrorFallback } from '../../shared';
-import { Box } from '@holdr-ui/react';
+import { Fragment, Suspense } from 'react';
+import {
+  ErrorFallback,
+  GQLRenderer,
+  Head,
+  Loader,
+  Paths,
+  prefix,
+} from '../../shared';
+import { useParams } from 'react-router-dom';
+import {
+  PageLayout,
+  PageLayoutContent,
+  PageLayoutHeader,
+} from '../../layout';
 
 function BookmarkPage() {
-  // const params = useParams();
+  const params = useParams();
   return (
-    <Box
-      w={{ '@bp4': '100%', '@bp5': 'calc(100% - 120px)' }}
-      borderRight={2}
-      borderLeft={2}
-      borderColor='base100'
-      minHeight='100%'
-    >
-      <ErrorBoundary FallbackComponent={ErrorFallback}>
-        <Suspense>
-          <Header />
-          <Content />
-        </Suspense>
-      </ErrorBoundary>
-    </Box>
+    <Wrapper>
+      <GQLRenderer
+        ErrorFallback={ErrorFallback}
+        LoadingFallback={<Loader loading={true} />}
+      >
+        <ErrorBoundary FallbackComponent={ErrorFallback}>
+          <Suspense>
+            <PageLayout>
+              <PageLayoutHeader
+                fallbackPath={prefix('/', Paths.bookmarks)}
+              >
+                {params.id ? (
+                  <Header />
+                ) : (
+                  <Fragment>
+                    <Head prefix='Bookmarks -' title='All Bookmarks' />
+                    All Bookmarks
+                  </Fragment>
+                )}
+              </PageLayoutHeader>
+              <PageLayoutContent>
+                <Content />
+              </PageLayoutContent>
+            </PageLayout>
+          </Suspense>
+        </ErrorBoundary>
+      </GQLRenderer>
+    </Wrapper>
   );
 }
 BookmarkPage.dipsplayName = 'Bookmark Page';

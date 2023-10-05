@@ -3,6 +3,7 @@ import {
   RemoveRelationshipAction,
   RequestRelationshipAction,
 } from '../types';
+import { Role } from '../../../../shared';
 
 export interface RelationshipRequest {
   id: number;
@@ -64,6 +65,7 @@ export interface RequestRelationshipInput {
 }
 
 export interface IProfile {
+  role: Role;
   username: string;
   protected: boolean;
   displayName: string;
@@ -72,13 +74,6 @@ export interface IProfile {
   bio?: string;
 }
 
-export interface ProfileFormData {
-  displayName: string;
-  bio?: string;
-  avatar?: File;
-  coverImage?: File;
-}
-
-export interface UpdateProfilePayload {
-  payload: ProfileFormData;
+export interface BaseRelationshipButtonProps {
+  username: string;
 }

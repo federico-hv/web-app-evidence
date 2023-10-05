@@ -16,3 +16,32 @@ export function getSubComponent<T>(children: ReactNode, displayName: T) {
       : null;
   });
 }
+
+/**
+ * Returns an array containing all the child nodes excluding the ones
+ * that have the display names in the exclusion list.
+ * @param children
+ * @param exclusionList
+ */
+export function getSubComponentExcluding<T>(
+  children: ReactNode,
+  exclusionList: T[],
+) {
+  return React.Children.map(children, (child: any) => {
+    if (!child) return null;
+    if (child.type === undefined || !child.type || !child.type.displayName)
+      return child;
+
+    return !exclusionList.includes(child.type.displayName)
+      ? (child as ReactElement)
+      : null;
+  });
+}
+
+/**
+ * Check if react node has children
+ * @param node react node
+ */
+export function hasChildren(node: any): boolean {
+  return node && Array.isArray(node) && node.length > 0;
+}

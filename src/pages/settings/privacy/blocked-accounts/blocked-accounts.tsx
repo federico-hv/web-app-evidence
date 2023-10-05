@@ -1,7 +1,6 @@
 import {
   Error,
   Head,
-  HeaderLayout,
   Loader,
   Paths,
   LinkOverlay,
@@ -30,6 +29,7 @@ import {
   GET_BLOCKED_ACCOUNTS,
   useRemoveRelationshipAction,
 } from '../../../../features';
+import { HeaderLayout } from '../../../../layout';
 
 function BlockedSettingsPage() {
   const { data, loading, error } = useQuery<{
