@@ -95,10 +95,11 @@ function Footer() {
                 value={{ isOpen, onOpen, option, onClose }}
               >
                 <IconButton
-                  size='lg'
                   onClick={() => onOpen('')}
                   className={largeIcon()}
                   icon={'add'}
+                  radius={4}
+                  // colorTheme='secondary400'
                   ariaLabel={'create post'}
                 />
                 <CreatePostDialog />
