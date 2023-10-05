@@ -61,8 +61,6 @@ CustomPageLayoutHeader.displayName = 'PageLayoutHeader';
 function CustomHead() {
   const { state: profile } = useGeneralContext<IProfile>();
 
-  console.log(profile);
-
   return (
     <Head
       prefix=''
