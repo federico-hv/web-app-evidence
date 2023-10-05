@@ -54,11 +54,6 @@ function PeopleTab({ query }: { query: string }) {
   return (
     <Error hasError={!!error}>
       <Loader loading={loading}>
-        <Head
-          description='Search Results'
-          title={`${data?.search.count || 0} search results`}
-        />
-
         <Container maxWidth={600}>
           {data && data.search.count > 0 ? (
             <VStack flex={1}>
@@ -182,6 +177,10 @@ function DiscoverPage() {
 
   return (
     <Fragment>
+      <Head
+        prefix={!!query ? `${query} - ` : 'Holdr - '}
+        title='Discover'
+      />
       <ContentLayout>
         <ContentLayoutMain>
           <Box as='header'>
