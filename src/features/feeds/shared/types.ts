@@ -8,7 +8,7 @@ import { IconName } from '@holdr-ui/react/dist/shared/types';
 
 export type FeedReactionName = (typeof feedReaction)[number];
 
-export type FeedStatistic = (typeof feedStatistic)[number];
+export type FeedStatisticType = (typeof feedStatistic)[number];
 
 export type FeedReactionFetchType = (typeof feedReactionFetchType)[number];
 

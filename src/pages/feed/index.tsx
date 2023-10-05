@@ -1,7 +1,6 @@
 import { ErrorFallback, GQLRenderer, useScrollToTop } from '../../shared';
 import { Card, Container, Text, VStack } from '@holdr-ui/react';
 import { SuggestionsCard } from '../../features';
-import { Content, Header } from './ui';
 import {
   ContentLayout,
   ContentLayoutAside,
@@ -11,6 +10,7 @@ import {
   PageLayoutHeader,
 } from '../../layout';
 import { FeedProvider } from './shared';
+import { Header, Content } from './ui';
 
 function FeedPage() {
   useScrollToTop(document.querySelector('#root'));

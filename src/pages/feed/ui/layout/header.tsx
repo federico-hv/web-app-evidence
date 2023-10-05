@@ -1,7 +1,7 @@
-import { FeedContextProvider, FeedModel } from '../../../features';
-import { LinkText, prefix, useGeneralContext } from '../../../shared';
+import { FeedContextProvider, FeedModel } from '../../../../features';
+import { LinkText, prefix, useGeneralContext } from '../../../../shared';
 import { Heading, HStack, VStack } from '@holdr-ui/react';
-import MoreOptionsButton from './more-options.button';
+import { FeedMoreOptionsButton } from '../buttons';
 
 function Header() {
   const { state } = useGeneralContext<FeedModel>();
@@ -34,7 +34,7 @@ function Header() {
           createdAt: state.createdAt,
         }}
       >
-        <MoreOptionsButton type={state.type} />
+        <FeedMoreOptionsButton type={state.type} />
       </FeedContextProvider>
     </HStack>
   );

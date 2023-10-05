@@ -4,11 +4,14 @@ import {
   PostMedia,
   Polls,
   PostModel,
-} from '../../../features';
+} from '../../../../features';
 import { Text, VStack } from '@holdr-ui/react';
-import { SwitchConditional, SwitchConditionalCase } from '../../../shared';
+import {
+  SwitchConditional,
+  SwitchConditionalCase,
+} from '../../../../shared';
 
-function PostContent({ data }: { data: PostModel }) {
+function PostDetails({ data }: { data: PostModel }) {
   return (
     <VStack>
       <Text size={{ '@bp1': 2, '@bp3': 3 }}>{data.description}</Text>
@@ -27,6 +30,6 @@ function PostContent({ data }: { data: PostModel }) {
     </VStack>
   );
 }
-PostContent.displayName = 'PostContent';
+PostDetails.displayName = 'PostDetails';
 
-export default PostContent;
+export default PostDetails;

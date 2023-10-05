@@ -1,7 +1,6 @@
 import {
   Box,
   Center,
-  Heading,
   HStack,
   Icon,
   Switch,
@@ -11,12 +10,17 @@ import {
 } from '@holdr-ui/react';
 import { useEffect, useState } from 'react';
 
-import { useRecordState } from '../../../../../shared';
+import {
+  TextGroup,
+  TextGroupHeading,
+  TextGroupSubheading,
+  useRecordState,
+} from '../../../../../shared';
 import dayjs from 'dayjs';
 import { PollAnswerInput, SelectTime } from '../../inputs';
 import { AddPollProps, ITime } from './types';
 
-function AddPoll({ update, remove, reset, increaseHeight }: AddPollProps) {
+function AddPoll({ update, remove, reset }: AddPollProps) {
   const MaximumOptions = 4;
   const [responses, set] = useState(['', '']);
   const { switchState: withEndDate, turnOn, turnOff } = useSwitch(true);
@@ -90,7 +94,7 @@ function AddPoll({ update, remove, reset, increaseHeight }: AddPollProps) {
           ))}
           {responses.length < MaximumOptions && (
             <HStack
-              py={4}
+              py={{ '@bp1': 3, '@bp3': 4 }}
               gap={3}
               as='button'
               role='button'
@@ -100,12 +104,20 @@ function AddPoll({ update, remove, reset, increaseHeight }: AddPollProps) {
               radius={2}
               _hover={{ backgroundColor: '$base200' }}
               onClick={() => {
-                increaseHeight(62.5);
+                // increaseHeight(62.5);
                 addPoll();
               }}
             >
-              <Icon color='base600' name='add' size='lg' />
-              <Text weight={500} color='base600'>
+              <Icon
+                color='base600'
+                name='add'
+                size={{ '@bp1': 'sm', '@bp3': 'lg' }}
+              />
+              <Text
+                size={{ '@bp1': 2, '@bp3': 3 }}
+                weight={500}
+                color='base600'
+              >
                 Add Choice
               </Text>
             </HStack>
@@ -119,23 +131,31 @@ function AddPoll({ update, remove, reset, increaseHeight }: AddPollProps) {
         borderColor='base200'
         divider={<Box borderBottom={1} borderColor='base100' />}
       >
-        <VStack gap={1}>
-          <HStack justify='space-between'>
-            <Heading casing='capitalize' size={3} as='h5'>
+        <HStack as='label' gap={4} items='flex-start'>
+          <TextGroup>
+            <TextGroupHeading
+              casing='capitalize'
+              size={{ '@bp1': 2, '@bp3': 3 }}
+              as='h3'
+            >
               Open Poll
-            </Heading>
-            <Switch
-              value={`${withEndDate}`}
-              onChange={(e) =>
-                e.target.value === 'true' ? turnOff() : turnOn()
-              }
-            />
-          </HStack>
-          <Text size={2} color='base400'>
-            While enabled, users will be able to to vote on the poll
-            forever.
-          </Text>
-        </VStack>
+            </TextGroupHeading>
+            <TextGroupSubheading
+              size={{ '@bp1': 1, '@bp3': 2 }}
+              color='base400'
+            >
+              While enabled, users will be able to to vote on the poll
+              forever.
+            </TextGroupSubheading>
+          </TextGroup>
+          <Switch
+            size={{ '@bp1': 'sm', '@bp3': 'base' }}
+            value={`${withEndDate}`}
+            onChange={(e) =>
+              e.target.value === 'true' ? turnOff() : turnOn()
+            }
+          />
+        </HStack>
         {withEndDate && (
           <HStack gap={4}>
             <SelectTime
@@ -201,12 +221,12 @@ function AddPoll({ update, remove, reset, increaseHeight }: AddPollProps) {
           remove();
           reset();
         }}
-        p={4}
+        p={{ '@bp1': 3, '@bp3': 4 }}
         borderTop={1}
         borderColor='base200'
         _hover={{ backgroundColor: '#f2464617' }}
       >
-        <Text weight={500} color='danger'>
+        <Text size={{ '@bp1': 2, '@bp3': 3 }} weight={500} color='danger'>
           Remove poll
         </Text>
       </Center>

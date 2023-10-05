@@ -4,11 +4,11 @@ import {
   GeneralPostMoreButton,
   useCurrentUser,
   useFeedContext,
-} from '../../../features';
+} from '../../../../features';
 import { Box } from '@holdr-ui/react';
 import { Fragment } from 'react';
 
-function MoreOptionsButton({ type }: { type: 'article' | 'post' }) {
+function FeedMoreOptionsButton({ type }: { type: 'article' | 'post' }) {
   const { owner } = useFeedContext();
   const currentUser = useCurrentUser();
 
@@ -29,6 +29,6 @@ function MoreOptionsButton({ type }: { type: 'article' | 'post' }) {
     </Box>
   );
 }
-MoreOptionsButton.displayName = 'MoreOptionsButton';
+FeedMoreOptionsButton.displayName = 'FeedMoreOptionsButton';
 
-export default MoreOptionsButton;
+export default FeedMoreOptionsButton;

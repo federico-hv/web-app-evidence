@@ -9,6 +9,11 @@ function PollAnswerInput({ title, value, update }: PollAnswerInputProps) {
     <Box>
       <InputGroup>
         <Input
+          css={{
+            '@bp1': { fontSize: '$2' },
+            '@bp3': { fontSize: '$3' },
+          }}
+          size={{ '@bp1': 'sm', '@bp3': 'base' }}
           value={value}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
             update(e.target.value)
@@ -18,7 +23,8 @@ function PollAnswerInput({ title, value, update }: PollAnswerInputProps) {
         />
         <InputGroup.RightElement>
           <CircularProgress
-            thickness={3}
+            size={{ '@bp1': 16, '@bp3': 24 }}
+            thickness={{ '@bp1': 1, '@bp3': 3 }}
             value={Math.ceil((value.length / MAXIMUM_CHARACTERS) * 100)}
           />
         </InputGroup.RightElement>

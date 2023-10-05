@@ -47,7 +47,7 @@ export {
   CommonDialogActionButton,
   CommonDialogTrigger,
 } from './common-dialog';
-
+export { default as EmptyMessage } from './empty-message';
 export {
   default as MediaView,
   MediaViewAvatar,

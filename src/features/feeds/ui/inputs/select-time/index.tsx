@@ -12,7 +12,11 @@ function SelectTime({
   return (
     <FormControl>
       <FormControl.Label casing='capitalize'>{name}</FormControl.Label>
-      <Select value={value} onChange={onChange}>
+      <Select
+        size={{ '@bp1': 'sm', '@bp3': 'base' }}
+        value={value}
+        onChange={onChange}
+      >
         {arrayFrom(numberOfOptions)
           .filter((num) => num >= startFrom)
           .map((num) => (

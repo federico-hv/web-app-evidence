@@ -1,4 +1,4 @@
-import { ArticleModel } from '../../../features';
+import { ArticleModel } from '../../../../features';
 import {
   Button,
   Card,
@@ -9,7 +9,7 @@ import {
 } from '@holdr-ui/react';
 import { Link } from 'react-router-dom';
 
-function ArticleContent({ data }: { data: ArticleModel }) {
+function ArticleDetails({ data }: { data: ArticleModel }) {
   return (
     <Card boxShadow='none' radius={0}>
       <Card.Body>
@@ -46,6 +46,6 @@ function ArticleContent({ data }: { data: ArticleModel }) {
     </Card>
   );
 }
-ArticleContent.displayName = 'ArticleContent';
+ArticleDetails.displayName = 'ArticleDetails';
 
-export default ArticleContent;
+export default ArticleDetails;

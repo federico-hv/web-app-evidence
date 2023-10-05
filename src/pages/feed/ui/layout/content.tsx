@@ -6,7 +6,7 @@ import {
   PostModel,
   Reaction,
   ReactionPopover,
-} from '../../../features';
+} from '../../../../features';
 import {
   arrayFrom,
   DateUtility,
@@ -19,7 +19,7 @@ import {
   prefix,
   TextGroup,
   useGeneralContext,
-} from '../../../shared';
+} from '../../../../shared';
 import {
   Avatar,
   Box,
@@ -30,11 +30,9 @@ import {
   VStack,
 } from '@holdr-ui/react';
 import { capitalize } from 'lodash';
-import Statistic from './statistic';
-import PostContent from './post.content';
-import ArticleContent from './article.content';
-import { FeedReactionUsersDialog } from './index';
 import { useState } from 'react';
+import { FeedReactionUsersDialog } from '../dialogs';
+import { ArticleDetails, FeedStatistic, PostDetails } from '../groups';
 
 type Options = 'reactions' | 'views' | 'bookmarks' | undefined;
 
@@ -72,9 +70,12 @@ function Statistics() {
     >
       <GeneralContextProvider value={{ state, update }}>
         <StatisticsWrapper>
-          <Statistic name='views' />
-          <Statistic name='reactions' action={() => update('reactions')} />
-          <Statistic name='bookmarks' />
+          <FeedStatistic name='views' />
+          <FeedStatistic
+            name='reactions'
+            action={() => update('reactions')}
+          />
+          <FeedStatistic name='bookmarks' />
         </StatisticsWrapper>
         <FeedReactionUsersDialog />
       </GeneralContextProvider>
@@ -82,7 +83,7 @@ function Statistics() {
   );
 }
 
-function FeedContent() {
+function Content() {
   const { state } = useGeneralContext<FeedModel>();
 
   return (
@@ -131,12 +132,12 @@ function FeedContent() {
                     </TextGroup.Subheading>
                   </TextGroup>
                 </HStack>
-                {/*<MoreOptionsButton type.ts={state.type.ts} />*/}
+                {/*<FeedMoreOptionsButton type.ts={state.type.ts} />*/}
               </HStack>
               {state.type === 'post' ? (
-                <PostContent data={state.node as PostModel} />
+                <PostDetails data={state.node as PostModel} />
               ) : (
-                <ArticleContent data={state.node as ArticleModel} />
+                <ArticleDetails data={state.node as ArticleModel} />
               )}
 
               <Statistics />
@@ -189,6 +190,6 @@ function FeedContent() {
     </FeedContextProvider>
   );
 }
-FeedContent.displayName = 'FeedContent';
+Content.displayName = 'FeedContent';
 
-export default FeedContent;
+export default Content;

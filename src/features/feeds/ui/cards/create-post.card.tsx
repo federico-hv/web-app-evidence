@@ -39,7 +39,7 @@ function CreatePostCard() {
               justify='center'
               bgColor='base100'
               w='full'
-              px={4}
+              px={{ '@bp1': 3, '@bp3': 4 }}
               radius={4}
               h={{ '@bp1': 32, '@bp3': 40 }}
               border={1}

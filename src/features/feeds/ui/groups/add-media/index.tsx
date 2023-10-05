@@ -94,7 +94,7 @@ function AddMedia({ update, remove, reset }: AddMediaProps) {
       position='relative'
       border={1}
       borderColor='base200'
-      minHeight={350}
+      minHeight={{ '@bp1': 250, '@bp3': 350 }}
       w='100%'
       radius={4}
     >
@@ -115,13 +115,18 @@ function AddMedia({ update, remove, reset }: AddMediaProps) {
           <Fragment>
             <HStack gap={3} p={3} zIndex={10} position='absolute'>
               <Button
+                size={{ '@bp1': 'sm', '@bp3': 'base' }}
                 colorTheme='primary400'
                 leftIcon='settings-alt-outline'
               >
                 Edit
               </Button>
               {canAddMore && (
-                <Button colorTheme='primary400' leftIcon='add'>
+                <Button
+                  size={{ '@bp1': 'sm', '@bp3': 'base' }}
+                  colorTheme='primary400'
+                  leftIcon='add'
+                >
                   <PostMediaUpload onChange={handleOnChange} />
                   Add more
                 </Button>
@@ -179,12 +184,12 @@ function AddMedia({ update, remove, reset }: AddMediaProps) {
           remove();
           reset();
         }}
-        p={4}
+        p={{ '@bp1': 3, '@bp3': 4 }}
         borderTop={1}
         borderColor='base200'
         _hover={{ backgroundColor: '#f2464617' }}
       >
-        <Text weight={500} color='danger'>
+        <Text size={{ '@bp1': 2, '@bp3': 3 }} weight={500} color='danger'>
           Remove media
         </Text>
       </Center>

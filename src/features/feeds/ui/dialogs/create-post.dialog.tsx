@@ -72,6 +72,8 @@ function CreatePostDialog() {
     }
   };
 
+  console.log(option);
+
   return (
     <>
       {currentUser && (
@@ -83,45 +85,67 @@ function CreatePostDialog() {
           onClose={onClose}
         >
           <CommonDialogHeader label='Create Post' />
-          <CommonDialogContent>
+          <CommonDialogContent
+            h={{
+              '@bp1': 'calc(100% - 10px)',
+              '@bp3': 'calc(100% - 100px)',
+            }}
+          >
             <VStack
               py={4}
               gap={4}
-              h={{ '@bp1': 'calc(100% - 68px)', '@bp3': '100%' }}
+              h={{
+                '@bp1':
+                  option === 'media'
+                    ? 'calc(100% - 76px)'
+                    : 'calc(100% - 92px)',
+                '@bp3': '100%',
+              }}
             >
-              <HStack gap={3}>
+              <HStack gap={1}>
                 <Avatar
-                  size='lg'
+                  size={{ '@bp1': 'base', '@bp3': 'lg' }}
                   variant='squircle'
                   src={currentUser.avatar}
                 />
                 <VStack gap={1}>
-                  <Text weight={500}>{currentUser.displayName}</Text>
+                  <Box pl={3}>
+                    <Text size={{ '@bp1': 2, '@bp3': 3 }} weight={500}>
+                      {currentUser.displayName}
+                    </Text>
+                  </Box>
                   <Button
-                    leftIcon='global-outline'
                     size='sm'
+                    leftIcon='global-outline'
                     variant='ghost'
                   >
                     Everyone
                   </Button>
                 </VStack>
               </HStack>
+
               <VStack
+                className='needtoknow'
                 h='100%'
-                justify='space-between'
                 overflowY='auto'
                 pb={4}
                 gap={4}
               >
-                <Box flex={1} as='label' minHeight={75}>
+                <Box
+                  as='label'
+                  h={option === '' ? '100%' : 'auto'}
+                  minHeight={{ '@bp1': 75, '@bp3': 75 }}
+                >
                   <StyledTextarea
                     autoFocus
-                    css={{ padding: 0 }}
+                    css={{
+                      padding: 0,
+                    }}
                     value={state.description}
                     onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
                       update({ description: e.target.value });
                     }}
-                    fontSize={switchState ? 'sm' : 'lg'}
+                    // fontSize={switchState ? 'sm' : 'lg'}
                     minLines={1}
                     maxLines={3}
                     maxLength={150}
@@ -166,6 +190,7 @@ function CreatePostDialog() {
               position='fixed'
               b={81}
               w='100%'
+              l={0}
               gap={4}
               px={0}
               css={{

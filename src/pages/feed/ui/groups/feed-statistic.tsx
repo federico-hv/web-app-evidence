@@ -3,8 +3,8 @@ import { useSuspenseQuery } from '@apollo/client';
 import {
   GET_FEED_STATISTIC,
   useFeedContext,
-  FeedStatistic,
-} from '../../../features';
+  FeedStatisticType,
+} from '../../../../features';
 import { capitalize } from 'lodash';
 import { HStack, Text } from '@holdr-ui/react';
 
@@ -14,17 +14,17 @@ const Readable = {
   reactions: 'reaction',
 };
 
-function Statistic({
+function FeedStatistic({
   name,
   action,
 }: {
-  name: FeedStatistic;
+  name: FeedStatisticType;
   action?: VoidFunction;
 }) {
   const { feedId } = useFeedContext();
   const { data } = useSuspenseQuery<
     { feedStatistic: number },
-    { id: string; name: FeedStatistic }
+    { id: string; name: FeedStatisticType }
   >(GET_FEED_STATISTIC, {
     variables: {
       id: feedId,
@@ -66,6 +66,6 @@ function Statistic({
     </HStack>
   );
 }
-Statistic.displayName = 'Statistic';
+FeedStatistic.displayName = 'FeedStatistic';
 
-export default Statistic;
+export default FeedStatistic;

@@ -15,6 +15,7 @@ import {
   CommonDialogContent,
   CommonDialogHeader,
   DialogTabContextProvider,
+  EmptyMessage,
   Error,
   ErrorFallback,
   GQLRenderer,
@@ -41,7 +42,6 @@ import {
   useCanViewProfile,
 } from '../../shared';
 import millify from 'millify';
-import { EmptyMessage } from '../layout/content';
 
 function RelationshipSummary() {
   const { username } = useParams();

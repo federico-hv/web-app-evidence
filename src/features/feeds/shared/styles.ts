@@ -3,6 +3,8 @@ import { Textarea } from '@holdr-ui/react';
 
 const StyledTextarea = styled(Textarea, {
   borderWidth: '0 !important',
+  '@bp1': {},
+  '@bp3': {},
   variants: {
     fontSize: {
       lg: {

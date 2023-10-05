@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import { StringNumeric } from '../../types';
 
 export type CommonDialogSCNames =
   | 'CommonDialogHeader'
@@ -9,7 +10,7 @@ export type CommonDialogSCNames =
 
 export interface CommonDialogProps {
   ariaDescribedBy?: string;
-  minHeight?: number;
+  minHeight?: StringNumeric;
   children?: ReactNode;
   isOpen: boolean;
   onOpen: VoidFunction;
