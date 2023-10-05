@@ -1,6 +1,6 @@
 export class FileUtility {
   /**
-   * Check if a file mime type matches expected file type
+   * Check if a file mime type.ts matches expected file type.ts
    * @param mimeType
    * @param expectedType
    */
@@ -10,7 +10,7 @@ export class FileUtility {
   }
 
   /**
-   * Get a file type, given the mime type
+   * Get a file type.ts, given the mime type.ts
    * @param mimeType
    */
   static getType(mimeType: string): 'image' | 'video' {
@@ -21,7 +21,7 @@ export class FileUtility {
       case 'video':
         return 'video';
       default:
-        throw new Error('Media type not supported.');
+        throw new Error('Media type.ts not supported.');
     }
   }
 }

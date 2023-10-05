@@ -1,9 +1,9 @@
 import { Box, Container, useWindowSize, VStack } from '@holdr-ui/react';
 import {
-  ErrorFallback,
   GenericProps,
   GQLRenderer,
   Head,
+  NotFoundError,
   useGeneralContext,
   useScrollPosition,
 } from '../../shared';
@@ -61,8 +61,11 @@ CustomPageLayoutHeader.displayName = 'PageLayoutHeader';
 function CustomHead() {
   const { state: profile } = useGeneralContext<IProfile>();
 
+  console.log(profile);
+
   return (
     <Head
+      prefix=''
       title={`${profile.displayName} (@${profile.username})`}
       description={profile.bio || ''}
     />
@@ -74,10 +77,10 @@ function ProfilePage() {
   const { width } = useWindowSize();
 
   return (
-    <GQLRenderer ErrorFallback={ErrorFallback}>
+    <GQLRenderer ErrorFallback={() => <NotFoundError q={username} />}>
       <ProfileProvider>
+        <CustomHead />
         <RelationshipProvider username={username || ''}>
-          <CustomHead />
           <ContentLayout>
             <ContentLayoutMain>
               <PageLayout>

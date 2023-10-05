@@ -127,7 +127,7 @@ function ProfileDrawer() {
                   <VStack borderTop={1} borderColor='base100'>
                     <ProfileDrawerOption
                       onClick={onClose}
-                      to={Paths.allBookmarks}
+                      to={Paths.bookmarks}
                       label='Bookmarks'
                       icon='bookmark-outline'
                     />

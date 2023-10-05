@@ -23,7 +23,7 @@ function HistoryHeader({ history }: { history: IReturnMany<UserModel> }) {
           pt={2}
           pb={4}
         >
-          <Heading as='h3' size={4}>
+          <Heading as='h3' size={{ '@bp1': 3, '@bp3': 4 }}>
             Recent
           </Heading>
           <Button

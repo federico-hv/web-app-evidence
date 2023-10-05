@@ -65,7 +65,32 @@ function Search() {
   };
 
   return (
-    <Box w='full'>
+    <Box
+      w='full'
+      css={{
+        '& .spotlight__input-wrapper > div:nth-child(2)': {
+          backgroundColor: '#FFF !important',
+        },
+        '@bp1': {
+          fontSize: '$2 !important',
+          'input, input::placeholder': {
+            fontSize: '$2 !important',
+          },
+          '& #results:last-child': {
+            fontSize: '$2 !important',
+          },
+        },
+        '@bp3': {
+          fontSize: '$3 !important',
+          'input, input::placeholder': {
+            fontSize: '$3 !important',
+          },
+          '& #results:last-child': {
+            fontSize: '$3 !important',
+          },
+        },
+      }}
+    >
       <Spotlight>
         <Spotlight.Input onValueChange={handleValueChange} />
         <Spotlight.Content isLoading={loading}>

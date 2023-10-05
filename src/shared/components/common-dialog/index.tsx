@@ -223,7 +223,26 @@ function CommonDialogActionButton({
 }
 CommonDialogActionButton.displayName = 'CommonDialogActionButton';
 
+function CustomCommonDialogButtonWrapper({ children }: GenericProps) {
+  return (
+    <Box
+      w='100%'
+      borderTop={1}
+      borderColor='base100'
+      position='fixed'
+      p={4}
+      l={0}
+      b={0}
+      zIndex={10}
+      css={{ backgroundColor: '#FFF' }}
+    >
+      {children}
+    </Box>
+  );
+}
+
 export {
+  CustomCommonDialogButtonWrapper,
   CommonDialogHeader,
   CommonDialogContent,
   CommonDialogActionButton,

@@ -5,16 +5,16 @@ import { Suspense, useEffect } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { SearchBox, BookmarkGroupsList } from './ui';
 import {
-  CreateBookmarkGroup,
-  CreateBookmarkGroupTrigger,
-} from '../../features';
-import {
   PageLayout,
   PageLayoutContent,
   PageLayoutHeader,
   ShelfLayout,
   ShelfLayoutShelf,
 } from '../../layout';
+import {
+  CreateBookmarkGroup,
+  CreateBookmarkGroupTrigger,
+} from '../../features';
 
 function BookmarksPage() {
   const { width } = useWindowSize();
