@@ -104,7 +104,8 @@ function ProfilePage() {
                     <InfoGroup />
                     <RelationshipsGroup />
                   </VStack>
-                  <Box borderBottom={1} borderColor='base100' />
+                  {/* Horizontal Rule*/}
+                  <Box borderBottom={1} borderColor='base100' />{' '}
                   <ProfileContent />
                 </PageLayoutContent>
               </PageLayout>

@@ -239,7 +239,7 @@ function Content() {
 
   return (
     <Fragment>
-      {!canViewProfile && (
+      {!canViewProfile && !data.relationshipStatusInfo.isBlocked && (
         <AccountUnavailable
           icon='lock-fill'
           title='Protected Account'
