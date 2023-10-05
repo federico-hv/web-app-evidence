@@ -239,24 +239,25 @@ function Content() {
 
   return (
     <Fragment>
-      {!canViewProfile && !data.relationshipStatusInfo.isBlocked && (
+      {!canViewProfile && !data.relationshipStatusInfo.isBlocked ? (
         <AccountUnavailable
           icon='lock-fill'
           title='Protected Account'
           subtitle={` This account is protected. Request to follow @${profile.username} to view their activity and cosigns.`}
         />
-      )}
-      {canViewProfile && !data.relationshipStatusInfo.isBlocked ? (
-        <GQLRenderer ErrorFallback={() => <Fragment />}>
-          {profile.role === 'artist' && <ArtistContent />}
-          {profile.role === 'general' && <GeneralUserContent />}
-        </GQLRenderer>
       ) : (
         <AccountUnavailable
           icon='information-fill'
           title='Blocked Account'
           subtitle={` This account is blocked. Unblock @${profile.username} to view their profile.`}
         />
+      )}
+
+      {canViewProfile && !data.relationshipStatusInfo.isBlocked && (
+        <GQLRenderer ErrorFallback={() => <Fragment />}>
+          {profile.role === 'artist' && <ArtistContent />}
+          {profile.role === 'general' && <GeneralUserContent />}
+        </GQLRenderer>
       )}
     </Fragment>
   );
