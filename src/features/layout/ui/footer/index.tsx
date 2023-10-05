@@ -6,10 +6,12 @@ import {
   ResponsiveItem,
   useIsBottomOf,
   useScrollDirection,
+  useScrollPosition,
 } from '../../../../shared';
 import { Link, matchPath, useLocation } from 'react-router-dom';
 
 function Footer() {
+  const { top } = useScrollPosition('#root');
   const isBottom = useIsBottomOf('#root');
   const { direction, delta } = useScrollDirection('#root');
   const { pathname } = useLocation();
@@ -19,7 +21,7 @@ function Footer() {
       <ResponsiveItem mobile='show'>
         <Box
           display={
-            !isBottom && direction === 'down' && delta > 0
+            top >= 15 && !isBottom && direction === 'down' && delta > 0
               ? 'none'
               : 'block'
           }

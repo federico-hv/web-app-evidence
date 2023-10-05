@@ -2,9 +2,15 @@ import { Fragment } from 'react';
 import { Box, HStack } from '@holdr-ui/react';
 import { GQLRenderer, Logo } from '../../shared/components';
 import ProfileDrawer from './profile.drawer';
-import { useScrollDirection } from '../../shared';
+import {
+  useIsBottomOf,
+  useScrollDirection,
+  useScrollPosition,
+} from '../../shared';
 
 function SmNavigation() {
+  const { top } = useScrollPosition('#root');
+  const isBottom = useIsBottomOf('#root');
   const { direction, delta } = useScrollDirection('#root');
 
   return (
@@ -17,7 +23,10 @@ function SmNavigation() {
         blur: '12px',
         zIndex: 50,
         '@bp1': {
-          display: direction === 'down' && delta > 0 ? 'none' : 'block',
+          display:
+            top >= 15 && !isBottom && direction === 'down' && delta > 0
+              ? 'none'
+              : 'block',
         },
       }}
     >
