@@ -23,6 +23,8 @@ export const useLogout = () => {
     });
     setCurrentUser(null);
 
+    console.log(cookie.getAll());
+
     navigate(prefix('/', Paths.root));
   };
 
