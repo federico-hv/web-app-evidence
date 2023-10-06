@@ -79,7 +79,7 @@ function MessagesPage() {
                     Messages
                     <IconButton
                       variant='ghost'
-                      icon='more-fill'
+                      icon='edit-box-outline'
                       ariaLabel='options'
                     />
                   </PageLayoutHeader>
