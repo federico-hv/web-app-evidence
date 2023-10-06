@@ -57,8 +57,8 @@ function MediaView({ children }: GenericProps) {
             <AnimatePresence>
               <Box
                 position='fixed'
-                w='w-screen'
-                h='h-screen'
+                w='100%'
+                h='100%'
                 t={0}
                 l={0}
                 zIndex={100}
@@ -88,8 +88,9 @@ function MediaView({ children }: GenericProps) {
                     h='100%'
                     w='100%'
                     items='center'
+                    gap={4}
                     justify='space-between'
-                    p={{ '@bp1': '2', '@bp4': 4 }}
+                    p={{ '@bp1': 3, '@bp4': 4 }}
                   >
                     <Box />
                     {Content}
