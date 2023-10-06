@@ -262,9 +262,9 @@ export const globalStyles = globalCss({
     padding: 0,
     border: 0,
   },
-  html: {
-    unset: 'all !important',
-  },
+  // html: {
+  //   unset: 'all !important',
+  // },
   body: {
     backgroundColor: '#fbfbfa',
     fontFamily: 'Rubik, ui-sans-serif, system-ui',
