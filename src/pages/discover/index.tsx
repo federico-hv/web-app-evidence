@@ -8,13 +8,13 @@ import {
   VStack,
 } from '@holdr-ui/react';
 import {
-  Error,
   Head,
   IReturnMany,
   UserModel,
-  Loader,
   useGoBack,
   TabBorderFix,
+  GQLRenderer,
+  ErrorFallback,
 } from '../../shared';
 import {
   SEARCH,
@@ -22,8 +22,7 @@ import {
   UserWithRelationshipAction,
 } from '../../features';
 import { useSearchParams } from 'react-router-dom';
-import { Fragment } from 'react';
-import { useQuery } from '@apollo/client';
+import { useSuspenseQuery } from '@apollo/client';
 import {
   ContentLayout,
   ContentLayoutAside,
@@ -37,40 +36,38 @@ import {
  */
 
 function useSearchResults(queryString: string) {
-  const { data, loading, error } = useQuery<
+  const { data } = useSuspenseQuery<
     {
       search: IReturnMany<UserModel>;
     },
     { queryString: string }
   >(SEARCH, { variables: { queryString: queryString } });
 
-  return { data, loading, error };
+  return { data };
 }
 
 function PeopleTab({ query }: { query: string }) {
-  const { loading, error, data } = useSearchResults(query);
+  const { data } = useSearchResults(query);
 
   return (
-    <Error hasError={!!error}>
-      <Loader loading={loading}>
-        <Container maxWidth={600}>
-          {data && data.search.count > 0 ? (
-            <VStack flex={1}>
-              {data.search.data.map((user) => (
-                <UserWithRelationshipAction key={user.id} data={user} />
-              ))}
-            </VStack>
-          ) : (
-            <Text size={2}>
-              We could not find any user that matches
-              <Text weight={500} css={{ display: 'inline' }}>
-                {` "${query}"`}
-              </Text>
+    <GQLRenderer ErrorFallback={ErrorFallback}>
+      <Container maxWidth={600}>
+        {data && data.search.count > 0 ? (
+          <VStack flex={1}>
+            {data.search.data.map((user) => (
+              <UserWithRelationshipAction key={user.id} data={user} />
+            ))}
+          </VStack>
+        ) : (
+          <Text size={2}>
+            We could not find any user that matches
+            <Text weight={500} css={{ display: 'inline' }}>
+              {` "${query}"`}
             </Text>
-          )}
-        </Container>
-      </Loader>
-    </Error>
+          </Text>
+        )}
+      </Container>
+    </GQLRenderer>
   );
 }
 
@@ -170,7 +167,7 @@ function DiscoverPage() {
   const query = searchParams.get('q');
 
   return (
-    <Fragment>
+    <GQLRenderer ErrorFallback={ErrorFallback}>
       <Head
         prefix={!!query ? `${query} - ` : 'Holdr - '}
         title='Discover'
@@ -209,7 +206,7 @@ function DiscoverPage() {
         </ContentLayoutMain>
         <ContentLayoutAside></ContentLayoutAside>
       </ContentLayout>
-    </Fragment>
+    </GQLRenderer>
   );
 }
 DiscoverPage.displayName = 'DiscoverPage';
