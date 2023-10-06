@@ -11,6 +11,7 @@ import {
   Error,
   GQLRenderer,
   Loader,
+  TabBorderFix,
   TextGroup,
   useGeneralContext,
 } from '../../../../shared';
@@ -60,69 +61,71 @@ function ArtistContent() {
   const { state: profile } = useGeneralContext<IProfile>();
 
   return (
-    <Tabs defaultValue='posts'>
-      <Tabs.List
-        variant='link'
-        css={{
-          position: 'sticky',
-          backgroundColor: '$clearTint500',
-          blur: '12px',
-          zIndex: 5,
-          '& button': {
-            height: '$7',
-          },
-          '@bp1': {
-            t: 0,
-          },
-          '@bp3': {
-            t: '65px',
-          },
-        }}
-      >
-        <Container maxWidth={600}>
-          <Tabs.Trigger value='posts'>
-            <Text weight={500} size={{ '@bp1': 2, '@bp3': 3 }}>
-              Posts
-            </Text>
-          </Tabs.Trigger>
-          <Tabs.Trigger value='articles'>
-            <Text weight={500} size={{ '@bp1': 2, '@bp3': 3 }}>
-              Articles
-            </Text>
-          </Tabs.Trigger>
-          <Tabs.Trigger value='cosign'>
-            <Text weight={500} size={{ '@bp1': 2, '@bp3': 3 }}>
-              Co-signs
-            </Text>
-          </Tabs.Trigger>
-        </Container>
-      </Tabs.List>
-      <Tabs.Content value='posts'>
-        <Feeds
-          type='post'
-          emptyMessage={{
-            title: 'No posts',
-            subtitle: `${profile.displayName} has not yet created any posts.`,
+    <TabBorderFix>
+      <Tabs defaultValue='posts'>
+        <Tabs.List
+          variant='link'
+          css={{
+            position: 'sticky',
+            backgroundColor: '$clearTint500',
+            blur: '12px',
+            zIndex: 5,
+            '& button': {
+              height: '$7',
+            },
+            '@bp1': {
+              t: 0,
+            },
+            '@bp3': {
+              t: '65px',
+            },
           }}
-        />
-      </Tabs.Content>
-      <Tabs.Content value='articles'>
-        <Feeds
-          type='article'
-          emptyMessage={{
-            title: 'No articles',
-            subtitle: `${profile.displayName} has not yet added any articles.`,
-          }}
-        />
-      </Tabs.Content>
-      <Tabs.Content value='cosign'>
-        <EmptyMessage
-          title='No co-signs'
-          subtitle={`${profile.displayName} has not yet received any music release
+        >
+          <Container maxWidth={600}>
+            <Tabs.Trigger value='posts'>
+              <Text weight={500} size={{ '@bp1': 2, '@bp3': 3 }}>
+                Posts
+              </Text>
+            </Tabs.Trigger>
+            <Tabs.Trigger value='articles'>
+              <Text weight={500} size={{ '@bp1': 2, '@bp3': 3 }}>
+                Articles
+              </Text>
+            </Tabs.Trigger>
+            <Tabs.Trigger value='cosign'>
+              <Text weight={500} size={{ '@bp1': 2, '@bp3': 3 }}>
+                Co-signs
+              </Text>
+            </Tabs.Trigger>
+          </Container>
+        </Tabs.List>
+        <Tabs.Content value='posts'>
+          <Feeds
+            type='post'
+            emptyMessage={{
+              title: 'No posts',
+              subtitle: `${profile.displayName} has not yet created any posts.`,
+            }}
+          />
+        </Tabs.Content>
+        <Tabs.Content value='articles'>
+          <Feeds
+            type='article'
+            emptyMessage={{
+              title: 'No articles',
+              subtitle: `${profile.displayName} has not yet added any articles.`,
+            }}
+          />
+        </Tabs.Content>
+        <Tabs.Content value='cosign'>
+          <EmptyMessage
+            title='No co-signs'
+            subtitle={`${profile.displayName} has not yet received any music release
             co-signs.`}
-        />
-      </Tabs.Content>
-    </Tabs>
+          />
+        </Tabs.Content>
+      </Tabs>
+    </TabBorderFix>
   );
 }
 
@@ -135,65 +138,67 @@ function GeneralUserContent() {
   >(GET_REACTED_FEEDS, { variables: { username: profile.username } });
 
   return (
-    <Tabs defaultValue='activity'>
-      <Tabs.List
-        variant='link'
-        css={{
-          position: 'sticky',
-          backgroundColor: '$clearTint500',
-          blur: '12px',
-          zIndex: 5,
-          '& button': {
-            height: '$7',
-          },
-          '@bp1': {
-            t: 0,
-          },
-          '@bp3': {
-            t: '65px',
-          },
-        }}
-      >
-        <Container maxWidth={600}>
-          <Tabs.Trigger value='activity'>
-            <Text weight={500} size={{ '@bp1': 2, '@bp3': 3 }}>
-              Activity
-            </Text>
-          </Tabs.Trigger>
-          <Tabs.Trigger value='cosigns'>
-            <Text weight={500} size={{ '@bp1': 2, '@bp3': 3 }}>
-              Co-signs
-            </Text>
-          </Tabs.Trigger>
-        </Container>
-      </Tabs.List>
-      <Tabs.Content value='activity'>
-        <Error hasError={!!error} errorMessage={error?.message}>
-          <Loader loading={loading}>
-            <Container maxWidth='600px'>
-              {data && data.reactedFeeds.count > 0 ? (
-                <VStack gap={6} pb={6} w='100%'>
-                  {data.reactedFeeds.data.map((item) => (
-                    <FeedCard key={item.id} data={item} />
-                  ))}
-                </VStack>
-              ) : (
-                <EmptyMessage
-                  title='No activity yet'
-                  subtitle={`${profile.displayName} has not yet reacted to anything.`}
-                />
-              )}
-            </Container>
-          </Loader>
-        </Error>
-      </Tabs.Content>
-      <Tabs.Content value='cosigns'>
-        <EmptyMessage
-          title='No co-signs yet'
-          subtitle={`${profile.displayName} has not yet co-signed any music release.`}
-        />
-      </Tabs.Content>
-    </Tabs>
+    <TabBorderFix>
+      <Tabs defaultValue='activity'>
+        <Tabs.List
+          variant='link'
+          css={{
+            position: 'sticky',
+            backgroundColor: '$clearTint500',
+            blur: '12px',
+            zIndex: 5,
+            '& button': {
+              height: '$7',
+            },
+            '@bp1': {
+              t: 0,
+            },
+            '@bp3': {
+              t: '65px',
+            },
+          }}
+        >
+          <Container maxWidth={600}>
+            <Tabs.Trigger value='activity'>
+              <Text weight={500} size={{ '@bp1': 2, '@bp3': 3 }}>
+                Activity
+              </Text>
+            </Tabs.Trigger>
+            <Tabs.Trigger value='cosigns'>
+              <Text weight={500} size={{ '@bp1': 2, '@bp3': 3 }}>
+                Co-signs
+              </Text>
+            </Tabs.Trigger>
+          </Container>
+        </Tabs.List>
+        <Tabs.Content value='activity'>
+          <Error hasError={!!error} errorMessage={error?.message}>
+            <Loader loading={loading}>
+              <Container maxWidth='600px'>
+                {data && data.reactedFeeds.count > 0 ? (
+                  <VStack gap={6} pb={6} w='100%'>
+                    {data.reactedFeeds.data.map((item) => (
+                      <FeedCard key={item.id} data={item} />
+                    ))}
+                  </VStack>
+                ) : (
+                  <EmptyMessage
+                    title='No activity yet'
+                    subtitle={`${profile.displayName} has not yet reacted to anything.`}
+                  />
+                )}
+              </Container>
+            </Loader>
+          </Error>
+        </Tabs.Content>
+        <Tabs.Content value='cosigns'>
+          <EmptyMessage
+            title='No co-signs yet'
+            subtitle={`${profile.displayName} has not yet co-signed any music release.`}
+          />
+        </Tabs.Content>
+      </Tabs>
+    </TabBorderFix>
   );
 }
 

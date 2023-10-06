@@ -20,6 +20,7 @@ import {
   useGoBack,
   ErrorFallback,
   GQLRenderer,
+  TabBorderFix,
 } from '../../shared';
 import { CommonRelationshipButton, SEARCH, Search } from '../../features';
 import { useSearchParams } from 'react-router-dom';
@@ -140,53 +141,55 @@ function SearchResults() {
 
 function DiscoverContent() {
   return (
-    <Tabs defaultValue='for-you'>
-      <Tabs.List
-        variant='link'
-        css={{
-          position: 'sticky',
-          backgroundColor: '$clearTint500',
-          blur: '12px',
-          zIndex: 5,
-          '& button': {
-            height: '$7',
-          },
-          '@bp1': {
-            t: 0,
-          },
-          '@bp3': {
-            t: '65px',
-          },
-        }}
-      >
-        <Container maxWidth={600}>
-          <Tabs.Trigger value='for-you'>
+    <TabBorderFix>
+      <Tabs defaultValue='for-you'>
+        <Tabs.List
+          variant='link'
+          css={{
+            position: 'sticky',
+            backgroundColor: '$clearTint500',
+            blur: '12px',
+            zIndex: 5,
+            '& button': {
+              height: '$7',
+            },
+            '@bp1': {
+              t: 0,
+            },
+            '@bp3': {
+              t: '65px',
+            },
+          }}
+        >
+          <Container maxWidth={600}>
+            <Tabs.Trigger value='for-you'>
+              <Text weight={500} size={{ '@bp1': 2, '@bp3': 3 }}>
+                For you
+              </Text>
+            </Tabs.Trigger>
+            <Tabs.Trigger value='trending'>
+              <Text weight={500} size={{ '@bp1': 2, '@bp3': 3 }}>
+                Trending
+              </Text>
+            </Tabs.Trigger>
+          </Container>
+        </Tabs.List>
+        <Tabs.Content value='for-you'>
+          <Container maxWidth={600}>
             <Text weight={500} size={{ '@bp1': 2, '@bp3': 3 }}>
               For you
             </Text>
-          </Tabs.Trigger>
-          <Tabs.Trigger value='trending'>
+          </Container>
+        </Tabs.Content>
+        <Tabs.Content value='trending'>
+          <Container maxWidth={600}>
             <Text weight={500} size={{ '@bp1': 2, '@bp3': 3 }}>
               Trending
             </Text>
-          </Tabs.Trigger>
-        </Container>
-      </Tabs.List>
-      <Tabs.Content value='for-you'>
-        <Container maxWidth={600}>
-          <Text weight={500} size={{ '@bp1': 2, '@bp3': 3 }}>
-            For you
-          </Text>
-        </Container>
-      </Tabs.Content>
-      <Tabs.Content value='trending'>
-        <Container maxWidth={600}>
-          <Text weight={500} size={{ '@bp1': 2, '@bp3': 3 }}>
-            Trending
-          </Text>
-        </Container>
-      </Tabs.Content>
-    </Tabs>
+          </Container>
+        </Tabs.Content>
+      </Tabs>
+    </TabBorderFix>
   );
 }
 
