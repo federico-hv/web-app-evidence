@@ -24,6 +24,11 @@ export function App() {
 
     node?.removeAttribute('style');
 
+    if (node) {
+      node.style.overflow = '';
+      node.style.position = '';
+    }
+
     return () => node?.setAttribute('style', '');
   }, []);
 
