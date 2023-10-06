@@ -38,7 +38,7 @@ function CustomPageLayoutHeader({
 }: GenericProps & { appearAfter: number }) {
   const [containerWidth, setContainerWidth] = useState(0);
   const ref = useRef<HTMLDivElement>();
-  const { top } = useScrollPosition('#root');
+  const { top } = useScrollPosition();
   const { width } = useWindowSize();
 
   useEffect(() => {

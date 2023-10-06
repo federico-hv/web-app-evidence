@@ -10,4 +10,5 @@ export {
   PageLayoutHeader,
   PageLayoutContent,
 } from './page';
-export { default as SmNavigation } from './sm-navigation';
+
+export * from './navigation';

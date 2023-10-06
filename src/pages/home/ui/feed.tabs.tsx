@@ -9,7 +9,7 @@ import {
 import {
   Error,
   Loader,
-  useIsBottomOf,
+  useIsBottom,
   useScrollDirection,
 } from '../../../shared';
 import { Alert, Container, Tabs, VStack } from '@holdr-ui/react';
@@ -53,8 +53,8 @@ function Feeds({ type = 'all' }: { type: 'all' | 'article' | 'post' }) {
 }
 
 function FeedTabs() {
-  const isBottom = useIsBottomOf('#root');
-  const { direction, delta } = useScrollDirection('#root');
+  const isBottom = useIsBottom();
+  const { direction, delta } = useScrollDirection();
 
   return (
     <Tabs defaultValue='all'>

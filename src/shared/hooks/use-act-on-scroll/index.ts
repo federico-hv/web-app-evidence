@@ -13,7 +13,7 @@ export function useActOnScroll(
   offset: number,
   action: VoidFunction,
 ) {
-  const { delta } = useScrollDirection('#root');
+  const { delta } = useScrollDirection();
   const node = document.querySelector(selectors);
 
   useEffect(() => {

@@ -4,32 +4,29 @@ import { useEffect } from 'react';
 /**
  * Get the current top and left scroll positions
  *
- * @param selectors CSS selectors.
  */
-export function useScrollPosition(selectors: string): {
+export function useScrollPosition(): {
   top: number;
   left: number;
 } {
   const [state, update] = useRecordState<{
-    top: 0;
-    left: 0;
+    top: number;
+    left: number;
   }>({
     top: 0,
     left: 0,
   });
 
-  const node = document.querySelector(selectors);
+  // const node = document.querySelector(selectors);
 
   useEffect(() => {
-    const setPositions = (e: any) =>
-      update({ top: e.target.scrollTop, left: e.target.scrollLeft });
+    const setPositions = () =>
+      update({ top: window.scrollY, left: window.scrollX });
 
-    if (node) {
-      node.addEventListener('scroll', setPositions);
+    window.addEventListener('scroll', setPositions);
 
-      return () => node.removeEventListener('scroll', setPositions);
-    }
-  }, [node, update]);
+    return () => window.removeEventListener('scroll', setPositions);
+  }, [update]);
 
   return state;
 }

@@ -1,26 +1,25 @@
 import { Fragment } from 'react';
 import { Box, HStack } from '@holdr-ui/react';
-import { GQLRenderer, Logo } from '../../shared/components';
+import { GQLRenderer, Logo } from '../../../shared/components';
 import ProfileDrawer from './profile.drawer';
 import {
-  useIsBottomOf,
+  useIsBottom,
   useScrollDirection,
   useScrollPosition,
-} from '../../shared';
+} from '../../../shared';
 
 function SmNavigation() {
-  const { top } = useScrollPosition('#root');
-  const isBottom = useIsBottomOf('#root');
-  const { direction, delta } = useScrollDirection('#root');
+  const { top } = useScrollPosition();
+  const isBottom = useIsBottom();
+  const { direction, delta } = useScrollDirection();
 
   return (
     <Box
       position='fixed'
       t={0}
       w='100%'
-      bgColor='clearTint500'
       css={{
-        blur: '12px',
+        backgroundColor: '#FFF',
         zIndex: 50,
         '@bp1': {
           display:

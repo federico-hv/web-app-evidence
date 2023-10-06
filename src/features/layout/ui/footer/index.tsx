@@ -11,7 +11,7 @@ import {
   prefix,
   Responsive,
   ResponsiveItem,
-  useIsBottomOf,
+  useIsBottom,
   useScrollDirection,
   useScrollPosition,
 } from '../../../../shared';
@@ -28,9 +28,9 @@ const largeIcon = css({
 function Footer() {
   const currentUser = useCurrentUser();
 
-  const { top } = useScrollPosition('#root');
-  const isBottom = useIsBottomOf('#root');
-  const { direction, delta } = useScrollDirection('#root');
+  const { top } = useScrollPosition();
+  const isBottom = useIsBottom();
+  const { direction, delta } = useScrollDirection();
 
   const { pathname } = useLocation();
 
