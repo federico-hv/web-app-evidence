@@ -1,21 +1,23 @@
 import { GenericProps } from '../../interfaces';
-import { AvatarProps } from '@holdr-ui/react/dist/components/avatar/src/avatar.types';
 import {
   Avatar,
   Box,
-  CloseButton,
+  Button,
   Image,
   useDisclosure,
   useKeyBind,
   useNoScroll,
   VStack,
 } from '@holdr-ui/react';
-import { ImageProps } from '@holdr-ui/react/dist/components/image/src/image.types';
 import { getSubComponent } from '../../utilities';
 import { Fragment } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { createPortal } from 'react-dom';
 import { MediaViewSCNames } from './type';
+import { extraBtnPadding } from '../../styles';
+
+import { ImageProps } from '@holdr-ui/react/dist/components/image/src/image.types';
+import { AvatarProps } from '@holdr-ui/react/dist/components/avatar/src/avatar.types';
 
 /*
   Anatomy:
@@ -40,8 +42,7 @@ function MediaView({ children }: GenericProps) {
     'MediaViewContent',
   );
 
-  // cannot scroll
-  useNoScroll();
+  useNoScroll(isOpen);
   // close with ESCAPE
   useKeyBind(27, onClose);
 
@@ -63,18 +64,6 @@ function MediaView({ children }: GenericProps) {
                 zIndex={100}
               >
                 <Box position='relative' w='100%' h='100%'>
-                  <Box
-                    position='absolute'
-                    t={{ '@bp1': '0.25rem', '@bp3': '1rem' }}
-                    l={{ '@bp1': '0.25rem', '@bp3': '1rem' }}
-                    css={{ zIndex: 51 }}
-                  >
-                    <CloseButton
-                      colorTheme='primary400'
-                      onClick={onClose}
-                      size={{ '@bp1': 'base', '@bp3': 'lg' }}
-                    />
-                  </Box>
                   <Box // Overlay
                     position='absolute'
                     l={0}
@@ -99,9 +88,21 @@ function MediaView({ children }: GenericProps) {
                     h='100%'
                     w='100%'
                     items='center'
-                    justify='center'
+                    justify='space-between'
+                    p={{ '@bp1': '2', '@bp4': 4 }}
                   >
+                    <Box />
                     {Content}
+                    <Box position='relative' zIndex={50}>
+                      <Button
+                        onClick={onClose}
+                        className={extraBtnPadding()}
+                        colorTheme='primary400'
+                        variant='ghost'
+                      >
+                        Close
+                      </Button>
+                    </Box>
                   </VStack>
                 </Box>
               </Box>
@@ -121,7 +122,7 @@ function MediaViewAvatar(props: AvatarProps) {
 MediaViewAvatar.displayName = 'MediaViewAvatar';
 
 function MediaViewImage(props: ImageProps) {
-  return <Image {...props} />;
+  return <Image {...props} radius={3} />;
 }
 MediaViewImage.displayName = 'MediaViewImage';
 
