@@ -72,8 +72,6 @@ function CreatePostDialog() {
     }
   };
 
-  console.log(option);
-
   return (
     <>
       {currentUser && (
