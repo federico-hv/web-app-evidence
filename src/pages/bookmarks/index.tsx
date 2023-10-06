@@ -1,8 +1,12 @@
 import { Box, IconButton, useWindowSize } from '@holdr-ui/react';
-import { ErrorFallback, Loader, Paths, SearchBox } from '../../shared';
+import {
+  ErrorFallback,
+  GQLRenderer,
+  Paths,
+  SearchBox,
+} from '../../shared';
 import { Outlet, useNavigate, useParams } from 'react-router-dom';
-import { Suspense, useEffect } from 'react';
-import { ErrorBoundary } from 'react-error-boundary';
+import { useEffect } from 'react';
 import { BookmarkGroupsList } from './ui';
 import {
   PageLayout,
@@ -47,8 +51,8 @@ function BookmarksPage() {
                 '@bp4': 300,
                 '@bp5': 350,
               }}
-              borderRight={2}
-              borderColor='base100'
+              // borderRight={2}
+              // borderColor='base100'
               css={{
                 flexShrink: 0,
               }}
@@ -74,8 +78,8 @@ function BookmarksPage() {
               >
                 <PageLayoutHeader
                   position='sticky'
-                  borderRight={2}
-                  borderColor='base100'
+                  // borderRight={2}
+                  // borderColor='base100'
                   t={0}
                   css={{ backgroundColor: '#FFF', zIndex: 10 }}
                 >
@@ -95,7 +99,7 @@ function BookmarksPage() {
                     </CreateBookmarkGroupTrigger>
                   </CreateBookmarkGroup>
                 </PageLayoutHeader>
-                <PageLayoutContent borderRight={2} borderColor='base100'>
+                <PageLayoutContent>
                   <SearchBox
                     position='sticky'
                     t={58}
@@ -103,11 +107,9 @@ function BookmarksPage() {
                     py={4}
                     css={{ backgroundColor: '#FFF', zIndex: 10 }}
                   />
-                  <ErrorBoundary FallbackComponent={ErrorFallback}>
-                    <Suspense fallback={<Loader loading={true} />}>
-                      <BookmarkGroupsList />
-                    </Suspense>
-                  </ErrorBoundary>
+                  <GQLRenderer ErrorFallback={ErrorFallback}>
+                    <BookmarkGroupsList />
+                  </GQLRenderer>
                 </PageLayoutContent>
               </PageLayout>
             </ShelfLayoutShelf>
