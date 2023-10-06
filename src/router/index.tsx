@@ -1,8 +1,16 @@
 import { Route, Routes } from 'react-router';
-import { AuthRedirectPage, HomePage, DiscoverPage } from '../pages';
+import {
+  AuthRedirectPage,
+  HomePage,
+  DiscoverPage,
+  NotificationsPage,
+  MessagesPage,
+  ReleasesPage,
+} from '../pages';
 import { AuthGuard, NotFoundError, Paths, prefix } from '../shared';
 import { MainLayout } from '../features';
 import { BookmarksRoutes, SettingsRoutes, UserRoutes } from './routes';
+import ChannelsPage from '../pages/channels';
 
 function Router() {
   return (
@@ -24,10 +32,30 @@ function Router() {
             path={prefix(Paths.username, '/*')}
             element={<UserRoutes />}
           />
-          {/*/!* Bookmarks Route*!/*/}
+          {/* Bookmarks Route */}
           <Route
             path={prefix(Paths.bookmarks, '/*')}
             element={<BookmarksRoutes />}
+          />
+          {/* Notifications Route */}
+          <Route
+            path={prefix(Paths.notifications, '/*')}
+            element={<NotificationsPage />}
+          />
+          {/* Messages Route */}
+          <Route
+            path={prefix(Paths.messages, '/*')}
+            element={<MessagesPage />}
+          />
+          {/* Releases Route */}
+          <Route
+            path={prefix(Paths.releases, '/*')}
+            element={<ReleasesPage />}
+          />
+          {/* Channels Route */}
+          <Route
+            path={prefix(Paths.channels, '/*')}
+            element={<ChannelsPage />}
           />
         </Route>
         <Route path='*' element={<NotFoundError />} />

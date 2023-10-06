@@ -80,11 +80,11 @@ function Footer() {
             />
             <NavigationLink
               variant='ghost'
-              as={<Link to={prefix('/', Paths.messages)} />}
-              isActive={!!matchPath(Paths.messages, pathname)}
-              activeIcon='chat-alt-fill'
+              as={<Link to={prefix('/', Paths.discover)} />}
+              isActive={!!matchPath(Paths.discover, pathname)}
+              activeIcon='search-outline'
               size='sm'
-              inactiveIcon='chat-alt-outline'
+              inactiveIcon='search-outline'
               css={{
                 padding: 0,
                 size: '2.5rem',
@@ -119,11 +119,11 @@ function Footer() {
             />
             <NavigationLink
               variant='ghost'
-              as={<Link to={prefix('/', Paths.discover)} />}
-              isActive={!!matchPath(Paths.discover, pathname)}
-              activeIcon='search-outline'
+              as={<Link to={prefix('/', Paths.messages)} />}
+              isActive={!!matchPath(Paths.messages, pathname)}
+              activeIcon='chat-alt-fill'
               size='sm'
-              inactiveIcon='search-outline'
+              inactiveIcon='chat-alt-outline'
               css={{
                 padding: 0,
                 size: '2.5rem',

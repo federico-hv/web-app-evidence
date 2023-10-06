@@ -1,9 +1,9 @@
 import { Box, IconButton, useWindowSize } from '@holdr-ui/react';
-import { ErrorFallback, Loader, Paths } from '../../shared';
+import { ErrorFallback, Loader, Paths, SearchBox } from '../../shared';
 import { Outlet, useNavigate, useParams } from 'react-router-dom';
 import { Suspense, useEffect } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
-import { SearchBox, BookmarkGroupsList } from './ui';
+import { BookmarkGroupsList } from './ui';
 import {
   PageLayout,
   PageLayoutContent,
