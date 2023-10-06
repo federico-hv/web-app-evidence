@@ -8,6 +8,7 @@ import { AuthProvider } from './features';
 import { Tooltip } from '@holdr-ui/react';
 import Router from './router';
 import { loadErrorMessages, loadDevMessages } from '@apollo/client/dev';
+import { useEffect } from 'react';
 
 if (import.meta.env.DEV) {
   // Print out error and dev messages for GraphQL in dev mode
@@ -17,6 +18,14 @@ if (import.meta.env.DEV) {
 
 export function App() {
   globalStyles();
+
+  useEffect(() => {
+    const node = document.querySelector('html');
+
+    node?.removeAttribute('style');
+
+    return () => node?.setAttribute('style', '');
+  }, []);
 
   return (
     <CookiesProvider>
