@@ -1,5 +1,4 @@
 import {
-  Avatar,
   Box,
   Container,
   HStack,
@@ -13,16 +12,15 @@ import {
   Head,
   IReturnMany,
   UserModel,
-  LinkOverlay,
   Loader,
-  prefix,
-  UserNamesGroup,
   useGoBack,
-  ErrorFallback,
-  GQLRenderer,
   TabBorderFix,
 } from '../../shared';
-import { CommonRelationshipButton, SEARCH, Search } from '../../features';
+import {
+  SEARCH,
+  Search,
+  UserWithRelationshipAction,
+} from '../../features';
 import { useSearchParams } from 'react-router-dom';
 import { Fragment } from 'react';
 import { useQuery } from '@apollo/client';
@@ -59,35 +57,7 @@ function PeopleTab({ query }: { query: string }) {
           {data && data.search.count > 0 ? (
             <VStack flex={1}>
               {data.search.data.map((user) => (
-                <HStack
-                  gap={3}
-                  p={4}
-                  w='100%'
-                  h='100%'
-                  radius={2}
-                  cursor='pointer'
-                  items='center'
-                  _hover={{ backgroundColor: '$base100' }}
-                  position='relative'
-                  key={user.id}
-                >
-                  <LinkOverlay to={prefix('/', user.username)} />
-                  <Avatar
-                    variant='squircle'
-                    src={user.avatar}
-                    name={user.displayName}
-                  />
-                  <UserNamesGroup
-                    displayName={user.displayName}
-                    username={user.displayName}
-                  />
-                  <GQLRenderer
-                    ErrorFallback={ErrorFallback}
-                    LoadingFallback={<Fragment />}
-                  >
-                    <CommonRelationshipButton username={user.username} />
-                  </GQLRenderer>
-                </HStack>
+                <UserWithRelationshipAction key={user.id} data={user} />
               ))}
             </VStack>
           ) : (
