@@ -46,7 +46,10 @@ function PageLayoutHeader({
       }}
       {...props}
     >
-      <Container maxWidth={600}>
+      <Container
+        maxWidth={600}
+        style={{ paddingInline: 0, margin: 'auto' }}
+      >
         <HStack w='100%' items='center' gap={3}>
           <Box display={{ '@bp1': 'block', '@bp4': 'none' }}>
             <BackButton fallbackPath={fallbackPath} />

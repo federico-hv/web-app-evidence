@@ -25,8 +25,8 @@ function NotificationsPage() {
               Notifications
               <IconButton
                 variant='ghost'
-                icon='more-fill'
-                ariaLabel='more option'
+                icon='settings-outline'
+                ariaLabel='settings'
               />
             </PageLayoutHeader>
             <PageLayoutContent>
