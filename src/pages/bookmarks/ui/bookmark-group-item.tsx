@@ -16,7 +16,7 @@ function BookmarkGroupItem({ data }: { data: IBookmarkGroup }) {
     <Box
       p={4}
       position='relative'
-      borderLeft={2}
+      borderLeft={params.id === data.id || params['*'] === data.id ? 2 : 0}
       borderColor={
         params.id === data.id || params['*'] === data.id
           ? 'base800'

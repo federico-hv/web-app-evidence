@@ -47,6 +47,7 @@ function BookmarksPage() {
                 '@bp4': 300,
                 '@bp5': 350,
               }}
+              borderRight={2}
               borderColor='base100'
               css={{
                 flexShrink: 0,
@@ -73,6 +74,8 @@ function BookmarksPage() {
               >
                 <PageLayoutHeader
                   position='sticky'
+                  borderRight={2}
+                  borderColor='base100'
                   t={0}
                   css={{ backgroundColor: '#FFF', zIndex: 10 }}
                 >
@@ -92,14 +95,12 @@ function BookmarksPage() {
                     </CreateBookmarkGroupTrigger>
                   </CreateBookmarkGroup>
                 </PageLayoutHeader>
-                <PageLayoutContent>
+                <PageLayoutContent borderRight={2} borderColor='base100'>
                   <SearchBox
                     position='sticky'
                     t={58}
                     px={{ '@bp1': 2, '@bp3': 4 }}
                     py={4}
-                    borderBottom={2}
-                    borderColor='base100'
                     css={{ backgroundColor: '#FFF', zIndex: 10 }}
                   />
                   <ErrorBoundary FallbackComponent={ErrorFallback}>
