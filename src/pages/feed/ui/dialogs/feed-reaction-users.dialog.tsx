@@ -10,30 +10,7 @@ import {
   ReadableFeedReaction,
 } from '../../shared';
 import { HStack, Icon, Tabs } from '@holdr-ui/react';
-import { FeedReactionName } from '../../../../features';
-import { IconName } from '@holdr-ui/react/dist/shared/types';
-
-const ReactionIcon: Record<
-  FeedReactionName,
-  { active: IconName; inactive: IconName }
-> = {
-  love: {
-    active: 'heart-outline',
-    inactive: 'heart-outline',
-  },
-  sad: {
-    active: 'emotion-sad-outline',
-    inactive: 'emotion-sad-outline',
-  },
-  indifferent: {
-    active: 'emotion-unhappy-outline',
-    inactive: 'emotion-unhappy-outline',
-  },
-  excited: {
-    active: 'emotion-happy-outline',
-    inactive: 'emotion-happy-outline',
-  },
-};
+import { ReactionIcon } from '../../../../features';
 
 function FeedReactionUsersDialog() {
   const { state, update } = useGeneralContext();

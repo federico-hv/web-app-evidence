@@ -62,34 +62,47 @@ export const feedReactionFetchType = [
 
 export const feedAudience = ['members', 'everyone'] as const;
 
+export const ReactionIcon: Record<
+  FeedReactionName,
+  { active: IconName; inactive: IconName }
+> = {
+  love: {
+    active: 'heart-outline',
+    inactive: 'heart-outline',
+  },
+  sad: {
+    active: 'emotion-sad-outline',
+    inactive: 'emotion-sad-outline',
+  },
+  indifferent: {
+    active: 'emotion-unhappy-outline',
+    inactive: 'emotion-unhappy-outline',
+  },
+  excited: {
+    active: 'emotion-happy-outline',
+    inactive: 'emotion-happy-outline',
+  },
+};
+
 export const FeedReactionActions: Array<FeedReactionAction> = [
   {
     name: 'love',
     icon: {
-      name: {
-        inactive: 'heart-outline',
-        active: 'heart-fill',
-      },
+      name: ReactionIcon.love,
       color: { active: '#de4747', hover: '#f4525226' },
     },
   },
   {
     name: 'excited',
     icon: {
-      name: {
-        inactive: 'emotion-happy-outline',
-        active: 'emotion-happy-fill',
-      },
+      name: ReactionIcon.excited,
       color: { active: '#c2c05a', hover: 'rgba(229,193,31,0.15)' },
     },
   },
   {
     name: 'sad',
     icon: {
-      name: {
-        inactive: 'emotion-sad-outline',
-        active: 'emotion-sad-fill',
-      },
+      name: ReactionIcon.sad,
       color: {
         active: '#2468c4',
         hover: 'rgba(72,158,173,0.15)',
@@ -99,10 +112,7 @@ export const FeedReactionActions: Array<FeedReactionAction> = [
   {
     name: 'indifferent',
     icon: {
-      name: {
-        inactive: 'emotion-normal-outline',
-        active: 'emotion-normal-fill',
-      },
+      name: ReactionIcon.indifferent,
       color: {
         active: '#1c9110',
         hover: 'rgba(93,204,52,0.15)',
