@@ -1,14 +1,6 @@
 import { useQuery } from '@apollo/client';
 import { VStack } from '@holdr-ui/react';
-import {
-  Error,
-  Head,
-  IConnection,
-  IPaginationParams,
-  Loader,
-  Paths,
-  prefix,
-} from '../../../../shared';
+import { Error, Head, Loader, Paths, prefix } from '../../../../shared';
 import { RootSettingsPath } from '../root';
 import { HeaderLayout } from '../../../../layout';
 import { GET_CONNECTED_ACCOUNTS } from './queries';

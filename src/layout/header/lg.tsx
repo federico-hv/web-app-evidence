@@ -98,7 +98,7 @@ function LgHeader() {
         </Box>
         <Box h={350} minHeight={320} p={4} w='full'>
           <Box w='full' h='full'>
-            <Calendar onDateClick={(date) => console.log(date)} />
+            <Calendar onDateClick={(date: Date) => console.log(date)} />
           </Box>
         </Box>
       </VStack>

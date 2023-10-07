@@ -4,16 +4,12 @@ import {
   HomePage,
   DiscoverPage,
   NotificationsPage,
+  MessagesPage,
   ReleasesPage,
   ChannelsPage,
 } from '../pages';
 import { AuthGuard, NotFoundError, Paths, prefix } from '../shared';
-import {
-  BookmarksRoutes,
-  MessagesRoutes,
-  SettingsRoutes,
-  UserRoutes,
-} from './routes';
+import { BookmarksRoutes, SettingsRoutes, UserRoutes } from './routes';
 import { MainLayout } from '../layout';
 
 function Router() {
@@ -49,7 +45,7 @@ function Router() {
           {/* Messages Route */}
           <Route
             path={prefix(Paths.messages, '/*')}
-            element={<MessagesRoutes />}
+            element={<MessagesPage />}
           />
           {/* Releases Route */}
           <Route
