@@ -1,7 +1,7 @@
 import { Head, Paths, prefix, RootSettingsPath } from '../../../../shared';
 
 import { SettingItem } from '../../../../features';
-import { HeaderLayout } from '../../../../layout';
+import SettingsHeaderLayout from '../../../../layout/settings-header';
 
 function NotificationsPreferenceSettingsPage() {
   return (
@@ -14,7 +14,7 @@ function NotificationsPreferenceSettingsPage() {
           Paths.setting.notifications_preferences,
         )}
       />
-      <HeaderLayout
+      <SettingsHeaderLayout
         title='Preferences'
         backLink={prefix(RootSettingsPath, Paths.setting.notifications)}
       >
@@ -25,7 +25,7 @@ function NotificationsPreferenceSettingsPage() {
           )}
           heading='Email notifications'
         />
-      </HeaderLayout>
+      </SettingsHeaderLayout>
     </>
   );
 }

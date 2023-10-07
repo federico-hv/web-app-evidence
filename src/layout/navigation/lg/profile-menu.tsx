@@ -16,8 +16,8 @@ import {
   TextGroupSubheading,
   useLogout,
   useMenuNavigate,
-} from '../../../../shared';
-import { useCurrentUser } from '../../../auth';
+} from '../../../shared';
+import { useCurrentUser } from '../../../features';
 import { Link } from 'react-router-dom';
 
 function ProfileMenu() {

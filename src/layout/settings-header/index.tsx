@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 import { Heading, HStack, IconButton, VStack } from '@holdr-ui/react';
 import { useNavigate } from 'react-router-dom';
 
-function HeaderLayout({
+function SettingsHeaderLayout({
   children,
   title,
   backLink,
@@ -35,6 +35,6 @@ function HeaderLayout({
     </VStack>
   );
 }
-HeaderLayout.displayName = 'HeaderLayout';
+SettingsHeaderLayout.displayName = 'SettingsHeaderLayout';
 
-export default HeaderLayout;
+export default SettingsHeaderLayout;

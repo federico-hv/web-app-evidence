@@ -47,7 +47,7 @@ import { useQuery } from '@apollo/client';
 import { RootSettingsPath } from '../root';
 import pinCode from '../../../../assets/images/pin-code.png';
 import qrCode from '../../../../assets/images/scan-qrcode.png';
-import { HeaderLayout } from '../../../../layout';
+import SettingsHeaderLayout from '../../../../layout/settings-header';
 
 function DialogFooterWrapper({ children }: GenericProps) {
   return (
@@ -415,7 +415,7 @@ function TwoFactorAuthSettingsPage() {
         url={prefix(RootSettingsPath, Paths.setting.login_security)}
       />
       <Loader loading={loading}>
-        <HeaderLayout
+        <SettingsHeaderLayout
           title='Two-factor authentication'
           backLink={prefix(
             RootSettingsPath,
@@ -488,7 +488,7 @@ function TwoFactorAuthSettingsPage() {
               )}
             </>
           )}
-        </HeaderLayout>
+        </SettingsHeaderLayout>
       </Loader>
     </Error>
   );

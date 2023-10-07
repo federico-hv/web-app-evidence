@@ -6,7 +6,7 @@ import {
   NavigationLinkGroup,
   VStack,
 } from '@holdr-ui/react';
-import { Paths, prefix } from '../../../../shared';
+import { Paths, prefix } from '../../shared';
 
 function MdHeader() {
   const { pathname } = useLocation();
