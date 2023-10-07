@@ -29,7 +29,7 @@ import {
   GET_BLOCKED_ACCOUNTS,
   useRemoveRelationshipAction,
 } from '../../../../features';
-import { HeaderLayout } from '../../../../layout';
+import SettingsHeaderLayout from '../../../../layout/settings-header';
 
 function BlockedSettingsPage() {
   const { data, loading, error } = useQuery<{
@@ -46,7 +46,7 @@ function BlockedSettingsPage() {
         description='See the accounts that have been blocked.'
         url={prefix(RootSettingsPath, Paths.setting.privacy)}
       />
-      <HeaderLayout
+      <SettingsHeaderLayout
         title='Blocked accounts'
         backLink={prefix(RootSettingsPath, Paths.setting.manage_users)}
       >
@@ -101,7 +101,7 @@ function BlockedSettingsPage() {
             </SwitchConditional>
           )}
         </Loader>
-      </HeaderLayout>
+      </SettingsHeaderLayout>
     </Error>
   );
 }

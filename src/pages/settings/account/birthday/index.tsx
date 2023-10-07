@@ -14,7 +14,7 @@ import {
   RootSettingsPath,
 } from '../../../../shared';
 import { isEqual } from 'lodash';
-import { HeaderLayout } from '../../../../layout';
+import SettingsHeaderLayout from '../../../../layout/settings-header';
 
 function BirthdaySettingPage() {
   const { data } = useAccountInfo();
@@ -27,7 +27,7 @@ function BirthdaySettingPage() {
         description='Change your birthday.'
         url={`/${RootSettingsPath}/${Paths.setting.birthday}`}
       />
-      <HeaderLayout
+      <SettingsHeaderLayout
         title='Birthday'
         backLink={prefix(RootSettingsPath, Paths.setting.account_info)}
       >
@@ -56,7 +56,7 @@ function BirthdaySettingPage() {
             onFinish={onFinish}
           />
         </AccountInfoFormContextProvider>
-      </HeaderLayout>
+      </SettingsHeaderLayout>
     </Error>
   );
 }

@@ -10,7 +10,7 @@ import {
   UpdatePasswordContextProvider,
   UpdatePasswordForm,
 } from '../../../../features';
-import { HeaderLayout } from '../../../../layout';
+import SettingsHeaderLayout from '../../../../layout/settings-header';
 
 function ChangePasswordSettingPage() {
   const { loading, error, data, onFinish, onSubmit } = useUpdatePassword();
@@ -21,7 +21,7 @@ function ChangePasswordSettingPage() {
         description='Change your password at any time.'
         url={`${Paths.settings}/${Paths.setting.change_password}`}
       />
-      <HeaderLayout
+      <SettingsHeaderLayout
         title='Change your password'
         backLink={prefix(RootSettingsPath, Paths.setting.account)}
       >
@@ -30,7 +30,7 @@ function ChangePasswordSettingPage() {
         >
           <UpdatePasswordForm onSubmit={onSubmit} onFinish={onFinish} />
         </UpdatePasswordContextProvider>
-      </HeaderLayout>
+      </SettingsHeaderLayout>
     </Error>
   );
 }

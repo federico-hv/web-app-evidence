@@ -7,7 +7,7 @@ import {
   Checkbox,
 } from '@holdr-ui/react';
 import { Head, Paths, prefix, RootSettingsPath } from '../../../../shared';
-import { HeaderLayout } from '../../../../layout';
+import SettingsHeaderLayout from '../../../../layout/settings-header';
 
 function EmailFiltersSettingsPage() {
   return (
@@ -17,7 +17,7 @@ function EmailFiltersSettingsPage() {
         description='Filter the notifications that you get on your email.'
         url={prefix(RootSettingsPath, Paths.setting.privacy)}
       />
-      <HeaderLayout
+      <SettingsHeaderLayout
         title='Filters'
         backLink={prefix(
           RootSettingsPath,
@@ -53,7 +53,7 @@ function EmailFiltersSettingsPage() {
             </HStack>
           </VStack>
         </VStack>
-      </HeaderLayout>
+      </SettingsHeaderLayout>
     </>
   );
 }

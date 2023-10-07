@@ -1,6 +1,6 @@
 import { SettingItem } from '../../../../features';
 import { Head, Paths, prefix, RootSettingsPath } from '../../../../shared';
-import { HeaderLayout } from '../../../../layout';
+import SettingsHeaderLayout from '../../../../layout/settings-header';
 
 function ManageUsersSettingsPage() {
   return (
@@ -10,7 +10,7 @@ function ManageUsersSettingsPage() {
         description='Manage the notifications that you receive and how your receive them.'
         url={prefix(RootSettingsPath, Paths.setting.manage_users)}
       />
-      <HeaderLayout
+      <SettingsHeaderLayout
         title='Mute and block'
         backLink={prefix(RootSettingsPath, Paths.setting.privacy)}
       >
@@ -29,7 +29,7 @@ function ManageUsersSettingsPage() {
         {/*  )}*/}
         {/*  heading='Restricted accounts'*/}
         {/*/>*/}
-      </HeaderLayout>
+      </SettingsHeaderLayout>
     </>
   );
 }

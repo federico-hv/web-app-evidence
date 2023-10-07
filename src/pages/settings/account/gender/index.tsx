@@ -25,7 +25,7 @@ import {
 } from '../../../../shared';
 import { Formik } from 'formik';
 import { isEqual, pick } from 'lodash';
-import { HeaderLayout } from '../../../../layout';
+import SettingsHeaderLayout from '../../../../layout/settings-header';
 
 function GenderSettingPage() {
   const { data } = useAccountInfo();
@@ -46,7 +46,7 @@ function GenderSettingPage() {
         description='Change your gender.'
         url={`${Paths.settings}/${Paths.setting.gender}`}
       />
-      <HeaderLayout
+      <SettingsHeaderLayout
         title='Gender'
         backLink={prefix(RootSettingsPath, Paths.setting.account_info)}
       >
@@ -142,7 +142,7 @@ function GenderSettingPage() {
             </VStack>
           )}
         </Formik>
-      </HeaderLayout>
+      </SettingsHeaderLayout>
     </Error>
   );
 }

@@ -1,6 +1,6 @@
 import { SettingItem } from '../../../../features';
 import { Head, Paths, prefix, RootSettingsPath } from '../../../../shared';
-import { HeaderLayout } from '../../../../layout';
+import SettingsHeaderLayout from '../../../../layout/settings-header';
 
 function NotificationsFilterSettingsPage() {
   return (
@@ -10,7 +10,7 @@ function NotificationsFilterSettingsPage() {
         description='Filter your notifications based on what you want to receive.'
         url={prefix(RootSettingsPath, Paths.setting.privacy)}
       />
-      <HeaderLayout
+      <SettingsHeaderLayout
         title='Filters'
         backLink={prefix(RootSettingsPath, Paths.setting.notifications)}
       >
@@ -21,7 +21,7 @@ function NotificationsFilterSettingsPage() {
           )}
           heading='Muted notifications'
         />
-      </HeaderLayout>
+      </SettingsHeaderLayout>
     </>
   );
 }
