@@ -18,11 +18,10 @@ function AuthRedirect() {
 
   useEffect(() => {
     if (!currentUser) {
-      console.log('Please login. no current user');
-      // window.open(
-      //   `${import.meta.env.VITE_AUTH_APP_URL}?${queryParams}`,
-      //   '_self',
-      // );
+      window.open(
+        `${import.meta.env.VITE_AUTH_APP_URL}?${queryParams}`,
+        '_self',
+      );
     } else {
       // Bug workaround: for some reason the app doesn't
       // register the currentUser immediately, so we need to
