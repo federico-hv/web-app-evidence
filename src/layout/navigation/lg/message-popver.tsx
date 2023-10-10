@@ -11,6 +11,7 @@ import { useMenuNavigate } from '../../../shared';
 
 function MessagePopover() {
   const [state, set] = useState(false);
+  const { goto } = useMenuNavigate();
   return (
     <Popover isOpen={state} onOpenChange={set}>
       <Popover.Trigger onClick={() => set(true)}>
