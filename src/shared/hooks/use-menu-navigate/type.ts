@@ -8,6 +8,7 @@ type locations =
   | 'bookmarks'
   | 'back'
   | 'notifications'
+  | 'messages'
   | 'profile';
 
 interface UseMenuNavigateReturnType {
