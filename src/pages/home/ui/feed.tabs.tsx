@@ -80,13 +80,19 @@ function FeedTabs() {
       >
         <Container maxWidth={600}>
           <Tabs.Trigger value='all'>
-            <Text size={{ '@bp1': 2, '@bp3': 3 }}>All</Text>
+            <Text weight={500} size={{ '@bp1': 2, '@bp3': 3 }}>
+              All
+            </Text>
           </Tabs.Trigger>
           <Tabs.Trigger value='holdr'>
-            <Text size={{ '@bp1': 2, '@bp3': 3 }}>Holdr</Text>
+            <Text weight={500} size={{ '@bp1': 2, '@bp3': 3 }}>
+              Holdr
+            </Text>
           </Tabs.Trigger>
           <Tabs.Trigger value='news'>
-            <Text size={{ '@bp1': 2, '@bp3': 3 }}>News</Text>
+            <Text weight={500} size={{ '@bp1': 2, '@bp3': 3 }}>
+              News
+            </Text>
           </Tabs.Trigger>
         </Container>
       </Tabs.List>
