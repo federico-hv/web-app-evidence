@@ -12,7 +12,7 @@ import {
   useIsBottom,
   useScrollDirection,
 } from '../../../shared';
-import { Alert, Container, Tabs, VStack } from '@holdr-ui/react';
+import { Alert, Container, Tabs, Text, VStack } from '@holdr-ui/react';
 
 function Feeds({ type = 'all' }: { type: 'all' | 'article' | 'post' }) {
   const currentUser = useCurrentUser();
@@ -79,9 +79,15 @@ function FeedTabs() {
         }}
       >
         <Container maxWidth={600}>
-          <Tabs.Trigger value='all'>All</Tabs.Trigger>
-          <Tabs.Trigger value='holdr'>Holdr</Tabs.Trigger>
-          <Tabs.Trigger value='news'>News</Tabs.Trigger>
+          <Tabs.Trigger value='all'>
+            <Text size={{ '@bp1': 2, '@bp3': 3 }}>All</Text>
+          </Tabs.Trigger>
+          <Tabs.Trigger value='holdr'>
+            <Text size={{ '@bp1': 2, '@bp3': 3 }}>Holdr</Text>
+          </Tabs.Trigger>
+          <Tabs.Trigger value='news'>
+            <Text size={{ '@bp1': 2, '@bp3': 3 }}>News</Text>
+          </Tabs.Trigger>
         </Container>
       </Tabs.List>
       <Tabs.Content value='all'>
