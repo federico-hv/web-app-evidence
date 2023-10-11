@@ -1,24 +1,55 @@
 import { useState } from 'react';
-import { Box, FormControl, HStack, Select } from '@holdr-ui/react';
+import { Box, FormControl, HStack, Select, Text } from '@holdr-ui/react';
 import dayjs from 'dayjs';
 import localeData from 'dayjs/plugin/localeData';
-import { DatePickerProps } from './date-picker.type';
-import { Age, arrayFrom, DateUtility, IDate } from '../../index';
+import { DatePickerProps } from './types';
+import { arrayFrom, DateUtility, IDate } from '../../../shared';
 
 dayjs.extend(localeData);
 
-// TODO: Ranges must be external to this component
-
-function DatePicker({ date, onChange }: DatePickerProps) {
+function DatePicker({
+  date,
+  onChange,
+  max = dayjs().toString(),
+  min = dayjs().subtract(100, 'years').toString(),
+}: DatePickerProps) {
   const [state, set] = useState(DateUtility.breakdown(date));
+
   // range for months
-  const months = dayjs.localeData().months();
-  // ranges for year picker
-  const minYear = dayjs().subtract(Age.min, 'year').get('year');
-  const years = arrayFrom(75);
-  // range for days in month
+  // max and min values for days, months and days
+  const Minimum: IDate = DateUtility.breakdown(min);
+  const Maximum: IDate = DateUtility.breakdown(max);
+
+  // the years allowed
+  const years = arrayFrom(
+    Math.abs(parseInt(Maximum.year) - parseInt(Minimum.year) + 1),
+  );
+  // the months allowed
+  let monthNames: string[] = dayjs.localeData().months();
+
+  if (state.year === Maximum.year) {
+    monthNames = monthNames.slice(
+      0,
+      DateUtility.parseToIntMonth(Maximum.month) + 1,
+    );
+  } else if (state.year === Minimum.year) {
+    monthNames = monthNames.slice(
+      DateUtility.parseToIntMonth(Minimum.month),
+      12,
+    );
+  }
+  // the days allowed
   const daysInMonth = DateUtility.daysInMonth(state.month, state.year);
-  const days = arrayFrom(daysInMonth);
+  let days = arrayFrom(daysInMonth);
+
+  if (state.month === Maximum.month && state.year === Maximum.year) {
+    days = days.slice(1, parseInt(Maximum.day));
+  } else if (
+    state.month === Minimum.month &&
+    state.year === Minimum.year
+  ) {
+    days = days.slice(parseInt(Minimum.day));
+  }
 
   const update = (next: Partial<IDate>) => {
     set((prev) => {
@@ -29,27 +60,33 @@ function DatePicker({ date, onChange }: DatePickerProps) {
   };
 
   return (
-    <HStack gap={4}>
-      <Box w={125}>
+    <HStack gap={{ '@bp1': 3, '@bp3': 4 }}>
+      <Box flex={2} minWidth={100}>
         <FormControl>
-          <FormControl.Label color='base400'>Month</FormControl.Label>
+          <FormControl.Label color='base400'>
+            <Text size={2}>Month</Text>
+          </FormControl.Label>
           <Select
+            size={{ '@bp1': 'sm', '@bp3': 'base' }}
             value={state.month}
             onChange={(e) => update({ month: e.target.value })}
           >
-            {months.map((month) => (
-              <option value={month} key={month}>
-                {month}
+            {monthNames.map((monthName) => (
+              <option value={monthName} key={monthName}>
+                {monthName}
               </option>
             ))}
           </Select>
         </FormControl>
       </Box>
 
-      <Box w={80}>
+      <Box flex={1} minWidth={80}>
         <FormControl>
-          <FormControl.Label color='base400'>Day</FormControl.Label>
+          <FormControl.Label color='base400'>
+            <Text size={2}>Day</Text>
+          </FormControl.Label>
           <Select
+            size={{ '@bp1': 'sm', '@bp3': 'base' }}
             value={state.day}
             onChange={(e) => update({ day: e.target.value })}
           >
@@ -62,16 +99,19 @@ function DatePicker({ date, onChange }: DatePickerProps) {
         </FormControl>
       </Box>
 
-      <Box w={80}>
+      <Box flex={1} minWidth={80}>
         <FormControl>
-          <FormControl.Label color='base400'>Year</FormControl.Label>
+          <FormControl.Label color='base400'>
+            <Text size={2}>Year</Text>
+          </FormControl.Label>
           <Select
+            size={{ '@bp1': 'sm', '@bp3': 'base' }}
             value={state.year}
             onChange={(e) => update({ year: e.target.value })}
           >
             {years.map((year, idx) => (
-              <option value={minYear - idx} key={year}>
-                {minYear - idx}
+              <option value={parseInt(Maximum.year) - idx} key={year}>
+                {parseInt(Maximum.year) - idx}
               </option>
             ))}
           </Select>

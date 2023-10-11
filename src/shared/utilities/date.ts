@@ -14,6 +14,37 @@ export class DateUtility {
     );
   }
 
+  static parseToIntMonth(month: string) {
+    switch (month.toLowerCase()) {
+      case 'january':
+        return 0;
+      case 'february':
+        return 1;
+      case 'march':
+        return 2;
+      case 'april':
+        return 3;
+      case 'may':
+        return 4;
+      case 'june':
+        return 5;
+      case 'july':
+        return 6;
+      case 'august':
+        return 7;
+      case 'september':
+        return 8;
+      case 'october':
+        return 9;
+      case 'november':
+        return 10;
+      case 'december':
+        return 11;
+      default:
+        return -1;
+    }
+  }
+
   static daysInMonth(month: string, year: string) {
     return dayjs(
       this.fromBreakdown({
@@ -24,12 +55,12 @@ export class DateUtility {
     ).daysInMonth();
   }
 
-  static breakdown(date: string): IDate {
+  static breakdown(date: string, format = 'YYYY-MM-D'): IDate {
     const months = this.allMonths();
     return {
-      month: months[dayjs(date).get('month')],
-      day: `${dayjs(date).get('day')}`,
-      year: `${dayjs(date).get('year')}`,
+      month: months[dayjs(date, format).get('month')],
+      day: `${dayjs(date, format).get('date') + 1}`,
+      year: `${dayjs(date, format).get('year')}`,
     };
   }
 

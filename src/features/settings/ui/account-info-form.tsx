@@ -7,9 +7,10 @@ import {
   IAccountInfo,
 } from '../shared';
 import { Box, Button, HStack, VStack } from '@holdr-ui/react';
-import { FormInput, isInputDisabled } from '../../../shared';
+import { Age, FormInput, isInputDisabled } from '../../../shared';
 import { UpdateAccountInfoSchema } from '../shared';
 import phones from '../../../assets/json/phone.code.json';
+import dayjs from 'dayjs';
 
 function InnerForm() {
   const countries = phones.map(({ name }) => name);
@@ -32,7 +33,14 @@ function InnerForm() {
             />
           )}
           {name === 'birthday' && (
-            <FormInput disabled={loading} name='birthday' type='date' />
+            <FormInput
+              disabled={loading}
+              name='birthday'
+              helperText='We will not display your birthday, publicly, on our platform.'
+              type='date'
+              min={dayjs().subtract(Age.max, 'y').format('YYYY-MM-DD')}
+              max={dayjs().subtract(Age.min, 'y').format('YYYY-MM-DD')}
+            />
           )}
           {name === 'country' && (
             <FormInput name='country' type='select' label='country'>
