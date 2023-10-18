@@ -25,7 +25,7 @@ function BookmarkGroupDialog() {
             '@bp1': 32,
             '@bp3': 'calc(32px + 1rem)',
           }}
-          w='calc(100% - (32px + 0.25rem))'
+          w='calc(100% - (32px + 2rem))'
           pl={3}
         >
           <Heading
