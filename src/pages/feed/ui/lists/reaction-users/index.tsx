@@ -33,7 +33,7 @@ function ReactionUsersList({ type }: ReactionUsersListProps) {
     return (
       <Box borderTop={1} borderColor='base100' mt='calc(-1 * $4)' pt={4}>
         {data.feedReactionUsers.count > 0 ? (
-          <VStack>
+          <VStack gap={4}>
             {data.feedReactionUsers.data.map((item) => (
               <UserWithRelationshipAction
                 key={item.user.id}
