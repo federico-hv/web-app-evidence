@@ -50,7 +50,7 @@ function BookmarkPopover({
   useKeyBind(27, closePopover);
 
   // close when scrolling
-  useActOnScroll('#root', 10, closePopover);
+  useActOnScroll(10, closePopover);
 
   return (
     <DialogContextProvider value={{ isOpen, onOpen, onClose }}>

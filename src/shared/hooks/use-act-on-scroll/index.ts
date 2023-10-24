@@ -4,17 +4,12 @@ import { useEffect } from 'react';
 /**
  * Calls an action after scrolling by offset.
  *
- * @param selectors CSS selectors
  * @param offset
  * @param action action to be executed
  */
-export function useActOnScroll(
-  selectors: string,
-  offset: number,
-  action: VoidFunction,
-) {
+export function useActOnScroll(offset: number, action: VoidFunction) {
   const { delta } = useScrollDirection();
-  const node = document.querySelector(selectors);
+  // const node = document.querySelector(selectors);
 
   useEffect(() => {
     const act = () => {
@@ -23,10 +18,8 @@ export function useActOnScroll(
       }
     };
 
-    if (node) {
-      node.addEventListener('scroll', act);
+    window.addEventListener('scroll', act);
 
-      return () => node.removeEventListener('scroll', act);
-    }
-  }, [delta, node, offset, action]);
+    return () => window.removeEventListener('scroll', act);
+  }, [delta, offset, action]);
 }
