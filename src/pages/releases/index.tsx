@@ -6,7 +6,7 @@ import {
   PageLayoutContent,
   PageLayoutHeader,
 } from '../../layout';
-import { Box, IconButton } from '@holdr-ui/react';
+import { Box, HStack, IconButton } from '@holdr-ui/react';
 import { EmptyMessage, Head } from '../../shared';
 import { Fragment } from 'react';
 
@@ -23,11 +23,13 @@ function ReleasesPage() {
               css={{ backgroundColor: '#FFF', zIndex: 10 }}
             >
               Releases
-              <IconButton
-                variant='ghost'
-                icon='more-fill'
-                ariaLabel='more option'
-              />
+              <HStack items='center'>
+                <IconButton
+                  variant='ghost'
+                  icon='settings-outline'
+                  ariaLabel='releases settings'
+                />
+              </HStack>
             </PageLayoutHeader>
             <PageLayoutContent>
               <Box pt={4}>

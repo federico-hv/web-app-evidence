@@ -67,19 +67,19 @@ export const ReactionIcon: Record<
   { active: IconName; inactive: IconName }
 > = {
   love: {
-    active: 'heart-outline',
+    active: 'heart-fill',
     inactive: 'heart-outline',
   },
   sad: {
-    active: 'emotion-sad-outline',
+    active: 'emotion-sad-fill',
     inactive: 'emotion-sad-outline',
   },
   indifferent: {
-    active: 'emotion-unhappy-outline',
+    active: 'emotion-unhappy-fill',
     inactive: 'emotion-unhappy-outline',
   },
   excited: {
-    active: 'emotion-happy-outline',
+    active: 'emotion-happy-fill',
     inactive: 'emotion-happy-outline',
   },
 };
