@@ -97,7 +97,7 @@ function LgHeader() {
           />
         </Box>
         <Box h={320} minHeight={320} p={4} w='full'>
-          <Box bgColor='base300' w='full' h='full'>
+          <Box w='full' h='full'>
             <Calendar />
           </Box>
         </Box>
