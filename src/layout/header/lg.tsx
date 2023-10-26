@@ -6,7 +6,8 @@ import {
   NavigationLinkGroup,
   VStack,
 } from '@holdr-ui/react';
-import { extraBtnPadding, Paths, prefix } from '../../shared';
+import { extraBtnPadding, Paths, prefix } from '../../../../shared';
+import Calendar from 'shared/components/calendar';
 
 function LgHeader() {
   const { pathname } = useLocation();
@@ -96,7 +97,9 @@ function LgHeader() {
           />
         </Box>
         <Box h={320} minHeight={320} p={4} w='full'>
-          <Box bgColor='base100' w='full' h='full'></Box>
+          <Box bgColor='base300' w='full' h='full'>
+            <Calendar />
+          </Box>
         </Box>
       </VStack>
     </VStack>

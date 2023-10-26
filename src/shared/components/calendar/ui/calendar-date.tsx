@@ -1,0 +1,28 @@
+import { Button, Container } from '@holdr-ui/react';
+import { DateProps } from '../types/calendar-date-types';
+import _ from 'lodash';
+
+function Date({ date, currentDate, onClick, disabled }: DateProps) {
+  return (
+    <Container centerContent>
+      {_.isEqual(currentDate, date) ? (
+        <Button size='sm' onClick={onClick}>
+          {date.day}
+        </Button>
+      ) : (
+        <Button
+          variant='ghost'
+          size='sm'
+          onClick={onClick}
+          disabled={disabled}
+        >
+          {date.day}
+        </Button>
+      )}
+    </Container>
+  );
+}
+
+Date.displayName = 'Date';
+
+export default Date;
