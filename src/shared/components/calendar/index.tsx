@@ -1,11 +1,17 @@
-import { Box, Button, Container, Grid, HStack } from '@holdr-ui/react';
+import {
+  Box,
+  Button,
+  Container,
+  Grid,
+  HStack,
+  Text,
+} from '@holdr-ui/react';
 import { DateUtility } from '../../../shared/utilities';
 import { getDays, getWeekdays } from './utilities';
 import dayjs from 'dayjs';
 import Date from './ui/calendar-date';
 import { useDate } from './hooks/useDate';
 import { CalendarDate } from './types/calendar-types';
-import _ from 'lodash';
 
 function Calendar() {
   const currentDate = DateUtility.breakdown(dayjs().format('MM-DD-YYYY'));
@@ -16,25 +22,34 @@ function Calendar() {
   const { calendarDate, isCurrentDate, incrementDate, decrementDate } =
     useDate(currentDate);
 
+  // TODO: replace with onClick functionality
+  function onClick(date: CalendarDate) {
+    console.log(date);
+  }
+
   return (
     <Box>
-      <HStack justify='space-between'>
+      <HStack justify='space-between' css={{ padding: '$3 0' }}>
         <Container>
-          {`${DateUtility.allMonths()[parseInt(calendarDate.month) - 1]} ${
-            calendarDate.year
-          }`}
+          <Text weight={500}>
+            {`${
+              DateUtility.allMonths()[parseInt(calendarDate.month) - 1]
+            } ${calendarDate.year}`}
+          </Text>
         </Container>
         <HStack>
           <Button
             variant='ghost'
             rightIcon='caret-left-outline'
             onClick={decrementDate}
+            style={{ padding: 0 }}
           />
           <Button
             variant='ghost'
             rightIcon='caret-right-outline'
             onClick={incrementDate}
             disabled={isCurrentDate}
+            style={{ padding: 0 }}
           />
         </HStack>
       </HStack>
@@ -46,7 +61,9 @@ function Calendar() {
       >
         {getWeekdays(calendarDate).map((weekday, idx) => (
           <Grid.Item key={idx}>
-            <Container centerContent>{weekday}</Container>
+            <Container centerContent>
+              <Text weight={500}>{weekday}</Text>
+            </Container>
           </Grid.Item>
         ))}
 
@@ -61,7 +78,7 @@ function Calendar() {
                 date={date}
                 disabled={day != idx + 1}
                 currentDate={currentDate}
-                onClick={() => console.log(date)}
+                onClick={() => onClick(date)}
               />
             </Grid.Item>
           );

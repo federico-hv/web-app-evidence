@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { CalendarDate } from '../types/calendar-types';
 import _ from 'lodash';
 
@@ -7,9 +7,12 @@ export function useDate(currentDate: CalendarDate) {
   const [date, setDate] = useState<CalendarDate>(currentDate);
   const [isCurrentDate, setIsCurrentDate] = useState<boolean>(true);
 
+  useEffect(() => {
+    setIsCurrentDate(_.isEqual(date, currentDate));
+  }, [currentDate]);
+
   const incrementDate = () => {
-    if (_.isEqual(date, currentDate)) {
-      setIsCurrentDate(true);
+    if (isCurrentDate) {
       return;
     }
 
@@ -22,7 +25,6 @@ export function useDate(currentDate: CalendarDate) {
   };
 
   const decrementDate = () => {
-    setIsCurrentDate(false);
     let month = parseInt(date.month);
     let year = parseInt(date.year);
 
