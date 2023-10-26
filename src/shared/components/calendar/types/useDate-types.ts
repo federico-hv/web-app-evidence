@@ -1,4 +1,4 @@
-import { CalendarDate } from './calendar.types';
+import { CalendarDate } from './calendar-types';
 
 export type DateProps = {
   date: CalendarDate;

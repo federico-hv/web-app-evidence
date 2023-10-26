@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import { DateUtility } from '../../../../shared/utilities';
-import { CalendarDate } from '../types/calendar.types';
+import { CalendarDate } from '../types/calendar-types';
 
 const weekdays = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
 

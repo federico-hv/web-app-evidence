@@ -4,7 +4,7 @@ import { getDays, getWeekdays } from './utilities';
 import dayjs from 'dayjs';
 import Date from './ui/calendar-date';
 import { useDate } from './hooks/useDate';
-import { CalendarDate } from './types/calendar.types';
+import { CalendarDate } from './types/calendar-types';
 import _ from 'lodash';
 
 function Calendar() {

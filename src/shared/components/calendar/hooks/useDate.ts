@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { CalendarDate } from '../types/calendar.types';
+import { useState } from 'react';
+import { CalendarDate } from '../types/calendar-types';
 import _ from 'lodash';
 
 export function useDate(currentDate: CalendarDate) {
