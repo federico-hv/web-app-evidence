@@ -12,9 +12,7 @@ export function useDate(currentDate: CalendarDate) {
   }, [currentDate]);
 
   const incrementDate = () => {
-    if (isCurrentDate) {
-      return;
-    }
+    if (isCurrentDate) return;
 
     let month = parseInt(date.month);
     let year = parseInt(date.year);
