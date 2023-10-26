@@ -1,5 +1,5 @@
 import { Button, Container } from '@holdr-ui/react';
-import { DateProps } from '../types/calendar-date-types';
+import { DateProps } from '../types/useDate-types';
 import _ from 'lodash';
 
 function Date({ date, currentDate, onClick, disabled }: DateProps) {
