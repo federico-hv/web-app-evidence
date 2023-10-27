@@ -1,90 +1,115 @@
 import {
   Box,
-  Button,
+  ButtonGroup,
+  Card,
   Container,
   Grid,
   HStack,
+  IconButton,
   Text,
 } from '@holdr-ui/react';
 import { DateUtility } from '../../../shared/utilities';
-import { getDays, getWeekdays } from './utilities';
-import dayjs from 'dayjs';
+import {
+  getDays,
+  getNextMonth,
+  getPreviousMonth,
+  getWeekdays,
+} from './utilities';
 import Date from './ui/calendar-date';
-import { useDate } from './hooks/useDate';
-import { CalendarDate } from './types/calendar-types';
+import { CalendarProps, CalendarState } from './types';
+import { useEffect, useState } from 'react';
+import _ from 'lodash';
+import { IDate } from '../../../shared';
 
-function Calendar() {
-  const currentDate = DateUtility.breakdown(dayjs().format('MM-DD-YYYY'));
-  currentDate.month = (
-    DateUtility.parseToIntMonth(currentDate.month) + 1
+function Calendar({ startingDate, onDayClick }: CalendarProps) {
+  const initialDate = { ...startingDate };
+  initialDate.month = (
+    DateUtility.parseToIntMonth(startingDate.month) + 1
   ).toString();
 
-  const { calendarDate, isCurrentDate, incrementDate, decrementDate } =
-    useDate(currentDate);
+  const [isInitialDate, setIsInitialDate] = useState<boolean>(true);
+  const [calendarDate, setCalendarDate] = useState<CalendarState>(
+    _.omit(initialDate, 'day'),
+  );
 
-  // TODO: replace with onClick functionality
-  function onClick(date: CalendarDate) {
-    console.log(date);
-  }
+  useEffect(() => {
+    setIsInitialDate(_.isEqual(calendarDate, _.omit(initialDate, 'day')));
+  }, [calendarDate]);
+
+  const incrementDate = () => {
+    setCalendarDate(getNextMonth(calendarDate));
+  };
+
+  const decrementDate = () => {
+    if (isInitialDate) return;
+
+    setCalendarDate(getPreviousMonth(calendarDate));
+  };
 
   return (
-    <Box>
-      <HStack justify='space-between' css={{ padding: '$3 0' }}>
+    <Card boxShadow='false'>
+      <Card.Header
+        direction='horizontal'
+        justify='space-between'
+        css={{ padding: '$3 0' }}
+      >
         <Container>
-          <Text weight={500}>
+          <Text weight={500} css={{ userSelect: 'none' }}>
             {`${
               DateUtility.allMonths()[parseInt(calendarDate.month) - 1]
             } ${calendarDate.year}`}
           </Text>
         </Container>
-        <HStack>
-          <Button
-            variant='ghost'
-            rightIcon='caret-left-outline'
+        <ButtonGroup variant='ghost' style={{ padding: 0 }}>
+          <IconButton
+            icon='caret-left-outline'
+            ariaLabel='decrementMonth'
+            disabled={isInitialDate}
             onClick={decrementDate}
-            style={{ padding: 0 }}
           />
-          <Button
-            variant='ghost'
-            rightIcon='caret-right-outline'
+          <IconButton
+            icon='caret-right-outline'
+            ariaLabel='incrementMonth'
             onClick={incrementDate}
-            disabled={isCurrentDate}
-            style={{ padding: 0 }}
           />
-        </HStack>
-      </HStack>
-
-      <Grid
-        templateColumns='repeat(7, 1fr)'
-        rowGap={4}
-        templateRows='repeat(6, 1fr)'
-      >
-        {getWeekdays(calendarDate).map((weekday, idx) => (
-          <Grid.Item key={idx}>
-            <Container centerContent>
-              <Text weight={500}>{weekday}</Text>
-            </Container>
-          </Grid.Item>
-        ))}
-
-        {getDays(calendarDate.month, calendarDate.year).map((day, idx) => {
-          const date: CalendarDate = {
-            ...calendarDate,
-            day: day.toString(),
-          };
-          return (
+        </ButtonGroup>
+      </Card.Header>
+      <Card.Body>
+        <Grid templateColumns='repeat(7, 1fr)' pb={'$3'}>
+          {getWeekdays().map((weekday, idx) => (
             <Grid.Item key={idx}>
-              <Date
-                date={date}
-                disabled={day != idx + 1}
-                currentDate={currentDate}
-                onClick={() => onClick(date)}
-              />
+              <Container centerContent>
+                <Text weight={500}>{weekday}</Text>
+              </Container>
             </Grid.Item>
-          );
-        })}
-      </Grid>
-    </Box>
+          ))}
+        </Grid>
+        <Grid
+          templateColumns='repeat(7, 1fr)'
+          rowGap={3}
+          templateRows='repeat(6, 1fr)'
+        >
+          {getDays(calendarDate.month, calendarDate.year).map(
+            (el, idx) => {
+              const date: IDate = {
+                ...calendarDate,
+                day: el.day.toString(),
+              };
+              return (
+                <Grid.Item key={idx}>
+                  <Date
+                    date={date}
+                    disabled={el.disabled}
+                    initialDate={initialDate}
+                    onClick={() => onDayClick(date)}
+                  />
+                </Grid.Item>
+              );
+            },
+          )}
+        </Grid>
+      </Card.Body>
+    </Card>
   );
 }
 
