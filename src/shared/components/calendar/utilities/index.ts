@@ -33,8 +33,7 @@ export function getDays(month: string, year: string) {
     ),
   );
 
-  const length = days.length;
-  for (let i = 0; i < 35 - length; i++) {
+  for (let i = 0; days.length % 7 != 0; i++) {
     days.push({
       day: i + 1,
       disabled: true,
