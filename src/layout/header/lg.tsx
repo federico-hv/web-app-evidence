@@ -102,7 +102,7 @@ function LgHeader() {
             colorTheme='secondary400'
           />
         </Box>
-        <Box h={320} minHeight={320} p={4} w='full'>
+        <Box h={350} minHeight={320} p={4} w='full'>
           <Box w='full' h='full'>
             <Calendar
               onDayClick={(date) => console.log(date)}
