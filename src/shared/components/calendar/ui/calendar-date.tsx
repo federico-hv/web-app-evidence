@@ -2,11 +2,6 @@ import { Button, Container, Text } from '@holdr-ui/react';
 import { DateProps } from '../types';
 import _ from 'lodash';
 
-
-
-const style = css({
-
-}) 
 function Date({ date, initialDate, onClick, disabled }: DateProps) {
   return (
     <Container centerContent style={{ padding: 0 }}>
