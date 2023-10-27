@@ -48,19 +48,20 @@ function Calendar({ startingDate, onDayClick }: CalendarProps) {
 
   return (
     <Card boxShadow='false'>
-      <Card.Header
-        direction='horizontal'
-        justify='space-between'
-        css={{ padding: '$3 0' }}
-      >
-        <Container>
+      <Card.Header direction='horizontal' justify='space-between' pb={4}>
+        <Container css={{ paddingInline: 0 }}>
           <Text weight={500} css={{ userSelect: 'none' }}>
             {`${
               DateUtility.allMonths()[parseInt(calendarDate.month) - 1]
             } ${calendarDate.year}`}
           </Text>
         </Container>
-        <ButtonGroup variant='ghost' style={{ padding: 0 }}>
+        <ButtonGroup
+          variant='ghost'
+          style={{ padding: 0 }}
+          w='100'
+          gap={0}
+        >
           <IconButton
             icon='caret-left-outline'
             ariaLabel='decrementMonth'
@@ -75,7 +76,11 @@ function Calendar({ startingDate, onDayClick }: CalendarProps) {
         </ButtonGroup>
       </Card.Header>
       <Card.Body>
-        <Grid templateColumns='repeat(7, 1fr)' pb={'$3'}>
+        <Grid
+          templateColumns='repeat(7, 1fr)'
+          pb={'$3'}
+          css={{ cursor: 'default' }}
+        >
           {getWeekdays().map((weekday, idx) => (
             <Grid.Item key={idx}>
               <Container centerContent>
