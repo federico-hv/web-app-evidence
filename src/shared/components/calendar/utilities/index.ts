@@ -1,26 +1,20 @@
 import dayjs from 'dayjs';
 import { DateUtility } from '../../../../shared';
-import { CalendarState } from '../types';
 
 /**
  * Returns an array containing the required days in the previous month,
  * the days in the desired month aligned correctly,
  * and the days in the next month so that the array length is modulo 7.
  *
- * @param month numeric string between [1, 12] representing a month.
- * @param year numeric string representing a year
+ * @param date string representation of date as YYYY-MM-DD
  * @returns an array containing all days in a month
  */
-export function getDays(month: string, year: string) {
-  const startDate = dayjs(
-    DateUtility.fromBreakdown({ month: month, year: year, day: '1' }),
-  ).get('day');
+export function getDays(date: string) {
+  const dayjsDate = dayjs(date);
+  const dateObject = DateUtility.breakdown(dayjsDate.format('YYYY-MM-DD'));
 
-  const previousMonth = getPreviousMonth({ month: month, year: year });
-  const previousDays = DateUtility.daysInMonth(
-    previousMonth.month,
-    previousMonth.year,
-  );
+  const startDate = dayjsDate.startOf('month').get('day');
+  const previousDays = dayjsDate.subtract(1, 'month').daysInMonth();
 
   let days = [];
 
@@ -35,7 +29,9 @@ export function getDays(month: string, year: string) {
   // populate the array with current months dates
   days = days.concat(
     Array.from(
-      { length: DateUtility.daysInMonth(month, year) },
+      {
+        length: DateUtility.daysInMonth(dateObject.month, dateObject.year),
+      },
       (_, i) => {
         return {
           day: i + 1,
@@ -61,31 +57,6 @@ export function getDays(month: string, year: string) {
  *
  * @returns array of shortened weekdays.
  */
-
 export function getWeekdays() {
   return dayjs.weekdays().map((weekday) => weekday.substring(0, 2));
-}
-
-export function getPreviousMonth(date: CalendarState) {
-  let month = parseInt(date.month);
-  let year = parseInt(date.year);
-
-  if (month === 1) return { month: '12', year: (--year).toString() };
-
-  return {
-    month: (--month).toString(),
-    year: date.year,
-  };
-}
-
-export function getNextMonth(date: CalendarState) {
-  let month = parseInt(date.month);
-  let year = parseInt(date.year);
-
-  if (month === 12) return { month: '1', year: (++year).toString() };
-
-  return {
-    month: (++month).toString(),
-    year: date.year,
-  };
 }

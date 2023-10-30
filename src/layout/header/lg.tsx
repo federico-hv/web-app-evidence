@@ -104,12 +104,7 @@ function LgHeader() {
         </Box>
         <Box h={350} minHeight={320} p={4} w='full'>
           <Box w='full' h='full'>
-            <Calendar
-              onDayClick={(date) => console.log(date)}
-              currentDate={DateUtility.breakdown(
-                dayjs().format('MM-DD-YYYY'),
-              )}
-            />
+            <Calendar onDayClick={(date) => console.log(date)} />
           </Box>
         </Box>
       </VStack>

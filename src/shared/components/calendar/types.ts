@@ -1,17 +1,12 @@
 import { IDate } from '../..';
 
-export type CalendarState = {
-  month: string;
-  year: string;
-};
 export type CalendarProps = {
   onDayClick: (date: IDate) => void;
-  currentDate: IDate;
 };
 
 export type DateProps = {
   date: IDate;
-  initialDate: IDate;
+  currentDate: string;
   onClick: VoidFunction;
   disabled: boolean;
 };
