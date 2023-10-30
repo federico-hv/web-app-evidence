@@ -14,30 +14,6 @@ export class DateUtility {
     );
   }
 
-  static daysInMonth(month: string, year: string) {
-    return dayjs(
-      this.fromBreakdown({
-        day: '1',
-        month: month,
-        year: year,
-      }),
-    ).daysInMonth();
-  }
-
-  static breakdown(date: string, format = 'YYYY-MM-D'): IDate {
-    const months = this.allMonths();
-    return {
-      month: months[dayjs(date).get('month')],
-      day: `${dayjs(date).get('date')}`,
-      year: `${dayjs(date).get('year')}`,
-    };
-  }
-
-  static fromNow(date: StringNumeric) {
-    dayjs.extend(relativeTime);
-    return dayjs().from(dayjs(date, 'X'), true);
-  }
-
   static parseToIntMonth(month: string) {
     switch (month.toLowerCase()) {
       case 'january':
@@ -67,5 +43,29 @@ export class DateUtility {
       default:
         return -1;
     }
+  }
+
+  static daysInMonth(month: string, year: string) {
+    return dayjs(
+      this.fromBreakdown({
+        day: '1',
+        month: month,
+        year: year,
+      }),
+    ).daysInMonth();
+  }
+
+  static breakdown(date: string, format = 'YYYY-MM-D'): IDate {
+    const months = this.allMonths();
+    return {
+      month: months[dayjs(date).get('month')],
+      day: `${dayjs(date).get('date')}`,
+      year: `${dayjs(date).get('year')}`,
+    };
+  }
+
+  static fromNow(date: StringNumeric) {
+    dayjs.extend(relativeTime);
+    return dayjs().from(dayjs(date, 'X'), true);
   }
 }
