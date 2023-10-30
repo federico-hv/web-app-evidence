@@ -6,7 +6,7 @@ export type CalendarState = {
 };
 export type CalendarProps = {
   onDayClick: (date: IDate) => void;
-  startingDate: IDate;
+  currentDate: IDate;
 };
 
 export type DateProps = {

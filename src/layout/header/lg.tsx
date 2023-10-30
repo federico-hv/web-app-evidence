@@ -106,7 +106,7 @@ function LgHeader() {
           <Box w='full' h='full'>
             <Calendar
               onDayClick={(date) => console.log(date)}
-              startingDate={DateUtility.breakdown(
+              currentDate={DateUtility.breakdown(
                 dayjs().format('MM-DD-YYYY'),
               )}
             />
