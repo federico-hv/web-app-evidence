@@ -11,7 +11,7 @@ import { getDays, getWeekdays } from './utilities';
 import Date from './ui/calendar-date';
 import { CalendarProps } from './types';
 import { useState } from 'react';
-import { _ } from 'lodash';
+import { isEqual, omit } from 'lodash';
 import { IDate } from '../../../shared';
 import dayjs from 'dayjs';
 
@@ -22,9 +22,9 @@ function Calendar({ onDayClick }: CalendarProps) {
     dayjs().startOf('month').format('YYYY-MM-DD'),
   );
 
-  const isCurrentDate = _.isEqual(
-    _.omit(DateUtility.breakdown(calendarDate), 'day'),
-    _.omit(DateUtility.breakdown(currentDate), 'day'),
+  const isCurrentDate = isEqual(
+    omit(DateUtility.breakdown(calendarDate), 'day'),
+    omit(DateUtility.breakdown(currentDate), 'day'),
   );
 
   const incrementDate = () => {
@@ -101,7 +101,7 @@ function Calendar({ onDayClick }: CalendarProps) {
                   date={date as IDate}
                   disabled={date.disabled}
                   currentDate={currentDate}
-                  onClick={() => onDayClick(_.omit(date, 'disabled'))}
+                  onClick={() => onDayClick(omit(date, 'disabled'))}
                 />
               </Grid.Item>
             );
