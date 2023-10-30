@@ -46,8 +46,17 @@ function Calendar({ startingDate, onDayClick }: CalendarProps) {
     setCalendarDate(getPreviousMonth(calendarDate));
   };
 
+  const days = getDays(calendarDate.month, calendarDate.year).map(
+    (date) => {
+      return {
+        ...calendarDate,
+        day: date.day.toString(),
+        disabled: date.disabled,
+      };
+    },
+  );
   return (
-    <Card boxShadow='false'>
+    <Card boxShadow='none'>
       <Card.Header direction='horizontal' justify='space-between' pb={4}>
         <Container css={{ paddingInline: 0 }}>
           <Text weight={500} css={{ userSelect: 'none' }}>
@@ -56,12 +65,7 @@ function Calendar({ startingDate, onDayClick }: CalendarProps) {
             } ${calendarDate.year}`}
           </Text>
         </Container>
-        <ButtonGroup
-          variant='ghost'
-          style={{ padding: 0 }}
-          w='100'
-          gap={0}
-        >
+        <ButtonGroup variant='ghost' w='100' gap={0}>
           <IconButton
             icon='caret-left-outline'
             ariaLabel='decrementMonth'
@@ -79,7 +83,7 @@ function Calendar({ startingDate, onDayClick }: CalendarProps) {
         <Grid
           templateColumns='repeat(7, 1fr)'
           pb={'$3'}
-          css={{ cursor: 'default' }}
+          cursor={'default'}
         >
           {getWeekdays().map((weekday, idx) => (
             <Grid.Item key={idx}>
@@ -94,24 +98,18 @@ function Calendar({ startingDate, onDayClick }: CalendarProps) {
           rowGap={3}
           templateRows='repeat(6, 1fr)'
         >
-          {getDays(calendarDate.month, calendarDate.year).map(
-            (el, idx) => {
-              const date: IDate = {
-                ...calendarDate,
-                day: el.day.toString(),
-              };
-              return (
-                <Grid.Item key={idx}>
-                  <Date
-                    date={date}
-                    disabled={el.disabled}
-                    initialDate={initialDate}
-                    onClick={() => onDayClick(date)}
-                  />
-                </Grid.Item>
-              );
-            },
-          )}
+          {days.map((date, idx) => {
+            return (
+              <Grid.Item key={idx}>
+                <Date
+                  date={date as IDate}
+                  disabled={date.disabled}
+                  initialDate={initialDate}
+                  onClick={() => onDayClick(_.omit(date, 'disabled'))}
+                />
+              </Grid.Item>
+            );
+          })}
         </Grid>
       </Card.Body>
     </Card>
