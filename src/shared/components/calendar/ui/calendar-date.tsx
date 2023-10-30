@@ -38,7 +38,13 @@ function Date({ date, currentDate, onClick, disabled }: DateProps) {
 
   return (
     <Center>
-      <Square {...props} onClick={onClick} size={4} radius={3}>
+      <Square
+        minHeight='35px'
+        {...props}
+        onClick={onClick}
+        size={4}
+        radius={3}
+      >
         {date.day}
       </Square>
     </Center>
