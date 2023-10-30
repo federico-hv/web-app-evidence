@@ -1,6 +1,5 @@
-import { Center, Circle, Square } from '@holdr-ui/react';
+import { Center, Square } from '@holdr-ui/react';
 import { DateProps } from '../types';
-import _ from 'lodash';
 import { DateUtility } from '../../../../shared';
 
 function Date({ date, currentDate, onClick, disabled }: DateProps) {
