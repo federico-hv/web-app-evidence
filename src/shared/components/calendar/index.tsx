@@ -10,27 +10,22 @@ import { DateUtility } from '../../../shared/utilities';
 import { getDays, getWeekdays } from './utilities';
 import Date from './ui/calendar-date';
 import { CalendarProps } from './types';
-import { useEffect, useState } from 'react';
-import _ from 'lodash';
+import { useState } from 'react';
+import { _ } from 'lodash';
 import { IDate } from '../../../shared';
 import dayjs from 'dayjs';
 
 function Calendar({ onDayClick }: CalendarProps) {
   const currentDate = dayjs().format('YYYY-MM-DD');
 
-  const [isCurrentDate, setIsCurrentDate] = useState<boolean>(true);
   const [calendarDate, setCalendarDate] = useState<string>(
     dayjs().startOf('month').format('YYYY-MM-DD'),
   );
 
-  useEffect(() => {
-    setIsCurrentDate(
-      _.isEqual(
-        _.omit(DateUtility.breakdown(calendarDate), 'day'),
-        _.omit(DateUtility.breakdown(currentDate), 'day'),
-      ),
-    );
-  }, [calendarDate]);
+  const isCurrentDate = _.isEqual(
+    _.omit(DateUtility.breakdown(calendarDate), 'day'),
+    _.omit(DateUtility.breakdown(currentDate), 'day'),
+  );
 
   const incrementDate = () => {
     setCalendarDate(

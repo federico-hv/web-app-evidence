@@ -8,7 +8,7 @@ function Date({ date, currentDate, onClick, disabled }: DateProps) {
 
   const disabledProps = {
     css: {
-      color: 'gray',
+      color: '$base300',
       cursor: 'default',
     },
   };
