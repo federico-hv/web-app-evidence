@@ -55,6 +55,7 @@ function Calendar({ startingDate, onDayClick }: CalendarProps) {
       };
     },
   );
+
   return (
     <Card boxShadow='none'>
       <Card.Header direction='horizontal' justify='space-between' pb={4}>
