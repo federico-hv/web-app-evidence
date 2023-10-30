@@ -1,9 +1,11 @@
 import {
+  Box,
   ButtonGroup,
   Card,
-  Container,
+  Center,
   Grid,
   IconButton,
+  Square,
   Text,
 } from '@holdr-ui/react';
 import { DateUtility } from '../../../shared/utilities';
@@ -13,6 +15,7 @@ import { CalendarProps } from './types';
 import { useState } from 'react';
 import { isEqual, omit } from 'lodash';
 import { IDate } from '../../../shared';
+import { disabledTheme, selectedTheme, baseTheme } from './date.styles';
 import dayjs from 'dayjs';
 
 function Calendar({ onDayClick }: CalendarProps) {
@@ -53,14 +56,21 @@ function Calendar({ onDayClick }: CalendarProps) {
     };
   });
 
+  const getDateTheme = (date: IDate & { disabled: boolean }) => {
+    if (date.disabled) return { ...disabledTheme };
+    if (DateUtility.fromBreakdown(date as IDate) === currentDate)
+      return { ...selectedTheme, ...selectedTheme };
+    return baseTheme;
+  };
+
   return (
     <Card boxShadow='none'>
-      <Card.Header direction='horizontal' justify='space-between' pb={4}>
-        <Container css={{ paddingInline: 0 }}>
+      <Card.Header direction='horizontal' justify='space-between' pb={1}>
+        <Center>
           <Text weight={500} css={{ userSelect: 'none' }}>
             {`${calendarMonth} ${calendarYear} `}
           </Text>
-        </Container>
+        </Center>
         <ButtonGroup variant='ghost' w='100' gap={0}>
           <IconButton
             icon='caret-left-outline'
@@ -83,9 +93,9 @@ function Calendar({ onDayClick }: CalendarProps) {
         >
           {getWeekdays().map((weekday, idx) => (
             <Grid.Item key={idx}>
-              <Container centerContent>
+              <Square size={4}>
                 <Text weight={500}>{weekday}</Text>
-              </Container>
+              </Square>
             </Grid.Item>
           ))}
         </Grid>
@@ -99,8 +109,7 @@ function Calendar({ onDayClick }: CalendarProps) {
               <Grid.Item key={idx}>
                 <Date
                   date={date as IDate}
-                  disabled={date.disabled}
-                  currentDate={currentDate}
+                  theme={getDateTheme(date)}
                   onClick={() => onDayClick(omit(date, 'disabled'))}
                 />
               </Grid.Item>

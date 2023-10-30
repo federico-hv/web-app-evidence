@@ -1,3 +1,4 @@
+import { CSSTheme } from '@holdr-ui/react/dist/shared/types';
 import { IDate } from '../..';
 
 export type CalendarProps = {
@@ -6,7 +7,11 @@ export type CalendarProps = {
 
 export type DateProps = {
   date: IDate;
-  currentDate: string;
   onClick: VoidFunction;
-  disabled: boolean;
+  theme: DateTheme;
+};
+
+type DateTheme = {
+  css?: CSSTheme;
+  _hover?: CSSTheme;
 };
