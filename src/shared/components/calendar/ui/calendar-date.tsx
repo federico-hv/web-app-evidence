@@ -4,7 +4,6 @@ import _ from 'lodash';
 import { css } from 'configs';
 
 const baseStyle = css({
-  // padding: '16px 4px',
   alignContent: 'center',
   display: 'flex',
   justifyContent: 'center',
