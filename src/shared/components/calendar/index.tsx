@@ -21,10 +21,10 @@ import { useEffect, useState } from 'react';
 import _ from 'lodash';
 import { IDate } from '../../../shared';
 
-function Calendar({ startingDate, onDayClick }: CalendarProps) {
-  const initialDate = { ...startingDate };
+function Calendar({ currentDate, onDayClick }: CalendarProps) {
+  const initialDate = { ...currentDate };
   initialDate.month = (
-    DateUtility.parseToIntMonth(startingDate.month) + 1
+    DateUtility.parseToIntMonth(currentDate.month) + 1
   ).toString();
 
   const [isInitialDate, setIsInitialDate] = useState<boolean>(true);
