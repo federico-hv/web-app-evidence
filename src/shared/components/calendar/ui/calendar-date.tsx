@@ -1,4 +1,4 @@
-import { Square } from '@holdr-ui/react';
+import { Center } from '@holdr-ui/react';
 import { DateProps } from '../types';
 import { disabledTheme, selectedTheme, baseTheme } from '../date.styles';
 import { IDate, DateUtility } from '../../../../shared';
@@ -12,16 +12,15 @@ function Date({ date, onClick, currentDate, disabled }: DateProps) {
   };
 
   return (
-    <Square
+    <Center
       minHeight='35px'
       maxWidth='30px'
       onClick={onClick}
-      size={4}
       radius={3}
       {...getDateTheme()}
     >
       {date.day}
-    </Square>
+    </Center>
   );
 }
 
