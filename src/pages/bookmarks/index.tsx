@@ -1,9 +1,13 @@
 import { Box, IconButton, useWindowSize } from '@holdr-ui/react';
-import { ErrorFallback, Loader, Paths } from '../../shared';
+import {
+  ErrorFallback,
+  GQLRenderer,
+  Paths,
+  SearchBox,
+} from '../../shared';
 import { Outlet, useNavigate, useParams } from 'react-router-dom';
-import { Suspense, useEffect } from 'react';
-import { ErrorBoundary } from 'react-error-boundary';
-import { SearchBox, BookmarkGroupsList } from './ui';
+import { useEffect } from 'react';
+import { BookmarkGroupsList } from './ui';
 import {
   PageLayout,
   PageLayoutContent,
@@ -47,7 +51,8 @@ function BookmarksPage() {
                 '@bp4': 300,
                 '@bp5': 350,
               }}
-              borderColor='base100'
+              // borderRight={2}
+              // borderColor='base100'
               css={{
                 flexShrink: 0,
               }}
@@ -73,6 +78,8 @@ function BookmarksPage() {
               >
                 <PageLayoutHeader
                   position='sticky'
+                  // borderRight={2}
+                  // borderColor='base100'
                   t={0}
                   css={{ backgroundColor: '#FFF', zIndex: 10 }}
                 >
@@ -98,15 +105,11 @@ function BookmarksPage() {
                     t={58}
                     px={{ '@bp1': 2, '@bp3': 4 }}
                     py={4}
-                    borderBottom={2}
-                    borderColor='base100'
                     css={{ backgroundColor: '#FFF', zIndex: 10 }}
                   />
-                  <ErrorBoundary FallbackComponent={ErrorFallback}>
-                    <Suspense fallback={<Loader loading={true} />}>
-                      <BookmarkGroupsList />
-                    </Suspense>
-                  </ErrorBoundary>
+                  <GQLRenderer ErrorFallback={ErrorFallback}>
+                    <BookmarkGroupsList />
+                  </GQLRenderer>
                 </PageLayoutContent>
               </PageLayout>
             </ShelfLayoutShelf>

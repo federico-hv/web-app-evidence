@@ -6,7 +6,12 @@ import {
   useCurrentUser,
   FeedCard,
 } from '../../../features';
-import { Error, Loader, useScrollDirection } from '../../../shared';
+import {
+  Error,
+  Loader,
+  useIsBottom,
+  useScrollDirection,
+} from '../../../shared';
 import { Alert, Container, Tabs, VStack } from '@holdr-ui/react';
 
 function Feeds({ type = 'all' }: { type: 'all' | 'article' | 'post' }) {
@@ -48,7 +53,8 @@ function Feeds({ type = 'all' }: { type: 'all' | 'article' | 'post' }) {
 }
 
 function FeedTabs() {
-  const { direction, delta } = useScrollDirection('#root');
+  const isBottom = useIsBottom();
+  const { direction, delta } = useScrollDirection();
 
   return (
     <Tabs defaultValue='all'>
@@ -64,7 +70,8 @@ function FeedTabs() {
             marginRight: '$4',
           },
           '@bp1': {
-            top: direction === 'down' && delta > 0 ? 0 : '56px',
+            top:
+              direction === 'down' && !isBottom && delta > 0 ? 0 : '56px',
           },
           '@bp3': {
             top: 65,

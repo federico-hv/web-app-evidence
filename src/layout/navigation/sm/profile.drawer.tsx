@@ -11,20 +11,20 @@ import {
   VStack,
 } from '@holdr-ui/react';
 import { Fragment } from 'react';
-import { GET_RELATIONSHIP_COUNT, useCurrentUser } from '../../features';
+import { GET_RELATIONSHIP_COUNT, useCurrentUser } from '../../../features';
 import ProfileDrawerOption from './profile-drawer-option';
 import {
   TextGroup,
   TextGroupSubheading,
   UserNamesGroup,
-} from '../../shared/components';
+} from '../../../shared/components';
 import {
   extraBtnPadding,
   LinkOverlay,
   Paths,
   prefix,
   useLogout,
-} from '../../shared';
+} from '../../../shared';
 
 function ProfileDrawer() {
   const logout = useLogout();

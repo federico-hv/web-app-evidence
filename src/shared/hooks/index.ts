@@ -17,5 +17,5 @@ export * from './use-dimensions';
 export * from './use-scroll-to-top';
 export * from './use-scroll-direction';
 export * from './use-scroll-position';
-export * from './use-is-bottom-of';
+export * from './use-is-bottom';
 export * from './use-act-on-scroll';

@@ -1,4 +1,4 @@
-import { Box, HStack, VStack } from '@holdr-ui/react';
+import { Box, Container, HStack, VStack } from '@holdr-ui/react';
 import { getSubComponent, BackButton } from '../../shared';
 import { PageLayoutHeaderProps, PageLayoutSCNames } from './types';
 import { VStackProps } from '@holdr-ui/react/dist/components/stack/src/stack.types';
@@ -46,23 +46,28 @@ function PageLayoutHeader({
       }}
       {...props}
     >
-      <HStack items='center' gap={3}>
-        <Box display={{ '@bp1': 'block', '@bp4': 'none' }}>
-          <BackButton fallbackPath={fallbackPath} />
-        </Box>
-        <HStack
-          items={'center'}
-          justify='space-between'
-          w='100%'
-          fontSize={4}
-          css={{
-            fontSize: 'large',
-            fontWeight: 500,
-          }}
-        >
-          {children}
+      <Container
+        maxWidth={600}
+        style={{ paddingInline: 0, margin: 'auto' }}
+      >
+        <HStack w='100%' items='center' gap={3}>
+          <Box display={{ '@bp1': 'block', '@bp4': 'none' }}>
+            <BackButton fallbackPath={fallbackPath} />
+          </Box>
+          <HStack
+            items={'center'}
+            justify='space-between'
+            w='100%'
+            fontSize={4}
+            css={{
+              fontSize: 'large',
+              fontWeight: 500,
+            }}
+          >
+            {children}
+          </HStack>
         </HStack>
-      </HStack>
+      </Container>
     </VStack>
   );
 }

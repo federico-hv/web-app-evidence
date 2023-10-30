@@ -1,25 +1,53 @@
-import { Box, HStack, NavigationLink } from '@holdr-ui/react';
 import {
+  Box,
+  HStack,
+  IconButton,
+  NavigationLink,
+  useDisclosure,
+} from '@holdr-ui/react';
+import {
+  DialogTabContextProvider,
   Paths,
   prefix,
   Responsive,
   ResponsiveItem,
-  useIsBottomOf,
+  useIsBottom,
   useScrollDirection,
+  useScrollPosition,
 } from '../../../../shared';
 import { Link, matchPath, useLocation } from 'react-router-dom';
+import { css } from '../../../../configs';
+import { CreatePostDialog } from '../../../feeds';
+import { useState } from 'react';
+import { useCurrentUser } from '../../../auth';
+
+const largeIcon = css({
+  fontSize: '1.25rem !important',
+});
 
 function Footer() {
-  const isBottom = useIsBottomOf('#root');
-  const { direction, delta } = useScrollDirection('#root');
+  const currentUser = useCurrentUser();
+
+  const { top } = useScrollPosition();
+  const isBottom = useIsBottom();
+  const { direction, delta } = useScrollDirection();
+
   const { pathname } = useLocation();
+
+  const [option, setOption] = useState('');
+  const { isOpen, onOpen: open, onClose } = useDisclosure();
+
+  const onOpen = (option: string) => {
+    setOption(option);
+    open();
+  };
 
   return (
     <Responsive>
       <ResponsiveItem mobile='show'>
         <Box
           display={
-            !isBottom && direction === 'down' && delta > 0
+            top >= 15 && !isBottom && direction === 'down' && delta > 0
               ? 'none'
               : 'block'
           }
@@ -37,7 +65,7 @@ function Footer() {
             boxShadow: 'rgba(0, 0, 0, 0.15) 0px 4px 12px',
           }}
         >
-          <HStack justify='space-between' as='nav' p={2}>
+          <HStack justify='space-between' items='center' as='nav' p={2}>
             <NavigationLink
               variant='ghost'
               as={<Link to={prefix('/', Paths.root)} />}
@@ -52,35 +80,50 @@ function Footer() {
             />
             <NavigationLink
               variant='ghost'
-              as={<Link to={prefix('/', Paths.bookmarks)} />}
-              isActive={!!matchPath(Paths.bookmarks, pathname)}
-              activeIcon='bookmark-fill'
-              size='sm'
-              inactiveIcon='bookmark-outline'
-              css={{
-                padding: 0,
-                size: '2.5rem',
-              }}
-            />
-            <NavigationLink
-              variant='ghost'
-              as={<Link to={prefix('/', Paths.releases)} />}
-              isActive={!!matchPath(Paths.releases, pathname)}
-              activeIcon='releases-fill'
-              size='sm'
-              inactiveIcon='releases-outline'
-              css={{
-                padding: 0,
-                size: '2.5rem',
-              }}
-            />
-            <NavigationLink
-              variant='ghost'
               as={<Link to={prefix('/', Paths.discover)} />}
               isActive={!!matchPath(Paths.discover, pathname)}
               activeIcon='search-outline'
               size='sm'
               inactiveIcon='search-outline'
+              css={{
+                padding: 0,
+                size: '2.5rem',
+              }}
+            />
+            {currentUser && currentUser.role === 'artist' && (
+              <DialogTabContextProvider
+                value={{ isOpen, onOpen, option, onClose }}
+              >
+                <IconButton
+                  onClick={() => onOpen('')}
+                  className={largeIcon()}
+                  icon={'add'}
+                  radius={4}
+                  // colorTheme='secondary400'
+                  ariaLabel={'create post'}
+                />
+                <CreatePostDialog />
+              </DialogTabContextProvider>
+            )}
+            <NavigationLink
+              variant='ghost'
+              as={<Link to={prefix('/', Paths.notifications)} />}
+              isActive={!!matchPath(Paths.notifications, pathname)}
+              activeIcon='notification-alt-fill'
+              size='sm'
+              inactiveIcon='notification-alt-outline'
+              css={{
+                padding: 0,
+                size: '2.5rem',
+              }}
+            />
+            <NavigationLink
+              variant='ghost'
+              as={<Link to={prefix('/', Paths.messages)} />}
+              isActive={!!matchPath(Paths.messages, pathname)}
+              activeIcon='chat-alt-fill'
+              size='sm'
+              inactiveIcon='chat-alt-outline'
               css={{
                 padding: 0,
                 size: '2.5rem',

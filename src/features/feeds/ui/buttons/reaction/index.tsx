@@ -1,5 +1,5 @@
 import { useFeedContext } from '../../../shared';
-import { Center, Icon } from '@holdr-ui/react';
+import { Center, Icon, useSwitch } from '@holdr-ui/react';
 import { ReactionButtonProps } from './types';
 
 function ReactionButton({
@@ -9,6 +9,7 @@ function ReactionButton({
   icon,
   colorCode,
 }: ReactionButtonProps) {
+  const { switchState, turnOff, turnOn } = useSwitch(active);
   const { feedId } = useFeedContext(); // no need for this
 
   return (
@@ -17,6 +18,8 @@ function ReactionButton({
       radius='full'
       fontSize={4}
       cursor='pointer'
+      onPointerEnter={turnOn}
+      onPointerLeave={turnOff}
       onClick={async () => await onClick(feedId)}
       _hover={{
         backgroundColor: colorCode.hover,
@@ -30,7 +33,7 @@ function ReactionButton({
     >
       <Icon
         size={{ '@bp1': 'sm', '@bp3': 'base' }}
-        name={active ? icon.active : icon.inactive}
+        name={active || switchState ? icon.active : icon.inactive}
         aria-label={name}
       />
     </Center>

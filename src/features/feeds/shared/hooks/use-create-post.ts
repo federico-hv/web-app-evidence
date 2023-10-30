@@ -31,9 +31,8 @@ export function useCreatePost() {
         },
       });
     } catch (err) {
-      console.log(
-        'Failed to send data to create a post. Probably a payload issue.',
-      );
+      if (import.meta.env.DEV) console.error(err);
+
       openWith({
         status: 'danger',
         description:

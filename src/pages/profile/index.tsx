@@ -38,7 +38,7 @@ function CustomPageLayoutHeader({
 }: GenericProps & { appearAfter: number }) {
   const [containerWidth, setContainerWidth] = useState(0);
   const ref = useRef<HTMLDivElement>();
-  const { top } = useScrollPosition('#root');
+  const { top } = useScrollPosition();
   const { width } = useWindowSize();
 
   useEffect(() => {
@@ -60,8 +60,6 @@ CustomPageLayoutHeader.displayName = 'PageLayoutHeader';
 
 function CustomHead() {
   const { state: profile } = useGeneralContext<IProfile>();
-
-  console.log(profile);
 
   return (
     <Head
@@ -104,7 +102,8 @@ function ProfilePage() {
                     <InfoGroup />
                     <RelationshipsGroup />
                   </VStack>
-                  <Box borderBottom={1} borderColor='base100' />
+                  {/* Horizontal Rule*/}
+                  <Box borderBottom={1} borderColor='base100' />{' '}
                   <ProfileContent />
                 </PageLayoutContent>
               </PageLayout>
