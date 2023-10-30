@@ -14,7 +14,6 @@ import { CalendarProps } from './types';
 import { useState } from 'react';
 import { isEqual, omit } from 'lodash';
 import { IDate } from '../../../shared';
-import { disabledTheme, selectedTheme, baseTheme } from './date.styles';
 import dayjs from 'dayjs';
 
 function Calendar({ onDayClick }: CalendarProps) {
@@ -54,13 +53,6 @@ function Calendar({ onDayClick }: CalendarProps) {
       disabled: date.disabled,
     };
   });
-
-  const getDateTheme = (date: IDate & { disabled: boolean }) => {
-    if (date.disabled) return { ...disabledTheme };
-    if (DateUtility.fromBreakdown(date as IDate) === currentDate)
-      return { ...selectedTheme, ...selectedTheme };
-    return baseTheme;
-  };
 
   return (
     <Card boxShadow='none'>
@@ -108,7 +100,8 @@ function Calendar({ onDayClick }: CalendarProps) {
               <Grid.Item key={idx}>
                 <Date
                   date={date as IDate}
-                  theme={getDateTheme(date)}
+                  disabled={date.disabled}
+                  currentDate={currentDate}
                   onClick={() => onDayClick(omit(date, 'disabled'))}
                 />
               </Grid.Item>

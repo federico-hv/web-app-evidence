@@ -8,7 +8,8 @@ export type CalendarProps = {
 export type DateProps = {
   date: IDate;
   onClick: VoidFunction;
-  theme: DateTheme;
+  currentDate: string;
+  disabled: boolean;
 };
 
 type DateTheme = {
