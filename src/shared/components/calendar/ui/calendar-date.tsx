@@ -1,27 +1,15 @@
-import { Box, Button, Container, Text } from '@holdr-ui/react';
+import { Center, Circle, Square } from '@holdr-ui/react';
 import { DateProps } from '../types';
 import _ from 'lodash';
-import { css } from 'configs';
+import { DateUtility } from '../../../../shared';
 
-const baseStyle = css({
-  alignContent: 'center',
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  height: '35px',
-  width: '31px',
-  fontWeight: '$400',
-  margin: 'auto',
-  fontSize: '50px',
-});
-
-function Date({ date, initialDate, onClick, disabled }: DateProps) {
+function Date({ date, currentDate, onClick, disabled }: DateProps) {
   let props = {};
 
   const disabledProps = {
     css: {
       color: 'gray',
-      cursor: 'default'
+      cursor: 'default',
     },
   };
 
@@ -45,12 +33,15 @@ function Date({ date, initialDate, onClick, disabled }: DateProps) {
     ? { ...props, ...disabledProps }
     : { ...props, ...baseProps };
 
-  if (_.isEqual(date, initialDate)) props = { ...props, ...selectedProps };
+  if (DateUtility.fromBreakdown(date) === currentDate)
+    props = { ...props, ...selectedProps };
 
   return (
-    <Box {...props} onClick={onClick} radius={3} className={baseStyle()}>
-      {date.day}
-    </Box>
+    <Center>
+      <Square {...props} onClick={onClick} size={4} radius={3}>
+        {date.day}
+      </Square>
+    </Center>
   );
 }
 

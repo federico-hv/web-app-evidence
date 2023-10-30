@@ -1,76 +1,76 @@
 import {
-  Box,
   ButtonGroup,
   Card,
   Container,
   Grid,
-  HStack,
   IconButton,
   Text,
 } from '@holdr-ui/react';
 import { DateUtility } from '../../../shared/utilities';
-import {
-  getDays,
-  getNextMonth,
-  getPreviousMonth,
-  getWeekdays,
-} from './utilities';
+import { getDays, getWeekdays } from './utilities';
 import Date from './ui/calendar-date';
-import { CalendarProps, CalendarState } from './types';
+import { CalendarProps } from './types';
 import { useEffect, useState } from 'react';
 import _ from 'lodash';
 import { IDate } from '../../../shared';
+import dayjs from 'dayjs';
 
-function Calendar({ currentDate, onDayClick }: CalendarProps) {
-  const initialDate = { ...currentDate };
-  initialDate.month = (
-    DateUtility.parseToIntMonth(currentDate.month) + 1
-  ).toString();
+function Calendar({ onDayClick }: CalendarProps) {
+  const currentDate = dayjs().format('YYYY-MM-DD');
 
-  const [isInitialDate, setIsInitialDate] = useState<boolean>(true);
-  const [calendarDate, setCalendarDate] = useState<CalendarState>(
-    _.omit(initialDate, 'day'),
+  const [isCurrentDate, setIsCurrentDate] = useState<boolean>(true);
+  const [calendarDate, setCalendarDate] = useState<string>(
+    dayjs().startOf('month').format('YYYY-MM-DD'),
   );
 
   useEffect(() => {
-    setIsInitialDate(_.isEqual(calendarDate, _.omit(initialDate, 'day')));
+    setIsCurrentDate(
+      _.isEqual(
+        _.omit(DateUtility.breakdown(calendarDate), 'day'),
+        _.omit(DateUtility.breakdown(currentDate), 'day'),
+      ),
+    );
   }, [calendarDate]);
 
   const incrementDate = () => {
-    setCalendarDate(getNextMonth(calendarDate));
+    setCalendarDate(
+      dayjs(calendarDate).add(1, 'month').format('YYYY-MM-DD'),
+    );
   };
 
   const decrementDate = () => {
-    if (isInitialDate) return;
+    if (isCurrentDate) return;
 
-    setCalendarDate(getPreviousMonth(calendarDate));
+    setCalendarDate(
+      dayjs(calendarDate).subtract(1, 'month').format('YYYY-MM-DD'),
+    );
   };
 
-  const days = getDays(calendarDate.month, calendarDate.year).map(
-    (date) => {
-      return {
-        ...calendarDate,
-        day: date.day.toString(),
-        disabled: date.disabled,
-      };
-    },
-  );
+  const { year: calendarYear, month: calendarMonth } =
+    DateUtility.breakdown(calendarDate);
+
+  const calendarDays = getDays(calendarDate).map((date) => {
+    return {
+      month: calendarMonth,
+      year: calendarYear,
+      day: date.day.toString(),
+      disabled: date.disabled,
+    };
+  });
 
   return (
     <Card boxShadow='none'>
       <Card.Header direction='horizontal' justify='space-between' pb={4}>
         <Container css={{ paddingInline: 0 }}>
           <Text weight={500} css={{ userSelect: 'none' }}>
-            {`${
-              DateUtility.allMonths()[parseInt(calendarDate.month) - 1]
-            } ${calendarDate.year}`}
+            {`${calendarMonth} ${calendarYear} `}
           </Text>
         </Container>
         <ButtonGroup variant='ghost' w='100' gap={0}>
           <IconButton
             icon='caret-left-outline'
             ariaLabel='decrementMonth'
-            disabled={isInitialDate}
+            disabled={isCurrentDate}
             onClick={decrementDate}
           />
           <IconButton
@@ -99,13 +99,13 @@ function Calendar({ currentDate, onDayClick }: CalendarProps) {
           rowGap={3}
           templateRows='repeat(6, 1fr)'
         >
-          {days.map((date, idx) => {
+          {calendarDays.map((date, idx) => {
             return (
               <Grid.Item key={idx}>
                 <Date
                   date={date as IDate}
                   disabled={date.disabled}
-                  initialDate={initialDate}
+                  currentDate={currentDate}
                   onClick={() => onDayClick(_.omit(date, 'disabled'))}
                 />
               </Grid.Item>
