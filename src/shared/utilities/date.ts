@@ -58,9 +58,9 @@ export class DateUtility {
   static breakdown(date: string, format = 'YYYY-MM-D'): IDate {
     const months = this.allMonths();
     return {
-      month: months[dayjs(date, format).get('month')],
-      day: `${dayjs(date, format).get('date') + 1}`,
-      year: `${dayjs(date, format).get('year')}`,
+      month: months[dayjs(date).get('month')],
+      day: `${dayjs(date).get('date')}`,
+      year: `${dayjs(date).get('year')}`,
     };
   }
 
