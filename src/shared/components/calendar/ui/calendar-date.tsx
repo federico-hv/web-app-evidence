@@ -1,7 +1,7 @@
 import { Center } from '@holdr-ui/react';
 import { DateProps } from '../types';
 import { disabledTheme, selectedTheme, baseTheme } from '../date.styles';
-import { IDate, DateUtility } from '../../../../shared';
+import { IDate, DateUtility, voidFn } from '../../../../shared';
 
 function Date({ date, onClick, currentDate, disabled }: DateProps) {
   const getDateTheme = () => {
@@ -15,9 +15,9 @@ function Date({ date, onClick, currentDate, disabled }: DateProps) {
     <Center
       minHeight='35px'
       maxWidth='30px'
-      onClick={onClick}
       radius={3}
       {...getDateTheme()}
+      onClick={!disabled ? onClick : voidFn}
     >
       {date.day}
     </Center>
