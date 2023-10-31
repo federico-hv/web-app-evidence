@@ -34,40 +34,7 @@ describe('[Date Utility]', () => {
 
     it('should correctly get todays days', () => {
       const date = dayjs();
-      const startDate = date.startOf('month').get('day');
-
-      const formattedCurrentDate = DateUtility.breakdown(
-        date.format('YYYY-MM-DD'),
-      );
-
-      const formattedPreviousDate = DateUtility.breakdown(
-        date.subtract(1, 'month').format('YYYY-MM-DD'),
-      );
-
-      const numDays = DateUtility.daysInMonth(
-        formattedCurrentDate.month,
-        formattedCurrentDate.year,
-      );
-
-      const nextMonthNumDays = DateUtility.daysInMonth(
-        formattedPreviousDate.month,
-        formattedPreviousDate.year,
-      );
-
-      const length = numDays + startDate > 35 ? 42 : 35;
-
-      const days = Array.from({ length: length }, (_, i) => {
-        if (i + 1 <= startDate)
-          return {
-            day: nextMonthNumDays - startDate + i + 1,
-            disabled: true,
-          };
-
-        return {
-          day: ((i - startDate) % numDays) + 1,
-          disabled: i - startDate >= numDays,
-        };
-      });
+      const days = createCurrentDayArray();
 
       expect(getDays(date.format('YYYY-MM-DD'))).to.deep.equal(days);
     });
@@ -80,5 +47,44 @@ describe('[Date Utility]', () => {
     });
   });
 });
+
+export function createCurrentDayArray() {
+  const date = dayjs();
+  const startDate = date.startOf('month').get('day');
+
+  const formattedCurrentDate = DateUtility.breakdown(
+    date.format('YYYY-MM-DD'),
+  );
+
+  const formattedPreviousDate = DateUtility.breakdown(
+    date.subtract(1, 'month').format('YYYY-MM-DD'),
+  );
+
+  const numDays = DateUtility.daysInMonth(
+    formattedCurrentDate.month,
+    formattedCurrentDate.year,
+  );
+
+  const nextMonthNumDays = DateUtility.daysInMonth(
+    formattedPreviousDate.month,
+    formattedPreviousDate.year,
+  );
+
+  const length = numDays + startDate > 35 ? 42 : 35;
+
+  const days = Array.from({ length: length }, (_, i) => {
+    if (i + 1 <= startDate)
+      return {
+        day: nextMonthNumDays - startDate + i + 1,
+        disabled: true,
+      };
+
+    return {
+      day: ((i - startDate) % numDays) + 1,
+      disabled: i - startDate >= numDays,
+    };
+  });
+  return days;
+}
 
 export {};
