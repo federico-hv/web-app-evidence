@@ -2,6 +2,9 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { IDate } from '../interfaces';
 import { StringNumeric } from '../types';
+import localeData from 'dayjs/plugin/localeData';
+
+dayjs.extend(localeData);
 
 export class DateUtility {
   static allMonths(): string[] {
