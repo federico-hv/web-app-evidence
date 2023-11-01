@@ -1,2 +1,2 @@
 export * from './headers';
-export * from './tabs';
+export * as NotificationTabs from './tabs';
