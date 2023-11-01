@@ -10,6 +10,7 @@ import {
   ReadableFeedReaction,
 } from '../../shared';
 import { HStack, Icon, Tabs } from '@holdr-ui/react';
+import { ReactionIcon } from '../../../../features';
 
 function FeedReactionUsersDialog() {
   const { state, update } = useGeneralContext();
@@ -30,7 +31,7 @@ function FeedReactionUsersDialog() {
             css={{
               position: 'sticky',
               blur: '12px',
-              zIndex: 11,
+              zIndex: 5,
               py: '$3',
 
               '@bp1': {
@@ -56,7 +57,9 @@ function FeedReactionUsersDialog() {
             {FeedReactionTabOptions.map((name) => (
               <Tabs.Trigger key={`${name}-tab-trigger-`} value={name}>
                 <HStack gap={3} items='center'>
-                  <Icon name='emotion-sad-outline' />
+                  {name !== 'all' && (
+                    <Icon name={ReactionIcon[name].inactive} />
+                  )}
                   {ReadableFeedReaction[name]}
                 </HStack>
               </Tabs.Trigger>

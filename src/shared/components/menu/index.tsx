@@ -45,7 +45,7 @@ function Menu({
   useKeyBind(27, closePopover);
 
   // close popover after scroll
-  useActOnScroll('#root', 10, closePopover);
+  useActOnScroll(10, closePopover);
 
   return (
     <MenuContextProvider value={{ isOpen, onOpen, onClose }}>

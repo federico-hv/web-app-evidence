@@ -10,7 +10,7 @@ function MainLayout() {
       {currentUser && <Navigation />}
       <HStack h='100vh' position='relative'>
         {currentUser && <Header />}
-        <Box w='full' h='full'>
+        <Box className='main-outlet' w='full' h='full'>
           <Outlet />
         </Box>
         <Footer />

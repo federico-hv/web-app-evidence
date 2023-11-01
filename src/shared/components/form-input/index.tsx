@@ -1,9 +1,11 @@
 import {
   Box,
   FormControl,
+  HStack,
   Icon,
   IconButton,
   InputGroup,
+  Text,
 } from '@holdr-ui/react';
 import React from 'react';
 import { FormInputProps } from './form-input.types';
@@ -20,6 +22,7 @@ function FormInput({
   leftIcon,
   rightIcon,
   name,
+  helperText,
   type,
   onClickButton,
   ...others
@@ -34,7 +37,9 @@ function FormInput({
           casing='capitalize'
           color='base400'
         >
-          {label}
+          <Text size={2} weight={500}>
+            {label}
+          </Text>
         </FormControl.Label>
       )}
       {type === 'date' || type === 'phone' ? (
@@ -46,7 +51,10 @@ function FormInput({
           {...others}
         />
       ) : (
-        <InputGroup variant='filled'>
+        <InputGroup
+          size={{ '@bp1': 'sm', '@bp3': 'base' }}
+          variant='filled'
+        >
           {leftIcon && (
             <InputGroup.LeftElement>
               <Icon color='base300' name={leftIcon} />
@@ -73,20 +81,32 @@ function FormInput({
           )}
         </InputGroup>
       )}
-
-      <FormControl.ErrorText>
-        <AnimatePresence>
-          {field.value.length && (
-            <AppearingBox
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: 'fit-content', opacity: 1 }}
-              as='span'
-            >
-              {meta.error}
-            </AppearingBox>
-          )}
-        </AnimatePresence>
-      </FormControl.ErrorText>
+      {helperText && !meta.error && (
+        <FormControl.HelperText>
+          <HStack items='center' gap={2}>
+            <Icon name='information-outline' />
+            {helperText}
+          </HStack>
+        </FormControl.HelperText>
+      )}
+      {meta.error && (
+        <FormControl.ErrorText>
+          <AnimatePresence>
+            {field.value.length && (
+              <AppearingBox
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: 'fit-content', opacity: 1 }}
+                as='span'
+              >
+                <HStack items='center' gap={2}>
+                  <Icon name='information-outline' />
+                  {meta.error}
+                </HStack>
+              </AppearingBox>
+            )}
+          </AnimatePresence>
+        </FormControl.ErrorText>
+      )}
     </FormControl>
   );
 }

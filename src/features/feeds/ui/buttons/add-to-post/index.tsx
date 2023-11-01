@@ -16,7 +16,7 @@ function AddToPostButton({ logo, label, onClick }: AddToPostButtonProps) {
       _hover={{ backgroundColor: '$base100' }}
     >
       <Image
-        size={{ '@bp1': 14, '@bp3': 20 }}
+        size={{ '@bp1': 18, '@bp3': 20 }}
         src={logo}
         alt='media icon'
       />

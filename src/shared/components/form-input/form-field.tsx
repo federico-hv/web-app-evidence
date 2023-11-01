@@ -5,7 +5,6 @@ import { textareaCSS } from './form-input.style';
 import React from 'react';
 import { styled } from '../../../configs';
 import DatePicker from '../date-picker';
-import PhoneInput from '../phone-input';
 
 export const selectCss = styled('select', {
   'box-sizing': 'border-box',
@@ -17,7 +16,7 @@ function FormField({
   placeholder,
   ...others
 }: FormInputProps & {
-  type: 'text' | 'textarea' | 'select' | 'phone' | string;
+  type: 'text' | 'textarea' | 'select' | string;
 }) {
   const [field] = useField(name);
   return (
@@ -33,7 +32,9 @@ function FormField({
             placeholder={placeholder}
             {...field}
             {...others}
-            css={{ boxSizing: 'border-box' }}
+            css={{
+              boxSizing: 'border-box',
+            }}
           />
         )}
       {type === 'textarea' && (
@@ -55,13 +56,11 @@ function FormField({
         />
       )}
       {type === 'date' && (
-        <DatePicker date={field.value} onChange={field.onChange(name)} />
-      )}
-      {type === 'phone' && (
-        <PhoneInput
-          prefix={others.prefix}
-          phone={field.value}
+        <DatePicker
+          date={field.value}
           onChange={field.onChange(name)}
+          min={others.min as string}
+          max={others.max as string}
         />
       )}
     </>

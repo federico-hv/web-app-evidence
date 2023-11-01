@@ -12,7 +12,7 @@ import {
   IReturnMany,
   useDialogContext,
 } from '../../../../../shared';
-import { VStack } from '@holdr-ui/react';
+import { Box, VStack } from '@holdr-ui/react';
 import { ReactionUsersListProps } from './types';
 import { Fragment } from 'react';
 import { ReadableFeedReactionOption } from '../../../shared';
@@ -31,9 +31,9 @@ function ReactionUsersList({ type }: ReactionUsersListProps) {
     });
 
     return (
-      <Fragment>
+      <Box borderTop={1} borderColor='base100' mt='calc(-1 * $4)' pt={4}>
         {data.feedReactionUsers.count > 0 ? (
-          <VStack>
+          <VStack gap={4}>
             {data.feedReactionUsers.data.map((item) => (
               <UserWithRelationshipAction
                 key={item.user.id}
@@ -49,7 +49,7 @@ function ReactionUsersList({ type }: ReactionUsersListProps) {
               this feed yet.`}
           />
         )}
-      </Fragment>
+      </Box>
     );
   }
 

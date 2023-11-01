@@ -1,5 +1,4 @@
 import {
-  Avatar,
   Box,
   Container,
   HStack,
@@ -9,22 +8,21 @@ import {
   VStack,
 } from '@holdr-ui/react';
 import {
-  Error,
   Head,
   IReturnMany,
   UserModel,
-  LinkOverlay,
-  Loader,
-  prefix,
-  UserNamesGroup,
   useGoBack,
-  ErrorFallback,
+  TabBorderFix,
   GQLRenderer,
+  ErrorFallback,
 } from '../../shared';
-import { CommonRelationshipButton, SEARCH, Search } from '../../features';
+import {
+  SEARCH,
+  Search,
+  UserWithRelationshipAction,
+} from '../../features';
 import { useSearchParams } from 'react-router-dom';
-import { Fragment } from 'react';
-import { useQuery } from '@apollo/client';
+import { useSuspenseQuery } from '@apollo/client';
 import {
   ContentLayout,
   ContentLayoutAside,
@@ -38,73 +36,38 @@ import {
  */
 
 function useSearchResults(queryString: string) {
-  const { data, loading, error } = useQuery<
+  const { data } = useSuspenseQuery<
     {
       search: IReturnMany<UserModel>;
     },
     { queryString: string }
   >(SEARCH, { variables: { queryString: queryString } });
 
-  return { data, loading, error };
+  return { data };
 }
 
 function PeopleTab({ query }: { query: string }) {
-  const { loading, error, data } = useSearchResults(query);
+  const { data } = useSearchResults(query);
 
   return (
-    <Error hasError={!!error}>
-      <Loader loading={loading}>
-        <Head
-          description='Search Results'
-          title={`${data?.search.count || 0} search results`}
-        />
-
-        <Container maxWidth={600}>
-          {data && data.search.count > 0 ? (
-            <VStack flex={1}>
-              {data.search.data.map((user) => (
-                <HStack
-                  gap={3}
-                  p={4}
-                  w='100%'
-                  h='100%'
-                  radius={2}
-                  cursor='pointer'
-                  items='center'
-                  _hover={{ backgroundColor: '$base100' }}
-                  position='relative'
-                  key={user.id}
-                >
-                  <LinkOverlay to={prefix('/', user.username)} />
-                  <Avatar
-                    variant='squircle'
-                    src={user.avatar}
-                    name={user.displayName}
-                  />
-                  <UserNamesGroup
-                    displayName={user.displayName}
-                    username={user.displayName}
-                  />
-                  <GQLRenderer
-                    ErrorFallback={ErrorFallback}
-                    LoadingFallback={<Fragment />}
-                  >
-                    <CommonRelationshipButton username={user.username} />
-                  </GQLRenderer>
-                </HStack>
-              ))}
-            </VStack>
-          ) : (
-            <Text size={2}>
-              We could not find any user that matches
-              <Text weight={500} css={{ display: 'inline' }}>
-                {` "${query}"`}
-              </Text>
+    <GQLRenderer ErrorFallback={ErrorFallback}>
+      <Container maxWidth={600}>
+        {data && data.search.count > 0 ? (
+          <VStack flex={1}>
+            {data.search.data.map((user) => (
+              <UserWithRelationshipAction key={user.id} data={user} />
+            ))}
+          </VStack>
+        ) : (
+          <Text size={2}>
+            We could not find any user that matches
+            <Text weight={500} css={{ display: 'inline' }}>
+              {` "${query}"`}
             </Text>
-          )}
-        </Container>
-      </Loader>
-    </Error>
+          </Text>
+        )}
+      </Container>
+    </GQLRenderer>
   );
 }
 
@@ -145,32 +108,55 @@ function SearchResults() {
 
 function DiscoverContent() {
   return (
-    <Tabs defaultValue='for-you'>
-      <Tabs.List
-        variant='link'
-        css={{
-          position: 'sticky',
-          backgroundColor: '$clearTint500',
-          blur: '12px',
-          zIndex: 11,
-          t: '65px',
-          '& button': {
-            height: '$7',
-          },
-        }}
-      >
-        <Container maxWidth={600}>
-          <Tabs.Trigger value='for-you'>For you</Tabs.Trigger>
-          <Tabs.Trigger value='trending'>Trending</Tabs.Trigger>
-        </Container>
-      </Tabs.List>
-      <Tabs.Content value='for-you'>
-        <Container maxWidth={600}>For you</Container>
-      </Tabs.Content>
-      <Tabs.Content value='trending'>
-        <Container maxWidth={600}>Trending</Container>
-      </Tabs.Content>
-    </Tabs>
+    <TabBorderFix>
+      <Tabs defaultValue='for-you'>
+        <Tabs.List
+          variant='link'
+          css={{
+            position: 'sticky',
+            backgroundColor: '$clearTint500',
+            blur: '12px',
+            zIndex: 5,
+            '& button': {
+              height: '$7',
+            },
+            '@bp1': {
+              t: 0,
+            },
+            '@bp3': {
+              t: '65px',
+            },
+          }}
+        >
+          <Container maxWidth={600}>
+            <Tabs.Trigger value='for-you'>
+              <Text weight={500} size={{ '@bp1': 2, '@bp3': 3 }}>
+                For you
+              </Text>
+            </Tabs.Trigger>
+            <Tabs.Trigger value='trending'>
+              <Text weight={500} size={{ '@bp1': 2, '@bp3': 3 }}>
+                Trending
+              </Text>
+            </Tabs.Trigger>
+          </Container>
+        </Tabs.List>
+        <Tabs.Content value='for-you'>
+          <Container maxWidth={600}>
+            <Text weight={500} size={{ '@bp1': 2, '@bp3': 3 }}>
+              For you
+            </Text>
+          </Container>
+        </Tabs.Content>
+        <Tabs.Content value='trending'>
+          <Container maxWidth={600}>
+            <Text weight={500} size={{ '@bp1': 2, '@bp3': 3 }}>
+              Trending
+            </Text>
+          </Container>
+        </Tabs.Content>
+      </Tabs>
+    </TabBorderFix>
   );
 }
 
@@ -181,7 +167,11 @@ function DiscoverPage() {
   const query = searchParams.get('q');
 
   return (
-    <Fragment>
+    <GQLRenderer ErrorFallback={ErrorFallback}>
+      <Head
+        prefix={!!query ? `${query} - ` : 'Holdr - '}
+        title='Discover'
+      />
       <ContentLayout>
         <ContentLayoutMain>
           <Box as='header'>
@@ -216,7 +206,7 @@ function DiscoverPage() {
         </ContentLayoutMain>
         <ContentLayoutAside></ContentLayoutAside>
       </ContentLayout>
-    </Fragment>
+    </GQLRenderer>
   );
 }
 DiscoverPage.displayName = 'DiscoverPage';

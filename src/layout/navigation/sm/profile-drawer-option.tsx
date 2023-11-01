@@ -1,6 +1,6 @@
 import { HStack, Icon, Text } from '@holdr-ui/react';
 import { ProfileDrawerOptionProps } from './types';
-import { LinkOverlay } from '../../shared';
+import { LinkOverlay } from '../../../shared';
 
 function ProfileDrawerOption({
   label,

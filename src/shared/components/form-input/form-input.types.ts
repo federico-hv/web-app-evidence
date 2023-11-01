@@ -1,8 +1,9 @@
 import { IconName } from '@holdr-ui/react/dist/shared/types';
-import { StringNumeric } from '../../index';
 import { ReactNode } from 'react';
+import { StringNumeric } from '../../types';
 
 export interface FormInputProps {
+  helperText?: string;
   disabled?: boolean;
   defaultValue?: string;
   placeholder?: string;

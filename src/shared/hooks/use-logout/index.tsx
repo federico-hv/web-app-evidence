@@ -13,11 +13,15 @@ export const useLogout = () => {
 
   const logout = () => {
     const cookie = new Cookies();
-    cookie.remove('access_token');
-    cookie.remove('refresh_token');
+    cookie.remove('access_token', {
+      path: '/',
+      domain: import.meta.env.VITE_DOMAIN_URL,
+    });
+    cookie.remove('refresh_token', {
+      path: '/',
+      domain: import.meta.env.VITE_DOMAIN_URL,
+    });
     setCurrentUser(null);
-
-    console.log('logged out');
 
     navigate(prefix('/', Paths.root));
   };

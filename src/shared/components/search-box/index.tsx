@@ -17,7 +17,7 @@ function SearchBox(props: Omit<BoxProps, 'children'>) {
               fontSize: '$3',
             },
           }}
-          placeholder='Search bookmarks'
+          placeholder='Search'
         />
       </InputGroup>
     </Box>

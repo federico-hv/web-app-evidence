@@ -44,7 +44,7 @@ function ReactionPopover({
   useKeyBind(27, onClose);
 
   // close when scrolling
-  useActOnScroll('#root', 10, onClose);
+  useActOnScroll(10, onClose);
 
   return (
     <Popover isOpen={isOpen} onOpenChange={set}>
@@ -59,9 +59,14 @@ function ReactionPopover({
           sideOffset={sideOffset}
           minWidth={1}
           radius='full'
-          css={{ backgroundColor: '#FFF', zIndex: 20 }}
+          css={{
+            backgroundColor: '#FFF',
+            zIndex: 20,
+          }}
         >
           <HStack
+            h='100%'
+            w='100%'
             p={{ '@bp1': 1, '@bp3': 2 }}
             gap={3}
             items='center'
