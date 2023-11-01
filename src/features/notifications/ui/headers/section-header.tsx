@@ -2,7 +2,7 @@ import { Center, HStack, Text } from '@holdr-ui/react';
 import { Link } from 'react-router-dom';
 import { Paths } from 'shared';
 
-export function SectionHeader() {
+function SectionHeader() {
   return (
     <HStack justify='space-between'>
       <Text weight={500}>New</Text>
@@ -14,3 +14,6 @@ export function SectionHeader() {
     </HStack>
   );
 }
+
+SectionHeader.displayName = 'SectionHeader';
+export default SectionHeader;

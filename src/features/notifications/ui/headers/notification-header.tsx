@@ -1,7 +1,7 @@
-import { Box, Center, HStack, Heading, IconButton } from '@holdr-ui/react';
+import { Center, HStack, Heading, IconButton } from '@holdr-ui/react';
 import { Menu } from 'shared';
 
-export function NotificationHeader() {
+function NotificationHeader() {
   return (
     <HStack justify={'space-between'}>
       <Center>
@@ -23,3 +23,6 @@ export function NotificationHeader() {
     </HStack>
   );
 }
+
+NotificationHeader.displayName = 'NotificationHeader';
+export default NotificationHeader;
