@@ -36,32 +36,33 @@ describe('[Calendar]', () => {
     }
   });
 
-  it('should allow a user to increment date', () => {
-    fireEvent.click(screen.getByLabelText('incrementMonth'));
+  it('should allow a user to view the following months', () => {
+    fireEvent.click(screen.getByLabelText('view next month'));
 
-    const incrementedDate = DateUtility.breakdown(
+    const oneMonthFromNow = DateUtility.breakdown(
       dayjs().add(1, 'month').format('YYYY-MM-DD'),
     );
 
     expect(
-      screen.getByText(`${incrementedDate.month} ${incrementedDate.year}`),
+      screen.getByText(`${oneMonthFromNow.month} ${oneMonthFromNow.year}`),
     ).to.exist;
   });
 
-  it('should not allow a user to decrement date earlier than current date', () => {
+  it('should not view previous months from current month', () => {
     const day = DateUtility.breakdown(dayjs().format('YYYY-MM-DD'));
-    fireEvent.click(screen.getByLabelText('decrementMonth'));
+    fireEvent.click(screen.getByLabelText('view next month'));
 
     expect(screen.getByText(`${day.month} ${day.year}`)).to.exist;
   });
 
-  it('should allow a user to decrement date', () => {
-    fireEvent.click(screen.getByLabelText('incrementMonth'));
-    fireEvent.click(screen.getByLabelText('decrementMonth'));
+  it('should allow view previous months', () => {
+    fireEvent.click(screen.getByLabelText('view next month'));
+    fireEvent.click(screen.getByLabelText('view next month'));
 
     const day = DateUtility.breakdown(dayjs().format('YYYY-MM-DD'));
 
     expect(screen.getByText(`${day.month} ${day.year}`)).to.exist;
   });
 });
+
 export {};
