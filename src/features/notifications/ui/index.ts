@@ -1,2 +1,2 @@
-export * from './notification-header';
-export * from './section-header';
+export * from './headers';
+export * from './tabs';
