@@ -65,13 +65,13 @@ function Calendar({ onDayClick }: CalendarProps) {
         <ButtonGroup variant='ghost' w='100' gap={0}>
           <IconButton
             icon='caret-left-outline'
-            ariaLabel='decrementMonth'
+            ariaLabel='view previous month'
             disabled={isCurrentDate}
             onClick={decrementDate}
           />
           <IconButton
             icon='caret-right-outline'
-            ariaLabel='incrementMonth'
+            ariaLabel='view next month'
             onClick={incrementDate}
           />
         </ButtonGroup>
