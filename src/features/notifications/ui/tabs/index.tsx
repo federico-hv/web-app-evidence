@@ -1,6 +1,6 @@
 import { Box, Tabs } from '@holdr-ui/react';
 import SectionHeader from '../headers/section-header';
-import { useNotification } from 'features/notifications/shared/hooks';
+import { useNotification } from '../../shared/hooks';
 
 function AllTab() {
   const data = useNotification('relationship');
