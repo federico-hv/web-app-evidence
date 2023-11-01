@@ -24,7 +24,7 @@ describe('[Date]', () => {
     );
   });
 
-  it('should correctly render day as 1', () => {
+  it('should correctly render the date, containing the first', () => {
     const { getByText } = render(
       <Date
         onClick={onClick}
