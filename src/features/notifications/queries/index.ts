@@ -1,1 +1,3 @@
-export const message = 'Coming soon';
+import { gql } from '@apollo/client';
+
+export const GET_NOTIFICATIONS = gql``;
