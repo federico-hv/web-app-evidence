@@ -10,7 +10,8 @@ function AllTab() {
 
   /* TODO: UPDATE THIS FUNCTION TO ADHERE TO NEW DATA */
   function buildNotification(notification: Notification) {
-    return notification.type === 'relationship' ? (
+    const type = notification.type;
+    return (
       <NotificationItem>
         <NotificationItem.Avatar
           avatarImage={
@@ -19,37 +20,29 @@ function AllTab() {
         />
         <NotificationItem.Details
           name={notification.actor.displayName}
-          description={'followed you'}
+          description={
+            type == 'relationship'
+              ? 'followed you'
+              : notification.entity.action + ' a recent post'
+          }
           timeFromNow={DateUtility.fromNow(
             notification.createdAt.toDateString(),
           )}
         />
-        <NotificationItem.ActionButton onClick={voidFn}>
-          Follow
-        </NotificationItem.ActionButton>
-      </NotificationItem>
-    ) : (
-      <NotificationItem>
-        <NotificationItem.Avatar
-          avatarImage={
-            notification.actor.avatar + '?random=' + Math.random()
-          }
-        />
-
-        <NotificationItem.MediaItem
-          mediaItem={
-            (notification.entity as FeedEntity).imageSrc +
-            '?random=' +
-            Math.random()
-          }
-        />
-        <NotificationItem.Details
-          name={notification.actor.displayName}
-          description={notification.entity.action + ' a recent post'}
-          timeFromNow={DateUtility.fromNow(
-            notification.createdAt.toDateString(),
-          )}
-        />
+        {type == 'relationship' && (
+          <NotificationItem.MediaItem
+            mediaItem={
+              (notification.entity as FeedEntity).imageSrc +
+              '?random=' +
+              Math.random()
+            }
+          />
+        )}
+        {type == 'feed' && (
+          <NotificationItem.ActionButton onClick={voidFn}>
+            Follow
+          </NotificationItem.ActionButton>
+        )}
       </NotificationItem>
     );
   }

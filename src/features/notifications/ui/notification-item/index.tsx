@@ -1,5 +1,6 @@
 import {
   Avatar,
+  Box,
   Button,
   Center,
   HStack,
@@ -21,8 +22,8 @@ function NotificationItem({ children }: { children: ReactNode }) {
 
   return (
     <HStack justify='space-between'>
-      <HStack>
-        <Center pr={4}>{avatar}</Center>
+      <HStack gap={4}>
+        {avatar}
         {details}
       </HStack>
       <Center>
@@ -89,3 +90,10 @@ NotificationMediaItem.displayName = 'NotificationMediaItem';
 NotificationActionButton.displayName = 'NotificationActionButton';
 
 export default NotificationItem;
+
+export {
+  NotificationAvatar,
+  NotificationDetails,
+  NotificationMediaItem,
+  NotificationActionButton,
+};
