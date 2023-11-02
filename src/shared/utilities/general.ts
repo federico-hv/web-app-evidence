@@ -52,3 +52,29 @@ export function hexToRGB(hex: string, alpha = 1) {
 export function voidFn() {
   return;
 }
+
+/**
+ * Creates a sub-arrays of size 'groupsOf'.
+ *
+ * @param arr
+ * @param groupsOf
+ */
+export function groupArray<T>(arr: T[], groupsOf: number): T[][] {
+  // Check if we can create groups of equal size
+  if (arr.length % groupsOf !== 0) {
+    return [];
+  }
+
+  const newArr = [];
+  let cursor = 0;
+
+  while (cursor < arr.length) {
+    // create a subgroup
+    newArr.push(arr.slice(cursor, cursor + groupsOf));
+
+    // move cursor to next group index
+    cursor += groupsOf;
+  }
+
+  return newArr;
+}

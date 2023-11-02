@@ -1,3 +1,1 @@
-import { gql } from '@apollo/client';
-
-export const GET_NOTIFICATIONS = undefined;
+export const message = 'Coming soon';
