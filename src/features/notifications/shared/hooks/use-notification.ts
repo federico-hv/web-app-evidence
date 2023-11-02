@@ -26,7 +26,7 @@ const mockNotifications: Notification[] = [
       username: 'user2',
       id: 'user2Id',
       type: 'FollowRequest',
-      action: 'created',
+      action: 'requested',
     },
   },
   {
@@ -42,7 +42,7 @@ const mockNotifications: Notification[] = [
       username: 'user1',
       id: 'user1Id',
       type: 'Follow',
-      action: 'created',
+      action: 'requested',
     },
   },
   {

@@ -24,7 +24,7 @@ function NotificationPopover() {
           h='calc(98.5vh - 68px)'
           w={400}
           zIndex={50}
-          css={{ backgroundColor: '#fff' }}
+          bgColor='base100'
           px='$5'
         >
           <NotificationHeader />
