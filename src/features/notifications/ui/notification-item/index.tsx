@@ -1,6 +1,5 @@
 import {
   Avatar,
-  Box,
   Button,
   Center,
   HStack,
@@ -39,7 +38,6 @@ function NotificationAvatar({ avatarImage }: { avatarImage: string }) {
 }
 
 function NotificationMediaItem({ mediaItem }: { mediaItem: string }) {
-  console.log(mediaItem);
   return <Image src={mediaItem} size={7} radius={2} />;
 }
 
