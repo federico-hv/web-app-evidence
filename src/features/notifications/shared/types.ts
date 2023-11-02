@@ -6,7 +6,7 @@ export interface RelationshipEntity extends GenericItem {
   username: string;
   id: string;
   type: 'FollowRequest' | 'Follow' | 'AcceptedFollowRequest';
-  action: 'accepted' | 'requested';
+  action: 'accepted' | 'created';
 }
 export interface FeedEntity extends GenericItem {
   // still debating
