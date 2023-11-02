@@ -1,26 +1,29 @@
-import { Center } from '@holdr-ui/react';
+import { Text, Square } from '@holdr-ui/react';
 import { DateProps } from '../types';
-import { disabledTheme, selectedTheme, baseTheme } from '../date.styles';
-import { IDate, DateUtility, voidFn } from '../../../../shared';
+import { DateUtility } from '../../../../shared';
 
-function Date({ date, onClick, currentDate, disabled }: DateProps) {
-  const getDateTheme = () => {
-    if (disabled) return { ...disabledTheme };
-    if (DateUtility.fromBreakdown(date as IDate) === currentDate)
-      return { ...selectedTheme, ...selectedTheme };
-    return baseTheme;
-  };
-
+function Date({ date, active, onClick, disabled }: DateProps) {
   return (
-    <Center
-      minHeight='35px'
-      maxWidth='30px'
+    <Square
+      bgColor={active ? 'base800' : 'transparent'}
+      size={30}
       radius={3}
-      {...getDateTheme()}
-      onClick={!disabled ? onClick : voidFn}
+      onClick={!disabled ? onClick : undefined}
+      cursor={disabled ? 'not-allowed' : 'pointer'}
+      _hover={
+        disabled || active ? undefined : { backgroundColor: '$base100' }
+      }
     >
-      {date.day}
-    </Center>
+      {active ? (
+        <Text color={'primary100'} size={2}>
+          {DateUtility.get(date, 'day')}
+        </Text>
+      ) : (
+        <Text color={disabled ? 'base300' : 'base800'} size={2}>
+          {DateUtility.get(date, 'day')}
+        </Text>
+      )}
+    </Square>
   );
 }
 
