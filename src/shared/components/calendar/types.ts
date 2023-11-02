@@ -3,7 +3,7 @@ export type CalendarProps = {
 };
 
 export type DateProps = {
-  active: boolean;
+  active?: boolean;
   date: Date;
   onClick: VoidFunction;
   disabled: boolean;
