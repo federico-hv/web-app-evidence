@@ -1,13 +1,13 @@
 import { GenericItem, UserModel } from 'shared';
 
-interface RelationshipEntity extends GenericItem {
+export interface RelationshipEntity extends GenericItem {
   // still debating
   username: string;
   id: string;
   type: 'FollowRequest' | 'Follow' | 'AcceptedFollowRequest';
-  action: 'accepted' | 'created';
+  action: 'accepted' | 'requested';
 }
-interface FeedEntity extends GenericItem {
+export interface FeedEntity extends GenericItem {
   // still debating
   imageSrc: string;
   owner: UserModel;

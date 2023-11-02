@@ -3,61 +3,55 @@ import { Notification, NotificationType } from '../types';
 /* TODO: Replace this hook with a GraphQL Query
  */
 export function useNotification(type: NotificationType) {
-  let data: Notification[] = mockNotifications;
-  data = data.sort(
-    (a: Notification, b: Notification) =>
-      a.createdAt.getTime() - b.createdAt.getTime(),
+  const data: Notification[] = mockNotifications.sort(() =>
+    Math.random() > 0.5 ? 1 : -1,
   );
+
   const error = false;
   const loading = false;
   return { data, error, loading };
 }
 
-function getRandomTimeInCurrentDay() {
-  const startOfDay = new Date();
-  return new Date(startOfDay.getTime() + Math.random() * 23);
-}
-
 const mockNotifications: Notification[] = [
   {
-    createdAt: getRandomTimeInCurrentDay(),
+    createdAt: new Date(),
     actor: {
       username: 'user1',
       id: 'user1Id',
-      displayName: 'User 1',
-      avatar: 'user1-avatar.jpg',
+      displayName: 'John Doe',
+      avatar: 'https://picsum.photos/200',
     },
     type: 'relationship',
     entity: {
       username: 'user2',
       id: 'user2Id',
       type: 'FollowRequest',
-      action: 'created',
+      action: 'requested',
     },
   },
   {
-    createdAt: getRandomTimeInCurrentDay(),
+    createdAt: new Date(),
     actor: {
       username: 'user3',
       id: 'user3Id',
-      displayName: 'User 3',
-      avatar: 'user3-avatar.jpg',
+      displayName: 'Alice Johnson',
+      avatar: 'https://picsum.photos/200',
     },
     type: 'relationship',
     entity: {
       username: 'user1',
       id: 'user1Id',
       type: 'Follow',
-      action: 'created',
+      action: 'requested',
     },
   },
   {
-    createdAt: getRandomTimeInCurrentDay(),
+    createdAt: new Date(),
     actor: {
       username: 'user2',
       id: 'user2Id',
-      displayName: 'User 2',
-      avatar: 'user2-avatar.jpg',
+      displayName: 'Bob Smith',
+      avatar: 'https://picsum.photos/200',
     },
     type: 'relationship',
     entity: {
@@ -68,64 +62,64 @@ const mockNotifications: Notification[] = [
     },
   },
   {
-    createdAt: getRandomTimeInCurrentDay(),
+    createdAt: new Date(),
     actor: {
       username: 'user4',
       id: 'user4Id',
-      displayName: 'User 4',
-      avatar: 'user4-avatar.jpg',
+      displayName: 'Emma Brown',
+      avatar: 'https://picsum.photos/200',
     },
     type: 'feed',
     entity: {
-      imageSrc: 'Your-Image-URL-Here-1',
-      id: 'fake-id1',
+      imageSrc: 'https://picsum.photos/200',
+      id: '123',
       owner: {
         username: 'user1',
         id: 'user1Id',
-        displayName: 'User 1',
-        avatar: 'user1-avatar.jpg',
+        displayName: 'John Doe',
+        avatar: 'https://picsum.photos/200',
       },
       action: 'created',
     },
   },
   {
-    createdAt: getRandomTimeInCurrentDay(),
+    createdAt: new Date(),
     actor: {
       username: 'user5',
       id: 'user5Id',
-      displayName: 'User 5',
-      avatar: 'user5-avatar.jpg',
+      displayName: 'Chris Wilson',
+      avatar: 'https://picsum.photos/200',
     },
     type: 'feed',
     entity: {
-      imageSrc: 'Your-Image-URL-Here-2',
-      id: 'fake-id2',
+      imageSrc: 'https://picsum.photos/200',
+      id: '123',
       owner: {
         username: 'user2',
         id: 'user2Id',
-        displayName: 'User 2',
-        avatar: 'user2-avatar.jpg',
+        displayName: 'Bob Smith',
+        avatar: 'https://picsum.photos/200',
       },
       action: 'liked',
     },
   },
   {
-    createdAt: getRandomTimeInCurrentDay(),
+    createdAt: new Date(),
     actor: {
       username: 'user6',
       id: 'user6Id',
-      displayName: 'User 6',
-      avatar: 'user6-avatar.jpg',
+      displayName: 'Ella Davis',
+      avatar: 'https://picsum.photos/200',
     },
     type: 'feed',
     entity: {
-      imageSrc: 'Your-Image-URL-Here-3',
-      id: 'fake-id3',
+      imageSrc: 'https://picsum.photos/200',
+      id: '123',
       owner: {
         username: 'user3',
         id: 'user3Id',
-        displayName: 'User 3',
-        avatar: 'user3-avatar.jpg',
+        displayName: 'Alice Johnson',
+        avatar: 'https://picsum.photos/200',
       },
       action: 'shared',
     },

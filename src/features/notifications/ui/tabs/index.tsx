@@ -1,12 +1,69 @@
-import { Box, Tabs } from '@holdr-ui/react';
+import { Box, Tabs, VStack } from '@holdr-ui/react';
 import SectionHeader from '../headers/section-header';
 import { useNotification } from '../../shared/hooks';
+import NotificationItem from '../notification-item';
+import { DateUtility, voidFn } from 'shared';
+import { FeedEntity, Notification } from '../../index';
 
 function AllTab() {
-  const data = useNotification('relationship');
+  const { data, error, loading } = useNotification('relationship');
+
+  /* TODO: UPDATE THIS FUNCTION TO ADHERE TO NEW DATA */
+  function buildNotification(notification: Notification) {
+    return notification.type === 'relationship' ? (
+      <NotificationItem>
+        <NotificationItem.Avatar
+          avatarImage={
+            notification.actor.avatar + '?random=' + Math.random()
+          }
+        />
+        <NotificationItem.Details
+          name={notification.actor.displayName}
+          description={'followed you'}
+          timeFromNow={DateUtility.fromNow(
+            notification.createdAt.toDateString(),
+          )}
+        />
+        <NotificationItem.ActionButton onClick={voidFn}>
+          Follow
+        </NotificationItem.ActionButton>
+      </NotificationItem>
+    ) : (
+      <NotificationItem>
+        <NotificationItem.Avatar
+          avatarImage={
+            notification.actor.avatar + '?random=' + Math.random()
+          }
+        />
+
+        <NotificationItem.MediaItem
+          mediaItem={
+            (notification.entity as FeedEntity).imageSrc +
+            '?random=' +
+            Math.random()
+          }
+        />
+        <NotificationItem.Details
+          name={notification.actor.displayName}
+          description={notification.entity.action + ' a recent post'}
+          timeFromNow={DateUtility.fromNow(
+            notification.createdAt.toDateString(),
+          )}
+        />
+      </NotificationItem>
+    );
+  }
+
+  if (error || loading) return <></>;
+
   return (
     <Box>
       <SectionHeader />
+      <VStack py={3} gap={5}>
+        {data.map((notification, idx) => {
+          return buildNotification(notification);
+        })}
+      </VStack>
     </Box>
   );
 }
