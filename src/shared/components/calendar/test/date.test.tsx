@@ -15,35 +15,20 @@ describe('[Date]', () => {
 
   it('should correctly render', () => {
     render(
-      <Date
-        onClick={onClick}
-        date={{ day: '1', month: '1', year: '2023' }}
-        disabled={false}
-        currentDate={dayjs().format('YYYY-MM-DD')}
-      />,
+      <Date date={dayjs().toDate()} onClick={onClick} disabled={false} />,
     );
   });
 
   it('should correctly render the date, containing the first', () => {
     const { getByText } = render(
-      <Date
-        onClick={onClick}
-        date={{ day: '1', month: '1', year: '2023' }}
-        disabled={false}
-        currentDate={dayjs().format('YYYY-MM-DD')}
-      />,
+      <Date onClick={onClick} date={dayjs().toDate()} disabled={false} />,
     );
     expect(getByText(1)).to.exist;
   });
 
   it('should call onClick when Date is clicked', async () => {
     const { getByText } = render(
-      <Date
-        onClick={onClick}
-        date={{ day: '1', month: '1', year: '2023' }}
-        disabled={false}
-        currentDate={dayjs().format('YYYY-MM-DD')}
-      />,
+      <Date onClick={onClick} date={dayjs().toDate()} disabled={false} />,
     );
 
     fireEvent.click(getByText(1));
@@ -52,12 +37,7 @@ describe('[Date]', () => {
 
   it('should not call onClick when Date is clicked and disabled', async () => {
     const { getByText } = render(
-      <Date
-        onClick={onClick}
-        date={{ day: '1', month: '1', year: '2023' }}
-        disabled={true}
-        currentDate={dayjs().format('YYYY-MM-DD')}
-      />,
+      <Date onClick={onClick} date={dayjs().toDate()} disabled={true} />,
     );
 
     fireEvent.click(getByText(1));
