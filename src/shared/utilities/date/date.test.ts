@@ -1,4 +1,4 @@
-import { DateUtility } from './date';
+import { DateUtility } from './index';
 
 describe('[DateUtility]', () => {
   describe('[allMonths]', () => {

@@ -16,7 +16,7 @@ describe('[Calendar]', () => {
       count++;
     };
 
-    render(<Calendar onDayClick={onClick} />);
+    render(<Calendar onDateClick={onClick} />);
   });
 
   it('should correctly render', () => {

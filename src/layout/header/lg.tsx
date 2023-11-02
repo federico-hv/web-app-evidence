@@ -6,14 +6,8 @@ import {
   NavigationLinkGroup,
   VStack,
 } from '@holdr-ui/react';
-import {
-  DateUtility,
-  extraBtnPadding,
-  Paths,
-  prefix,
-} from '../../../../shared';
+import { extraBtnPadding, Paths, prefix } from '../../../../shared';
 import { Calendar } from '../../../../shared/components';
-import dayjs from 'dayjs';
 
 function LgHeader() {
   const { pathname } = useLocation();
@@ -104,7 +98,7 @@ function LgHeader() {
         </Box>
         <Box h={350} minHeight={320} p={4} w='full'>
           <Box w='full' h='full'>
-            <Calendar onDayClick={(date) => console.log(date)} />
+            <Calendar onDateClick={(date) => console.log(date)} />
           </Box>
         </Box>
       </VStack>

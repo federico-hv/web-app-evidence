@@ -1,117 +1,117 @@
 import {
   ButtonGroup,
   Card,
-  Center,
-  Grid,
+  HStack,
   IconButton,
   Square,
   Text,
+  VStack,
 } from '@holdr-ui/react';
-import { DateUtility } from '../../../shared/utilities';
-import { getDays, getWeekdays } from './utilities';
+import { DateUtility, groupArray } from '../../utilities';
 import Date from './ui/calendar-date';
 import { CalendarProps } from './types';
 import { useState } from 'react';
-import { isEqual, omit } from 'lodash';
-import { IDate } from '../../../shared';
 import dayjs from 'dayjs';
 
-function Calendar({ onDayClick }: CalendarProps) {
-  const currentDate = dayjs().format('YYYY-MM-DD');
+function Calendar({ onDateClick }: CalendarProps) {
+  const today = dayjs().toDate();
+  const [currentDate, setCurrentDate] = useState(today);
 
-  const [calendarDate, setCalendarDate] = useState<string>(
-    dayjs().startOf('month').format('YYYY-MM-DD'),
+  const year = DateUtility.get(currentDate, 'year');
+  const month = DateUtility.get(currentDate, 'month');
+
+  const weekdays = DateUtility.getWeekdays((day) => day.substring(0, 2));
+
+  const firstDateOfMonth = DateUtility.getStartOf(currentDate, 'month');
+  const lastDateOfMonth = DateUtility.getEndOf(currentDate, 'month');
+
+  const firstDateInFirstMonthWeek = DateUtility.getStartOf(
+    firstDateOfMonth,
+    'week',
+  );
+  const lastDateInLastMonthWeek = DateUtility.getEndOf(
+    lastDateOfMonth,
+    'week',
   );
 
-  const isCurrentDate = isEqual(
-    omit(DateUtility.breakdown(calendarDate), 'day'),
-    omit(DateUtility.breakdown(currentDate), 'day'),
+  const numberOfDaysInMonth = DateUtility.difference(
+    firstDateInFirstMonthWeek,
+    lastDateInLastMonthWeek,
+    'day',
   );
 
-  const incrementDate = () => {
-    setCalendarDate(
-      dayjs(calendarDate).add(1, 'month').format('YYYY-MM-DD'),
-    );
-  };
+  const days = DateUtility.generateDays(
+    firstDateInFirstMonthWeek,
+    numberOfDaysInMonth,
+  );
 
-  const decrementDate = () => {
-    if (isCurrentDate) return;
+  const weeksOfDates = groupArray(days, 7);
 
-    setCalendarDate(
-      dayjs(calendarDate).subtract(1, 'month').format('YYYY-MM-DD'),
-    );
-  };
+  const addMonthToCurrentDate = () =>
+    setCurrentDate(DateUtility.add(currentDate, 1, 'month'));
 
-  const { year: calendarYear, month: calendarMonth } =
-    DateUtility.breakdown(calendarDate);
-
-  const calendarDays = getDays(calendarDate).map((date) => {
-    return {
-      month: calendarMonth,
-      year: calendarYear,
-      day: date.day.toString(),
-      disabled: date.disabled,
-    };
-  });
+  const subtractDateFromCurrentDate = () =>
+    setCurrentDate(DateUtility.subtract(currentDate, 1, 'month'));
 
   return (
     <Card boxShadow='none'>
-      <Card.Header direction='horizontal' justify='space-between' pb={1}>
-        <Center>
-          <Text weight={500} css={{ userSelect: 'none' }}>
-            {`${calendarMonth} ${calendarYear} `}
-          </Text>
-        </Center>
+      <Card.Header
+        direction='horizontal'
+        items='center'
+        justify='space-between'
+        mb={4}
+      >
+        <Text weight={500}>{`${month} ${year}`}</Text>
         <ButtonGroup variant='ghost' w='100' gap={0}>
           <IconButton
             icon='caret-left-outline'
             ariaLabel='view previous month'
-            disabled={isCurrentDate}
-            onClick={decrementDate}
+            disabled={DateUtility.equal(currentDate, today)}
+            onClick={subtractDateFromCurrentDate}
           />
           <IconButton
             icon='caret-right-outline'
             ariaLabel='view next month'
-            onClick={incrementDate}
+            onClick={addMonthToCurrentDate}
           />
         </ButtonGroup>
       </Card.Header>
       <Card.Body>
-        <Grid
-          templateColumns='repeat(7, 1fr)'
-          pb={'$3'}
-          cursor={'default'}
-        >
-          {getWeekdays().map((weekday, idx) => (
-            <Grid.Item key={idx}>
-              <Square size={4}>
-                <Text weight={500}>{weekday}</Text>
-              </Square>
-            </Grid.Item>
+        <HStack mb={3} justify='space-between'>
+          {weekdays.map((day) => (
+            <Square size={30} key={day}>
+              <Text size={2} weight={500}>
+                {day}
+              </Text>
+            </Square>
           ))}
-        </Grid>
-        <Grid
-          templateColumns='repeat(7, 1fr)'
-          rowGap={3}
-          templateRows='repeat(6, 1fr)'
-        >
-          {calendarDays.map((date, idx) => {
-            return (
-              <Grid.Item key={idx}>
+        </HStack>
+        <VStack gap={3}>
+          {weeksOfDates.map((week, idx) => (
+            <HStack
+              justify='space-between'
+              key={`${month}-${year} week ${idx + 1}`}
+            >
+              {week.map((date) => (
                 <Date
-                  date={date as IDate}
-                  disabled={date.disabled}
-                  currentDate={currentDate}
-                  onClick={() => onDayClick(omit(date, 'disabled'))}
+                  key={date.toString()}
+                  date={date}
+                  active={DateUtility.equal(date, today)}
+                  disabled={
+                    DateUtility.lessThan(date, firstDateOfMonth) ||
+                    DateUtility.lessThan(date, today) ||
+                    DateUtility.greaterThan(date, lastDateOfMonth)
+                  }
+                  onClick={() => onDateClick(date)}
                 />
-              </Grid.Item>
-            );
-          })}
-        </Grid>
+              ))}
+            </HStack>
+          ))}
+        </VStack>
       </Card.Body>
     </Card>
   );
 }
-
 Calendar.displayName = 'Calendar';
+
 export default Calendar;
