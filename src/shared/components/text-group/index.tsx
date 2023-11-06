@@ -5,9 +5,13 @@ import {
   TextGroupSubheadingProps,
 } from './types';
 
-function TextGroup({ children, ...props }: TextGroupProps) {
+function TextGroup({
+  children,
+  direction = 'vertical',
+  ...props
+}: TextGroupProps) {
   return (
-    <Stack direction='vertical' gap={2} w='100%' {...props}>
+    <Stack direction={direction} gap={2} w='100%' {...props}>
       {children}
     </Stack>
   );
