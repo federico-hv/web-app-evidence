@@ -1,43 +1,44 @@
 import { Box, Button, Tabs, VStack } from '@holdr-ui/react';
 import SectionHeader from '../headers/section-header';
 import { useNotification } from '../../shared/hooks';
-import NotificationItem from '../notification-item';
-import { DateUtility, voidFn } from 'shared';
+import NotificationItem, {
+  NotificationDescription,
+} from '../notification-item';
+import { voidFn } from 'shared';
 import { FeedEntity, Notification } from '../../index';
 
 function AllTab() {
   const { data, error, loading } = useNotification('relationship');
 
   /* TODO: UPDATE THIS FUNCTION TO ADHERE TO NEW DATA */
-  function buildNotification(notification: Notification) {
+  function buildNotification(notification: Notification, idx: number) {
     const type = notification.type;
+
     return (
-      <NotificationItem>
+      <NotificationItem key={idx}>
         <NotificationItem.Avatar
           src={notification.actor.avatar + '?random=' + Math.random()}
         />
         <NotificationItem.Details
           name={notification.actor.displayName}
-          description={
-            type == 'relationship'
-              ? 'followed you'
-              : notification.entity.action + ' a recent post'
-          }
+          description={NotificationDescription[type](
+            notification.entity.action,
+          )}
           date={notification.createdAt}
         />
-        {type == 'relationship' && (
+        {type === 'feed' && (
           <NotificationItem.MediaItem
-            mediaItem={
+            src={
               (notification.entity as FeedEntity).imageSrc +
               '?random=' +
               Math.random()
             }
           />
         )}
-        {type == 'feed' && (
-          <NotificationItem.ActionButton>
+        {type === 'relationship' && (
+          <NotificationItem.ActionWrapper>
             <Button onClick={voidFn}>Follow</Button>
-          </NotificationItem.ActionButton>
+          </NotificationItem.ActionWrapper>
         )}
       </NotificationItem>
     );
@@ -50,7 +51,7 @@ function AllTab() {
       <SectionHeader />
       <VStack py={3} gap={5}>
         {data.map((notification, idx) => {
-          return buildNotification(notification);
+          return buildNotification(notification, idx);
         })}
       </VStack>
     </Box>

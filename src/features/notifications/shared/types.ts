@@ -30,7 +30,6 @@ export type NotificationDetailsProps = {
   date: Date;
 };
 
-export type NotificationMediaItemProps = { mediaItem: string };
-export type NotificationActionButtonProps = {
+export type NotificationActionWrapperProps = {
   children: ReactNode;
 };
