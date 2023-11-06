@@ -21,7 +21,7 @@ export default (configEnv: ConfigEnv) => {
       },
       host: true, // needed for docker port mapping to work
       strictPort: true,
-      port: 5174,
+      port: 5173,
     },
     test: {
       globals: true,
