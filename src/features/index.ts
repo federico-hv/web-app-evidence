@@ -6,3 +6,4 @@ export * from './feeds';
 export * from './search';
 export * from './bookmarks';
 export * from './user';
+export * from './notifications';
