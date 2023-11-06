@@ -15,7 +15,7 @@ import {
   NotificationType,
 } from 'features/notifications/shared';
 import { ReactNode } from 'react';
-import { DateUtility, getSubComponent, voidFn } from 'shared';
+import { DateUtility, getSubComponent } from 'shared';
 
 function NotificationItem({ children }: { children: ReactNode }) {
   const avatar = getSubComponent(children, 'NotificationAvatar');
