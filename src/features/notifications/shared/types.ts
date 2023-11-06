@@ -33,3 +33,9 @@ export type NotificationDetailsProps = {
 export type NotificationActionWrapperProps = {
   children: ReactNode;
 };
+
+export type NotificationSCName =
+  | 'NotificationAvatar'
+  | 'NotificationDetails'
+  | 'NotificationMediaItem'
+  | 'NotificationActionWrapper';
