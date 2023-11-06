@@ -81,19 +81,12 @@ function NotificationDetails({
     <Center>
       <VStack gap={2}>
         <Text weight={500}>{name}</Text>
-        <TextGroup
-          direction='horizontal'
-          color='base300'
-          gap={3}
-          fontSize={2}
-        >
-          <TextGroup.Subheading>
-            {description.toLowerCase()}
-          </TextGroup.Subheading>
-          <TextGroup.Subheading>
-            {DateUtility.fromNow(date.toDateString())}
-          </TextGroup.Subheading>
-        </TextGroup>
+        <HStack gap={3}>
+          <TextGroup color='base300' fontSize={2}>
+            <Text>{description.toLowerCase()}</Text>
+            <Text>{DateUtility.fromNow(date.toDateString())}</Text>
+          </TextGroup>
+        </HStack>
       </VStack>
     </Center>
   );
