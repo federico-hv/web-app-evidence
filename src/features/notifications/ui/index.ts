@@ -1,2 +1,2 @@
-export { default as NotificationTabs } from './tabs';
+export * from './tabs';
 export * from './headers';
