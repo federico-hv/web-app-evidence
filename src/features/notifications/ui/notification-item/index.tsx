@@ -7,8 +7,14 @@ import {
   Text,
   VStack,
 } from '@holdr-ui/react';
+import { AvatarProps } from '@holdr-ui/react/dist/components/avatar/src/avatar.types';
+import {
+  NotificationActionButtonProps,
+  NotificationDetailsProps,
+  NotificationMediaItemProps,
+} from 'features/notifications/shared';
 import { ReactNode } from 'react';
-import { getSubComponent } from 'shared';
+import { DateUtility, getSubComponent } from 'shared';
 
 function NotificationItem({ children }: { children: ReactNode }) {
   const avatar = getSubComponent(children, 'NotificationAvatar');
@@ -33,33 +39,30 @@ function NotificationItem({ children }: { children: ReactNode }) {
   );
 }
 
-function NotificationAvatar({ avatarImage }: { avatarImage: string }) {
-  return <Avatar src={avatarImage} radius={4} size='lg' />;
+function NotificationAvatar({
+  src,
+  radius = 4,
+  size = 'lg',
+  ...props
+}: AvatarProps) {
+  return <Avatar src={src} radius={radius} size={size} {...props} />;
 }
 
-function NotificationMediaItem({ mediaItem }: { mediaItem: string }) {
+function NotificationMediaItem({ mediaItem }: NotificationMediaItemProps) {
   return <Image src={mediaItem} size={7} radius={2} />;
 }
 
 function NotificationActionButton({
-  onClick,
   children,
-}: {
-  onClick: VoidFunction;
-  children: ReactNode;
-}) {
-  return <Button onClick={onClick}>{children}</Button>;
+}: NotificationActionButtonProps) {
+  return <>{children}</>;
 }
 
 function NotificationDetails({
   name,
   description,
-  timeFromNow,
-}: {
-  name: string;
-  description: string;
-  timeFromNow: string;
-}) {
+  date,
+}: NotificationDetailsProps) {
   return (
     <Center>
       <VStack gap={2}>
@@ -69,7 +72,7 @@ function NotificationDetails({
             {description.toLowerCase()}
           </Text>
           <Text color='base300' size={2}>
-            {timeFromNow}
+            {DateUtility.fromNow(date.toDateString())}
           </Text>
         </HStack>
       </VStack>
