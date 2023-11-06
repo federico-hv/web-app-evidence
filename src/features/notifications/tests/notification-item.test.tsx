@@ -7,20 +7,21 @@ import NotificationItem, {
 } from '../ui/notification-item';
 
 import logo from '../../../assets/images/logo.png';
+import { Button } from '@holdr-ui/react';
 
 describe('NotificationItem', () => {
-  it('renders a NotificationAvatar component', () => {
-    render(<NotificationAvatar avatarImage='https://picsum.photos/200' />);
+  it('displays a notification avatar', () => {
+    render(<NotificationAvatar src='https://picsum.photos/200' />);
     const avatar = screen.getByAltText('Avatar');
     expect(avatar).to.exist;
   });
 
-  it('renders a NotificationDetails component', () => {
+  it('displays notification details', () => {
     render(
       <NotificationDetails
         name='John'
         description='Some description'
-        timeFromNow='2 hours ago'
+        date={new Date()}
       />,
     );
 
@@ -32,7 +33,7 @@ describe('NotificationItem', () => {
     expect(timeFromNow).to.exist;
   });
 
-  it('renders a NotificationMediaItem component', () => {
+  it('displays a notification image', () => {
     const { getByAltText } = render(
       <NotificationMediaItem mediaItem='https://picsum.photos/200' />,
     );
@@ -40,7 +41,7 @@ describe('NotificationItem', () => {
     expect((mediaItem as HTMLMediaElement).src).to.equal('test-media.jpg');
   });
 
-  it('renders a NotificationActionButton component', () => {
+  it('displays a notification button', () => {
     let count = 0;
 
     const onClickMock = () => count++;
@@ -53,13 +54,13 @@ describe('NotificationItem', () => {
     expect(actionButton).to.exist;
   });
 
-  it('has a functional onClick', () => {
+  it('allows a user to click on a notification button', () => {
     let count = 0;
 
     const onClickMock = () => count++;
     render(
-      <NotificationActionButton onClick={onClickMock}>
-        Test Action Button
+      <NotificationActionButton>
+        <Button onClick={onClickMock}>Test Action Button</Button>
       </NotificationActionButton>,
     );
     const actionButton = screen.getByText('Test Action Button');
@@ -67,17 +68,17 @@ describe('NotificationItem', () => {
     expect(count).to.equal(1);
   });
 
-  it('renders a NotificationItem component', () => {
+  it('renders a complete notification', () => {
     render(
       <NotificationItem>
-        <NotificationItem.Avatar avatarImage='test-avatar.jpg' />
+        <NotificationItem.Avatar src='test-avatar.jpg' />
         <NotificationItem.Details
           name='John Doe'
           description='Some notification description'
-          timeFromNow='2 hours ago'
+          date={new Date()}
         />
-        <NotificationItem.ActionButton onClick={() => {}}>
-          Action
+        <NotificationItem.ActionButton>
+          <Button onClick={() => {}}>Action</Button>
         </NotificationItem.ActionButton>
         <NotificationItem.MediaItem mediaItem='test-media.jpg' />
       </NotificationItem>,

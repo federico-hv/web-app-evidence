@@ -1,3 +1,4 @@
+import { ReactNode } from 'react';
 import { GenericItem, UserModel } from 'shared';
 
 export interface RelationshipEntity extends GenericItem {
@@ -22,3 +23,14 @@ export interface Notification {
 }
 
 export type NotificationType = 'relationship' | 'feed';
+
+export type NotificationDetailsProps = {
+  name: string;
+  description: string;
+  date: Date;
+};
+
+export type NotificationMediaItemProps = { mediaItem: string };
+export type NotificationActionButtonProps = {
+  children: ReactNode;
+};
