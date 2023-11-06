@@ -46,8 +46,8 @@ describe('NotificationItem', () => {
 
     const onClickMock = () => count++;
     render(
-      <NotificationActionButton onClick={onClickMock}>
-        Test Action Button
+      <NotificationActionButton>
+        <Button onClick={onClickMock}>Test Action Button</Button>
       </NotificationActionButton>,
     );
     const actionButton = screen.getByText('Test Action Button');
