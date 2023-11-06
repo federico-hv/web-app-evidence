@@ -4,7 +4,7 @@ import NotificationItem, {
   NotificationAvatar,
   NotificationDetails,
   NotificationMediaItem,
-} from '../ui/notification-item';
+} from '../ui/notification-item/notification-item';
 
 import { Button } from '@holdr-ui/react';
 
