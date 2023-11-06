@@ -8,7 +8,7 @@ function SectionHeader() {
       <Text weight={500}>New</Text>
       <Link to={Paths.notifications}>
         <Center>
-          <Text>View all</Text>
+          <Text color='base300'>View all</Text>
         </Center>
       </Link>
     </HStack>
