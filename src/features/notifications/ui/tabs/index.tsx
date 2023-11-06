@@ -5,7 +5,7 @@ import NotificationItem, {
   NotificationDescription,
 } from '../notification-item';
 import { voidFn } from 'shared';
-import { FeedEntity, Notification } from '../../index';
+import { FeedEntity, Notification, } from '../../index';
 
 function AllTab() {
   const { data, error, loading } = useNotification('relationship');

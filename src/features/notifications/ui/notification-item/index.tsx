@@ -1,6 +1,5 @@
 import {
   Avatar,
-  Box,
   Center,
   HStack,
   Image,
@@ -12,26 +11,39 @@ import { ImageProps } from '@holdr-ui/react/dist/components/image/src/image.type
 import {
   NotificationActionWrapperProps,
   NotificationDetailsProps,
+  NotificationSCName,
   NotificationType,
 } from 'features/notifications/shared';
 import { ReactNode } from 'react';
-import { DateUtility, getSubComponent } from 'shared';
+import { DateUtility, TextGroup, getSubComponent } from 'shared';
 
 function NotificationItem({ children }: { children: ReactNode }) {
-  const avatar = getSubComponent(children, 'NotificationAvatar');
-  const details = getSubComponent(children, 'NotificationDetails');
-  const mediaItem = getSubComponent(children, 'NotificationMediaItem');
-  const action = getSubComponent(children, 'NotificationActionWrapper');
+  const Avatar = getSubComponent<NotificationSCName>(
+    children,
+    'NotificationAvatar',
+  );
+  const Details = getSubComponent<NotificationSCName>(
+    children,
+    'NotificationDetails',
+  );
+  const MediaItem = getSubComponent<NotificationSCName>(
+    children,
+    'NotificationMediaItem',
+  );
+  const Action = getSubComponent<NotificationSCName>(
+    children,
+    'NotificationActionWrapper',
+  );
 
   return (
     <HStack justify='space-between'>
       <HStack gap={4}>
-        {avatar}
-        {details}
+        {Avatar}
+        {Details}
       </HStack>
       <Center>
-        {action}
-        {mediaItem}
+        {Action}
+        {MediaItem}
       </Center>
     </HStack>
   );
@@ -71,12 +83,10 @@ function NotificationDetails({
       <VStack gap={2}>
         <Text weight={500}>{name}</Text>
         <HStack gap={3}>
-          <Text color='base300' size={2}>
-            {description.toLowerCase()}
-          </Text>
-          <Text color='base300' size={2}>
-            {DateUtility.fromNow(date.toDateString())}
-          </Text>
+          <TextGroup color='base300' fontSize={2}>
+            <Text>{description.toLowerCase()}</Text>
+            <Text>{DateUtility.fromNow(date.toDateString())}</Text>
+          </TextGroup>
         </HStack>
       </VStack>
     </Center>
