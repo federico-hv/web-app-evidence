@@ -1,4 +1,4 @@
-import { Box, Tabs, VStack } from '@holdr-ui/react';
+import { Box, Button, Tabs, VStack } from '@holdr-ui/react';
 import SectionHeader from '../headers/section-header';
 import { useNotification } from '../../shared/hooks';
 import NotificationItem from '../notification-item';
@@ -14,9 +14,7 @@ function AllTab() {
     return (
       <NotificationItem>
         <NotificationItem.Avatar
-          avatarImage={
-            notification.actor.avatar + '?random=' + Math.random()
-          }
+          src={notification.actor.avatar + '?random=' + Math.random()}
         />
         <NotificationItem.Details
           name={notification.actor.displayName}
@@ -25,9 +23,7 @@ function AllTab() {
               ? 'followed you'
               : notification.entity.action + ' a recent post'
           }
-          timeFromNow={DateUtility.fromNow(
-            notification.createdAt.toDateString(),
-          )}
+          date={notification.createdAt}
         />
         {type == 'relationship' && (
           <NotificationItem.MediaItem
@@ -39,8 +35,8 @@ function AllTab() {
           />
         )}
         {type == 'feed' && (
-          <NotificationItem.ActionButton onClick={voidFn}>
-            Follow
+          <NotificationItem.ActionButton>
+            <Button onClick={voidFn}>Follow</Button>
           </NotificationItem.ActionButton>
         )}
       </NotificationItem>
