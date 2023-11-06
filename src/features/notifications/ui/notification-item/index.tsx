@@ -1,6 +1,6 @@
 import {
   Avatar,
-  Button,
+  Box,
   Center,
   HStack,
   Image,
@@ -8,22 +8,20 @@ import {
   VStack,
 } from '@holdr-ui/react';
 import { AvatarProps } from '@holdr-ui/react/dist/components/avatar/src/avatar.types';
+import { ImageProps } from '@holdr-ui/react/dist/components/image/src/image.types';
 import {
-  NotificationActionButtonProps,
+  NotificationActionWrapperProps,
   NotificationDetailsProps,
-  NotificationMediaItemProps,
+  NotificationType,
 } from 'features/notifications/shared';
 import { ReactNode } from 'react';
-import { DateUtility, getSubComponent } from 'shared';
+import { DateUtility, getSubComponent, voidFn } from 'shared';
 
 function NotificationItem({ children }: { children: ReactNode }) {
   const avatar = getSubComponent(children, 'NotificationAvatar');
   const details = getSubComponent(children, 'NotificationDetails');
   const mediaItem = getSubComponent(children, 'NotificationMediaItem');
-  const actionButton = getSubComponent(
-    children,
-    'NotificationActionButton',
-  );
+  const action = getSubComponent(children, 'NotificationActionWrapper');
 
   return (
     <HStack justify='space-between'>
@@ -32,7 +30,7 @@ function NotificationItem({ children }: { children: ReactNode }) {
         {details}
       </HStack>
       <Center>
-        {actionButton}
+        {action}
         {mediaItem}
       </Center>
     </HStack>
@@ -48,13 +46,18 @@ function NotificationAvatar({
   return <Avatar src={src} radius={radius} size={size} {...props} />;
 }
 
-function NotificationMediaItem({ mediaItem }: NotificationMediaItemProps) {
-  return <Image src={mediaItem} size={7} radius={2} />;
+function NotificationMediaItem({
+  src,
+  size = 7,
+  radius = 2,
+  ...props
+}: ImageProps) {
+  return <Image src={src} size={size} radius={radius} {...props} />;
 }
 
-function NotificationActionButton({
+function NotificationActionWrapper({
   children,
-}: NotificationActionButtonProps) {
+}: NotificationActionWrapperProps) {
   return <>{children}</>;
 }
 
@@ -80,16 +83,29 @@ function NotificationDetails({
   );
 }
 
+/* TODO: UPDATE THIS WITH CORRECT VALUES*/
+export const NotificationDescription: Record<
+  NotificationType,
+  (args: string) => string
+> = {
+  relationship: (args: string) => {
+    return 'followed you';
+  },
+  feed: (args: string) => {
+    return args + ' a recent post';
+  },
+};
+
 NotificationItem.Avatar = NotificationAvatar;
 NotificationItem.Details = NotificationDetails;
 NotificationItem.MediaItem = NotificationMediaItem;
-NotificationItem.ActionButton = NotificationActionButton;
+NotificationItem.ActionWrapper = NotificationActionWrapper;
 
 NotificationItem.displayName = 'NotificationItem';
 NotificationAvatar.displayName = 'NotificationAvatar';
 NotificationDetails.displayName = 'NotificationDetails';
 NotificationMediaItem.displayName = 'NotificationMediaItem';
-NotificationActionButton.displayName = 'NotificationActionButton';
+NotificationActionWrapper.displayName = 'NotificationActionWrapper';
 
 export default NotificationItem;
 
@@ -97,5 +113,5 @@ export {
   NotificationAvatar,
   NotificationDetails,
   NotificationMediaItem,
-  NotificationActionButton,
+  NotificationActionWrapper,
 };

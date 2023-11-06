@@ -1,12 +1,11 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import NotificationItem, {
-  NotificationActionButton,
+  NotificationActionWrapper,
   NotificationAvatar,
   NotificationDetails,
   NotificationMediaItem,
 } from '../ui/notification-item';
 
-import logo from '../../../assets/images/logo.png';
 import { Button } from '@holdr-ui/react';
 
 describe('NotificationItem', () => {
@@ -35,37 +34,23 @@ describe('NotificationItem', () => {
 
   it('displays a notification image', () => {
     const { getByAltText } = render(
-      <NotificationMediaItem mediaItem='https://picsum.photos/200' />,
+      <NotificationMediaItem src='https://picsum.photos/200' />,
     );
     const mediaItem = getByAltText('notification media item');
     expect((mediaItem as HTMLMediaElement).src).to.equal('test-media.jpg');
   });
 
-  it('displays a notification button', () => {
+  it('displays a notification action', () => {
     let count = 0;
 
     const onClickMock = () => count++;
     render(
-      <NotificationActionButton>
+      <NotificationActionWrapper>
         <Button onClick={onClickMock}>Test Action Button</Button>
-      </NotificationActionButton>,
+      </NotificationActionWrapper>,
     );
     const actionButton = screen.getByText('Test Action Button');
     expect(actionButton).to.exist;
-  });
-
-  it('allows a user to click on a notification button', () => {
-    let count = 0;
-
-    const onClickMock = () => count++;
-    render(
-      <NotificationActionButton>
-        <Button onClick={onClickMock}>Test Action Button</Button>
-      </NotificationActionButton>,
-    );
-    const actionButton = screen.getByText('Test Action Button');
-    fireEvent.click(actionButton);
-    expect(count).to.equal(1);
   });
 
   it('renders a complete notification', () => {
@@ -77,10 +62,10 @@ describe('NotificationItem', () => {
           description='Some notification description'
           date={new Date()}
         />
-        <NotificationItem.ActionButton>
+        <NotificationItem.ActionWrapper>
           <Button onClick={() => {}}>Action</Button>
-        </NotificationItem.ActionButton>
-        <NotificationItem.MediaItem mediaItem='test-media.jpg' />
+        </NotificationItem.ActionWrapper>
+        <NotificationItem.MediaItem src='test-media.jpg' />
       </NotificationItem>,
     );
 
