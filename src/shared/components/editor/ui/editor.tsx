@@ -11,6 +11,7 @@ import LexicalErrorBoundary from '@lexical/react/LexicalErrorBoundary';
 
 import { EditorProps } from '../shared/types';
 import { ReactElement } from 'react';
+import { Box } from '@holdr-ui/react';
 
 const defaultConfig: InitialConfigType = {
   namespace: 'editor',
@@ -50,9 +51,22 @@ export default function Editor({
 
   return (
     <LexicalComposer initialConfig={config}>
-      <div className='editor-container' id='input-field' data-cy='editor'>
+      <Box
+        w='full'
+        h='full'
+        className='editor-container'
+        id='input-field'
+        data-cy='editor'
+      >
         <PlainTextPlugin
-          contentEditable={<ContentEditable className='editor-input' />}
+          contentEditable={
+            <Box
+              contentEditable
+              className='editor-input'
+              w='full'
+              h='full'
+            />
+          }
           placeholder={
             <div className='editor-placeholder'>{Placeholder}</div>
           }
@@ -61,7 +75,7 @@ export default function Editor({
         <OnChangePlugin onChange={updateState} />
         <HistoryPlugin />
         {plugins}
-      </div>
+      </Box>
     </LexicalComposer>
   );
 }

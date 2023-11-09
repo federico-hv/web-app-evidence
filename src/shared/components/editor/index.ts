@@ -1,2 +1,2 @@
-export * from './shared';
-export * from './ui';
+import { Editor } from './ui';
+export default Editor;
