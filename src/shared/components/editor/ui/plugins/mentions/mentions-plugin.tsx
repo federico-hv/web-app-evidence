@@ -13,8 +13,8 @@ import {
 } from 'react';
 import * as ReactDOM from 'react-dom';
 import { checkForAtSignMentions } from './regex';
-import { $createMentionNode } from '../../nodes/mention/mention-node';
-import { GenericOption, MentionOption, MentionsProps } from '../../types';
+import { $createMentionNode } from '../../../utility/nodes/mention/mention-node';
+import { GenericOption, MentionOption, MentionsProps } from '../../../types';
 
 export default function MentionsPlugin<T extends GenericOption>({
   dataFetcher,

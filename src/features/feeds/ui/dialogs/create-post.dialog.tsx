@@ -34,6 +34,7 @@ import MediaIcon from '../../../../assets/images/media.png';
 import PollIcon from '../../../../assets/images/poll.png';
 import { omit } from 'lodash';
 import { useCreatePost } from '../../shared';
+import { Editor } from 'shared';
 
 function CreatePostDialog() {
   const currentUser = useCurrentUser();
@@ -134,7 +135,8 @@ function CreatePostDialog() {
                   h={option === '' ? '100%' : 'auto'}
                   minHeight={{ '@bp1': 75, '@bp3': 75 }}
                 >
-                  <StyledTextarea
+                  <Editor />
+                  {/* <StyledTextarea
                     autoFocus
                     css={{
                       padding: 0,
@@ -153,7 +155,7 @@ function CreatePostDialog() {
                         ? 'What do you want to find out from your fans?'
                         : 'What do you want your fans to know?'
                     }
-                  />
+                  /> */}
                 </Box>
                 <SwitchConditional>
                   <SwitchConditionalCase
