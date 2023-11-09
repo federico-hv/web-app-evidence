@@ -16,7 +16,9 @@ import {
 import { IProviderItem, UpdatePasswordFormData } from '../types';
 
 import googleLogo from '../../../../assets/images/google-logo.png';
-import appleLogo from '../../../../assets/images/apple-logo.png';
+import facebookLogo from '../../../../assets/images/facebook-logo.png';
+import appleMusicLogo from '../../../../assets/images/apple-music-logo.png';
+import darkAppleLogo from '../../../../assets/images/apple-music-logo.png';
 import spotifyLogo from '../../../../assets/images/spotify-logo.png';
 import { ProfileFormData } from '../../../user';
 
@@ -68,12 +70,20 @@ export const Provider: Record<AuthProviderName, IProviderItem> = {
     image: googleLogo,
     name: 'Google',
   },
+  facebook: {
+    image: facebookLogo,
+    name: 'Facebook',
+  },
   spotify: {
     image: spotifyLogo,
     name: 'Spotify',
   },
   apple: {
-    image: appleLogo,
+    image: darkAppleLogo,
     name: 'Apple',
+  },
+  'apple-music': {
+    image: appleMusicLogo,
+    name: 'Apple Music',
   },
 };
