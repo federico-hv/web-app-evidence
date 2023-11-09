@@ -18,6 +18,7 @@ import {
   SwitchConditionalCase,
   useDialogTabContext,
   useRecordState,
+  UserModel,
 } from '../../../../shared';
 import { useCurrentUser } from '../../../auth';
 import {
@@ -35,12 +36,26 @@ import PollIcon from '../../../../assets/images/poll.png';
 import { omit } from 'lodash';
 import { useCreatePost } from '../../shared';
 import { Editor } from 'shared';
+import { MentionsPlugin } from '../../../../shared/components/editor/ui';
+import { MentionNode } from '../../../../shared/components/editor/shared';
+import { HashtagNode } from '@lexical/hashtag';
+import { HashtagPlugin } from '@lexical/react/LexicalHashtagPlugin';
+import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin';
+import { GenericOption } from '../../../../shared/components/editor/types';
+import { useSearch } from '../../../../features';
+import { css } from 'configs';
+
+const nodeStyle = css({
+  fontWeight: '$600',
+  color: '$secondary400',
+})();
 
 function CreatePostDialog() {
   const currentUser = useCurrentUser();
   const { createPost, loading } = useCreatePost();
   const { isOpen, onOpen, onClose, option } = useDialogTabContext();
   const { switchState, turnOn, turnOff } = useSwitch(!!option);
+  const [search, { results }] = useSearch<UserModel>();
   const [state, update, set] = useRecordState<CreatePostInput>({
     description: '',
   });
@@ -135,7 +150,44 @@ function CreatePostDialog() {
                   h={option === '' ? '100%' : 'auto'}
                   minHeight={{ '@bp1': 75, '@bp3': 75 }}
                 >
-                  <Editor />
+                  <Editor
+                    config={{
+                      onError: (e) => console.error(e),
+                      nodes: [MentionNode, HashtagNode],
+                      namespace: 'postEditor',
+                      theme: {
+                        hashtag: nodeStyle.className,
+                        mention: nodeStyle.className,
+                      },
+                    }}
+                    plugins={[
+                      <MentionsPlugin
+                        keyExtractor={(data: GenericOption) => data.name}
+                        renderItem={(data: GenericOption) => (
+                          <div>{data.name}</div>
+                        )}
+                        // TODO: replace with real api fetch
+                        dataFetcher={(state: string | null) => [
+                          { name: 'Bob' },
+                          { name: 'Joe' },
+                          { name: 'John' },
+                        ]}
+                        key='MentionsPlugin'
+                      />,
+                      <HashtagPlugin key='HashtagPlugin' />,
+                      <AutoFocusPlugin key='AutoFocusPlugin' />,
+                    ]}
+                    onChange={(state) => update({ ...state })}
+                    Placeholder={
+                      <Box position='absolute' t={0} px='$3'>
+                        <Text color='base400'>
+                          {option === 'poll'
+                            ? 'What do you want to find out from your fans?'
+                            : 'What do you want your fans to know?'}
+                        </Text>
+                      </Box>
+                    }
+                  />
                   {/* <StyledTextarea
                     autoFocus
                     css={{

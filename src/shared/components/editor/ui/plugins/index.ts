@@ -1,1 +1,1 @@
-export * from './mentions';
+export { default as MentionsPlugin } from './mentions';

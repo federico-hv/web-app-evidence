@@ -9,9 +9,10 @@ import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin';
 import { $getRoot, EditorState as LexicalEditorState } from 'lexical';
 import LexicalErrorBoundary from '@lexical/react/LexicalErrorBoundary';
 
-import { EditorProps } from './types';
 import { ReactElement } from 'react';
 import { Box } from '@holdr-ui/react';
+import { editorStyles } from './styles';
+import { EditorProps } from './types';
 
 const defaultConfig: InitialConfigType = {
   namespace: 'editor',
@@ -34,7 +35,8 @@ export default function Editor({
         if (
           !(key === 'texts' || key === 'roots' || key === 'paragraphs')
         ) {
-          state[key] = [...state[key], value.__text];
+          state[key] =
+            key in state ? [...state[key], value.__text] : [value.__text];
         }
       });
 
@@ -57,10 +59,11 @@ export default function Editor({
         className='editor-container'
         id='input-field'
         data-cy='editor'
+        position='relative'
       >
         <PlainTextPlugin
-          contentEditable={<ContentEditable />}
-          placeholder={<PlaceHolder>{Placeholder}</PlaceHolder>}
+          contentEditable={<ContentEditable className={editorStyles()} />}
+          placeholder={Placeholder}
           ErrorBoundary={LexicalErrorBoundary}
         />
         <OnChangePlugin onChange={updateState} />
@@ -69,8 +72,4 @@ export default function Editor({
       </Box>
     </LexicalComposer>
   );
-}
-
-function PlaceHolder({ children }: { children: any }) {
-  return <div className='editor-placeholder'>{children}</div>;
 }
