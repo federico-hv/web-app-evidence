@@ -18,7 +18,7 @@ import {
   GenericOption,
   MentionOption,
 } from '../../../types';
-import { checkForAtSignMentions } from '../../../shared/utility';
+import { checkForAtSignMentions } from '../../../shared';
 
 export default function MentionsPlugin<T extends GenericOption>({
   dataFetcher,
