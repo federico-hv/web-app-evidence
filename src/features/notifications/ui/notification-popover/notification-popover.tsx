@@ -1,8 +1,5 @@
 import { IconButton, Popover } from '@holdr-ui/react';
-import {
-  NotificationHeader,
-  NotificationTabs,
-} from '../../../notifications';
+import { NotificationHeader, NotificationTabs } from '../..';
 import { useState } from 'react';
 
 function NotificationPopover() {
@@ -24,7 +21,7 @@ function NotificationPopover() {
           h='calc(98.5vh - 68px)'
           w={400}
           zIndex={50}
-          bgColor='base500'
+          css={{ backgroundColor: '#fff' }}
           px='$5'
         >
           <NotificationHeader />

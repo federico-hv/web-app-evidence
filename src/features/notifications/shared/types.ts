@@ -1,13 +1,14 @@
+import { ReactNode } from 'react';
 import { GenericItem, UserModel } from 'shared';
 
-interface RelationshipEntity extends GenericItem {
+export interface RelationshipEntity extends GenericItem {
   // still debating
   username: string;
   id: string;
   type: 'FollowRequest' | 'Follow' | 'AcceptedFollowRequest';
   action: 'accepted' | 'created';
 }
-interface FeedEntity extends GenericItem {
+export interface FeedEntity extends GenericItem {
   // still debating
   imageSrc: string;
   owner: UserModel;
@@ -22,3 +23,19 @@ export interface Notification {
 }
 
 export type NotificationType = 'relationship' | 'feed';
+
+export type NotificationDetailsProps = {
+  name: string;
+  description: string;
+  date: Date;
+};
+
+export type NotificationActionWrapperProps = {
+  children: ReactNode;
+};
+
+export type NotificationSCName =
+  | 'NotificationAvatar'
+  | 'NotificationDetails'
+  | 'NotificationMediaItem'
+  | 'NotificationActionWrapper';

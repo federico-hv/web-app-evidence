@@ -6,7 +6,7 @@ import {
 import { Box, Container, Flex, HStack } from '@holdr-ui/react';
 import { Search } from '../../../search';
 import MessagePopover from './message-popver';
-import NotificationPopover from './notification-popover';
+import NotificationPopover from '../../../notifications/ui/notification-popover/notification-popover';
 import ProfileMenu from './profile-menu';
 
 function Navigation() {
