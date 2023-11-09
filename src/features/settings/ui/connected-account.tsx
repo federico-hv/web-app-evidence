@@ -1,12 +1,18 @@
 import { Box, Button, HStack, Image } from '@holdr-ui/react';
 import { ConnectedAccountProps, Provider } from '../shared';
-import { TextGroup, TextGroupSubheading } from '../../../shared';
+import {
+  AuthProviderName,
+  TextGroup,
+  TextGroupSubheading,
+} from '../../../shared';
+import { lowerCase } from 'lodash';
 
 function ConnectedAccount({
   provider: name,
   email,
 }: ConnectedAccountProps) {
-  const providerItem = Provider[name];
+  console.log({ name });
+  const providerItem = Provider[lowerCase(name) as AuthProviderName];
   return (
     <HStack
       px={4}
