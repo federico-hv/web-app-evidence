@@ -24,7 +24,7 @@ export default function Editor({
   onChange,
 }: EditorProps): ReactElement {
   function updateState(editorState: LexicalEditorState) {
-    const object: any = {};
+    const state: any = {};
 
     editorState.read(() => {
       if (!onChange) return;
@@ -33,22 +33,18 @@ export default function Editor({
         if (
           !(key === 'texts' || key === 'roots' || key === 'paragraphs')
         ) {
-          if (Object.keys(object).includes(key)) {
-            object[key].push(value.__text);
-          } else {
-            object[key] = [value.__text];
-          }
+          state[key] = [...state[key], value.__text];
         }
       });
 
-      object.message = $getRoot().__cachedText || '';
+      state.message = $getRoot().__cachedText || '';
 
-      object.mentions?.forEach((user: string, idx: number) => {
-        object.message = object.message.replace(user, '$' + idx);
-        object.mentions[idx] = user.slice(1);
+      state.mentions?.forEach((user: string, idx: number) => {
+        state.message = state.message.replace(user, '$' + idx);
+        state.mentions[idx] = user.slice(1);
       });
 
-      onChange(object);
+      onChange(state);
     });
   }
 
