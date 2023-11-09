@@ -1,2 +1,2 @@
 export * from './nodes';
-export * from './regex-util';
+export * from './regex.utility';
