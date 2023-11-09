@@ -12,9 +12,13 @@ import {
   ReactElement,
 } from 'react';
 import * as ReactDOM from 'react-dom';
-import { checkForAtSignMentions } from './regex';
-import { $createMentionNode } from '../../../utility/nodes/mention/mention-node';
-import { GenericOption, MentionOption, MentionsProps } from '../../../types';
+import { $createMentionNode } from '../../../shared/utility/nodes/mention/mention-node';
+import {
+  MentionsProps,
+  GenericOption,
+  MentionOption,
+} from '../../../types';
+import { checkForAtSignMentions } from '../../../shared/utility';
 
 export default function MentionsPlugin<T extends GenericOption>({
   dataFetcher,
