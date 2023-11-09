@@ -9,7 +9,7 @@
 import {
   AtSignMentionsRegexAliasRegex,
   AtSignMentionsRegex,
-} from './regex';
+} from '../../ui/plugins/mentions/regex/regex';
 
 import { MenuTextMatch } from '@lexical/react/LexicalTypeaheadMenuPlugin';
 
