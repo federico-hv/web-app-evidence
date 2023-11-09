@@ -9,7 +9,7 @@ import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin';
 import { $getRoot, EditorState as LexicalEditorState } from 'lexical';
 import LexicalErrorBoundary from '@lexical/react/LexicalErrorBoundary';
 
-import { EditorProps } from '../shared/types';
+import { EditorProps } from './types';
 import { ReactElement } from 'react';
 import { Box } from '@holdr-ui/react';
 
@@ -59,17 +59,8 @@ export default function Editor({
         data-cy='editor'
       >
         <PlainTextPlugin
-          contentEditable={
-            <Box
-              contentEditable
-              className='editor-input'
-              w='full'
-              h='full'
-            />
-          }
-          placeholder={
-            <div className='editor-placeholder'>{Placeholder}</div>
-          }
+          contentEditable={<ContentEditable />}
+          placeholder={<PlaceHolder>{Placeholder}</PlaceHolder>}
           ErrorBoundary={LexicalErrorBoundary}
         />
         <OnChangePlugin onChange={updateState} />
@@ -78,4 +69,8 @@ export default function Editor({
       </Box>
     </LexicalComposer>
   );
+}
+
+function PlaceHolder({ children }: { children: any }) {
+  return <div className='editor-placeholder'>{children}</div>;
 }

@@ -15,7 +15,7 @@ import {
   NodeKey,
   TextNode,
 } from 'lexical';
-import { SerializedMentionNode } from '../../types';
+import { SerializedMentionNode } from '../../../types';
 
 export function $createMentionNode(mentionName: string): MentionNode {
   const mentionNode = new MentionNode(mentionName);
