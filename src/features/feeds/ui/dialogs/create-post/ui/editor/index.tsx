@@ -13,6 +13,7 @@ import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin';
 import CreatePostPlaceholder from '../placeholder';
 import MentionItem from '../mention-item';
 import { nodeStyle as useNodeStyle } from '../styles';
+import { omit } from 'lodash';
 
 export default function CreatePostEditor({
   update,
@@ -57,7 +58,11 @@ export default function CreatePostEditor({
         <HistoryPlugin key='HistoryPlugin' />,
       ]}
       onChange={(state) =>
-        update({ description: state.message, ...state })
+        update({
+          description: state.message,
+          // length will be necessary with tokenized description
+          ...omit(state, ['message', 'length']),
+        })
       }
       Placeholder={<CreatePostPlaceholder option={option} />}
     />

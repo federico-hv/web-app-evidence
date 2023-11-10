@@ -42,7 +42,6 @@ function CreatePostDialog() {
   const { switchState, turnOn, turnOff } = useSwitch(!!option);
   const [state, update, set] = useRecordState<CreatePostInput>({
     description: '',
-    length: 0,
   });
 
   const [contentHeight, setContentHeight] = useState(
@@ -225,7 +224,8 @@ function CreatePostDialog() {
                 </HStack>
                 <CircularProgress
                   size={{ '@bp1': 18, '@bp3': 30 }}
-                  value={Math.ceil((state.length / 150) * 100)}
+                  // should use state.length
+                  value={Math.ceil((state.description.length / 150) * 100)}
                 />
               </HStack>
             </VStack>
