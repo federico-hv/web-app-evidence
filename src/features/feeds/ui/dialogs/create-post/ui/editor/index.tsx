@@ -11,7 +11,7 @@ import { useSearch } from '../../../../../../../features/search';
 import { CreatePostInput } from 'features/feeds/shared';
 import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin';
 import CreatePostPlaceholder from '../placeholder';
-import MentionItem from '../mention-item';
+import CreatePostMentionItem from '../mention-item';
 import { nodeStyle as useNodeStyle } from '../styles';
 import { omit } from 'lodash';
 
@@ -42,7 +42,7 @@ export default function CreatePostEditor({
         <MentionsPlugin<UserModel>
           keyExtractor={(data) => data.username}
           renderItem={(data, selected: boolean) => (
-            <MentionItem data={data} selected={selected} />
+            <CreatePostMentionItem data={data} selected={selected} />
           )}
           dataFetcher={async (mentionString) => {
             !mentionString

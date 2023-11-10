@@ -2,7 +2,7 @@ import { Box, Text } from '@holdr-ui/react';
 import { UserModel } from 'shared';
 import { mentionOption, selectedMentionOption } from '../styles';
 
-export default function MentionItem({
+export default function CreatePostMentionItem({
   data,
   selected,
 }: {
