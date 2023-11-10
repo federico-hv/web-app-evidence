@@ -10,10 +10,6 @@ export interface EditorProps {
   onChange?: (state: any) => void;
 }
 
-export interface EditorTheme {
-  [key: string]: string;
-}
-
 export type ErrorBoundaryProps = {
   children: ReactElement;
   onError: (error: Error) => void;
