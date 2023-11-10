@@ -1,1 +1,1 @@
-export const EXAMPLE = '';
+export const message = 'Coming soon';
