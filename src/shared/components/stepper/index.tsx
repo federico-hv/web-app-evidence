@@ -3,6 +3,8 @@ import { useCounter } from '../../hooks';
 import { StepperProps } from './types';
 import { StepperContext, StepperContextProvider } from '../../contexts';
 
+// TODO: Update this.
+
 function Stepper({ defaultStep = 0, children }: StepperProps) {
   const {
     count: step,

@@ -6,11 +6,14 @@ import {
   PageLayoutContent,
   PageLayoutHeader,
 } from '../../layout';
-import { Box, HStack, IconButton } from '@holdr-ui/react';
+import { Box, Button, Center, HStack, IconButton } from '@holdr-ui/react';
 import { EmptyMessage, Head } from '../../shared';
-import { Fragment } from 'react';
+import { Fragment, useState } from 'react';
+import { UnconnectedDialog } from './ui';
 
 function ReleasesPage() {
+  const [firstTimeLogin] = useState(true);
+  const [connected] = useState(false);
   return (
     <Fragment>
       <Head title='Releases' />
@@ -32,17 +35,24 @@ function ReleasesPage() {
               </HStack>
             </PageLayoutHeader>
             <PageLayoutContent>
-              <Box pt={4}>
-                <EmptyMessage
-                  title='No releases'
-                  subtitle='All releases will appear here.'
-                />
-              </Box>
+              {!connected ? (
+                <Center mt={6} h='100%'>
+                  <Button>Connect to DSP</Button>
+                </Center>
+              ) : (
+                <Box pt={4}>
+                  <EmptyMessage
+                    title='No releases'
+                    subtitle='All releases will appear here.'
+                  />
+                </Box>
+              )}
             </PageLayoutContent>
           </PageLayout>
         </ContentLayoutMain>
         <ContentLayoutAside></ContentLayoutAside>
       </ContentLayout>
+      <UnconnectedDialog isOpen={firstTimeLogin} />
     </Fragment>
   );
 }

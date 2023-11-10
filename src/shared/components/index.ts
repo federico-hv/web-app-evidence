@@ -22,6 +22,10 @@ export { default as FormInput } from './form-input';
 export { default as DatePicker } from './date-picker';
 export { default as PhoneInput } from './phone-input';
 export { default as ContentBox } from './content-box';
+export {
+  default as StepperIndicator,
+  StepperIndicatorStep,
+} from './stepper-indicator';
 export { default as ForgotPasswordLink } from './forgot-password';
 export { default as Stepper, StepperStep } from './stepper';
 export { default as UserNamesGroup } from './user-names-group';

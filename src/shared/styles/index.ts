@@ -1,5 +1,9 @@
 import { css, styled } from '../../configs';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { Box } from '@holdr-ui/react';
+
+export const MotionBox = motion(Box);
 
 export const extraBtnPadding = css({
   py: '10px',

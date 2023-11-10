@@ -1,9 +1,8 @@
 import { Box, Button, HStack, Image } from '@holdr-ui/react';
-
 import { TextGroup, TextGroupSubheading } from '../../../../../../shared';
 import { ConnectedAccountProps } from './types';
-import { ConnectedAccountUtility } from '../../shared';
 import { Fragment } from 'react';
+import { ConnectedAccountUtility } from '../../../../../../features';
 
 function ConnectedAccount({
   provider: name,

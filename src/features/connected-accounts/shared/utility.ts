@@ -1,17 +1,16 @@
 import { ConnectorProvider, IProviderItem } from './types';
-import spotifyLogo from '../../../../../assets/images/spotify-logo.png';
-import appleMusicLogo from '../../../../../assets/images/apple-music-logo.png';
+import { Asset } from '../../../shared';
 
 export class ConnectedAccountUtility {
   static providers = ['spotify', 'apple music'];
 
   static providerItem: Record<ConnectorProvider, IProviderItem> = {
     spotify: {
-      image: spotifyLogo,
+      image: Asset.Image.SpotifyLogo,
       name: 'Spotify',
     },
     'apple music': {
-      image: appleMusicLogo,
+      image: Asset.Image.AppleMusicLogo,
       name: 'Apple Music',
     },
   };
