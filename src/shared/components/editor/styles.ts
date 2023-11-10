@@ -8,3 +8,10 @@ export const editorStyles = css({
     cursor: 'pointer',
   },
 });
+
+export const popoverStyles = css({
+  zIndex: '$100',
+  position: 'absolute',
+  top: '100%',
+  listStyle: 'none',
+});
