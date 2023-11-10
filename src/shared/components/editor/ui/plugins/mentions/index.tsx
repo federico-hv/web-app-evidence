@@ -12,7 +12,7 @@ import {
   ReactElement,
 } from 'react';
 import * as ReactDOM from 'react-dom';
-import { $createMentionNode } from '../../../shared/utility/nodes/mention/mention-node';
+import { $createMentionNode } from '../../../shared';
 import {
   MentionsProps,
   GenericOption,
@@ -34,8 +34,8 @@ export default function MentionsPlugin<T extends GenericOption>({
 
   useEffect(() => {
     const input = document.getElementById('input-field');
-    const handleUnfocused = (e: Event) => setFocused(false);
-    const handleFocused = (e: Event) => setFocused(true);
+    const handleUnfocused = () => setFocused(false);
+    const handleFocused = () => setFocused(true);
     input?.addEventListener('blur', handleUnfocused, true);
     input?.addEventListener('focus', handleFocused, true);
 
@@ -52,7 +52,7 @@ export default function MentionsPlugin<T extends GenericOption>({
   const options = useMemo(
     () =>
       results.map((result: T) => new MentionOption(result, keyExtractor)),
-    [results],
+    [results, keyExtractor],
   );
 
   const onSelectOption = useCallback(
