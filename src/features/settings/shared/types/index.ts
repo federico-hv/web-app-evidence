@@ -1,4 +1,4 @@
-import { FormProps, IStatus, AuthProviderName } from '../../../../shared';
+import { FormProps, IStatus } from '../../../../shared';
 import { IconName } from '@holdr-ui/react/dist/shared/types';
 
 export interface IAccountInfo {
@@ -61,19 +61,6 @@ export interface IVerifyContactInfo {
   phone?: string;
   email?: string;
   channel: 'sms' | 'email';
-}
-export interface IProviderItem {
-  name: string;
-  image: string;
-}
-
-export interface IConnectedAccount {
-  provider: AuthProviderName;
-  email: string;
-}
-
-export interface ConnectedAccountProps extends IConnectedAccount {
-  name?: '';
 }
 
 export interface EnableTwoFAInput {

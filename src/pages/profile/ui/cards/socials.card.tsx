@@ -1,6 +1,6 @@
 import { Box, HStack, Image } from '@holdr-ui/react';
 import spotifyLogo from '../../../../assets/images/spotify-logo.png';
-import appleLogo from '../../../../assets/images/apple-logo.png';
+import appleLogo from '../../../../assets/images/apple-music-logo.png';
 import instagramLogo from '../../../../assets/images/instagram-logo.png';
 import {
   SocialProviderName,

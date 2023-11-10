@@ -3,6 +3,9 @@ interface CreatePoll {
   endDate?: Date;
   responses?: string[];
   media?: never;
+  hashtags?: string[];
+  mentions?: string[];
+  length: number;
 }
 
 interface CreatePost {
@@ -10,6 +13,9 @@ interface CreatePost {
   endDate?: never;
   media?: { file: File }[];
   responses?: never;
+  hashtags?: string[];
+  mentions?: string[];
+  length: number;
 }
 
 type CreatePostInput = CreatePost | CreatePoll;

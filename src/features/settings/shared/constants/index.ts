@@ -8,16 +8,12 @@ import {
   passwordPatternMsg,
   phonePattern,
   phonePatternMsg,
-  AuthProviderName,
   requiredField,
   usernamePattern,
   usernamePatternMsg,
 } from '../../../../shared';
-import { IProviderItem, UpdatePasswordFormData } from '../types';
+import { UpdatePasswordFormData } from '../types';
 
-import googleLogo from '../../../../assets/images/google-logo.png';
-import appleLogo from '../../../../assets/images/apple-logo.png';
-import spotifyLogo from '../../../../assets/images/spotify-logo.png';
 import { ProfileFormData } from '../../../user';
 
 export const UpdateAccountInfoSchema = object<ProfileFormData>({
@@ -62,18 +58,3 @@ export const UpdatePasswordSchema = object<UpdatePasswordFormData>({
     )
     .required(requiredField('new account-info-guard verification')),
 });
-
-export const Provider: Record<AuthProviderName, IProviderItem> = {
-  google: {
-    image: googleLogo,
-    name: 'Google',
-  },
-  spotify: {
-    image: spotifyLogo,
-    name: 'Spotify',
-  },
-  apple: {
-    image: appleLogo,
-    name: 'Apple',
-  },
-};

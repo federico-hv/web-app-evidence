@@ -18,22 +18,22 @@ import {
   SwitchConditionalCase,
   useDialogTabContext,
   useRecordState,
-} from '../../../../shared';
-import { useCurrentUser } from '../../../auth';
+} from '../../../../../shared';
+import { useCurrentUser } from '../../../../auth';
 import {
   CreatePostInput,
   DIALOG_CONTENT_HEIGHT,
   PollSchema,
   PostSchema,
-  StyledTextarea,
-} from '../../shared';
-import { ChangeEvent, useState } from 'react';
-import AddPoll from '../groups/add-poll';
-import AddMedia from '../groups/add-media';
-import MediaIcon from '../../../../assets/images/media.png';
-import PollIcon from '../../../../assets/images/poll.png';
+} from '../../../shared';
+import { useState } from 'react';
+import AddPoll from '../../groups/add-poll';
+import AddMedia from '../../groups/add-media';
+import MediaIcon from '../../../../../assets/images/media.png';
+import PollIcon from '../../../../../assets/images/poll.png';
 import { omit } from 'lodash';
-import { useCreatePost } from '../../shared';
+import { useCreatePost } from '../../../shared';
+import CreatePostEditor from './ui/editor';
 
 function CreatePostDialog() {
   const currentUser = useCurrentUser();
@@ -42,6 +42,7 @@ function CreatePostDialog() {
   const { switchState, turnOn, turnOff } = useSwitch(!!option);
   const [state, update, set] = useRecordState<CreatePostInput>({
     description: '',
+    length: 0,
   });
 
   const [contentHeight, setContentHeight] = useState(
@@ -134,7 +135,8 @@ function CreatePostDialog() {
                   h={option === '' ? '100%' : 'auto'}
                   minHeight={{ '@bp1': 75, '@bp3': 75 }}
                 >
-                  <StyledTextarea
+                  <CreatePostEditor state={state} update={update} />
+                  {/* <StyledTextarea
                     autoFocus
                     css={{
                       padding: 0,
@@ -153,7 +155,7 @@ function CreatePostDialog() {
                         ? 'What do you want to find out from your fans?'
                         : 'What do you want your fans to know?'
                     }
-                  />
+                  /> */}
                 </Box>
                 <SwitchConditional>
                   <SwitchConditionalCase
@@ -243,7 +245,7 @@ function CreatePostDialog() {
                 </HStack>
                 <CircularProgress
                   size={{ '@bp1': 18, '@bp3': 30 }}
-                  value={Math.ceil((state.description.length / 150) * 100)}
+                  value={Math.ceil((state.length / 150) * 100)}
                 />
               </HStack>
             </VStack>
