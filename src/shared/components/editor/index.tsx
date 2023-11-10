@@ -41,6 +41,7 @@ export default function Editor({
       });
 
       state.message = $getRoot().__cachedText || '';
+      state.length = state.message.length;
 
       state.mentions?.forEach((user: string, idx: number) => {
         state.message = state.message.replace(user, '$' + idx);
