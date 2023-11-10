@@ -14,9 +14,20 @@ import {
   NotificationSCName,
 } from 'features/notifications/shared';
 import { ReactNode } from 'react';
-import { DateUtility, TextGroup, getSubComponent } from 'shared';
+import { useNavigate } from 'react-router-dom';
+import {
+  DateUtility,
+  Paths,
+  TextGroup,
+  getSubComponent,
+  prefix,
+  usePopoverContext,
+} from 'shared';
 
 function NotificationItem({ children }: { children: ReactNode }) {
+  const { setClosed } = usePopoverContext();
+  const navigate = useNavigate();
+
   const Avatar = getSubComponent<NotificationSCName>(
     children,
     'NotificationAvatar',
@@ -43,6 +54,10 @@ function NotificationItem({ children }: { children: ReactNode }) {
         borderRadius: '$1',
       }}
       p={3}
+      onClick={() => {
+        setClosed();
+        navigate(prefix('/', Paths.notifications));
+      }}
     >
       <HStack gap={3}>
         <Center>{Avatar}</Center>

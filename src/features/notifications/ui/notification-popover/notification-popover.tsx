@@ -1,9 +1,16 @@
-import { IconButton, Popover } from '@holdr-ui/react';
+import { IconButton, Popover, useKeyBind } from '@holdr-ui/react';
 import { NotificationHeader, NotificationTabs } from '../..';
 import { useState } from 'react';
+import { PopoverContextProvider } from 'shared/contexts/popover';
 
 function NotificationPopover() {
   const [state, set] = useState(false);
+
+  // close with ESC key
+  useKeyBind(27, () => {
+    set(false);
+  });
+
   return (
     <Popover isOpen={state} onOpenChange={set}>
       <Popover.Trigger onClick={() => set(true)}>
@@ -24,8 +31,16 @@ function NotificationPopover() {
           css={{ backgroundColor: '#fff' }}
           px='$5'
         >
-          <NotificationHeader />
-          <NotificationTabs />
+          <PopoverContextProvider
+            value={{
+              setOpen: () => set(true),
+              setClosed: () => set(false),
+              isOpen: state,
+            }}
+          >
+            <NotificationHeader />
+            <NotificationTabs />
+          </PopoverContextProvider>
         </Popover.Content>
       </Popover.Portal>
     </Popover>

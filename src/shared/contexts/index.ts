@@ -5,3 +5,4 @@ export * from './stepper';
 export * from './dialog';
 export * from './dialog-tab';
 export * from './general';
+export * from './popover';
