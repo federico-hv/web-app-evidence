@@ -8,18 +8,12 @@ import {
   passwordPatternMsg,
   phonePattern,
   phonePatternMsg,
-  AuthProviderName,
   requiredField,
   usernamePattern,
   usernamePatternMsg,
 } from '../../../../shared';
-import { IProviderItem, UpdatePasswordFormData } from '../types';
+import { UpdatePasswordFormData } from '../types';
 
-import googleLogo from '../../../../assets/images/google-logo.png';
-import facebookLogo from '../../../../assets/images/facebook-logo.png';
-import appleMusicLogo from '../../../../assets/images/apple-music-logo.png';
-import darkAppleLogo from '../../../../assets/images/apple-music-logo.png';
-import spotifyLogo from '../../../../assets/images/spotify-logo.png';
 import { ProfileFormData } from '../../../user';
 
 export const UpdateAccountInfoSchema = object<ProfileFormData>({
