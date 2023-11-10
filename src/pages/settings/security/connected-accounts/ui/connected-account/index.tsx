@@ -1,18 +1,20 @@
 import { Box, Button, HStack, Image } from '@holdr-ui/react';
-import { ConnectedAccountProps, Provider } from '../shared';
-import {
-  AuthProviderName,
-  TextGroup,
-  TextGroupSubheading,
-} from '../../../shared';
-import { lowerCase } from 'lodash';
+
+import { TextGroup, TextGroupSubheading } from '../../../../../../shared';
+import { ConnectedAccountProps } from './types';
+import { ConnectedAccountUtility } from '../../shared';
+import { Fragment } from 'react';
 
 function ConnectedAccount({
   provider: name,
-  email,
+  connectedOn,
 }: ConnectedAccountProps) {
-  console.log({ name });
-  const providerItem = Provider[lowerCase(name) as AuthProviderName];
+  const providerItem = ConnectedAccountUtility.getProviderItem(name);
+
+  if (!providerItem) {
+    return <Fragment />;
+  }
+
   return (
     <HStack
       px={4}
@@ -35,7 +37,7 @@ function ConnectedAccount({
             {providerItem.name}
           </TextGroupSubheading>
           <TextGroupSubheading size={2} color='base400'>
-            {email}
+            {connectedOn}
           </TextGroupSubheading>
         </TextGroup>
       </HStack>
@@ -45,6 +47,6 @@ function ConnectedAccount({
     </HStack>
   );
 }
-ConnectedAccount.displayName = 'ConnectedAccount';
+ConnectedAccount.displayName = 'Index';
 
 export default ConnectedAccount;
