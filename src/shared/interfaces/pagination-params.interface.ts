@@ -1,4 +1,4 @@
 export interface IPaginationParams<T> {
-  cursor: T;
-  take: number;
+  cursor?: T;
+  take?: number;
 }

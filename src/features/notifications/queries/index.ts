@@ -1,1 +1,1 @@
-export const message = 'Coming soon';
+export const GET_NOTIFICATIONS = ``;

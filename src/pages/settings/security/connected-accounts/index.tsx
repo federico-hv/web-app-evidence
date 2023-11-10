@@ -1,18 +1,27 @@
 import { useQuery } from '@apollo/client';
 import { VStack } from '@holdr-ui/react';
 import {
-  GET_CONNECTED_ACCOUNTS,
-  IConnectedAccount,
-} from '../../../../features';
-import { Error, Head, Loader, Paths, prefix } from '../../../../shared';
+  Error,
+  Head,
+  IConnection,
+  IPaginationParams,
+  Loader,
+  Paths,
+  prefix,
+} from '../../../../shared';
 import { RootSettingsPath } from '../root';
-import { ConnectedAccount } from '../../../../features';
 import { HeaderLayout } from '../../../../layout';
+import { GET_CONNECTED_ACCOUNTS } from './queries';
+import { IConnectedAccount } from './shared';
+import { ConnectedAccount } from './ui';
 
 function ConnectedAccountSettingsPage() {
-  const { data, loading, error } = useQuery<{
-    connectedAccounts: IConnectedAccount[];
-  }>(GET_CONNECTED_ACCOUNTS);
+  const { data, loading, error } = useQuery<
+    {
+      connectedAccounts: IConnection<IConnectedAccount, number>;
+    },
+    { params?: IPaginationParams<number> }
+  >(GET_CONNECTED_ACCOUNTS);
 
   return (
     <Error hasError={!!error}>
@@ -28,12 +37,8 @@ function ConnectedAccountSettingsPage() {
             backLink={prefix(RootSettingsPath, Paths.setting.security)}
           >
             <VStack>
-              {data.connectedAccounts.map(({ provider, email }) => (
-                <ConnectedAccount
-                  key={provider}
-                  provider={provider}
-                  email={email}
-                />
+              {data.connectedAccounts.edges.map(({ node, cursor }) => (
+                <ConnectedAccount key={cursor} {...node} />
               ))}
             </VStack>
           </HeaderLayout>
