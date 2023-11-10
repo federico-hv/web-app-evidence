@@ -48,7 +48,7 @@ function AllTab() {
   return (
     <Box>
       <SectionHeader />
-      <VStack py={3} gap={5}>
+      <VStack py={3} gap={2}>
         {data.map((notification, idx) => {
           return buildNotification(notification, idx);
         })}
