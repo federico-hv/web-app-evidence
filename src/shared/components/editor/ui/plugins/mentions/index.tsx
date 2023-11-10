@@ -28,8 +28,6 @@ export default function MentionsPlugin<T>({
   const [queryString, setQueryString] = useState<string | null>(null);
   const [focused, setFocused] = useState<boolean>(true);
 
-  console.log(results);
-
   useEffect(() => {
     dataFetcher(queryString);
   }, [queryString]);
@@ -98,7 +96,7 @@ export default function MentionsPlugin<T>({
         anchorElementRef,
         { selectedIndex, selectOptionAndCleanUp, setHighlightedIndex },
       ) =>
-        anchorElementRef.current && results.length
+        anchorElementRef.current && results.length && focused
           ? ReactDOM.createPortal(
               <div className={popoverStyles()}>
                 <ul style={{ listStyle: 'none' }}>
