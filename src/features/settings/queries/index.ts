@@ -14,15 +14,6 @@ export const GET_ACCOUNT_INFO = gql`
   }
 `;
 
-export const GET_CONNECTED_ACCOUNTS = gql`
-  query connectedAccounts {
-    connectedAccounts {
-      provider
-      email
-    }
-  }
-`;
-
 export const GET_TWO_FA_CHANNEL = gql`
   query twoFAChannel {
     twoFAChannel

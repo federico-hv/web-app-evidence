@@ -62,19 +62,6 @@ export interface IVerifyContactInfo {
   email?: string;
   channel: 'sms' | 'email';
 }
-export interface IProviderItem {
-  name: string;
-  image: string;
-}
-
-export interface IConnectedAccount {
-  provider: AuthProviderName;
-  email: string;
-}
-
-export interface ConnectedAccountProps extends IConnectedAccount {
-  name?: '';
-}
 
 export interface EnableTwoFAInput {
   channel: string;

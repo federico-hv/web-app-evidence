@@ -64,26 +64,3 @@ export const UpdatePasswordSchema = object<UpdatePasswordFormData>({
     )
     .required(requiredField('new account-info-guard verification')),
 });
-
-export const Provider: Record<AuthProviderName, IProviderItem> = {
-  google: {
-    image: googleLogo,
-    name: 'Google',
-  },
-  facebook: {
-    image: facebookLogo,
-    name: 'Facebook',
-  },
-  spotify: {
-    image: spotifyLogo,
-    name: 'Spotify',
-  },
-  apple: {
-    image: darkAppleLogo,
-    name: 'Apple',
-  },
-  'apple-music': {
-    image: appleMusicLogo,
-    name: 'Apple Music',
-  },
-};
