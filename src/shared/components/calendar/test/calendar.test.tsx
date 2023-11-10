@@ -3,8 +3,6 @@ import Calendar from '../index';
 import { DateUtility } from '../../../../shared';
 
 import dayjs from 'dayjs';
-import { createCurrentDayArray } from './util.test';
-import { getWeekdays } from '../utilities';
 
 describe('[Calendar]', () => {
   let onClick: VoidFunction;
@@ -25,14 +23,36 @@ describe('[Calendar]', () => {
   });
 
   it('should have correct weekdays', () => {
-    for (const weekday of getWeekdays()) {
+    for (const weekday of DateUtility.getWeekdays()) {
       expect(screen.getByText(weekday)).to.exist;
     }
   });
 
   it('should have correct days', () => {
-    for (const date of createCurrentDayArray()) {
-      expect(screen.getAllByText(date.day)).to.exist;
+    const currentDate = dayjs().toDate();
+    const firstDateOfMonth = DateUtility.getStartOf(currentDate, 'month');
+    const lastDateOfMonth = DateUtility.getEndOf(currentDate, 'month');
+    const firstDateInFirstMonthWeek = DateUtility.getStartOf(
+      firstDateOfMonth,
+      'week',
+    );
+    const lastDateInLastMonthWeek = DateUtility.getEndOf(
+      lastDateOfMonth,
+      'week',
+    );
+
+    const numberOfDaysInMonth = DateUtility.difference(
+      firstDateInFirstMonthWeek,
+      lastDateInLastMonthWeek,
+      'day',
+    );
+
+    const days = DateUtility.generateDays(
+      firstDateInFirstMonthWeek,
+      numberOfDaysInMonth,
+    );
+    for (const date of days) {
+      expect(screen.getAllByText(date.getDay())).to.exist;
     }
   });
 

@@ -5,12 +5,22 @@ import {
   NavigationLink,
   NavigationLinkGroup,
   VStack,
+  useDisclosure,
 } from '@holdr-ui/react';
-import { extraBtnPadding, Paths, prefix } from '../../../../shared';
+import {
+  DialogContextProvider,
+  extraBtnPadding,
+  Paths,
+  prefix,
+} from '../../../../shared';
 import { Calendar } from '../../../../shared/components';
+import { CalendarDialogue } from '../../../../shared/components/calendar/ui';
+import { useState } from 'react';
 
 function LgHeader() {
   const { pathname } = useLocation();
+  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
     <VStack
@@ -98,10 +108,18 @@ function LgHeader() {
         </Box>
         <Box h={350} minHeight={320} p={4} w='full'>
           <Box w='full' h='full'>
-            <Calendar onDateClick={(date) => console.log(date)} />
+            <Calendar
+              onDateClick={(date) => {
+                setSelectedDate(date);
+                onOpen();
+              }}
+            />
           </Box>
         </Box>
       </VStack>
+      <DialogContextProvider value={{ isOpen, onOpen, onClose }}>
+        <CalendarDialogue date={selectedDate} />
+      </DialogContextProvider>
     </VStack>
   );
 }
