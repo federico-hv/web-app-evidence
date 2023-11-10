@@ -1,7 +1,7 @@
 import { IconButton, Popover, useKeyBind } from '@holdr-ui/react';
 import { NotificationHeader, NotificationTabs } from '../..';
 import { useState } from 'react';
-import { PopoverContextProvider } from 'shared/contexts/popover';
+import { PopoverContextProvider } from 'shared';
 
 function NotificationPopover() {
   const [state, set] = useState(false);
