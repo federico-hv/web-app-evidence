@@ -13,24 +13,26 @@ import {
 } from 'react';
 import * as ReactDOM from 'react-dom';
 import { $createMentionNode } from '../../../shared';
-import {
-  MentionsProps,
-  GenericOption,
-  MentionOption,
-} from '../../../types';
+import { MentionsProps, MentionOption } from '../../../types';
 import { checkForAtSignMentions } from '../../../shared';
+import { popoverStyles } from '../../../styles';
 
-export default function MentionsPlugin<T extends GenericOption>({
+export default function MentionsPlugin<T>({
   dataFetcher,
   renderItem,
   keyExtractor,
+  results,
 }: MentionsProps<T>): ReactElement | null {
   const [editor] = useLexicalComposerContext();
 
   const [queryString, setQueryString] = useState<string | null>(null);
   const [focused, setFocused] = useState<boolean>(true);
 
-  const results = dataFetcher(queryString);
+  console.log(results);
+
+  useEffect(() => {
+    dataFetcher(queryString);
+  }, [queryString]);
 
   useEffect(() => {
     const input = document.getElementById('input-field');
@@ -51,7 +53,7 @@ export default function MentionsPlugin<T extends GenericOption>({
 
   const options = useMemo(
     () =>
-      results.map((result: T) => new MentionOption(result, keyExtractor)),
+      results?.map((result: T) => new MentionOption(result, keyExtractor)),
     [results, keyExtractor],
   );
 
@@ -63,7 +65,7 @@ export default function MentionsPlugin<T extends GenericOption>({
     ) => {
       editor.update(() => {
         const mentionNode = $createMentionNode(
-          '@' + selectedOption.data.name,
+          '@' + keyExtractor(selectedOption.data),
         );
         if (nodeToReplace) {
           nodeToReplace.replace(mentionNode);
@@ -96,15 +98,12 @@ export default function MentionsPlugin<T extends GenericOption>({
         anchorElementRef,
         { selectedIndex, selectOptionAndCleanUp, setHighlightedIndex },
       ) =>
-        anchorElementRef.current && results.length && focused
+        anchorElementRef.current && results.length
           ? ReactDOM.createPortal(
-              <div className='typeahead-popover mentions-menu'>
-                <ul>
+              <div className={popoverStyles()}>
+                <ul style={{ listStyle: 'none' }}>
                   {options.map((option: MentionOption<T>, i: number) => (
                     <li
-                      className={`option${
-                        selectedIndex === i ? ' selected' : ''
-                      }`}
                       id={
                         selectedIndex === i ? 'selected-option' : 'option'
                       }
@@ -119,7 +118,7 @@ export default function MentionsPlugin<T extends GenericOption>({
                       ref={option.setRefElement}
                       key={keyExtractor(option.data)}
                     >
-                      {renderItem(option.data)}
+                      {renderItem(option.data, selectedIndex === i)}
                     </li>
                   ))}
                 </ul>

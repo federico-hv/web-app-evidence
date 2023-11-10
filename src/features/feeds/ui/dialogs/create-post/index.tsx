@@ -33,7 +33,7 @@ import MediaIcon from '../../../../../assets/images/media.png';
 import PollIcon from '../../../../../assets/images/poll.png';
 import { omit } from 'lodash';
 import { useCreatePost } from '../../../shared';
-import CreatePostEditor from './ui/editor';
+import { CreatePostEditor } from './ui';
 
 function CreatePostDialog() {
   const currentUser = useCurrentUser();
@@ -135,27 +135,7 @@ function CreatePostDialog() {
                   h={option === '' ? '100%' : 'auto'}
                   minHeight={{ '@bp1': 75, '@bp3': 75 }}
                 >
-                  <CreatePostEditor state={state} update={update} />
-                  {/* <StyledTextarea
-                    autoFocus
-                    css={{
-                      padding: 0,
-                    }}
-                    value={state.description}
-                    onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
-                      update({ description: e.target.value });
-                    }}
-                    // fontSize={switchState ? 'sm' : 'lg'}
-                    minLines={1}
-                    maxLines={3}
-                    maxLength={150}
-                    variant='unstyled'
-                    placeholder={
-                      option === 'poll'
-                        ? 'What do you want to find out from your fans?'
-                        : 'What do you want your fans to know?'
-                    }
-                  /> */}
+                  <CreatePostEditor update={update} />
                 </Box>
                 <SwitchConditional>
                   <SwitchConditionalCase
