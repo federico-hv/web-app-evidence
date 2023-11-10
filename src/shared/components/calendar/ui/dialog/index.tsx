@@ -1,4 +1,3 @@
-import { Box, Dialog, Text } from '@holdr-ui/react';
 import {
   CommonDialog,
   CommonDialogHeader,
