@@ -3,13 +3,13 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Box } from '@holdr-ui/react';
 
-export const MotionBox = motion(Box);
-
 export const extraBtnPadding = css({
   py: '10px',
   height: '3rem !important',
   minWidth: '3rem !important',
 });
+
+export const MotionBox = motion(Box);
 
 export const LinkOverlay = styled(Link, {
   position: 'absolute',

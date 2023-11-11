@@ -3,7 +3,7 @@ import { SettingItem, useAccountInfo } from '../../../../features';
 import { Head, Paths, prefix, RootSettingsPath } from '../../../../shared';
 import { capitalize } from 'lodash';
 import dayjs from 'dayjs';
-import { HeaderLayout } from '../../../../layout';
+import SettingsHeaderLayout from '../../../../layout/settings-header';
 
 function AccountInfoPage() {
   const { data } = useAccountInfo();
@@ -14,7 +14,7 @@ function AccountInfoPage() {
         description='See account info like your phone number and email.'
         url={`${Paths.settings}/${Paths.setting.account_info}`}
       />
-      <HeaderLayout
+      <SettingsHeaderLayout
         title='Account information'
         backLink={prefix(RootSettingsPath, Paths.setting.account)}
       >
@@ -65,7 +65,7 @@ function AccountInfoPage() {
             subheading={`${dayjs(data.birthday).format('MMMM D, YYYY')}`}
           />
         </VStack>
-      </HeaderLayout>
+      </SettingsHeaderLayout>
     </>
   );
 }

@@ -24,7 +24,7 @@ import {
 } from '../../layout';
 
 /**
- * TODO: Deprecate, use a component that wraps a page with header and body SCs
+ * TODO: Deprecate, use a component that wraps a page with settings-header and body SCs
  */
 export function PageHeader({
   title,

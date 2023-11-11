@@ -44,8 +44,6 @@ function convertMentionElement(
   return null;
 }
 
-const mentionStyle = 'background-color: rgba(24, 119, 232, 0.2)';
-
 export class MentionNode extends TextNode {
   __mention: string;
 
@@ -82,8 +80,7 @@ export class MentionNode extends TextNode {
 
   createDOM(config: EditorConfig): HTMLElement {
     const dom = super.createDOM(config);
-    dom.style.cssText = mentionStyle;
-    dom.className = 'mention';
+    dom.className = config.theme.mention || 'mention';
     return dom;
   }
 

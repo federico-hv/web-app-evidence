@@ -6,11 +6,11 @@ import {
   NotificationsPage,
   MessagesPage,
   ReleasesPage,
+  ChannelsPage,
 } from '../pages';
 import { AuthGuard, NotFoundError, Paths, prefix } from '../shared';
-import { MainLayout } from '../features';
 import { BookmarksRoutes, SettingsRoutes, UserRoutes } from './routes';
-import ChannelsPage from '../pages/channels';
+import { MainLayout } from '../layout';
 
 function Router() {
   return (

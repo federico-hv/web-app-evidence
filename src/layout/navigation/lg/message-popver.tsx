@@ -7,10 +7,11 @@ import {
   Text,
 } from '@holdr-ui/react';
 import { useState } from 'react';
-import { ActionItemWrapper } from '../../../../shared';
+import { useMenuNavigate } from '../../../shared';
 
 function MessagePopover() {
   const [state, set] = useState(false);
+  const { goto } = useMenuNavigate();
   return (
     <Popover isOpen={state} onOpenChange={set}>
       <Popover.Trigger onClick={() => set(true)}>
@@ -42,11 +43,17 @@ function MessagePopover() {
             l={5}
             r={5}
           >
-            <ActionItemWrapper>
-              <HStack py={3} w='100%' justify='center'>
-                <Text weight={500}>View all</Text>
-              </HStack>
-            </ActionItemWrapper>
+            <HStack
+              onClick={() => {
+                goto.messages();
+                set(false);
+              }}
+              py={4}
+              w='100%'
+              justify='center'
+            >
+              <Text weight={500}>View all</Text>
+            </HStack>
           </Box>
         </Popover.Content>
       </Popover.Portal>

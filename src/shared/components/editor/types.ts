@@ -10,10 +10,6 @@ export interface EditorProps {
   onChange?: (state: any) => void;
 }
 
-export interface EditorTheme {
-  [key: string]: string;
-}
-
 export type ErrorBoundaryProps = {
   children: ReactElement;
   onError: (error: Error) => void;
@@ -28,11 +24,7 @@ export type SerializedMentionNode = Spread<
   SerializedTextNode
 >;
 
-export interface GenericOption {
-  name: string;
-}
-
-export class MentionOption<T extends GenericOption> extends MenuOption {
+export class MentionOption<T> extends MenuOption {
   data: T;
 
   constructor(data: T, keyExtractor: (data: T) => string) {
@@ -41,8 +33,9 @@ export class MentionOption<T extends GenericOption> extends MenuOption {
   }
 }
 
-export interface MentionsProps<T extends GenericOption> {
-  dataFetcher: (mentionString: string | null) => T[];
-  renderItem: (data: T) => ReactElement;
+export interface MentionsProps<T> {
+  dataFetcher: (mentionString: string | null) => void;
+  renderItem: (data: T, selected: boolean) => ReactElement;
   keyExtractor: (data: T) => string;
+  results: T[];
 }
