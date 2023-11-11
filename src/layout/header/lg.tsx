@@ -6,8 +6,7 @@ import {
   NavigationLinkGroup,
   VStack,
 } from '@holdr-ui/react';
-import { extraBtnPadding, Paths, prefix } from '../../../../shared';
-import { Calendar } from '../../../../shared/components';
+import { Calendar, extraBtnPadding, Paths, prefix } from '../../shared';
 
 function LgHeader() {
   const { pathname } = useLocation();

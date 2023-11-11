@@ -1,9 +1,6 @@
 import { IconButton, Popover } from '@holdr-ui/react';
-import {
-  NotificationHeader,
-  NotificationTabs,
-} from '../../../notifications';
 import { useState } from 'react';
+import { NotificationHeader, NotificationTabs } from '../../../features';
 
 function NotificationPopover() {
   const [state, set] = useState(false);

@@ -1,11 +1,19 @@
 import { useQuery } from '@apollo/client';
 import { VStack } from '@holdr-ui/react';
-import { Error, Head, Loader, Paths, prefix } from '../../../../shared';
+import {
+  Error,
+  Head,
+  IConnection,
+  IPaginationParams,
+  Loader,
+  Paths,
+  prefix,
+} from '../../../../shared';
 import { RootSettingsPath } from '../root';
-import { HeaderLayout } from '../../../../layout';
 import { GET_CONNECTED_ACCOUNTS } from './queries';
 import { IConnectedAccount } from './shared';
 import { ConnectedAccount } from './ui';
+import SettingsHeaderLayout from '../../../../layout/settings-header';
 
 function ConnectedAccountSettingsPage() {
   const { data, loading, error } = useQuery<
@@ -24,7 +32,7 @@ function ConnectedAccountSettingsPage() {
       />
       <Loader loading={loading}>
         {data && (
-          <HeaderLayout
+          <SettingsHeaderLayout
             title='Connected accounts'
             backLink={prefix(RootSettingsPath, Paths.setting.security)}
           >
@@ -33,7 +41,7 @@ function ConnectedAccountSettingsPage() {
                 <ConnectedAccount key={cursor} {...node} />
               ))}
             </VStack>
-          </HeaderLayout>
+          </SettingsHeaderLayout>
         )}
       </Loader>
     </Error>

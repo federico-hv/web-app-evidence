@@ -1,7 +1,8 @@
 import { Link, matchPath, useLocation } from 'react-router-dom';
 import {
   Box,
-  IconButton,
+  Circle,
+  Icon,
   NavigationLink,
   NavigationLinkGroup,
   VStack,
@@ -79,12 +80,28 @@ function MdHeader() {
               }}
             />
           </NavigationLinkGroup>
-          <Box p={4} borderTop={2} borderBottom={2} borderColor='base100'>
-            <IconButton
-              icon='store-fill'
-              ariaLabel='go to shop'
-              colorTheme='secondary400'
-            />
+          <Box
+            flex={1}
+            p={4}
+            borderTop={2}
+            borderBottom={2}
+            borderColor='base100'
+          >
+            <Circle
+              position='relative'
+              as='button'
+              size={40}
+              bgColor='secondary400'
+            >
+              <Circle
+                _hover={{ backgroundColor: '$clearTint300' }}
+                size={40}
+                position='absolute'
+                t={0}
+                l={0}
+              />
+              <Icon color='primary400' name='store-fill' />
+            </Circle>
           </Box>
           <Box h={320} minHeight={320} p={4} w='full'>
             <Box bgColor='base100' w='full' h='full'></Box>

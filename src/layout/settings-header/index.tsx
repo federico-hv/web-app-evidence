@@ -2,6 +2,8 @@ import { ReactNode } from 'react';
 import { Heading, HStack, IconButton, VStack } from '@holdr-ui/react';
 import { useNavigate } from 'react-router-dom';
 
+// TODO Yeah, Imma deprecate the f*ck outta this. I dont like this piece of code at all.
+
 function SettingsHeaderLayout({
   children,
   title,
