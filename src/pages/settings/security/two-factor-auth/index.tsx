@@ -23,10 +23,10 @@ function TwoFactorAuthSettingsPage() {
         backLink={prefix(RootSettingsPath, Paths.setting.account_security)}
       >
         <VStack pt={3} gap={4}>
+          <TwoFASmsCheckbox />
           <GqlRenderer ErrorFallback={ErrorFallback}>
-            <TwoFASmsCheckbox />
+            <TwoFAAuthAppCheckbox />
           </GqlRenderer>
-          <TwoFAAuthAppCheckbox />
         </VStack>
       </SettingsHeaderLayout>
     </Fragment>
