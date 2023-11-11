@@ -2,7 +2,7 @@ import { Box, Heading, Text, VStack } from '@holdr-ui/react';
 import { Head, Paths, prefix } from '../../../../shared';
 import { RootSettingsPath } from '../root';
 import { SettingItem } from '../../../../features';
-import { HeaderLayout } from '../../../../layout';
+import SettingsHeaderLayout from '../../../../layout/settings-header';
 
 function AccountSecuritySettingsPage() {
   return (
@@ -12,7 +12,7 @@ function AccountSecuritySettingsPage() {
         description=''
         url={prefix(RootSettingsPath, Paths.setting.account_security)}
       />
-      <HeaderLayout
+      <SettingsHeaderLayout
         title='Security'
         backLink={prefix(RootSettingsPath, Paths.setting.security)}
       >
@@ -40,7 +40,7 @@ function AccountSecuritySettingsPage() {
             />
           </Box>
         </VStack>
-      </HeaderLayout>
+      </SettingsHeaderLayout>
     </>
   );
 }

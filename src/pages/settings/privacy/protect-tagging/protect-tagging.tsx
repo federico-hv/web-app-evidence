@@ -17,7 +17,7 @@ import {
 } from '../../../../shared';
 import { Box, Checkbox, HStack } from '@holdr-ui/react';
 import { useQuery } from '@apollo/client';
-import { HeaderLayout } from '../../../../layout';
+import SettingsHeaderLayout from '../../../../layout/settings-header';
 
 function ProtectAndTaggingSettingsPage() {
   const {
@@ -40,7 +40,7 @@ function ProtectAndTaggingSettingsPage() {
         description='Manage whether other users can view your posts, likes and other activity.'
         url={to}
       />
-      <HeaderLayout title='Protection' backLink={to}>
+      <SettingsHeaderLayout title='Protection' backLink={to}>
         <Box p={4} borderBottom={2} borderColor='base100'>
           <HStack justify='space-between' items='center'>
             <TextGroup>
@@ -69,7 +69,7 @@ function ProtectAndTaggingSettingsPage() {
             </Loader>
           </HStack>
         </Box>
-      </HeaderLayout>
+      </SettingsHeaderLayout>
     </Error>
   );
 }

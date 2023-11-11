@@ -12,7 +12,7 @@ import {
   prefix,
   RootSettingsPath,
 } from '../../../../shared';
-import { HeaderLayout } from '../../../../layout';
+import SettingsHeaderLayout from '../../../../layout/settings-header';
 
 function UsernameSettingPage() {
   const { data } = useAccountInfo();
@@ -33,7 +33,7 @@ function UsernameSettingPage() {
         description='Change your username.'
         url={`${Paths.settings}/${Paths.setting.username}`}
       />
-      <HeaderLayout
+      <SettingsHeaderLayout
         title='Username'
         backLink={prefix(RootSettingsPath, Paths.setting.account_info)}
       >
@@ -51,7 +51,7 @@ function UsernameSettingPage() {
             onFinish={onFinish}
           />
         </AccountInfoFormContextProvider>
-      </HeaderLayout>
+      </SettingsHeaderLayout>
     </Error>
   );
 }

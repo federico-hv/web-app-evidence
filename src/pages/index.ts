@@ -7,5 +7,6 @@ export { default as BookmarksPage } from './bookmarks';
 export { default as BookmarkPage } from './bookmark';
 export { default as NotificationsPage } from './notifications';
 export { default as MessagesPage } from './messages';
+export { default as MessagePage } from './message';
 export { default as ReleasesPage } from './releases';
-export { default as Channels } from './channels';
+export { default as ChannelsPage } from './channels';

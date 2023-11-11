@@ -1,4 +1,4 @@
-import { Responsive, ResponsiveItem } from '../../../../shared/components';
+import { Responsive, ResponsiveItem } from '../../shared/components';
 import MdHeader from './md';
 import LgHeader from './lg';
 
@@ -16,4 +16,4 @@ function Header() {
 }
 Header.displayName = 'Header';
 
-export { Header };
+export default Header;
