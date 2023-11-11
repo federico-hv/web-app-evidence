@@ -1,11 +1,12 @@
 import { VStack } from '@holdr-ui/react';
-import { Head, Paths, prefix } from '../../../../shared';
+import { ErrorFallback, Head, Paths, prefix } from '../../../../shared';
 import { Fragment } from 'react';
 import { RootSettingsPath } from '../root';
 
 import SettingsHeaderLayout from '../../../../layout/settings-header';
 import TwoFASmsCheckbox from './ui/two-fa-sms.checkbox';
 import TwoFAAuthAppCheckbox from './ui/two-fa-auth-app.checkbox';
+import GqlRenderer from '../../../../shared/components/gql-renderer';
 
 function TwoFactorAuthSettingsPage() {
   return (
@@ -22,7 +23,9 @@ function TwoFactorAuthSettingsPage() {
         backLink={prefix(RootSettingsPath, Paths.setting.account_security)}
       >
         <VStack pt={3} gap={4}>
-          <TwoFASmsCheckbox />
+          <GqlRenderer ErrorFallback={ErrorFallback}>
+            <TwoFASmsCheckbox />
+          </GqlRenderer>
           <TwoFAAuthAppCheckbox />
         </VStack>
       </SettingsHeaderLayout>
