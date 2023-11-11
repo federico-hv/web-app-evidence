@@ -5,6 +5,7 @@ import {
   CommonDialogActionButton,
   CommonDialogContent,
   CommonDialogHeader,
+  InfoItem,
   StepperIndicator,
   StepperIndicatorStep,
   TextGroup,
@@ -84,28 +85,6 @@ function ConnectionStep() {
 }
 
 function GetStartedStep() {
-  const InfoItem = ({
-    title,
-    description,
-    imageSrc,
-  }: {
-    title: string;
-    description: string;
-    imageSrc: string;
-  }) => (
-    <HStack gap={4}>
-      <Image size={30} src={imageSrc} alt='save to library' />
-      <TextGroup gap={0}>
-        <TextGroupSubheading weight={500} size={3}>
-          {title}
-        </TextGroupSubheading>
-        <TextGroupSubheading color='base400' size={2}>
-          {description}
-        </TextGroupSubheading>
-      </TextGroup>
-    </HStack>
-  );
-
   return (
     <VStack gap={6}>
       <TextGroup>
@@ -122,17 +101,20 @@ function GetStartedStep() {
       <VStack gap={5}>
         <InfoItem
           imageSrc={Asset.Icon.SaveToLibrary}
+          imageAltText='save to library logo'
           title='Save to library'
           description='Save the releases that you like into your streaming service library directly
           from Holdr.'
         />
         <InfoItem
           imageSrc={Asset.Icon.Notification}
+          imageAltText='new artist logo'
           title='New artist notifications'
           description='We will notify you whenever one of your favorite artists from your streaming services joins Holdr.'
         />
         <InfoItem
           imageSrc={Asset.Icon.UserAdd}
+          imageAltText='tastemakers logo'
           title='Tastemakers'
           description='Showcase your favourite playlists and connect with other like-minded fans.'
         />
