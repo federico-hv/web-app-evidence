@@ -72,6 +72,7 @@ export function useDisableTwoFA() {
  *
  */
 export function useEnableTwoFA() {
+  const { openWith } = useToast();
   const [mutate, { loading: loading, error, data }] = useMutation<
     {
       enableTwoFA: IStatus;
@@ -79,7 +80,7 @@ export function useEnableTwoFA() {
     { payload: EnableTwoFAInput }
   >(ENABLE_TWO_FA);
 
-  const enableTwoFA = async (code: string, cb?: VoidFunction) => {
+  const enableTwoFA = async (code: string) => {
     const { data } = await mutate({
       variables: {
         payload: {
@@ -102,9 +103,14 @@ export function useEnableTwoFA() {
       },
     });
 
-    if (data && data.enableTwoFA.status) {
-      cb && cb();
+    if (data && !data.enableTwoFA.status) {
+      openWith({
+        description: data.enableTwoFA.message,
+        status: 'danger',
+      });
     }
+
+    return { data };
   };
 
   return { enableTwoFA, loading, error, data };
