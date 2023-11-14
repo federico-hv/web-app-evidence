@@ -3,6 +3,7 @@ import { INotification, NotificationType } from '../types';
 /* TODO: Replace this hook with a GraphQL Query
  */
 export function useNotification(type: NotificationType) {
+  console.log(type);
   const data: INotification[] = mockNotifications.sort(() =>
     Math.random() > 0.5 ? 1 : -1,
   );

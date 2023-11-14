@@ -6,6 +6,7 @@ export const NotificationDescription: Record<
   (args: string) => string
 > = {
   relationship: (args: string) => {
+    console.log(args);
     return 'followed you';
   },
   feed: (args: string) => {
