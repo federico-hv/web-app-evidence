@@ -5,8 +5,9 @@ import NotificationItem from '../notification-item/notification-item';
 import { voidFn } from 'shared';
 import { FeedEntity, Notification } from '../../index';
 import { NotificationDescription } from '../notification-item';
+import { BaseNotificationSCProps } from '../types';
 
-function AllTab() {
+function AllTab({ onClose }: BaseNotificationSCProps) {
   const { data, error, loading } = useNotification('relationship');
 
   /* TODO: UPDATE THIS FUNCTION TO ADHERE TO NEW DATA */
@@ -14,7 +15,7 @@ function AllTab() {
     const type = notification.type;
 
     return (
-      <NotificationItem key={idx}>
+      <NotificationItem key={idx} onClose={onClose}>
         <NotificationItem.Avatar
           src={notification.actor.avatar + '?random=' + Math.random()}
         />
@@ -47,8 +48,8 @@ function AllTab() {
 
   return (
     <Box>
-      <SectionHeader />
-      <VStack py={3} gap={5}>
+      <SectionHeader onClose={onClose} />
+      <VStack py={3} gap={2}>
         {data.map((notification, idx) => {
           return buildNotification(notification, idx);
         })}
@@ -67,7 +68,7 @@ function RequestsTab() {
   return <></>;
 }
 
-function NotificationTabs() {
+function NotificationTabs({ onClose }: BaseNotificationSCProps) {
   return (
     <Tabs defaultValue='all'>
       <Box pt={4} pb={4}>
@@ -78,7 +79,7 @@ function NotificationTabs() {
         </Tabs.List>
       </Box>
       <Tabs.Content value='all'>
-        <AllTab />
+        <AllTab onClose={onClose} />
       </Tabs.Content>
       <Tabs.Content value='all'>
         <HoldrClubTab />

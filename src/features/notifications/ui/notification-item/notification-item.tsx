@@ -14,9 +14,24 @@ import {
   NotificationSCName,
 } from 'features/notifications/shared';
 import { ReactNode } from 'react';
-import { DateUtility, TextGroup, getSubComponent } from 'shared';
+import { useNavigate } from 'react-router-dom';
+import {
+  DateUtility,
+  Paths,
+  TextGroup,
+  getSubComponent,
+  prefix,
+} from 'shared';
+import { BaseNotificationSCProps } from '../types';
 
-function NotificationItem({ children }: { children: ReactNode }) {
+function NotificationItem({
+  children,
+  onClose,
+}: BaseNotificationSCProps & {
+  children: ReactNode;
+}) {
+  const navigate = useNavigate();
+
   const Avatar = getSubComponent<NotificationSCName>(
     children,
     'NotificationAvatar',
@@ -35,9 +50,21 @@ function NotificationItem({ children }: { children: ReactNode }) {
   );
 
   return (
-    <HStack justify='space-between'>
-      <HStack gap={4}>
-        {Avatar}
+    <HStack
+      justify='space-between'
+      _hover={{
+        cursor: 'pointer',
+        backgroundColor: '$base200',
+        borderRadius: '$1',
+      }}
+      p={3}
+      onClick={() => {
+        onClose();
+        navigate(prefix('/', Paths.notifications));
+      }}
+    >
+      <HStack gap={3}>
+        <Center>{Avatar}</Center>
         {Details}
       </HStack>
       <Center>
@@ -51,7 +78,7 @@ function NotificationItem({ children }: { children: ReactNode }) {
 function NotificationAvatar({
   src,
   radius = 4,
-  size = 'lg',
+  size = 'sm',
   ...props
 }: AvatarProps) {
   return <Avatar src={src} radius={radius} size={size} {...props} />;
@@ -59,7 +86,7 @@ function NotificationAvatar({
 
 function NotificationMediaItem({
   src,
-  size = 7,
+  size = '4',
   radius = 2,
   ...props
 }: ImageProps) {
@@ -78,24 +105,23 @@ function NotificationDetails({
   date,
 }: NotificationDetailsProps) {
   return (
-    <Center>
-      <VStack gap={2}>
-        <Text weight={500}>{name}</Text>
-        <TextGroup
-          direction='horizontal'
-          color='base300'
-          gap={3}
-          fontSize={2}
-        >
-          <TextGroup.Subheading>
-            {description.toLowerCase()}
-          </TextGroup.Subheading>
-          <TextGroup.Subheading>
-            {DateUtility.fromNow(date.toDateString())}
-          </TextGroup.Subheading>
-        </TextGroup>
-      </VStack>
-    </Center>
+    <VStack>
+      <Text weight={500}>{name}</Text>
+      <TextGroup
+        direction='horizontal'
+        color='base400'
+        gap={3}
+        fontSize={2}
+        style={{ userSelect: 'none' }}
+      >
+        <TextGroup.Subheading>
+          {description.toLowerCase()}
+        </TextGroup.Subheading>
+        <TextGroup.Subheading>
+          {`${DateUtility.fromNow(date.toDateString())} ago`}
+        </TextGroup.Subheading>
+      </TextGroup>
+    </VStack>
   );
 }
 

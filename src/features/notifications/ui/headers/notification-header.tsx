@@ -15,7 +15,7 @@ function NotificationHeader() {
             ariaLabel='notifications menu'
             variant='ghost'
             icon='more-fill'
-            size={'lg'}
+            size='base'
           />
         </Menu.Trigger>
         <Menu.Content>{/* TODO */}</Menu.Content>
