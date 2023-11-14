@@ -1,9 +1,9 @@
-import { Notification, NotificationType } from '../types';
+import { INotification, NotificationType } from '../types';
 
 /* TODO: Replace this hook with a GraphQL Query
  */
 export function useNotification(type: NotificationType) {
-  const data: Notification[] = mockNotifications.sort(() =>
+  const data: INotification[] = mockNotifications.sort(() =>
     Math.random() > 0.5 ? 1 : -1,
   );
 
@@ -12,7 +12,7 @@ export function useNotification(type: NotificationType) {
   return { data, error, loading };
 }
 
-const mockNotifications: Notification[] = [
+const mockNotifications: INotification[] = [
   {
     createdAt: new Date(),
     actor: {

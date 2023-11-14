@@ -1,24 +1,24 @@
 import { render, screen } from '@testing-library/react';
-import NotificationItem, {
-  NotificationActionWrapper,
-  NotificationAvatar,
-  NotificationDetails,
+import Index, {
+  NotificationItemActionWrapper,
+  NotificationItemAvatar,
+  NotificationItemDetails,
   NotificationMediaItem,
-} from '../ui/notification-item/notification-item';
+} from '../ui/notification-item';
 
 import { Button } from '@holdr-ui/react';
 import { voidFn } from 'shared';
 
 describe('NotificationItem', () => {
   it('displays a notification avatar', () => {
-    render(<NotificationAvatar src='https://picsum.photos/200' />);
+    render(<NotificationItemAvatar src='https://picsum.photos/200' />);
     const avatar = screen.getByAltText('Avatar');
     expect(avatar).to.exist;
   });
 
   it('displays notification details', () => {
     render(
-      <NotificationDetails
+      <NotificationItemDetails
         name='John'
         description='Some description'
         date={new Date()}
@@ -46,9 +46,9 @@ describe('NotificationItem', () => {
 
     const onClickMock = () => count++;
     render(
-      <NotificationActionWrapper>
+      <NotificationItemActionWrapper>
         <Button onClick={onClickMock}>Test Action Button</Button>
-      </NotificationActionWrapper>,
+      </NotificationItemActionWrapper>,
     );
     const actionButton = screen.getByText('Test Action Button');
     expect(actionButton).to.exist;
@@ -56,18 +56,18 @@ describe('NotificationItem', () => {
 
   it('renders a complete notification', () => {
     render(
-      <NotificationItem onClose={voidFn}>
-        <NotificationItem.Avatar src='test-avatar.jpg' />
-        <NotificationItem.Details
+      <Index onClose={voidFn}>
+        <Index.Avatar src='test-avatar.jpg' />
+        <Index.Details
           name='John Doe'
           description='Some notification description'
           date={new Date()}
         />
-        <NotificationItem.ActionWrapper>
+        <Index.ActionWrapper>
           <Button onClick={() => {}}>Action</Button>
-        </NotificationItem.ActionWrapper>
-        <NotificationItem.MediaItem src='test-media.jpg' />
-      </NotificationItem>,
+        </Index.ActionWrapper>
+        <Index.MediaItem src='test-media.jpg' />
+      </Index>,
     );
 
     screen.getByAltText('avatar');

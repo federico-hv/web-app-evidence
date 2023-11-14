@@ -1,4 +1,4 @@
-import { NotificationType } from '../../index';
+import { NotificationType } from './types';
 
 /* TODO: UPDATE THIS WITH CORRECT VALUES*/
 export const NotificationDescription: Record<
