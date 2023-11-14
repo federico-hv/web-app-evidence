@@ -1,13 +1,12 @@
-import { Center, HStack, Text } from '@holdr-ui/react';
+import { HStack, Text } from '@holdr-ui/react';
 import { Link } from 'react-router-dom';
-import { Paths, usePopoverContext } from 'shared';
+import { Paths } from 'shared';
 
-function SectionHeader() {
-  const { setClosed } = usePopoverContext();
+function SectionHeader({ onClose }: { onClose: VoidFunction }) {
   return (
     <HStack justify='space-between' pb={4}>
       <Text weight={500}>New</Text>
-      <Link to={Paths.notifications} onClick={setClosed}>
+      <Link to={Paths.notifications} onClick={onClose}>
         <Text color='base300' size={2}>
           View all
         </Text>

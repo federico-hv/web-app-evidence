@@ -19,4 +19,3 @@ export * from './use-scroll-direction';
 export * from './use-scroll-position';
 export * from './use-is-bottom';
 export * from './use-act-on-scroll';
-export * from './use-popover-context';

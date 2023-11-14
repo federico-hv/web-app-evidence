@@ -7,6 +7,7 @@ import NotificationItem, {
 } from '../ui/notification-item/notification-item';
 
 import { Button } from '@holdr-ui/react';
+import { voidFn } from 'shared';
 
 describe('NotificationItem', () => {
   it('displays a notification avatar', () => {
@@ -55,7 +56,7 @@ describe('NotificationItem', () => {
 
   it('renders a complete notification', () => {
     render(
-      <NotificationItem>
+      <NotificationItem onClose={voidFn}>
         <NotificationItem.Avatar src='test-avatar.jpg' />
         <NotificationItem.Details
           name='John Doe'

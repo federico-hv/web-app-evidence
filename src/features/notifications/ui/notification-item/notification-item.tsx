@@ -21,11 +21,15 @@ import {
   TextGroup,
   getSubComponent,
   prefix,
-  usePopoverContext,
 } from 'shared';
 
-function NotificationItem({ children }: { children: ReactNode }) {
-  const { setClosed } = usePopoverContext();
+function NotificationItem({
+  children,
+  onClose,
+}: {
+  children: ReactNode;
+  onClose: VoidFunction;
+}) {
   const navigate = useNavigate();
 
   const Avatar = getSubComponent<NotificationSCName>(
@@ -55,7 +59,7 @@ function NotificationItem({ children }: { children: ReactNode }) {
       }}
       p={3}
       onClick={() => {
-        setClosed();
+        onClose();
         navigate(prefix('/', Paths.notifications));
       }}
     >
