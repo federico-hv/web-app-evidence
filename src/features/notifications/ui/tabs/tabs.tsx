@@ -5,8 +5,9 @@ import NotificationItem from '../notification-item/notification-item';
 import { voidFn } from 'shared';
 import { FeedEntity, Notification } from '../../index';
 import { NotificationDescription } from '../notification-item';
+import { BaseNotificationSCProp } from '../types';
 
-function AllTab({ onClose }: { onClose: VoidFunction }) {
+function AllTab({ onClose }: BaseNotificationSCProp) {
   const { data, error, loading } = useNotification('relationship');
 
   /* TODO: UPDATE THIS FUNCTION TO ADHERE TO NEW DATA */
@@ -67,7 +68,7 @@ function RequestsTab() {
   return <></>;
 }
 
-function NotificationTabs({ onClose }: { onClose: VoidFunction }) {
+function NotificationTabs({ onClose }: BaseNotificationSCProp) {
   return (
     <Tabs defaultValue='all'>
       <Box pt={4} pb={4}>

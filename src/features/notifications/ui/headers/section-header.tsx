@@ -1,8 +1,9 @@
 import { HStack, Text } from '@holdr-ui/react';
 import { Link } from 'react-router-dom';
 import { Paths } from 'shared';
+import { BaseNotificationSCProp } from '../types';
 
-function SectionHeader({ onClose }: { onClose: VoidFunction }) {
+function SectionHeader({ onClose }: BaseNotificationSCProp) {
   return (
     <HStack justify='space-between' pb={4}>
       <Text weight={500}>New</Text>

@@ -7,7 +7,7 @@ import {
 import { NotificationHeader, NotificationTabs } from '../..';
 
 function NotificationPopover() {
-  const { isOpen, onClose } = useDisclosure();
+  const { isOpen, onClose, onOpen } = useDisclosure(true);
 
   // close with ESC key
   useKeyBind(27, () => {
@@ -15,8 +15,8 @@ function NotificationPopover() {
   });
 
   return (
-    <Popover isOpen={isOpen}>
-      <Popover.Trigger onClick={() => onClose}>
+    <Popover isOpen={isOpen} onOpenChange={isOpen ? onClose : onOpen}>
+      <Popover.Trigger onClick={isOpen ? onClose : onOpen}>
         <IconButton
           colorTheme='primary400'
           icon='notification-outline'
