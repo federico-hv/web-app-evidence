@@ -1,3 +1,3 @@
-export interface BaseNotificationSCProp {
+export interface BaseNotificationSCProps {
   onClose: VoidFunction;
 }

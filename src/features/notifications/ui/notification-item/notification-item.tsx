@@ -22,12 +22,12 @@ import {
   getSubComponent,
   prefix,
 } from 'shared';
-import { BaseNotificationSCProp } from '../types';
+import { BaseNotificationSCProps } from '../types';
 
 function NotificationItem({
   children,
   onClose,
-}: BaseNotificationSCProp & {
+}: BaseNotificationSCProps & {
   children: ReactNode;
 }) {
   const navigate = useNavigate();
