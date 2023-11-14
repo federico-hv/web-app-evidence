@@ -7,7 +7,7 @@ import {
 import { NotificationHeader, NotificationTabs } from '../..';
 
 function NotificationPopover() {
-  const { isOpen, onClose, onOpen } = useDisclosure(true);
+  const { isOpen, onClose, onOpen } = useDisclosure(false);
 
   // close with ESC key
   useKeyBind(27, () => {
