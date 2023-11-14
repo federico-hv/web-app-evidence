@@ -5,6 +5,8 @@ import {
   CommonDialogActionButton,
   CommonDialogContent,
   CommonDialogHeader,
+  GeneralContextProvider,
+  hexToRGB,
   InfoItem,
   StepperIndicator,
   StepperIndicatorStep,
@@ -12,25 +14,27 @@ import {
   TextGroupHeading,
   TextGroupSubheading,
   useCounter,
+  useGeneralContext,
+  useRecordState,
 } from '../../../shared';
 import {
   Circle,
   Image,
   HStack,
   Text,
-  useDisclosure,
   VStack,
   Box,
   Avatar,
   Grid,
   Checkbox,
-  useSwitch,
+  Center,
 } from '@holdr-ui/react';
 import {
   ConnectedAccountUtility,
   ConnectorProvider,
 } from '../../../features';
-import { Fragment } from 'react';
+import { Fragment, useEffect, useState } from 'react';
+import { DialogProps } from '@holdr-ui/react/dist/compositions/dialog/src/dialog.types';
 
 function ConnectButton({ provider }: { provider: ConnectorProvider }) {
   const providerItem = ConnectedAccountUtility.getProviderItem(provider);
@@ -63,7 +67,7 @@ function ConnectButton({ provider }: { provider: ConnectorProvider }) {
 function ConnectionStep() {
   return (
     <VStack gap={7} justify='space-between' h='100%'>
-      <TextGroup>
+      <TextGroup mt={3}>
         <TextGroupHeading casing='capitalize'>
           Connect Music Service
         </TextGroupHeading>
@@ -87,7 +91,7 @@ function ConnectionStep() {
 function GetStartedStep() {
   return (
     <VStack gap={6}>
-      <TextGroup>
+      <TextGroup mt={3}>
         <TextGroupHeading casing='capitalize'>
           Get Started
         </TextGroupHeading>
@@ -123,105 +127,207 @@ function GetStartedStep() {
   );
 }
 
-function ArtistOption() {
-  const { switchState, toggle } = useSwitch();
+function ArtistOption({
+  id,
+  name,
+}: {
+  id: string;
 
-  // TODO: Make checkmark invisible when not checked.
+  name: string;
+}) {
+  const { update, state } = useGeneralContext<{ ids: string[] }>();
+
+  const [visible, setVisible] = useState(
+    state.ids.findIndex((_id) => _id === id) >= 0,
+  );
+
+  useEffect(() => {
+    setVisible(state.ids.findIndex((_id) => _id === id) >= 0);
+  }, [id, state]);
+
   return (
     <VStack
       as='label'
       position='relative'
       items='center'
-      gap={2}
+      justify='center'
+      gap={1}
       w='fit-content'
-      onClick={toggle}
+      maxWidth='100px'
+      onClick={(e) => {
+        setVisible((prev) => {
+          if (!prev) {
+            update({ ids: [...state.ids, id] });
+          } else {
+            // remove from list
+            update({ ids: state.ids.filter((_id) => _id !== id) });
+          }
+
+          return !prev;
+        });
+
+        e.preventDefault();
+        e.stopPropagation();
+      }}
     >
-      <Box
-        position='absolute'
-        t={0}
-        r={0}
-        zIndex={10}
-        css={{
-          opacity: switchState ? 1 : 0,
-        }}
-      >
-        <Checkbox
-          size='sm'
-          colorTheme='success'
-          labelledBy='artist-name'
-        />
+      <Box position='absolute' t={0} r='-10px' zIndex={10}>
+        {visible && (
+          <Checkbox
+            readOnly
+            value={`${visible}`}
+            checked={visible}
+            size='sm'
+            colorTheme='secondary400'
+            labelledBy='artist-name'
+          />
+        )}
       </Box>
       <Box position='relative' zIndex={1}>
-        <Avatar variant='squircle' />
+        <Avatar variant='squircle' size='lg' />
       </Box>
-      <TextGroup items='center' gap={0}>
-        <TextGroupSubheading weight={500} size={2}>
-          Artist Name
-        </TextGroupSubheading>
-        <TextGroupSubheading weight={500} size={2} color='base400'>
-          @username
-        </TextGroupSubheading>
-      </TextGroup>
+      <Text css={{ width: '100%', textAlign: 'center' }} size={2}>
+        {name}
+      </Text>
     </VStack>
   );
 }
 
 function ArtistSelectionStep() {
+  const { state, update } = useGeneralContext<{ ids: string[] }>();
+
+  const artists = arrayFrom(31);
+
   return (
-    <VStack gap={4}>
-      <TextGroup>
-        <TextGroupHeading casing='capitalize'>
-          Select Artists
-        </TextGroupHeading>
-        <TextGroupSubheading size={2}>
-          Here are artists that we found in your library you do not follow
-          on Holdr.
-        </TextGroupSubheading>
-      </TextGroup>
-      <Grid templateColumns={'repeat(4, 1fr)'}>
-        {arrayFrom(4).map((idx) => (
-          <Grid.Item key={idx}>
-            <ArtistOption />
-          </Grid.Item>
-        ))}
-      </Grid>
+    <VStack h='calc(100% - 27px)' position='relative'>
+      <VStack
+        gap={5}
+        pb={1}
+        h={state.ids.length > 0 ? 'calc(100% - 51px)' : '100%'}
+      >
+        <TextGroup mt={3}>
+          <TextGroupHeading casing='capitalize'>
+            Select Artists
+          </TextGroupHeading>
+          <TextGroupSubheading size={2}>
+            Here are artists that we found in your library you do not
+            follow on Holdr.
+          </TextGroupSubheading>
+        </TextGroup>
+
+        <Box h='100%' overflow='auto'>
+          <Grid gap={5} templateColumns={'repeat(3, 1fr)'}>
+            {artists.map((idx) => (
+              <Grid.Item key={idx} justifySelf='center'>
+                <ArtistOption name={`Artist ${idx + 1}`} id={`${idx}`} />
+              </Grid.Item>
+            ))}
+          </Grid>
+        </Box>
+      </VStack>
+      {state.ids.length > 0 && (
+        <HStack
+          position='absolute'
+          b={0}
+          l={0}
+          w='100%'
+          bgColor='transparent'
+          css={{ zIndex: 15 }}
+        >
+          {state.ids.length > 0 && (
+            <Center
+              py={4}
+              radius={3}
+              flex={1}
+              cursor='pointer'
+              _hover={{ backgroundColor: '$base100' }}
+              onClick={() => update({ ids: artists.map((id) => '' + id) })}
+            >
+              <Text weight={500}>Select All</Text>
+            </Center>
+          )}
+          {state.ids.length > 1 && (
+            <Center
+              radius={3}
+              py={4}
+              flex={1}
+              cursor='pointer'
+              _hover={{ backgroundColor: hexToRGB('#d3190b', 0.075) }}
+              onClick={() => update({ ids: [] })}
+            >
+              <Text color='danger' weight={500}>
+                Remove All
+              </Text>
+            </Center>
+          )}
+        </HStack>
+      )}
     </VStack>
   );
 }
 
-function UnconnectedDialog({ isOpen }: { isOpen: boolean }) {
-  const { count: step, increment: nextStep } = useCounter(0);
-  const disclosure = useDisclosure(isOpen);
+function UnconnectedDialog(props: DialogProps) {
+  const [width, setWidth] = useState('550px');
+
+  const [state, update] = useRecordState<{ ids: string[] }>({
+    ids: [],
+  });
+  const { count: step, increment: nextStep, reset } = useCounter(0);
+
+  const resetDialog = () => {
+    props.onClose();
+    update({ ids: [] });
+    setWidth('550px');
+    reset();
+  };
   return (
-    <CommonDialog minHeight={600} {...disclosure}>
-      <CommonDialogHeader label='' />
-      <CommonDialogContent>
-        <VStack py={4} px={6} h='100%' justify='space-between'>
-          {step === 0 && <GetStartedStep />}
-          {step === 1 && <ConnectionStep />}
-          {step === 2 && <ArtistSelectionStep />}
-          <StepperIndicator current={step}>
-            {arrayFrom(2).map((idx) => (
-              <StepperIndicatorStep key={idx} />
-            ))}
-          </StepperIndicator>
-        </VStack>
-      </CommonDialogContent>
-      {step < 2 && (
-        <CommonDialogActionButton
-          // disabled={step === 1}
-          label='Continue'
-          onClick={nextStep}
-        />
-      )}
-      {step === 2 && (
-        <CommonDialogActionButton
-          disabled={true}
-          label='Finish'
-          onClick={disclosure.onClose}
-        />
-      )}
-    </CommonDialog>
+    <GeneralContextProvider value={{ state, update }}>
+      <CommonDialog minHeight={width} {...props} onClose={resetDialog}>
+        <CommonDialogHeader label='' />
+        <CommonDialogContent>
+          <VStack px={6} h='100%' justify='space-between'>
+            {step === 0 && <GetStartedStep />}
+            {step === 1 && <ConnectionStep />}
+            {step === 2 && <ArtistSelectionStep />}
+            <Box
+              position='sticky'
+              b={0}
+              pt={3}
+              pb={4}
+              zIndex={10}
+              css={{ backgroundColor: '#fff' }}
+            >
+              <StepperIndicator current={step}>
+                {arrayFrom(2).map((idx) => (
+                  <StepperIndicatorStep key={idx} />
+                ))}
+              </StepperIndicator>
+            </Box>
+          </VStack>
+        </CommonDialogContent>
+        {step < 2 && (
+          <CommonDialogActionButton
+            // disabled={step === 1}
+            label='Continue'
+            onClick={() => {
+              if (step === 1) {
+                setWidth('675px');
+              }
+              nextStep();
+            }}
+          />
+        )}
+        {step === 2 && (
+          <CommonDialogActionButton
+            label={
+              state.ids.length > 0
+                ? `Follow (${state.ids.length})`
+                : 'Skip'
+            }
+            onClick={resetDialog}
+          />
+        )}
+      </CommonDialog>
+    </GeneralContextProvider>
   );
 }
 UnconnectedDialog.displayName = 'UnconnectedDialog';

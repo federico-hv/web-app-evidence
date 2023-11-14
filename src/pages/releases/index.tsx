@@ -6,13 +6,20 @@ import {
   PageLayoutContent,
   PageLayoutHeader,
 } from '../../layout';
-import { Box, Button, Center, HStack, IconButton } from '@holdr-ui/react';
-import { EmptyMessage, Head } from '../../shared';
+import {
+  Box,
+  Button,
+  Center,
+  HStack,
+  IconButton,
+  useDisclosure,
+} from '@holdr-ui/react';
+import { EmptyMessage, Head, makeButtonLarger } from '../../shared';
 import { Fragment, useState } from 'react';
 import { UnconnectedDialog } from './ui';
 
 function ReleasesPage() {
-  const [firstTimeLogin] = useState(true);
+  const disclosure = useDisclosure(true);
   const [connected] = useState(false);
   return (
     <Fragment>
@@ -35,11 +42,7 @@ function ReleasesPage() {
               </HStack>
             </PageLayoutHeader>
             <PageLayoutContent>
-              {!connected ? (
-                <Center mt={6} h='100%'>
-                  <Button>Connect to DSP</Button>
-                </Center>
-              ) : (
+              {connected && (
                 <Box pt={4}>
                   <EmptyMessage
                     title='No releases'
@@ -50,9 +53,23 @@ function ReleasesPage() {
             </PageLayoutContent>
           </PageLayout>
         </ContentLayoutMain>
-        <ContentLayoutAside></ContentLayoutAside>
+        <ContentLayoutAside>
+          {!connected ? (
+            <Center px={4} mt={4} w='100' h='100%'>
+              <Button
+                onClick={disclosure.onOpen}
+                fullWidth
+                className={makeButtonLarger('2.5rem')}
+              >
+                Get Started
+              </Button>
+            </Center>
+          ) : (
+            <Fragment />
+          )}
+        </ContentLayoutAside>
       </ContentLayout>
-      <UnconnectedDialog isOpen={firstTimeLogin} />
+      <UnconnectedDialog {...disclosure} />
     </Fragment>
   );
 }

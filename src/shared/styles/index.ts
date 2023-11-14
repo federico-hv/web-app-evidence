@@ -5,11 +5,14 @@ import { Box } from '@holdr-ui/react';
 
 export const MotionBox = motion(Box);
 
-export const extraBtnPadding = css({
-  py: '10px',
-  height: '3rem !important',
-  minWidth: '3rem !important',
-});
+export const makeButtonLarger = (size: string, py = '10px') =>
+  css({
+    py: py,
+    height: `${size} !important`,
+    minWidth: `${size} !important`,
+  })();
+
+export const extraBtnPadding = () => makeButtonLarger('3rem');
 
 export const LinkOverlay = styled(Link, {
   position: 'absolute',

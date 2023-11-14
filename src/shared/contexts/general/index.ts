@@ -15,5 +15,6 @@ const GeneralContext: React.Context<GeneralContextType> =
   });
 
 const GeneralContextProvider = GeneralContext.Provider;
+const GeneralContextConsumer = GeneralContext.Consumer;
 
-export { GeneralContext, GeneralContextProvider };
+export { GeneralContext, GeneralContextProvider, GeneralContextConsumer };
