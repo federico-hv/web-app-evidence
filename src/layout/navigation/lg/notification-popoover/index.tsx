@@ -1,6 +1,5 @@
 import {
   Box,
-  Center,
   Heading,
   HStack,
   IconButton,
@@ -9,7 +8,6 @@ import {
   Tabs,
   useKeyBind,
   VStack,
-  Button,
 } from '@holdr-ui/react';
 import {
   dummyFn,
