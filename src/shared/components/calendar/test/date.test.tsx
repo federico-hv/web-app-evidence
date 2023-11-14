@@ -1,5 +1,5 @@
 import { fireEvent, render } from '@testing-library/react';
-import Date from '../ui/calendar-date';
+import { Date } from '../ui';
 import dayjs from 'dayjs';
 
 describe('[Date]', () => {
