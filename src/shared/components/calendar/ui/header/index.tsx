@@ -5,7 +5,7 @@ import {
   useDialogContext,
 } from 'shared';
 
-function CalendarDialog({ date }: { date: Date }) {
+function DateDialog({ date }: { date: Date }) {
   const { isOpen, onOpen, onClose } = useDialogContext();
 
   const today = DateUtility.equal(date, new Date());
@@ -18,5 +18,5 @@ function CalendarDialog({ date }: { date: Date }) {
   );
 }
 
-CalendarDialog.displayName = 'CalendarDialogue';
-export default CalendarDialog;
+DateDialog.displayName = 'DateDialogue';
+export default DateDialog;
