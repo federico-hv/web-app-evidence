@@ -29,7 +29,7 @@ import {
   useAccountInfo,
   useDeletePhoneNumber,
 } from '../../../../features';
-import { HeaderLayout } from '../../../../layout';
+import SettingsHeaderLayout from '../../../../layout/settings-header';
 
 function DeletePhoneNumber() {
   const { onSubmit } = useDeletePhoneNumber();
@@ -70,7 +70,7 @@ function PhoneSettingPage() {
         description='Change your phone number.'
         url={`${Paths.settings}/${Paths.setting.phone}`}
       />
-      <HeaderLayout
+      <SettingsHeaderLayout
         title='Phone'
         backLink={prefix(RootSettingsPath, Paths.setting.account_info)}
       >
@@ -154,7 +154,7 @@ function PhoneSettingPage() {
             </ChangeContactInfoContextProvider>
           </HStack>
         </VStack>
-      </HeaderLayout>
+      </SettingsHeaderLayout>
     </>
   );
 }

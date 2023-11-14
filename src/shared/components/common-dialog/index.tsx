@@ -191,6 +191,7 @@ function CommonDialogContent({ children, ...props }: VStackProps) {
   return (
     <VStack
       w='100%'
+      h='calc(100% - 81px)'
       px={{ '@bp1': 3, '@bp3': 4 }}
       gap={{ '@bp1': 4, '@bp3': 5 }}
       {...props}

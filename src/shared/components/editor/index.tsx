@@ -30,23 +30,26 @@ export default function Editor({
 
     editorState.read(() => {
       if (!onChange) return;
-      editorState._nodeMap.forEach((value) => {
-        const key = value.__type + 's';
-        if (
-          !(key === 'texts' || key === 'roots' || key === 'paragraphs')
-        ) {
-          state[key] =
-            key in state ? [...state[key], value.__text] : [value.__text];
-        }
-      });
+
+      // TODO: add query functionality for nodes
+
+      // editorState._nodeMap.forEach((value) => {
+      //   const key = value.__type + 's';
+      //   if (
+      //     !(key === 'texts' || key === 'roots' || key === 'paragraphs')
+      //   ) {
+      //     state[key] =
+      //       key in state ? [...state[key], value.__text] : [value.__text];
+      //   }
+      // });
 
       state.message = $getRoot().__cachedText || '';
-      state.length = state.message.length;
+      // state.length = state.message.length;
 
-      state.mentions?.forEach((user: string, idx: number) => {
-        state.message = state.message.replace(user, '$' + idx);
-        state.mentions[idx] = user.slice(1);
-      });
+      // state.mentions?.forEach((user: string, idx: number) => {
+      // state.message = state.message.replace(user, '$' + idx);
+      // state.mentions[idx] = user.slice(1);
+      // });
 
       onChange(state);
     });

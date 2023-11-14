@@ -29,7 +29,7 @@ import {
   InputGroup,
   VStack,
 } from '@holdr-ui/react';
-import { HeaderLayout } from '../../../../layout';
+import SettingsHeaderLayout from '../../../../layout/settings-header';
 
 function MutedSettingsPage() {
   const { data, loading, error } = useQuery<{
@@ -45,7 +45,7 @@ function MutedSettingsPage() {
         description='See the accounts that have been muted.'
         url={prefix(RootSettingsPath, Paths.setting.privacy)}
       />
-      <HeaderLayout
+      <SettingsHeaderLayout
         title='Muted accounts'
         backLink={prefix(RootSettingsPath, Paths.setting.manage_users)}
       >
@@ -100,7 +100,7 @@ function MutedSettingsPage() {
             </SwitchConditional>
           )}
         </Loader>
-      </HeaderLayout>
+      </SettingsHeaderLayout>
     </Error>
   );
 }

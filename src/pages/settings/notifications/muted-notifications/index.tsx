@@ -1,6 +1,6 @@
 import { Head, Paths, prefix, RootSettingsPath } from '../../../../shared';
 import { Checkbox, Heading, HStack, Text, VStack } from '@holdr-ui/react';
-import { HeaderLayout } from '../../../../layout';
+import SettingsHeaderLayout from '../../../../layout/settings-header';
 
 function MutedNotificationsSettingsPage() {
   return (
@@ -10,7 +10,7 @@ function MutedNotificationsSettingsPage() {
         description='Filter your notifications based on what you want to receive.'
         url={prefix(RootSettingsPath, Paths.setting.privacy)}
       />
-      <HeaderLayout
+      <SettingsHeaderLayout
         title='Muted notifications'
         backLink={prefix(
           RootSettingsPath,
@@ -42,7 +42,7 @@ function MutedNotificationsSettingsPage() {
             </HStack>
           </VStack>
         </VStack>
-      </HeaderLayout>
+      </SettingsHeaderLayout>
     </>
   );
 }

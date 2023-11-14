@@ -7,7 +7,7 @@ import {
   VStack,
 } from '@holdr-ui/react';
 import { ForgotPasswordLink } from '../../../shared';
-import { HeaderLayout } from '../../../layout';
+import SettingsHeaderLayout from '../../../layout/settings-header';
 
 interface Props {
   backLink: string;
@@ -16,7 +16,7 @@ interface Props {
 
 function PasswordConfirmation({ name, backLink }: Props) {
   return (
-    <HeaderLayout title={name} backLink={backLink}>
+    <SettingsHeaderLayout title={name} backLink={backLink}>
       <VStack
         px={4}
         gap={2}
@@ -46,7 +46,7 @@ function PasswordConfirmation({ name, backLink }: Props) {
           <Button type='submit'>Continue</Button>
         </HStack>
       </VStack>
-    </HeaderLayout>
+    </SettingsHeaderLayout>
   );
 }
 

@@ -59,4 +59,9 @@ export {
 } from './media-view';
 export { default as SearchBox } from './search-box';
 export { default as TabBorderFix } from './tab-border-fix';
+export {
+  default as StepIndicator,
+  StepperIndicatorStep,
+} from './stepper-indicator';
+export { default as InfoItem } from './info-item';
 // export { default as Form, FormInput } from './forms';
