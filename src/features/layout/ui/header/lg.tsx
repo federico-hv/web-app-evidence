@@ -15,7 +15,7 @@ import {
 } from '../../../../shared';
 import { Calendar } from '../../../../shared/components';
 import { useState } from 'react';
-import { DateDialog } from 'shared/components/calendar/ui';
+import { DateDialog } from '../../../../shared/components/calendar/ui';
 
 function LgHeader() {
   const { pathname } = useLocation();
