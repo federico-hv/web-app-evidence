@@ -10,9 +10,6 @@ import logoDark from '../../assets/images/logo-dark.png';
 import spotifyLogo from '../../assets/images/spotify-logo.png';
 import youtubeLogo from '../../assets/images/yt-logo.png';
 
-import saveToLibrary from '../../assets/icons/save-to-library.svg';
-import notification from '../../assets/icons/notification.svg';
-import userAdd from '../../assets/icons/user-add.svg';
 import qrCode from '../../assets/icons/qr-code.svg';
 import keyboard from '../../assets/icons/keyboard.svg';
 import saveToLibrary from '../../assets/icons/save-to-library.svg';
