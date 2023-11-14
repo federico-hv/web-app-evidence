@@ -23,7 +23,7 @@ import {
   GET_2FA_RECOVERY_KEY,
   useRefresh2FARecoveryKey,
 } from '../../../../features';
-import { HeaderLayout } from '../../../../layout';
+import SettingsHeaderLayout from '../../../../layout/settings-header';
 
 function BackupCodeSettingsPage() {
   const navigate = useNavigate();
@@ -49,7 +49,7 @@ function BackupCodeSettingsPage() {
         description=''
         url={prefix(RootSettingsPath, Paths.setting.backup_code)}
       />
-      <HeaderLayout
+      <SettingsHeaderLayout
         title='Recovery keys'
         backLink={prefix(RootSettingsPath, Paths.setting.login_security)}
       >
@@ -97,7 +97,7 @@ function BackupCodeSettingsPage() {
             </Box>
           )}
         </Loader>
-      </HeaderLayout>
+      </SettingsHeaderLayout>
     </Error>
   );
 }

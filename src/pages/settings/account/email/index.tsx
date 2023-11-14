@@ -27,7 +27,7 @@ import {
   useSwitch,
   VStack,
 } from '@holdr-ui/react';
-import { HeaderLayout } from '../../../../layout';
+import SettingsHeaderLayout from '../../../../layout/settings-header';
 
 function EmailSettingPage() {
   const { data } = useAccountInfo();
@@ -46,7 +46,7 @@ function EmailSettingPage() {
         description='Change your email address.'
         url={`${Paths.settings}/${Paths.setting.email}`}
       />
-      <HeaderLayout
+      <SettingsHeaderLayout
         title='Email'
         backLink={prefix(RootSettingsPath, Paths.setting.account_info)}
       >
@@ -129,7 +129,7 @@ function EmailSettingPage() {
             </ChangeContactInfoContextProvider>
           </HStack>
         </VStack>
-      </HeaderLayout>
+      </SettingsHeaderLayout>
     </>
   );
 }

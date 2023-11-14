@@ -7,31 +7,26 @@ import {
   MentionsPlugin,
 } from '../../../../../../../shared/components/editor/ui';
 import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin';
-import { GenericOption } from '../../../../../../../shared/components/editor/types';
-import { css } from 'configs';
 import { useSearch } from '../../../../../../../features/search';
 import { CreatePostInput } from 'features/feeds/shared';
-import { Box, Text } from '@holdr-ui/react';
 import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin';
-
-const nodeStyle = css({
-  fontWeight: '$600',
-  color: '$secondary400',
-})();
+import CreatePostPlaceholder from '../placeholder';
+import CreatePostMentionItem from '../mention-item';
+import { nodeStyle as useNodeStyle } from '../styles';
+import { omit } from 'lodash';
 
 export default function CreatePostEditor({
-  state,
   update,
 }: {
-  state: CreatePostInput;
   update: (
     next: Partial<CreatePostInput>,
     cb?: (current: CreatePostInput) => void,
   ) => void;
 }) {
+  const nodeStyle = useNodeStyle();
   const { option } = useDialogTabContext();
-  // TODO
   const [search, { results }] = useSearch<UserModel>();
+
   return (
     <Editor
       config={{
@@ -44,16 +39,17 @@ export default function CreatePostEditor({
         },
       }}
       plugins={[
-        <MentionsPlugin
-          keyExtractor={(data: GenericOption) => data.name}
-          // TODO: add popover
-          renderItem={(data: GenericOption) => <Text>{data.name}</Text>}
-          // TODO: replace with real api fetch
-          dataFetcher={(state: string | null) => [
-            { name: 'Bob' },
-            { name: 'Joe' },
-            { name: 'John' },
-          ]}
+        <MentionsPlugin<UserModel>
+          keyExtractor={(data) => data.username}
+          renderItem={(data, selected: boolean) => (
+            <CreatePostMentionItem data={data} selected={selected} />
+          )}
+          dataFetcher={async (mentionString) => {
+            !mentionString
+              ? await search('')
+              : await search(mentionString);
+          }}
+          results={results}
           key='MentionsPlugin'
         />,
         <HashtagPlugin key='HashtagPlugin' />,
@@ -62,17 +58,13 @@ export default function CreatePostEditor({
         <HistoryPlugin key='HistoryPlugin' />,
       ]}
       onChange={(state) =>
-        update({ description: state.message, ...state })
+        update({
+          description: state.message,
+          // length will be necessary with tokenized description
+          ...omit(state, ['message', 'length']),
+        })
       }
-      Placeholder={
-        <Box position='absolute' t={0} px='$3'>
-          <Text color='base400'>
-            {option === 'poll'
-              ? 'What do you want to find out from your fans?'
-              : 'What do you want your fans to know?'}
-          </Text>
-        </Box>
-      }
+      Placeholder={<CreatePostPlaceholder option={option} />}
     />
   );
 }

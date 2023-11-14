@@ -15,6 +15,7 @@ export const useMenuNavigate: UseMenuNavigate = () => {
     settings: () => navigate(prefix('/', Paths.settings)),
     support: () => navigate(prefix('/', Paths.support)),
     releases: () => navigate(prefix('/', Paths.releases)),
+    messages: () => navigate(prefix('/', Paths.messages)),
     channels: () => navigate(prefix('/', Paths.channels)),
     bookmarks: () => navigate(prefix('/', Paths.bookmarks)),
     profile: () => navigate(prefix('/', currentUser?.username || '')),

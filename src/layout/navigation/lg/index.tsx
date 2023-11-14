@@ -2,14 +2,14 @@ import {
   Logo,
   Responsive,
   ResponsiveItem,
-} from '../../../../shared/components';
+} from '../../../shared/components';
 import { Box, Container, Flex, HStack } from '@holdr-ui/react';
-import { Search } from '../../../search';
+import { Search } from '../../../features/search';
 import MessagePopover from './message-popver';
-import NotificationPopover from '../../../notifications/ui/notification-popover/notification-popover';
 import ProfileMenu from './profile-menu';
+import { NotificationPopover } from '../../../features';
 
-function Navigation() {
+function LgNavigation() {
   return (
     <Responsive>
       <ResponsiveItem tablet='show' laptop='show' desktop='show'>
@@ -63,6 +63,6 @@ function Navigation() {
     </Responsive>
   );
 }
-Navigation.displayName = 'Navigation';
+LgNavigation.displayName = 'LgNavigation';
 
-export { Navigation };
+export default LgNavigation;

@@ -5,7 +5,7 @@ interface CreatePoll {
   media?: never;
   hashtags?: string[];
   mentions?: string[];
-  length: number;
+  length?: number;
 }
 
 interface CreatePost {
@@ -15,7 +15,7 @@ interface CreatePost {
   responses?: never;
   hashtags?: string[];
   mentions?: string[];
-  length: number;
+  length?: number;
 }
 
 type CreatePostInput = CreatePost | CreatePoll;

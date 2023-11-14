@@ -12,7 +12,7 @@ import {
   RootSettingsPath,
 } from '../../../../shared';
 import { isEqual, pick } from 'lodash';
-import { HeaderLayout } from '../../../../layout';
+import SettingsHeaderLayout from '../../../../layout/settings-header';
 
 function CountrySettingPage() {
   const { data } = useAccountInfo();
@@ -32,7 +32,7 @@ function CountrySettingPage() {
         description='Change your country.'
         url={`${Paths.settings}/${Paths.setting.country}`}
       />
-      <HeaderLayout
+      <SettingsHeaderLayout
         title='Country'
         backLink={prefix(RootSettingsPath, Paths.setting.account_info)}
       >
@@ -52,7 +52,7 @@ function CountrySettingPage() {
             onFinish={onFinish}
           />
         </AccountInfoFormContextProvider>
-      </HeaderLayout>
+      </SettingsHeaderLayout>
     </Error>
   );
 }

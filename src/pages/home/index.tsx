@@ -13,9 +13,8 @@ import {
   ContentLayout,
   ContentLayoutAside,
   ContentLayoutMain,
-  SmNavigation,
+  SmHeader,
 } from '../../layout';
-
 //TODO: Rename move
 
 function HomePage() {
@@ -27,7 +26,7 @@ function HomePage() {
         <Head prefix='Holdr Base' title='' description='Home page' />
         <Responsive>
           <ResponsiveItem mobile='show'>
-            <SmNavigation />
+            <SmHeader />
           </ResponsiveItem>
         </Responsive>
         {currentUser && (
