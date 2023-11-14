@@ -35,7 +35,7 @@ function NotificationPopover() {
           px='$5'
         >
           <NotificationHeader />
-          <NotificationTabs onClose={close} />
+          <NotificationTabs onClose={onClose} />
         </Popover.Content>
       </Popover.Portal>
     </Popover>
