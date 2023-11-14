@@ -7,15 +7,12 @@ import {
   Square,
   Text,
   VStack,
-  useDisclosure,
 } from '@holdr-ui/react';
 import { DateUtility, groupArray } from '../../utilities';
 import { Date } from './ui';
 import { CalendarProps } from './types';
 import { useState } from 'react';
 import dayjs from 'dayjs';
-import { DialogContextProvider } from 'shared';
-import { CalendarDialogue } from './ui';
 
 function Calendar({ onDateClick }: CalendarProps) {
   const today = dayjs().toDate();

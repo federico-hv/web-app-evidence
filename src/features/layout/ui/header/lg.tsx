@@ -14,8 +14,8 @@ import {
   prefix,
 } from '../../../../shared';
 import { Calendar } from '../../../../shared/components';
-import { CalendarDialogue } from '../../../../shared/components/calendar/ui';
 import { useState } from 'react';
+import { DateDialog } from 'shared/components/calendar/ui';
 
 function LgHeader() {
   const { pathname } = useLocation();
@@ -118,7 +118,7 @@ function LgHeader() {
         </Box>
       </VStack>
       <DialogContextProvider value={{ isOpen, onOpen, onClose }}>
-        <CalendarDialogue date={selectedDate} />
+        <DateDialog date={selectedDate} />
       </DialogContextProvider>
     </VStack>
   );
