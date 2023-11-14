@@ -1,13 +1,12 @@
 import { render, screen } from '@testing-library/react';
-import Index, {
+import NotificationItem, {
   NotificationItemActionWrapper,
   NotificationItemAvatar,
   NotificationItemDetails,
-  NotificationMediaItem,
+  NotificationItemMediaItem,
 } from '../ui/notification-item';
 
 import { Button } from '@holdr-ui/react';
-import { voidFn } from 'shared';
 
 describe('NotificationItem', () => {
   it('displays a notification avatar', () => {
@@ -35,7 +34,7 @@ describe('NotificationItem', () => {
 
   it('displays a notification image', () => {
     const { getByAltText } = render(
-      <NotificationMediaItem src='https://picsum.photos/200' />,
+      <NotificationItemMediaItem src='https://picsum.photos/200' />,
     );
     const mediaItem = getByAltText('notification media item');
     expect((mediaItem as HTMLMediaElement).src).to.equal('test-media.jpg');
@@ -56,18 +55,18 @@ describe('NotificationItem', () => {
 
   it('renders a complete notification', () => {
     render(
-      <Index onClose={voidFn}>
-        <Index.Avatar src='test-avatar.jpg' />
-        <Index.Details
+      <NotificationItem>
+        <NotificationItem.Avatar src='test-avatar.jpg' />
+        <NotificationItem.Details
           name='John Doe'
           description='Some notification description'
           date={new Date()}
         />
-        <Index.ActionWrapper>
-          <Button onClick={() => {}}>Action</Button>
-        </Index.ActionWrapper>
-        <Index.MediaItem src='test-media.jpg' />
-      </Index>,
+        <NotificationItem.ActionWrapper>
+          <Button onClick={() => console.log('test')}>Action</Button>
+        </NotificationItem.ActionWrapper>
+        <NotificationItem.MediaItem src='test-media.jpg' />
+      </NotificationItem>,
     );
 
     screen.getByAltText('avatar');
