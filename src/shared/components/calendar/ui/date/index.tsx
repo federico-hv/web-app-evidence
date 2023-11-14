@@ -1,6 +1,6 @@
 import { Text, Square } from '@holdr-ui/react';
-import { DateProps } from '../types';
-import { DateUtility } from '../../../../shared';
+import { DateProps } from '../../types';
+import { DateUtility } from '../../../..';
 
 function Date({ date, active, onClick, disabled }: DateProps) {
   return (

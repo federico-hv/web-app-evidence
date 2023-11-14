@@ -1,23 +1,23 @@
 import { render, screen } from '@testing-library/react';
 import NotificationItem, {
-  NotificationActionWrapper,
-  NotificationAvatar,
-  NotificationDetails,
-  NotificationMediaItem,
-} from '../ui/notification-item/notification-item';
+  NotificationItemActionWrapper,
+  NotificationItemAvatar,
+  NotificationItemDetails,
+  NotificationItemMediaItem,
+} from '../ui/notification-item';
 
 import { Button } from '@holdr-ui/react';
 
 describe('NotificationItem', () => {
   it('displays a notification avatar', () => {
-    render(<NotificationAvatar src='https://picsum.photos/200' />);
+    render(<NotificationItemAvatar src='https://picsum.photos/200' />);
     const avatar = screen.getByAltText('Avatar');
     expect(avatar).to.exist;
   });
 
   it('displays notification details', () => {
     render(
-      <NotificationDetails
+      <NotificationItemDetails
         name='John'
         description='Some description'
         date={new Date()}
@@ -34,7 +34,7 @@ describe('NotificationItem', () => {
 
   it('displays a notification image', () => {
     const { getByAltText } = render(
-      <NotificationMediaItem src='https://picsum.photos/200' />,
+      <NotificationItemMediaItem src='https://picsum.photos/200' />,
     );
     const mediaItem = getByAltText('notification media item');
     expect((mediaItem as HTMLMediaElement).src).to.equal('test-media.jpg');
@@ -45,9 +45,9 @@ describe('NotificationItem', () => {
 
     const onClickMock = () => count++;
     render(
-      <NotificationActionWrapper>
+      <NotificationItemActionWrapper>
         <Button onClick={onClickMock}>Test Action Button</Button>
-      </NotificationActionWrapper>,
+      </NotificationItemActionWrapper>,
     );
     const actionButton = screen.getByText('Test Action Button');
     expect(actionButton).to.exist;
@@ -63,7 +63,7 @@ describe('NotificationItem', () => {
           date={new Date()}
         />
         <NotificationItem.ActionWrapper>
-          <Button onClick={() => {}}>Action</Button>
+          <Button onClick={() => console.log('test')}>Action</Button>
         </NotificationItem.ActionWrapper>
         <NotificationItem.MediaItem src='test-media.jpg' />
       </NotificationItem>,

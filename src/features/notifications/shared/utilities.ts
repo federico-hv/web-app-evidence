@@ -1,4 +1,4 @@
-import { NotificationType } from '../../index';
+import { NotificationType } from './types';
 
 /* TODO: UPDATE THIS WITH CORRECT VALUES*/
 export const NotificationDescription: Record<
@@ -6,6 +6,7 @@ export const NotificationDescription: Record<
   (args: string) => string
 > = {
   relationship: (args: string) => {
+    console.log(args);
     return 'followed you';
   },
   feed: (args: string) => {

@@ -8,7 +8,7 @@ import {
   VStack,
 } from '@holdr-ui/react';
 import { DateUtility, groupArray } from '../../utilities';
-import Date from './ui/calendar-date';
+import { Date } from './ui';
 import { CalendarProps } from './types';
 import { useState } from 'react';
 import dayjs from 'dayjs';
@@ -102,7 +102,9 @@ function Calendar({ onDateClick }: CalendarProps) {
                     DateUtility.lessThan(date, today) ||
                     DateUtility.greaterThan(date, lastDateOfMonth)
                   }
-                  onClick={() => onDateClick(date)}
+                  onClick={() => {
+                    onDateClick(date);
+                  }}
                 />
               ))}
             </HStack>

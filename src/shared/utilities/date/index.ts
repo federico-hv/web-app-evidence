@@ -278,4 +278,13 @@ export class DateUtility {
   static fromNow(date: StringNumeric) {
     return dayjs().from(dayjs(date, 'X'), true);
   }
+
+  /**
+   * Returns a string representation of the date in the format of Thur, 9 Nov 2023
+   *
+   * @param date date to format
+   */
+  static toDateString(date: Date) {
+    return date.toUTCString().split(' ').slice(0, 4)?.join(' ');
+  }
 }
