@@ -11,9 +11,9 @@ import {
 } from '../../../../shared';
 import { RootSettingsPath } from '../root';
 import { GET_CONNECTED_ACCOUNTS } from './queries';
-import { IConnectedAccount } from './shared';
 import { ConnectedAccount } from './ui';
 import SettingsHeaderLayout from '../../../../layout/settings-header';
+import { IConnectedAccount } from '../../../../features';
 
 function ConnectedAccountSettingsPage() {
   const { data, loading, error } = useQuery<

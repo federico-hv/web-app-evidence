@@ -6,7 +6,7 @@ import {
   CommonDialogContent,
   CommonDialogTrigger,
   GeneralContextProvider,
-  StepIndicator,
+  StepperIndicator,
   StepperIndicatorStep,
   useCounter,
   useDialogContext,
@@ -80,11 +80,11 @@ function TwoFAAppSetupDialog() {
                 </Text>
               </HStack>
             )}
-            <StepIndicator current={step}>
+            <StepperIndicator current={step}>
               {arrayFrom(2).map((idx) => (
                 <StepperIndicatorStep key={idx} />
               ))}
-            </StepIndicator>
+            </StepperIndicator>
           </VStack>
         </VStack>
       </CommonDialogContent>

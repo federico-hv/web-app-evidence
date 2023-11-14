@@ -3,7 +3,6 @@ import { CREATE_POST } from '../../mutations';
 import { CreatePostInput, FeedModel } from '../interface';
 import { useToast } from '../../../../shared';
 import { GET_FEEDS } from '../../queries';
-import { omit } from 'lodash';
 
 /**
  *

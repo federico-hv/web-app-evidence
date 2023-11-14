@@ -1,3 +1,3 @@
-import { IConnectedAccount } from '../../shared';
+import { IConnectedAccount } from '../../../../../../features';
 
 export type ConnectedAccountProps = IConnectedAccount;
