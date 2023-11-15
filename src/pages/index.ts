@@ -10,3 +10,4 @@ export { default as MessagesPage } from './messages';
 export { default as MessagePage } from './message';
 export { default as ReleasesPage } from './releases';
 export { default as ChannelsPage } from './channels';
+export { default as SetupReleasesFlow } from './setup-flow/releases';

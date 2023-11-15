@@ -1,11 +1,9 @@
 import { Route, Routes } from 'react-router';
-import { MessagePage, MessagesPage } from '../../pages';
+import { ReleasesPage } from '../../pages';
 
 const MessagesRoutes = () => (
   <Routes>
-    <Route element={<MessagesPage />}>
-      <Route path=':id' element={<MessagePage />} />
-    </Route>
+    <Route path='*' element={<ReleasesPage />} />
   </Routes>
 );
 MessagesRoutes.displayName = 'MessagesRoutes';

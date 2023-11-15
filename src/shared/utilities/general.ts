@@ -1,3 +1,8 @@
+import { prefix } from './string';
+import { join } from 'lodash';
+
+//TODO: Rename this file to common
+
 /**
  * Returns an array containing numbers from 0,...,n
  *
@@ -77,4 +82,14 @@ export function groupArray<T>(arr: T[], groupsOf: number): T[][] {
   }
 
   return newArr;
+}
+
+/**
+ * Returns an url path.
+ *
+ * @param paths string array of paths to be joined
+ * @param prefixStr prefix the path with a '/'
+ */
+export function makePath(paths: string[], prefixStr = '/') {
+  return prefix(prefixStr, join(paths, '/'));
 }

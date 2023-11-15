@@ -37,6 +37,7 @@ export const Paths = {
     notifications_preferences: 'notifications/preferences',
   },
   support: 'support',
+  setupFlow: 'setup/flow',
   messages: 'messages',
   authRedirect: 'auth-guard/auth-redirect',
 };
