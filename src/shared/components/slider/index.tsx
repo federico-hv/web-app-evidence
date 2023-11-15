@@ -1,16 +1,14 @@
 import { Box, ButtonGroup, Center, IconButton } from '@holdr-ui/react';
 import { SliderContentProps, SliderSCNames } from './shared/types';
-import { ReactNode, useEffect, useState } from 'react';
+import { ReactElement, ReactNode, useEffect, useState } from 'react';
 import { MotionBox, getSubComponent } from 'shared';
 import { SliderButtons, SliderIndicator } from './ui';
 import { useSlider, useTimer } from './shared';
 
 function Slider({ children }: { children?: ReactNode }) {
   const { elapsed } = useTimer(10000);
-  const contentList = getSubComponent<SliderSCNames>(
-    children,
-    'SliderContent',
-  );
+  const contentList =
+    getSubComponent<SliderSCNames>(children, 'SliderContent') || [];
 
   const { incrementCurrent, decrementCurrent, setCurrent, current } =
     useSlider(contentList.length);
