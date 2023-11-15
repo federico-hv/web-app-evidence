@@ -29,10 +29,7 @@ import {
   Checkbox,
   Center,
 } from '@holdr-ui/react';
-import {
-  ConnectedAccountUtility,
-  ConnectorProvider,
-} from '../../../features';
+import { ConnectedAccountUtility, ConnectorProvider } from '../shared';
 import { Fragment, useEffect, useState } from 'react';
 import { DialogProps } from '@holdr-ui/react/dist/compositions/dialog/src/dialog.types';
 

@@ -6,21 +6,26 @@ import {
   PageLayoutContent,
   PageLayoutHeader,
 } from '../../layout';
+import { Box, Button, Center, HStack, IconButton } from '@holdr-ui/react';
 import {
-  Box,
-  Button,
-  Center,
-  HStack,
-  IconButton,
-  useDisclosure,
-} from '@holdr-ui/react';
-import { EmptyMessage, Head, makeButtonLarger } from '../../shared';
-import { Fragment, useState } from 'react';
-import { UnconnectedDialog } from './ui';
+  EmptyMessage,
+  Head,
+  makeButtonLarger,
+  makePath,
+  useNavigateWithPreviousLocation,
+  Paths,
+} from '../../shared';
+import { Fragment, useEffect, useState } from 'react';
+import { Outlet } from 'react-router-dom';
 
 function ReleasesPage() {
-  const disclosure = useDisclosure(true);
+  const navigate = useNavigateWithPreviousLocation();
   const [connected] = useState(false);
+
+  useEffect(() => {
+    navigate(makePath([Paths.setupFlow, Paths.releases]), !connected);
+  }, [connected]);
+
   return (
     <Fragment>
       <Head title='Releases' />
@@ -57,8 +62,13 @@ function ReleasesPage() {
           {!connected ? (
             <Center px={4} mt={4} w='100' h='100%'>
               <Button
-                onClick={disclosure.onOpen}
                 fullWidth
+                onClick={() =>
+                  navigate(
+                    makePath([Paths.setupFlow, Paths.releases]),
+                    true,
+                  )
+                }
                 className={makeButtonLarger('2.5rem')}
               >
                 Get Started
@@ -69,7 +79,7 @@ function ReleasesPage() {
           )}
         </ContentLayoutAside>
       </ContentLayout>
-      <UnconnectedDialog {...disclosure} />
+      <Outlet />
     </Fragment>
   );
 }
