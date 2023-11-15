@@ -1,7 +1,7 @@
 import { css, styled } from '../../configs';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Box } from '@holdr-ui/react';
+import { Box, Circle } from '@holdr-ui/react';
 
 export const extraBtnPadding = css({
   py: '10px',
@@ -10,6 +10,7 @@ export const extraBtnPadding = css({
 });
 
 export const MotionBox = motion(Box);
+export const MotionDot = motion(Circle);
 
 export const LinkOverlay = styled(Link, {
   position: 'absolute',

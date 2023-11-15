@@ -64,4 +64,5 @@ export {
 export { default as SearchBox } from './search-box';
 export { default as TabBorderFix } from './tab-border-fix';
 export { default as InfoItem } from './info-item';
+export { default as Slider } from './slider';
 // export { default as Form, FormInput } from './forms';
