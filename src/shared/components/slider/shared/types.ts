@@ -1,19 +1,27 @@
 import { ReactElement } from 'react';
+import { GenericProps } from 'shared';
 
-export interface SliderContentProps {
-  children: ReactElement;
-  onClick?: VoidFunction;
+export interface SliderIndicatorProps extends GenericProps {
+  renderFunction?: (
+    active: boolean,
+    idx: number,
+    setCurrent: (current: number) => void,
+  ) => ReactElement;
 }
 
-export interface SliderIndicatorProps {
+export interface ISliderContext {
+  incrementCurrent: VoidFunction;
+  decrementCurrent: VoidFunction;
   length: number;
   current: number;
   setCurrent: (current: number) => void;
 }
 
-export interface SliderButtonsProps {
-  incrementCurrent: VoidFunction;
-  decrementCurrent: VoidFunction;
-}
+export type SliderSCNames =
+  | 'SliderContent'
+  | 'SliderControls'
+  | 'SliderIndicator';
 
-export type SliderSCNames = 'SliderContent';
+export type SliderControlsSCNames =
+  | 'SliderNextButton'
+  | 'SliderPreviousButton';

@@ -1,2 +1,1 @@
-export * from './use-slider';
-export * from './use-timer';
+export * from './use-slider-context';
