@@ -1,9 +1,10 @@
-import { Box, ButtonGroup, Center, IconButton } from '@holdr-ui/react';
+import { Box, Center } from '@holdr-ui/react';
 import { SliderContentProps, SliderSCNames } from './shared/types';
-import { ReactElement, ReactNode, useEffect, useState } from 'react';
+import { ReactNode, useEffect } from 'react';
 import { MotionBox, getSubComponent } from 'shared';
 import { SliderButtons, SliderIndicator } from './ui';
 import { useSlider, useTimer } from './shared';
+import { AnimatePresence } from 'framer-motion';
 
 function Slider({ children }: { children?: ReactNode }) {
   const { elapsed } = useTimer(10000);
@@ -18,8 +19,8 @@ function Slider({ children }: { children?: ReactNode }) {
   }, [elapsed]);
 
   return (
-    <Box position='relative' w='full'>
-      <Center>{contentList[current]}</Center>
+    <Box position='relative' w='full' h='200px'>
+      <AnimatePresence>{contentList[current]}</AnimatePresence>
       <SliderButtons
         incrementCurrent={incrementCurrent}
         decrementCurrent={decrementCurrent}
@@ -37,17 +38,19 @@ function Slider({ children }: { children?: ReactNode }) {
 
 function SliderContent({ children, onClick }: SliderContentProps) {
   return (
-    <MotionBox
-      radius={3}
-      overflow='hidden'
-      w='calc(100% - 40px)'
-      h='full'
-      onClick={onClick}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1, transition: { duration: 0.5 } }}
-    >
-      {children}
-    </MotionBox>
+    <Center>
+      <MotionBox
+        radius={3}
+        overflow='hidden'
+        w='calc(100% - 24px)'
+        h='full'
+        onClick={onClick}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1, transition: { duration: 0.25 } }}
+      >
+        {children}
+      </MotionBox>
+    </Center>
   );
 }
 

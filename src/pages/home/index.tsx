@@ -6,7 +6,7 @@ import {
   Responsive,
   ResponsiveItem,
 } from '../../shared';
-import { Image, VStack } from '@holdr-ui/react';
+import { VStack } from '@holdr-ui/react';
 import { SuggestionsCard, useCurrentUser } from '../../features';
 import { FeedTabs } from './ui';
 import {
@@ -15,7 +15,6 @@ import {
   ContentLayoutMain,
   SmHeader,
 } from '../../layout';
-import { Slider } from 'shared';
 //TODO: Rename move
 
 function HomePage() {
@@ -33,44 +32,6 @@ function HomePage() {
         {currentUser && (
           <ContentLayout>
             <ContentLayoutMain>
-              <Slider>
-                <Slider.Content>
-                  <Image
-                    fit='cover'
-                    src={
-                      'https://picsum.photos/1000?random=' + Math.random()
-                    }
-                    h='200px'
-                  />
-                </Slider.Content>
-                <Slider.Content>
-                  <Image
-                    fit='cover'
-                    src={
-                      'https://picsum.photos/1000?random=' + Math.random()
-                    }
-                    h='200px'
-                  />
-                </Slider.Content>
-                <Slider.Content>
-                  <Image
-                    fit='cover'
-                    src={
-                      'https://picsum.photos/1000?random=' + Math.random()
-                    }
-                    h='200px'
-                  />
-                </Slider.Content>
-                <Slider.Content>
-                  <Image
-                    fit='cover'
-                    src={
-                      'https://picsum.photos/1000?random=' + Math.random()
-                    }
-                    h='200px'
-                  />
-                </Slider.Content>
-              </Slider>
               <VStack gap={4} mt={{ '@bp1': 56, '@bp3': 0 }} w='100%'>
                 <FeedTabs />
               </VStack>

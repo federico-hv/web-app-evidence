@@ -16,7 +16,7 @@ function SliderIndicator({
       exit={{ opacity: 0 }}
       onClick={() => setCurrent(idx)}
       bgColor={current === idx ? 'base100' : 'base200'}
-      size={1}
+      size='0.65rem'
     />
   ));
   return <HStack gap={3}>{steps}</HStack>;

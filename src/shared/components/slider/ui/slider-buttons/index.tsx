@@ -9,7 +9,7 @@ function SliderButtons({
     <Center position='absolute' t='50%' b='50%' w='full'>
       <ButtonGroup
         style={{ opacity: 0.75, visibility: 'hidden' }}
-        size='lg'
+        size='sm'
         justify='space-between'
         w='full'
         colorTheme='base100'
