@@ -3,14 +3,17 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Box, Circle } from '@holdr-ui/react';
 
-export const extraBtnPadding = css({
-  py: '10px',
-  height: '3rem !important',
-  minWidth: '3rem !important',
-});
-
 export const MotionBox = motion(Box);
 export const MotionDot = motion(Circle);
+
+export const makeButtonLarger = (size: string, py = '10px') =>
+  css({
+    py: py,
+    height: `${size} !important`,
+    minWidth: `${size} !important`,
+  })();
+
+export const extraBtnPadding = () => makeButtonLarger('3rem');
 
 export const LinkOverlay = styled(Link, {
   position: 'absolute',

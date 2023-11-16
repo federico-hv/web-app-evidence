@@ -71,6 +71,7 @@ function CommonDialog({
           radius={{ '@bp1': 0, '@bp3': 4 }}
           css={{
             backgroundColor: '#FFF',
+            transition: 'all 0.25s ease-in-out',
           }}
         >
           <Dialog.Header

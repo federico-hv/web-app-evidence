@@ -53,15 +53,19 @@ const ContentLayoutAside = ({ children }: BaseContentLayoutProps) => {
   return (
     <Box
       as='aside'
+      h='100%'
       w={{ '@bp1': 0, '@bp4': 160, '@bp5': 375 }}
       css={{ '@bp1': { display: 'none' }, '@bp4': { display: 'block' } }}
     >
       <Box
         position='fixed'
         t={65}
+        h='calc(100% - 65px)'
         css={{ '@bp1': { display: 'none' }, '@bp5': { display: 'block' } }}
       >
-        <Box w={{ '@bp1': 0, '@bp4': 160, '@bp5': 375 }}>{children}</Box>
+        <Box h='100%' w={{ '@bp1': 0, '@bp4': 160, '@bp5': 375 }}>
+          {children}
+        </Box>
       </Box>
     </Box>
   );

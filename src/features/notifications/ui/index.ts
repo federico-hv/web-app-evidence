@@ -1,4 +1,8 @@
-export * from './tabs';
-export * from './headers';
-export * from './notification-item';
-export * from './notification-popover';
+export { default as Notification } from './notification';
+export {
+  default as NotificationItem,
+  NotificationItemAvatar,
+  NotificationItemDetails,
+  NotificationItemMediaItem,
+  NotificationItemActionWrapper,
+} from './notification-item';

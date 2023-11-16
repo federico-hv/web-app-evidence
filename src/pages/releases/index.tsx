@@ -7,13 +7,25 @@ import {
   PageLayoutHeader,
 } from '../../layout';
 import { Box, Button, Center, HStack, IconButton } from '@holdr-ui/react';
-import { EmptyMessage, Head } from '../../shared';
-import { Fragment, useState } from 'react';
-import { UnconnectedDialog } from './ui';
+import {
+  EmptyMessage,
+  Head,
+  makeButtonLarger,
+  makePath,
+  useNavigateWithPreviousLocation,
+  Paths,
+} from '../../shared';
+import { Fragment, useEffect, useState } from 'react';
+import { Outlet } from 'react-router-dom';
 
 function ReleasesPage() {
-  const [firstTimeLogin] = useState(true);
+  const navigate = useNavigateWithPreviousLocation();
   const [connected] = useState(false);
+
+  useEffect(() => {
+    navigate(makePath([Paths.setupFlow, Paths.releases]), !connected);
+  }, [connected]);
+
   return (
     <Fragment>
       <Head title='Releases' />
@@ -35,11 +47,7 @@ function ReleasesPage() {
               </HStack>
             </PageLayoutHeader>
             <PageLayoutContent>
-              {!connected ? (
-                <Center mt={6} h='100%'>
-                  <Button>Connect to DSP</Button>
-                </Center>
-              ) : (
+              {connected && (
                 <Box pt={4}>
                   <EmptyMessage
                     title='No releases'
@@ -50,9 +58,28 @@ function ReleasesPage() {
             </PageLayoutContent>
           </PageLayout>
         </ContentLayoutMain>
-        <ContentLayoutAside></ContentLayoutAside>
+        <ContentLayoutAside>
+          {!connected ? (
+            <Center px={4} mt={4} w='100' h='100%'>
+              <Button
+                fullWidth
+                onClick={() =>
+                  navigate(
+                    makePath([Paths.setupFlow, Paths.releases]),
+                    true,
+                  )
+                }
+                className={makeButtonLarger('2.5rem')}
+              >
+                Get Started
+              </Button>
+            </Center>
+          ) : (
+            <Fragment />
+          )}
+        </ContentLayoutAside>
       </ContentLayout>
-      <UnconnectedDialog isOpen={firstTimeLogin} />
+      <Outlet />
     </Fragment>
   );
 }

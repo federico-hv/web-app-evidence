@@ -21,3 +21,4 @@ export * from './use-is-bottom';
 export * from './use-act-on-scroll';
 export * from './use-interval';
 export * from './use-circular-count';
+export * from './use-navigate-with-previous-location';

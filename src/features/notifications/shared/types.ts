@@ -15,7 +15,7 @@ export interface FeedEntity extends GenericItem {
   action: 'created' | 'liked' | 'shared';
 }
 
-export interface Notification {
+export interface INotification {
   createdAt: Date;
   actor: UserModel;
   type: NotificationType;
@@ -34,8 +34,8 @@ export type NotificationActionWrapperProps = {
   children: ReactNode;
 };
 
-export type NotificationSCName =
-  | 'NotificationAvatar'
-  | 'NotificationDetails'
-  | 'NotificationMediaItem'
-  | 'NotificationActionWrapper';
+export type NotificationItemSCName =
+  | 'NotificationItemAvatar'
+  | 'NotificationItemDetails'
+  | 'NotificationItemMediaItem'
+  | 'NotificationItemActionWrapper';

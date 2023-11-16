@@ -7,7 +7,7 @@ import { Box, Container, Flex, HStack } from '@holdr-ui/react';
 import { Search } from '../../../features/search';
 import MessagePopover from './message-popver';
 import ProfileMenu from './profile-menu';
-import { NotificationPopover } from '../../../features';
+import NotificationPopover from './notification-popoover';
 
 function LgNavigation() {
   return (
