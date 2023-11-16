@@ -30,8 +30,8 @@ function Slider({
   autoplay = true,
   children,
 }: SliderProps) {
-  const contentList =
-    getSubComponent<SliderSCNames>(children, 'SliderContent') || [];
+  const SlideList =
+    getSubComponent<SliderSCNames>(children, 'SliderSlide') || [];
 
   const controls = getSubComponent<SliderSCNames>(
     children,
@@ -48,7 +48,7 @@ function Slider({
     decrementCount: decrementCurrent,
     setCount: setCurrent,
     count: current,
-  } = useCircularCount(contentList.length);
+  } = useCircularCount(SlideList.length);
 
   const elapsed = useInterval(delay);
 
@@ -64,11 +64,11 @@ function Slider({
         setCurrent,
         current,
         loop: loop,
-        length: contentList.length,
+        length: SlideList.length,
       }}
     >
       <Box position='relative' w='full' h='200px'>
-        <AnimatePresence>{contentList[current]}</AnimatePresence>
+        <AnimatePresence>{SlideList[current]}</AnimatePresence>
         {controls}
         <Center position='absolute' b='0' l='0' r='0' pb={3}>
           {indicator}
@@ -162,7 +162,7 @@ function SliderIndicator({
   );
 }
 
-function SliderContent({ children }: GenericProps) {
+function SliderSlide({ children }: GenericProps) {
   return (
     <Center>
       <MotionBox
@@ -180,13 +180,13 @@ function SliderContent({ children }: GenericProps) {
 }
 
 Slider.displayName = 'Slider';
-SliderContent.displayName = 'SliderContent';
+SliderSlide.displayName = 'SliderSlide';
 SliderIndicator.displayName = 'SliderIndicator';
 SliderControls.displayName = 'SliderControls';
 SliderNextButton.displayName = 'SliderNextButton';
 SliderPreviousButton.displayName = 'SliderPreviousButton';
 
-Slider.Content = SliderContent;
+Slider.Slide = SliderSlide;
 Slider.Controls = SliderControls;
 Slider.Indicator = SliderIndicator;
 SliderControls.NextButton = SliderNextButton;
@@ -194,7 +194,7 @@ SliderControls.PreviousButton = SliderPreviousButton;
 
 export default Slider;
 export {
-  SliderContent,
+  SliderSlide,
   SliderIndicator,
   SliderControls,
   SliderNextButton,

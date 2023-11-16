@@ -21,7 +21,7 @@ export interface ISliderContext {
 }
 
 export type SliderSCNames =
-  | 'SliderContent'
+  | 'SliderSlide'
   | 'SliderControls'
   | 'SliderIndicator';
 
