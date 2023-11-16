@@ -1,7 +1,10 @@
-import { ConnectorProvider, IProviderItem } from './types';
-import { Asset } from '../../../shared';
+import {
+  ConnectorProvider,
+  IProviderItem,
+} from '../../../connected-accounts';
+import { Asset } from '../../../../shared';
 
-export class ConnectedAccountUtility {
+export class ReleasesUtility {
   static providers = ['spotify', 'apple music'];
 
   static providerItem: Record<ConnectorProvider, IProviderItem> = {

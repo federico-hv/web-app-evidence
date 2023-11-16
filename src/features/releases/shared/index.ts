@@ -1,2 +1,1 @@
-export * from './types';
-export * from './utility';
+export * from './utility/common.utility';

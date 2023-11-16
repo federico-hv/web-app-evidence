@@ -93,3 +93,55 @@ export function groupArray<T>(arr: T[], groupsOf: number): T[][] {
 export function makePath(paths: string[], prefixStr = '/') {
   return prefix(prefixStr, join(paths, '/'));
 }
+
+/**
+ * Generate a random alphabetic string of some size.
+ *
+ * @param length The length of the string to be generated
+ */
+export function generateRandomString(length: number): string {
+  let text = '';
+  const possible =
+    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+  for (let i = 0; i < length; i++) {
+    text += possible.charAt(Math.floor(Math.random() * possible.length));
+  }
+  return text;
+}
+
+/**
+ * Encrypt data using SHA-256 encryption algorithm.
+ *
+ * @param data
+ */
+export async function encrypt(data: BufferSource): Promise<ArrayBuffer> {
+  return await window.crypto.subtle.digest('SHA-256', data);
+}
+
+/**
+ * Encode a string to base64 representation.
+ *
+ * @param data
+ */
+function base64encode(data: any) {
+  return btoa(String.fromCharCode(...new Uint8Array(data)))
+    .replace(/\+/g, '-')
+    .replace(/\//g, '_')
+    .replace(/=+$/, '');
+}
+
+/**
+ * Generates a base64 representation of the codeVerifier text
+ *
+ * @param codeVerifier text
+ */
+export async function generateCodeChallenge(
+  codeVerifier: string,
+): Promise<string> {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(codeVerifier);
+  const digest = await encrypt(data);
+
+  return base64encode(digest);
+}

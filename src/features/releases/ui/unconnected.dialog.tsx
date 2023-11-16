@@ -18,8 +18,6 @@ import {
   useRecordState,
 } from '../../../shared';
 import {
-  Circle,
-  Image,
   HStack,
   Text,
   VStack,
@@ -29,39 +27,37 @@ import {
   Checkbox,
   Center,
 } from '@holdr-ui/react';
-import { ConnectedAccountUtility, ConnectorProvider } from '../shared';
-import { Fragment, useEffect, useState } from 'react';
 import { DialogProps } from '@holdr-ui/react/dist/compositions/dialog/src/dialog.types';
+import { useEffect, useState } from 'react';
+import ConnectButton from './connect.button';
+import { SpotifyUtility } from '../shared/utility/spotify.utility';
 
-function ConnectButton({ provider }: { provider: ConnectorProvider }) {
-  const providerItem = ConnectedAccountUtility.getProviderItem(provider);
-
-  if (!providerItem) {
-    return <Fragment />;
-  }
-
+function SpotifyButton() {
   return (
-    <HStack
-      cursor='pointer'
-      px={6}
-      h={48}
-      items='center'
-      justify='space-between'
-      border={2}
-      borderColor='base100'
-      radius='full'
-      _hover={{ backgroundColor: '$base100' }}
-    >
-      <Circle size={20}>
-        <Image src={providerItem.image} alt='spotify logo' />
-      </Circle>
-      <Text weight={500}>Connect {providerItem.name}</Text>
-      <Box />
-    </HStack>
+    <ConnectButton
+      provider='spotify'
+      onClick={SpotifyUtility.requestCode}
+    />
+  );
+}
+
+function AppleMusicButton() {
+  return (
+    <ConnectButton
+      provider='apple music'
+      onClick={() => console.log('apple music')}
+    />
   );
 }
 
 function ConnectionStep() {
+  const connected = [''];
+
+  const isConnected = (name: string) =>
+    connected.findIndex(
+      (_name) => _name.toLowerCase() === name.toLowerCase(),
+    ) > -1;
+
   return (
     <VStack gap={7} justify='space-between' h='100%'>
       <TextGroup mt={3}>
@@ -76,8 +72,8 @@ function ConnectionStep() {
       </TextGroup>
 
       <VStack gap={4} px={5}>
-        <ConnectButton provider='spotify' />
-        <ConnectButton provider='apple music' />
+        {!isConnected('spotify') && <SpotifyButton />}
+        {!isConnected('apple music') && <AppleMusicButton />}
       </VStack>
 
       <Box />
@@ -132,7 +128,7 @@ function ArtistOption({
 
   name: string;
 }) {
-  const { update, state } = useGeneralContext<{ ids: string[] }>();
+  const { update, state } = useGeneralContext<IUnconnectedDialogContext>();
 
   const [visible, setVisible] = useState(
     state.ids.findIndex((_id) => _id === id) >= 0,
@@ -190,7 +186,7 @@ function ArtistOption({
 }
 
 function ArtistSelectionStep() {
-  const { state, update } = useGeneralContext<{ ids: string[] }>();
+  const { state, update } = useGeneralContext<IUnconnectedDialogContext>();
 
   const artists = arrayFrom(31);
 
@@ -262,13 +258,25 @@ function ArtistSelectionStep() {
   );
 }
 
-function UnconnectedDialog(props: DialogProps) {
+interface IUnconnectedDialogContext {
+  ids: string[];
+}
+
+function UnconnectedDialog({
+  currentStep,
+  ...props
+}: DialogProps & { currentStep: number }) {
   const [width, setWidth] = useState('550px');
 
-  const [state, update] = useRecordState<{ ids: string[] }>({
+  const [state, update] = useRecordState<IUnconnectedDialogContext>({
     ids: [],
   });
-  const { count: step, increment: nextStep, reset } = useCounter(0);
+
+  const {
+    count: step,
+    increment: nextStep,
+    reset,
+  } = useCounter(currentStep);
 
   const resetDialog = () => {
     props.onClose();
@@ -276,6 +284,7 @@ function UnconnectedDialog(props: DialogProps) {
     setWidth('550px');
     reset();
   };
+
   return (
     <GeneralContextProvider value={{ state, update }}>
       <CommonDialog minHeight={width} {...props} onClose={resetDialog}>

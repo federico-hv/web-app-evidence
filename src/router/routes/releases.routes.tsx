@@ -1,11 +1,21 @@
 import { Route, Routes } from 'react-router';
 import { ReleasesPage } from '../../pages';
+import { useSearchParams } from 'react-router-dom';
 
-const MessagesRoutes = () => (
+function SpotifyConnectRedirect() {
+  const [params] = useSearchParams();
+
+  console.log(params);
+
+  return <div>HAHAHA</div>;
+}
+
+const ReleasesRoutes = () => (
   <Routes>
-    <Route path='*' element={<ReleasesPage />} />
+    <Route path='' element={<ReleasesPage />} />
+    <Route path='spotify/connect' element={<SpotifyConnectRedirect />} />
   </Routes>
 );
-MessagesRoutes.displayName = 'MessagesRoutes';
+ReleasesRoutes.displayName = 'ReleasesRoutes';
 
-export default MessagesRoutes;
+export default ReleasesRoutes;

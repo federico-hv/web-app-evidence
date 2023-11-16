@@ -73,14 +73,12 @@ function Router() {
           <Route path='*' element={<NotFoundError />} />
         </Route>
       </Routes>
-      {previousLocation && (
-        <Routes>
-          <Route
-            path={prefix(Paths.setupFlow, '/*')}
-            element={<SetupFlowRoutes />}
-          />
-        </Routes>
-      )}
+      <Routes>
+        <Route
+          path={prefix(Paths.setupFlow, '/*')}
+          element={<SetupFlowRoutes />}
+        />
+      </Routes>
     </Fragment>
   );
 }

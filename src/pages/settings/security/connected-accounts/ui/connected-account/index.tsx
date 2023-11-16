@@ -2,13 +2,13 @@ import { Box, Button, HStack, Image } from '@holdr-ui/react';
 import { TextGroup, TextGroupSubheading } from '../../../../../../shared';
 import { ConnectedAccountProps } from './types';
 import { Fragment } from 'react';
-import { ConnectedAccountUtility } from '../../../../../../features';
+import { ReleasesUtility } from '../../../../../../features';
 
 function ConnectedAccount({
   provider: name,
   connectedOn,
 }: ConnectedAccountProps) {
-  const providerItem = ConnectedAccountUtility.getProviderItem(name);
+  const providerItem = ReleasesUtility.getProviderItem(name);
 
   if (!providerItem) {
     return <Fragment />;

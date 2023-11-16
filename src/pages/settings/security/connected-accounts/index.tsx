@@ -10,7 +10,7 @@ import {
   prefix,
 } from '../../../../shared';
 import { RootSettingsPath } from '../root';
-import { GET_CONNECTED_ACCOUNTS } from './queries';
+import { GET_CONNECTED_ACCOUNTS } from '../../../../features';
 import { ConnectedAccount } from './ui';
 import SettingsHeaderLayout from '../../../../layout/settings-header';
 import { IConnectedAccount } from '../../../../features';

@@ -6,6 +6,8 @@ interface ImportMetaEnv {
   readonly VITE_AUTH_APP_URL: string;
   readonly VITE_GQL_API_URL: string;
   readonly VITE_DOMAIN_URL: string;
+  readonly VITE_SPOTIFY_CLIENT_ID: string;
+  readonly VITE_SPOTIFY_REDIRECT_URI: string;
 }
 
 interface ImportMeta {
