@@ -1,11 +1,11 @@
 import { Route, Routes } from 'react-router';
 import { ReleasesPage } from '../../pages';
 
-const MessagesRoutes = () => (
+const ReleasesRoutes = () => (
   <Routes>
-    <Route path='*' element={<ReleasesPage />} />
+    <Route path='' element={<ReleasesPage />} />
   </Routes>
 );
-MessagesRoutes.displayName = 'MessagesRoutes';
+ReleasesRoutes.displayName = 'ReleasesRoutes';
 
-export default MessagesRoutes;
+export default ReleasesRoutes;

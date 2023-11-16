@@ -2,13 +2,14 @@ import { Box, Button, HStack, Image } from '@holdr-ui/react';
 import { TextGroup, TextGroupSubheading } from '../../../../../../shared';
 import { ConnectedAccountProps } from './types';
 import { Fragment } from 'react';
-import { ConnectedAccountUtility } from '../../../../../../features';
+import { ReleasesUtility } from '../../../../../../features';
+import dayjs from 'dayjs';
 
 function ConnectedAccount({
   provider: name,
   connectedOn,
 }: ConnectedAccountProps) {
-  const providerItem = ConnectedAccountUtility.getProviderItem(name);
+  const providerItem = ReleasesUtility.getProviderItem(name);
 
   if (!providerItem) {
     return <Fragment />;
@@ -36,7 +37,7 @@ function ConnectedAccount({
             {providerItem.name}
           </TextGroupSubheading>
           <TextGroupSubheading size={2} color='base400'>
-            {connectedOn}
+            Connected on {dayjs(connectedOn, 'X').format('MMMM YYYY')}
           </TextGroupSubheading>
         </TextGroup>
       </HStack>
