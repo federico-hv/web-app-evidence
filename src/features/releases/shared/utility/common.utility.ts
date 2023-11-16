@@ -11,10 +11,12 @@ export class ReleasesUtility {
     spotify: {
       image: Asset.Image.SpotifyLogo,
       name: 'Spotify',
+      ref: 'spotify',
     },
     'apple music': {
       image: Asset.Image.AppleMusicLogo,
       name: 'Apple Music',
+      ref: 'apple music',
     },
   };
   static getProviderItem(name: string): IProviderItem | null {

@@ -2,6 +2,7 @@ export const Paths = {
   root: '',
   discover: 'discover',
   channels: 'channels',
+  connect: 'connect',
   bookmarks: 'bookmarks',
   allBookmarks: 'bookmarks/all',
   releases: 'releases',

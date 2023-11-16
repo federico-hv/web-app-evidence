@@ -20,10 +20,16 @@ import { Fragment, useEffect, useState } from 'react';
 function ReleasesPage() {
   const navigate = useNavigateWithPreviousLocation();
 
+  const setupPath = makePath([
+    Paths.setupFlow,
+    Paths.releases,
+    'get-started',
+  ]);
+
   const [connected] = useState(false);
 
   useEffect(() => {
-    navigate(makePath([Paths.setupFlow, Paths.releases]), !connected);
+    navigate(setupPath, !connected);
   }, []);
 
   return (
@@ -63,12 +69,7 @@ function ReleasesPage() {
             <Center px={4} mt={4} w='100' h='100%'>
               <Button
                 fullWidth
-                onClick={() =>
-                  navigate(
-                    makePath([Paths.setupFlow, Paths.releases]),
-                    true,
-                  )
-                }
+                onClick={() => navigate(setupPath, true)}
                 className={makeButtonLarger('2.5rem')}
               >
                 Get Started

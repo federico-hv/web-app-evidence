@@ -2,6 +2,10 @@ import {
   generateCodeChallenge,
   generateRandomString,
 } from '../../../../shared';
+import {
+  SpotifyRequestMeResponse,
+  SpotifyRequestTokenResponse,
+} from '../types';
 
 export class SpotifyUtility {
   /**
@@ -17,51 +21,50 @@ export class SpotifyUtility {
     ].join(' ');
 
     generateCodeChallenge(codeVerifier).then((codeChallenge) => {
-      const state = generateRandomString(16);
+      // const state = generateRandomString(16);
+
+      const authUrl = new URL('https://accounts.spotify.com/authorize');
 
       sessionStorage.setItem('code_verifier', codeVerifier);
 
       const args = new URLSearchParams({
         response_type: 'code',
         client_id: import.meta.env.VITE_SPOTIFY_CLIENT_ID,
-        scope: scope,
         redirect_uri: import.meta.env.VITE_SPOTIFY_REDIRECT_URI,
-        state: state,
+        scope: scope,
         code_challenge_method: 'S256',
         code_challenge: codeChallenge,
       });
 
-      window.open(
-        'https://accounts.spotify.com/authorize?' + args,
-        '_self',
-      );
-      //
-      // window.location.href =
-      //   'https://accounts.spotify.com/authorize?' + args;
+      authUrl.search = args.toString();
+
+      window.location.href = authUrl.toString();
     });
   }
 
   /**
-   * Use the provided code challenge to request an access token.
+   * Use the provided code to request an access token.
    * @param code the code challenge
    */
   static async requestTokens(code: string) {
     const codeVerifier = sessionStorage.getItem('code_verifier');
 
-    const body = new URLSearchParams({
-      grant_type: 'authorization_code',
-      code: code,
-      client_id: import.meta.env.VITE_SPOTIFY_CLIENT_ID,
-      redirect_uri: import.meta.env.VITE_SPOTIFY_REDIRECT_URI,
-      code_verifier: codeVerifier || '',
-    });
+    if (!codeVerifier) {
+      throw new Error('Failed to find code verifier.');
+    }
 
     return fetch('https://accounts.spotify.com/api/token', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
-      body: body,
+      body: new URLSearchParams({
+        grant_type: 'authorization_code',
+        code: code,
+        client_id: import.meta.env.VITE_SPOTIFY_CLIENT_ID,
+        redirect_uri: import.meta.env.VITE_SPOTIFY_REDIRECT_URI,
+        code_verifier: codeVerifier,
+      }),
     })
       .then((response) => {
         if (!response.ok) {
@@ -74,13 +77,11 @@ export class SpotifyUtility {
       });
   }
 
-  static async requestMe() {
-    const access_token = localStorage.getItem('spotify_access_token');
-
+  static async requestMe(accessToken: string) {
     return fetch('https://api.spotify.com/v1/me', {
       method: 'GET',
       headers: {
-        Authorization: `Bearer ${access_token}`,
+        Authorization: `Bearer ${accessToken}`,
       },
     })
       .then((response) => {
@@ -94,3 +95,24 @@ export class SpotifyUtility {
       });
   }
 }
+
+/**
+ * This function fetches a spotify user and the tokens associated with it.
+ *
+ * @param code the code from Spotify in the redirect url.
+ */
+export const fetchSpotifyUser = async (code: string) => {
+  return SpotifyUtility.requestTokens(code)
+    .then((data: SpotifyRequestTokenResponse) => {
+      return {
+        accessToken: data.access_token,
+        refreshToken: data.refresh_token,
+      };
+    })
+    .then((tokens) =>
+      SpotifyUtility.requestMe(tokens.accessToken).then(
+        (me: SpotifyRequestMeResponse) => ({ me, tokens }),
+      ),
+    )
+    .then((data) => data);
+};

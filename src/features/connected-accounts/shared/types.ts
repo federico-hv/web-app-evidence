@@ -8,4 +8,5 @@ export interface IConnectedAccount {
 export interface IProviderItem {
   name: string;
   image: string;
+  ref: ConnectorProvider;
 }

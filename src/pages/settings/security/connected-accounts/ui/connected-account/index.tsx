@@ -3,6 +3,7 @@ import { TextGroup, TextGroupSubheading } from '../../../../../../shared';
 import { ConnectedAccountProps } from './types';
 import { Fragment } from 'react';
 import { ReleasesUtility } from '../../../../../../features';
+import dayjs from 'dayjs';
 
 function ConnectedAccount({
   provider: name,
@@ -36,7 +37,7 @@ function ConnectedAccount({
             {providerItem.name}
           </TextGroupSubheading>
           <TextGroupSubheading size={2} color='base400'>
-            {connectedOn}
+            Connected on {dayjs(connectedOn, 'X').format('MMMM YYYY')}
           </TextGroupSubheading>
         </TextGroup>
       </HStack>
