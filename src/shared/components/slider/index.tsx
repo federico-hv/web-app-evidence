@@ -2,6 +2,7 @@ import { Box, Center, HStack } from '@holdr-ui/react';
 import {
   SliderControlsSCNames,
   SliderIndicatorProps,
+  SliderProps,
   SliderSCNames,
 } from './shared/types';
 import { useEffect } from 'react';
@@ -23,7 +24,12 @@ import { AnimatePresence, color } from 'framer-motion';
 import { HStackProps } from '@holdr-ui/react/dist/components/stack/src/stack.types';
 import { IconButtonProps } from '@holdr-ui/react/dist/components/icon-button/src/icon-button.styles';
 
-function Slider({ children }: GenericProps) {
+function Slider({
+  loop = true,
+  delay = 10,
+  autoplay = true,
+  children,
+}: SliderProps) {
   const contentList =
     getSubComponent<SliderSCNames>(children, 'SliderContent') || [];
 
@@ -44,10 +50,10 @@ function Slider({ children }: GenericProps) {
     count: current,
   } = useCircularCount(contentList.length);
 
-  const elapsed = useInterval(10);
+  const elapsed = useInterval(delay);
 
   useEffect(() => {
-    if (elapsed != 0) incrementCurrent();
+    if (autoplay && elapsed != 0) incrementCurrent();
   }, [elapsed]);
 
   return (
@@ -57,6 +63,7 @@ function Slider({ children }: GenericProps) {
         decrementCurrent,
         setCurrent,
         current,
+        loop: loop,
         length: contentList.length,
       }}
     >
@@ -108,15 +115,16 @@ function SliderControls({
 
 function SliderPreviousButton({
   icon = 'caret-left-outline',
-  ariaLabel = 'decrement slider',
+  ariaLabel = 'go to previous slide',
   ...props
 }: Partial<IconButtonProps>) {
-  const { decrementCurrent } = useSliderContext();
+  const { decrementCurrent, loop, current } = useSliderContext();
   return (
     <SliderButton
       ariaLabel={ariaLabel}
       onClick={decrementCurrent}
       icon={icon}
+      disabled={!loop && current === 0}
       {...props}
     />
   );
@@ -124,30 +132,34 @@ function SliderPreviousButton({
 
 function SliderNextButton({
   icon = 'caret-right-outline',
-  ariaLabel = 'increment slider',
+  ariaLabel = 'go to next slide',
   ...props
 }: Partial<IconButtonProps>) {
-  const { incrementCurrent } = useSliderContext();
+  const { incrementCurrent, loop, length, current } = useSliderContext();
   return (
     <SliderButton
       ariaLabel={ariaLabel}
       onClick={incrementCurrent}
       icon={icon}
+      disabled={!loop && length - 1 === current}
       {...props}
     />
   );
 }
 
 function SliderIndicator({
-  renderFunction = IndicatorDot,
+  renderItem: renderFunction = (idx: number) => <IndicatorDot idx={idx} />,
+  ...props
 }: SliderIndicatorProps) {
-  const { current, setCurrent, length } = useSliderContext();
+  const { length } = useSliderContext();
 
-  const steps = arrayFrom(length).map((idx) =>
-    renderFunction(current === idx, idx, setCurrent),
+  const Steps = arrayFrom(length).map((idx) => renderFunction(idx));
+
+  return (
+    <HStack gap={3} {...props}>
+      {Steps}
+    </HStack>
   );
-
-  return <HStack gap={3}>{steps}</HStack>;
 }
 
 function SliderContent({ children }: GenericProps) {

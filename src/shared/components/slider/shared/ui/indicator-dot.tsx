@@ -1,10 +1,8 @@
 import { MotionDot } from 'shared';
+import { useSliderContext } from '../contexts';
 
-export function IndicatorDot(
-  active: boolean,
-  idx: number,
-  setCurrent: (curr: number) => void,
-) {
+export default function IndicatorDot({ idx }: { idx: number }) {
+  const { current, setCurrent } = useSliderContext();
   return (
     <MotionDot
       key={idx}
@@ -12,7 +10,7 @@ export function IndicatorDot(
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       onClick={() => setCurrent(idx)}
-      bgColor={active ? 'base100' : 'base200'}
+      bgColor={current === idx ? 'base100' : 'base200'}
       size='0.65rem'
     />
   );
