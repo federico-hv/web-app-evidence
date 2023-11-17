@@ -1,4 +1,4 @@
-import { ReleasesUtility } from '../shared';
+import { ReleasesUtility } from '../../shared';
 import { Fragment } from 'react';
 import {
   Box,
@@ -11,17 +11,12 @@ import {
 import {
   ConnectorProvider,
   useConnectedAccounts,
-} from '../../connected-accounts';
-import { dummyFn, GQLRenderer } from '../../../shared';
-import { theme } from '../../../configs';
+} from '../../../connected-accounts';
+import { dummyFn, GQLRenderer } from '../../../../shared';
+import { theme } from '../../../../configs';
+import { ConnectButtonProps } from './types';
 
-function ConnectButton({
-  provider,
-  onClick,
-}: {
-  provider: ConnectorProvider;
-  onClick: VoidFunction;
-}) {
+function ConnectButton({ provider, onClick }: ConnectButtonProps) {
   const providerItem = ReleasesUtility.getProviderItem(provider);
   const connectedAccounts = useConnectedAccounts([provider]);
 
