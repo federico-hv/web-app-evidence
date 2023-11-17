@@ -23,7 +23,7 @@ function ConnectButton({
   onClick: VoidFunction;
 }) {
   const providerItem = ReleasesUtility.getProviderItem(provider);
-  const connectedAccounts = useConnectedAccounts(providerItem?.ref);
+  const connectedAccounts = useConnectedAccounts([provider]);
 
   const isConnected = connectedAccounts.edges.find(
     ({ node }) => node.provider === provider,
