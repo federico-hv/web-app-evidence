@@ -14,7 +14,7 @@ function MessagePopover() {
   const { goto } = useMenuNavigate();
   return (
     <Popover isOpen={state} onOpenChange={set}>
-      <Popover.Trigger onClick={() => set(true)}>
+      <Popover.Trigger onClick={() => set(true)} asChild>
         <IconButton
           colorTheme='primary400'
           icon='chat-alt-outline'

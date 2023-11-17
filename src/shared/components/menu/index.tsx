@@ -52,7 +52,9 @@ function Menu({
       <Responsive>
         <ResponsiveItem tablet='hide'>
           <Popover isOpen={isPopoverOpen} onOpenChange={setIsOpenPopover}>
-            <Popover.Trigger>{Trigger}</Popover.Trigger>
+            <Popover.Trigger asChild>
+              <Box>{Trigger}</Box>
+            </Popover.Trigger>
             <Popover.Portal>
               <Popover.Content
                 minWidth={325}
