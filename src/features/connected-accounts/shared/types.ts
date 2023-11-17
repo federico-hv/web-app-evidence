@@ -1,6 +1,7 @@
 export type ConnectorProvider = 'spotify' | 'apple music';
 
 export interface IConnectedAccount {
+  id: number;
   provider: ConnectorProvider;
   connectedOn: string;
 }

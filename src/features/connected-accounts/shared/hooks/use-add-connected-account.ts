@@ -1,5 +1,5 @@
 import { useMutation } from '@apollo/client';
-import { CONNECT_ACCOUNT } from '../../mutations';
+import { ADD_CONNECT_ACCOUNT } from '../../mutations';
 import { IStatus, SocialProviderName } from '../../../../shared';
 
 interface IConnectAccountInput {
@@ -9,17 +9,17 @@ interface IConnectAccountInput {
   refreshToken: string;
 }
 
-export function useConnectAccount() {
+export function useAddConnectedAccount() {
   const [mutate, { loading, error }] = useMutation<
-    { connectAccount: IStatus },
+    { addConnectedAccount: IStatus },
     {
       payload: IConnectAccountInput;
     }
-  >(CONNECT_ACCOUNT);
+  >(ADD_CONNECT_ACCOUNT);
 
-  const connectAccount = async (payload: IConnectAccountInput) => {
+  const addConnectedAccount = async (payload: IConnectAccountInput) => {
     return mutate({ variables: { payload } });
   };
 
-  return { connectAccount, loading, error };
+  return { addConnectedAccount, loading, error };
 }

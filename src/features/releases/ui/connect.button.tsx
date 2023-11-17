@@ -13,6 +13,7 @@ import {
   useConnectedAccounts,
 } from '../../connected-accounts';
 import { dummyFn, GQLRenderer } from '../../../shared';
+import { theme } from '../../../configs';
 
 function ConnectButton({
   provider,
@@ -45,18 +46,31 @@ function ConnectButton({
       bgColor={isConnected ? 'base100' : 'transparent'}
       onClick={isConnected ? dummyFn : onClick}
       _hover={{ backgroundColor: '$base100' }}
-      css={{ cursor: isConnected ? 'not-allowed' : 'pointer' }}
+      css={{
+        '&:active': {
+          scale: isConnected ? 1 : 0.95,
+        },
+        cursor: isConnected ? 'not-allowed' : 'pointer',
+        opacity: isConnected ? 0.5 : 1,
+        transitionProperty: 'all',
+        transitionDuration: theme.transitions['duration-normal'],
+        transitionTimingFunction: 'ease',
+      }}
     >
-      <Circle size={20}>
+      <Circle size={{ '@bp1': 16, '@bp3': 20 }}>
         <Image
           src={providerItem.image}
           alt={`${providerItem.name} logo`}
         />
       </Circle>
       {!isConnected ? (
-        <Text weight={500}>Connect {providerItem.name}</Text>
+        <Text size={{ '@bp1': 2, '@bp3': 3 }} weight={500}>
+          Connect {providerItem.name}
+        </Text>
       ) : (
-        <Text weight={500}>{providerItem.name} connected</Text>
+        <Text size={{ '@bp1': 2, '@bp3': 3 }} weight={500}>
+          {providerItem.name} connected
+        </Text>
       )}
       <Box />
     </HStack>

@@ -1,18 +1,36 @@
 import { Box, Button, HStack, Image } from '@holdr-ui/react';
-import { TextGroup, TextGroupSubheading } from '../../../../../../shared';
+import {
+  changeDimensions,
+  TextGroup,
+  TextGroupSubheading,
+  useToast,
+} from '../../../../../../shared';
 import { ConnectedAccountProps } from './types';
 import { Fragment } from 'react';
-import { ReleasesUtility } from '../../../../../../features';
+import {
+  ReleasesUtility,
+  useRemoveConnectedAccount,
+} from '../../../../../../features';
 import dayjs from 'dayjs';
 
 function ConnectedAccount({
+  id,
   provider: name,
   connectedOn,
 }: ConnectedAccountProps) {
+  const { removeConnectedAccount, loading, error } =
+    useRemoveConnectedAccount();
+
+  const { openWith } = useToast();
+
   const providerItem = ReleasesUtility.getProviderItem(name);
 
   if (!providerItem) {
     return <Fragment />;
+  }
+
+  if (error) {
+    openWith({ status: 'danger', description: error.message });
   }
 
   return (
@@ -41,7 +59,15 @@ function ConnectedAccount({
           </TextGroupSubheading>
         </TextGroup>
       </HStack>
-      <Button size='sm' colorTheme='danger' variant='ghost'>
+      <Button
+        onClick={() => removeConnectedAccount(id)}
+        className={changeDimensions({ width: '6rem', height: '2rem' })}
+        isLoading={loading}
+        loadingText={loading ? '' : 'disconnect'}
+        size='sm'
+        colorTheme='danger'
+        variant='ghost'
+      >
         Disconnect
       </Button>
     </HStack>

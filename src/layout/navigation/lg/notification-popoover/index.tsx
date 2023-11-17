@@ -41,7 +41,7 @@ function NotificationPopover() {
 
   return (
     <Popover isOpen={isOpen} onOpenChange={setIsOpen}>
-      <Popover.Trigger onClick={() => setIsOpen(true)}>
+      <Popover.Trigger onClick={() => setIsOpen(true)} asChild>
         <IconButton
           colorTheme='primary400'
           icon='notification-outline'

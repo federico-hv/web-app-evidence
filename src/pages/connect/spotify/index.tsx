@@ -15,14 +15,14 @@ import {
   Paths,
 } from '../../../shared';
 import { Navigate } from 'react-router-dom';
-import { useConnectAccount, useSpotifyUser } from '../../../features';
+import { useAddConnectedAccount, useSpotifyUser } from '../../../features';
 
 function ConnectSpotifyRedirect() {
   const {
     loading: loadingMutation,
     error: mutationError,
-    connectAccount,
-  } = useConnectAccount();
+    addConnectedAccount,
+  } = useAddConnectedAccount();
   const { data, error, isLoading } = useSpotifyUser();
 
   const [errorMessage, setErrorMessage] = useState(
@@ -44,14 +44,14 @@ function ConnectSpotifyRedirect() {
   useEffect(() => {
     if (data) {
       // make request
-      connectAccount({
+      addConnectedAccount({
         socialProvider: 'spotify',
         socialId: data.me.id,
         ...data.tokens,
       })
         .then((res) => {
-          if (res.data && !res.data.connectAccount.status) {
-            setErrorMessage(res.data.connectAccount.message);
+          if (res.data && !res.data.addConnectedAccount.status) {
+            setErrorMessage(res.data.addConnectedAccount.message);
           }
         })
         .catch((error) => console.error(error));

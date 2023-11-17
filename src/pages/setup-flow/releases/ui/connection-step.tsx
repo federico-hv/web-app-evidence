@@ -26,7 +26,10 @@ function ConnectionStep() {
           </TextGroupSubheading>
         </TextGroup>
 
-        <VStack gap={4} px={5}>
+        <VStack
+          gap={{ '@bp1': 3, '@bp3': 4 }}
+          px={{ '@bp1': 1, '@bp3': 5 }}
+        >
           <SpotifyButton />
           <AppleMusicButton />
         </VStack>

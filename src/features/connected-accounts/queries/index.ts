@@ -8,6 +8,7 @@ export const GET_CONNECTED_ACCOUNTS = gql`
     connectedAccounts(params: $params, name: $name) {
       edges {
         node {
+          id
           provider
           connectedOn
         }
