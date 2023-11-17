@@ -16,7 +16,7 @@ import {
   Paths,
   GQLRenderer,
 } from '../../shared';
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment, useEffect } from 'react';
 import { useIsConnected } from '../../features';
 
 function ReleasesPage() {
@@ -34,7 +34,7 @@ ReleasesPage.displayName = 'Releases Page';
 function Content() {
   const isConnected = useIsConnected(['spotify', 'apple music']);
 
-  const navigate = useNavigateWithPreviousLocation();
+  const navigate = useNavigateWithPreviousLocation(); // deprecate method, sorta useless
 
   const setupPath = makePath([
     Paths.setupFlow,
@@ -42,10 +42,8 @@ function Content() {
     'get-started',
   ]);
 
-  const [connected] = useState(false);
-
   useEffect(() => {
-    if (!isConnected) navigate(setupPath, !connected);
+    if (!isConnected) navigate(setupPath, !isConnected);
   }, []);
 
   return (
@@ -67,7 +65,7 @@ function Content() {
             </HStack>
           </PageLayoutHeader>
           <PageLayoutContent>
-            {connected && (
+            {isConnected && (
               <Box pt={4}>
                 <EmptyMessage
                   title='No releases'
@@ -79,7 +77,7 @@ function Content() {
         </PageLayout>
       </ContentLayoutMain>
       <ContentLayoutAside>
-        {!connected ? (
+        {!isConnected ? (
           <Center px={4} mt={4} w='100' h='100%'>
             <Button
               fullWidth
