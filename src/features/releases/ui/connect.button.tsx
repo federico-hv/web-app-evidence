@@ -59,6 +59,7 @@ function ConnectButton({
     >
       <Circle size={{ '@bp1': 16, '@bp3': 20 }}>
         <Image
+          loading='eager'
           src={providerItem.image}
           alt={`${providerItem.name} logo`}
         />
