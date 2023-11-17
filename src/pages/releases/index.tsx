@@ -16,8 +16,11 @@ import {
   Paths,
 } from '../../shared';
 import { Fragment, useEffect, useState } from 'react';
+import { useIsConnected } from '../../features';
 
 function ReleasesPage() {
+  const isConnected = useIsConnected(['spotify', 'apple music']);
+
   const navigate = useNavigateWithPreviousLocation();
 
   const setupPath = makePath([
@@ -29,7 +32,7 @@ function ReleasesPage() {
   const [connected] = useState(false);
 
   useEffect(() => {
-    navigate(setupPath, !connected);
+    if (!isConnected) navigate(setupPath, !connected);
   }, []);
 
   return (

@@ -2,10 +2,10 @@ import { gql } from '@apollo/client';
 
 export const GET_CONNECTED_ACCOUNTS = gql`
   query connectedAccounts(
-    $name: ProviderName
+    $names: [ProviderName!]
     $params: NumberPaginationParamsInput
   ) {
-    connectedAccounts(params: $params, name: $name) {
+    connectedAccounts(params: $params, names: $names) {
       edges {
         node {
           id

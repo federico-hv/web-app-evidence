@@ -6,14 +6,14 @@ import {
   ConnectionStep,
   GetStartedStep,
 } from '../../pages/setup-flow/releases/ui';
-import { Box } from '@holdr-ui/react';
+import { Navigate } from 'react-router-dom';
 
 const SetupFlowRoutes = () => (
   <Routes>
     <Route path={Paths.releases} element={<SetupReleasesFlow />}>
+      <Route path='' element={<Navigate to='get-started' />} />
       <Route path='get-started' element={<GetStartedStep />} />
       <Route path='connection' element={<ConnectionStep />} />
-      <Route path='dummy' element={<Box />} />
       <Route path='artist-selection' element={<ArtistSelectionStep />} />
     </Route>
   </Routes>

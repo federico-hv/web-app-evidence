@@ -3,18 +3,24 @@ import { IConnection, IPaginationParams } from '../../../../shared';
 import { ConnectorProvider, IConnectedAccount } from '../types';
 import { GET_CONNECTED_ACCOUNTS } from '../../queries';
 
+/**
+ * Get the connected accounts that a user is connected to.
+ *
+ * @param names the names of the connected accounts to find
+ * @param params the pagination parameters
+ */
 export function useConnectedAccounts(
-  name?: ConnectorProvider,
+  names?: ConnectorProvider[],
   params?: IPaginationParams<number>,
 ) {
   const { data } = useSuspenseQuery<
     {
       connectedAccounts: IConnection<IConnectedAccount, number>;
     },
-    { name?: ConnectorProvider; params?: IPaginationParams<number> }
+    { names?: ConnectorProvider[]; params?: IPaginationParams<number> }
   >(GET_CONNECTED_ACCOUNTS, {
     variables: {
-      name,
+      names,
       params,
     },
   });

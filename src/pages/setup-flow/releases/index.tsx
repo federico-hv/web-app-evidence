@@ -21,7 +21,7 @@ import {
 import { IUnconnectedDialogContext, StepNumber } from './shared';
 import { getStepNumber } from './shared/utility';
 import { StepMap } from './shared/constants';
-import { useConnectedAccounts } from '../../../features';
+import { useIsConnected } from '../../../features';
 
 function SetupReleasesFlow() {
   const { openWith } = useToast();
@@ -66,9 +66,7 @@ function SetupReleasesFlow() {
 SetupReleasesFlow.displayName = 'Setup Releases Flow';
 
 function SetupDialog() {
-  const connectedAccounts = useConnectedAccounts();
-
-  const hasConnectedAccounts = connectedAccounts.edges.length > 0;
+  const isConnected = useIsConnected(['spotify', 'apple music']);
 
   const disclosure = useDisclosure(true);
 
@@ -116,7 +114,7 @@ function SetupDialog() {
         </CommonDialogContent>
         {stepNumber < 2 && (
           <CommonDialogActionButton
-            disabled={stepNumber === 1 && !hasConnectedAccounts}
+            disabled={stepNumber === 1 && !isConnected}
             label='Continue'
             onClick={() => {
               if (stepNumber === 1) {

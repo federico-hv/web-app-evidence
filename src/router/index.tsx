@@ -79,15 +79,12 @@ function Router() {
         </Route>
       </Routes>
       <Routes>
-        {previousLocation && (
-          <Fragment>
-            <Route
-              path={prefix(Paths.setupFlow, '/*')}
-              element={<SetupFlowRoutes />}
-            />
-            <Route path='*' element={<Fragment />} />
-          </Fragment>
-        )}
+        <Fragment>
+          <Route
+            path={prefix(Paths.setupFlow, '/*')}
+            element={<SetupFlowRoutes />}
+          />
+        </Fragment>
       </Routes>
     </Fragment>
   );
