@@ -22,7 +22,6 @@ import {
 } from './shared';
 import { HStackProps } from '@holdr-ui/react/dist/components/stack/src/stack.types';
 import { IconButtonProps } from '@holdr-ui/react/dist/components/icon-button/src/icon-button.styles';
-import { color } from 'framer-motion';
 
 function Slider({
   loop = true,
@@ -56,7 +55,7 @@ function Slider({
     decrementCount: decrementCurrent,
     setCount: setCurrent,
     count: current,
-  } = useCircularCount(SlideList.length || -1);
+  } = useCircularCount(SlideList?.length || -1);
 
   useEffect(() => {
     if (autoplay && elapsed != 0) {
@@ -68,7 +67,7 @@ function Slider({
   return (
     <SliderContextProvider
       value={{
-        length: SlideList.length,
+        length: SlideList?.length || -1,
         incrementCurrent,
         decrementCurrent,
         setCurrent,
