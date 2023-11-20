@@ -8,8 +8,8 @@ import {
 } from 'react';
 import { useSliderContext } from '../contexts';
 import { Box, HStack } from '@holdr-ui/react';
-import { useAnimationControls } from 'framer-motion';
 import { MotionBox } from 'shared';
+import { useAnimate } from 'framer-motion';
 
 export function SlideContent({ children }: { children: ReactNode }) {
   const {
@@ -22,8 +22,7 @@ export function SlideContent({ children }: { children: ReactNode }) {
   } = useSliderContext();
 
   const [displayedSlide, setDisplayedSlide] = useState(0);
-  const animations = useAnimationControls();
-  animations.mount();
+  const [scope, animate] = useAnimate();
 
   const [SlideList, setSlideList] = useState<ReactElement[]>(
     Children.map(children, (child, idx) => (
@@ -38,26 +37,24 @@ export function SlideContent({ children }: { children: ReactNode }) {
   }, [SlideList]);
 
   const slideSlides = async (direction: 'left' | 'right') => {
-    await animations
-      .start(() => {
+    return animate(scope.current, () => {
+      return {
+        x: direction === 'left' ? '100%' : '-100%',
+        transition: {
+          duration: speed,
+        },
+      };
+    }).then(() => {
+      updateSlideList(direction, 1);
+      animate(scope.current, () => {
         return {
-          x: direction === 'left' ? '100%' : '-100%',
+          x: '0',
           transition: {
-            duration: speed,
+            duration: 0,
           },
         };
-      })
-      .then(() => {
-        updateSlideList(direction, 1);
-        animations.start(() => {
-          return {
-            x: '0',
-            transition: {
-              duration: 0,
-            },
-          };
-        });
       });
+    });
   };
 
   const updateSlideList = (direction: 'left' | 'right', times: number) => {
@@ -75,13 +72,13 @@ export function SlideContent({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (displayedSlide === currentSlide) return;
 
-    // TODO: fix,
     if (!buttonClicked) {
       const difference = displayedSlide - currentSlide;
       updateSlideList(
         difference > 0 ? 'left' : 'right',
         Math.abs(difference),
       );
+      setDisplayedSlide(currentSlide);
       return;
     }
 
@@ -93,10 +90,9 @@ export function SlideContent({ children }: { children: ReactNode }) {
 
   return (
     <Box h='full' w='calc(100% - 32px)' radius={3}>
-      <MotionBox w='full' h='full' animate={animations}>
+      <MotionBox w='full' h='full' ref={scope}>
         <HStack
-          // UPDATE THIS
-          l={'-100%'}
+          l={`${-100 * (length - 1 - length / 2)}%`}
           h='full'
           w={`${100 * length}%`}
           position='absolute'
