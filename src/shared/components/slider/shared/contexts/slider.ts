@@ -9,6 +9,11 @@ const SliderContext = createContext<ISliderContext>({
   length: 0,
   current: 0,
   loop: true,
+  direction: 'left',
+  setDirection: dummyFn,
+  speed: 0,
+  buttonClicked: false,
+  setButtonClicked: dummyFn,
 });
 
 const SliderContextProvider = SliderContext.Provider;

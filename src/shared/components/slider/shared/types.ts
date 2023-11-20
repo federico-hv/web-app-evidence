@@ -9,6 +9,8 @@ export interface SliderProps extends GenericProps {
   loop?: boolean;
   delay?: number;
   autoplay?: boolean;
+  speed?: number;
+  animation?: 'fade' | 'slide';
 }
 
 export interface ISliderContext {
@@ -17,7 +19,13 @@ export interface ISliderContext {
   length: number;
   current: number;
   loop: boolean;
+  speed: number;
+  animation?: 'fade' | 'slide';
   setCurrent: (current: number) => void;
+  direction: 'left' | 'right';
+  setDirection: (dir: 'left' | 'right') => void;
+  buttonClicked: boolean;
+  setButtonClicked: (state: boolean) => void;
 }
 
 export type SliderSCNames =

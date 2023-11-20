@@ -1,37 +1,45 @@
-import { Box, Center, HStack } from '@holdr-ui/react';
+import { Box, Center, HStack, IconButton } from '@holdr-ui/react';
 import {
   SliderControlsSCNames,
   SliderIndicatorProps,
   SliderProps,
   SliderSCNames,
 } from './shared/types';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import {
   GenericProps,
-  MotionBox,
   arrayFrom,
   getSubComponent,
   useCircularCount,
   useInterval,
 } from 'shared';
 import {
+  FadeContent,
   IndicatorDot,
-  SliderButton,
+  SlideContent,
   SliderContextProvider,
   useSliderContext,
 } from './shared';
-import { AnimatePresence, color } from 'framer-motion';
 import { HStackProps } from '@holdr-ui/react/dist/components/stack/src/stack.types';
 import { IconButtonProps } from '@holdr-ui/react/dist/components/icon-button/src/icon-button.styles';
+import { color } from 'framer-motion';
 
 function Slider({
   loop = true,
   delay = 10,
   autoplay = true,
+  animation = 'fade',
+  speed = 0.5,
   children,
 }: SliderProps) {
-  const SlideList =
-    getSubComponent<SliderSCNames>(children, 'SliderSlide') || [];
+  const [direction, setDirection] = useState<'left' | 'right'>('left');
+  const [buttonClicked, setButtonClicked] = useState<boolean>(false);
+  const elapsed = useInterval(delay);
+
+  const SlideList = getSubComponent<SliderSCNames>(
+    children,
+    'SliderSlide',
+  );
 
   const controls = getSubComponent<SliderSCNames>(
     children,
@@ -48,32 +56,40 @@ function Slider({
     decrementCount: decrementCurrent,
     setCount: setCurrent,
     count: current,
-  } = useCircularCount(SlideList.length);
-
-  const elapsed = useInterval(delay);
+  } = useCircularCount(SlideList.length || -1);
 
   useEffect(() => {
-    if (autoplay && elapsed != 0) incrementCurrent();
+    if (autoplay && elapsed != 0) {
+      setDirection('right');
+      incrementCurrent();
+    }
   }, [elapsed]);
 
   return (
     <SliderContextProvider
       value={{
+        length: SlideList.length,
         incrementCurrent,
         decrementCurrent,
         setCurrent,
         current,
-        loop: loop,
-        length: SlideList.length,
+        loop,
+        speed,
+        animation,
+        direction,
+        setDirection,
+        buttonClicked,
+        setButtonClicked,
       }}
     >
-      <Box position='relative' w='full' h='200px'>
-        <AnimatePresence>{SlideList[current]}</AnimatePresence>
+      <Center position='relative' h='200px' w='full'>
+        {animation === 'fade' && <FadeContent>{SlideList}</FadeContent>}
+        {animation === 'slide' && <SlideContent>{SlideList}</SlideContent>}
         {controls}
         <Center position='absolute' b='0' l='0' r='0' pb={3}>
           {indicator}
         </Center>
-      </Box>
+      </Center>
     </SliderContextProvider>
   );
 }
@@ -116,14 +132,31 @@ function SliderControls({
 function SliderPreviousButton({
   icon = 'caret-left-outline',
   ariaLabel = 'go to previous slide',
+  colorTheme = 'base100',
+  style = { opacity: 0.75 },
   ...props
 }: Partial<IconButtonProps>) {
-  const { decrementCurrent, loop, current } = useSliderContext();
+  const {
+    decrementCurrent,
+    loop,
+    current,
+    setDirection,
+    buttonClicked,
+    setButtonClicked,
+  } = useSliderContext();
   return (
-    <SliderButton
+    <IconButton
       ariaLabel={ariaLabel}
-      onClick={decrementCurrent}
+      onClick={() => {
+        if (!buttonClicked) {
+          setButtonClicked(true);
+          setDirection('left');
+          decrementCurrent();
+        }
+      }}
       icon={icon}
+      style={style}
+      colorTheme={colorTheme}
       disabled={!loop && current === 0}
       {...props}
     />
@@ -133,14 +166,32 @@ function SliderPreviousButton({
 function SliderNextButton({
   icon = 'caret-right-outline',
   ariaLabel = 'go to next slide',
+  colorTheme = 'base100',
+  style = { opacity: 0.75 },
   ...props
 }: Partial<IconButtonProps>) {
-  const { incrementCurrent, loop, length, current } = useSliderContext();
+  const {
+    incrementCurrent,
+    loop,
+    length,
+    current,
+    setDirection,
+    buttonClicked,
+    setButtonClicked,
+  } = useSliderContext();
   return (
-    <SliderButton
+    <IconButton
       ariaLabel={ariaLabel}
-      onClick={incrementCurrent}
+      onClick={() => {
+        if (!buttonClicked) {
+          setButtonClicked(true);
+          setDirection('right');
+          incrementCurrent();
+        }
+      }}
       icon={icon}
+      style={style}
+      colorTheme={colorTheme}
       disabled={!loop && length - 1 === current}
       {...props}
     />
@@ -164,18 +215,9 @@ function SliderIndicator({
 
 function SliderSlide({ children }: GenericProps) {
   return (
-    <Center>
-      <MotionBox
-        radius={3}
-        overflow='hidden'
-        w='calc(100% - 24px)'
-        h='full'
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1, transition: { duration: 0.25 } }}
-      >
-        {children}
-      </MotionBox>
-    </Center>
+    <Box position='relative' radius={3} h='full' w='full'>
+      {children}
+    </Box>
   );
 }
 
