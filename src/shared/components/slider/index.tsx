@@ -55,7 +55,7 @@ function Slider({
     decrementCount: decrementCurrent,
     setCount: setCurrent,
     count: current,
-  } = useCircularCount(SlideList?.length || -1);
+  } = useCircularCount(SlideList?.length || 0);
 
   useEffect(() => {
     if (autoplay && elapsed != 0) {
@@ -64,10 +64,12 @@ function Slider({
     }
   }, [elapsed]);
 
+  if (!SlideList || !SlideList.length) return null;
+
   return (
     <SliderContextProvider
       value={{
-        length: SlideList?.length || -1,
+        length: SlideList.length,
         incrementCurrent,
         decrementCurrent,
         setCurrent,
