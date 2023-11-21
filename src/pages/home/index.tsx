@@ -5,8 +5,9 @@ import {
   Head,
   Responsive,
   ResponsiveItem,
+  Slider,
 } from '../../shared';
-import { VStack } from '@holdr-ui/react';
+import { Image, VStack } from '@holdr-ui/react';
 import { SuggestionsCard, useCurrentUser } from '../../features';
 import { FeedTabs } from './ui';
 import {
@@ -32,6 +33,53 @@ function HomePage() {
         {currentUser && (
           <ContentLayout>
             <ContentLayoutMain>
+              <Slider
+                animation='fade'
+                loop={true}
+                autoplay={{ active: true, delay: 5 }}
+              >
+                <Slider.Controls>
+                  <Slider.Controls.NextButton />{' '}
+                  <Slider.Controls.PreviousButton />
+                </Slider.Controls>
+                <Slider.Indicator />
+                <Slider.Slide>
+                  <Image
+                    fit='cover'
+                    src={
+                      'https://picsum.photos/1000?random=' + Math.random()
+                    }
+                    h='200px'
+                  />
+                </Slider.Slide>
+                <Slider.Slide>
+                  <Image
+                    fit='cover'
+                    src={
+                      'https://picsum.photos/1000?random=' + Math.random()
+                    }
+                    h='200px'
+                  />
+                </Slider.Slide>
+                <Slider.Slide>
+                  <Image
+                    fit='cover'
+                    src={
+                      'https://picsum.photos/1000?random=' + Math.random()
+                    }
+                    h='200px'
+                  />
+                </Slider.Slide>
+                <Slider.Slide>
+                  <Image
+                    fit='cover'
+                    src={
+                      'https://picsum.photos/1000?random=' + Math.random()
+                    }
+                    h='200px'
+                  />
+                </Slider.Slide>
+              </Slider>
               <VStack gap={4} mt={{ '@bp1': 56, '@bp3': 0 }} w='100%'>
                 <FeedTabs />
               </VStack>

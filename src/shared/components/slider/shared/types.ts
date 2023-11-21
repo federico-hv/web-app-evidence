@@ -10,6 +10,7 @@ export interface SliderProps extends GenericProps {
   autoplay?: { active: boolean; delay?: number };
   speed?: number;
   animation?: 'fade' | 'slide';
+  type?: 'swipe' | 'drag';
 }
 
 export interface ISliderContext {
@@ -19,12 +20,14 @@ export interface ISliderContext {
   current: number;
   loop: boolean;
   speed: number;
-  animation?: 'fade' | 'slide';
+  animation: 'fade' | 'slide';
   setCurrent: (current: number) => void;
-  direction: 'left' | 'right';
-  setDirection: (dir: 'left' | 'right') => void;
+  direction: DirectionNames;
+  setDirection: (dir: DirectionNames) => void;
   buttonClicked: boolean;
   setButtonClicked: (state: boolean) => void;
+  loading: boolean;
+  setLoading: (state: boolean) => void;
 }
 
 export type SliderSCNames =
@@ -35,3 +38,5 @@ export type SliderSCNames =
 export type SliderControlsSCNames =
   | 'SliderNextButton'
   | 'SliderPreviousButton';
+
+export type DirectionNames = 'left' | 'right';

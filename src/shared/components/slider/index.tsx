@@ -4,8 +4,9 @@ import {
   SliderIndicatorProps,
   SliderProps,
   SliderSCNames,
+  DirectionNames,
 } from './shared/types';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   GenericProps,
   arrayFrom,
@@ -14,14 +15,14 @@ import {
   useInterval,
 } from 'shared';
 import {
-  FadeContent,
   IndicatorDot,
-  SlideContent,
+  SlideSlider,
   SliderContextProvider,
   useSliderContext,
 } from './shared';
 import { HStackProps } from '@holdr-ui/react/dist/components/stack/src/stack.types';
 import { IconButtonProps } from '@holdr-ui/react/dist/components/icon-button/src/icon-button.styles';
+import { useInView } from 'framer-motion';
 
 function Slider({
   loop = true,
@@ -29,9 +30,11 @@ function Slider({
   animation = 'fade',
   speed = 0.5,
   children,
+  type = 'swipe',
 }: SliderProps) {
-  const [direction, setDirection] = useState<'left' | 'right'>('left');
+  const [direction, setDirection] = useState<DirectionNames>('left');
   const [buttonClicked, setButtonClicked] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const elapsed = useInterval(autoplay?.delay || 20);
 
   const SlideList = getSubComponent<SliderSCNames>(
@@ -57,7 +60,8 @@ function Slider({
   } = useCircularCount(SlideList?.length || 0);
 
   useEffect(() => {
-    if (autoplay.active && elapsed != 0) {
+    if (autoplay.active && elapsed != 0 && !loading) {
+      setButtonClicked(true);
       setDirection('right');
       incrementCurrent();
     }
@@ -80,11 +84,12 @@ function Slider({
         setDirection,
         buttonClicked,
         setButtonClicked,
+        loading,
+        setLoading,
       }}
     >
       <Center position='relative' h='200px' w='full' overflow='hidden'>
-        {animation === 'fade' && <FadeContent>{SlideList}</FadeContent>}
-        {animation === 'slide' && <SlideContent>{SlideList}</SlideContent>}
+        <SlideSlider>{SlideList}</SlideSlider>
         {controls}
         <Center position='absolute' b='0' l='0' r='0' pb={3}>
           {indicator}
@@ -141,14 +146,14 @@ function SliderPreviousButton({
     loop,
     current,
     setDirection,
-    buttonClicked,
+    loading,
     setButtonClicked,
   } = useSliderContext();
   return (
     <IconButton
       ariaLabel={ariaLabel}
       onClick={() => {
-        if (!buttonClicked) {
+        if (!loading) {
           setButtonClicked(true);
           setDirection('left');
           decrementCurrent();
@@ -176,14 +181,14 @@ function SliderNextButton({
     length,
     current,
     setDirection,
-    buttonClicked,
+    loading,
     setButtonClicked,
   } = useSliderContext();
   return (
     <IconButton
       ariaLabel={ariaLabel}
       onClick={() => {
-        if (!buttonClicked) {
+        if (!loading) {
           setButtonClicked(true);
           setDirection('right');
           incrementCurrent();
@@ -214,8 +219,15 @@ function SliderIndicator({
 }
 
 function SliderSlide({ children }: GenericProps) {
+  const ref = useRef(null);
+
+  const isInView = useInView(ref);
+
+  useEffect(() => {
+    console.log(isInView);
+  }, [isInView]);
   return (
-    <Box position='relative' radius={3} h='full' w='full'>
+    <Box position='relative' ref={ref} radius={3} h='full' w='full'>
       {children}
     </Box>
   );
