@@ -25,9 +25,15 @@ export interface ISliderContext {
   direction: DirectionNames;
   setDirection: (dir: DirectionNames) => void;
   buttonClicked: boolean;
-  setButtonClicked: (state: boolean) => void;
+  setButtonClicked: SetterFunction;
   loading: boolean;
-  setLoading: (state: boolean) => void;
+  setLoading: SetterFunction;
+  drag: boolean;
+  setDrag: SetterFunction;
+}
+
+export interface SlideProps extends GenericProps {
+  idx?: number;
 }
 
 export type SliderSCNames =
@@ -40,3 +46,4 @@ export type SliderControlsSCNames =
   | 'SliderPreviousButton';
 
 export type DirectionNames = 'left' | 'right';
+type SetterFunction = (state: boolean) => void;

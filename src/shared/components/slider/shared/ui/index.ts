@@ -1,2 +1,2 @@
 export { default as IndicatorDot } from './indicator-dot';
-export { default as SlideSlider } from './slide-slider';
+export { default as InnerSlider } from './inner-slider';

@@ -17,6 +17,8 @@ const SliderContext = createContext<ISliderContext>({
   setButtonClicked: dummyFn,
   loading: false,
   setLoading: dummyFn,
+  drag: false,
+  setDrag: dummyFn,
 });
 
 const SliderContextProvider = SliderContext.Provider;

@@ -5,6 +5,8 @@ import { useAnimate } from 'framer-motion';
 
 export function useSlide(
   updateSlideList: (direction: DirectionNames, times: number) => void,
+  displayedSlide: number,
+  setDisplayedSlide: (state: number) => void,
 ) {
   const {
     current: currentSlide,
@@ -14,8 +16,8 @@ export function useSlide(
     speed,
     buttonClicked,
     setButtonClicked,
+    drag,
   } = useSliderContext();
-  const [displayedSlide, setDisplayedSlide] = useState(0);
 
   const [scope, animate] = useAnimate();
 
@@ -45,7 +47,7 @@ export function useSlide(
   };
 
   useEffect(() => {
-    if (displayedSlide === currentSlide || loading) return;
+    if (displayedSlide === currentSlide || loading || drag) return;
 
     setLoading(true);
     if (!buttonClicked) {
@@ -68,5 +70,5 @@ export function useSlide(
     });
   }, [currentSlide]);
 
-  return scope;
+  return { scope, animate };
 }

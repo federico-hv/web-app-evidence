@@ -5,6 +5,7 @@ import {
   SliderProps,
   SliderSCNames,
   DirectionNames,
+  SlideProps,
 } from './shared/types';
 import { useEffect, useRef, useState } from 'react';
 import {
@@ -16,7 +17,7 @@ import {
 } from 'shared';
 import {
   IndicatorDot,
-  SlideSlider,
+  InnerSlider,
   SliderContextProvider,
   useSliderContext,
 } from './shared';
@@ -34,7 +35,8 @@ function Slider({
 }: SliderProps) {
   const [direction, setDirection] = useState<DirectionNames>('left');
   const [buttonClicked, setButtonClicked] = useState<boolean>(false);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [drag, setDrag] = useState<boolean>(false);
   const elapsed = useInterval(autoplay?.delay || 20);
 
   const SlideList = getSubComponent<SliderSCNames>(
@@ -86,10 +88,12 @@ function Slider({
         setButtonClicked,
         loading,
         setLoading,
+        drag,
+        setDrag,
       }}
     >
       <Center position='relative' h='200px' w='full' overflow='hidden'>
-        <SlideSlider>{SlideList}</SlideSlider>
+        <InnerSlider>{SlideList}</InnerSlider>
         {controls}
         <Center position='absolute' b='0' l='0' r='0' pb={3}>
           {indicator}
@@ -218,16 +222,27 @@ function SliderIndicator({
   );
 }
 
-function SliderSlide({ children }: GenericProps) {
+function SliderSlide({ children, idx }: SlideProps) {
+  const { setCurrent, loading, drag, current } = useSliderContext();
   const ref = useRef(null);
 
   const isInView = useInView(ref);
 
   useEffect(() => {
-    console.log(isInView);
+    if (isInView && drag) {
+      console.log(current);
+      console.log('view', idx);
+    }
   }, [isInView]);
   return (
-    <Box position='relative' ref={ref} radius={3} h='full' w='full'>
+    <Box
+      position='relative'
+      ref={ref}
+      radius={3}
+      h='full'
+      w='full'
+      style={{ pointerEvents: 'none' }}
+    >
       {children}
     </Box>
   );

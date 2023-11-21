@@ -5,19 +5,21 @@ import { useAnimate } from 'framer-motion';
 
 export function useFade(
   updateSlideList: (direction: DirectionNames, times: number) => void,
+  displayedSlide: number,
+  setDisplayedSlide: (state: number) => void,
 ) {
   const {
     current: currentSlide,
     loading,
     setLoading,
     speed,
+    drag,
   } = useSliderContext();
-  const [displayedSlide, setDisplayedSlide] = useState(0);
 
   const [scope, animate] = useAnimate();
 
   useEffect(() => {
-    if (displayedSlide === currentSlide || loading) return;
+    if (displayedSlide === currentSlide || loading || drag) return;
 
     setLoading(true);
     const difference = displayedSlide - currentSlide;
@@ -51,5 +53,5 @@ export function useFade(
     return;
   }, [currentSlide]);
 
-  return scope;
+  return { scope, animate };
 }
