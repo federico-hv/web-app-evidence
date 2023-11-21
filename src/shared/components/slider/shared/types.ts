@@ -7,8 +7,7 @@ export interface SliderIndicatorProps extends HStackProps {
 }
 export interface SliderProps extends GenericProps {
   loop?: boolean;
-  delay?: number;
-  autoplay?: boolean;
+  autoplay?: { active: boolean; delay?: number };
   speed?: number;
   animation?: 'fade' | 'slide';
 }

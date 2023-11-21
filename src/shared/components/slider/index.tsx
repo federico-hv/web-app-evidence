@@ -25,15 +25,14 @@ import { IconButtonProps } from '@holdr-ui/react/dist/components/icon-button/src
 
 function Slider({
   loop = true,
-  delay = 10,
-  autoplay = true,
+  autoplay = { active: true, delay: 10 },
   animation = 'fade',
   speed = 0.5,
   children,
 }: SliderProps) {
   const [direction, setDirection] = useState<'left' | 'right'>('left');
   const [buttonClicked, setButtonClicked] = useState<boolean>(false);
-  const elapsed = useInterval(delay);
+  const elapsed = useInterval(autoplay?.delay || 20);
 
   const SlideList = getSubComponent<SliderSCNames>(
     children,
@@ -58,7 +57,7 @@ function Slider({
   } = useCircularCount(SlideList?.length || 0);
 
   useEffect(() => {
-    if (autoplay && elapsed != 0) {
+    if (autoplay.active && elapsed != 0) {
       setDirection('right');
       incrementCurrent();
     }
