@@ -83,7 +83,7 @@ function Slider({
         setButtonClicked,
       }}
     >
-      <Center position='relative' h='200px' w='full'>
+      <Center position='relative' h='200px' w='full' overflow='hidden'>
         {animation === 'fade' && <FadeContent>{SlideList}</FadeContent>}
         {animation === 'slide' && <SlideContent>{SlideList}</SlideContent>}
         {controls}

@@ -8,8 +8,8 @@ import {
 } from 'react';
 import { useSliderContext } from '../contexts';
 import { Box, HStack } from '@holdr-ui/react';
-import { MotionBox } from 'shared';
 import { useAnimate } from 'framer-motion';
+import { MotionBox } from 'shared';
 
 export function SlideContent({ children }: { children: ReactNode }) {
   const {
@@ -22,6 +22,7 @@ export function SlideContent({ children }: { children: ReactNode }) {
   } = useSliderContext();
 
   const [displayedSlide, setDisplayedSlide] = useState(0);
+
   const [scope, animate] = useAnimate();
 
   const [SlideList, setSlideList] = useState<ReactElement[]>(
@@ -32,28 +33,28 @@ export function SlideContent({ children }: { children: ReactNode }) {
     }, [] as ReactElement[]) || [],
   );
 
-  useEffect(() => {
-    console.log(SlideList);
-  }, [SlideList]);
-
   const slideSlides = async (direction: 'left' | 'right') => {
-    return animate(scope.current, () => {
-      return {
+    await animate(
+      scope.current,
+      {
         x: direction === 'left' ? '100%' : '-100%',
-        transition: {
-          duration: speed,
-        },
-      };
-    }).then(() => {
+      },
+      {
+        ease: 'easeIn',
+        duration: speed,
+      },
+    ).then(() => {
       updateSlideList(direction, 1);
-      animate(scope.current, () => {
-        return {
+
+      return animate(
+        scope.current,
+        {
           x: '0',
-          transition: {
-            duration: 0,
-          },
-        };
-      });
+        },
+        {
+          duration: 0,
+        },
+      );
     });
   };
 
@@ -89,12 +90,18 @@ export function SlideContent({ children }: { children: ReactNode }) {
   }, [currentSlide]);
 
   return (
-    <Box h='full' w='calc(100% - 32px)' radius={3}>
-      <MotionBox w='full' h='full' ref={scope}>
+    <Box
+      w='calc(100% - 32px)'
+      h='full'
+      radius={3}
+      overflow='hidden'
+      position='relative'
+    >
+      <MotionBox h='full' w='full' ref={scope}>
         <HStack
           l={`${-100 * (length - 1 - length / 2)}%`}
-          h='full'
           w={`${100 * length}%`}
+          h='full'
           position='absolute'
         >
           {SlideList}
