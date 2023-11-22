@@ -1,6 +1,7 @@
 import { Box, Center, HStack, IconButton } from '@holdr-ui/react';
 import { Fragment, useEffect, useState } from 'react';
 import {
+  GenericProps,
   arrayFrom,
   getSubComponent,
   useCircularCount,
@@ -15,6 +16,7 @@ import {
   SliderIndicatorProps,
   SliderProps,
   SliderSCNames,
+  SliderContentSCNames,
 } from './shared';
 import { IconButtonProps } from '@holdr-ui/react/dist/components/icon-button/src/icon-button.styles';
 import { AnimatePresence } from 'framer-motion';
@@ -22,7 +24,8 @@ import { BoxProps } from '@holdr-ui/react/dist/components/box/src/box.types';
 
 function Slider({
   loop = true,
-  autoplay = { active: true, delay: 10 },
+  autoplay = false,
+  delay = 20,
   animation = 'fade',
   speed = 0.5,
   position = 'relative',
@@ -34,19 +37,20 @@ function Slider({
 }: SliderProps) {
   const [buttonClicked, setButtonClicked] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
-  const elapsed = useInterval(autoplay?.delay || 20);
+  const [length, setLength] = useState<number>(0);
+  const elapsed = useInterval(delay);
 
-  const SlideList = getSubComponent<SliderSCNames>(
+  const SlideContent = getSubComponent<SliderSCNames>(
     children,
-    'SliderSlide',
+    'SliderContent',
   );
 
-  const controls = getSubComponent<SliderSCNames>(
+  const Controls = getSubComponent<SliderSCNames>(
     children,
     'SliderControls',
   );
 
-  const indicator = getSubComponent<SliderSCNames>(
+  const Indicators = getSubComponent<SliderSCNames>(
     children,
     'SliderIndicator',
   );
@@ -56,23 +60,22 @@ function Slider({
     decrementCount: decrementCurrent,
     setCount: setCurrent,
     count: current,
-  } = useCircularCount(SlideList?.length || 0);
+  } = useCircularCount(length);
 
   useEffect(() => {
-    if (autoplay.active && elapsed != 0 && !loading) {
+    if (autoplay && elapsed != 0 && !loading) {
       setButtonClicked(true);
       incrementCurrent();
     }
   }, [elapsed]);
-
-  if (!SlideList || !SlideList.length) return null;
 
   return (
     // does not solve render issue
     <AnimatePresence>
       <SliderContextProvider
         value={{
-          length: SlideList.length,
+          length,
+          setLength,
           incrementCurrent,
           decrementCurrent,
           setCurrent,
@@ -93,10 +96,10 @@ function Slider({
           overflow={overflow}
           {...props}
         >
-          <InnerSlider>{SlideList}</InnerSlider>
-          {controls}
+          {SlideContent}
+          {Controls}
           <Center position='absolute' b='0' l='0' r='0' pb={3}>
-            {indicator}
+            {Indicators}
           </Center>
         </Center>
       </SliderContextProvider>
@@ -170,7 +173,7 @@ function SliderNextButton({
   ariaLabel = 'go to next slide',
   colorTheme = 'primary400',
   ...props
-}: IconButtonProps) {
+}: Partial<IconButtonProps>) {
   const {
     incrementCurrent,
     loop,
@@ -222,6 +225,20 @@ function SliderIndicator({
   );
 }
 
+function SliderContent({ children }: GenericProps) {
+  const { setLength } = useSliderContext();
+  const SlideList = getSubComponent<SliderContentSCNames>(
+    children,
+    'SliderSlide',
+  );
+
+  setLength(SlideList.length || 0);
+
+  if (!SlideList || !SlideList.length) return null;
+
+  return <InnerSlider>{SlideList}</InnerSlider>;
+}
+
 function SliderSlide({
   children,
   h = 'full',
@@ -247,11 +264,13 @@ function SliderSlide({
 
 Slider.displayName = 'Slider';
 SliderSlide.displayName = 'SliderSlide';
+SliderContent.displayName = 'SliderContent';
 SliderIndicator.displayName = 'SliderIndicator';
 SliderControls.displayName = 'SliderControls';
 SliderNextButton.displayName = 'SliderNextButton';
 SliderPreviousButton.displayName = 'SliderPreviousButton';
 
+Slider.Content = SliderContent;
 Slider.Slide = SliderSlide;
 Slider.Controls = SliderControls;
 Slider.Indicator = SliderIndicator;
@@ -261,6 +280,7 @@ SliderControls.PreviousButton = SliderPreviousButton;
 export default Slider;
 export {
   SliderSlide,
+  SliderContent,
   SliderIndicator,
   SliderControls,
   SliderNextButton,

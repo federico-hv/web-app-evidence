@@ -18,7 +18,8 @@ export interface IndicatorItemProps {
 
 export interface SliderProps extends CenterProps {
   loop?: boolean;
-  autoplay?: { active: boolean; delay?: number };
+  autoplay?: boolean;
+  delay?: number;
   speed?: number;
   animation?: 'fade' | 'slide';
   type?: 'swipe' | 'drag';
@@ -28,6 +29,7 @@ export interface ISliderContext {
   incrementCurrent: VoidFunction;
   decrementCurrent: VoidFunction;
   length: number;
+  setLength: (length: number) => void;
   current: number;
   loop: boolean;
   speed: number;
@@ -40,9 +42,11 @@ export interface ISliderContext {
 }
 
 export type SliderSCNames =
-  | 'SliderSlide'
   | 'SliderControls'
-  | 'SliderIndicator';
+  | 'SliderIndicator'
+  | 'SliderContent';
+
+export type SliderContentSCNames = 'SliderSlide';
 
 export type SliderControlsSCNames =
   | 'SliderNextButton'

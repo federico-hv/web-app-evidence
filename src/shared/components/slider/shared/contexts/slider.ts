@@ -7,6 +7,7 @@ const SliderContext = createContext<ISliderContext>({
   decrementCurrent: dummyFn,
   setCurrent: dummyFn,
   length: 0,
+  setLength: dummyFn,
   current: 0,
   loop: true,
   animation: 'fade',
