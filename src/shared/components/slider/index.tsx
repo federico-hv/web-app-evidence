@@ -1,12 +1,5 @@
 import { Box, Center, HStack, IconButton } from '@holdr-ui/react';
-import {
-  SliderControlsSCNames,
-  SliderIndicatorProps,
-  SliderProps,
-  SliderSCNames,
-  DirectionNames,
-} from './shared/types';
-import { useEffect, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import {
   arrayFrom,
   getSubComponent,
@@ -18,8 +11,11 @@ import {
   InnerSlider,
   SliderContextProvider,
   useSliderContext,
+  SliderControlsSCNames,
+  SliderIndicatorProps,
+  SliderProps,
+  SliderSCNames,
 } from './shared';
-import { HStackProps } from '@holdr-ui/react/dist/components/stack/src/stack.types';
 import { IconButtonProps } from '@holdr-ui/react/dist/components/icon-button/src/icon-button.styles';
 import { AnimatePresence } from 'framer-motion';
 import { BoxProps } from '@holdr-ui/react/dist/components/box/src/box.types';
@@ -36,7 +32,6 @@ function Slider({
   children,
   ...props
 }: SliderProps) {
-  const [direction, setDirection] = useState<DirectionNames>('left');
   const [buttonClicked, setButtonClicked] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
   const elapsed = useInterval(autoplay?.delay || 20);
@@ -66,7 +61,6 @@ function Slider({
   useEffect(() => {
     if (autoplay.active && elapsed != 0 && !loading) {
       setButtonClicked(true);
-      setDirection('right');
       incrementCurrent();
     }
   }, [elapsed]);
@@ -86,8 +80,6 @@ function Slider({
           loop,
           speed,
           animation,
-          direction,
-          setDirection,
           buttonClicked,
           setButtonClicked,
           loading,
@@ -112,15 +104,7 @@ function Slider({
   );
 }
 
-function SliderControls({
-  position = 'absolute',
-  t = '50%',
-  b = '50%',
-  w = 'full',
-  justify = 'space-between',
-  children,
-  ...props
-}: HStackProps) {
+function SliderControls({ children, ...props }: BoxProps) {
   const nextButton = getSubComponent<SliderControlsSCNames>(
     children,
     'SliderNextButton',
@@ -132,48 +116,48 @@ function SliderControls({
   );
 
   return (
-    <HStack
-      items='center'
-      position={position}
-      t={t}
-      b={b}
-      w={w}
-      justify={justify}
-      {...props}
-    >
-      {previousButton}
-      {nextButton}
-    </HStack>
+    <Fragment>
+      <Box
+        position='absolute'
+        l={0}
+        t='50%'
+        css={{ transform: 'translateY(-50%)' }}
+        {...props}
+      >
+        {previousButton}
+      </Box>
+      <Box
+        position='absolute'
+        r={0}
+        t='50%'
+        css={{ transform: 'translateY(-50%)' }}
+        {...props}
+      >
+        {nextButton}
+      </Box>
+    </Fragment>
   );
 }
 
 function SliderPreviousButton({
   icon = 'caret-left-outline',
   ariaLabel = 'go to previous slide',
-  colorTheme = 'base100',
-  style = { opacity: 0.75 },
+  colorTheme = 'primary400',
   ...props
 }: Partial<IconButtonProps>) {
-  const {
-    decrementCurrent,
-    loop,
-    current,
-    setDirection,
-    loading,
-    setButtonClicked,
-  } = useSliderContext();
+  const { decrementCurrent, loop, current, loading, setButtonClicked } =
+    useSliderContext();
   return (
     <IconButton
       ariaLabel={ariaLabel}
       onClick={() => {
         if (!loading) {
           setButtonClicked(true);
-          setDirection('left');
           decrementCurrent();
         }
       }}
       icon={icon}
-      style={style}
+      style={{ opacity: 0.75 }}
       colorTheme={colorTheme}
       disabled={!loop && current === 0}
       {...props}
@@ -184,16 +168,14 @@ function SliderPreviousButton({
 function SliderNextButton({
   icon = 'caret-right-outline',
   ariaLabel = 'go to next slide',
-  colorTheme = 'base100',
-  style = { opacity: 0.75 },
+  colorTheme = 'primary400',
   ...props
-}: Partial<IconButtonProps>) {
+}: IconButtonProps) {
   const {
     incrementCurrent,
     loop,
     length,
     current,
-    setDirection,
     loading,
     setButtonClicked,
   } = useSliderContext();
@@ -203,12 +185,11 @@ function SliderNextButton({
       onClick={() => {
         if (!loading) {
           setButtonClicked(true);
-          setDirection('right');
           incrementCurrent();
         }
       }}
       icon={icon}
-      style={style}
+      style={{ opacity: 0.75 }}
       colorTheme={colorTheme}
       disabled={!loop && length - 1 === current}
       {...props}
@@ -217,12 +198,22 @@ function SliderNextButton({
 }
 
 function SliderIndicator({
-  renderItem: renderFunction = (idx: number) => <IndicatorDot idx={idx} />,
+  renderItem: renderFunction = (isActive, onClick, key) => (
+    <IndicatorDot isActive={isActive} onClick={onClick} key={key} />
+  ),
   ...props
 }: SliderIndicatorProps) {
-  const { length } = useSliderContext();
+  const { length, current, setCurrent, loading } = useSliderContext();
 
-  const Steps = arrayFrom(length).map((idx) => renderFunction(idx));
+  const Steps = arrayFrom(length).map((idx) =>
+    renderFunction(
+      current === idx,
+      () => {
+        if (!loading) setCurrent(idx);
+      },
+      `slider_indicator-item-${idx}`,
+    ),
+  );
 
   return (
     <HStack gap={3} {...props}>
@@ -237,7 +228,7 @@ function SliderSlide({
   w = 'full',
   radius = 3,
   position = 'relative',
-  style = { pointerEvents: 'none' },
+  css = { pointerEvents: 'none' },
   ...props
 }: BoxProps) {
   return (
@@ -246,7 +237,7 @@ function SliderSlide({
       radius={radius}
       h={h}
       w={w}
-      style={style}
+      css={css}
       {...props}
     >
       {children}

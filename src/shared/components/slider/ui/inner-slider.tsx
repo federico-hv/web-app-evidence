@@ -3,19 +3,16 @@ import {
   Fragment,
   ReactElement,
   ReactNode,
-  cloneElement,
-  isValidElement,
   useEffect,
   useRef,
   useState,
 } from 'react';
-import { useSliderContext } from '../contexts';
+import { useSliderContext } from '../shared/contexts';
 import { Box, HStack } from '@holdr-ui/react';
 import { AnimationScope, useDragControls } from 'framer-motion';
 import { MotionBox } from 'shared';
-import { useFade, useSlide } from '../hooks';
-import { DirectionNames } from '../types';
-import { toInteger } from 'lodash';
+import { useFade, useSlide } from '../shared/hooks';
+import { DirectionNames } from '../shared/types';
 
 const useSliderAnimation: Record<
   string,

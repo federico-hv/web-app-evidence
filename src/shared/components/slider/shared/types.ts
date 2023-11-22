@@ -1,11 +1,21 @@
 import { CenterProps } from '@holdr-ui/react/dist/components/center/src/center.types';
 import { HStackProps } from '@holdr-ui/react/dist/components/stack/src/stack.types';
-import { ReactElement, RefObject } from 'react';
-import { GenericProps } from 'shared';
+import { ReactElement } from 'react';
 
 export interface SliderIndicatorProps extends HStackProps {
-  renderItem?: (idx: number) => ReactElement;
+  renderItem?: (
+    isActive: boolean,
+    onClick: VoidFunction,
+    key: string,
+  ) => ReactElement;
 }
+
+export interface IndicatorItemProps {
+  key: string;
+  onClick: VoidFunction;
+  isActive: boolean;
+}
+
 export interface SliderProps extends CenterProps {
   loop?: boolean;
   autoplay?: { active: boolean; delay?: number };
@@ -23,8 +33,6 @@ export interface ISliderContext {
   speed: number;
   animation: 'fade' | 'slide';
   setCurrent: (current: number) => void;
-  direction: DirectionNames;
-  setDirection: (dir: DirectionNames) => void;
   buttonClicked: boolean;
   setButtonClicked: SetterFunction;
   loading: boolean;
