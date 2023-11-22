@@ -232,7 +232,7 @@ function SliderContent({ children }: GenericProps) {
     'SliderSlide',
   );
 
-  setLength(SlideList.length || 0);
+  setLength(SlideList?.length || 0);
 
   if (!SlideList || !SlideList.length) return null;
 

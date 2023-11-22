@@ -33,11 +33,7 @@ function HomePage() {
         {currentUser && (
           <ContentLayout>
             <ContentLayoutMain>
-              <Slider
-                animation='fade'
-                loop={true}
-                autoplay={{ active: false }}
-              >
+              <Slider animation='fade' loop={true} autoplay={false}>
                 <Slider.Controls>
                   <Slider.Controls.NextButton />{' '}
                   <Slider.Controls.PreviousButton />
