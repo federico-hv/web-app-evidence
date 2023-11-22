@@ -76,6 +76,7 @@ export function InnerSlider({ children }: { children: ReactNode }) {
       transformX.indexOf('(') + 1,
       transformX.indexOf('p'),
     );
+
     console.log(sliderPosition);
     console.log(Math.round(sliderPosition / scope.current.offsetWidth));
   };
@@ -100,6 +101,7 @@ export function InnerSlider({ children }: { children: ReactNode }) {
       >
         <HStack
           ref={slideRef}
+          // broken, fix this
           l={`${-100 * (length - 1 - length / 2)}%`}
           w={`${100 * length}%`}
           h='full'

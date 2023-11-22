@@ -1,3 +1,4 @@
+import { CenterProps } from '@holdr-ui/react/dist/components/center/src/center.types';
 import { HStackProps } from '@holdr-ui/react/dist/components/stack/src/stack.types';
 import { ReactElement, RefObject } from 'react';
 import { GenericProps } from 'shared';
@@ -5,7 +6,7 @@ import { GenericProps } from 'shared';
 export interface SliderIndicatorProps extends HStackProps {
   renderItem?: (idx: number) => ReactElement;
 }
-export interface SliderProps extends GenericProps {
+export interface SliderProps extends CenterProps {
   loop?: boolean;
   autoplay?: { active: boolean; delay?: number };
   speed?: number;
@@ -28,10 +29,6 @@ export interface ISliderContext {
   setButtonClicked: SetterFunction;
   loading: boolean;
   setLoading: SetterFunction;
-}
-
-export interface SlideProps extends GenericProps {
-  idx?: number;
 }
 
 export type SliderSCNames =

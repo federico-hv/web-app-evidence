@@ -5,9 +5,8 @@ import {
   SliderProps,
   SliderSCNames,
   DirectionNames,
-  SlideProps,
 } from './shared/types';
-import { RefObject, useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   arrayFrom,
   getSubComponent,
@@ -22,15 +21,20 @@ import {
 } from './shared';
 import { HStackProps } from '@holdr-ui/react/dist/components/stack/src/stack.types';
 import { IconButtonProps } from '@holdr-ui/react/dist/components/icon-button/src/icon-button.styles';
-import { useInView } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
+import { BoxProps } from '@holdr-ui/react/dist/components/box/src/box.types';
 
 function Slider({
   loop = true,
   autoplay = { active: true, delay: 10 },
   animation = 'fade',
   speed = 0.5,
+  position = 'relative',
+  h = '200px',
+  w = 'full',
+  overflow = 'hidden',
   children,
-  type = 'swipe',
+  ...props
 }: SliderProps) {
   const [direction, setDirection] = useState<DirectionNames>('left');
   const [buttonClicked, setButtonClicked] = useState<boolean>(false);
@@ -70,32 +74,41 @@ function Slider({
   if (!SlideList || !SlideList.length) return null;
 
   return (
-    <SliderContextProvider
-      value={{
-        length: SlideList.length,
-        incrementCurrent,
-        decrementCurrent,
-        setCurrent,
-        current,
-        loop,
-        speed,
-        animation,
-        direction,
-        setDirection,
-        buttonClicked,
-        setButtonClicked,
-        loading,
-        setLoading,
-      }}
-    >
-      <Center position='relative' h='200px' w='full' overflow='hidden'>
-        <InnerSlider>{SlideList}</InnerSlider>
-        {controls}
-        <Center position='absolute' b='0' l='0' r='0' pb={3}>
-          {indicator}
+    // does not solve render issue
+    <AnimatePresence>
+      <SliderContextProvider
+        value={{
+          length: SlideList.length,
+          incrementCurrent,
+          decrementCurrent,
+          setCurrent,
+          current,
+          loop,
+          speed,
+          animation,
+          direction,
+          setDirection,
+          buttonClicked,
+          setButtonClicked,
+          loading,
+          setLoading,
+        }}
+      >
+        <Center
+          position={position}
+          h={h}
+          w={w}
+          overflow={overflow}
+          {...props}
+        >
+          <InnerSlider>{SlideList}</InnerSlider>
+          {controls}
+          <Center position='absolute' b='0' l='0' r='0' pb={3}>
+            {indicator}
+          </Center>
         </Center>
-      </Center>
-    </SliderContextProvider>
+      </SliderContextProvider>
+    </AnimatePresence>
   );
 }
 
@@ -218,14 +231,23 @@ function SliderIndicator({
   );
 }
 
-function SliderSlide({ children }: SlideProps) {
+function SliderSlide({
+  children,
+  h = 'full',
+  w = 'full',
+  radius = 3,
+  position = 'relative',
+  style = { pointerEvents: 'none' },
+  ...props
+}: BoxProps) {
   return (
     <Box
-      position='relative'
-      radius={3}
-      h='full'
-      w='full'
-      style={{ pointerEvents: 'none' }}
+      position={position}
+      radius={radius}
+      h={h}
+      w={w}
+      style={style}
+      {...props}
     >
       {children}
     </Box>
