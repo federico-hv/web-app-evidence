@@ -1,4 +1,4 @@
-import { ReactElement, useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useSliderContext } from '../contexts';
 import { DirectionNames } from '../types';
 import { useAnimate } from 'framer-motion';
@@ -13,13 +13,12 @@ export function useFade(
     loading,
     setLoading,
     speed,
-    drag,
   } = useSliderContext();
 
   const [scope, animate] = useAnimate();
 
   useEffect(() => {
-    if (displayedSlide === currentSlide || loading || drag) return;
+    if (displayedSlide === currentSlide || loading) return;
 
     setLoading(true);
     const difference = displayedSlide - currentSlide;

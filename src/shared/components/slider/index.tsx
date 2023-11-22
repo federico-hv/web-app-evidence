@@ -7,9 +7,8 @@ import {
   DirectionNames,
   SlideProps,
 } from './shared/types';
-import { useEffect, useRef, useState } from 'react';
+import { RefObject, useEffect, useRef, useState } from 'react';
 import {
-  GenericProps,
   arrayFrom,
   getSubComponent,
   useCircularCount,
@@ -36,7 +35,6 @@ function Slider({
   const [direction, setDirection] = useState<DirectionNames>('left');
   const [buttonClicked, setButtonClicked] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
-  const [drag, setDrag] = useState<boolean>(false);
   const elapsed = useInterval(autoplay?.delay || 20);
 
   const SlideList = getSubComponent<SliderSCNames>(
@@ -88,8 +86,6 @@ function Slider({
         setButtonClicked,
         loading,
         setLoading,
-        drag,
-        setDrag,
       }}
     >
       <Center position='relative' h='200px' w='full' overflow='hidden'>
@@ -222,22 +218,10 @@ function SliderIndicator({
   );
 }
 
-function SliderSlide({ children, idx }: SlideProps) {
-  const { setCurrent, loading, drag, current } = useSliderContext();
-  const ref = useRef(null);
-
-  const isInView = useInView(ref);
-
-  useEffect(() => {
-    if (isInView && drag) {
-      console.log(current);
-      console.log('view', idx);
-    }
-  }, [isInView]);
+function SliderSlide({ children }: SlideProps) {
   return (
     <Box
       position='relative'
-      ref={ref}
       radius={3}
       h='full'
       w='full'

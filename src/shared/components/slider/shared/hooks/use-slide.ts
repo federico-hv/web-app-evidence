@@ -1,4 +1,4 @@
-import { ReactElement, useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useSliderContext } from '../contexts';
 import { DirectionNames } from '../types';
 import { useAnimate } from 'framer-motion';
@@ -16,7 +16,6 @@ export function useSlide(
     speed,
     buttonClicked,
     setButtonClicked,
-    drag,
   } = useSliderContext();
 
   const [scope, animate] = useAnimate();
@@ -47,7 +46,7 @@ export function useSlide(
   };
 
   useEffect(() => {
-    if (displayedSlide === currentSlide || loading || drag) return;
+    if (displayedSlide === currentSlide || loading) return;
 
     setLoading(true);
     if (!buttonClicked) {

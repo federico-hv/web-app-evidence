@@ -1,7 +1,5 @@
 import {
   Children,
-  Fragment,
-  PointerEvent,
   ReactElement,
   ReactNode,
   cloneElement,
@@ -30,8 +28,7 @@ const useSliderAnimation: Record<
 };
 
 export function InnerSlider({ children }: { children: ReactNode }) {
-  const { length, animation, loading, setLoading, current, setDrag } =
-    useSliderContext();
+  const { length, animation, setLoading } = useSliderContext();
   const [displayedSlide, setDisplayedSlide] = useState(0);
   const controls = useDragControls();
   const slideRef = useRef(null);
@@ -44,8 +41,6 @@ export function InnerSlider({ children }: { children: ReactNode }) {
       return idx <= length / 2 ? [...slides, slide] : [slide, ...slides];
     }, [] as ReactElement[]) || [],
   );
-
-  console.log(SlideList);
 
   const updateSlideList = (direction: 'left' | 'right', times: number) => {
     direction === 'left'
@@ -63,10 +58,6 @@ export function InnerSlider({ children }: { children: ReactNode }) {
     setLoading(false);
   }, []);
 
-  useEffect(() => {
-    console.log(current);
-  }, [current]);
-
   const { scope, animate } = useSliderAnimation[animation](
     updateSlideList,
     displayedSlide,
@@ -75,19 +66,18 @@ export function InnerSlider({ children }: { children: ReactNode }) {
 
   const startDrag = () => {
     setLoading(true);
-    setDrag(true);
   };
 
   const endDrag = () => {
-    const difference = displayedSlide - current;
-    updateSlideList(
-      difference > 0 ? 'left' : 'right',
-      Math.abs(difference),
+    const transformX = scope.current.style.transform.split(' ')[0];
+
+    // this assumes that the transformX property is in units of px, which seems to always be the case
+    const sliderPosition: number = transformX.substring(
+      transformX.indexOf('(') + 1,
+      transformX.indexOf('p'),
     );
-    animate(scope.current, { x: 0 }, { duration: 0 }).then(() => {
-      setLoading(false);
-      setDrag(false);
-    });
+    console.log(sliderPosition);
+    console.log(Math.round(sliderPosition / scope.current.offsetWidth));
   };
 
   return (

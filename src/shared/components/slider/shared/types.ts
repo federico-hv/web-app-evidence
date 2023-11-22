@@ -1,5 +1,5 @@
 import { HStackProps } from '@holdr-ui/react/dist/components/stack/src/stack.types';
-import { ReactElement } from 'react';
+import { ReactElement, RefObject } from 'react';
 import { GenericProps } from 'shared';
 
 export interface SliderIndicatorProps extends HStackProps {
@@ -28,8 +28,6 @@ export interface ISliderContext {
   setButtonClicked: SetterFunction;
   loading: boolean;
   setLoading: SetterFunction;
-  drag: boolean;
-  setDrag: SetterFunction;
 }
 
 export interface SlideProps extends GenericProps {
