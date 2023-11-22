@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useSliderContext } from '../contexts';
 import { DirectionNames } from '../types';
 import { useAnimate } from 'framer-motion';
+import { DialogTrigger } from '@holdr-ui/react/dist/compositions/dialog/src';
 
 export function useSlide(
   updateSlideList: (direction: DirectionNames, times: number) => void,
@@ -10,7 +11,6 @@ export function useSlide(
 ) {
   const {
     current: currentSlide,
-    direction: directionClicked,
     loading,
     setLoading,
     speed,
@@ -48,21 +48,18 @@ export function useSlide(
   useEffect(() => {
     if (displayedSlide === currentSlide || loading) return;
 
+    const difference = displayedSlide - currentSlide;
+    const direction = difference > 0 ? 'left' : 'right';
+
     setLoading(true);
     if (!buttonClicked) {
-      const difference = displayedSlide - currentSlide;
-
-      updateSlideList(
-        difference > 0 ? 'left' : 'right',
-        Math.abs(difference),
-      );
-
+      updateSlideList(direction, Math.abs(difference));
       setDisplayedSlide(currentSlide);
       setLoading(false);
       return;
     }
 
-    slideSlides(directionClicked).then(() => {
+    slideSlides(direction).then(() => {
       setDisplayedSlide(currentSlide);
       setButtonClicked(false);
       setLoading(false);
