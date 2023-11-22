@@ -1,5 +1,6 @@
 import {
   Children,
+  Fragment,
   ReactElement,
   ReactNode,
   cloneElement,
@@ -14,6 +15,7 @@ import { AnimationScope, useDragControls } from 'framer-motion';
 import { MotionBox } from 'shared';
 import { useFade, useSlide } from '../hooks';
 import { DirectionNames } from '../types';
+import { toInteger } from 'lodash';
 
 const useSliderAnimation: Record<
   string,
@@ -33,13 +35,15 @@ export function InnerSlider({ children }: { children: ReactNode }) {
   const controls = useDragControls();
   const slideRef = useRef(null);
 
-  const [SlideList, setSlideList] = useState<ReactElement[]>(
-    Children.map(children, (child, idx) => {
-      if (isValidElement<{ idx: number }>(child))
-        return cloneElement(child, { idx: idx });
-    })?.reduce((slides, slide, idx) => {
-      return idx <= length / 2 ? [...slides, slide] : [slide, ...slides];
-    }, [] as ReactElement[]) || [],
+  const [SlideList, setSlideList] = useState(
+    Children.map(children, (child, idx) => (
+      <Fragment key={idx}>{child}</Fragment>
+    ))?.reduce(
+      (slides: ReactElement[], slide: ReactElement, idx: number) => {
+        return idx <= length / 2 ? [...slides, slide] : [slide, ...slides];
+      },
+      [],
+    ) || [],
   );
 
   const updateSlideList = (direction: 'left' | 'right', times: number) => {
@@ -72,13 +76,25 @@ export function InnerSlider({ children }: { children: ReactNode }) {
     const transformX = scope.current.style.transform.split(' ')[0];
 
     // this assumes that the transformX property is in units of px, which seems to always be the case
-    const sliderPosition: number = transformX.substring(
-      transformX.indexOf('(') + 1,
-      transformX.indexOf('p'),
+    const sliderPosition: number = parseInt(
+      transformX.substring(
+        transformX.indexOf('(') + 1,
+        transformX.indexOf('p'),
+      ),
     );
 
-    console.log(sliderPosition);
-    console.log(Math.round(sliderPosition / scope.current.offsetWidth));
+    const index = Math.round(sliderPosition / 1000);
+
+    updateSlideList(index > 0 ? 'left' : 'right', Math.abs(index));
+
+    animate(
+      scope.current,
+      {
+        x: 0,
+      },
+      { duration: 0 },
+    );
+    setLoading(false);
   };
 
   return (
