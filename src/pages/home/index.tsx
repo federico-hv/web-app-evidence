@@ -34,8 +34,7 @@ function HomePage() {
         {currentUser && (
           <ContentLayout>
             <ContentLayoutMain>
-              <FadeSlider />
-              {/* <Slider animation='fade' loop={true} autoplay={false}>
+              <Slider animation='fade' loop={true} autoplay={false}>
                 <Slider.Controls>
                   <Slider.Controls.NextButton />{' '}
                   <Slider.Controls.PreviousButton />
@@ -60,7 +59,7 @@ function HomePage() {
                     </Slider.Slide>
                   ))}
                 </Slider.Content>
-              </Slider> */}
+              </Slider>
               <VStack gap={4} mt={{ '@bp1': 56, '@bp3': 0 }} w='100%'>
                 <FeedTabs />
               </VStack>

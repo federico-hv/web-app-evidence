@@ -100,7 +100,7 @@ function Slider({
         overflow={overflow}
         {...props}
       >
-        {animation == 'fade' && <FadeSlider></FadeSlider>}
+        {animation == 'fade' && <FadeSlider>{SliderSlides}</FadeSlider>}
         {animation == 'slide' && <SlideSlider>{SliderSlides}</SlideSlider>}
         {Controls}
         <Center position='absolute' b='0' l='0' r='0' pb={3}>
