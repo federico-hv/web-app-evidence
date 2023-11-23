@@ -7,15 +7,11 @@ const SliderContext = createContext<ISliderContext>({
   decrementCurrent: dummyFn,
   setCurrent: dummyFn,
   length: 0,
-  setLength: dummyFn,
   current: 0,
   loop: true,
-  animation: 'fade',
   speed: 0,
   buttonClicked: false,
   setButtonClicked: dummyFn,
-  loading: false,
-  setLoading: dummyFn,
 });
 
 const SliderContextProvider = SliderContext.Provider;

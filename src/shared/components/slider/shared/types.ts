@@ -29,16 +29,12 @@ export interface ISliderContext {
   incrementCurrent: VoidFunction;
   decrementCurrent: VoidFunction;
   length: number;
-  setLength: (length: number) => void;
   current: number;
   loop: boolean;
   speed: number;
-  animation: 'fade' | 'slide';
   setCurrent: (current: number) => void;
   buttonClicked: boolean;
   setButtonClicked: SetterFunction;
-  loading: boolean;
-  setLoading: SetterFunction;
 }
 
 export type SliderSCNames =
