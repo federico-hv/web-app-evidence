@@ -5,7 +5,6 @@ import { IndicatorItemProps } from '../shared/types';
 export default function IndicatorDot({
   isActive,
   onClick,
-  key,
 }: IndicatorItemProps) {
   return (
     <MotionDot
@@ -14,7 +13,6 @@ export default function IndicatorDot({
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       onClick={onClick}
-      key={key}
       bgColor={isActive ? 'base100' : 'base200'}
       size='0.65rem'
     />

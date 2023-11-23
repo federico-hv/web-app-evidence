@@ -24,12 +24,11 @@ function SlideSlider({ children }: GenericProps) {
     speed,
     buttonClicked,
     setButtonClicked,
-    animationRunning,
     setAnimationRunning,
   } = useSliderContext();
+  const controls = useDragControls();
   const [displayedSlide, setDisplayedSlide] = useState(0);
   const [scope, animate] = useAnimate();
-  const controls = useDragControls();
   const slideRef = useRef(null);
 
   const [SlideList, setSlideList] = useState(
@@ -72,8 +71,8 @@ function SlideSlider({ children }: GenericProps) {
 
     slideSlides(direction).then(() => {
       setDisplayedSlide(currentSlide);
-      setAnimationRunning(false);
       setButtonClicked(false);
+      setAnimationRunning(false);
     });
   }, [currentSlide]);
 
@@ -118,12 +117,23 @@ function SlideSlider({ children }: GenericProps) {
     const difference = Math.round(
       sliderPosition / scope.current.offsetWidth,
     );
+
+    if (
+      // left boundary
+      difference > length / 2 ||
+      // right boundary
+      difference < -1 * Math.ceil(length / 2)
+    ) {
+      setAnimationRunning(false);
+      animate(scope.current, ...slideAnimateOut());
+      return;
+    }
+
     const index =
       currentSlide - difference >= 0
         ? currentSlide - difference
         : length - difference;
 
-    console.log(difference, currentSlide);
     updateSlideList(
       difference > 0 ? 'left' : 'right',
       Math.abs(difference),
