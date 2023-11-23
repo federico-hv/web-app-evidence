@@ -24,9 +24,10 @@ function SlideSlider({ children }: GenericProps) {
     speed,
     buttonClicked,
     setButtonClicked,
+    animationRunning,
+    setAnimationRunning,
   } = useSliderContext();
   const [displayedSlide, setDisplayedSlide] = useState(0);
-  const [animationRunning, setAnimationRunning] = useState(false);
   const [scope, animate] = useAnimate();
   const controls = useDragControls();
   const slideRef = useRef(null);
@@ -50,12 +51,10 @@ function SlideSlider({ children }: GenericProps) {
   );
 
   useEffect(() => {
-    if (displayedSlide === currentSlide || animationRunning) return;
+    if (displayedSlide === currentSlide) return;
 
     let difference = displayedSlide - currentSlide;
     let direction: DirectionNames = difference > 0 ? 'left' : 'right';
-
-    setAnimationRunning(true);
 
     // no button has been clicked, since our difference is large
     if (!buttonClicked) {
@@ -115,15 +114,21 @@ function SlideSlider({ children }: GenericProps) {
         transformX.indexOf('p'),
       ),
     );
-    const difference = Math.round(sliderPosition / 1000);
+
+    const difference = Math.round(
+      sliderPosition / scope.current.offsetWidth,
+    );
     const index =
-      currentSlide - difference > 0
+      currentSlide - difference >= 0
         ? currentSlide - difference
         : length - difference;
+
+    console.log(difference, currentSlide);
     updateSlideList(
       difference > 0 ? 'left' : 'right',
       Math.abs(difference),
     );
+
     animate(scope.current, ...slideAnimateOut());
     setAnimationRunning(false);
     setCurrent(index);

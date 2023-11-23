@@ -35,6 +35,8 @@ export interface ISliderContext {
   setCurrent: (current: number) => void;
   buttonClicked: boolean;
   setButtonClicked: SetterFunction;
+  animationRunning: boolean;
+  setAnimationRunning: SetterFunction;
 }
 
 export type SliderSCNames =

@@ -35,6 +35,7 @@ function Slider({
   ...props
 }: SliderProps) {
   const [buttonClicked, setButtonClicked] = useState<boolean>(false);
+  const [animationRunning, setAnimationRunning] = useState(false);
   const elapsed = useInterval(delay);
 
   // can change, once getSubComponent does tree traversal
@@ -90,6 +91,8 @@ function Slider({
         speed,
         buttonClicked,
         setButtonClicked,
+        animationRunning,
+        setAnimationRunning,
       }}
     >
       <Center
@@ -152,14 +155,23 @@ function SliderPreviousButton({
   colorTheme = 'primary400',
   ...props
 }: Partial<IconButtonProps>) {
-  const { decrementCurrent, loop, current, setButtonClicked } =
-    useSliderContext();
+  const {
+    decrementCurrent,
+    loop,
+    current,
+    setButtonClicked,
+    animationRunning,
+    setAnimationRunning,
+  } = useSliderContext();
   return (
     <IconButton
       ariaLabel={ariaLabel}
       onClick={() => {
-        setButtonClicked(true);
-        decrementCurrent();
+        if (!animationRunning) {
+          setAnimationRunning(true);
+          setButtonClicked(true);
+          decrementCurrent();
+        }
       }}
       icon={icon}
       style={{ opacity: 0.75 }}
@@ -176,14 +188,24 @@ function SliderNextButton({
   colorTheme = 'primary400',
   ...props
 }: Partial<IconButtonProps>) {
-  const { incrementCurrent, loop, length, current, setButtonClicked } =
-    useSliderContext();
+  const {
+    incrementCurrent,
+    loop,
+    length,
+    current,
+    setButtonClicked,
+    animationRunning,
+    setAnimationRunning,
+  } = useSliderContext();
   return (
     <IconButton
       ariaLabel={ariaLabel}
       onClick={() => {
-        setButtonClicked(true);
-        incrementCurrent();
+        if (!animationRunning) {
+          setAnimationRunning(true);
+          setButtonClicked(true);
+          incrementCurrent();
+        }
       }}
       icon={icon}
       style={{ opacity: 0.75 }}
@@ -200,13 +222,22 @@ function SliderIndicator({
   ),
   ...props
 }: SliderIndicatorProps) {
-  const { length, current, setCurrent } = useSliderContext();
+  const {
+    length,
+    current,
+    setCurrent,
+    animationRunning,
+    setAnimationRunning,
+  } = useSliderContext();
 
   const Steps = arrayFrom(length).map((idx) =>
     renderFunction(
       current === idx,
       () => {
-        setCurrent(idx);
+        if (!animationRunning) {
+          setAnimationRunning(true);
+          setCurrent(idx);
+        }
       },
       `slider_indicator-item-${idx}`,
     ),

@@ -8,4 +8,4 @@ export const slideAnimation = (
   { ease: 'easeIn', duration: speed },
 ];
 
-export const slideAnimateOut = () => [{ x: '0' }, { duration: 0 }];
+export const slideAnimateOut = () => [{ x: 0 }, { duration: 0 }];
