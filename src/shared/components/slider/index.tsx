@@ -41,12 +41,12 @@ function Slider({
   const SliderContent = getSubComponent<SliderSCNames>(
     children,
     'SliderContent',
-  )[0];
+  );
 
   // can change, once getSubComponent does tree traversal
   const SliderSlides = SliderContent
     ? getSubComponent<SliderContentSCNames>(
-        SliderContent?.props?.children,
+        SliderContent[0]?.props?.children,
         'SliderSlide',
       )
     : [];
