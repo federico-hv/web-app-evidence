@@ -17,7 +17,6 @@ import {
   SliderContentSCNames,
 } from './shared';
 import { IconButtonProps } from '@holdr-ui/react/dist/components/icon-button/src/icon-button.styles';
-import { AnimatePresence } from 'framer-motion';
 import { BoxProps } from '@holdr-ui/react/dist/components/box/src/box.types';
 import { FadeSlider, IndicatorDot, SlideSlider } from './ui';
 
@@ -79,7 +78,6 @@ function Slider({
   }, [elapsed]);
 
   return (
-    // does not solve render issue
     <SliderContextProvider
       value={{
         length: length,
@@ -102,7 +100,7 @@ function Slider({
         overflow={overflow}
         {...props}
       >
-        {animation == 'fade' && <FadeSlider>{SliderSlides}</FadeSlider>}
+        {animation == 'fade' && <FadeSlider></FadeSlider>}
         {animation == 'slide' && <SlideSlider>{SliderSlides}</SlideSlider>}
         {Controls}
         <Center position='absolute' b='0' l='0' r='0' pb={3}>
@@ -243,11 +241,9 @@ function SliderIndicator({
   );
 
   return (
-    <AnimatePresence>
-      <HStack gap={3} {...props}>
-        {Steps}
-      </HStack>
-    </AnimatePresence>
+    <HStack gap={3} {...props}>
+      {Steps}
+    </HStack>
   );
 }
 

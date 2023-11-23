@@ -8,12 +8,17 @@ import {
 import {
   Children,
   Fragment,
+  PointerEvent,
   ReactElement,
   useEffect,
   useRef,
   useState,
 } from 'react';
-import { useAnimate, useDragControls } from 'framer-motion';
+import {
+  AnimatePresence,
+  useAnimate,
+  useDragControls,
+} from 'framer-motion';
 import { Box, HStack } from '@holdr-ui/react';
 
 function SlideSlider({ children }: GenericProps) {
@@ -97,14 +102,14 @@ function SlideSlider({ children }: GenericProps) {
     );
   };
 
-  const startDrag = () => {
+  const startDrag = (event: PointerEvent) => {
     setAnimationRunning(true);
+    controls.start(event);
   };
 
   const endDrag = () => {
     // assumes transformX is the beginning of the transform style string
     const transformX = scope.current?.style?.transform.split(' ')[0];
-
     if (!transformX) return;
     // this assumes that the transformX property is in units of px, which seems to always be the case
     const sliderPosition: number = parseInt(
@@ -113,11 +118,9 @@ function SlideSlider({ children }: GenericProps) {
         transformX.indexOf('p'),
       ),
     );
-
     const difference = Math.round(
       sliderPosition / scope.current.offsetWidth,
     );
-
     if (
       // left boundary
       difference > length / 2 ||
@@ -128,17 +131,14 @@ function SlideSlider({ children }: GenericProps) {
       animate(scope.current, ...slideAnimateOut());
       return;
     }
-
     const index =
       currentSlide - difference >= 0
         ? currentSlide - difference
         : length - difference;
-
     updateSlideList(
       difference > 0 ? 'left' : 'right',
       Math.abs(difference),
     );
-
     animate(scope.current, ...slideAnimateOut());
     setAnimationRunning(false);
     setCurrent(index);
@@ -146,35 +146,37 @@ function SlideSlider({ children }: GenericProps) {
   };
 
   return (
-    <Box
-      w='calc(100% - 32px)'
-      h='full'
-      radius={3}
-      overflow='hidden'
-      position='relative'
-      onPointerDown={startDrag}
-    >
-      <MotionBox
+    <AnimatePresence initial={false} mode='wait'>
+      <Box
+        w='calc(100% - 32px)'
         h='full'
-        w='full'
-        ref={scope}
-        drag='x'
-        dragControls={controls}
-        dragTransition={{ bounceStiffness: 0, bounceDamping: 0 }}
-        onDragEnd={endDrag}
+        radius={3}
+        overflow='hidden'
+        position='relative'
+        onPointerDown={startDrag}
       >
-        <HStack
-          ref={slideRef}
-          // broken, fix this
-          l={`${-100 * Math.round(length / 2)}%`}
-          w={`${100 * length}%`}
+        <MotionBox
           h='full'
-          position='absolute'
+          w='full'
+          ref={scope}
+          drag='x'
+          dragControls={controls}
+          dragTransition={{ bounceStiffness: 0, bounceDamping: 0 }}
+          onDragEnd={endDrag}
         >
-          {SlideList}
-        </HStack>
-      </MotionBox>
-    </Box>
+          <HStack
+            ref={slideRef}
+            // broken, fix this
+            l={`${-100 * Math.round(length / 2)}%`}
+            w={`${100 * length}%`}
+            h='full'
+            position='absolute'
+          >
+            {SlideList}
+          </HStack>
+        </MotionBox>
+      </Box>
+    </AnimatePresence>
   );
 }
 

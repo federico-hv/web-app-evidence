@@ -1,10 +1,11 @@
-import { Children, useEffect, useMemo } from 'react';
+import { Children, useMemo } from 'react';
 import { GenericProps, MotionBox } from 'shared';
 import { useSliderContext } from '../shared';
 import { AnimatePresence } from 'framer-motion';
 
 function FadeSlider({ children }: GenericProps) {
-  const { current, speed } = useSliderContext();
+  const { current, speed, setAnimationRunning } = useSliderContext();
+  setAnimationRunning(false);
 
   const SlideList = useMemo(
     () =>
@@ -30,11 +31,10 @@ function FadeSlider({ children }: GenericProps) {
   if (!SlideList) return null;
 
   return (
-    <AnimatePresence initial={false} mode='wait'>
-      {SlideList[current]}
-    </AnimatePresence>
+    <AnimatePresence initial={false}>{SlideList[current]}</AnimatePresence>
   );
 }
 
 FadeSlider.displayName = 'FadeContent';
 export default FadeSlider;
+
