@@ -35,6 +35,5 @@ function FadeSlider({ children }: GenericProps) {
   );
 }
 
-FadeSlider.displayName = 'FadeContent';
+FadeSlider.displayName = 'FadeSlider';
 export default FadeSlider;
-

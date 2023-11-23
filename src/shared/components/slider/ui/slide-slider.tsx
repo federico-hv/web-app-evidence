@@ -111,6 +111,7 @@ function SlideSlider({ children }: GenericProps) {
     // assumes transformX is the beginning of the transform style string
     const transformX = scope.current?.style?.transform.split(' ')[0];
     if (!transformX) return;
+
     // this assumes that the transformX property is in units of px, which seems to always be the case
     const sliderPosition: number = parseInt(
       transformX.substring(
@@ -121,11 +122,10 @@ function SlideSlider({ children }: GenericProps) {
     const difference = Math.round(
       sliderPosition / scope.current.offsetWidth,
     );
+    
     if (
-      // left boundary
-      difference > length / 2 ||
-      // right boundary
-      difference < -1 * Math.ceil(length / 2)
+      difference > length / 2 || // left boundary
+      difference < -1 * Math.ceil(length / 2) // right boundary
     ) {
       setAnimationRunning(false);
       animate(scope.current, ...slideAnimateOut());
