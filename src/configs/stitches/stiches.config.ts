@@ -199,6 +199,7 @@ export const { styled, css, theme, keyframes } = createStitches({
       'property-colors': 'background-color,border-color,color,fill,stroke',
       'property-height': 'width,height',
       'property-position': 'left,right,top,bottom',
+      'property-all': 'all',
       'property-background':
         'background-color,background-image,background-position',
     },

@@ -93,3 +93,15 @@ export function groupArray<T>(arr: T[], groupsOf: number): T[][] {
 export function makePath(paths: string[], prefixStr = '/') {
   return prefix(prefixStr, join(paths, '/'));
 }
+
+/**
+ * Makes an item into an array
+ *
+ * @param item any data item
+ */
+export function makeArray(item: any): any[] {
+  if (!Array.isArray(item)) {
+    return [item];
+  }
+  return item;
+}

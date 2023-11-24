@@ -1,4 +1,5 @@
 import {
+  arrayFrom,
   Error,
   ErrorFallback,
   GQLRenderer,
@@ -7,7 +8,7 @@ import {
   ResponsiveItem,
   Slider,
 } from '../../shared';
-import { Image, VStack } from '@holdr-ui/react';
+import { Center, VStack } from '@holdr-ui/react';
 import { SuggestionsCard, useCurrentUser } from '../../features';
 import { FeedTabs } from './ui';
 import {
@@ -16,7 +17,14 @@ import {
   ContentLayoutMain,
   SmHeader,
 } from '../../layout';
-//TODO: Rename move
+import {
+  SliderControls,
+  SliderIndicator,
+  SliderNextButton,
+  SliderPreviousButton,
+  SliderSlide,
+} from '../../shared/components/slider';
+//TODO: Remove
 
 function HomePage() {
   const currentUser = useCurrentUser();
@@ -33,52 +41,43 @@ function HomePage() {
         {currentUser && (
           <ContentLayout>
             <ContentLayoutMain>
+              {/*<Slider*/}
+              {/*  loop={true}*/}
+              {/*  animation='fade'*/}
+              {/*  autoplay={{ active: false }}*/}
+              {/*>*/}
+              {/*  <SliderControls>*/}
+              {/*    <SliderNextButton />*/}
+              {/*    <SliderPreviousButton />*/}
+              {/*  </SliderControls>*/}
+              {/*  <SliderIndicator py={3} gap={4} />*/}
+              {/*  {arrayFrom(4).map((idx) => (*/}
+              {/*    <SliderSlide*/}
+              {/*      key={idx}*/}
+              {/*      css={{ backgroundColor: '#fff442' }}*/}
+              {/*    >*/}
+              {/*      <Center h='100%'>Slide {idx + 1}</Center>*/}
+              {/*    </SliderSlide>*/}
+              {/*  ))}*/}
+              {/*</Slider>*/}
               <Slider
-                animation='fade'
                 loop={true}
+                animation='slide'
                 autoplay={{ active: false }}
               >
-                <Slider.Controls>
-                  <Slider.Controls.NextButton />{' '}
-                  <Slider.Controls.PreviousButton />
-                </Slider.Controls>
-                <Slider.Indicator />
-                <Slider.Slide>
-                  <Image
-                    fit='cover'
-                    src={
-                      'https://picsum.photos/1000?random=' + Math.random()
-                    }
-                    h='200px'
-                  />
-                </Slider.Slide>
-                <Slider.Slide>
-                  <Image
-                    fit='cover'
-                    src={
-                      'https://picsum.photos/1000?random=' + Math.random()
-                    }
-                    h='200px'
-                  />
-                </Slider.Slide>
-                <Slider.Slide>
-                  <Image
-                    fit='cover'
-                    src={
-                      'https://picsum.photos/1000?random=' + Math.random()
-                    }
-                    h='200px'
-                  />
-                </Slider.Slide>
-                <Slider.Slide>
-                  <Image
-                    fit='cover'
-                    src={
-                      'https://picsum.photos/1000?random=' + Math.random()
-                    }
-                    h='200px'
-                  />
-                </Slider.Slide>
+                <SliderControls>
+                  <SliderNextButton />
+                  <SliderPreviousButton />
+                </SliderControls>
+                <SliderIndicator py={3} gap={4} />
+                {arrayFrom(4).map((idx) => (
+                  <SliderSlide
+                    key={idx}
+                    css={{ backgroundColor: '#ff4ff2' }}
+                  >
+                    <Center h='100%'>Slide {idx + 1}</Center>
+                  </SliderSlide>
+                ))}
               </Slider>
               <VStack gap={4} mt={{ '@bp1': 56, '@bp3': 0 }} w='100%'>
                 <FeedTabs />
