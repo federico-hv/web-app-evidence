@@ -112,6 +112,7 @@ function Slider({
 }
 
 function SliderControls({ children, ...props }: BoxProps) {
+  const { current, length, loop } = useSliderContext();
   const nextButton = getSubComponent<SliderControlsSCNames>(
     children,
     'SliderNextButton',
@@ -122,26 +123,33 @@ function SliderControls({ children, ...props }: BoxProps) {
     'SliderPreviousButton',
   );
 
+  const displayPrevious = loop ? true : current != 0;
+  const displayNext = loop ? true : current != length - 1;
+
   return (
     <Fragment>
-      <Box
-        position='absolute'
-        l={0}
-        t='50%'
-        css={{ transform: 'translateY(-50%)' }}
-        {...props}
-      >
-        {previousButton}
-      </Box>
-      <Box
-        position='absolute'
-        r={0}
-        t='50%'
-        css={{ transform: 'translateY(-50%)' }}
-        {...props}
-      >
-        {nextButton}
-      </Box>
+      {displayPrevious && (
+        <Box
+          position='absolute'
+          l={0}
+          t='50%'
+          css={{ transform: 'translateY(-50%)' }}
+          {...props}
+        >
+          {previousButton}
+        </Box>
+      )}
+      {displayNext && (
+        <Box
+          position='absolute'
+          r={0}
+          t='50%'
+          css={{ transform: 'translateY(-50%)' }}
+          {...props}
+        >
+          {nextButton}
+        </Box>
+      )}
     </Fragment>
   );
 }

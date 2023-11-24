@@ -34,9 +34,9 @@ function HomePage() {
         {currentUser && (
           <ContentLayout>
             <ContentLayoutMain>
-              <Slider animation='slide' loop={true} autoplay={false}>
+              <Slider animation='slide' loop={false} autoplay={false}>
                 <Slider.Controls>
-                  <Slider.Controls.NextButton />{' '}
+                  <Slider.Controls.NextButton />
                   <Slider.Controls.PreviousButton />
                 </Slider.Controls>
                 <Slider.Indicator />
