@@ -1,10 +1,10 @@
 import { Box, HStack, IconButton } from '@holdr-ui/react';
-import { Fragment } from 'react';
+import React, { Fragment } from 'react';
 import {
   arrayFrom,
   GenericProps,
   getSubComponent,
-  useInterval,
+  makeArray,
 } from 'shared';
 import {
   SliderControlsSCNames,
@@ -29,20 +29,27 @@ export function circular(num: number, max: number) {
 }
 
 function Slider({
-  loop = true,
-  autoplay = { active: true, delay: 10 },
+  loop = false,
+  autoPlay = false,
+  delay = 2.5, // 2.5 seconds
   animation = 'fade',
-  speed = 0.5,
+  speed = 'duration-slower',
   position = 'relative',
   h = '200px',
   w = 'full',
-  overflow = 'hidden',
+
   children,
   ...props
 }: SliderProps) {
-  const elapsed = useInterval(autoplay?.delay || 20);
+  const SliderContent = getSubComponent<SliderSCNames>(
+    children,
+    'SliderContent',
+  );
 
-  const Slides = getSubComponent<SliderSCNames>(children, 'SliderSlide');
+  const Slides = getSubComponent<SliderSCNames>(
+    makeArray(SliderContent)[0].props.children,
+    'SliderSlide',
+  );
 
   const Controls = getSubComponent<SliderSCNames>(
     children,
@@ -56,17 +63,21 @@ function Slider({
 
   const numberOfSlides = Slides ? Slides.length : 0;
 
+  if (numberOfSlides === 0) {
+    return <Fragment />;
+  }
+
   return (
     // does not solve render issue
     <AnimatePresence>
-      <SliderProvider loop={loop} numberOfSlides={numberOfSlides}>
-        <Box
-          position={position}
-          h={h}
-          w={w}
-          overflow={overflow}
-          {...props}
-        >
+      <SliderProvider
+        autoPlay={autoPlay}
+        delay={delay}
+        speed={speed}
+        loop={loop}
+        numberOfSlides={numberOfSlides}
+      >
+        <Box position={position} h={h} w={w} {...props} overflow='hidden'>
           <HStack w='full' h='full' justify='flex-start'>
             {animation === 'slide' && (
               <SlideAnimated>
@@ -125,9 +136,9 @@ function SliderPreviousButton({
   colorTheme = 'clearTint400',
   ...props
 }: Partial<IconButtonProps>) {
-  const { loop, index, numberOfSlides, updateIndex } = useSliderContext();
+  const { loop, index } = useSliderContext();
 
-  if (index.current === 0 && !loop) {
+  if (index === 0 && !loop) {
     return <Fragment />;
   }
 
@@ -156,9 +167,9 @@ function SliderNextButton({
   colorTheme = 'clearTint400',
   ...props
 }: Partial<IconButtonProps>) {
-  const { loop, index, updateIndex, numberOfSlides } = useSliderContext();
+  const { loop, index, numberOfSlides } = useSliderContext();
 
-  if (index.current === numberOfSlides - 1 && !loop) {
+  if (index === numberOfSlides - 1 && !loop) {
     return <Fragment />;
   }
 
@@ -186,9 +197,9 @@ function SliderIndicator({ renderItem, ...props }: SliderIndicatorProps) {
 
   const Steps = arrayFrom(numberOfSlides).map((idx) => {
     const key = `slider_indicator-item-${idx}`;
-    const isActive = index.current === idx;
+    const isActive = index === idx;
     const onClick = () => {
-      updateIndex({ previous: index.current, current: idx });
+      updateIndex(idx);
     };
 
     return renderItem ? (
@@ -212,6 +223,12 @@ function SliderIndicator({ renderItem, ...props }: SliderIndicatorProps) {
       {Steps}
     </HStack>
   );
+}
+
+function SliderContent({ children }: GenericProps) {
+  const Slides = getSubComponent<SliderSCNames>(children, 'SliderSlide');
+
+  return <Fragment>{Slides}</Fragment>;
 }
 
 function SliderSlide({
@@ -241,12 +258,14 @@ Slider.displayName = 'Slider';
 SliderSlide.displayName = 'SliderSlide';
 SliderIndicator.displayName = 'SliderIndicator';
 SliderControls.displayName = 'SliderControls';
+SliderContent.displayName = 'SliderContent';
 SliderNextButton.displayName = 'SliderNextButton';
 SliderPreviousButton.displayName = 'SliderPreviousButton';
 
 Slider.Slide = SliderSlide;
 Slider.Controls = SliderControls;
 Slider.Indicator = SliderIndicator;
+SliderContent.Content = SliderContent;
 SliderControls.NextButton = SliderNextButton;
 SliderControls.PreviousButton = SliderPreviousButton;
 
@@ -257,4 +276,5 @@ export {
   SliderControls,
   SliderNextButton,
   SliderPreviousButton,
+  SliderContent,
 };

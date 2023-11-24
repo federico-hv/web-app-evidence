@@ -1,12 +1,15 @@
-import { dummyFn, GenericProps, useRecordState } from 'shared';
-import { ISliderContext, ISliderIndex } from '../types';
-import { createContext, useContext } from 'react';
+import { dummyFn } from 'shared';
+import { ISliderContext, SliderProviderProps } from '../types';
+import { createContext, useContext, useState } from 'react';
 
 const SliderContext = createContext<ISliderContext>({
   numberOfSlides: 0,
-  index: { current: 0, previous: -1 },
+  delay: 0,
+  index: 0,
   updateIndex: dummyFn,
   loop: true,
+  speed: 'duration-slower',
+  autoPlay: false,
 });
 
 const SliderContextProvider = SliderContext.Provider;
@@ -16,18 +19,29 @@ function useSliderContext() {
 }
 
 function SliderProvider({
+  autoPlay,
   loop,
+  delay,
+  speed,
   children,
   numberOfSlides,
-}: GenericProps & { numberOfSlides: number; loop: boolean }) {
-  const [index, updateIndex] = useRecordState<ISliderIndex>({
-    current: 0,
-    previous: -1,
-  });
+}: SliderProviderProps) {
+  const [index, setIndex] = useState<number>(0);
+
+  const updateIndex = (next: number, cb?: (next: number) => void) =>
+    setIndex(() => {
+      if (cb) {
+        cb(next);
+      }
+      return next;
+    });
 
   return (
     <SliderContextProvider
       value={{
+        autoPlay,
+        speed,
+        delay,
         loop,
         index,
         numberOfSlides,
