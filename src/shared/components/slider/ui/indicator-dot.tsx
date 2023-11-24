@@ -11,6 +11,7 @@ export default function IndicatorDot({
       onClick={onClick}
       bgColor={isActive ? 'base100' : 'base200'}
       size='0.65rem'
+      aria-label='change slide'
     />
   );
 }
