@@ -1,6 +1,6 @@
-import { CenterProps } from '@holdr-ui/react/dist/components/center/src/center.types';
 import { HStackProps } from '@holdr-ui/react/dist/components/stack/src/stack.types';
 import { ReactElement } from 'react';
+import { BoxProps } from '@holdr-ui/react/dist/components/box/src/box.types';
 
 export interface SliderIndicatorProps extends HStackProps {
   renderItem?: (
@@ -9,46 +9,41 @@ export interface SliderIndicatorProps extends HStackProps {
     key: string,
   ) => ReactElement;
 }
-
-export interface IndicatorItemProps {
-  key: string;
-  onClick: VoidFunction;
-  isActive: boolean;
-}
-
-export interface SliderProps extends CenterProps {
+export interface SliderProps extends BoxProps {
   loop?: boolean;
-  autoplay?: boolean;
-  delay?: number;
+  autoplay?: { active: boolean; delay?: number };
   speed?: number;
   animation?: 'fade' | 'slide';
   type?: 'swipe' | 'drag';
 }
 
-export interface ISliderContext {
-  incrementCurrent: VoidFunction;
-  decrementCurrent: VoidFunction;
-  length: number;
+export interface ISliderIndex {
   current: number;
+  previous: number;
+}
+
+export interface ISliderContext {
+  index: ISliderIndex;
+  updateIndex: (
+    next: Partial<ISliderIndex>,
+    cb?: (next: ISliderIndex) => void,
+  ) => void;
+  numberOfSlides: number;
   loop: boolean;
-  speed: number;
-  setCurrent: (current: number) => void;
-  buttonClicked: boolean;
-  setButtonClicked: SetterFunction;
-  animationRunning: boolean;
-  setAnimationRunning: SetterFunction;
+  // animation: 'fade' | 'slide';
+  // direction: DirectionNames;
+  // setDirection: (dir: DirectionNames) => void;
+  // buttonClicked: boolean;
+  // setButtonClicked: SetterFunction;
+  // loading: boolean;
+  // setLoading: SetterFunction;
 }
 
 export type SliderSCNames =
+  | 'SliderSlide'
   | 'SliderControls'
-  | 'SliderIndicator'
-  | 'SliderContent';
-
-export type SliderContentSCNames = 'SliderSlide';
+  | 'SliderIndicator';
 
 export type SliderControlsSCNames =
   | 'SliderNextButton'
   | 'SliderPreviousButton';
-
-export type DirectionNames = 'left' | 'right';
-type SetterFunction = (state: boolean) => void;
