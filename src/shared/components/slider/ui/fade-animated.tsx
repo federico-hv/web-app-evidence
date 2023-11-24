@@ -4,17 +4,16 @@ import { Box, HStack } from '@holdr-ui/react';
 import { useSliderContext } from '../shared';
 import { MotionBox } from '../../../styles';
 import { getSubComponent, makeArray } from '../../../utilities';
+import { AnimatePresence } from 'framer-motion';
+import { circular } from '../index';
 
-/**
- * TODO:
- * - Fix animation
- * - Idea: Stack the content on top of each other
- *    then as one of the items goes off, its put at the end of the list
- *    and the next item appear from the bottom.
- */
+const variants = {
+  visible: { opacity: 1 },
+  hidden: { opacity: 0 },
+};
 
 function FadeAnimated({ children }: GenericProps) {
-  const { index, numberOfSlides } = useSliderContext();
+  const { index, numberOfSlides, updateIndex } = useSliderContext();
 
   const FadeAnimatedSlides = getSubComponent(
     children,
@@ -35,19 +34,28 @@ function FadeAnimated({ children }: GenericProps) {
     (child, idx) => {
       const active = idx === index;
       return (
-        <MotionBox
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          hidden={!active}
-          position='absolute'
-          t={0}
-          l={0}
-          h='full'
-          w='full'
-          css={{ flex: 1, flexShrink: 0, flexBasis: `${Percentage}%` }}
-        >
-          {child}
-        </MotionBox>
+        <AnimatePresence>
+          {active && (
+            <MotionBox
+              initial='hidden'
+              variants={variants}
+              animate='visible'
+              transition={{ duration: 2.5, type: 'ease-in' }}
+              position='absolute'
+              t={0}
+              l={0}
+              h='full'
+              w='full'
+              css={{
+                flex: 1,
+                flexShrink: 0,
+                flexBasis: `${Percentage}%`,
+              }}
+            >
+              {child}
+            </MotionBox>
+          )}
+        </AnimatePresence>
       );
     },
   );
@@ -63,9 +71,9 @@ function FadeAnimated({ children }: GenericProps) {
         ) {
           return (
             <Box
-              onClick={() => {
-                console.log('next');
-              }}
+              onClick={() =>
+                updateIndex(circular(index + 1, numberOfSlides))
+              }
             >
               {child}
             </Box>
@@ -77,9 +85,9 @@ function FadeAnimated({ children }: GenericProps) {
         ) {
           return (
             <Box
-              onClick={() => {
-                console.log('prev');
-              }}
+              onClick={() =>
+                updateIndex(circular(index - 1, numberOfSlides))
+              }
             >
               {child}
             </Box>
