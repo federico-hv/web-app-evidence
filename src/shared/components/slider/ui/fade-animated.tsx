@@ -6,6 +6,7 @@ import { MotionBox } from '../../../styles';
 import { getSubComponent, makeArray } from '../../../utilities';
 import { AnimatePresence } from 'framer-motion';
 import { circular } from '../index';
+import { useInterval } from '../../../hooks';
 
 const variants = {
   visible: { opacity: 1 },
@@ -13,7 +14,8 @@ const variants = {
 };
 
 function FadeAnimated({ children }: GenericProps) {
-  const { index, numberOfSlides, updateIndex } = useSliderContext();
+  const { index, autoPlay, delay, numberOfSlides, updateIndex } =
+    useSliderContext();
 
   const FadeAnimatedSlides = getSubComponent(
     children,
@@ -96,6 +98,13 @@ function FadeAnimated({ children }: GenericProps) {
       });
     },
   );
+
+  // autoplay effect
+  useInterval(delay, () => {
+    if (autoPlay) {
+      updateIndex(circular(index + 1, numberOfSlides));
+    }
+  });
 
   return (
     <Fragment>
