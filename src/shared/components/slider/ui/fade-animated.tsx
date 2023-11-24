@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import { GenericProps } from '../../../interfaces';
-import { HStack } from '@holdr-ui/react';
+import { Box, HStack } from '@holdr-ui/react';
 import { useSliderContext } from '../shared';
 import { MotionBox } from '../../../styles';
 import { getSubComponent, makeArray } from '../../../utilities';
@@ -24,6 +24,8 @@ function FadeAnimated({ children }: GenericProps) {
     children,
     'FadeAnimatedControls',
   );
+  const ControlsWrapper = makeArray(FadeAnimatedControls)[0].props
+    .children;
 
   const Percentage = 100 / numberOfSlides;
 
@@ -31,7 +33,7 @@ function FadeAnimated({ children }: GenericProps) {
   const Slides = React.Children.map(
     makeArray(FadeAnimatedSlides)[0].props.children,
     (child, idx) => {
-      const active = idx === index.current;
+      const active = idx === index;
       return (
         <MotionBox
           initial={{ opacity: 0 }}
@@ -49,6 +51,43 @@ function FadeAnimated({ children }: GenericProps) {
       );
     },
   );
+  // Add some superpowers to the buttons
+  const Controls = React.Children.map(
+    makeArray(ControlsWrapper)[0].props.children,
+    (child) => {
+      return React.Children.map(child, (child) => {
+        if (
+          child &&
+          child.type &&
+          child.type.displayName === 'SliderNextButton'
+        ) {
+          return (
+            <Box
+              onClick={() => {
+                console.log('next');
+              }}
+            >
+              {child}
+            </Box>
+          );
+        } else if (
+          child &&
+          child.type &&
+          child.type.displayName === 'SliderPreviousButton'
+        ) {
+          return (
+            <Box
+              onClick={() => {
+                console.log('prev');
+              }}
+            >
+              {child}
+            </Box>
+          );
+        }
+      });
+    },
+  );
 
   return (
     <Fragment>
@@ -61,7 +100,7 @@ function FadeAnimated({ children }: GenericProps) {
       >
         {Slides}
       </HStack>
-      {FadeAnimatedControls}
+      {Controls}
     </Fragment>
   );
 }
