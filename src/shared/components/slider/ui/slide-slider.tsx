@@ -3,11 +3,11 @@ import {
   DirectionNames,
   slideAnimateOut,
   slideAnimation,
+  useCircularArray,
   useSliderContext,
 } from '../shared';
 import {
   Children,
-  Fragment,
   PointerEvent,
   ReactElement,
   useEffect,
@@ -36,23 +36,8 @@ function SlideSlider({ children }: GenericProps) {
   const [scope, animate] = useAnimate();
   const slideRef = useRef(null);
 
-  const [SlideList, setSlideList] = useState(
-    Children.map(children, (child, idx) => (
-      <Fragment key={idx + 1}>{child}</Fragment>
-    ))?.reduce(
-      (slides: ReactElement[], slide: ReactElement, idx: number) => {
-        const firstIndex = slides.length - Math.floor(length / 2);
-        return idx + 1 <= length / 2
-          ? [...slides, slide]
-          : [
-              ...slides.slice(0, firstIndex),
-              slide,
-              ...slides.slice(firstIndex),
-            ];
-      },
-      [],
-    ) || [],
-  );
+  const { array: SlideList, slideArray: updateSlideList } =
+    useCircularArray(Children.toArray(children));
 
   useEffect(() => {
     if (displayedSlide === currentSlide) return;
@@ -61,6 +46,7 @@ function SlideSlider({ children }: GenericProps) {
     let direction: DirectionNames = difference > 0 ? 'left' : 'right';
 
     // no button has been clicked, since our difference is large
+    // animation will be skipped
     if (!buttonClicked) {
       updateSlideList(direction, Math.abs(difference));
       setDisplayedSlide(currentSlide);
@@ -68,7 +54,7 @@ function SlideSlider({ children }: GenericProps) {
       return;
     }
 
-    // edge case
+    // loop around case
     if (Math.abs(difference) === length - 1) {
       difference = (-1 * difference) / (length - 1);
       direction = difference > 0 ? 'left' : 'right';
@@ -81,18 +67,7 @@ function SlideSlider({ children }: GenericProps) {
     });
   }, [currentSlide]);
 
-  const updateSlideList = (direction: 'left' | 'right', times: number) => {
-    direction === 'left'
-      ? setSlideList([
-          ...SlideList.slice(length - times),
-          ...SlideList.slice(0, length - times),
-        ])
-      : setSlideList([
-          ...SlideList.slice(times),
-          ...SlideList.slice(0, times),
-        ]);
-  };
-
+  // sliding animation
   const slideSlides = async (direction: 'left' | 'right') => {
     await animate(scope.current, ...slideAnimation(direction, speed)).then(
       () => {
@@ -122,7 +97,7 @@ function SlideSlider({ children }: GenericProps) {
     const difference = Math.round(
       sliderPosition / scope.current.offsetWidth,
     );
-    
+
     if (
       difference > length / 2 || // left boundary
       difference < -1 * Math.ceil(length / 2) // right boundary
@@ -161,12 +136,11 @@ function SlideSlider({ children }: GenericProps) {
           ref={scope}
           drag='x'
           dragControls={controls}
-          dragTransition={{ bounceStiffness: 0, bounceDamping: 0 }}
+          dragMomentum={false}
           onDragEnd={endDrag}
         >
           <HStack
             ref={slideRef}
-            // broken, fix this
             l={`${-100 * Math.round(length / 2)}%`}
             w={`${100 * length}%`}
             h='full'
