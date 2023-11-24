@@ -17,6 +17,9 @@ function FadeAnimated({ children }: GenericProps) {
   const { index, autoPlay, delay, numberOfSlides, updateIndex } =
     useSliderContext();
 
+  const increment = () => updateIndex(circular(index + 1, numberOfSlides));
+  const decrement = () => updateIndex(circular(index - 1, numberOfSlides));
+
   const FadeAnimatedSlides = getSubComponent(
     children,
     'FadeAnimatedSlides',
@@ -71,29 +74,13 @@ function FadeAnimated({ children }: GenericProps) {
           child.type &&
           child.type.displayName === 'SliderNextButton'
         ) {
-          return (
-            <Box
-              onClick={() =>
-                updateIndex(circular(index + 1, numberOfSlides))
-              }
-            >
-              {child}
-            </Box>
-          );
+          return <Box onClick={increment}>{child}</Box>;
         } else if (
           child &&
           child.type &&
           child.type.displayName === 'SliderPreviousButton'
         ) {
-          return (
-            <Box
-              onClick={() =>
-                updateIndex(circular(index - 1, numberOfSlides))
-              }
-            >
-              {child}
-            </Box>
-          );
+          return <Box onClick={decrement}>{child}</Box>;
         }
       });
     },
@@ -102,7 +89,7 @@ function FadeAnimated({ children }: GenericProps) {
   // autoplay effect
   useInterval(delay, () => {
     if (autoPlay) {
-      updateIndex(circular(index + 1, numberOfSlides));
+      increment();
     }
   });
 
