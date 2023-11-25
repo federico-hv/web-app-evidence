@@ -42,7 +42,7 @@ function HomePage() {
         {currentUser && (
           <ContentLayout>
             <ContentLayoutMain>
-              <Slider autoPlay delay={3} loop animation='fade'>
+              <Slider autoPlay delay={3} loop animation='slide'>
                 <SliderControls>
                   <SliderNextButton />
                   <SliderPreviousButton />

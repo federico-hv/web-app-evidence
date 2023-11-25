@@ -1,5 +1,5 @@
 import { HStackProps } from '@holdr-ui/react/dist/components/stack/src/stack.types';
-import { ReactElement } from 'react';
+import { Dispatch, ReactElement, SetStateAction } from 'react';
 import { BoxProps } from '@holdr-ui/react/dist/components/box/src/box.types';
 import { TransitionSpeed } from '../../../types';
 import { GenericProps } from '../../../interfaces';
@@ -36,7 +36,7 @@ export interface SliderProps
 
 export interface ISliderContext extends SliderCommonProps {
   index: number;
-  updateIndex: (next: number, cb?: (next: number) => void) => void;
+  setIndex: Dispatch<SetStateAction<number>>;
   numberOfSlides: number;
 }
 

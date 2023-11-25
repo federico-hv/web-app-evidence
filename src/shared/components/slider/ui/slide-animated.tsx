@@ -60,7 +60,7 @@ function SlideAnimated({ children }: GenericProps) {
 
   const sliderRef = useRef<HTMLDivElement>(null);
 
-  const { numberOfSlides, index, updateIndex, speed, delay, autoPlay } =
+  const { numberOfSlides, index, setIndex, speed, delay, autoPlay } =
     useSliderContext();
 
   // State used for handling user over-clicks: it disallows a user triggering another event
@@ -239,7 +239,7 @@ function SlideAnimated({ children }: GenericProps) {
             setDisabled(false);
           });
           // We are updating our external index here
-          updateIndex(mappedIndex(currentIndex, numberOfSlides));
+          setIndex(mappedIndex(currentIndex, numberOfSlides));
         }}
         css={{
           flexShrink: 0,

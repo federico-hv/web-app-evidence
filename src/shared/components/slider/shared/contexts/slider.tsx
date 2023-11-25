@@ -28,14 +28,6 @@ function SliderProvider({
 }: SliderProviderProps) {
   const [index, setIndex] = useState<number>(0);
 
-  const updateIndex = (next: number, cb?: (next: number) => void) =>
-    setIndex(() => {
-      if (cb) {
-        cb(next);
-      }
-      return next;
-    });
-
   return (
     <SliderContextProvider
       value={{
@@ -43,9 +35,9 @@ function SliderProvider({
         speed,
         delay,
         loop,
-        index,
         numberOfSlides,
-        updateIndex,
+        index,
+        setIndex,
       }}
     >
       {children}

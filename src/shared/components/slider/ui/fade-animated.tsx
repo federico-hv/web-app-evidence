@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import { GenericProps } from '../../../interfaces';
 import { Box, HStack } from '@holdr-ui/react';
 import { useSliderContext } from '../shared';
@@ -14,11 +14,13 @@ const variants = {
 };
 
 function FadeAnimated({ children }: GenericProps) {
-  const { index, autoPlay, delay, numberOfSlides, updateIndex } =
+  const { index, autoPlay, delay, numberOfSlides, setIndex } =
     useSliderContext();
 
-  const increment = () => updateIndex(circular(index + 1, numberOfSlides));
-  const decrement = () => updateIndex(circular(index - 1, numberOfSlides));
+  const increment = () =>
+    setIndex((prev) => circular(prev + 1, numberOfSlides));
+  const decrement = () =>
+    setIndex((prev) => circular(prev - 1, numberOfSlides));
 
   const FadeAnimatedSlides = getSubComponent(
     children,

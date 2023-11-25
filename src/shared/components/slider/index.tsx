@@ -193,13 +193,13 @@ function SliderNextButton({
 }
 
 function SliderIndicator({ renderItem, ...props }: SliderIndicatorProps) {
-  const { numberOfSlides, updateIndex, index } = useSliderContext();
+  const { numberOfSlides, setIndex, index } = useSliderContext();
 
   const Steps = arrayFrom(numberOfSlides).map((idx) => {
     const key = `slider_indicator-item-${idx}`;
     const isActive = index === idx;
     const onClick = () => {
-      updateIndex(idx);
+      setIndex(idx);
     };
 
     return renderItem ? (
