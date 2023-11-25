@@ -6,7 +6,7 @@ const SliderContext = createContext<ISliderContext>({
   numberOfSlides: 0,
   delay: 0,
   index: 0,
-  updateIndex: dummyFn,
+  setIndex: dummyFn,
   loop: true,
   speed: 'duration-slower',
   autoPlay: false,
