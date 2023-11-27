@@ -30,6 +30,11 @@ function FadeAnimated({ children }: GenericProps) {
     children,
     'FadeAnimatedControls',
   );
+
+  const FadeIndicatorControls = getSubComponent(
+    children,
+    'FadeAnimatedControls',
+  );
   const ControlsWrapper = makeArray(FadeAnimatedControls)[0].props
     .children;
 
@@ -107,7 +112,7 @@ function FadeAnimated({ children }: GenericProps) {
         {Slides}
       </HStack>
       {Controls}
-      {Indicator}
+      {FadeAnimatedIndicator}
     </Fragment>
   );
 }

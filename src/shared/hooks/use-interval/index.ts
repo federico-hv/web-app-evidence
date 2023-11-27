@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
  * @param period the amount of time to wait before calling the function (seconds)
  * @param cb the callback function to be called.
  *
+ * @returns function that resets the interval
  */
 export function useInterval(period: number, cb: VoidFunction) {
   const [interval, set] = useState(
