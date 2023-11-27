@@ -1,17 +1,31 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 /**
  * Call a function after a specified amount of time.
  *
- * @param interval the amount of time to wait before calling the function (seconds)
+ * @param period the amount of time to wait before calling the function (seconds)
  * @param cb the callback function to be called.
  *
  */
-export function useInterval(interval: number, cb: VoidFunction) {
-  useEffect(() => {
-    const intervalFunction = setInterval(() => {
+export function useInterval(period: number, cb: VoidFunction) {
+  const [interval, set] = useState(
+    setInterval(() => {
       cb();
-    }, interval * 1000);
-    return () => clearInterval(intervalFunction);
-  }, []); // on page load
+    }, period * 1000),
+  );
+
+  useEffect(() => {
+    return () => clearInterval(interval);
+  }, [interval]);
+
+  const reset = () => {
+    clearInterval(interval);
+    set(
+      setInterval(() => {
+        cb();
+      }, period * 1000),
+    );
+  };
+
+  return reset;
 }

@@ -136,6 +136,14 @@ function SlideAnimated({ children }: GenericProps) {
     </Box>
   ));
 
+  // autoplay effect
+  const reset = useInterval(delay, () => {
+    if (autoPlay) {
+      increment(moveSlide);
+      addAnimation();
+    }
+  });
+
   // Add some superpowers to the buttons
   const Controls = React.Children.map(
     makeArray(ControlsWrapper)[0].props.children,
@@ -150,6 +158,7 @@ function SlideAnimated({ children }: GenericProps) {
             <Box
               onClick={() => {
                 if (disabled) return;
+                if (autoPlay) reset();
                 increment(moveSlide);
                 addAnimation();
                 setDisabled(true);
@@ -167,6 +176,7 @@ function SlideAnimated({ children }: GenericProps) {
             <Box
               onClick={() => {
                 if (disabled) return;
+                if (autoPlay) reset();
                 decrement(moveSlide);
                 addAnimation();
                 setDisabled(true);
@@ -179,14 +189,6 @@ function SlideAnimated({ children }: GenericProps) {
       });
     },
   );
-
-  // autoplay effect
-  useInterval(delay, () => {
-    if (autoPlay) {
-      increment(moveSlide);
-      addAnimation();
-    }
-  });
 
   // Slide to the slide when the indicators are clicked.
   useEffect(() => {

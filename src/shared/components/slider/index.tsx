@@ -97,6 +97,9 @@ function Slider({
                 {numberOfSlides > 1 && (
                   <FadeAnimated.Controls>{Controls}</FadeAnimated.Controls>
                 )}
+                <FadeAnimated.Indicator>
+                  {Indicator}
+                </FadeAnimated.Indicator>
               </FadeAnimated>
             )}
           </HStack>

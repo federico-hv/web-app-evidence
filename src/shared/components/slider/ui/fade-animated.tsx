@@ -107,6 +107,7 @@ function FadeAnimated({ children }: GenericProps) {
         {Slides}
       </HStack>
       {Controls}
+      {Indicator}
     </Fragment>
   );
 }
@@ -119,10 +120,16 @@ function FadeAnimatedControls({ children }: GenericProps) {
   return <Fragment>{children}</Fragment>;
 }
 
+function FadeAnimatedIndicator({ children }: GenericProps) {
+  return <Fragment>{children}</Fragment>;
+}
+
 FadeAnimatedSlides.displayName = 'FadeAnimatedSlides';
 FadeAnimatedControls.displayName = 'FadeAnimatedControls';
+FadeAnimatedIndicator.displayName = 'FadeAnimatedIndicator';
 
 FadeAnimated.Controls = FadeAnimatedControls;
 FadeAnimated.Slides = FadeAnimatedSlides;
+FadeAnimated.Indicator = FadeAnimatedIndicator;
 
 export default FadeAnimated;
