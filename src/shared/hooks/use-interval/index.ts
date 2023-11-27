@@ -12,9 +12,9 @@ export function useInterval(period: number, cb: VoidFunction) {
   const [interval, set] = useState<any>(undefined);
 
   useEffect(() => {
-    const itvl = setInterval(cb, period * 1000);
-    set(itvl);
-    return () => clearInterval(itvl);
+    const initialInterval = setInterval(cb, period * 1000);
+    set(initialInterval);
+    return () => clearInterval(initialInterval);
   }, []);
 
   const stop = () => {
