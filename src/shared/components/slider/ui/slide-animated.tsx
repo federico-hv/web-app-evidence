@@ -55,8 +55,8 @@ function SlideAnimated({ children }: GenericProps) {
     children,
     'SlideAnimatedIndicator',
   );
-  const ControlsWrapper = makeArray(SlideAnimatedControls)[0].props
-    .children;
+  const ControlsWrapper = makeArray(SlideAnimatedControls)[0]?.props
+    ?.children;
 
   const sliderRef = useRef<HTMLDivElement>(null);
 
@@ -137,7 +137,7 @@ function SlideAnimated({ children }: GenericProps) {
   ));
 
   // autoplay effect
-  const reset = useInterval(delay, () => {
+  const { stop, start } = useInterval(delay, () => {
     if (autoPlay) {
       increment(moveSlide);
       addAnimation();
@@ -146,7 +146,7 @@ function SlideAnimated({ children }: GenericProps) {
 
   // Add some superpowers to the buttons
   const Controls = React.Children.map(
-    makeArray(ControlsWrapper)[0].props.children,
+    makeArray(ControlsWrapper)[0]?.props?.children,
     (child) => {
       return React.Children.map(child, (child) => {
         if (
@@ -158,10 +158,11 @@ function SlideAnimated({ children }: GenericProps) {
             <Box
               onClick={() => {
                 if (disabled) return;
-                if (autoPlay) reset();
+                stop();
                 increment(moveSlide);
                 addAnimation();
                 setDisabled(true);
+                start();
               }}
             >
               {child}
@@ -176,10 +177,11 @@ function SlideAnimated({ children }: GenericProps) {
             <Box
               onClick={() => {
                 if (disabled) return;
-                if (autoPlay) reset();
+                stop();
                 decrement(moveSlide);
                 addAnimation();
                 setDisabled(true);
+                start();
               }}
             >
               {child}

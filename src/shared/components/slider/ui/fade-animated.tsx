@@ -30,13 +30,13 @@ function FadeAnimated({ children }: GenericProps) {
     children,
     'FadeAnimatedControls',
   );
-
-  const FadeIndicatorControls = getSubComponent(
+  console.log(FadeAnimatedControls);
+  const FadeAnimatedIndicator = getSubComponent(
     children,
-    'FadeAnimatedControls',
+    'FadeAnimatedIndicator',
   );
-  const ControlsWrapper = makeArray(FadeAnimatedControls)[0].props
-    .children;
+  const ControlsWrapper = makeArray(FadeAnimatedControls)[0]?.props
+    ?.children;
 
   const Percentage = 100 / numberOfSlides;
 
@@ -71,9 +71,17 @@ function FadeAnimated({ children }: GenericProps) {
       );
     },
   );
+
+  // autoplay effect
+  const { stop: stopTimer, start: startTimer } = useInterval(delay, () => {
+    if (autoPlay) {
+      increment();
+    }
+  });
+
   // Add some superpowers to the buttons
   const Controls = React.Children.map(
-    makeArray(ControlsWrapper)[0].props.children,
+    makeArray(ControlsWrapper)[0]?.props?.children,
     (child) => {
       return React.Children.map(child, (child) => {
         if (
@@ -81,24 +89,37 @@ function FadeAnimated({ children }: GenericProps) {
           child.type &&
           child.type.displayName === 'SliderNextButton'
         ) {
-          return <Box onClick={increment}>{child}</Box>;
+          return (
+            <Box
+              onClick={() => {
+                stopTimer();
+                increment();
+                startTimer();
+              }}
+            >
+              {child}
+            </Box>
+          );
         } else if (
           child &&
           child.type &&
           child.type.displayName === 'SliderPreviousButton'
         ) {
-          return <Box onClick={decrement}>{child}</Box>;
+          return (
+            <Box
+              onClick={() => {
+                stopTimer();
+                decrement();
+                startTimer();
+              }}
+            >
+              {child}
+            </Box>
+          );
         }
       });
     },
   );
-
-  // autoplay effect
-  useInterval(delay, () => {
-    if (autoPlay) {
-      increment();
-    }
-  });
 
   return (
     <Fragment>

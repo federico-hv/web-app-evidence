@@ -45,7 +45,6 @@ function Slider({
     children,
     'SliderContent',
   );
-
   const Slides = getSubComponent<SliderSCNames>(
     makeArray(SliderContent)[0].props.children,
     'SliderSlide',
@@ -235,18 +234,10 @@ function SliderSlide({
   w = 'full',
   flex = 1,
   position = 'relative',
-  style = { pointerEvents: 'none' }, // What does this do?
   ...props
 }: BoxProps) {
   return (
-    <Box
-      position={position}
-      flex={flex}
-      h={h}
-      w={w}
-      style={style}
-      {...props}
-    >
+    <Box position={position} flex={flex} h={h} w={w} {...props}>
       {children}
     </Box>
   );

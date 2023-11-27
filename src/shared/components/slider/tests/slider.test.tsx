@@ -10,36 +10,52 @@ import Slider, {
 
 describe('[Slider]', () => {
   describe('Structural', () => {
-    it('should display a single button', () => {
+    it('should display no buttons when a single slide is present', () => {
       render(
         <Slider>
-          <SliderControls>
-            <SliderNextButton />
-          </SliderControls>
-        </Slider>,
-      );
-      expect(screen.getByLabelText('go to next slide')).to.exist;
-    });
-
-    it('should display two buttons', () => {
-      render(
-        <Slider>
+          <SliderIndicator />
           <SliderControls>
             <SliderPreviousButton />
             <SliderNextButton />
           </SliderControls>
+          <SliderContent>
+            <SliderSlide>slide 1</SliderSlide>
+          </SliderContent>
         </Slider>,
       );
-      expect(screen.getByLabelText('go to previous slide')).to.exist;
-      expect(screen.getByLabelText('go to next slide')).to.exist;
+      expect(screen.queryByLabelText('go to previous slide')).to.not.exist;
+      expect(screen.queryByLabelText('go to next slide')).to.not.exist;
+    });
+
+    it('should display next button only when two slides are present', () => {
+      render(
+        <Slider>
+          <SliderIndicator />
+          <SliderControls>
+            <SliderPreviousButton />
+            <SliderNextButton />
+          </SliderControls>
+          <SliderContent>
+            <SliderSlide>slide 1</SliderSlide>
+            <SliderSlide>slide 2</SliderSlide>
+          </SliderContent>
+        </Slider>,
+      );
+      expect(screen.queryByLabelText('go to previous slide')).to.not.exist;
+      expect(screen.queryByLabelText('go to next slide')).to.exist;
     });
 
     it('should display a single slide', () => {
       render(
         <Slider>
+          <SliderIndicator />
           <SliderContent>
             <SliderSlide>test slide</SliderSlide>
           </SliderContent>
+          <SliderControls>
+            <SliderPreviousButton />
+            <SliderNextButton />
+          </SliderControls>
         </Slider>,
       );
       expect(screen.getByText('test slide')).to.exist;
@@ -48,7 +64,11 @@ describe('[Slider]', () => {
     it('should display one indicator with one slide', () => {
       render(
         <Slider>
-          <SliderIndicator></SliderIndicator>
+          <SliderIndicator />
+          <SliderControls>
+            <SliderPreviousButton />
+            <SliderNextButton />
+          </SliderControls>
           <SliderContent>
             <SliderSlide>test slide</SliderSlide>
           </SliderContent>
@@ -61,7 +81,11 @@ describe('[Slider]', () => {
     it('should display two indicators with two slides', () => {
       render(
         <Slider>
-          <SliderIndicator></SliderIndicator>
+          <SliderIndicator> </SliderIndicator>
+          <SliderControls>
+            <SliderPreviousButton />
+            <SliderNextButton />
+          </SliderControls>
           <SliderContent>
             <SliderSlide>test slide</SliderSlide>
             <SliderSlide>test slide 2</SliderSlide>
@@ -82,7 +106,8 @@ describe('[Slider]', () => {
       render(
         <Slider>
           <SliderControls>
-            <SliderNextButton></SliderNextButton>
+            <SliderNextButton />
+            <SliderPreviousButton />
           </SliderControls>
           <SliderIndicator></SliderIndicator>
           <SliderContent>
@@ -99,7 +124,8 @@ describe('[Slider]', () => {
       render(
         <Slider loop={true}>
           <SliderControls>
-            <SliderNextButton></SliderNextButton>
+            <SliderNextButton />
+            <SliderPreviousButton />
           </SliderControls>
           <SliderIndicator></SliderIndicator>
           <SliderContent>
