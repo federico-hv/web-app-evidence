@@ -44,7 +44,7 @@ function HomePage() {
             <ContentLayoutMain>
               <Slider
                 loop={true}
-                animation='slide'
+                animation='fade'
                 autoplay={{ active: false }}
               >
                 <SliderControls>

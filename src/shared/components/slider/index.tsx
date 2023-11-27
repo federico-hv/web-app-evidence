@@ -58,7 +58,11 @@ function Slider({
 
   return (
     <AnimatePresence>
-      <SliderProvider loop={loop} numberOfSlides={numberOfSlides}>
+      <SliderProvider
+        loop={loop}
+        numberOfSlides={numberOfSlides}
+        speed={speed}
+      >
         <Box
           position={position}
           h={h}
@@ -124,7 +128,7 @@ function SliderPreviousButton({
   colorTheme = 'clearTint400',
   ...props
 }: Partial<IconButtonProps>) {
-  const { loop, index, numberOfSlides, updateIndex } = useSliderContext();
+  const { loop, index } = useSliderContext();
 
   if (index.current === 0 && !loop) {
     return <Fragment />;
@@ -155,7 +159,7 @@ function SliderNextButton({
   colorTheme = 'clearTint400',
   ...props
 }: Partial<IconButtonProps>) {
-  const { loop, index, updateIndex, numberOfSlides } = useSliderContext();
+  const { loop, index } = useSliderContext();
 
   if (index.current === numberOfSlides - 1 && !loop) {
     return <Fragment />;
