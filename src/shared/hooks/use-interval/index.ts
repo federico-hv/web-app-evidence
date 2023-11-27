@@ -1,20 +1,17 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 /**
- * Sets a count that is increased by 1 every interval seconds
+ * Call a function after a specified amount of time.
  *
- * @param interval seconds to be updated
- * @returns the increased count
+ * @param interval the amount of time to wait before calling the function (seconds)
+ * @param cb the callback function to be called.
+ *
  */
-export function useInterval(interval: number) {
-  const [elapsed, set] = useState(0);
-
+export function useInterval(interval: number, cb: VoidFunction) {
   useEffect(() => {
     const intervalFunction = setInterval(() => {
-      set(elapsed + 1);
+      cb();
     }, interval * 1000);
     return () => clearInterval(intervalFunction);
-  }, [elapsed]);
-
-  return elapsed;
+  }, []); // on page load
 }

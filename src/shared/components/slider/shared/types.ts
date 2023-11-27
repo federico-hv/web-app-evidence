@@ -1,6 +1,8 @@
 import { HStackProps } from '@holdr-ui/react/dist/components/stack/src/stack.types';
-import { ReactElement } from 'react';
+import { Dispatch, ReactElement, SetStateAction } from 'react';
 import { BoxProps } from '@holdr-ui/react/dist/components/box/src/box.types';
+import { TransitionSpeed } from '../../../types';
+import { GenericProps } from '../../../interfaces';
 
 export interface SliderIndicatorProps extends HStackProps {
   renderItem?: (
@@ -9,39 +11,39 @@ export interface SliderIndicatorProps extends HStackProps {
     key: string,
   ) => ReactElement;
 }
-export interface SliderProps extends BoxProps {
-  loop?: boolean;
-  autoplay?: { active: boolean; delay?: number };
-  speed?: number;
-  animation?: 'fade' | 'slide';
-  type?: 'swipe' | 'drag';
-}
 
-export interface ISliderIndex {
-  current: number;
-  previous: number;
-}
-
-export interface ISliderContext {
-  index: ISliderIndex;
-  updateIndex: (
-    next: Partial<ISliderIndex>,
-    cb?: (next: ISliderIndex) => void,
-  ) => void;
-  numberOfSlides: number;
+export interface SliderCommonProps {
+  delay: number;
   loop: boolean;
-  // animation: 'fade' | 'slide';
-  // direction: DirectionNames;
-  // setDirection: (dir: DirectionNames) => void;
-  // buttonClicked: boolean;
-  // setButtonClicked: SetterFunction;
-  // loading: boolean;
-  // setLoading: SetterFunction;
+  speed: TransitionSpeed;
+  autoPlay?: boolean;
+}
+
+export interface SliderProviderProps
+  extends GenericProps,
+    SliderCommonProps {
+  numberOfSlides: number;
+}
+
+export interface SliderProps
+  extends BoxProps,
+    Omit<SliderCommonProps, 'speed' | 'delay' | 'loop'> {
+  loop?: boolean;
+  delay?: number;
+  speed?: TransitionSpeed;
+  animation?: 'fade' | 'slide';
+}
+
+export interface ISliderContext extends SliderCommonProps {
+  index: number;
+  setIndex: Dispatch<SetStateAction<number>>;
+  numberOfSlides: number;
 }
 
 export type SliderSCNames =
   | 'SliderSlide'
   | 'SliderControls'
+  | 'SliderContent'
   | 'SliderIndicator';
 
 export type SliderControlsSCNames =

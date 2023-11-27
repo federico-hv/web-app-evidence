@@ -4,9 +4,8 @@ import { GenericProps } from '../../../interfaces';
 import { getSubComponent, makeArray } from '../../../utilities';
 import { circular } from '../index';
 import { Box, HStack, useSwitch } from '@holdr-ui/react';
-import { motion } from 'framer-motion';
-
-const MotionHStack = motion(HStack);
+import { theme } from '../../../../configs';
+import { useInterval } from '../../../hooks';
 
 /*
 Explanation:
@@ -61,7 +60,8 @@ function SlideAnimated({ children }: GenericProps) {
 
   const sliderRef = useRef<HTMLDivElement>(null);
 
-  const { numberOfSlides, index, updateIndex } = useSliderContext();
+  const { numberOfSlides, index, setIndex, speed, delay, autoPlay } =
+    useSliderContext();
 
   // State used for handling user over-clicks: it disallows a user triggering another event
   // when the next or previous buttons are clicked.
@@ -108,7 +108,7 @@ function SlideAnimated({ children }: GenericProps) {
   const addAnimation = () => {
     if (!sliderRef || !sliderRef.current) return;
 
-    sliderRef.current.style.transition = 'transform 0.5s ease-in-out';
+    sliderRef.current.style.transition = `transform ${theme.transitions[speed]} ease-in-out`;
   };
 
   // Copy first item to end of slide and last item to start of slide
@@ -180,10 +180,18 @@ function SlideAnimated({ children }: GenericProps) {
     },
   );
 
+  // autoplay effect
+  useInterval(delay, () => {
+    if (autoPlay) {
+      increment(moveSlide);
+      addAnimation();
+    }
+  });
+
   // Slide to the slide when the indicators are clicked.
   useEffect(() => {
     if (clickedIndicator) {
-      const next = index.current + 1;
+      const next = index + 1;
       // update the current index
       setCurrentIndex(next);
       // animate
@@ -193,7 +201,7 @@ function SlideAnimated({ children }: GenericProps) {
     disallowSlideChange();
   }, [index]);
 
-  // We need to move the slider to the "first" position
+  // [On page load]: We need to move the slider to the "first" position
   // Note: Passed in list [first,...,last] -> actual list [last,first,...,last, first]
   useEffect(() => {
     if (!sliderRef || !sliderRef.current) return;
@@ -201,6 +209,7 @@ function SlideAnimated({ children }: GenericProps) {
     sliderRef.current.style.transition = 'none'; // remove animation on load
     moveSlide(1);
     setTimeout(() => {
+      // required so that transition only reset after transform has finished.
       if (!sliderRef || !sliderRef.current) return;
       sliderRef.current.style.transition = ''; // reset to initial animation.
     });
@@ -209,35 +218,35 @@ function SlideAnimated({ children }: GenericProps) {
 
   return (
     <Fragment>
-      <MotionHStack
+      <HStack
         h='100%'
         ref={sliderRef}
         w={`${newNumberOfSlides * 100}%`}
         onTransitionEnd={(e) => {
           if (currentIndex === 0) {
-            // at the beginning so remove the transition
+            // at the beginning, so reset and remove the transition
             e.currentTarget.style.transition = 'none';
             moveSlide(newNumberOfSlides - 2);
             setCurrentIndex(newNumberOfSlides - 2);
           } else if (currentIndex === newNumberOfSlides - 1) {
+            // at the end, so reset and remove the transition
             e.currentTarget.style.transition = 'none';
             moveSlide(1);
             setCurrentIndex(1);
           }
           setTimeout(() => {
+            // wait for all the stuff above to finish
             setDisabled(false);
           });
-          updateIndex({
-            current: mappedIndex(currentIndex, numberOfSlides),
-            previous: -1,
-          });
+          // We are updating our external index here
+          setIndex(mappedIndex(currentIndex, numberOfSlides));
         }}
         css={{
           flexShrink: 0,
         }}
       >
         {Slides}
-      </MotionHStack>
+      </HStack>
       {Controls}
       <Box onClick={allowSlideChange}>{SlideAnimatedIndicator}</Box>
     </Fragment>

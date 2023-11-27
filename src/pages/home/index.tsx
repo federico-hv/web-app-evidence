@@ -18,6 +18,7 @@ import {
   SmHeader,
 } from '../../layout';
 import {
+  SliderContent,
   SliderControls,
   SliderNextButton,
   SliderPreviousButton,
@@ -42,24 +43,22 @@ function HomePage() {
         {currentUser && (
           <ContentLayout>
             <ContentLayoutMain>
-              <Slider
-                loop={true}
-                animation='fade'
-                autoplay={{ active: false }}
-              >
+              <Slider autoPlay delay={3} loop animation='slide'>
                 <SliderControls>
                   <SliderNextButton />
                   <SliderPreviousButton />
                 </SliderControls>
                 <SliderIndicator py={3} gap={4} />
-                {arrayFrom(4).map((idx) => (
-                  <SliderSlide
-                    key={idx}
-                    css={{ backgroundColor: '#ff4ff2' }}
-                  >
-                    <Center h='100%'>Slide {idx + 1}</Center>
-                  </SliderSlide>
-                ))}
+                <SliderContent>
+                  {arrayFrom(4).map((idx) => (
+                    <SliderSlide
+                      key={idx}
+                      css={{ backgroundColor: '#ff4ff2' }}
+                    >
+                      <Center h='100%'>Slide {idx + 1}</Center>
+                    </SliderSlide>
+                  ))}
+                </SliderContent>
               </Slider>
               <VStack gap={4} mt={{ '@bp1': 56, '@bp3': 0 }} w='100%'>
                 <FeedTabs />

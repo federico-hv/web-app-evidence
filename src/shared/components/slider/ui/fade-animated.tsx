@@ -1,20 +1,26 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import { GenericProps } from '../../../interfaces';
-import { HStack } from '@holdr-ui/react';
+import { Box, HStack } from '@holdr-ui/react';
 import { useSliderContext } from '../shared';
 import { MotionBox } from '../../../styles';
 import { getSubComponent, makeArray } from '../../../utilities';
+import { AnimatePresence } from 'framer-motion';
+import { circular } from '../index';
+import { useInterval } from '../../../hooks';
 
-/**
- * TODO:
- * - Fix animation
- * - Idea: Stack the content on top of each other
- *    then as one of the items goes off, its put at the end of the list
- *    and the next item appear from the bottom.
- */
+const variants = {
+  visible: { opacity: 1 },
+  hidden: { opacity: 0 },
+};
 
 function FadeAnimated({ children }: GenericProps) {
-  const { index, numberOfSlides } = useSliderContext();
+  const { index, autoPlay, delay, numberOfSlides, setIndex } =
+    useSliderContext();
+
+  const increment = () =>
+    setIndex((prev) => circular(prev + 1, numberOfSlides));
+  const decrement = () =>
+    setIndex((prev) => circular(prev - 1, numberOfSlides));
 
   const FadeAnimatedSlides = getSubComponent(
     children,
@@ -24,6 +30,8 @@ function FadeAnimated({ children }: GenericProps) {
     children,
     'FadeAnimatedControls',
   );
+  const ControlsWrapper = makeArray(FadeAnimatedControls)[0].props
+    .children;
 
   const Percentage = 100 / numberOfSlides;
 
@@ -31,24 +39,61 @@ function FadeAnimated({ children }: GenericProps) {
   const Slides = React.Children.map(
     makeArray(FadeAnimatedSlides)[0].props.children,
     (child, idx) => {
-      const active = idx === index.current;
+      const active = idx === index;
       return (
-        <MotionBox
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          hidden={!active}
-          position='absolute'
-          t={0}
-          l={0}
-          h='full'
-          w='full'
-          css={{ flex: 1, flexShrink: 0, flexBasis: `${Percentage}%` }}
-        >
-          {child}
-        </MotionBox>
+        <AnimatePresence>
+          {active && (
+            <MotionBox
+              initial='hidden'
+              variants={variants}
+              animate='visible'
+              transition={{ duration: 2.5, type: 'ease-in' }}
+              position='absolute'
+              t={0}
+              l={0}
+              h='full'
+              w='full'
+              css={{
+                flex: 1,
+                flexShrink: 0,
+                flexBasis: `${Percentage}%`,
+              }}
+            >
+              {child}
+            </MotionBox>
+          )}
+        </AnimatePresence>
       );
     },
   );
+  // Add some superpowers to the buttons
+  const Controls = React.Children.map(
+    makeArray(ControlsWrapper)[0].props.children,
+    (child) => {
+      return React.Children.map(child, (child) => {
+        if (
+          child &&
+          child.type &&
+          child.type.displayName === 'SliderNextButton'
+        ) {
+          return <Box onClick={increment}>{child}</Box>;
+        } else if (
+          child &&
+          child.type &&
+          child.type.displayName === 'SliderPreviousButton'
+        ) {
+          return <Box onClick={decrement}>{child}</Box>;
+        }
+      });
+    },
+  );
+
+  // autoplay effect
+  useInterval(delay, () => {
+    if (autoPlay) {
+      increment();
+    }
+  });
 
   return (
     <Fragment>
@@ -61,7 +106,7 @@ function FadeAnimated({ children }: GenericProps) {
       >
         {Slides}
       </HStack>
-      {FadeAnimatedControls}
+      {Controls}
     </Fragment>
   );
 }
