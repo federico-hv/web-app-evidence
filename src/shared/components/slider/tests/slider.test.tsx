@@ -193,6 +193,26 @@ describe('[Slider]', () => {
       screen.getByText('test slide 3');
     });
 
+    it('should not change the slide when current indicator is clicked', () => {
+      render(
+        <Slider loop={true}>
+          <SliderControls>
+            <SliderNextButton />
+            <SliderPreviousButton />
+          </SliderControls>
+          <SliderIndicator></SliderIndicator>
+          <SliderContent>
+            <SliderSlide>test slide</SliderSlide>
+            <SliderSlide>test slide 2</SliderSlide>
+            <SliderSlide>test slide 3</SliderSlide>
+            <SliderSlide>test slide 4</SliderSlide>
+          </SliderContent>
+        </Slider>,
+      );
+      fireEvent.click(screen.getAllByLabelText('change slide')[0]);
+      screen.getByText('test slide');
+    });
+
     it('should show previous button when current slide is not the first', () => {
       render(
         <Slider>
