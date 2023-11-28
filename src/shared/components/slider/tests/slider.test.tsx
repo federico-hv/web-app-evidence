@@ -154,7 +154,7 @@ describe('[Slider]', () => {
       expect(screen.getByText('test slide 4')).to.exist;
     });
 
-    it('should have change to the third slide when third indicator is clicked', () => {
+    it('should change to the third slide when third indicator is clicked', () => {
       render(
         <Slider loop={true}>
           <SliderControls>
