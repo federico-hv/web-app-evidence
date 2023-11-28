@@ -30,7 +30,6 @@ function FadeAnimated({ children }: GenericProps) {
     children,
     'FadeAnimatedControls',
   );
-  console.log(FadeAnimatedControls);
   const FadeAnimatedIndicator = getSubComponent(
     children,
     'FadeAnimatedIndicator',
