@@ -15,8 +15,8 @@ import {
   ContentLayoutMain,
   SmHeader,
 } from '../../layout';
-//TODO: Rename move
 
+//TODO: Rename move
 function HomePage() {
   const currentUser = useCurrentUser();
 

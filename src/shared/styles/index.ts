@@ -1,9 +1,10 @@
 import { css, styled } from '../../configs';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Box } from '@holdr-ui/react';
+import { Box, Circle } from '@holdr-ui/react';
 
 export const MotionBox = motion(Box);
+export const MotionDot = motion(Circle);
 
 export const makeButtonLarger = (size: string, py = '10px', px = '0px') =>
   css({

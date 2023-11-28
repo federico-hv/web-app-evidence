@@ -95,6 +95,16 @@ export function makePath(paths: string[], prefixStr = '/') {
 }
 
 /**
+ * Makes an item into an array
+ *
+ * @param item any data item
+ */
+export function makeArray(item: any): any[] {
+  if (!Array.isArray(item)) {
+    return [item];
+  }
+  return item;
+
  * Generate a random alphabetic string of some size.
  *
  * @param length The length of the string to be generated
@@ -144,4 +154,5 @@ export async function generateCodeChallenge(
   const digest = await encrypt(data);
 
   return base64encode(digest);
+
 }
