@@ -43,7 +43,7 @@ describe('[Slider]', () => {
       expect(screen.queryByLabelText('go to next slide')).to.not.exist;
     });
 
-    it('should display next button only when two slides are present when loop is false', () => {
+    it('should display next button only when two slides are present and loop is false', () => {
       render(
         <Slider>
           <SliderIndicator />
@@ -61,7 +61,7 @@ describe('[Slider]', () => {
       expect(screen.queryByLabelText('go to next slide')).to.exist;
     });
 
-    it('should display next and previous buttons with two slides when loop is true', () => {
+    it('should display next and previous buttons with two slides and loop is true', () => {
       render(
         <Slider loop>
           <SliderIndicator />
@@ -92,7 +92,6 @@ describe('[Slider]', () => {
           </SliderContent>
         </Slider>,
       );
-
       expect(screen.getByLabelText('change slide')).to.exist;
     });
 
@@ -110,7 +109,6 @@ describe('[Slider]', () => {
           </SliderContent>
         </Slider>,
       );
-
       expect(screen.getAllByLabelText('change slide').length).to.equal(2);
     });
   });
@@ -134,7 +132,7 @@ describe('[Slider]', () => {
       expect(screen.getByText('test slide 2')).to.exist;
     });
 
-    it('should change to last slide when previous button is clicked when loop is true', () => {
+    it('should change to last slide when previous button is clicked and loop is true', () => {
       render(
         <Slider loop={true}>
           <SliderControls>
@@ -152,6 +150,27 @@ describe('[Slider]', () => {
       );
       fireEvent.click(screen.getByLabelText('go to previous slide'));
       expect(screen.getByText('test slide 4')).to.exist;
+    });
+
+    it('should change to first slide when next button is clicked and loop is true', () => {
+      render(
+        <Slider loop={true}>
+          <SliderControls>
+            <SliderNextButton />
+            <SliderPreviousButton />
+          </SliderControls>
+          <SliderIndicator></SliderIndicator>
+          <SliderContent>
+            <SliderSlide>test slide</SliderSlide>
+            <SliderSlide>test slide 2</SliderSlide>
+            <SliderSlide>test slide 3</SliderSlide>
+            <SliderSlide>test slide 4</SliderSlide>
+          </SliderContent>
+        </Slider>,
+      );
+      fireEvent.click(screen.getAllByLabelText('change slide')[3]);
+      fireEvent.click(screen.getByLabelText('go to next slide'));
+      expect(screen.getByText('test slide')).to.exist;
     });
 
     it('should change to the third slide when third indicator is clicked', () => {
@@ -214,6 +233,51 @@ describe('[Slider]', () => {
       expect(screen.queryByLabelText('go to next slide')).to.exist;
       fireEvent.click(screen.getAllByLabelText('change slide')[3]);
       expect(screen.queryByLabelText('go to next slide')).to.not.exist;
+    });
+
+    it('should change to next slide when autoplay is true', () => {
+      render(
+        <Slider delay={10} autoPlay>
+          <SliderControls>
+            <SliderNextButton />
+            <SliderPreviousButton />
+          </SliderControls>
+          <SliderIndicator></SliderIndicator>
+          <SliderContent>
+            <SliderSlide>test slide</SliderSlide>
+            <SliderSlide>test slide 2</SliderSlide>
+            <SliderSlide>test slide 3</SliderSlide>
+            <SliderSlide>test slide 4</SliderSlide>
+          </SliderContent>
+        </Slider>,
+      );
+      expect(screen.getByText('test slide')).to.exist;
+      setTimeout(() => {
+        expect(screen.getByText('test slide 2')).to.exist;
+      }, 1100);
+    });
+
+    it('should not change to next slide when autoplay is false', () => {
+      render(
+        <Slider delay={10} autoPlay={false}>
+          <SliderControls>
+            <SliderNextButton />
+            <SliderPreviousButton />
+          </SliderControls>
+          <SliderIndicator></SliderIndicator>
+          <SliderContent>
+            <SliderSlide>test slide</SliderSlide>
+            <SliderSlide>test slide 2</SliderSlide>
+            <SliderSlide>test slide 3</SliderSlide>
+            <SliderSlide>test slide 4</SliderSlide>
+          </SliderContent>
+        </Slider>,
+      );
+      expect(screen.getByText('test slide')).to.exist;
+      setTimeout(() => {
+        expect(screen.getByText('test slide')).to.exist;
+        expect(screen.getByText('test slide 2')).to.not.exist;
+      }, 1100);
     });
   });
 });
