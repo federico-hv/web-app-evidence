@@ -1,5 +1,3 @@
-export type AuthProviderName = 'google' | 'apple' | 'facebook';
-
 export type SocialProviderName = 'spotify' | 'apple' | 'instagram';
 
 export type Role = 'general' | 'artist';

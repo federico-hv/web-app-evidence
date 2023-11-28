@@ -9,6 +9,7 @@ import {
 import { AuthGuard, NotFoundError, Paths, prefix } from '../shared';
 import {
   BookmarksRoutes,
+  ConnectRoutes,
   MessagesRoutes,
   ReleasesRoutes,
   SettingsRoutes,
@@ -28,8 +29,12 @@ function Router() {
     <Fragment>
       <Routes location={previousLocation || location}>
         <Route path={Paths.authRedirect} element={<AuthRedirectPage />} />
-        <Route path='/' element={<MainLayout />}>
-          <Route element={<AuthGuard />}>
+        <Route element={<MainLayout />}>
+          <Route
+            path={prefix(Paths.connect, '/*')}
+            element={<ConnectRoutes />}
+          />
+          <Route path='/' element={<AuthGuard />}>
             {/* Home Route*/}
             <Route path={Paths.root} element={<HomePage />} />
             {/* Discover Route*/}
@@ -73,14 +78,14 @@ function Router() {
           <Route path='*' element={<NotFoundError />} />
         </Route>
       </Routes>
-      {previousLocation && (
-        <Routes>
+      <Routes>
+        <Fragment>
           <Route
             path={prefix(Paths.setupFlow, '/*')}
             element={<SetupFlowRoutes />}
           />
-        </Routes>
-      )}
+        </Fragment>
+      </Routes>
     </Fragment>
   );
 }

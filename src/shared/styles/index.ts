@@ -6,11 +6,24 @@ import { Box, Circle } from '@holdr-ui/react';
 export const MotionBox = motion(Box);
 export const MotionDot = motion(Circle);
 
-export const makeButtonLarger = (size: string, py = '10px') =>
+export const makeButtonLarger = (size: string, py = '10px', px = '0px') =>
   css({
-    py: py,
+    py,
+    px,
     height: `${size} !important`,
     minWidth: `${size} !important`,
+  })();
+
+export const changeDimensions = ({
+  width,
+  height,
+}: {
+  width: string;
+  height: string;
+}) =>
+  css({
+    height: `${height ? height : 'initial'} !important`,
+    minWidth: `${width ? width : 'initial'} !important`,
   })();
 
 export const extraBtnPadding = () => makeButtonLarger('3rem');

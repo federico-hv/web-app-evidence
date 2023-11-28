@@ -1,1 +1,1 @@
-export { default as UnconnectedDialog } from './unconnected.dialog';
+export { default as ConnectButton } from './connect-button';
