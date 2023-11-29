@@ -87,21 +87,23 @@ function MdHeader() {
             borderBottom={2}
             borderColor='base100'
           >
-            <Circle
-              position='relative'
-              as='button'
-              size={40}
-              bgColor='secondary400'
-            >
+            <Link to={import.meta.env.VITE_CLUBS_APP_URL}>
               <Circle
-                _hover={{ backgroundColor: '$clearTint300' }}
+                position='relative'
+                as='button'
                 size={40}
-                position='absolute'
-                t={0}
-                l={0}
-              />
-              <Icon color='primary400' name='store-fill' />
-            </Circle>
+                bgColor='secondary400'
+              >
+                <Circle
+                  _hover={{ backgroundColor: '$clearTint300' }}
+                  size={40}
+                  position='absolute'
+                  t={0}
+                  l={0}
+                />
+                <Icon color='primary400' name='store-fill' />
+              </Circle>
+            </Link>
           </Box>
           <Box h={320} minHeight={320} p={4} w='full'>
             <Box bgColor='base100' w='full' h='full'></Box>

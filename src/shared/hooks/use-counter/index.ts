@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { UseCounterType } from './use-counter.type';
 
 /**
  * A hook that manages a state variable (number) that can be incremented or decremented.
@@ -9,19 +8,21 @@ import { UseCounterType } from './use-counter.type';
  *  - decrement - a function that subtracts 1 from the current count value.
  *  - increment - a function that adds 1 to the current count value.
  */
-export const useCounter: UseCounterType = (defaultValue = 0) => {
-  const [count, set] = useState(defaultValue);
+export function useCounter(initial = 1, limit = 1) {
+  const [current, setCurrentStep] = useState(initial);
 
-  const increment = () => set((prev) => prev + 1);
+  const increment = () =>
+    current + 1 <= limit && setCurrentStep((prev) => prev + 1);
 
-  const decrement = () => set((prev) => prev - 1);
+  const decrement = () =>
+    current - 1 >= initial && setCurrentStep((prev) => prev - 1);
 
-  const reset = () => set(0);
+  const reset = () => setCurrentStep(initial);
 
   return {
-    count,
+    current,
     increment,
-    reset,
     decrement,
+    reset,
   };
-};
+}

@@ -94,12 +94,14 @@ function LgHeader() {
           />
         </NavigationLinkGroup>
         <Box p={4} borderTop={2} borderBottom={2} borderColor='base100'>
-          <Button
-            className={extraBtnPadding()}
-            label='Holdr Club'
-            fullWidth
-            colorTheme='secondary400'
-          />
+          <Link to={import.meta.env.VITE_CLUBS_APP_URL}>
+            <Button
+              className={extraBtnPadding()}
+              label='Holdr Club'
+              fullWidth
+              colorTheme='secondary400'
+            />
+          </Link>
         </Box>
         <Box h={350} minHeight={320} p={4} w='full'>
           <Box w='full' h='full'>

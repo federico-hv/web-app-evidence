@@ -1,53 +1,56 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useQuery } from '@apollo/client';
-import { Image, Center, Box } from '@holdr-ui/react';
+import { Image, Center, Box, useWindowSize } from '@holdr-ui/react';
 import { motion } from 'framer-motion';
-import { IMe } from '../../shared';
+import { GenericProps, IMe, Loader } from '../../shared';
 import { AuthContextProvider, AuthProviderProps } from './shared';
 import { GET_ME } from './queries';
 
 const MotionBox = motion(Box);
 
 function AuthProvider({ children }: AuthProviderProps) {
-  const [currentUser, setCurrentUser] = useState<IMe | null>(null);
-  const { data, loading, error } = useQuery<{ me: IMe }>(GET_ME);
+  const { height } = useWindowSize();
+  const { data, loading } = useQuery<{ me: IMe }>(GET_ME);
 
-  useEffect(() => {
-    if (!loading && !error && data) {
-      setCurrentUser(() => data.me);
-    }
-  }, [loading, error, data]);
+  return (
+    <Loader loading={loading} h={height} as={<FullPageLoadingFallback />}>
+      <Content data={data ? data.me : null}>{children}</Content>
+    </Loader>
+  );
+}
+AuthProvider.displayName = 'AuthProvider';
 
-  if (loading) {
-    return (
-      <Center
-        position='fixed'
-        h='h-screen'
-        w='w-screen'
-        bgColor='primary400'
-      >
-        <MotionBox
-          animate={{ rotate: 360 }}
-          transition={{ repeat: Infinity, ease: 'easeInOut', duration: 1 }}
-        >
-          <Image
-            loading='eager'
-            size={100}
-            src='logo-dark.png'
-            alt='holdr logo'
-            fallback={<Box />}
-          />
-        </MotionBox>
-      </Center>
-    );
-  }
-
+function Content({ children, data }: GenericProps & { data: IMe | null }) {
+  const [currentUser, setCurrentUser] = useState<IMe | null>(data);
   return (
     <AuthContextProvider value={{ currentUser, setCurrentUser }}>
       {children}
     </AuthContextProvider>
   );
 }
-AuthProvider.displayName = 'AuthProvider';
+
+function FullPageLoadingFallback() {
+  return (
+    <Center
+      position='fixed'
+      h='h-screen'
+      w='w-screen'
+      bgColor='primary400'
+    >
+      <MotionBox
+        animate={{ rotate: 360 }}
+        transition={{ repeat: Infinity, ease: 'easeInOut', duration: 1 }}
+      >
+        <Image
+          loading='eager'
+          size={100}
+          src='logo-dark.png'
+          alt='holdr logo'
+          fallback={<Box />}
+        />
+      </MotionBox>
+    </Center>
+  );
+}
 
 export { AuthProvider };

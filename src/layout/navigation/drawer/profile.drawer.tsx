@@ -25,6 +25,7 @@ import {
   prefix,
   useLogout,
 } from '../../../shared';
+import { Link } from 'react-router-dom';
 
 function ProfileDrawer() {
   const logout = useLogout();
@@ -182,15 +183,17 @@ function ProfileDrawer() {
 
                   <VStack h='100%' justify='flex-end'>
                     <Box px={2} py={3} borderTop={2} borderColor='base100'>
-                      <Button
-                        radius={4}
-                        size='sm'
-                        colorTheme='secondary400'
-                        fullWidth
-                        className={extraBtnPadding()}
-                      >
-                        Holdr Club
-                      </Button>
+                      <Link to={import.meta.env.VITE_CLUBS_APP_URL}>
+                        <Button
+                          radius={4}
+                          size='sm'
+                          colorTheme='secondary400'
+                          fullWidth
+                          className={extraBtnPadding()}
+                        >
+                          Holdr Club
+                        </Button>
+                      </Link>
                     </Box>
                   </VStack>
                 </VStack>

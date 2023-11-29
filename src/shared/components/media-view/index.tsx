@@ -21,11 +21,12 @@ import { AvatarProps } from '@holdr-ui/react/dist/components/avatar/src/avatar.t
 
 /*
   Anatomy:
-  <MediaDialog>
+  <MediaView>
     <MediaTrigger/>
     <MediaContent>
       <MediaAvatar/>
       <MediaImage/>
+      <MediaSlider/>
     </MediaContent>
   </MediaDialog>
 */

@@ -6,7 +6,7 @@ import {
   Responsive,
   ResponsiveItem,
 } from '../../shared';
-import { VStack } from '@holdr-ui/react';
+import { Box } from '@holdr-ui/react';
 import { SuggestionsCard, useCurrentUser } from '../../features';
 import { FeedTabs } from './ui';
 import {
@@ -32,9 +32,9 @@ function HomePage() {
         {currentUser && (
           <ContentLayout>
             <ContentLayoutMain>
-              <VStack gap={4} mt={{ '@bp1': 56, '@bp3': 0 }} w='100%'>
+              <Box mt={{ '@bp1': 56, '@bp3': 0 }} w='100%'>
                 <FeedTabs />
-              </VStack>
+              </Box>
             </ContentLayoutMain>
             <ContentLayoutAside>
               <SuggestionsCard />
