@@ -16,6 +16,7 @@ import {
   SliderProvider,
   SlideAnimated,
   FadeAnimated,
+  SliderButtonProps,
 } from './shared';
 import { AnimatePresence } from 'framer-motion';
 
@@ -31,13 +32,13 @@ export function circular(num: number, max: number) {
 function Slider({
   loop = false,
   autoPlay = false,
+  current = 0,
   delay = 2.5, // 2.5 seconds
   animation = 'fade',
   speed = 'duration-slower',
   position = 'relative',
   h = '200px',
   w = 'full',
-
   children,
   ...props
 }: SliderProps) {
@@ -46,7 +47,7 @@ function Slider({
     'SliderContent',
   );
   const Slides = getSubComponent<SliderSCNames>(
-    makeArray(SliderContent)[0].props.children,
+    makeArray(SliderContent)[0]?.props?.children,
     'SliderSlide',
   );
 
@@ -71,6 +72,7 @@ function Slider({
       <SliderProvider
         autoPlay={autoPlay}
         delay={delay}
+        current={current}
         speed={speed}
         loop={loop}
         numberOfSlides={numberOfSlides}
@@ -131,8 +133,9 @@ function SliderPreviousButton({
   icon = 'caret-left-outline',
   ariaLabel = 'go to previous slide',
   colorTheme = 'clearTint400',
+  zIndex = 10,
   ...props
-}: Partial<IconButtonProps>) {
+}: SliderButtonProps) {
   const { loop, index } = useSliderContext();
 
   if (index === 0 && !loop) {
@@ -145,7 +148,7 @@ function SliderPreviousButton({
       position='absolute'
       l='0.5rem'
       t='50%'
-      zIndex={10}
+      zIndex={zIndex}
       css={{ transform: 'translateY(-50%)' }}
     >
       <IconButton
@@ -162,8 +165,9 @@ function SliderNextButton({
   icon = 'caret-right-outline',
   ariaLabel = 'go to next slide',
   colorTheme = 'clearTint400',
+  zIndex = 10,
   ...props
-}: Partial<IconButtonProps>) {
+}: SliderButtonProps) {
   const { loop, index, numberOfSlides } = useSliderContext();
 
   if (index === numberOfSlides - 1 && !loop) {
@@ -176,7 +180,7 @@ function SliderNextButton({
       position='absolute'
       r='0.5rem'
       t='50%'
-      zIndex={10}
+      zIndex={zIndex}
       css={{ transform: 'translateY(-50%)' }}
     >
       <IconButton
@@ -254,7 +258,7 @@ SliderPreviousButton.displayName = 'SliderPreviousButton';
 Slider.Slide = SliderSlide;
 Slider.Controls = SliderControls;
 Slider.Indicator = SliderIndicator;
-SliderContent.Content = SliderContent;
+Slider.Content = SliderContent;
 SliderControls.NextButton = SliderNextButton;
 SliderControls.PreviousButton = SliderPreviousButton;
 

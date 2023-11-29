@@ -9,15 +9,17 @@ import {
   useNoScroll,
   VStack,
 } from '@holdr-ui/react';
-import { getSubComponent } from '../../utilities';
-import { Fragment } from 'react';
+import { dummyFn, getSubComponent } from '../../utilities';
+import { Fragment, useEffect } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { createPortal } from 'react-dom';
-import { MediaViewSCNames } from './type';
+import { MediaViewProps, MediaViewSCNames } from './type';
 import { extraBtnPadding } from '../../styles';
 
 import { ImageProps } from '@holdr-ui/react/dist/components/image/src/image.types';
 import { AvatarProps } from '@holdr-ui/react/dist/components/avatar/src/avatar.types';
+import { SliderProps } from '../slider/shared';
+import Slider from '../slider';
 
 /*
   Anatomy:
@@ -26,12 +28,21 @@ import { AvatarProps } from '@holdr-ui/react/dist/components/avatar/src/avatar.t
     <MediaContent>
       <MediaAvatar/>
       <MediaImage/>
+      <MediaSlider/>
     </MediaContent>
   </MediaDialog>
 */
 
-function MediaView({ children }: GenericProps) {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+function MediaView({
+  children,
+  isOpen: _isOpen = false,
+  onClose: _onClose = dummyFn,
+}: MediaViewProps) {
+  const { isOpen, onOpen, onClose } = useDisclosure(_isOpen);
+
+  useEffect(() => {
+    _isOpen ? onOpen() : onClose();
+  }, [_isOpen]);
 
   const Trigger = getSubComponent<MediaViewSCNames>(
     children,
@@ -48,9 +59,11 @@ function MediaView({ children }: GenericProps) {
 
   return (
     <Fragment>
-      <Box w='100%' h='100%' onClick={onOpen}>
-        {Trigger}
-      </Box>
+      {Trigger && (
+        <Box w='100%' h='100%' onClick={onOpen}>
+          {Trigger}
+        </Box>
+      )}
       {createPortal(
         <Fragment>
           {isOpen && (
@@ -81,7 +94,10 @@ function MediaView({ children }: GenericProps) {
                     t={0}
                     w='100%'
                     h='100%'
-                    onClick={onClose}
+                    onClick={() => {
+                      _onClose();
+                      onClose();
+                    }}
                     zIndex={50}
                   />
                   <VStack
@@ -127,6 +143,16 @@ function MediaViewImage(props: ImageProps) {
 }
 MediaViewImage.displayName = 'MediaViewImage';
 
+function MediaViewSlider(props: SliderProps) {
+  return <Slider {...props} />;
+}
+MediaViewSlider.displayName = 'MediaViewSlider';
+
+function MediaViewTrigger({ children }: GenericProps) {
+  return <Fragment>{children}</Fragment>;
+}
+MediaViewTrigger.displayName = 'MediaViewTrigger';
+
 function MediaViewContent({ children }: GenericProps) {
   if (children && Array.isArray(children) && children.length > 1) {
     throw new Error(
@@ -142,31 +168,33 @@ function MediaViewContent({ children }: GenericProps) {
     children,
     'MediaViewImage',
   );
+  const Slider = getSubComponent<MediaViewSCNames>(
+    children,
+    'MediaViewSlider',
+  );
 
   return (
     <Fragment>
       {Avatar}
       {Image}
+      {Slider}
     </Fragment>
   );
 }
+
 MediaViewContent.displayName = 'MediaViewContent';
 
 MediaView.Trigger = MediaViewTrigger;
 MediaView.Image = MediaViewImage;
 MediaView.Avatar = MediaViewAvatar;
+MediaView.Slider = MediaViewSlider;
 MediaView.Content = MediaViewContent;
-
-function MediaViewTrigger({ children }: GenericProps) {
-  return <Fragment>{children}</Fragment>;
-}
-
-MediaViewTrigger.displayName = 'MediaViewTrigger';
 
 export {
   MediaViewTrigger,
   MediaViewImage,
   MediaViewAvatar,
+  MediaViewSlider,
   MediaViewContent,
 };
 

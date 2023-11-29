@@ -3,6 +3,8 @@ import { Dispatch, ReactElement, SetStateAction } from 'react';
 import { BoxProps } from '@holdr-ui/react/dist/components/box/src/box.types';
 import { TransitionSpeed } from '../../../types';
 import { GenericProps } from '../../../interfaces';
+import { ZIndex } from '@holdr-ui/react/dist/shared/types';
+import { IconButtonProps } from '@holdr-ui/react/dist/components/icon-button/src/icon-button.styles';
 
 export interface SliderIndicatorProps extends HStackProps {
   renderItem?: (
@@ -16,6 +18,7 @@ export interface SliderCommonProps {
   delay: number;
   loop: boolean;
   speed: TransitionSpeed;
+  current?: number;
   autoPlay?: boolean;
 }
 
@@ -25,6 +28,9 @@ export interface SliderProviderProps
   numberOfSlides: number;
 }
 
+export interface SliderButtonProps extends Partial<IconButtonProps> {
+  zIndex?: ZIndex;
+}
 export interface SliderProps
   extends BoxProps,
     Omit<SliderCommonProps, 'speed' | 'delay' | 'loop'> {

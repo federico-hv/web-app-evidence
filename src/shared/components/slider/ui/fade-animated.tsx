@@ -45,7 +45,7 @@ function FadeAnimated({ children }: GenericProps) {
     (child, idx) => {
       const active = idx === index;
       return (
-        <AnimatePresence>
+        <AnimatePresence initial={false}>
           {active && (
             <MotionBox
               initial='hidden'
