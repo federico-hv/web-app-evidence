@@ -1,5 +1,5 @@
 import { Box, HStack, IconButton } from '@holdr-ui/react';
-import React, { Fragment } from 'react';
+import { Fragment } from 'react';
 import {
   arrayFrom,
   GenericProps,
@@ -19,8 +19,6 @@ import {
   SliderButtonProps,
 } from './shared';
 import { AnimatePresence } from 'framer-motion';
-
-import { IconButtonProps } from '@holdr-ui/react/dist/components/icon-button/src/icon-button.styles';
 import { BoxProps } from '@holdr-ui/react/dist/components/box/src/box.types';
 
 export function circular(num: number, max: number) {

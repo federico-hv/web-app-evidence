@@ -41,7 +41,7 @@ function MediaView({
   const { isOpen, onOpen, onClose } = useDisclosure(_isOpen);
 
   useEffect(() => {
-    _isOpen ? onOpen() : onClose();
+    if (_isOpen) onOpen();
   }, [_isOpen]);
 
   const Trigger = getSubComponent<MediaViewSCNames>(
