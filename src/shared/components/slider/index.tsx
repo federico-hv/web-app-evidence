@@ -65,6 +65,14 @@ function Slider({
     return <Fragment />;
   }
 
+  if (numberOfSlides === 1) {
+    return (
+      <Box position={position} h={h} w={w} {...props} overflow='hidden'>
+        {Slides[0]}
+      </Box>
+    );
+  }
+
   return (
     <AnimatePresence>
       <SliderProvider
@@ -80,11 +88,7 @@ function Slider({
             {animation === 'slide' && (
               <SlideAnimated>
                 <SlideAnimated.Slides>{Slides}</SlideAnimated.Slides>
-                {numberOfSlides > 1 && (
-                  <SlideAnimated.Controls>
-                    {Controls}
-                  </SlideAnimated.Controls>
-                )}
+                <SlideAnimated.Controls>{Controls}</SlideAnimated.Controls>
                 <SlideAnimated.Indicator>
                   {Indicator}
                 </SlideAnimated.Indicator>
@@ -93,9 +97,7 @@ function Slider({
             {animation === 'fade' && (
               <FadeAnimated>
                 <FadeAnimated.Slides>{Slides}</FadeAnimated.Slides>
-                {numberOfSlides > 1 && (
-                  <FadeAnimated.Controls>{Controls}</FadeAnimated.Controls>
-                )}
+                <FadeAnimated.Controls>{Controls}</FadeAnimated.Controls>
                 <FadeAnimated.Indicator>
                   {Indicator}
                 </FadeAnimated.Indicator>

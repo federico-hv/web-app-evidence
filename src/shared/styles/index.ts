@@ -42,10 +42,8 @@ export const StyledLink = styled(Link, {
 });
 
 export const StyledVideo = styled('video', {
-  position: 'absolute',
   height: '100%',
   width: '100%',
-  objectFit: 'cover',
 });
 
 export const RadioWrapper = styled('label', {
