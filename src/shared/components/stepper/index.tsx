@@ -7,7 +7,7 @@ import { StepperContext, StepperContextProvider } from '../../contexts';
 
 function Stepper({ defaultStep = 0, children }: StepperProps) {
   const {
-    count: step,
+    current: step,
     increment,
     decrement,
     reset,

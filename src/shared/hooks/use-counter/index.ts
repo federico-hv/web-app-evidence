@@ -8,14 +8,18 @@ import { useState } from 'react';
  *  - decrement - a function that subtracts 1 from the current count value.
  *  - increment - a function that adds 1 to the current count value.
  */
-export function useCounter(initial = 1, limit = 1) {
+export function useCounter(initial = 1, limit?: number) {
   const [current, setCurrentStep] = useState(initial);
 
-  const increment = () =>
-    current + 1 <= limit && setCurrentStep((prev) => prev + 1);
+  const increment = () => {
+    if (limit && current + 1 > limit) return;
+    setCurrentStep((prev) => prev + 1);
+  };
 
-  const decrement = () =>
-    current - 1 >= initial && setCurrentStep((prev) => prev - 1);
+  const decrement = () => {
+    if (current - 1 < initial) return;
+    setCurrentStep((prev) => prev - 1);
+  };
 
   const reset = () => setCurrentStep(initial);
 

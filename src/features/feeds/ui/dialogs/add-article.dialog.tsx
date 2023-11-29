@@ -15,8 +15,10 @@ import { ArticlePreview } from '../groups';
 
 function AddArticleDialog() {
   const { isOpen, onOpen, onClose, option } = useDialogTabContext();
-  const { increment, decrement, count: step } = useCounter();
+  const { increment, decrement, current: step } = useCounter(0);
   const [state, update] = useRecordState({});
+
+  console.log(step);
 
   return (
     <CommonDialog
