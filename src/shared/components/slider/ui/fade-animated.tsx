@@ -25,11 +25,6 @@ function FadeAnimated({ children }: GenericProps) {
     loop,
   } = useSliderContext();
 
-  const increment = () =>
-    setIndex((prev) => circular(prev + 1, numberOfSlides));
-  const decrement = () =>
-    setIndex((prev) => circular(prev - 1, numberOfSlides));
-
   const FadeAnimatedSlides = getSubComponent(
     children,
     'FadeAnimatedSlides',
@@ -46,6 +41,28 @@ function FadeAnimated({ children }: GenericProps) {
     ?.children;
 
   const Percentage = 100 / numberOfSlides;
+
+  const incrementCircular = () =>
+    setIndex((prev) => circular(prev + 1, numberOfSlides));
+  const decrementCircular = () =>
+    setIndex((prev) => circular(prev - 1, numberOfSlides));
+
+  const incrementLinear = () => {
+    setIndex((prev) => {
+      if (prev === numberOfSlides - 1) return prev;
+      return prev + 1;
+    });
+  };
+
+  const decrementLinear = () => {
+    setIndex((prev) => {
+      if (prev === 0) return prev;
+      return prev - 1;
+    });
+  };
+
+  const increment = loop ? incrementCircular : incrementLinear;
+  const decrement = loop ? decrementCircular : decrementLinear;
 
   const updateSliderRight = () => {
     stopTimer();
