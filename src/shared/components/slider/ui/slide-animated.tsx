@@ -3,9 +3,10 @@ import { useSliderContext } from '../shared';
 import { GenericProps } from '../../../interfaces';
 import { getSubComponent, makeArray } from '../../../utilities';
 import { circular } from '../index';
-import { Box, HStack, useSwitch } from '@holdr-ui/react';
+import { Box, HStack, useKeyBind, useSwitch } from '@holdr-ui/react';
 import { theme } from '../../../../configs';
 import { useInterval } from '../../../hooks';
+import { requestRelationshipActions } from 'features';
 
 /*
 Explanation:
@@ -60,8 +61,16 @@ function SlideAnimated({ children }: GenericProps) {
 
   const sliderRef = useRef<HTMLDivElement>(null);
 
-  const { numberOfSlides, index, setIndex, speed, delay, autoPlay } =
-    useSliderContext();
+  const {
+    numberOfSlides,
+    index,
+    setIndex,
+    speed,
+    delay,
+    autoPlay,
+    keyboard,
+    loop,
+  } = useSliderContext();
 
   // State used for handling user over-clicks: it disallows a user triggering another event
   // when the next or previous buttons are clicked.
@@ -74,7 +83,7 @@ function SlideAnimated({ children }: GenericProps) {
   } = useSwitch();
 
   // TODO: Use updated useCounter after merging
-  const [currentIndex, setCurrentIndex] = useState(1);
+  const [currentIndex, setCurrentIndex] = useState(index + 1);
 
   const newNumberOfSlides = numberOfSlides + 2;
 
@@ -92,18 +101,46 @@ function SlideAnimated({ children }: GenericProps) {
     }%)`;
   };
 
-  const increment = (cb?: (num: number) => void) =>
+  const incrementLinear = (cb?: (num: number) => void) =>
+    setCurrentIndex((prev) => {
+      let next = prev;
+
+      // if our mapped index is length - 1, do not increment
+      if (prev + 1 >= newNumberOfSlides - 1) return next;
+
+      next = prev + 1;
+      if (cb) cb(next);
+      return next;
+    });
+
+  const incrementCircular = (cb?: (num: number) => void) =>
     setCurrentIndex((prev) => {
       const next = circular(prev + 1, newNumberOfSlides);
       if (cb) cb(next);
       return next;
     });
-  const decrement = (cb?: (num: number) => void) =>
+
+  const decrementLinear = (cb?: (num: number) => void) =>
+    setCurrentIndex((prev) => {
+      let next = prev;
+
+      // if our mapped index is 0, do not increment
+      if (prev - 1 <= 0) return next;
+
+      next = prev - 1;
+      if (cb) cb(next);
+      return next;
+    });
+
+  const decrementCircular = (cb?: (num: number) => void) =>
     setCurrentIndex((prev) => {
       const next = circular(prev - 1, newNumberOfSlides);
       if (cb) cb(next);
       return next;
     });
+
+  const increment = loop ? incrementCircular : incrementLinear;
+  const decrement = loop ? decrementCircular : decrementLinear;
 
   const addAnimation = () => {
     if (!sliderRef || !sliderRef.current) return;
@@ -137,11 +174,41 @@ function SlideAnimated({ children }: GenericProps) {
   ));
 
   // autoplay effect
-  const { stop, start } = useInterval(delay, () => {
+  const { stop: stopTimer, start: startTimer } = useInterval(delay, () => {
     if (autoPlay) {
       increment(moveSlide);
       addAnimation();
     }
+  });
+
+  const updateSliderRight = () => {
+    if (disabled) return;
+    stopTimer();
+    setDisabled(true);
+    increment(moveSlide);
+    addAnimation();
+    startTimer();
+  };
+
+  const updateSliderLeft = () => {
+    if (disabled) return;
+    stopTimer();
+    setDisabled(true);
+    decrement(moveSlide);
+    addAnimation();
+    startTimer();
+  };
+
+  // right arrow keybind
+  useKeyBind(39, () => {
+    if (!keyboard) return;
+    updateSliderRight();
+  });
+
+  // left arrow keybind
+  useKeyBind(37, () => {
+    if (!keyboard) return;
+    updateSliderLeft();
   });
 
   // Add some superpowers to the buttons
@@ -154,39 +221,13 @@ function SlideAnimated({ children }: GenericProps) {
           child.type &&
           child.type.displayName === 'SliderNextButton'
         ) {
-          return (
-            <Box
-              onClick={() => {
-                if (disabled) return;
-                stop();
-                increment(moveSlide);
-                addAnimation();
-                setDisabled(true);
-                start();
-              }}
-            >
-              {child}
-            </Box>
-          );
+          return <Box onClick={updateSliderRight}>{child}</Box>;
         } else if (
           child &&
           child.type &&
           child.type.displayName === 'SliderPreviousButton'
         ) {
-          return (
-            <Box
-              onClick={() => {
-                if (disabled) return;
-                stop();
-                decrement(moveSlide);
-                addAnimation();
-                setDisabled(true);
-                start();
-              }}
-            >
-              {child}
-            </Box>
-          );
+          return <Box onClick={updateSliderLeft}>{child}</Box>;
         }
       });
     },
@@ -205,13 +246,13 @@ function SlideAnimated({ children }: GenericProps) {
     disallowSlideChange();
   }, [index]);
 
-  // [On page load]: We need to move the slider to the "first" position
+  // [On page load]: We need to move the slider to its "initial", dependant on the current index position
   // Note: Passed in list [first,...,last] -> actual list [last,first,...,last, first]
   useEffect(() => {
     if (!sliderRef || !sliderRef.current) return;
 
     sliderRef.current.style.transition = 'none'; // remove animation on load
-    moveSlide(1);
+    moveSlide(currentIndex);
     setTimeout(() => {
       // required so that transition only reset after transform has finished.
       if (!sliderRef || !sliderRef.current) return;

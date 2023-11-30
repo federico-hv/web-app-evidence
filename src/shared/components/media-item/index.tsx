@@ -1,9 +1,3 @@
-import {
-  MediaView,
-  MediaViewContent,
-  MediaViewImage,
-  MediaViewTrigger,
-} from '../index';
 import { Box, Image } from '@holdr-ui/react';
 import { MediaItemProps } from './types';
 import { CenteredImage, StyledVideo } from '../../styles';
@@ -20,23 +14,12 @@ function MediaItem({ url, type, title = '' }: MediaItemProps) {
         </Box>
       )}
       {type === 'image' && (
-        <MediaView>
-          <MediaViewTrigger>
-            <Image src={url} alt={title} />
-          </MediaViewTrigger>
-          <MediaViewContent>
-            <MediaViewImage
-              className={CenteredImage()}
-              size={{ '@bp1': '95%', '@bp3': '85%' }}
-              src={url}
-              alt={title}
-            />
-          </MediaViewContent>
-        </MediaView>
+        <Image className={CenteredImage()} src={url} alt={title} />
       )}
     </Fragment>
   );
 }
+
 MediaItem.displayName = 'MediaItem';
 
 export default MediaItem;

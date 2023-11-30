@@ -1,40 +1,79 @@
-import { IMAGE_GRID, ImageSizes } from '../../../shared';
-import { Box, Grid } from '@holdr-ui/react';
-import { MediaItem } from '../../../../../shared';
+import { Fragment, useEffect, useState } from 'react';
+import {
+  MediaItem,
+  MediaView,
+  MediaViewContent,
+} from '../../../../../shared';
 import { PostMediaProps } from './types';
+import { useDisclosure } from '@holdr-ui/react';
+import { Slider } from 'shared';
 
 function PostMedia({ items }: PostMediaProps) {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [slideIndex, setIndex] = useState(0);
+
+  const SliderControls = (
+    <Slider.Controls>
+      <Slider.Controls.NextButton zIndex={50} />
+      <Slider.Controls.PreviousButton zIndex={50} />
+    </Slider.Controls>
+  );
+
+  // change if single video post support is changed
+  if (items[0].type === 'video')
+    return <MediaItem type={items[0].type} url={items[0].url} />;
+
   return (
-    <Box zIndex={5}>
-      {items.length > 0 && (
-        <Box h={{ '@bp1': 250, '@bp3': 350 }} mt={5}>
-          <Grid
-            gap={3}
+    <Fragment>
+      <MediaView isOpen={isOpen} onClose={onClose} onOpen={onOpen}>
+        <MediaViewContent>
+          <MediaView.Slider
+            w='100%'
             h='100%'
-            templateRows='repeat(2, 1fr)'
-            templateColumns='repeat(2, 1fr)'
+            current={slideIndex}
+            animation='slide'
+            keyboard
           >
-            {items.length <= 4 &&
-              IMAGE_GRID[items.length as ImageSizes].map(
-                ({ rowSpan, colSpan }, index) => (
-                  <Grid.Item
-                    rowSpan={rowSpan}
-                    colSpan={colSpan}
-                    key={`image-grid-${index}`}
-                  >
-                    <Box radius={2} h='100%' w='100%' overflow='hidden'>
-                      <MediaItem
-                        url={items[index].url}
-                        type={items[index].type}
-                      />
-                    </Box>
-                  </Grid.Item>
-                ),
-              )}
-          </Grid>
-        </Box>
-      )}
-    </Box>
+            <Slider.Content>
+              {items.map((el, idx) => (
+                <Slider.Slide
+                  key={`media-slide-${idx}`}
+                  radius={4}
+                  overflow='hidden'
+                >
+                  <MediaItem type={el.type} url={el.url} />
+                </Slider.Slide>
+              ))}
+            </Slider.Content>
+            {SliderControls}
+            <Slider.Indicator pb={3} zIndex={50} />
+          </MediaView.Slider>
+        </MediaViewContent>
+      </MediaView>
+      <Slider
+        mt={5}
+        h={{ '@bp1': 250, '@bp3': 350 }}
+        zIndex={5}
+        speed='duration-faster'
+        animation='slide'
+      >
+        <Slider.Content>
+          {items.map((el, idx) => (
+            <Slider.Slide
+              key={`media-slide-${idx}`}
+              onClick={() => {
+                setIndex(idx);
+                onOpen();
+              }}
+            >
+              <MediaItem type={el.type} url={el.url} />
+            </Slider.Slide>
+          ))}
+        </Slider.Content>
+        {SliderControls}
+        <Slider.Indicator pb={3} />
+      </Slider>
+    </Fragment>
   );
 }
 PostMedia.displayName = 'PostMedia';

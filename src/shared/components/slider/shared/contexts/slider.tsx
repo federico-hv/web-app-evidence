@@ -21,12 +21,14 @@ function useSliderContext() {
 function SliderProvider({
   autoPlay,
   loop,
+  current,
   delay,
   speed,
   children,
   numberOfSlides,
+  keyboard,
 }: SliderProviderProps) {
-  const [index, setIndex] = useState<number>(0);
+  const [index, setIndex] = useState<number>(current || 0);
 
   return (
     <SliderContextProvider
@@ -38,6 +40,7 @@ function SliderProvider({
         numberOfSlides,
         index,
         setIndex,
+        keyboard,
       }}
     >
       {children}

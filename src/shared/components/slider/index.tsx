@@ -1,5 +1,5 @@
 import { Box, HStack, IconButton } from '@holdr-ui/react';
-import React, { Fragment } from 'react';
+import { Fragment } from 'react';
 import {
   arrayFrom,
   GenericProps,
@@ -16,10 +16,9 @@ import {
   SliderProvider,
   SlideAnimated,
   FadeAnimated,
+  SliderButtonProps,
 } from './shared';
 import { AnimatePresence } from 'framer-motion';
-
-import { IconButtonProps } from '@holdr-ui/react/dist/components/icon-button/src/icon-button.styles';
 import { BoxProps } from '@holdr-ui/react/dist/components/box/src/box.types';
 
 export function circular(num: number, max: number) {
@@ -31,13 +30,14 @@ export function circular(num: number, max: number) {
 function Slider({
   loop = false,
   autoPlay = false,
+  keyboard = false,
+  current = 0,
   delay = 2.5, // 2.5 seconds
   animation = 'fade',
   speed = 'duration-slower',
   position = 'relative',
   h = '200px',
   w = 'full',
-
   children,
   ...props
 }: SliderProps) {
@@ -46,7 +46,7 @@ function Slider({
     'SliderContent',
   );
   const Slides = getSubComponent<SliderSCNames>(
-    makeArray(SliderContent)[0].props.children,
+    makeArray(SliderContent)[0]?.props?.children,
     'SliderSlide',
   );
 
@@ -66,25 +66,31 @@ function Slider({
     return <Fragment />;
   }
 
+  if (numberOfSlides === 1) {
+    return (
+      <Box position={position} h={h} w={w} {...props} overflow='hidden'>
+        {Slides && Slides[0]}
+      </Box>
+    );
+  }
+
   return (
     <AnimatePresence>
       <SliderProvider
         autoPlay={autoPlay}
         delay={delay}
+        current={current}
         speed={speed}
         loop={loop}
         numberOfSlides={numberOfSlides}
+        keyboard={keyboard}
       >
         <Box position={position} h={h} w={w} {...props} overflow='hidden'>
           <HStack w='full' h='full' justify='flex-start'>
             {animation === 'slide' && (
               <SlideAnimated>
                 <SlideAnimated.Slides>{Slides}</SlideAnimated.Slides>
-                {numberOfSlides > 1 && (
-                  <SlideAnimated.Controls>
-                    {Controls}
-                  </SlideAnimated.Controls>
-                )}
+                <SlideAnimated.Controls>{Controls}</SlideAnimated.Controls>
                 <SlideAnimated.Indicator>
                   {Indicator}
                 </SlideAnimated.Indicator>
@@ -93,9 +99,7 @@ function Slider({
             {animation === 'fade' && (
               <FadeAnimated>
                 <FadeAnimated.Slides>{Slides}</FadeAnimated.Slides>
-                {numberOfSlides > 1 && (
-                  <FadeAnimated.Controls>{Controls}</FadeAnimated.Controls>
-                )}
+                <FadeAnimated.Controls>{Controls}</FadeAnimated.Controls>
                 <FadeAnimated.Indicator>
                   {Indicator}
                 </FadeAnimated.Indicator>
@@ -131,8 +135,9 @@ function SliderPreviousButton({
   icon = 'caret-left-outline',
   ariaLabel = 'go to previous slide',
   colorTheme = 'clearTint400',
+  zIndex = 10,
   ...props
-}: Partial<IconButtonProps>) {
+}: SliderButtonProps) {
   const { loop, index } = useSliderContext();
 
   if (index === 0 && !loop) {
@@ -145,7 +150,7 @@ function SliderPreviousButton({
       position='absolute'
       l='0.5rem'
       t='50%'
-      zIndex={10}
+      zIndex={zIndex}
       css={{ transform: 'translateY(-50%)' }}
     >
       <IconButton
@@ -162,8 +167,9 @@ function SliderNextButton({
   icon = 'caret-right-outline',
   ariaLabel = 'go to next slide',
   colorTheme = 'clearTint400',
+  zIndex = 10,
   ...props
-}: Partial<IconButtonProps>) {
+}: SliderButtonProps) {
   const { loop, index, numberOfSlides } = useSliderContext();
 
   if (index === numberOfSlides - 1 && !loop) {
@@ -176,7 +182,7 @@ function SliderNextButton({
       position='absolute'
       r='0.5rem'
       t='50%'
-      zIndex={10}
+      zIndex={zIndex}
       css={{ transform: 'translateY(-50%)' }}
     >
       <IconButton
@@ -254,7 +260,7 @@ SliderPreviousButton.displayName = 'SliderPreviousButton';
 Slider.Slide = SliderSlide;
 Slider.Controls = SliderControls;
 Slider.Indicator = SliderIndicator;
-SliderContent.Content = SliderContent;
+Slider.Content = SliderContent;
 SliderControls.NextButton = SliderNextButton;
 SliderControls.PreviousButton = SliderPreviousButton;
 

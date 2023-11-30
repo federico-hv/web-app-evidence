@@ -1,12 +1,13 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useEffect, useRef, useState } from 'react';
 import { GenericProps } from '../../../interfaces';
-import { Box, HStack } from '@holdr-ui/react';
+import { Box, HStack, useKeyBind } from '@holdr-ui/react';
 import { useSliderContext } from '../shared';
 import { MotionBox } from '../../../styles';
 import { getSubComponent, makeArray } from '../../../utilities';
 import { AnimatePresence } from 'framer-motion';
 import { circular } from '../index';
 import { useInterval } from '../../../hooks';
+import { theme } from 'configs';
 
 const variants = {
   visible: { opacity: 1 },
@@ -14,13 +15,16 @@ const variants = {
 };
 
 function FadeAnimated({ children }: GenericProps) {
-  const { index, autoPlay, delay, numberOfSlides, setIndex } =
-    useSliderContext();
-
-  const increment = () =>
-    setIndex((prev) => circular(prev + 1, numberOfSlides));
-  const decrement = () =>
-    setIndex((prev) => circular(prev - 1, numberOfSlides));
+  const {
+    index,
+    autoPlay,
+    delay,
+    numberOfSlides,
+    setIndex,
+    speed,
+    keyboard,
+    loop,
+  } = useSliderContext();
 
   const FadeAnimatedSlides = getSubComponent(
     children,
@@ -39,19 +43,74 @@ function FadeAnimated({ children }: GenericProps) {
 
   const Percentage = 100 / numberOfSlides;
 
+  const incrementCircular = () =>
+    setIndex((prev) => circular(prev + 1, numberOfSlides));
+  const decrementCircular = () =>
+    setIndex((prev) => circular(prev - 1, numberOfSlides));
+
+  const incrementLinear = () => {
+    setIndex((prev) => {
+      if (prev === numberOfSlides - 1) return prev;
+      return prev + 1;
+    });
+  };
+
+  const decrementLinear = () => {
+    setIndex((prev) => {
+      if (prev === 0) return prev;
+      return prev - 1;
+    });
+  };
+
+  const increment = loop ? incrementCircular : incrementLinear;
+  const decrement = loop ? decrementCircular : decrementLinear;
+
+  const updateSliderRight = () => {
+    stopTimer();
+    increment();
+    startTimer();
+  };
+
+  const updateSliderLeft = () => {
+    stopTimer();
+    decrement();
+    startTimer();
+  };
+  const keyIndex = useRef(index);
+
+  useEffect(() => {
+    keyIndex.current = index;
+  }, [index]);
+
+  // right arrow keybind
+  useKeyBind(39, () => {
+    if (!keyboard) return;
+    if (loop || keyIndex.current != numberOfSlides - 1)
+      updateSliderRight();
+  });
+
+  // left arrow keybind
+  useKeyBind(37, () => {
+    if (!keyboard) return;
+    if (loop || keyIndex.current != 0) updateSliderLeft();
+  });
+
   // Add extra styling for slides
   const Slides = React.Children.map(
     makeArray(FadeAnimatedSlides)[0].props.children,
     (child, idx) => {
       const active = idx === index;
       return (
-        <AnimatePresence>
+        <AnimatePresence initial={false}>
           {active && (
             <MotionBox
               initial='hidden'
               variants={variants}
               animate='visible'
-              transition={{ duration: 2.5, type: 'ease-in' }}
+              transition={{
+                duration: theme.transitions[speed],
+                type: 'ease-in',
+              }}
               position='absolute'
               t={0}
               l={0}
