@@ -25,7 +25,7 @@ function PostMedia({ items }: PostMediaProps) {
 
   return (
     <Fragment>
-      <MediaView isOpen={isOpen} onClose={onClose}>
+      <MediaView isOpen={isOpen} onClose={onClose} onOpen={onOpen}>
         <MediaViewContent>
           <MediaView.Slider
             w='100%'

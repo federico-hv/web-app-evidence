@@ -35,19 +35,19 @@ import Slider from '../slider';
 
 function MediaView({
   children,
-  isOpen: _isOpen = false,
-  onClose: _onClose = dummyFn,
+  isOpen: _isOpen,
+  onOpen: _onOpen,
+  onClose: _onClose,
 }: MediaViewProps) {
-  const { isOpen, onOpen, onClose: __onClose } = useDisclosure(_isOpen);
+  let { isOpen, onOpen, onClose } = useDisclosure();
 
-  const onClose = () => {
-    _onClose();
-    __onClose();
-  };
-
-  useEffect(() => {
-    if (_isOpen) onOpen();
-  }, [_isOpen]);
+  // the following assumes you define your props in a way that once a dev
+  // wants to set isOpen externally they must also set onOpen and onClose
+  if (_isOpen && _onOpen && _onClose) {
+    isOpen = _isOpen;
+    onOpen = _onOpen;
+    onClose = _onClose;
+  }
 
   const Trigger = getSubComponent<MediaViewSCNames>(
     children,

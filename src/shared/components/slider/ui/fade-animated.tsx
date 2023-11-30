@@ -7,6 +7,7 @@ import { getSubComponent, makeArray } from '../../../utilities';
 import { AnimatePresence } from 'framer-motion';
 import { circular } from '../index';
 import { useInterval } from '../../../hooks';
+import { theme } from 'configs';
 
 const variants = {
   visible: { opacity: 1 },
@@ -106,7 +107,10 @@ function FadeAnimated({ children }: GenericProps) {
               initial='hidden'
               variants={variants}
               animate='visible'
-              transition={{ duration: speed, type: 'ease-in' }}
+              transition={{
+                duration: theme.transitions[speed],
+                type: 'ease-in',
+              }}
               position='absolute'
               t={0}
               l={0}
