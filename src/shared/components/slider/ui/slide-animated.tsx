@@ -6,6 +6,7 @@ import { circular } from '../index';
 import { Box, HStack, useKeyBind, useSwitch } from '@holdr-ui/react';
 import { theme } from '../../../../configs';
 import { useInterval } from '../../../hooks';
+import { requestRelationshipActions } from 'features';
 
 /*
 Explanation:
@@ -100,18 +101,46 @@ function SlideAnimated({ children }: GenericProps) {
     }%)`;
   };
 
-  const increment = (cb?: (num: number) => void) =>
+  const incrementLinear = (cb?: (num: number) => void) =>
+    setCurrentIndex((prev) => {
+      let next = prev;
+
+      // if our mapped index is length - 1, do not increment
+      if (prev + 1 >= newNumberOfSlides - 1) return next;
+
+      next = prev + 1;
+      if (cb) cb(next);
+      return next;
+    });
+
+  const incrementCircular = (cb?: (num: number) => void) =>
     setCurrentIndex((prev) => {
       const next = circular(prev + 1, newNumberOfSlides);
       if (cb) cb(next);
       return next;
     });
-  const decrement = (cb?: (num: number) => void) =>
+
+  const decrementLinear = (cb?: (num: number) => void) =>
+    setCurrentIndex((prev) => {
+      let next = prev;
+
+      // if our mapped index is 0, do not increment
+      if (prev - 1 <= 0) return next;
+
+      next = prev - 1;
+      if (cb) cb(next);
+      return next;
+    });
+
+  const decrementCircular = (cb?: (num: number) => void) =>
     setCurrentIndex((prev) => {
       const next = circular(prev - 1, newNumberOfSlides);
       if (cb) cb(next);
       return next;
     });
+
+  const increment = loop ? incrementCircular : incrementLinear;
+  const decrement = loop ? decrementCircular : decrementLinear;
 
   const addAnimation = () => {
     if (!sliderRef || !sliderRef.current) return;
@@ -170,23 +199,16 @@ function SlideAnimated({ children }: GenericProps) {
     startTimer();
   };
 
-  const keyIndex = useRef(index);
-
-  useEffect(() => {
-    keyIndex.current = index;
-  }, [index]);
-
   // right arrow keybind
   useKeyBind(39, () => {
     if (!keyboard) return;
-    if (loop || keyIndex.current != numberOfSlides - 1)
-      updateSliderRight();
+    updateSliderRight();
   });
 
   // left arrow keybind
   useKeyBind(37, () => {
     if (!keyboard) return;
-    if (loop || keyIndex.current != 0) updateSliderLeft();
+    updateSliderLeft();
   });
 
   // Add some superpowers to the buttons
