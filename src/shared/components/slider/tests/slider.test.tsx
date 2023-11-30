@@ -79,7 +79,7 @@ describe('[Slider]', () => {
       expect(screen.queryByLabelText('go to next slide')).to.exist;
     });
 
-    it('should display one indicator with one slide', () => {
+    it('should display no indicator with one slide', () => {
       render(
         <Slider>
           <SliderIndicator />
@@ -92,7 +92,7 @@ describe('[Slider]', () => {
           </SliderContent>
         </Slider>,
       );
-      expect(screen.getByLabelText('change slide')).to.exist;
+      expect(screen.queryByLabelText('change slide')).to.not.exist;
     });
 
     it('should display two indicators with two slides', () => {
@@ -298,6 +298,67 @@ describe('[Slider]', () => {
         expect(screen.getByText('test slide')).to.exist;
         expect(screen.getByText('test slide 2')).to.not.exist;
       }, 1100);
+    });
+
+    it('should change to next slide when right arrow is clicked', () => {
+      render(
+        <Slider delay={10} autoPlay={false}>
+          <SliderControls>
+            <SliderNextButton />
+            <SliderPreviousButton />
+          </SliderControls>
+          <SliderIndicator></SliderIndicator>
+          <SliderContent>
+            <SliderSlide>test slide</SliderSlide>
+            <SliderSlide>test slide 2</SliderSlide>
+            <SliderSlide>test slide 3</SliderSlide>
+            <SliderSlide>test slide 4</SliderSlide>
+          </SliderContent>
+        </Slider>,
+      );
+
+      expect(screen.getByText('test slide')).to.exist;
+
+      fireEvent.keyPress(screen.getByTestId('slider'), {
+        key: 'ArrowRight',
+        code: 'ArrowRight',
+        keyCode: 39,
+        charCode: 39,
+      });
+
+      screen.findByText('test slide 2').then(() => {
+        expect(screen.getByText('test slide 2')).to.exist;
+      });
+    });
+    it('should change to previous slide when left arrow is clicked', () => {
+      render(
+        <Slider delay={10} autoPlay={false} loop>
+          <SliderControls>
+            <SliderNextButton />
+            <SliderPreviousButton />
+          </SliderControls>
+          <SliderIndicator></SliderIndicator>
+          <SliderContent>
+            <SliderSlide>test slide</SliderSlide>
+            <SliderSlide>test slide 2</SliderSlide>
+            <SliderSlide>test slide 3</SliderSlide>
+            <SliderSlide>test slide 4</SliderSlide>
+          </SliderContent>
+        </Slider>,
+      );
+
+      expect(screen.getByText('test slide')).to.exist;
+
+      fireEvent.keyPress(screen.getByTestId('slider'), {
+        key: 'ArrowLeft',
+        code: 'ArrowLeft',
+        keyCode: 37,
+        charCode: 37,
+      });
+
+      screen.findByText('test slide 4').then(() => {
+        expect(screen.getByText('test slide 4')).to.exist;
+      });
     });
   });
 });

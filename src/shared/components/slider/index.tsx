@@ -1,4 +1,4 @@
-import { Box, HStack, IconButton } from '@holdr-ui/react';
+import { Box, Center, HStack, IconButton } from '@holdr-ui/react';
 import { Fragment } from 'react';
 import {
   arrayFrom,
@@ -19,7 +19,7 @@ import {
   SliderButtonProps,
 } from './shared';
 import { AnimatePresence } from 'framer-motion';
-import { BoxProps } from '@holdr-ui/react/dist/components/box/src/box.types';
+import { CenterProps } from '@holdr-ui/react/dist/components/center/src/center.types';
 
 export function circular(num: number, max: number) {
   if (num === max) return 0;
@@ -85,7 +85,14 @@ function Slider({
         numberOfSlides={numberOfSlides}
         keyboard={keyboard}
       >
-        <Box position={position} h={h} w={w} {...props} overflow='hidden'>
+        <Box
+          position={position}
+          h={h}
+          w={w}
+          {...props}
+          overflow='hidden'
+          data-testid='slider'
+        >
           <HStack w='full' h='full' justify='flex-start'>
             {animation === 'slide' && (
               <SlideAnimated>
@@ -241,11 +248,11 @@ function SliderSlide({
   flex = 1,
   position = 'relative',
   ...props
-}: BoxProps) {
+}: CenterProps) {
   return (
-    <Box position={position} flex={flex} h={h} w={w} {...props}>
+    <Center position={position} flex={flex} h={h} w={w} {...props}>
       {children}
-    </Box>
+    </Center>
   );
 }
 

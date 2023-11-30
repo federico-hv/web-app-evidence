@@ -5,34 +5,32 @@ import {
   MediaViewContent,
 } from '../../../../../shared';
 import { PostMediaProps } from './types';
-import { useDisclosure } from '@holdr-ui/react';
+import { Box, useDisclosure } from '@holdr-ui/react';
 import { Slider } from 'shared';
+import { IndicatorDot } from '../../../../../shared/components/slider/ui';
 
 function PostMedia({ items }: PostMediaProps) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [slideIndex, setIndex] = useState(0);
 
-  const SliderControls = (
-    <Slider.Controls>
-      <Slider.Controls.NextButton zIndex={50} />
-      <Slider.Controls.PreviousButton zIndex={50} />
-    </Slider.Controls>
-  );
-
   // change if single video post support is changed
   if (items[0].type === 'video')
-    return <MediaItem type={items[0].type} url={items[0].url} />;
+    return (
+      <Box mt={5}>
+        <MediaItem type={items[0].type} url={items[0].url} />;
+      </Box>
+    );
 
   return (
     <Fragment>
       <MediaView isOpen={isOpen} onClose={onClose} onOpen={onOpen}>
         <MediaViewContent>
           <MediaView.Slider
-            w='100%'
-            h='100%'
             current={slideIndex}
             animation='slide'
             keyboard
+            w='full'
+            h='full'
           >
             <Slider.Content>
               {items.map((el, idx) => (
@@ -40,13 +38,31 @@ function PostMedia({ items }: PostMediaProps) {
                   key={`media-slide-${idx}`}
                   radius={4}
                   overflow='hidden'
+                  w='full'
+                  h='full'
                 >
-                  <MediaItem type={el.type} url={el.url} />
+                  <Box w='85%' h='full'>
+                    <MediaItem type={el.type} url={el.url} />
+                  </Box>
                 </Slider.Slide>
               ))}
             </Slider.Content>
-            {SliderControls}
-            <Slider.Indicator pb={3} zIndex={50} />
+            <Slider.Controls>
+              <Slider.Controls.NextButton zIndex={50} size='lg' />
+              <Slider.Controls.PreviousButton zIndex={50} size='lg' />
+            </Slider.Controls>
+            <Slider.Indicator
+              pb={3}
+              zIndex={50}
+              renderItem={(isActive, onClick, key) => (
+                <IndicatorDot
+                  isActive={isActive}
+                  onClick={onClick}
+                  key={key}
+                  size='0.8rem'
+                />
+              )}
+            />
           </MediaView.Slider>
         </MediaViewContent>
       </MediaView>
@@ -70,7 +86,11 @@ function PostMedia({ items }: PostMediaProps) {
             </Slider.Slide>
           ))}
         </Slider.Content>
-        {SliderControls}
+
+        <Slider.Controls>
+          <Slider.Controls.NextButton zIndex={50} />
+          <Slider.Controls.PreviousButton zIndex={50} />
+        </Slider.Controls>
         <Slider.Indicator pb={3} />
       </Slider>
     </Fragment>

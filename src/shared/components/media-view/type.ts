@@ -7,9 +7,9 @@ interface IWithDisclosure {
 }
 
 interface IWithoutDisclosure {
-  isOpen: never;
-  onOpen: never;
-  onClose: never;
+  isOpen?: never;
+  onOpen?: never;
+  onClose?: never;
 }
 
 export type MediaViewProps = GenericProps &

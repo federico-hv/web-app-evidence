@@ -14,7 +14,22 @@ function MediaItem({ url, type, title = '' }: MediaItemProps) {
         </Box>
       )}
       {type === 'image' && (
-        <Image className={CenteredImage()} src={url} alt={title} />
+        <Box position='relative' w='full' h='full'>
+          <Image
+            fit='fill'
+            src={url}
+            alt={title}
+            css={{ filter: 'blur(5px)', opacity: 0.9 }}
+          />
+          <Box w='full' h='full' position='absolute' t={0} r={0}>
+            <Image
+              className={CenteredImage()}
+              src={url}
+              alt={title}
+              fit='contain'
+            />
+          </Box>
+        </Box>
       )}
     </Fragment>
   );
