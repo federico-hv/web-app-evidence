@@ -19,18 +19,32 @@ function PostMedia({ items }: PostMediaProps) {
     </Slider.Controls>
   );
 
-  const MediaItems = items.map((el, idx) => (
-    <Slider.Slide key={`media-slide-${idx}`}>
-      <MediaItem type={el.type} url={el.url} />
-    </Slider.Slide>
-  ));
+  // change if single video post support is changed
+  if (items[0].type === 'video')
+    return <MediaItem type={items[0].type} url={items[0].url} />;
 
   return (
     <Fragment>
       <MediaView isOpen={isOpen} onClose={onClose}>
         <MediaViewContent>
-          <MediaView.Slider w='100%' h='100%' current={slideIndex}>
-            <Slider.Content>{MediaItems}</Slider.Content>
+          <MediaView.Slider
+            w='100%'
+            h='100%'
+            current={slideIndex}
+            animation='slide'
+            keyboard
+          >
+            <Slider.Content>
+              {items.map((el, idx) => (
+                <Slider.Slide
+                  key={`media-slide-${idx}`}
+                  radius={4}
+                  overflow='hidden'
+                >
+                  <MediaItem type={el.type} url={el.url} />
+                </Slider.Slide>
+              ))}
+            </Slider.Content>
             {SliderControls}
             <Slider.Indicator pb={3} zIndex={50} />
           </MediaView.Slider>
@@ -44,14 +58,17 @@ function PostMedia({ items }: PostMediaProps) {
         animation='slide'
       >
         <Slider.Content>
-          {MediaItems.map((el, idx) =>
-            cloneElement(el, {
-              onClick: () => {
+          {items.map((el, idx) => (
+            <Slider.Slide
+              key={`media-slide-${idx}`}
+              onClick={() => {
                 setIndex(idx);
                 onOpen();
-              },
-            }),
-          )}
+              }}
+            >
+              <MediaItem type={el.type} url={el.url} />
+            </Slider.Slide>
+          ))}
         </Slider.Content>
         {SliderControls}
         <Slider.Indicator pb={3} />

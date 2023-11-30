@@ -18,6 +18,7 @@ export interface SliderCommonProps {
   delay: number;
   loop: boolean;
   speed: TransitionSpeed;
+  keyboard?: boolean;
   current?: number;
   autoPlay?: boolean;
 }

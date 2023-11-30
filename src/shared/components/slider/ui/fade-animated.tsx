@@ -14,7 +14,7 @@ const variants = {
 };
 
 function FadeAnimated({ children }: GenericProps) {
-  const { index, autoPlay, delay, numberOfSlides, setIndex } =
+  const { index, autoPlay, delay, numberOfSlides, setIndex, speed } =
     useSliderContext();
 
   const increment = () =>
@@ -51,7 +51,7 @@ function FadeAnimated({ children }: GenericProps) {
               initial='hidden'
               variants={variants}
               animate='visible'
-              transition={{ duration: 2.5, type: 'ease-in' }}
+              transition={{ duration: speed, type: 'ease-in' }}
               position='absolute'
               t={0}
               l={0}

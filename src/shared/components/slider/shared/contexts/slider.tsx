@@ -26,6 +26,7 @@ function SliderProvider({
   speed,
   children,
   numberOfSlides,
+  keyboard,
 }: SliderProviderProps) {
   const [index, setIndex] = useState<number>(current || 0);
 
@@ -39,6 +40,7 @@ function SliderProvider({
         numberOfSlides,
         index,
         setIndex,
+        keyboard,
       }}
     >
       {children}

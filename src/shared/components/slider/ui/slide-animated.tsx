@@ -3,7 +3,7 @@ import { useSliderContext } from '../shared';
 import { GenericProps } from '../../../interfaces';
 import { getSubComponent, makeArray } from '../../../utilities';
 import { circular } from '../index';
-import { Box, HStack, useSwitch } from '@holdr-ui/react';
+import { Box, HStack, useKeyBind, useSwitch } from '@holdr-ui/react';
 import { theme } from '../../../../configs';
 import { useInterval } from '../../../hooks';
 
@@ -60,8 +60,16 @@ function SlideAnimated({ children }: GenericProps) {
 
   const sliderRef = useRef<HTMLDivElement>(null);
 
-  const { numberOfSlides, index, setIndex, speed, delay, autoPlay } =
-    useSliderContext();
+  const {
+    numberOfSlides,
+    index,
+    setIndex,
+    speed,
+    delay,
+    autoPlay,
+    keyboard,
+    loop,
+  } = useSliderContext();
 
   // State used for handling user over-clicks: it disallows a user triggering another event
   // when the next or previous buttons are clicked.
@@ -144,6 +152,43 @@ function SlideAnimated({ children }: GenericProps) {
     }
   });
 
+  const updateSliderRight = () => {
+    if (disabled) return;
+    stop();
+    setDisabled(true);
+    increment(moveSlide);
+    addAnimation();
+    start();
+  };
+
+  const updateSliderLeft = () => {
+    if (disabled) return;
+    stop();
+    setDisabled(true);
+    decrement(moveSlide);
+    addAnimation();
+    start();
+  };
+
+  const keyIndex = useRef(index);
+
+  useEffect(() => {
+    keyIndex.current = index;
+  }, [index]);
+
+  // right arrow keybind
+  useKeyBind(39, () => {
+    if (!keyboard) return;
+    if (loop || keyIndex.current != numberOfSlides - 1)
+      updateSliderRight();
+  });
+
+  // left arrow keybind
+  useKeyBind(37, () => {
+    if (!keyboard) return;
+    if (loop || keyIndex.current != 0) updateSliderLeft();
+  });
+
   // Add some superpowers to the buttons
   const Controls = React.Children.map(
     makeArray(ControlsWrapper)[0]?.props?.children,
@@ -154,39 +199,13 @@ function SlideAnimated({ children }: GenericProps) {
           child.type &&
           child.type.displayName === 'SliderNextButton'
         ) {
-          return (
-            <Box
-              onClick={() => {
-                if (disabled) return;
-                stop();
-                increment(moveSlide);
-                addAnimation();
-                setDisabled(true);
-                start();
-              }}
-            >
-              {child}
-            </Box>
-          );
+          return <Box onClick={updateSliderRight}>{child}</Box>;
         } else if (
           child &&
           child.type &&
           child.type.displayName === 'SliderPreviousButton'
         ) {
-          return (
-            <Box
-              onClick={() => {
-                if (disabled) return;
-                stop();
-                decrement(moveSlide);
-                addAnimation();
-                setDisabled(true);
-                start();
-              }}
-            >
-              {child}
-            </Box>
-          );
+          return <Box onClick={updateSliderLeft}>{child}</Box>;
         }
       });
     },

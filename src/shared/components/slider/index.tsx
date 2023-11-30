@@ -30,6 +30,7 @@ export function circular(num: number, max: number) {
 function Slider({
   loop = false,
   autoPlay = false,
+  keyboard = false,
   current = 0,
   delay = 2.5, // 2.5 seconds
   animation = 'fade',
@@ -82,6 +83,7 @@ function Slider({
         speed={speed}
         loop={loop}
         numberOfSlides={numberOfSlides}
+        keyboard={keyboard}
       >
         <Box position={position} h={h} w={w} {...props} overflow='hidden'>
           <HStack w='full' h='full' justify='flex-start'>
