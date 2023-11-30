@@ -145,7 +145,7 @@ function SlideAnimated({ children }: GenericProps) {
   ));
 
   // autoplay effect
-  const { stop, start } = useInterval(delay, () => {
+  const { stop: stopTimer, start: startTimer } = useInterval(delay, () => {
     if (autoPlay) {
       increment(moveSlide);
       addAnimation();
@@ -154,20 +154,20 @@ function SlideAnimated({ children }: GenericProps) {
 
   const updateSliderRight = () => {
     if (disabled) return;
-    stop();
+    stopTimer();
     setDisabled(true);
     increment(moveSlide);
     addAnimation();
-    start();
+    startTimer();
   };
 
   const updateSliderLeft = () => {
     if (disabled) return;
-    stop();
+    stopTimer();
     setDisabled(true);
     decrement(moveSlide);
     addAnimation();
-    start();
+    startTimer();
   };
 
   const keyIndex = useRef(index);

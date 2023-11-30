@@ -1,6 +1,6 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useEffect, useRef, useState } from 'react';
 import { GenericProps } from '../../../interfaces';
-import { Box, HStack } from '@holdr-ui/react';
+import { Box, HStack, useKeyBind } from '@holdr-ui/react';
 import { useSliderContext } from '../shared';
 import { MotionBox } from '../../../styles';
 import { getSubComponent, makeArray } from '../../../utilities';
@@ -14,8 +14,16 @@ const variants = {
 };
 
 function FadeAnimated({ children }: GenericProps) {
-  const { index, autoPlay, delay, numberOfSlides, setIndex, speed } =
-    useSliderContext();
+  const {
+    index,
+    autoPlay,
+    delay,
+    numberOfSlides,
+    setIndex,
+    speed,
+    keyboard,
+    loop,
+  } = useSliderContext();
 
   const increment = () =>
     setIndex((prev) => circular(prev + 1, numberOfSlides));
@@ -38,6 +46,36 @@ function FadeAnimated({ children }: GenericProps) {
     ?.children;
 
   const Percentage = 100 / numberOfSlides;
+
+  const updateSliderRight = () => {
+    stopTimer();
+    increment();
+    startTimer();
+  };
+
+  const updateSliderLeft = () => {
+    stopTimer();
+    decrement();
+    startTimer();
+  };
+  const keyIndex = useRef(index);
+
+  useEffect(() => {
+    keyIndex.current = index;
+  }, [index]);
+
+  // right arrow keybind
+  useKeyBind(39, () => {
+    if (!keyboard) return;
+    if (loop || keyIndex.current != numberOfSlides - 1)
+      updateSliderRight();
+  });
+
+  // left arrow keybind
+  useKeyBind(37, () => {
+    if (!keyboard) return;
+    if (loop || keyIndex.current != 0) updateSliderLeft();
+  });
 
   // Add extra styling for slides
   const Slides = React.Children.map(
