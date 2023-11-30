@@ -69,7 +69,7 @@ function Slider({
   if (numberOfSlides === 1) {
     return (
       <Box position={position} h={h} w={w} {...props} overflow='hidden'>
-        {Slides.length && Slides[0]}
+        {Slides && Slides[0]}
       </Box>
     );
   }
