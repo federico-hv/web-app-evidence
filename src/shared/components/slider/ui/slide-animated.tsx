@@ -82,7 +82,7 @@ function SlideAnimated({ children }: GenericProps) {
   } = useSwitch();
 
   // TODO: Use updated useCounter after merging
-  const [currentIndex, setCurrentIndex] = useState(1);
+  const [currentIndex, setCurrentIndex] = useState(index + 1);
 
   const newNumberOfSlides = numberOfSlides + 2;
 
@@ -224,13 +224,13 @@ function SlideAnimated({ children }: GenericProps) {
     disallowSlideChange();
   }, [index]);
 
-  // [On page load]: We need to move the slider to the "first" position
+  // [On page load]: We need to move the slider to its "initial", dependant on the current index position
   // Note: Passed in list [first,...,last] -> actual list [last,first,...,last, first]
   useEffect(() => {
     if (!sliderRef || !sliderRef.current) return;
 
     sliderRef.current.style.transition = 'none'; // remove animation on load
-    moveSlide(1);
+    moveSlide(currentIndex);
     setTimeout(() => {
       // required so that transition only reset after transform has finished.
       if (!sliderRef || !sliderRef.current) return;

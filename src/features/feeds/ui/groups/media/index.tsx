@@ -1,4 +1,4 @@
-import { Fragment, cloneElement, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import {
   MediaItem,
   MediaView,

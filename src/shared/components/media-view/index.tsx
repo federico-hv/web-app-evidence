@@ -38,7 +38,12 @@ function MediaView({
   isOpen: _isOpen = false,
   onClose: _onClose = dummyFn,
 }: MediaViewProps) {
-  const { isOpen, onOpen, onClose } = useDisclosure(_isOpen);
+  const { isOpen, onOpen, onClose: __onClose } = useDisclosure(_isOpen);
+
+  const onClose = () => {
+    _onClose();
+    __onClose();
+  };
 
   useEffect(() => {
     if (_isOpen) onOpen();
@@ -94,10 +99,7 @@ function MediaView({
                     t={0}
                     w='100%'
                     h='100%'
-                    onClick={() => {
-                      _onClose();
-                      onClose();
-                    }}
+                    onClick={onClose}
                     zIndex={50}
                   />
                   <VStack
