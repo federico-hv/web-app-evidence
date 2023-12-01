@@ -20,7 +20,7 @@ function PostMedia({ items }: PostMediaProps) {
   if (items[0].type === 'video')
     return (
       <Box mt={5}>
-        <MediaItem type={items[0].type} url={items[0].url} />;
+        <MediaItem type={items[0].type} url={items[0].url} />
       </Box>
     );
 
