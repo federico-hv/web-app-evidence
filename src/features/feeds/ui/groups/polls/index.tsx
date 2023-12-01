@@ -65,24 +65,23 @@ function Polls({ id, items, endDate }: PollsProps) {
           ))}
         </VStack>
 
-        {voted ||
-          (expired && (
-            <HStack
-              fontSize={2}
-              gap={2}
-              items='flex-end'
-              css={{ userSelect: 'none' }}
-            >
-              <Image
-                size={{ '@bp1': 13, '@bp3': 16 }}
-                alt=''
-                src={pollAlt}
-              />
-              <Text size={{ '@bp1': 1, '@bp3': 2 }} color='base400'>
-                {total} {total > 1 ? 'votes' : 'vote'}
-              </Text>
-            </HStack>
-          ))}
+        {(voted || expired) && (
+          <HStack
+            fontSize={2}
+            gap={2}
+            items='flex-end'
+            css={{ userSelect: 'none' }}
+          >
+            <Image
+              size={{ '@bp1': 13, '@bp3': 16 }}
+              alt=''
+              src={pollAlt}
+            />
+            <Text size={{ '@bp1': 1, '@bp3': 2 }} color='base400'>
+              {total} {total > 1 ? 'votes' : 'vote'}
+            </Text>
+          </HStack>
+        )}
 
         {!!endDate && (
           <Fragment>
