@@ -7,7 +7,7 @@ import {
   VStack,
   useDisclosure,
 } from '@holdr-ui/react';
-import { DialogContextProvider } from '../../shared';
+import { DateUtility, DialogContextProvider } from '../../shared';
 import { useState } from 'react';
 import { DateDialog } from '../../shared/components/calendar/ui';
 import { Calendar, extraBtnPadding, Paths, prefix } from '../../shared';
@@ -15,6 +15,7 @@ import { Calendar, extraBtnPadding, Paths, prefix } from '../../shared';
 function LgHeader() {
   const { pathname } = useLocation();
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+  const [past, setPast] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
@@ -108,6 +109,7 @@ function LgHeader() {
             <Calendar
               onDateClick={(date: Date) => {
                 setSelectedDate(date);
+                setPast(DateUtility.lessThan(date, new Date()));
                 onOpen();
               }}
             />
@@ -115,7 +117,7 @@ function LgHeader() {
         </Box>
       </VStack>
       <DialogContextProvider value={{ isOpen, onOpen, onClose }}>
-        <DateDialog date={selectedDate} />
+        <DateDialog date={selectedDate} past={past} />
       </DialogContextProvider>
     </VStack>
   );
