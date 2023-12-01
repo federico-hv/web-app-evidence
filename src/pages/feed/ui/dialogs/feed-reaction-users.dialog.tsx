@@ -2,7 +2,7 @@ import {
   CommonDialog,
   CommonDialogContent,
   CommonDialogHeader,
-  useGeneralContext,
+  useDialogTabContext,
 } from '../../../../shared';
 import { ReactionUsersList } from '../lists';
 import {
@@ -13,15 +13,17 @@ import { HStack, Icon, Tabs } from '@holdr-ui/react';
 import { ReactionIcon } from '../../../../features';
 
 function FeedReactionUsersDialog() {
-  const { state, update } = useGeneralContext();
+  const { isOpen, onOpen, onClose, option } = useDialogTabContext();
+
+  if (option != 'reactions') return null;
 
   return (
     <CommonDialog
       minHeight='85vh'
       ariaDescribedBy='create-post-dialog__title'
-      isOpen={!!state}
-      onOpen={() => update('reactions')}
-      onClose={() => update(undefined)}
+      isOpen={isOpen}
+      onOpen={() => onOpen('reactions')}
+      onClose={onClose}
     >
       <CommonDialogHeader label='Feed reactions' />
       <CommonDialogContent>
