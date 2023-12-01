@@ -1,17 +1,20 @@
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment, useState } from 'react';
 import {
+  KeyboardKey,
   MediaItem,
   MediaView,
   MediaViewContent,
 } from '../../../../../shared';
 import { PostMediaProps } from './types';
-import { Box, useDisclosure } from '@holdr-ui/react';
+import { Box, useDisclosure, useKeyBind } from '@holdr-ui/react';
 import { Slider } from 'shared';
 import { IndicatorDot } from '../../../../../shared/components/slider/ui';
 
 function PostMedia({ items }: PostMediaProps) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [slideIndex, setIndex] = useState(0);
+
+  useKeyBind(KeyboardKey.Escape, onClose);
 
   // change if single video post support is changed
   if (items[0].type === 'video')
@@ -48,8 +51,12 @@ function PostMedia({ items }: PostMediaProps) {
               ))}
             </Slider.Content>
             <Slider.Controls>
-              <Slider.Controls.NextButton zIndex={50} size='lg' />
-              <Slider.Controls.PreviousButton zIndex={50} size='lg' />
+              <Slider.Controls.NextButton zIndex={50} size='xl' />
+              <Slider.Controls.PreviousButton
+                zIndex={50}
+                size='xl'
+                // className={enlargeFont()}
+              />
             </Slider.Controls>
             <Slider.Indicator
               pb={3}
@@ -68,7 +75,7 @@ function PostMedia({ items }: PostMediaProps) {
       </MediaView>
       <Slider
         mt={5}
-        h={{ '@bp1': 250, '@bp3': 350 }}
+        h={{ '@bp1': 300, '@bp3': 400 }}
         zIndex={5}
         speed='duration-faster'
         animation='slide'
@@ -82,7 +89,7 @@ function PostMedia({ items }: PostMediaProps) {
                 onOpen();
               }}
             >
-              <MediaItem type={el.type} url={el.url} />
+              <MediaItem blurred type={el.type} url={el.url} />
             </Slider.Slide>
           ))}
         </Slider.Content>
