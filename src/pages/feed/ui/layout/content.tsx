@@ -10,6 +10,7 @@ import {
 import {
   arrayFrom,
   DateUtility,
+  DialogTabContextProvider,
   ErrorFallback,
   GeneralContextProvider,
   GenericProps,
@@ -28,13 +29,16 @@ import {
   IconButton,
   Skeleton,
   VStack,
+  useDisclosure,
 } from '@holdr-ui/react';
 import { capitalize } from 'lodash';
 import { useState } from 'react';
-import { FeedReactionUsersDialog } from '../dialogs';
+import {
+  FeedBookmarksUsersDialog,
+  FeedReactionUsersDialog,
+  FeedViewsUsersDialog,
+} from '../dialogs';
 import { ArticleDetails, FeedStatistic, PostDetails } from '../groups';
-
-type Options = 'reactions' | 'views' | 'bookmarks' | undefined;
 
 function StatisticsWrapper({ children }: GenericProps) {
   return (
@@ -51,9 +55,13 @@ function StatisticsWrapper({ children }: GenericProps) {
 }
 
 function Statistics() {
-  const [state, setState] = useState<Options>();
+  const { isOpen, onOpen: open, onClose } = useDisclosure();
+  const [option, setOption] = useState('');
 
-  const update = (newState: Options) => setState(newState);
+  const onOpen = (value: string) => {
+    setOption(value);
+    open();
+  };
 
   const LoadingFallback = (
     <StatisticsWrapper>
@@ -68,17 +76,29 @@ function Statistics() {
       ErrorFallback={ErrorFallback}
       LoadingFallback={LoadingFallback}
     >
-      <GeneralContextProvider value={{ state, update }}>
+      <DialogTabContextProvider
+        value={{
+          isOpen,
+          onOpen,
+          onClose,
+          option,
+        }}
+      >
         <StatisticsWrapper>
-          <FeedStatistic name='views' />
+          <FeedStatistic name='views' action={() => onOpen('views')} />
           <FeedStatistic
             name='reactions'
-            action={() => update('reactions')}
+            action={() => onOpen('reactions')}
           />
-          <FeedStatistic name='bookmarks' />
+          <FeedStatistic
+            name='bookmarks'
+            action={() => onOpen('bookmarks')}
+          />
         </StatisticsWrapper>
         <FeedReactionUsersDialog />
-      </GeneralContextProvider>
+        <FeedViewsUsersDialog />
+        <FeedBookmarksUsersDialog />
+      </DialogTabContextProvider>
     </GQLRenderer>
   );
 }
