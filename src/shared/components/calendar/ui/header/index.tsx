@@ -21,7 +21,7 @@ function DateDialog({ date, past }: { date: Date; past: boolean }) {
           casing='uppercase'
           as='h2'
           size={{ '@bp1': 3, '@bp3': 4 }}
-          {...(past && { css: { textDecoration: 'line-through' } })}
+          {...(past && { weight: 400 })}
         >
           {dateString}
         </Heading>
