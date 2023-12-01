@@ -2,9 +2,9 @@ import {
   CommonDialog,
   CommonDialogContent,
   CommonDialogHeader,
+  EmptyMessage,
   useDialogTabContext,
 } from 'shared';
-import { FeedUsersList } from '../lists';
 
 function FeedViewsUsersDialog() {
   const { isOpen, onOpen, onClose, option } = useDialogTabContext();
@@ -20,9 +20,19 @@ function FeedViewsUsersDialog() {
     >
       <CommonDialogHeader label='Feed Views' />
       <CommonDialogContent>
-        <FeedUsersList />
+        <ViewUsersList />
       </CommonDialogContent>
     </CommonDialog>
+  );
+}
+
+// TODO: integrate views query
+function ViewUsersList() {
+  return (
+    <EmptyMessage
+      title='No views yet.'
+      subtitle='Nobody has viewed your post yet.'
+    />
   );
 }
 

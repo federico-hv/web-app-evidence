@@ -2,9 +2,10 @@ import {
   CommonDialog,
   CommonDialogContent,
   CommonDialogHeader,
+  EmptyMessage,
   useDialogTabContext,
 } from 'shared';
-import { BookmarkUsersList } from '../lists';
+
 function FeedBookmarksUsersDialog() {
   const { isOpen, onOpen, onClose, option } = useDialogTabContext();
 
@@ -22,6 +23,16 @@ function FeedBookmarksUsersDialog() {
         <BookmarkUsersList />
       </CommonDialogContent>
     </CommonDialog>
+  );
+}
+
+// TODO: integrate bookmarks query
+function BookmarkUsersList() {
+  return (
+    <EmptyMessage
+      title='No bookmarks yet.'
+      subtitle='Nobody has bookmarked your post yet.'
+    />
   );
 }
 

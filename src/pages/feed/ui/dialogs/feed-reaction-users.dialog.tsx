@@ -2,15 +2,28 @@ import {
   CommonDialog,
   CommonDialogContent,
   CommonDialogHeader,
+  EmptyMessage,
+  GQLRenderer,
+  IReturnMany,
+  useDialogContext,
   useDialogTabContext,
 } from '../../../../shared';
-import { ReactionUsersList } from '../lists';
 import {
   FeedReactionTabOptions,
   ReadableFeedReaction,
+  ReadableFeedReactionOption,
 } from '../../shared';
-import { HStack, Icon, Tabs } from '@holdr-ui/react';
-import { ReactionIcon } from '../../../../features';
+import { Box, HStack, Icon, Tabs, VStack } from '@holdr-ui/react';
+import {
+  FeedReactionFetchType,
+  GET_FEED_REACTION_USERS,
+  IFeedReactionUser,
+  ReactionIcon,
+  UserWithRelationshipAction,
+  useFeedContext,
+} from '../../../../features';
+import { useSuspenseQuery } from '@apollo/client';
+import { Fragment } from 'react';
 
 function FeedReactionUsersDialog() {
   const { isOpen, onOpen, onClose, option } = useDialogTabContext();
@@ -77,6 +90,50 @@ function FeedReactionUsersDialog() {
     </CommonDialog>
   );
 }
+
+function ReactionUsersList({ type }: { type: FeedReactionFetchType }) {
+  const { feedId } = useFeedContext();
+  const { onClose } = useDialogContext();
+
+  function List() {
+    const { data } = useSuspenseQuery<
+      { feedReactionUsers: IReturnMany<IFeedReactionUser> },
+      { type: FeedReactionFetchType; id: string }
+    >(GET_FEED_REACTION_USERS, {
+      variables: { id: feedId, type: type },
+      fetchPolicy: 'network-only',
+    });
+
+    return (
+      <Box borderTop={1} borderColor='base100' mt='calc(-1 * $4)' pt={4}>
+        {data.feedReactionUsers.count > 0 ? (
+          <VStack gap={4}>
+            {data.feedReactionUsers.data.map((item) => (
+              <UserWithRelationshipAction
+                key={item.user.id}
+                data={item.user}
+                onClose={onClose}
+              />
+            ))}
+          </VStack>
+        ) : (
+          <EmptyMessage
+            title='No reactions yet.'
+            subtitle={`Nobody has expressed ${ReadableFeedReactionOption[type]} for
+              this feed yet.`}
+          />
+        )}
+      </Box>
+    );
+  }
+
+  return (
+    <GQLRenderer ErrorFallback={() => <Fragment />}>
+      <List />
+    </GQLRenderer>
+  );
+}
+
 FeedReactionUsersDialog.displayName = 'FeedReactionUsersDialog';
 
 export default FeedReactionUsersDialog;
