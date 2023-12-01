@@ -6,7 +6,7 @@ import { circular } from '../index';
 import { Box, HStack, useKeyBind, useSwitch } from '@holdr-ui/react';
 import { theme } from '../../../../configs';
 import { useInterval } from '../../../hooks';
-import { requestRelationshipActions } from 'features';
+import { KeyboardKey } from '../../../constants';
 
 /*
 Explanation:
@@ -199,14 +199,12 @@ function SlideAnimated({ children }: GenericProps) {
     startTimer();
   };
 
-  // right arrow keybind
-  useKeyBind(39, () => {
+  useKeyBind(KeyboardKey.RightArrow, () => {
     if (!keyboard) return;
     updateSliderRight();
   });
 
-  // left arrow keybind
-  useKeyBind(37, () => {
+  useKeyBind(KeyboardKey.LeftArrow, () => {
     if (!keyboard) return;
     updateSliderLeft();
   });
