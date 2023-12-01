@@ -1,5 +1,4 @@
-import { CenterVariantProps } from '@holdr-ui/react/dist/components/center/src/center.types';
-import { MotionDot, StringNumeric, dummyFn } from '../../../index';
+import { MotionDot, StringNumeric } from '../../../index';
 import {
   ResponsiveValue,
   SpacingSize,
@@ -23,7 +22,7 @@ export default function IndicatorDot({
   return (
     <MotionDot
       onClick={onClick}
-      bgColor={isActive ? 'clearTint400' : 'darkTint300'}
+      bgColor={isActive ? 'primary400' : 'clearTint400'}
       aria-label='change slide'
       zIndex={zIndex}
       size={size}
