@@ -6,6 +6,9 @@ import {
 import { useQuery } from '@apollo/client';
 import { GET_FEED_AUDIENCE } from '../../queries';
 import {
+  CommonDialog,
+  CommonDialogContent,
+  CommonDialogHeader,
   Error,
   extraBtnPadding,
   Loader,
@@ -16,7 +19,6 @@ import {
   Box,
   Button,
   Center,
-  Dialog,
   Drawer,
   Heading,
   Radio,
@@ -86,32 +88,20 @@ function AudienceDialog() {
   return (
     <Fragment>
       {width && width > 540 ? (
-        <Dialog
+        <CommonDialog
           ariaDescribedBy='change-audience-dialog__title'
           isOpen={isOpen}
           onClose={onClose}
           onOpen={onOpen}
+          minHeight={300}
         >
-          <Dialog.Portal>
-            <Dialog.Overlay />
-            <Dialog.Content w={400} h={300}>
-              <Dialog.Body css={{ padding: 0 }}>
-                <Center p={5} borderBottom={1} borderColor='base100'>
-                  <Heading
-                    as='h2'
-                    size={{ '@bp1': 3, '@bp3': 4 }}
-                    css={{ textAlign: 'center' }}
-                    casing='uppercase'
-                    weight={500}
-                  >
-                    Audience
-                  </Heading>
-                </Center>
-                <Options />
-              </Dialog.Body>
-            </Dialog.Content>
-          </Dialog.Portal>
-        </Dialog>
+          <CommonDialogHeader label='Audience' />
+          <CommonDialogContent>
+            <Box mt={4}>
+              <Options />
+            </Box>
+          </CommonDialogContent>
+        </CommonDialog>
       ) : (
         <Drawer isOpen={isOpen} onClose={onClose}>
           <Drawer.Portal>
