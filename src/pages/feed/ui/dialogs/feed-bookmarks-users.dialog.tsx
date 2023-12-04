@@ -39,7 +39,6 @@ function FeedBookmarksUsersDialog() {
   );
 }
 
-// TODO: integrate bookmarks query
 function BookmarkUsersList() {
   const { feedId } = useFeedContext();
   const { onClose } = useDialogContext();
