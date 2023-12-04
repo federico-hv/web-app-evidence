@@ -31,7 +31,7 @@ function FeedBookmarksUsersDialog() {
       onOpen={() => onOpen('views')}
       onClose={onClose}
     >
-      <CommonDialogHeader label='Feed Booksmarks' />
+      <CommonDialogHeader label='Feed Bookmarks' />
       <CommonDialogContent>
         <BookmarkUsersList />
       </CommonDialogContent>
@@ -66,10 +66,12 @@ function BookmarkUsersList() {
             ))}
           </VStack>
         ) : (
-          <EmptyMessage
-            title='No bookmarks yet.'
-            subtitle='Nobody has bookmarked your post yet.'
-          />
+          <Box>
+            <EmptyMessage
+              title='No bookmarks yet.'
+              subtitle='Nobody has bookmarked your post yet.'
+            />
+          </Box>
         )}
       </Box>
     );
