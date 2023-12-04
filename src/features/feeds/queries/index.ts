@@ -231,3 +231,25 @@ export const GET_FEED_AUDIENCE = gql`
     feedAudience(id: $id) # FeedAudience
   }
 `;
+
+export const GET_POLL_VOTES = gql`
+  query usersWhoVoted($id: String!, $params: StringPaginationParamsInput) {
+    usersWhoVoted(id: $id, params: $params) {
+      edges {
+        node {
+          id
+          username
+          avatar
+          displayName
+        }
+        cursor
+      }
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+    }
+  }
+`;

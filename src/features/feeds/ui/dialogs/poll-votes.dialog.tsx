@@ -1,21 +1,34 @@
-import { Tabs } from '@holdr-ui/react';
-import { IPoll } from 'features/feeds/shared';
+import { useSuspenseQuery } from '@apollo/client';
+import { Box, Tabs, VStack } from '@holdr-ui/react';
+import { GET_POLL_VOTES } from '../../queries';
+import { IPoll, useFeedContext } from '../../shared';
 import {
   CommonDialog,
   CommonDialogContent,
   CommonDialogHeader,
   EmptyMessage,
+  GQLRenderer,
+  IConnection,
+  IPaginationParams,
+  UserModel,
   useDialogContext,
 } from 'shared';
+import { Fragment } from 'react';
+import { UserWithRelationshipAction } from '../../../relationships';
 
 function PollVotesDialog({ items }: { items: IPoll[] }) {
   const { isOpen, onOpen, onClose } = useDialogContext();
 
   return (
-    <CommonDialog isOpen={isOpen} onClose={onClose} onOpen={onOpen}>
+    <CommonDialog
+      isOpen={isOpen}
+      onClose={onClose}
+      onOpen={onOpen}
+      minHeight='85vh'
+    >
       <CommonDialogHeader label='Poll Votes' />
       <CommonDialogContent>
-        <Tabs defaultValue={items[0].text}>
+        <Tabs defaultValue={'all'}>
           <Tabs.List
             variant='ghost'
             css={{
@@ -44,6 +57,9 @@ function PollVotesDialog({ items }: { items: IPoll[] }) {
               },
             }}
           >
+            <Tabs.Trigger value={'all'} key={`all-tab-trigger`}>
+              all
+            </Tabs.Trigger>
             {items.map((data) => (
               <Tabs.Trigger
                 value={data.text}
@@ -58,22 +74,57 @@ function PollVotesDialog({ items }: { items: IPoll[] }) {
               key={`${data.text}-tab-content`}
               value={data.text}
             >
-              <PollUserList />
+              <PollUserList option={data.text} />
             </Tabs.Content>
           ))}
+          <Tabs.Content key={'all-tab-content'} value={'all'}>
+            <PollUserList option={'all'} />
+          </Tabs.Content>
         </Tabs>
       </CommonDialogContent>
     </CommonDialog>
   );
 }
 
-// TODO: integrate gql query
-function PollUserList() {
+function PollUserList({ option }: { option: string }) {
+  const { feedId } = useFeedContext();
+  const { data } = useSuspenseQuery<
+    { usersWhoVoted: IConnection<UserModel, string> },
+    { id?: string; params?: IPaginationParams<string> }
+  >(GET_POLL_VOTES, {
+    variables: { id: feedId },
+    fetchPolicy: 'network-only',
+  });
+
+  const votedUsers = data?.usersWhoVoted?.edges;
+
+  function List() {
+    return (
+      <Box borderTop={1} borderColor='base100' mt='calc(-1 * $4)' pt={4}>
+        {/** TODO: integrade filter support on usersWhoVoted, then remove option === all check  */}
+        {option === 'all' && votedUsers && votedUsers.length > 0 ? (
+          <VStack gap={4}>
+            {votedUsers.map((value, idx) => (
+              <UserWithRelationshipAction
+                data={value.node}
+                key={`voted-user-${idx}`}
+              />
+            ))}
+          </VStack>
+        ) : (
+          <EmptyMessage
+            title={'No Votes Yet.'}
+            subtitle={`Nobody has voted for this result yet.`}
+          />
+        )}
+      </Box>
+    );
+  }
+
   return (
-    <EmptyMessage
-      title={'No Votes Yet.'}
-      subtitle={`Nobody has voted for this result yet.`}
-    />
+    <GQLRenderer ErrorFallback={() => <Fragment />}>
+      <List />
+    </GQLRenderer>
   );
 }
 
