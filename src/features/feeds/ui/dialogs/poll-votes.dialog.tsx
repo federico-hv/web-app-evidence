@@ -88,17 +88,18 @@ function PollVotesDialog({ items }: { items: IPoll[] }) {
 
 function PollUserList({ option }: { option: string }) {
   const { feedId } = useFeedContext();
-  const { data } = useSuspenseQuery<
-    { usersWhoVoted: IConnection<UserModel, string> },
-    { id?: string; params?: IPaginationParams<string> }
-  >(GET_POLL_VOTES, {
-    variables: { id: feedId },
-    fetchPolicy: 'network-only',
-  });
-
-  const votedUsers = data?.usersWhoVoted?.edges;
+  const { onClose } = useDialogContext();
 
   function List() {
+    const { data } = useSuspenseQuery<
+      { usersWhoVoted: IConnection<UserModel, string> },
+      { id?: string; params?: IPaginationParams<string> }
+    >(GET_POLL_VOTES, {
+      variables: { id: feedId },
+      fetchPolicy: 'network-only',
+    });
+
+    const votedUsers = data?.usersWhoVoted?.edges;
     return (
       <Box borderTop={1} borderColor='base100' mt='calc(-1 * $4)' pt={4}>
         {/** TODO: integrade filter support on usersWhoVoted, then remove option === all check  */}
@@ -107,6 +108,7 @@ function PollUserList({ option }: { option: string }) {
             {votedUsers.map((value, idx) => (
               <UserWithRelationshipAction
                 data={value.node}
+                onClose={onClose}
                 key={`voted-user-${idx}`}
               />
             ))}
