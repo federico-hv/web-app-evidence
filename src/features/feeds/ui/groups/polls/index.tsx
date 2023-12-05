@@ -18,10 +18,13 @@ import { AnswerPollButton } from '../../buttons';
 import pollAlt from '../../../../../assets/images/poll-alt.png';
 import { PollsProps } from './types';
 import { PollVotesDialog } from '../../dialogs';
+import { useCurrentUser } from '../../../../../features';
 
 function Polls({ id, items, endDate }: PollsProps) {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { feedId } = useFeedContext();
+  const { feedId, owner } = useFeedContext();
+
+  const currentUser = useCurrentUser();
 
   const { votePoll, loading } = useVotePoll();
   // parse poll to check whether there is a vote or not
@@ -76,11 +79,13 @@ function Polls({ id, items, endDate }: PollsProps) {
               items='flex-end'
               w='fit-content'
               css={{ userSelect: 'none' }}
-              _hover={{
-                cursor: 'pointer',
-                textDecoration: 'underline',
-              }}
-              onClick={onOpen}
+              {...(currentUser?.id === owner.id && {
+                _hover: {
+                  cursor: 'pointer',
+                  textDecoration: 'underline',
+                },
+                onClick: onOpen,
+              })}
             >
               <Image
                 size={{ '@bp1': 13, '@bp3': 16 }}
