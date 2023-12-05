@@ -6,6 +6,8 @@ import {
   PostModel,
   Reaction,
   ReactionPopover,
+  useCurrentUser,
+  useFeedContext,
 } from '../../../../features';
 import {
   arrayFrom,
@@ -58,6 +60,10 @@ function Statistics() {
   const { isOpen, onOpen: open, onClose } = useDisclosure();
   const [option, setOption] = useState('');
 
+  const currentUser = useCurrentUser();
+  const { owner, createdAt, reaction, feedId, bookmarked } =
+    useFeedContext();
+
   const onOpen = (value: string) => {
     setOption(value);
     open();
@@ -85,14 +91,21 @@ function Statistics() {
         }}
       >
         <StatisticsWrapper>
-          <FeedStatistic name='views' action={() => onOpen('views')} />
+          <FeedStatistic
+            name='views'
+            {...(owner.id === currentUser?.id && {
+              action: () => onOpen('views'),
+            })}
+          />
           <FeedStatistic
             name='reactions'
             action={() => onOpen('reactions')}
           />
           <FeedStatistic
             name='bookmarks'
-            action={() => onOpen('bookmarks')}
+            {...(owner.id === currentUser?.id && {
+              action: () => onOpen('bookmarks'),
+            })}
           />
         </StatisticsWrapper>
         <FeedReactionUsersDialog />

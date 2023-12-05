@@ -117,11 +117,13 @@ function ReactionUsersList({ type }: { type: FeedReactionFetchType }) {
             ))}
           </VStack>
         ) : (
-          <EmptyMessage
-            title='No reactions yet.'
-            subtitle={`Nobody has expressed ${ReadableFeedReactionOption[type]} for
+          <Box pt={4}>
+            <EmptyMessage
+              title='No reactions yet.'
+              subtitle={`Nobody has expressed ${ReadableFeedReactionOption[type]} for
               this feed yet.`}
-          />
+            />
+          </Box>
         )}
       </Box>
     );

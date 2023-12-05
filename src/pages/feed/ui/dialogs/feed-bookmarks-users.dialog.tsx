@@ -66,7 +66,7 @@ function BookmarkUsersList() {
             ))}
           </VStack>
         ) : (
-          <Box>
+          <Box pt={4}>
             <EmptyMessage
               title='No bookmarks yet.'
               subtitle='Nobody has bookmarked your post yet.'
