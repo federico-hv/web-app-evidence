@@ -18,10 +18,12 @@ import { AnswerPollButton } from '../../buttons';
 import pollAlt from '../../../../../assets/images/poll-alt.png';
 import { PollsProps } from './types';
 import { PollVotesDialog } from '../../dialogs';
+import { useCurrentUser } from '../../../../auth';
 
 function Polls({ id, items, endDate }: PollsProps) {
+  const user = useCurrentUser();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { feedId } = useFeedContext();
+  const { feedId, owner } = useFeedContext();
 
   const { votePoll, loading } = useVotePoll();
   // parse poll to check whether there is a vote or not
@@ -69,7 +71,7 @@ function Polls({ id, items, endDate }: PollsProps) {
             ))}
           </VStack>
 
-          {(voted || expired) && (
+          {(voted || expired || user?.id === owner.id) && (
             <HStack
               fontSize={2}
               gap={2}
