@@ -93,7 +93,7 @@ function Polls({ id, items, endDate }: PollsProps) {
             </HStack>
           )}
 
-          {!!endDate && (
+          {!expired && !!endDate && (
             <Fragment>
               <HStack fontSize={2} gap={2} items='center'>
                 <Icon name='time-outline' size='base' />
