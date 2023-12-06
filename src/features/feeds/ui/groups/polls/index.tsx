@@ -18,13 +18,12 @@ import { AnswerPollButton } from '../../buttons';
 import pollAlt from '../../../../../assets/images/poll-alt.png';
 import { PollsProps } from './types';
 import { PollVotesDialog } from '../../dialogs';
-import { useCurrentUser } from '../../../../../features';
+import { useCurrentUser } from '../../../../auth';
 
 function Polls({ id, items, endDate }: PollsProps) {
+  const user = useCurrentUser();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { feedId, owner } = useFeedContext();
-
-  const currentUser = useCurrentUser();
 
   const { votePoll, loading } = useVotePoll();
   // parse poll to check whether there is a vote or not
@@ -72,14 +71,14 @@ function Polls({ id, items, endDate }: PollsProps) {
             ))}
           </VStack>
 
-          {(voted || expired) && (
+          {(voted || expired || user?.id === owner.id) && (
             <HStack
               fontSize={2}
               gap={2}
               items='flex-end'
               w='fit-content'
               css={{ userSelect: 'none' }}
-              {...(currentUser?.id === owner.id && {
+              {...(user?.id === owner.id && {
                 _hover: {
                   cursor: 'pointer',
                   textDecoration: 'underline',
@@ -98,7 +97,7 @@ function Polls({ id, items, endDate }: PollsProps) {
             </HStack>
           )}
 
-          {!!endDate && (
+          {!expired && !!endDate && (
             <Fragment>
               <HStack fontSize={2} gap={2} items='center'>
                 <Icon name='time-outline' size='base' />

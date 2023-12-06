@@ -30,12 +30,10 @@ function NotificationsPage() {
               />
             </PageLayoutHeader>
             <PageLayoutContent>
-              <Box pt={4}>
-                <EmptyMessage
-                  title='No notifications'
-                  subtitle='All your notifications will appear here.'
-                />
-              </Box>
+              <EmptyMessage
+                title='No notifications'
+                subtitle='All your notifications will appear here.'
+              />
             </PageLayoutContent>
           </PageLayout>
         </ContentLayoutMain>

@@ -1,3 +1,4 @@
+import { Box } from '@holdr-ui/react';
 import {
   CommonDialog,
   CommonDialogContent,
@@ -29,10 +30,12 @@ function FeedViewsUsersDialog() {
 // TODO: integrate views query
 function ViewUsersList() {
   return (
-    <EmptyMessage
-      title='No views yet.'
-      subtitle='Nobody has viewed your post yet.'
-    />
+    <Box pt={4}>
+      <EmptyMessage
+        title='No views yet.'
+        subtitle='Nobody has viewed your post yet.'
+      />
+    </Box>
   );
 }
 
