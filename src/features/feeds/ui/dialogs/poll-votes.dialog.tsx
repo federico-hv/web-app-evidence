@@ -28,7 +28,7 @@ function PollVotesDialog({ items }: { items: IPoll[] }) {
     >
       <CommonDialogHeader label='Poll Votes' />
       <CommonDialogContent>
-        <Tabs defaultValue={'all'}>
+        <Tabs defaultValue={'All'}>
           <Tabs.List
             variant='ghost'
             css={{
@@ -57,15 +57,15 @@ function PollVotesDialog({ items }: { items: IPoll[] }) {
               },
             }}
           >
-            <Tabs.Trigger value={'all'} key={`all-tab-trigger`}>
-              all
+            <Tabs.Trigger value={'All'} key={`All-tab-trigger`}>
+              All
             </Tabs.Trigger>
             {items.map((data) => (
               <Tabs.Trigger
                 value={data.text}
                 key={`${data.text}-tab-trigger`}
               >
-                {data.text}
+                <Box css={{ whiteSpace: 'nowrap' }}>{data.text}</Box>
               </Tabs.Trigger>
             ))}
           </Tabs.List>
@@ -77,8 +77,8 @@ function PollVotesDialog({ items }: { items: IPoll[] }) {
               <PollUserList option={data.text} />
             </Tabs.Content>
           ))}
-          <Tabs.Content key={'all-tab-content'} value={'all'}>
-            <PollUserList option={'all'} />
+          <Tabs.Content key={'All-tab-content'} value={'All'}>
+            <PollUserList option={'All'} />
           </Tabs.Content>
         </Tabs>
       </CommonDialogContent>
@@ -102,8 +102,8 @@ function PollUserList({ option }: { option: string }) {
     const votedUsers = data?.usersWhoVoted?.edges;
     return (
       <Box borderTop={1} borderColor='base100' mt='calc(-1 * $4)' pt={4}>
-        {/** TODO: integrade filter support on usersWhoVoted, then remove option === all check  */}
-        {option === 'all' && votedUsers && votedUsers.length > 0 ? (
+        {/** TODO: integrade filter support on usersWhoVoted, then remove option === All check  */}
+        {option === 'All' && votedUsers && votedUsers.length > 0 ? (
           <VStack gap={4}>
             {votedUsers.map((value, idx) => (
               <UserWithRelationshipAction

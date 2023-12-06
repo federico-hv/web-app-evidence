@@ -78,11 +78,13 @@ function Polls({ id, items, endDate }: PollsProps) {
               items='flex-end'
               w='fit-content'
               css={{ userSelect: 'none' }}
-              _hover={{
-                cursor: 'pointer',
-                textDecoration: 'underline',
-              }}
-              onClick={onOpen}
+              {...(user?.id === owner.id && {
+                _hover: {
+                  cursor: 'pointer',
+                  textDecoration: 'underline',
+                },
+                onClick: onOpen,
+              })}
             >
               <Image
                 size={{ '@bp1': 13, '@bp3': 16 }}
