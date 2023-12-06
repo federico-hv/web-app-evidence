@@ -124,7 +124,7 @@ function PollUserList({ option }: { option: string }) {
   }
 
   return (
-    <GQLRenderer ErrorFAllback={() => <Fragment />}>
+    <GQLRenderer ErrorFallback={() => <Fragment />}>
       <List />
     </GQLRenderer>
   );
