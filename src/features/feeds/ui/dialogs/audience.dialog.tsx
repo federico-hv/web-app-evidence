@@ -10,24 +10,11 @@ import {
   CommonDialogContent,
   CommonDialogHeader,
   Error,
-  extraBtnPadding,
   Loader,
   RadioWrapper,
   useDialogContext,
 } from '../../../../shared';
-import {
-  Box,
-  Button,
-  Center,
-  Drawer,
-  Heading,
-  Radio,
-  Skeleton,
-  Text,
-  useWindowSize,
-  VStack,
-} from '@holdr-ui/react';
-import { Fragment } from 'react';
+import { Box, Radio, Skeleton, Text, VStack } from '@holdr-ui/react';
 
 function AudienceDialog() {
   const { feedId } = useFeedContext();
@@ -42,8 +29,6 @@ function AudienceDialog() {
   const { changeAudience } = useChangeAudience();
 
   const { isOpen, onClose, onOpen } = useDialogContext();
-
-  const { width } = useWindowSize();
 
   const Options = () => (
     <Error hasError={!!error} errorMessage={error?.message}>
@@ -86,61 +71,20 @@ function AudienceDialog() {
   );
 
   return (
-    <Fragment>
-      {width && width > 540 ? (
-        <CommonDialog
-          ariaDescribedBy='change-audience-dialog__title'
-          isOpen={isOpen}
-          onClose={onClose}
-          onOpen={onOpen}
-          minHeight={300}
-        >
-          <CommonDialogHeader label='Audience' />
-          <CommonDialogContent>
-            <Box mt={4}>
-              <Options />
-            </Box>
-          </CommonDialogContent>
-        </CommonDialog>
-      ) : (
-        <Drawer isOpen={isOpen} onClose={onClose}>
-          <Drawer.Portal>
-            <Drawer.Overlay />
-            <Drawer.Content>
-              <VStack
-                radius={3}
-                bgColor='primary400'
-                w='full'
-                h='380px'
-                divider={<Box borderBottom={1} borderColor='base100' />}
-              >
-                <Center p={5} borderBottom={1} borderColor='base100'>
-                  <Heading
-                    as='h2'
-                    size={{ '@bp1': 3, '@bp3': 4 }}
-                    css={{ textAlign: 'center' }}
-                    casing='uppercase'
-                    weight={500}
-                  >
-                    Audience
-                  </Heading>
-                </Center>
-                <Options />
-                <VStack flex={1} px={4} justify='center'>
-                  <Button
-                    className={extraBtnPadding()}
-                    fullWidth
-                    onClick={onClose}
-                  >
-                    Close
-                  </Button>
-                </VStack>
-              </VStack>
-            </Drawer.Content>
-          </Drawer.Portal>
-        </Drawer>
-      )}
-    </Fragment>
+    <CommonDialog
+      ariaDescribedBy='change-audience-dialog__title'
+      isOpen={isOpen}
+      onClose={onClose}
+      onOpen={onOpen}
+      minHeight={300}
+    >
+      <CommonDialogHeader label='Audience' />
+      <CommonDialogContent>
+        <Box mt={4}>
+          <Options />
+        </Box>
+      </CommonDialogContent>
+    </CommonDialog>
   );
 }
 
