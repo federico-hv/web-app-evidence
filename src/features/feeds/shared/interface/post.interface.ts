@@ -13,6 +13,7 @@ export interface IPostMedia extends GenericItem {
 
 export interface IPoll extends GenericItem {
   __typename: string;
+  id: number;
   text: string;
   voted: boolean;
   count: number;

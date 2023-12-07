@@ -233,8 +233,12 @@ export const GET_FEED_AUDIENCE = gql`
 `;
 
 export const GET_POLL_VOTES = gql`
-  query usersWhoVoted($id: String!, $params: StringPaginationParamsInput) {
-    usersWhoVoted(id: $id, params: $params) {
+  query usersWhoVoted(
+    $id: String!
+    $params: StringPaginationParamsInput
+    $pollId: Int
+  ) {
+    usersWhoVoted(id: $id, params: $params, pollId: $pollId) {
       edges {
         node {
           id
