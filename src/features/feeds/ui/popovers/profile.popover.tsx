@@ -4,6 +4,7 @@ import {
   Card,
   HStack,
   Heading,
+  HoverCard,
   Popover,
   Text,
 } from '@holdr-ui/react';
@@ -49,10 +50,11 @@ function ProfilePopover() {
 
   // close when scrolling
   useActOnScroll(10, onClose);
+  const onOpenChange = () => (isOpen ? onClose() : onOpen());
 
   function Content() {
     return (
-      <Card gap={4} w='full' p={3}>
+      <Card gap={4} w='xs' p={3} bgColor='base100'>
         <Card.Header>
           <HStack justify='space-between' items='center'>
             <Avatar src={owner.avatar} size='lg' />
@@ -105,15 +107,19 @@ function ProfilePopover() {
       ErrorFallback={() => <Fragment />}
       LoadingFallback={<Fragment />}
     >
-      <Popover isOpen={isOpen} onOpenChange={onOpen}>
-        {/** popover doesn't work without this empty trigger */}
-        <Popover.Trigger />
-        <Popover.Portal>
-          <Popover.Content onMouseEnter={onOpen} w='xs' p={0}>
+      <HoverCard
+        openDelay={50}
+        closeDelay={300}
+        open={isOpen}
+        onOpenChange={onOpenChange}
+      >
+        <HoverCard.Trigger />
+        <HoverCard.Portal>
+          <HoverCard.Content>
             <Content />
-          </Popover.Content>
-        </Popover.Portal>
-      </Popover>
+          </HoverCard.Content>
+        </HoverCard.Portal>
+      </HoverCard>
     </GQLRenderer>
   );
 }
