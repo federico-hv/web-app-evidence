@@ -26,7 +26,7 @@ import { BookmarkPopover } from '../../../../bookmarks';
 import { FeedOwnerMoreButton, GeneralPostMoreButton } from '../../buttons';
 import { ReactionPopover } from '../../popovers';
 import { PostMedia, Polls } from '../../groups';
-import ProfileHoverCard from '../profile.hover-card';
+import ProfileHoverCard from '../profile.hovercard';
 
 function PostCard({ data }: { data: PostModel }) {
   const currentUser = useCurrentUser();

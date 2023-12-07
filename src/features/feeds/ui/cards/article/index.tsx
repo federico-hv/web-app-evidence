@@ -26,7 +26,7 @@ import {
   GeneralArticleMoreButton,
 } from '../../buttons';
 import { ReactionPopover } from '../../popovers';
-import ProfileHoverCard from '../profile.hover-card';
+import ProfileHoverCard from '../profile.hovercard';
 
 // `https://logo.clearbit.com/${domainUrl}` logo finder
 
