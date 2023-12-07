@@ -7,11 +7,13 @@ import {
   IconButton,
   Text,
   VStack,
+  useDisclosure,
 } from '@holdr-ui/react';
 import { Link, useLocation } from 'react-router-dom';
 import { capitalize } from 'lodash';
 import {
   DateUtility,
+  DialogContextProvider,
   LinkOverlay,
   prefix,
   TextGroup,
@@ -23,7 +25,7 @@ import {
   FeedOwnerMoreButton,
   GeneralArticleMoreButton,
 } from '../../buttons';
-import { ReactionPopover } from '../../popovers';
+import { ProfilePopover, ReactionPopover } from '../../popovers';
 
 // `https://logo.clearbit.com/${domainUrl}` logo finder
 
@@ -32,6 +34,8 @@ function ArticleCard({ data }: { data: ArticleModel }) {
   const currentUser = useCurrentUser();
   const { owner, createdAt, reaction, feedId, bookmarked } =
     useFeedContext();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
   return (
     <VStack gap={3}>
       <Card
@@ -46,12 +50,17 @@ function ArticleCard({ data }: { data: ArticleModel }) {
           css={{ zIndex: 5 }}
         >
           <Link to={prefix('/', owner.username)}>
-            <Avatar
-              size={{ '@bp1': 'base', '@bp3': 'xl' }}
-              variant='squircle'
-              src={owner.avatar}
-              name={owner.displayName}
-            />
+            <VStack onMouseEnter={onOpen} onMouseLeave={onClose}>
+              <Avatar
+                size={{ '@bp1': 'base', '@bp3': 'xl' }}
+                variant='squircle'
+                src={owner.avatar}
+                name={owner.displayName}
+              />
+              <DialogContextProvider value={{ isOpen, onOpen, onClose }}>
+                <ProfilePopover />
+              </DialogContextProvider>
+            </VStack>
           </Link>
 
           {currentUser && currentUser.id === owner.id ? (

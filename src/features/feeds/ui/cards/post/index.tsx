@@ -7,9 +7,12 @@ import {
   HStack,
   IconButton,
   Text,
+  VStack,
+  useDisclosure,
 } from '@holdr-ui/react';
 import {
   DateUtility,
+  DialogContextProvider,
   extraBtnPadding,
   LinkOverlay,
   prefix,
@@ -21,12 +24,14 @@ import { capitalize } from 'lodash';
 import { useCurrentUser } from '../../../../auth';
 import { BookmarkPopover } from '../../../../bookmarks';
 import { FeedOwnerMoreButton, GeneralPostMoreButton } from '../../buttons';
-import { ReactionPopover } from '../../popovers';
+import { ProfilePopover, ReactionPopover } from '../../popovers';
 import { PostMedia, Polls } from '../../groups';
 
 function PostCard({ data }: { data: PostModel }) {
   const currentUser = useCurrentUser();
   const { owner, createdAt, reaction, bookmarked } = useFeedContext();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
   return (
     <Card>
       <Card.Header
@@ -36,14 +41,25 @@ function PostCard({ data }: { data: PostModel }) {
         direction='horizontal'
         justify='space-between'
       >
-        <HStack gap={4} position='relative'>
+        <HStack
+          gap={4}
+          position='relative'
+          onMouseEnter={onOpen}
+          onMouseLeave={onClose}
+        >
           <LinkOverlay to={prefix('/', owner.username)} />
-          <Avatar
-            size={{ '@bp1': 'base', '@bp3': 'xl' }}
-            variant='squircle'
-            src={owner.avatar}
-            name={owner.displayName}
-          />
+          <VStack>
+            <Avatar
+              size={{ '@bp1': 'base', '@bp3': 'xl' }}
+              variant='squircle'
+              src={owner.avatar}
+              name={owner.displayName}
+            />
+            <DialogContextProvider value={{ isOpen, onOpen, onClose }}>
+              <ProfilePopover />
+            </DialogContextProvider>
+          </VStack>
+
           <TextGroup gap={1}>
             <TextGroup.Heading size={{ '@bp1': 2, '@bp3': 3 }}>
               {owner.displayName}
@@ -112,7 +128,6 @@ function PostCard({ data }: { data: PostModel }) {
             </Responsive>
           </ReactionPopover>
         </Box>
-
         <Box
           w={{ '@bp3': '100%', '@bp1': undefined }}
           position='relative'
@@ -146,7 +161,6 @@ function PostCard({ data }: { data: PostModel }) {
             </Responsive>
           </BookmarkPopover>
         </Box>
-
         <Box
           w={{ '@bp3': '100%', '@bp1': undefined }}
           position='relative'
