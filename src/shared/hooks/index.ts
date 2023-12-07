@@ -22,3 +22,4 @@ export * from './use-act-on-scroll';
 export * from './use-interval';
 export * from './use-circular-count';
 export * from './use-navigate-with-previous-location';
+export * from './use-set-cookie';
