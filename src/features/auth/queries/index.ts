@@ -11,3 +11,13 @@ export const GET_ME = gql`
     }
   }
 `;
+
+export const REFRESH_ACCESS_TOKEN = gql`
+  query refreshAccessToken {
+    refreshAccessToken {
+      accessToken
+      refreshToken
+      expiresAt
+    }
+  }
+`;
