@@ -79,7 +79,10 @@ export const errorLink = onError(
     ) {
       if (!isRefreshingToken) {
         setRefreshingToken(true);
+        
+        // refresh the access token
         return fromPromise(refreshAccessToken()).flatMap(() => {
+          // token is successfully refreshed
           setRefreshingToken(false);
           resolvePendingRequests();
 
