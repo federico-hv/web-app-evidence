@@ -25,7 +25,8 @@ import {
   FeedOwnerMoreButton,
   GeneralArticleMoreButton,
 } from '../../buttons';
-import { ProfilePopover, ReactionPopover } from '../../popovers';
+import { ReactionPopover } from '../../popovers';
+import ProfileHoverCard from '../profile.hover-card';
 
 // `https://logo.clearbit.com/${domainUrl}` logo finder
 
@@ -58,7 +59,7 @@ function ArticleCard({ data }: { data: ArticleModel }) {
                 name={owner.displayName}
               />
               <DialogContextProvider value={{ isOpen, onOpen, onClose }}>
-                <ProfilePopover />
+                <ProfileHoverCard />
               </DialogContextProvider>
             </VStack>
           </Link>

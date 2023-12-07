@@ -15,7 +15,7 @@ import {
   IProfile,
   GET_PROFILE,
   useRelationshipUsers,
-} from '../../../../features';
+} from '../../..';
 import {
   GQLRenderer,
   LinkText,
@@ -29,7 +29,7 @@ import { Fragment } from 'react';
 
 // TODO: add mobile support
 //       fix popover to stay active while mouse is over it
-function ProfilePopover() {
+function ProfileHoverCard() {
   const currentUser = useCurrentUser();
   const { owner } = useFeedContext();
 
@@ -108,7 +108,7 @@ function ProfilePopover() {
       LoadingFallback={<Fragment />}
     >
       <HoverCard
-        openDelay={50}
+      openDelay={50}
         closeDelay={300}
         open={isOpen}
         onOpenChange={onOpenChange}
@@ -124,5 +124,5 @@ function ProfilePopover() {
   );
 }
 
-ProfilePopover.displayName = 'ProfilePopover';
-export default ProfilePopover;
+ProfileHoverCard.displayName = 'ProfilePopover';
+export default ProfileHoverCard;

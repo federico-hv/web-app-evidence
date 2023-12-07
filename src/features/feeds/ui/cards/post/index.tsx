@@ -24,8 +24,9 @@ import { capitalize } from 'lodash';
 import { useCurrentUser } from '../../../../auth';
 import { BookmarkPopover } from '../../../../bookmarks';
 import { FeedOwnerMoreButton, GeneralPostMoreButton } from '../../buttons';
-import { ProfilePopover, ReactionPopover } from '../../popovers';
+import { ReactionPopover } from '../../popovers';
 import { PostMedia, Polls } from '../../groups';
+import ProfileHoverCard from '../profile.hover-card';
 
 function PostCard({ data }: { data: PostModel }) {
   const currentUser = useCurrentUser();
@@ -56,10 +57,9 @@ function PostCard({ data }: { data: PostModel }) {
               name={owner.displayName}
             />
             <DialogContextProvider value={{ isOpen, onOpen, onClose }}>
-              <ProfilePopover />
+              <ProfileHoverCard />
             </DialogContextProvider>
           </VStack>
-
           <TextGroup gap={1}>
             <TextGroup.Heading size={{ '@bp1': 2, '@bp3': 3 }}>
               {owner.displayName}
