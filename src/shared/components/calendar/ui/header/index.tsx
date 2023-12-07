@@ -1,3 +1,4 @@
+import { Heading } from '@holdr-ui/react';
 import {
   CommonDialog,
   CommonDialogContent,
@@ -7,7 +8,7 @@ import {
   useDialogContext,
 } from 'shared';
 
-function DateDialog({ date }: { date: Date }) {
+function DateDialog({ date, past }: { date: Date; past: boolean }) {
   const { isOpen, onOpen, onClose } = useDialogContext();
 
   const today = DateUtility.equal(date, new Date());
@@ -15,7 +16,16 @@ function DateDialog({ date }: { date: Date }) {
 
   return (
     <CommonDialog isOpen={isOpen} onOpen={onOpen} onClose={onClose}>
-      <CommonDialogHeader label={dateString} />
+      <CommonDialogHeader>
+        <Heading
+          casing='uppercase'
+          as='h2'
+          size={{ '@bp1': 3, '@bp3': 4 }}
+          {...(past && { weight: 400 })}
+        >
+          {dateString}
+        </Heading>
+      </CommonDialogHeader>
       <CommonDialogContent>
         <EmptyMessage
           title='No Events'

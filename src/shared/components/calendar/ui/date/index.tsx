@@ -8,7 +8,7 @@ function Date({ date, active, onClick, disabled }: DateProps) {
       bgColor={active ? 'base800' : 'transparent'}
       size={30}
       radius={3}
-      onClick={!disabled ? onClick : undefined}
+      onClick={onClick}
       cursor={disabled ? 'not-allowed' : 'pointer'}
       _hover={
         disabled || active ? undefined : { backgroundColor: '$base100' }
