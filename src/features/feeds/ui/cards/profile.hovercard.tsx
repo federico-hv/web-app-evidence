@@ -115,7 +115,7 @@ function ProfileHoverCard() {
       >
         <HoverCard.Trigger />
         <HoverCard.Portal>
-          <HoverCard.Contents>
+          <HoverCard.Content>
             <Content />
           </HoverCard.Content>
         </HoverCard.Portal>
