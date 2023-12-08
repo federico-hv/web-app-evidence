@@ -57,7 +57,7 @@ function ProfileHoverCard() {
       <Card gap={4} w='xs' p={3} bgColor='base100'>
         <Card.Header>
           <HStack justify='space-between' items='center'>
-            <Avatar src={owner.avatar} size='lg' />
+            <Avatar src={owner.avatar} size='lg' variant='squircle' />
             {currentUser && currentUser.username !== owner.username && (
               <CommonRelationshipButton username={owner.username} />
             )}
@@ -108,14 +108,14 @@ function ProfileHoverCard() {
       LoadingFallback={<Fragment />}
     >
       <HoverCard
-      openDelay={50}
-        closeDelay={300}
+        openDelay={2500}
+        closeDelay={2500}
         open={isOpen}
         onOpenChange={onOpenChange}
       >
         <HoverCard.Trigger />
         <HoverCard.Portal>
-          <HoverCard.Content>
+          <HoverCard.Contents>
             <Content />
           </HoverCard.Content>
         </HoverCard.Portal>
