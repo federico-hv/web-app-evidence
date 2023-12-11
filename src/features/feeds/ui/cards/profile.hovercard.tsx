@@ -108,7 +108,7 @@ function ProfileHoverCard() {
       LoadingFallback={<Fragment />}
     >
       <HoverCard
-        openDelay={2500}
+        openDelay={2000}
         closeDelay={2500}
         open={isOpen}
         onOpenChange={onOpenChange}
