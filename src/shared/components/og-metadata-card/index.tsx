@@ -8,7 +8,6 @@ import {
 import { OgMetadata } from '../../interfaces';
 
 function OgMetadataCard({ data }: { data: OgMetadata }) {
-  console.log(data);
   return (
     <Stack
       direction={{
