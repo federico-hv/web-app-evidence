@@ -6,7 +6,8 @@ export const minimumLengthMsg = (min: number) =>
 export const maximumLengthMsg = (max: number) =>
   `Requires ${max} characters less more`;
 
-export const requiredField = (field: string) => `Enter your ${field}`;
+export const requiredField = (field: string, subject = 'your') =>
+  `Enter ${subject} ${field}`;
 
 export function isInputDisabled<U>(
   values: Record<any, any>,

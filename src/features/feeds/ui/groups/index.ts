@@ -5,3 +5,4 @@ export { default as CreatePost } from './create-post';
 export { default as PostMedia } from './media';
 export { default as Polls } from './polls';
 export { default as ArticlePreview } from './article-preview';
+export { default as ArticleUpload } from './article-upload';

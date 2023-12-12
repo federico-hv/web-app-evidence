@@ -5,3 +5,5 @@ export type Role = 'general' | 'artist';
 export type GenericItem = { id: StringNumeric };
 
 export type StringNumeric = string | number;
+
+export type ProcessActionType = 'manual' | 'auto';

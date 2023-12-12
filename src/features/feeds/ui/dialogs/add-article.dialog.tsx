@@ -10,15 +10,12 @@ import {
   useDialogTabContext,
   useRecordState,
 } from '../../../../shared';
-import { ConvertUrlForm } from '../forms';
-import { ArticlePreview } from '../groups';
+import { ArticlePreview, ArticleUpload } from '../groups';
 
 function AddArticleDialog() {
   const { isOpen, onOpen, onClose, option } = useDialogTabContext();
   const { increment, decrement, current: step } = useCounter(0);
   const [state, update] = useRecordState({});
-
-  console.log(step);
 
   return (
     <CommonDialog
@@ -37,7 +34,7 @@ function AddArticleDialog() {
         >
           <Stepper increment={increment} decrement={decrement} step={step}>
             <Stepper.Step step={0}>
-              <ConvertUrlForm />
+              <ArticleUpload />
             </Stepper.Step>
             <Stepper.Step step={1}>
               <StepperContext.Consumer>
