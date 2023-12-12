@@ -51,25 +51,9 @@ function CreateArticleForm() {
           onSubmit={(e) => handleSubmit(e as FormEvent<HTMLFormElement>)}
           overflow='scroll'
         >
-          <FormInput
-            label='Title'
-            leftIcon='settings-fill'
-            name='title'
-            type='text'
-            autoFocus
-          />
-          <FormInput
-            label='Website URL'
-            leftIcon='global-outline'
-            name='url'
-            type='text'
-          />
-          <FormInput
-            label='Image URL'
-            leftIcon='image-add-fill'
-            name='image'
-            type='text'
-          />
+          <FormInput label='Title' name='title' type='text' autoFocus />
+          <FormInput label='Website URL' name='url' type='text' />
+          <FormInput label='Image URL' name='image' type='text' />
           <FormInput
             label='Description'
             name='description'

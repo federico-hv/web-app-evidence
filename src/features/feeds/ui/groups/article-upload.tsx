@@ -1,17 +1,26 @@
 import { Fragment, useState } from 'react';
 import { ConvertUrlForm, CreateArticleForm } from '../forms';
-
-type ArticleUploadForms = 'manual' | 'url';
+import { ProcessActionType } from 'shared';
+import { Button, VStack } from '@holdr-ui/react';
 
 function ArticleUpload() {
-  const [type, setType] = useState<ArticleUploadForms>('url');
+  const [manual, setManual] = useState<ProcessActionType>('auto');
 
   return (
     <Fragment>
-      {type === 'url' && (
-        <ConvertUrlForm onError={() => setType('manual')} />
+      {manual === 'auto' && (
+        <VStack>
+          <ConvertUrlForm />
+          <Button
+            variant='ghost'
+            size='sm'
+            onClick={() => setManual('manual')}
+          >
+            {`Can't use Link?`}
+          </Button>
+        </VStack>
       )}
-      {type === 'manual' && <CreateArticleForm />}
+      {manual === 'manual' && <CreateArticleForm />}
     </Fragment>
   );
 }

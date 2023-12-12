@@ -11,7 +11,7 @@ import { Alert, Button, VStack } from '@holdr-ui/react';
 import { Formik } from 'formik';
 import { FormEvent } from 'react';
 
-function ConvertUrlForm({ onError }: { onError: VoidFunction }) {
+function ConvertUrlForm() {
   const { error, createOgMetadata, loading } = useCreateOgMetadata();
   const { update } = useGeneralContext();
   const { increment } = useStepperContext();
@@ -27,55 +27,54 @@ function ConvertUrlForm({ onError }: { onError: VoidFunction }) {
           </Alert.Content>
         </Alert>
       )}
-      <Formik
-        initialValues={{ url: '' }}
-        validationSchema={URLSchema}
-        onSubmit={async ({ url }, { resetForm }) => {
-          const data = await createOgMetadata(url);
+      <VStack>
+        <Formik
+          initialValues={{ url: '' }}
+          validationSchema={URLSchema}
+          onSubmit={async ({ url }, { resetForm }) => {
+            const data = await createOgMetadata(url);
 
-          if (!error && data) {
-            resetForm();
-            update({ data });
-            increment();
-          }
-        }}
-      >
-        {({ values, errors, handleSubmit }) => (
-          <VStack
-            as='form'
-            pt={4}
-            gap={1}
-            h='fit-content'
-            justify='space-between'
-            onSubmit={(e) => handleSubmit(e as FormEvent<HTMLFormElement>)}
-          >
-            <FormInput
-              label='Website URL'
-              leftIcon='global-outline'
-              name='url'
-              type='text'
-              autoFocus
-            />
-            {error && (
-              <Button variant='ghost' size='sm' onClick={onError}>
-                Continue Manually
-              </Button>
-            )}
-            <CustomCommonDialogButtonWrapper>
-              <Button
-                type='submit'
-                isLoading={loading}
-                loadingText={loading ? '' : 'Generating'}
-                disabled={isInputDisabled(values, errors, ['url'])}
-                className={extraBtnPadding()}
-                fullWidth
-              >
-                Generate
-              </Button>
-            </CustomCommonDialogButtonWrapper>
-          </VStack>
-        )}
-      </Formik>
+            if (!error && data) {
+              resetForm();
+              update({ data });
+              increment();
+            }
+          }}
+        >
+          {({ values, errors, handleSubmit }) => (
+            <VStack
+              as='form'
+              pt={4}
+              gap={1}
+              h='fit-content'
+              justify='space-between'
+              onSubmit={(e) =>
+                handleSubmit(e as FormEvent<HTMLFormElement>)
+              }
+            >
+              <FormInput
+                label='Website URL'
+                leftIcon='global-outline'
+                name='url'
+                type='text'
+                autoFocus
+              />
+              <CustomCommonDialogButtonWrapper>
+                <Button
+                  type='submit'
+                  isLoading={loading}
+                  loadingText={loading ? '' : 'Generating'}
+                  disabled={isInputDisabled(values, errors, ['url'])}
+                  className={extraBtnPadding()}
+                  fullWidth
+                >
+                  Generate
+                </Button>
+              </CustomCommonDialogButtonWrapper>
+            </VStack>
+          )}
+        </Formik>
+      </VStack>
     </>
   );
 }
