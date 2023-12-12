@@ -14,6 +14,8 @@ function ArticlePreview() {
   const { onClose } = useDialogTabContext();
   const { createArticle, loading, error } = useCreateArticle();
 
+  console.log(state);
+
   return (
     <VStack py={4} h='full' justify='space-between'>
       <OgMetadataCard data={state.data} />

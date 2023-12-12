@@ -11,7 +11,7 @@ import { Alert, Button, VStack } from '@holdr-ui/react';
 import { Formik } from 'formik';
 import { FormEvent } from 'react';
 
-function ConvertUrlForm() {
+function ConvertUrlForm({ onError }: { onError: VoidFunction }) {
   const { error, createOgMetadata, loading } = useCreateOgMetadata();
   const { update } = useGeneralContext();
   const { increment } = useStepperContext();
@@ -43,9 +43,9 @@ function ConvertUrlForm() {
         {({ values, errors, handleSubmit }) => (
           <VStack
             as='form'
-            py={4}
-            gap={4}
-            h='full'
+            pt={4}
+            gap={1}
+            h='fit-content'
             justify='space-between'
             onSubmit={(e) => handleSubmit(e as FormEvent<HTMLFormElement>)}
           >
@@ -56,6 +56,11 @@ function ConvertUrlForm() {
               type='text'
               autoFocus
             />
+            {error && (
+              <Button variant='ghost' size='sm' onClick={onError}>
+                Continue Manually
+              </Button>
+            )}
             <CustomCommonDialogButtonWrapper>
               <Button
                 type='submit'
