@@ -130,15 +130,17 @@ function VideoPause({
 }: VideoPauseProps) {
   const { paused } = useVideoContext();
   return (
-    paused && (
-      <Image
-        src={VideoIcons.pauseIcon}
-        w={w}
-        h={h}
-        css={{ ...css, ...{ opacity: 0.5 } }}
-        {...props}
-      />
-    )
+    <>
+      {paused && (
+        <Image
+          src={VideoIcons.pauseIcon}
+          w={w}
+          h={h}
+          css={{ ...css, ...{ opacity: 0.5 } }}
+          {...props}
+        />
+      )}
+    </>
   );
 }
 
