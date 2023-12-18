@@ -19,7 +19,7 @@ function PostMedia({ items }: PostMediaProps) {
   // change if single video post support is changed
   if (items[0].type === 'video')
     return (
-      <Box mt={5}>
+      <Box mt={5} h={{ '@bp1': 300, '@bp3': 400 }}>
         <MediaItem type={items[0].type} url={items[0].url} />
       </Box>
     );

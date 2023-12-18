@@ -2,6 +2,16 @@ import { Box, Image } from '@holdr-ui/react';
 import { MediaItemProps } from './types';
 import { CenteredImage, StyledVideo } from '../../styles';
 import { Fragment } from 'react';
+import Video, {
+  VideoControls,
+  VideoFullScreen,
+  VideoPause,
+  VideoPausePlay,
+  VideoProgressSlider,
+  VideoSettings,
+  VideoThumbnail,
+  VideoVolume,
+} from '../video';
 
 function MediaItem({
   url,
@@ -12,11 +22,24 @@ function MediaItem({
   return (
     <Fragment>
       {type === 'video' && (
-        <Box h='100%' w='100%' position='relative'>
-          <StyledVideo controls title={title}>
-            <source src={url} type='video/mp4' />
-          </StyledVideo>
-        </Box>
+        <Video
+          playsInline={false}
+          autoPlay={false}
+          interactive={false}
+          volumeLevel={0}
+          speed={1}
+          src={url}
+        >
+          <VideoPause />
+          <VideoProgressSlider />
+          <VideoThumbnail />
+          <VideoControls>
+            <VideoPausePlay />
+            <VideoSettings />
+            <VideoVolume />
+            <VideoFullScreen />
+          </VideoControls>
+        </Video>
       )}
       {type === 'image' && (
         <Box
