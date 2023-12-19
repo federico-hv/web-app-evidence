@@ -8,11 +8,9 @@ import {
   IconButton,
   Text,
   VStack,
-  useDisclosure,
 } from '@holdr-ui/react';
 import {
   DateUtility,
-  DialogContextProvider,
   extraBtnPadding,
   LinkOverlay,
   prefix,
@@ -26,12 +24,11 @@ import { BookmarkPopover } from '../../../../bookmarks';
 import { FeedOwnerMoreButton, GeneralPostMoreButton } from '../../buttons';
 import { ReactionPopover } from '../../popovers';
 import { PostMedia, Polls } from '../../groups';
-import ProfileHoverCard from '../profile.hovercard';
+// import ProfileHoverCard from '../profile.hovercard';
 
 function PostCard({ data }: { data: PostModel }) {
   const currentUser = useCurrentUser();
   const { owner, createdAt, reaction, bookmarked } = useFeedContext();
-  const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
     <Card>
@@ -42,12 +39,7 @@ function PostCard({ data }: { data: PostModel }) {
         direction='horizontal'
         justify='space-between'
       >
-        <HStack
-          gap={4}
-          position='relative'
-          onMouseEnter={onOpen}
-          onMouseLeave={onClose}
-        >
+        <HStack gap={4} position='relative'>
           <LinkOverlay to={prefix('/', owner.username)} />
           <VStack>
             <Avatar
@@ -56,9 +48,6 @@ function PostCard({ data }: { data: PostModel }) {
               src={owner.avatar}
               name={owner.displayName}
             />
-            <DialogContextProvider value={{ isOpen, onOpen, onClose }}>
-              <ProfileHoverCard />
-            </DialogContextProvider>
           </VStack>
           <TextGroup gap={1}>
             <TextGroup.Heading size={{ '@bp1': 2, '@bp3': 3 }}>

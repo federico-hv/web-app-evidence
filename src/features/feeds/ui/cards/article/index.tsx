@@ -7,13 +7,11 @@ import {
   IconButton,
   Text,
   VStack,
-  useDisclosure,
 } from '@holdr-ui/react';
 import { Link, useLocation } from 'react-router-dom';
 import { capitalize } from 'lodash';
 import {
   DateUtility,
-  DialogContextProvider,
   LinkOverlay,
   prefix,
   TextGroup,
@@ -26,7 +24,7 @@ import {
   GeneralArticleMoreButton,
 } from '../../buttons';
 import { ReactionPopover } from '../../popovers';
-import ProfileHoverCard from '../profile.hovercard';
+//import ProfileHoverCard from '../profile.hovercard';
 
 // `https://logo.clearbit.com/${domainUrl}` logo finder
 
@@ -35,7 +33,6 @@ function ArticleCard({ data }: { data: ArticleModel }) {
   const currentUser = useCurrentUser();
   const { owner, createdAt, reaction, feedId, bookmarked } =
     useFeedContext();
-  const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
     <VStack gap={3}>
@@ -51,16 +48,13 @@ function ArticleCard({ data }: { data: ArticleModel }) {
           css={{ zIndex: 5 }}
         >
           <Link to={prefix('/', owner.username)}>
-            <VStack onMouseEnter={onOpen} onMouseLeave={onClose}>
+            <VStack>
               <Avatar
                 size={{ '@bp1': 'base', '@bp3': 'xl' }}
                 variant='squircle'
                 src={owner.avatar}
                 name={owner.displayName}
               />
-              <DialogContextProvider value={{ isOpen, onOpen, onClose }}>
-                <ProfileHoverCard />
-              </DialogContextProvider>
             </VStack>
           </Link>
           {currentUser && currentUser.id === owner.id ? (
