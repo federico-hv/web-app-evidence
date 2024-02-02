@@ -18,7 +18,7 @@ import stats from '../../../../assets/images/stats.png';
 import pinOutlined from '../../../../assets/images/pin-outlined.png';
 import pinFilled from '../../../../assets/images/pin-filled.png';
 
-function FeedOwnerMoreButton({ ghost }: { ghost?: boolean }) {
+function FeedOwnerMoreButton({}: { ghost?: boolean }) {
   const { openWith } = useAlertDialog();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { owner, isPinned, feedId } = useFeedContext();
@@ -34,20 +34,18 @@ function FeedOwnerMoreButton({ ghost }: { ghost?: boolean }) {
       <DialogContextProvider value={{ isOpen, onOpen, onClose }}>
         {data && (
           <Menu>
-            {ghost ? (
-              <Menu.Trigger>
-                <IconButton
-                  size={{ '@bp1': 'sm', '@bp3': 'base' }}
-                  colorTheme='darkTint400'
-                  blur='xl'
-                  icon='more-fill'
-                  boxShadow='none'
-                  ariaLabel='view options'
-                />
-              </Menu.Trigger>
-            ) : (
-              <Menu.Trigger />
-            )}
+            <Menu.Trigger>
+              <IconButton
+                variant='ghost'
+                size={{ '@bp1': 'sm', '@bp3': 'base' }}
+                colorTheme='primary400'
+                blur='xl'
+                icon='more-fill'
+                boxShadow='none'
+                ariaLabel='view options'
+              />
+            </Menu.Trigger>
+
             <Menu.Header />
             <Menu.Content>
               <Menu.Item

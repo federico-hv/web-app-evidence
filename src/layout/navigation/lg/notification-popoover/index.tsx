@@ -43,6 +43,7 @@ function NotificationPopover() {
     <Popover isOpen={isOpen} onOpenChange={setIsOpen}>
       <Popover.Trigger onClick={() => setIsOpen(true)} asChild>
         <IconButton
+          variant='ghost'
           colorTheme='primary400'
           icon='notification-outline'
           ariaLabel='View notifications'

@@ -16,6 +16,7 @@ function MessagePopover() {
     <Popover isOpen={state} onOpenChange={set}>
       <Popover.Trigger onClick={() => set(true)} asChild>
         <IconButton
+          variant='ghost'
           colorTheme='primary400'
           icon='chat-alt-outline'
           ariaLabel='View messages'

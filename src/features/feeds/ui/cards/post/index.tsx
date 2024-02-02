@@ -1,8 +1,7 @@
-import { PostModel, useFeedContext, Reaction } from '../../../shared';
+import { PostModel, useFeedContext } from '../../../shared';
 import {
   Avatar,
   Box,
-  Button,
   Card,
   HStack,
   IconButton,
@@ -11,49 +10,56 @@ import {
 } from '@holdr-ui/react';
 import {
   DateUtility,
-  extraBtnPadding,
   LinkOverlay,
   prefix,
-  Responsive,
-  ResponsiveItem,
   TextGroup,
 } from '../../../../../shared';
 import { capitalize } from 'lodash';
 import { useCurrentUser } from '../../../../auth';
-import { BookmarkPopover } from '../../../../bookmarks';
 import { FeedOwnerMoreButton, GeneralPostMoreButton } from '../../buttons';
-import { ReactionPopover } from '../../popovers';
 import { PostMedia, Polls } from '../../groups';
-// import ProfileHoverCard from '../profile.hovercard';
 
 function PostCard({ data }: { data: PostModel }) {
   const currentUser = useCurrentUser();
-  const { owner, createdAt, reaction, bookmarked } = useFeedContext();
+  const { owner, createdAt } = useFeedContext();
 
   return (
-    <Card>
+    <Card boxShadow='none' gap={3}>
       <Card.Header
-        borderBottom={1}
-        borderColor='base100'
-        p={{ '@bp1': 3, '@bp3': 4 }}
+        px={{ '@bp1': 3, '@bp3': 4 }}
+        pt={{ '@bp1': 3, '@bp3': 4 }}
         direction='horizontal'
         justify='space-between'
       >
-        <HStack gap={4} position='relative'>
+        <HStack gap={3} position='relative'>
           <LinkOverlay to={prefix('/', owner.username)} />
           <VStack>
             <Avatar
-              size={{ '@bp1': 'base', '@bp3': 'xl' }}
+              // size={{ '@bp1': 'base', '@bp3': 'lg' }}
               variant='squircle'
               src={owner.avatar}
-              name={owner.displayName}
+              css={{
+                size: '55px',
+              }}
+              // name={owner.displayName}
             />
           </VStack>
-          <TextGroup gap={1}>
-            <TextGroup.Heading size={{ '@bp1': 2, '@bp3': 3 }}>
+          <TextGroup>
+            <TextGroup.Heading
+              weight={500}
+              css={{
+                fontSize: '14px',
+              }}
+            >
               {owner.displayName}
             </TextGroup.Heading>
-            <TextGroup.Subheading color='base400' size={1} weight={500}>
+            <TextGroup.Subheading
+              color='base300'
+              weight={400}
+              css={{
+                fontSize: '12px',
+              }}
+            >
               {capitalize(DateUtility.fromNow(createdAt))} ago
             </TextGroup.Subheading>
           </TextGroup>
@@ -69,114 +75,67 @@ function PostCard({ data }: { data: PostModel }) {
       </Card.Header>
       <Card.Body
         px={{ '@bp1': 3, '@bp3': 4 }}
-        py={{ '@bp1': 4, '@bp3': 6 }}
+        // py={{ '@bp1': 4, '@bp3': 6 }}
         position='relative'
       >
+        <Box
+          mb={{ '@bp1': 3, '@bp3': 4 }}
+          h='1px'
+          w='100%'
+          css={{
+            backgroundColor: 'rgba(152, 152, 255, 0.10)',
+          }}
+        />
         <Text size={{ '@bp1': 2, '@bp3': 3 }}>{data.description}</Text>
         {data.media && <PostMedia items={data.media} />}
         {data.polls && (
           <Polls id={data.id} endDate={data.endDate} items={data.polls} />
         )}
+        <Box
+          mt={{ '@bp1': 3, '@bp3': 4 }}
+          h='1px'
+          w='100%'
+          css={{
+            backgroundColor: 'rgba(152, 152, 255, 0.10)',
+          }}
+        />
       </Card.Body>
       <Card.Footer
         px={{ '@bp1': 3, '@bp3': 4 }}
-        py={{ '@bp1': 2, '@bp3': 3 }}
-        borderTop={1}
-        borderColor='base100'
+        pb={{ '@bp1': 3, '@bp3': 4 }}
+        // py={{ '@bp1': 2, '@bp3': 3 }}
         direction='horizontal'
         items='center'
-        justify='space-between'
         w='100%'
+        gap={7}
       >
-        <Box w={{ '@bp3': '100%', '@bp1': undefined }} css={{ zIndex: 5 }}>
-          <ReactionPopover>
-            <Responsive>
-              <ResponsiveItem mobile='show'>
-                <IconButton
-                  icon={
-                    reaction ? Reaction[reaction].icon : 'reaction-add'
-                  }
-                  variant='ghost'
-                  colorTheme='base600'
-                  ariaLabel={reaction ? Reaction[reaction].name : 'React'}
-                />
-              </ResponsiveItem>
-              <ResponsiveItem fullWidth laptop='show' desktop='show'>
-                <Button
-                  fullWidth
-                  leftIcon={
-                    reaction ? Reaction[reaction].icon : 'reaction-add'
-                  }
-                  className={extraBtnPadding()}
-                  variant='ghost'
-                  colorTheme='base600'
-                >
-                  {reaction ? Reaction[reaction].name : 'React'}
-                </Button>
-              </ResponsiveItem>
-            </Responsive>
-          </ReactionPopover>
-        </Box>
-        <Box
-          w={{ '@bp3': '100%', '@bp1': undefined }}
-          position='relative'
-          css={{ zIndex: 5 }}
-        >
-          <BookmarkPopover>
-            <Responsive>
-              <ResponsiveItem mobile='show'>
-                <IconButton
-                  ariaLabel={
-                    !bookmarked ? 'create bookmark' : 'remove bookmark'
-                  }
-                  icon={!bookmarked ? 'bookmark-outline' : 'bookmark-fill'}
-                  variant='ghost'
-                  colorTheme='base600'
-                />
-              </ResponsiveItem>
-              <ResponsiveItem fullWidth laptop='show' desktop='show'>
-                <Button
-                  fullWidth
-                  leftIcon={
-                    !bookmarked ? 'bookmark-outline' : 'bookmark-fill'
-                  }
-                  className={extraBtnPadding()}
-                  variant='ghost'
-                  colorTheme='base600'
-                >
-                  Bookmark
-                </Button>
-              </ResponsiveItem>
-            </Responsive>
-          </BookmarkPopover>
-        </Box>
-        <Box
-          w={{ '@bp3': '100%', '@bp1': undefined }}
-          position='relative'
-          css={{ zIndex: 5 }}
-        >
-          <Responsive>
-            <ResponsiveItem mobile='show'>
-              <IconButton
-                icon='share-outline'
-                ariaLabel='Bookmark'
-                variant='ghost'
-                colorTheme='base600'
-              />
-            </ResponsiveItem>
-            <ResponsiveItem fullWidth laptop='show' desktop='show'>
-              <Button
-                leftIcon='share-outline'
-                fullWidth
-                className={extraBtnPadding()}
-                variant='ghost'
-                colorTheme='base600'
-              >
-                Share
-              </Button>
-            </ResponsiveItem>
-          </Responsive>
-        </Box>
+        <HStack items='center' gap={2} zIndex={5}>
+          <IconButton
+            variant='ghost'
+            colorTheme='primary400'
+            icon='heart-outline'
+            ariaLabel='like post'
+          />
+          <Box cursor='pointer'>0</Box>
+        </HStack>
+        <HStack items='center' gap={2} zIndex={5}>
+          <IconButton
+            variant='ghost'
+            colorTheme='primary400'
+            icon='chat-alt-outline'
+            ariaLabel='view comments'
+          />
+          <Box cursor='pointer'>0</Box>
+        </HStack>
+        <HStack items='center' gap={2} zIndex={5}>
+          <IconButton
+            variant='ghost'
+            colorTheme='primary400'
+            icon='bookmark-outline'
+            ariaLabel='bookmark feed'
+          />
+          <Box cursor='pointer'>0</Box>
+        </HStack>
       </Card.Footer>
     </Card>
   );

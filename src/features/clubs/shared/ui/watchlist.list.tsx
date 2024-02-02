@@ -1,0 +1,31 @@
+import { Box, Button, Heading, VStack } from '@holdr-ui/react';
+import { makeButtonLarger } from '../../../../shared';
+
+function Watchlist() {
+  return (
+    <VStack as='nav' p={4}>
+      <Heading size={3} weight={400} css={{ userSelect: 'none' }}>
+        Watchlist
+      </Heading>
+      <Box
+        mt={{ '@bp1': '8px', '@bp3': '8px' }}
+        mb={{ '@bp1': '16px', '@bp3': '16px' }}
+        h='1px'
+        w='100%'
+        css={{
+          backgroundColor: 'rgba(152, 152, 255, 0.10)',
+        }}
+      />
+      <Button
+        fullWidth
+        className={makeButtonLarger('2.5rem')}
+        colorTheme='secondary400'
+      >
+        Browse Clubs
+      </Button>
+    </VStack>
+  );
+}
+Watchlist.displayName = 'Watchlist';
+
+export default Watchlist;

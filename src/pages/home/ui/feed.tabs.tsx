@@ -1,21 +1,20 @@
 import { useQuery } from '@apollo/client';
 import {
-  CreatePost,
+  // CreatePost,
   FeedsReturnModel,
   GET_FEEDS,
-  useCurrentUser,
   FeedCard,
 } from '../../../features';
-import {
-  Error,
-  Loader,
-  useIsBottom,
-  useScrollDirection,
-} from '../../../shared';
-import { Alert, Container, Tabs, VStack } from '@holdr-ui/react';
+import { Error, Loader } from '../../../shared';
+import { Alert, HStack, VStack } from '@holdr-ui/react';
+import CustomTabs, {
+  CustomTabsContent,
+  CustomTabsHeader,
+  CustomTabsList,
+  CustomTabsTrigger,
+} from '../../../tmp/custom-tabs';
 
 function Feeds({ type = 'all' }: { type: 'all' | 'article' | 'post' }) {
-  const currentUser = useCurrentUser();
   const { loading, data, error } = useQuery<
     { feeds: FeedsReturnModel },
     { type: string }
@@ -36,16 +35,11 @@ function Feeds({ type = 'all' }: { type: 'all' | 'article' | 'post' }) {
     >
       <Loader loading={loading}>
         {data && (
-          <Container maxWidth={600} pt={4}>
-            <VStack w='100%' gap={5} pb={6}>
-              {currentUser && currentUser.role === 'artist' && (
-                <CreatePost />
-              )}
-              {data.feeds.data.map((item) => (
-                <FeedCard key={item.id} data={item} />
-              ))}
-            </VStack>
-          </Container>
+          <VStack w='100%' gap={5} pb={6}>
+            {data.feeds.data.map((item) => (
+              <FeedCard key={item.id} data={item} />
+            ))}
+          </VStack>
         )}
       </Loader>
     </Error>
@@ -53,47 +47,100 @@ function Feeds({ type = 'all' }: { type: 'all' | 'article' | 'post' }) {
 }
 
 function FeedTabs() {
-  const isBottom = useIsBottom();
-  const { direction, delta } = useScrollDirection();
-
   return (
-    <Tabs defaultValue='all'>
-      <Tabs.List
+    <CustomTabs
+      defaultValue='for-you'
+      flex={1}
+      css={{
+        background:
+          'radial-gradient(50% 100% at 50% 100%, rgba(128, 128, 255, 0.15) 0%, rgba(128, 128, 255, 0.05) 100%)',
+      }}
+    >
+      <CustomTabsHeader
+        h={64}
+        position='sticky'
+        t={80}
+        zIndex={10}
         css={{
-          position: 'sticky',
-          backgroundColor: '$clearTint500',
-          blur: '12px',
-          zIndex: 11,
-          py: '$4',
-          px: '$1',
-          '& button:not(:last-child)': {
-            marginRight: '$4',
-          },
-          '@bp1': {
-            top:
-              direction === 'down' && !isBottom && delta > 0 ? 0 : '56px',
-          },
-          '@bp3': {
-            top: 65,
-          },
+          backgroundColor: '#141317',
         }}
       >
-        <Container maxWidth={600}>
-          <Tabs.Trigger value='all'>All</Tabs.Trigger>
-          <Tabs.Trigger value='holdr'>Holdr</Tabs.Trigger>
-          <Tabs.Trigger value='news'>News</Tabs.Trigger>
-        </Container>
-      </Tabs.List>
-      <Tabs.Content value='all'>
-        <Feeds type='all' />
-      </Tabs.Content>
-      <Tabs.Content value='holdr'>
-        <Feeds type='post' />
-      </Tabs.Content>
-      <Tabs.Content value='news'>
-        <Feeds type='article' />
-      </Tabs.Content>
-    </Tabs>
+        <HStack
+          placeholder=''
+          items='center'
+          w='100%'
+          css={{
+            border: '1px solid rgba(152, 152, 255, 0.10)',
+            borderTopLeftRadius: '$4',
+            borderTopRightRadius: '$4',
+            background:
+              'radial-gradient(50% 100% at 50% 100%, rgba(128, 128, 255, 0.15) 0%, rgba(128, 128, 255, 0.05) 100%)',
+          }}
+        >
+          <CustomTabsList>
+            <CustomTabsTrigger
+              _hover={{ background: '#9898FF26' }}
+              css={{ borderTopLeftRadius: '$4' }}
+              value='for-you'
+            >
+              For You
+            </CustomTabsTrigger>
+            <CustomTabsTrigger
+              _hover={{ background: '#9898FF26' }}
+              css={{ borderTopRightRadius: '$4' }}
+              value='following'
+            >
+              Following
+            </CustomTabsTrigger>
+          </CustomTabsList>
+          {/*<HStack placeholder='' p={4}>*/}
+          {/*  <IconButton*/}
+          {/*    radius={4}*/}
+          {/*    variant='outline'*/}
+          {/*    icon='settings-outline'*/}
+          {/*    colorTheme='primary400'*/}
+          {/*    ariaLabel={'settings'}*/}
+          {/*  />*/}
+          {/*</HStack>*/}
+        </HStack>
+      </CustomTabsHeader>
+      <CustomTabsContent
+        value='for-you'
+        css={{
+          borderRight: '1px solid rgba(152, 152, 255, 0.10)',
+          borderLeft: '1px solid rgba(152, 152, 255, 0.10)',
+          borderBottom: '1px solid rgba(152, 152, 255, 0.10)',
+        }}
+      >
+        <VStack
+          placeholder=''
+          minHeight={0}
+          w='100%'
+          p={3}
+          as='aside'
+          gap={4}
+        >
+          <Feeds type='all' />
+        </VStack>
+      </CustomTabsContent>
+      <CustomTabsContent value='following'>
+        <VStack
+          placeholder=''
+          minHeight={0}
+          w='100%'
+          p={3}
+          as='aside'
+          gap={4}
+          css={{
+            borderLeft: '1px solid rgba(152, 152, 255, 0.10)',
+            borderRight: '1px solid rgba(152, 152, 255, 0.10)',
+            borderBottom: '1px solid rgba(152, 152, 255, 0.10)',
+          }}
+        >
+          <Feeds type='all' />
+        </VStack>
+      </CustomTabsContent>
+    </CustomTabs>
   );
 }
 FeedTabs.displayName = 'FeedTabs';

@@ -268,13 +268,13 @@ export const globalStyles = globalCss({
   //   position: 'unset !important',
   // },
   body: {
-    backgroundColor: '#fbfbfa',
+    backgroundColor: '#141317',
+    color: '#FFFFFF',
     fontFamily: 'Rubik, ui-sans-serif, system-ui',
   },
   a: {
     'text-decoration': 'none',
     color: 'inherit',
-    // border: 'inherit',
   },
   textarea: {
     fontFamily: 'inherit',

@@ -8,3 +8,4 @@ export * from './bookmarks';
 export * from './user';
 export * from './notifications';
 export * from './connected-accounts';
+export * from './clubs';

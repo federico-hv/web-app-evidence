@@ -1,6 +1,7 @@
 export const Paths = {
   root: '',
   discover: 'discover',
+  clubs: 'clubs',
   channels: 'channels',
   connect: 'connect',
   bookmarks: 'bookmarks',

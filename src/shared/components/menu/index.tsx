@@ -118,6 +118,7 @@ function MenuTrigger({ children }: GenericProps) {
           size={{ '@bp1': 'sm', '@bp3': 'base' }}
           variant='ghost'
           icon='more-fill'
+          color='primary400'
           ariaLabel='view options'
         />
       )}
