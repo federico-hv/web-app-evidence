@@ -23,15 +23,19 @@ function AnalyticsStatistics({
   return (
     <VStack py={4}>
       <HStack items='center' gap={2}>
-        <Text casing='capitalize' color='base300' size='14px'>
-          {label}
-        </Text>
+        <Box>
+          <Text casing='capitalize' color='base300' size='14px'>
+            {label}
+          </Text>
+        </Box>
         {info && (
-          <Tooltip label={info}>
-            <Box fontSize='12px'>
-              <Icon name='information-outline' />
-            </Box>
-          </Tooltip>
+          <Box mt='5px'>
+            <Tooltip label={info}>
+              <Box fontSize='12px'>
+                <Icon color='base400' name='information-outline' />
+              </Box>
+            </Tooltip>
+          </Box>
         )}
       </HStack>
       <HStack items='flex-end' justify='space-between'>
