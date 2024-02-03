@@ -1,19 +1,11 @@
-import { useCurrentUser } from '../../../auth';
-import { Fragment } from 'react';
 import { Box, Button, Heading, VStack } from '@holdr-ui/react';
-import { makeButtonLarger } from '../../../../shared';
+import { makeButtonLarger } from '../../../shared';
 
-function MyMembers() {
-  const currentUser = useCurrentUser();
-
-  if (!currentUser || (currentUser && currentUser.role === 'general')) {
-    return <Fragment />;
-  }
-
+function Watchlist() {
   return (
     <VStack as='nav' p={4}>
-      <Heading size={3} weight={400} css={{ userSelect: 'none' }}>
-        My members
+      <Heading size={3} weight={500} css={{ userSelect: 'none' }}>
+        Watchlist
       </Heading>
       <Box
         mt={{ '@bp1': '8px', '@bp3': '8px' }}
@@ -29,11 +21,11 @@ function MyMembers() {
         className={makeButtonLarger('2.5rem')}
         colorTheme='secondary400'
       >
-        Create Club
+        Browse Clubs
       </Button>
     </VStack>
   );
 }
-MyMembers.displayName = 'MyMembers';
+Watchlist.displayName = 'Watchlist';
 
-export default MyMembers;
+export default Watchlist;

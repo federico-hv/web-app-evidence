@@ -1,7 +1,7 @@
-import { useCurrentUser } from '../../../auth';
+import { useCurrentUser } from '../../auth';
 import { Fragment } from 'react';
 import { Box, Button, Heading, VStack } from '@holdr-ui/react';
-import { makeButtonLarger } from '../../../../shared';
+import { makeButtonLarger } from '../../../shared';
 
 function MyMembershipList() {
   const currentUser = useCurrentUser();
@@ -12,7 +12,7 @@ function MyMembershipList() {
 
   return (
     <VStack as='nav' p={4}>
-      <Heading size={3} weight={400} css={{ userSelect: 'none' }}>
+      <Heading size={3} weight={500} css={{ userSelect: 'none' }}>
         My memberships
       </Heading>
       <Box

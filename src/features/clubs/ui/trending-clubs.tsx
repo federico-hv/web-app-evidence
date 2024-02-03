@@ -1,4 +1,4 @@
-import { RadialSurface } from '../../../../shared';
+import { RadialSurface } from '../../../shared';
 import {
   Avatar,
   Box,
@@ -22,12 +22,12 @@ function TrendingClub({
       </Box>
       <HStack gap={3}>
         <Avatar size='lg' variant='squircle' />
-        <VStack mt={2}>
+        <VStack mt={2} gap={2}>
           <Text casing='capitalize' size='14px' weight={500}>
             {name}
           </Text>
           <Text size='14px' color='base300'>
-            Name
+            660 memberships
           </Text>
         </VStack>
       </HStack>
@@ -57,11 +57,11 @@ function TrendingClubs() {
           }}
         />
         <VStack gap={4}>
-          <TrendingClub position={1} name='Name' />
-          <TrendingClub position={2} name='Name' />
-          <TrendingClub position={3} name='Name' />
-          <TrendingClub position={4} name='Name' />
-          <TrendingClub position={5} name='Name' />
+          <TrendingClub position={1} name='Name 1' />
+          <TrendingClub position={2} name='Name 2' />
+          <TrendingClub position={3} name='Name 3' />
+          <TrendingClub position={4} name='Name 4' />
+          <TrendingClub position={5} name='Name 5' />
         </VStack>
       </VStack>
     </RadialSurface>

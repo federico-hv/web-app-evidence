@@ -1,7 +1,7 @@
 import { Route, Routes } from 'react-router';
 import { AuthRedirectPage, HomePage } from '../pages';
 import { AuthGuard, NotFoundError, Paths, prefix } from '../shared';
-import { ConnectRoutes, SetupFlowRoutes } from './routes';
+import { ClubRoutes, ConnectRoutes, SetupFlowRoutes } from './routes';
 import { MainLayout } from '../layout';
 import { Fragment } from 'react';
 import { useLocation } from 'react-router-dom';
@@ -23,6 +23,11 @@ function Router() {
           <Route path='/' element={<AuthGuard />}>
             {/* Home Route*/}
             <Route path={Paths.root} element={<HomePage />} />
+            {/* Club Routes */}
+            <Route
+              path={prefix(Paths.clubs, '/*')}
+              element={<ClubRoutes />}
+            />
             {/*/!* Discover Route*!/*/}
             {/*<Route path={Paths.discover} element={<DiscoverPage />} />*/}
             {/*/!* Settings Route*!/*/}

@@ -4,3 +4,5 @@ export { default as WatchlistList } from './watchlist.list';
 export { default as MonthlySalesSummary } from './monthly-sales-summary';
 export { default as MembershipValueSummary } from './membership-value-summary';
 export { default as TrendingClubs } from './trending-clubs';
+export { default as MembershipAuctionCard } from './membership-auction.card';
+export { default as MembershipSecondarySaleCard } from './membership-secondary-sale.card';

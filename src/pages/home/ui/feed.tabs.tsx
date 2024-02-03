@@ -112,20 +112,12 @@ function FeedTabs() {
           borderBottom: '1px solid rgba(152, 152, 255, 0.10)',
         }}
       >
-        <VStack
-          placeholder=''
-          minHeight={0}
-          w='100%'
-          p={3}
-          as='aside'
-          gap={4}
-        >
+        <VStack minHeight={0} w='100%' p={3} as='aside' gap={4}>
           <Feeds type='all' />
         </VStack>
       </CustomTabsContent>
       <CustomTabsContent value='following'>
         <VStack
-          placeholder=''
           minHeight={0}
           w='100%'
           p={3}

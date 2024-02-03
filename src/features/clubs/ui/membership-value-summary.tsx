@@ -1,4 +1,4 @@
-import { RadialSurface } from '../../../../shared';
+import { RadialSurface } from '../../../shared';
 import { Box, Heading, HStack, Text, VStack } from '@holdr-ui/react';
 
 export function ValueStatistic({
