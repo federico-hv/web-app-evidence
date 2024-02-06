@@ -247,10 +247,9 @@ export const { styled, css, theme, keyframes } = createStitches({
 
 export const globalStyles = globalCss({
   '@import':
-    "url('https://fonts.googleapis.com/css2?family=Rubik:wght@100;200;300;400;500;600;700;800;900&display=swap')",
+    'url(../../matter.font.css), url(../../general-sans.font.css)',
   ':root': {
-    fontFamily: 'Rubik, ui-sans-serif, system-ui',
-
+    fontFamily: 'Matter, ui-sans-serif, system-ui',
     fontSynthesis: 'none',
     textRendering: 'optimizeLegibility',
     '-webkit-font-smoothing': 'antialiased',
@@ -270,7 +269,10 @@ export const globalStyles = globalCss({
   body: {
     backgroundColor: '#141317',
     color: '#FFFFFF',
-    fontFamily: 'Rubik, ui-sans-serif, system-ui',
+    // fontFamily: 'Matter, ui-sans-serif, system-ui',
+  },
+  'h1, h2, h3, h4, h5': {
+    fontFamily: 'GeneralSans, ui-sans-serif, system-ui',
   },
   a: {
     'text-decoration': 'none',

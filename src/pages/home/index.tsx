@@ -20,7 +20,7 @@ function HomePage() {
 
   return (
     <GQLRenderer ErrorFallback={ErrorFallback}>
-      <Head prefix='Holdr Base' title='' description='Home page' />
+      <Head prefix='Holdr' title='' description='Home page' />
       {currentUser && (
         <ContentLayout>
           <ContentLayoutMain>

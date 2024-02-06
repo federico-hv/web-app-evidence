@@ -26,7 +26,7 @@ function AllContent() {
           <FlatList
             overflow='auto'
             className='hide-scrollbar'
-            gap={5}
+            gap={4}
             data={arrayFrom(8).map(() => dummyAuctionMembershipData)}
             renderItem={(data) => <MembershipAuctionCard data={data} />}
             keyExtractor={(_, idx) => idx}
@@ -43,7 +43,7 @@ function AllContent() {
           <FlatList
             overflow='auto'
             className='hide-scrollbar'
-            gap={5}
+            gap={4}
             data={arrayFrom(8).map(() => dummySecondarySaleMembershipData)}
             renderItem={(data) => (
               <MembershipSecondarySaleCard data={data} />
@@ -62,7 +62,7 @@ function AllContent() {
           <FlatList<OnSaleMembershipModel>
             overflow='auto'
             className='hide-scrollbar'
-            gap={5}
+            gap={4}
             data={shuffle([
               ...arrayFrom(4).map(() => dummySecondarySaleMembershipData),
               ...arrayFrom(4).map(() => dummyAuctionMembershipData),

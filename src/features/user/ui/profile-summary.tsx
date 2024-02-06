@@ -1,7 +1,31 @@
 import { Avatar, Box, HStack, Text, VStack } from '@holdr-ui/react';
-import { RadialSurface } from '../../../../shared';
+import { RadialSurface } from '../../../shared';
+import { useCurrentUser } from '../../auth';
+
+function Members() {
+  return (
+    <HStack gap={2} placeholder=''>
+      <Text size={2}>0</Text>
+      <Text size={2} color='base300'>
+        Members
+      </Text>
+    </HStack>
+  );
+}
+
+function Memberships() {
+  return (
+    <HStack gap={2} placeholder=''>
+      <Text size={2}>0</Text>
+      <Text size={2} color='base300'>
+        Memberships
+      </Text>
+    </HStack>
+  );
+}
 
 function ProfileSummary() {
+  const currentUser = useCurrentUser();
   return (
     <RadialSurface radius={4} h={117} w='100%'>
       <VStack
@@ -45,12 +69,7 @@ function ProfileSummary() {
           placeholder=''
           justify='space-between'
         >
-          <HStack gap={2} placeholder=''>
-            <Text size={2}>0</Text>
-            <Text size={2} color='base300'>
-              Memberships
-            </Text>
-          </HStack>
+          {currentUser?.role === 'artist' ? <Members /> : <Memberships />}
           <HStack gap={2} placeholder=''>
             <Text size={2}>0</Text>
             <Text size={2} color='base300'>

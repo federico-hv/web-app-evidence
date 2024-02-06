@@ -1,4 +1,4 @@
-import { RadialSurface } from '../../../../shared';
+import { RadialSurface } from '../../../shared';
 import {
   Avatar,
   Box,

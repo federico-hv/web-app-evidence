@@ -10,10 +10,7 @@ function Logo() {
   return (
     <Link to='/'>
       <Box as='span'>
-        <Image
-          size={{ '@bp1': '16px', '@bp4': '30px' }}
-          src={Asset.Image.LogoLight}
-        />
+        <Image h={23} w={103} src={Asset.Image.Logo} />
       </Box>
     </Link>
   );

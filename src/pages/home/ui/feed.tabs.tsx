@@ -4,6 +4,7 @@ import {
   FeedsReturnModel,
   GET_FEEDS,
   FeedCard,
+  CreatePost,
 } from '../../../features';
 import { Error, Loader } from '../../../shared';
 import { Alert, HStack, VStack } from '@holdr-ui/react';
@@ -83,7 +84,7 @@ function FeedTabs() {
               css={{ borderTopLeftRadius: '$4' }}
               value='for-you'
             >
-              For You
+              For you
             </CustomTabsTrigger>
             <CustomTabsTrigger
               _hover={{ background: '#9898FF26' }}
@@ -110,9 +111,12 @@ function FeedTabs() {
           borderRight: '1px solid rgba(152, 152, 255, 0.10)',
           borderLeft: '1px solid rgba(152, 152, 255, 0.10)',
           borderBottom: '1px solid rgba(152, 152, 255, 0.10)',
+          borderBottomLeftRadius: '$4',
+          borderBottomRightRadius: '$4',
         }}
       >
         <VStack minHeight={0} w='100%' p={3} as='aside' gap={4}>
+          <CreatePost />
           <Feeds type='all' />
         </VStack>
       </CustomTabsContent>
@@ -127,8 +131,11 @@ function FeedTabs() {
             borderLeft: '1px solid rgba(152, 152, 255, 0.10)',
             borderRight: '1px solid rgba(152, 152, 255, 0.10)',
             borderBottom: '1px solid rgba(152, 152, 255, 0.10)',
+            borderBottomLeftRadius: '$4',
+            borderBottomRightRadius: '$4',
           }}
         >
+          <CreatePost />
           <Feeds type='all' />
         </VStack>
       </CustomTabsContent>

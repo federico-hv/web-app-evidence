@@ -11,7 +11,7 @@ import {
   SecondarySalesContent,
   WatchlistContent,
 } from './ui';
-import { Box, Heading, HStack } from '@holdr-ui/react';
+import { Box, Heading, HStack, theme } from '@holdr-ui/react';
 import { TabOptions } from './shared';
 import CustomTabs, {
   CustomTabsContent,
@@ -19,13 +19,24 @@ import CustomTabs, {
   CustomTabsList,
   CustomTabsTrigger,
 } from '../../tmp/custom-tabs';
+import { CSS } from '@stitches/react';
+
+const tabsHoverStyle: CSS<typeof theme> = {
+  transitionDuration: theme.transitions['duration-slow'],
+  transitionProperty: 'background',
+  transitionTimingFunction: 'linear',
+};
 
 function ClubsPage() {
   const currentUser = useCurrentUser();
 
   return (
     <GQLRenderer ErrorFallback={ErrorFallback}>
-      <Head prefix='Holdr Base' title='' description='Home page' />
+      <Head
+        prefix='Holdr - Clubs'
+        title=''
+        description='A catalog of memberships that are being offered by artists.'
+      />
       {currentUser && (
         <RadialSurface w='100%' radius={4} h='100%'>
           {/* New page layout*/}
@@ -43,6 +54,7 @@ function ClubsPage() {
                       flex='unset'
                       px='20px'
                       py='12px'
+                      css={tabsHoverStyle}
                       _hover={{ background: '#9898FF26' }}
                       value='all'
                     >
@@ -52,6 +64,7 @@ function ClubsPage() {
                       flex='unset'
                       px='20px'
                       py='12px'
+                      css={tabsHoverStyle}
                       _hover={{ background: '#9898FF26' }}
                       value={TabOptions['live-auctions']}
                     >
@@ -61,6 +74,7 @@ function ClubsPage() {
                       flex='unset'
                       px='20px'
                       py='12px'
+                      css={tabsHoverStyle}
                       _hover={{ background: '#9898FF26' }}
                       value={TabOptions['secondary-sales']}
                     >
@@ -70,6 +84,7 @@ function ClubsPage() {
                       flex='unset'
                       px='20px'
                       py='12px'
+                      css={tabsHoverStyle}
                       _hover={{ background: '#9898FF26' }}
                       value={TabOptions.watchlist}
                     >

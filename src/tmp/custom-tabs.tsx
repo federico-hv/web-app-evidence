@@ -75,13 +75,14 @@ function CustomTabsTrigger({
       items='center'
       cursor='pointer'
       overflow='hidden'
-      borderBottom={1}
+      borderBottom={2}
       borderColor={
         value === state.currentValue ? 'secondary400' : 'transparent'
       }
       {...props}
       css={{
         userSelect: 'none',
+        fontWeight: value === state.currentValue ? 500 : 400,
         ...css,
       }}
     >

@@ -29,7 +29,7 @@ function MembershipValueSummary() {
         <Heading
           casing='capitalize'
           size={3}
-          weight={400}
+          weight={500}
           css={{ userSelect: 'none' }}
         >
           Membership value

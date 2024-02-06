@@ -1,4 +1,4 @@
-import { RadialSurface } from '../../../../shared';
+import { RadialSurface } from '../../../shared';
 import {
   Box,
   Heading,
@@ -17,7 +17,7 @@ function AnalyticsStatistics({
 }: {
   label: string;
   value: number;
-  percent: number;
+  percent?: number;
   info?: string;
 }) {
   return (
@@ -40,9 +40,12 @@ function AnalyticsStatistics({
       </HStack>
       <HStack items='flex-end' justify='space-between'>
         <Box fontSize='2rem'>{value}</Box>
-        <HStack>
-          <Box>{percent}%</Box>
-        </HStack>
+        {percent !== undefined && (
+          <HStack>
+            {/* arrow coming soon...*/}
+            <Box>{percent}%</Box>
+          </HStack>
+        )}
       </HStack>
     </VStack>
   );
@@ -52,7 +55,7 @@ function AnalyticsSummary() {
   return (
     <RadialSurface radius={4} h={450} w='100%' css={{ flexShrink: 0 }}>
       <VStack as='nav' p={4}>
-        <Heading size={3} weight={400} css={{ userSelect: 'none' }}>
+        <Heading size={3} weight={500} css={{ userSelect: 'none' }}>
           Analytics
         </Heading>
         <Box
@@ -79,16 +82,8 @@ function AnalyticsSummary() {
             value={0}
             percent={0}
           />
-          <AnalyticsStatistics
-            label='memberships sold'
-            value={0}
-            percent={0}
-          />
-          <AnalyticsStatistics
-            label='outstanding memberships'
-            value={0}
-            percent={0}
-          />
+          <AnalyticsStatistics label='memberships sold' value={0} />
+          <AnalyticsStatistics label='outstanding memberships' value={0} />
         </VStack>
       </VStack>
     </RadialSurface>
