@@ -33,13 +33,13 @@ function Watchlist() {
       <VStack gap={3} items={'center'}>
         <WatchlistItem
           active={
-            !!matchPath(dummyAuctionMembershipData.name, pathname)
+            !!matchPath(encodeURIComponent(dummyAuctionMembershipData.name), pathname)
           }
           data={dummyAuctionMembershipData}
           to={dummyAuctionMembershipData.name}
         />
         <WatchlistItem
-          active={!!matchPath(dummySecondarySaleMembershipData.name, pathname)}
+          active={!!matchPath(encodeURIComponent(dummySecondarySaleMembershipData.name), pathname)}
           data={dummySecondarySaleMembershipData}
           to={dummySecondarySaleMembershipData.name}
         />
