@@ -17,14 +17,14 @@ function Watchlist() {
           backgroundColor: 'rgba(152, 152, 255, 0.10)',
         }}
       />
-      <Button
+      {/* <Button
         fullWidth
         className={makeButtonLarger('2.5rem')}
         colorTheme='purple500'
       >
         Browse Clubs
-      </Button>
-      <VStack gap={4}>
+      </Button> */}
+      <VStack gap={3}>
         <WatchlistItem
           auctionName="I'm live!"
           timeLeft={new Date()}
