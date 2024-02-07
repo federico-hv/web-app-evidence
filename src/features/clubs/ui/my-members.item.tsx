@@ -1,44 +1,66 @@
 import {
-    Avatar,
-    HStack,
-    VStack,
-    Text,
-    AvatarBadge,
-    Circle,
-  } from '@holdr-ui/react';
-  import { UserModel } from 'shared';
-  
-  interface MyMembersItemProps {
-    data: UserModel;
-    isOnline: boolean;
-  }
-  
-  function MyMembersItem({ data, isOnline }: MyMembersItemProps) {
-    return (
-      <HStack p={2} gap={4} radius={2} items={'center'}>
-      <Avatar size='base' src={data.avatar}>
-        {isOnline && (
-          <AvatarBadge size={1}>
-            <Circle
-              size='13px'
-              css={{ backgroundColor: '#34C05A', borderColor: '#141317' }}
-              border={1}
-            />
-          </AvatarBadge>
-        )}
-      </Avatar>
-      <VStack gap={2}>
-        <Text size={3} weight={500}>
-          {data.displayName}
-        </Text>
-        <Text size={1} weight={300}>
-          {`@${data.username}`}
-        </Text>
-      </VStack>
-    </HStack>
-    );
-  }
-  
-  MyMembersItem.displayName = 'MyMembers item';
-  
-  export default MyMembersItem;
+  Avatar,
+  HStack,
+  VStack,
+  Text,
+  AvatarBadge,
+  Circle,
+} from '@holdr-ui/react';
+import { Link } from 'react-router-dom';
+import { UserModel } from 'shared';
+
+interface MyMembersItemProps {
+  data: UserModel;
+  isOnline: boolean;
+  active: boolean;
+  to: string;
+}
+
+function MyMembersItem({
+  data,
+  isOnline,
+  active,
+  to,
+}: MyMembersItemProps) {
+  return (
+    <Link to={to}>
+      <HStack
+        p={3}
+        gap={4}
+        radius={3}
+        items={'center'}
+        _hover={{ backgroundColor: '#9898FF26', cursor: 'pointer' }}
+        css={{
+          background: active ? '#9898FF26' : 'transparent',
+        }}
+      >
+        <Avatar size='base' src={data.avatar}>
+          {isOnline && (
+            <AvatarBadge size={1}>
+              <Circle
+                size='13px'
+                css={{
+                  backgroundColor: '#34C05A',
+                  borderColor: '#141317',
+                }}
+                border={1}
+              />
+            </AvatarBadge>
+          )}
+        </Avatar>
+        <VStack gap={1}>
+          <Text size={3} weight={500}>
+            {data.displayName}
+          </Text>
+          <Text size={1} weight={300}>
+            {`@${data.username}`}
+          </Text>
+        </VStack>
+      </HStack>
+    </Link>
+  );
+}
+
+MyMembersItem.displayName = 'MyMembers item';
+
+export default MyMembersItem;
