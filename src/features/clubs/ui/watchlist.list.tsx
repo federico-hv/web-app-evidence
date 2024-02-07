@@ -1,5 +1,6 @@
 import { Box, Button, Heading, VStack } from '@holdr-ui/react';
 import { makeButtonLarger } from '../../../shared';
+import { WatchlistItem } from './index';
 
 function Watchlist() {
   return (
@@ -23,6 +24,20 @@ function Watchlist() {
       >
         Browse Clubs
       </Button>
+      <VStack gap={4}>
+        <WatchlistItem
+          auctionName="I'm live!"
+          timeLeft={new Date()}
+          price={100}
+          live={true}
+        />
+        <WatchlistItem
+          auctionName='Not live :P'
+          timeLeft={new Date()}
+          price={0}
+          live={false}
+        />
+      </VStack>
     </VStack>
   );
 }
