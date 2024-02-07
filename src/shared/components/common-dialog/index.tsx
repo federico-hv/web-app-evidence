@@ -28,7 +28,7 @@ function CommonDialog({
   isOpen,
   onOpen,
   onClose,
-  ariaDescribedBy,
+  ariaDescribedBy = '',
   children,
   minHeight = 500,
 }: CommonDialogProps) {

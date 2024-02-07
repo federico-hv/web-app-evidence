@@ -59,7 +59,7 @@ function NotificationOptionButton() {
   return (
     <Responsive>
       <ResponsiveItem tablet='hide'>
-        <Dialog>
+        <Dialog ariaDescribedBy=''>
           <Dialog.Trigger>
             <IconButton
               size={{ '@bp1': 'sm', '@bp3': 'base' }}

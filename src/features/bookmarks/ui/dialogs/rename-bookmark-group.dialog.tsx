@@ -23,7 +23,12 @@ function RenameBookmarkGroupDialog() {
   const { setValue } = getFieldHelpers('name');
 
   return (
-    <Dialog isOpen={isOpen} onOpen={onOpen} onClose={onClose}>
+    <Dialog
+      ariaDescribedBy=''
+      isOpen={isOpen}
+      onOpen={onOpen}
+      onClose={onClose}
+    >
       <Dialog.Portal>
         <Dialog.Overlay />
         <Dialog.Content

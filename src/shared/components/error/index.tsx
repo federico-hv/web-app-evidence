@@ -14,7 +14,7 @@ function Error({
   return (
     <VStack gap={3}>
       {errorMessage && (
-        <Alert status='error'>
+        <Alert status='danger'>
           <Alert.Description>{errorMessage}</Alert.Description>
         </Alert>
       )}

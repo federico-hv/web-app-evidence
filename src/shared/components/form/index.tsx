@@ -2,9 +2,8 @@ import { Formik, FormikValues, useFormikContext } from 'formik';
 import { FormInputProps } from '../form-input/form-input.types';
 import { GenericProps } from '../../interfaces';
 import { FormEvent } from 'react';
-import { Button, VStack } from '@holdr-ui/react';
+import { Button, ButtonProps, VStack } from '@holdr-ui/react';
 import { FormProps } from './types';
-import { ButtonProps } from '@holdr-ui/react/dist/components/button/src/button.type';
 import { isInputDisabled } from '../../utilities';
 
 /**
@@ -52,9 +51,9 @@ function FormInput(props: FormInputProps) {
 }
 FormInput.displayName = 'Form_FormInput';
 
-interface FormButtonProps extends ButtonProps {
+type FormButtonProps = ButtonProps & {
   keys: string[];
-}
+};
 
 function FormButton({ keys, ...props }: FormButtonProps) {
   const { values, errors } = useFormikContext();

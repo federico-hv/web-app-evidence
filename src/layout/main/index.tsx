@@ -9,11 +9,11 @@ import { Outlet } from 'react-router-dom';
 function MainLayout() {
   const currentUser = useCurrentUser();
   return (
-    <VStack placeholder='' w='100vw' h='100vh'>
+    <VStack w='100vw' h='100vh'>
       {currentUser && <LgNavigation />}
       <Container maxWidth={1280} mt={80} position='relative'>
         <Box w='100%'>
-          <HStack w='100%' h='100%' gap={4} placeholder=''>
+          <HStack w='100%' h='100%' gap={4}>
             {/* Header */}
             {currentUser && <Header />}
             {/* Main */}

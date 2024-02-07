@@ -11,15 +11,15 @@ import {
   useState,
   ReactElement,
 } from 'react';
-import * as ReactDOM from 'react-dom';
 import { $createMentionNode } from '../../../shared';
 import { MentionsProps, MentionOption } from '../../../types';
 import { checkForAtSignMentions } from '../../../shared';
-import { popoverStyles } from '../../../styles';
+// import { popoverStyles } from '../../../styles';
+// import { createPortal } from 'react-dom';
 
 export default function MentionsPlugin<T>({
   dataFetcher,
-  renderItem,
+  //renderItem,
   keyExtractor,
   results,
 }: MentionsProps<T>): ReactElement | null {
@@ -96,34 +96,34 @@ export default function MentionsPlugin<T>({
         anchorElementRef,
         { selectedIndex, selectOptionAndCleanUp, setHighlightedIndex },
       ) =>
-        anchorElementRef.current && results.length && focused
-          ? ReactDOM.createPortal(
-              <div className={popoverStyles()}>
-                <ul style={{ listStyle: 'none' }}>
-                  {options.map((option: MentionOption<T>, i: number) => (
-                    <li
-                      id={
-                        selectedIndex === i ? 'selected-option' : 'option'
-                      }
-                      // onClick doesnt work, instead using onMouseDown
-                      onMouseDown={() => {
-                        setHighlightedIndex(i);
-                        selectOptionAndCleanUp(option);
-                      }}
-                      onMouseEnter={() => {
-                        setHighlightedIndex(i);
-                      }}
-                      ref={option.setRefElement}
-                      key={keyExtractor(option.data)}
-                    >
-                      {renderItem(option.data, selectedIndex === i)}
-                    </li>
-                  ))}
-                </ul>
-              </div>,
-              anchorElementRef.current,
-            )
-          : null
+        // anchorElementRef.current && results.length && focused
+        //   ? createPortal(
+        //       <div className={popoverStyles()}>
+        //         <ul style={{ listStyle: 'none' }}>
+        //           {options.map((option: MentionOption<T>, i: number) => (
+        //             <li
+        //               id={
+        //                 selectedIndex === i ? 'selected-option' : 'option'
+        //               }
+        //               // onClick doesnt work, instead using onMouseDown
+        //               onMouseDown={() => {
+        //                 setHighlightedIndex(i);
+        //                 selectOptionAndCleanUp(option);
+        //               }}
+        //               onMouseEnter={() => {
+        //                 setHighlightedIndex(i);
+        //               }}
+        //               ref={option.setRefElement}
+        //               key={keyExtractor(option.data)}
+        //             >
+        //               {renderItem(option.data, selectedIndex === i)}
+        //             </li>
+        //           ))}
+        //         </ul>
+        //       </div>,
+        //       anchorElementRef.current,
+        //     )
+        null
       }
     />
   );

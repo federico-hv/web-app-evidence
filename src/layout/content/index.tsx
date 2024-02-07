@@ -50,7 +50,6 @@ const ContentLayoutAside = ({ children }: BaseContentLayoutProps) => {
           h='calc(100% - 80px)'
           pb={4}
           w={{ '@bp1': 0, '@bp6': 308 }}
-          placeholder=''
         >
           {children}
         </VStack>

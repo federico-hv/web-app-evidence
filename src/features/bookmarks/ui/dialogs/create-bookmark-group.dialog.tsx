@@ -38,7 +38,12 @@ function CreateBookmarkGroupDialog({
   const { setValue: setIsPrivateValue } = getFieldHelpers('isPrivate');
 
   return (
-    <Dialog isOpen={isOpen} onClose={onClose} onOpen={onOpen}>
+    <Dialog
+      ariaDescribedBy=''
+      isOpen={isOpen}
+      onClose={onClose}
+      onOpen={onOpen}
+    >
       <Dialog.Trigger>{children}</Dialog.Trigger>
       <Dialog.Portal>
         <Dialog.Overlay />
