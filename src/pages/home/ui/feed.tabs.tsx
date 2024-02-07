@@ -82,9 +82,9 @@ function FeedTabs() {
         h={64}
         position='sticky'
         t={80}
-        zIndex={10}
         css={{
           backgroundColor: '#141317',
+          zIndex: 6,
         }}
       >
         <HStack
