@@ -2,6 +2,8 @@ import { useCurrentUser } from '../../auth';
 import { Fragment } from 'react';
 import { Box, Button, Heading, VStack } from '@holdr-ui/react';
 import { makeButtonLarger } from '../../../shared';
+import {MyMembersItem} from './index';
+import { dummyMember } from '../../../pages/clubs/shared';
 
 function MyMembers() {
   const currentUser = useCurrentUser();
@@ -31,6 +33,10 @@ function MyMembers() {
       >
         Create Club
       </Button>
+      <VStack gap={2}>
+        <MyMembersItem data={dummyMember} online={true}></MyMembersItem>
+        <MyMembersItem data={dummyMember} online={false}/>
+      </VStack>
     </VStack>
   );
 }
