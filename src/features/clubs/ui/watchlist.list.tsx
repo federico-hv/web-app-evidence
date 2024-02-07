@@ -32,14 +32,22 @@ function Watchlist() {
       </Button> */}
       <VStack gap={3} items={'center'}>
         <WatchlistItem
-          active={!!matchPath(dummySecondarySaleMembershipData.name, pathname)}
+          active={
+            !!matchPath(dummyAuctionMembershipData.name, pathname)
+          }
           data={dummyAuctionMembershipData}
-          to={dummySecondarySaleMembershipData.name}
+          to={dummyAuctionMembershipData.name}
         />
         <WatchlistItem
-          active={!!matchPath("dummy2", pathname)}
+          active={!!matchPath(dummySecondarySaleMembershipData.name, pathname)}
           data={dummySecondarySaleMembershipData}
-          to={"dummy2"}
+          to={dummySecondarySaleMembershipData.name}
+        />
+
+        <WatchlistItem
+          active={!!matchPath('dummy3', pathname)}
+          data={dummySecondarySaleMembershipData}
+          to={'dummy3'}
         />
       </VStack>
     </VStack>
