@@ -28,7 +28,9 @@ function FeedFilterMenu({
   }) => (
     <HStack items='center' gap={4}>
       {checked && <Icon name='check' color='purple400' />}
-      <Text casing='capitalize'>{value}</Text>
+      <Text casing='capitalize' color={checked ? 'purple400' : 'initial'}>
+        {value}
+      </Text>
     </HStack>
   );
 
