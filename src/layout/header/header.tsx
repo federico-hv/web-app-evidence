@@ -38,11 +38,11 @@ function Header() {
           >
             <NavigationList />
           </RadialSurface>
-          <RadialSurface w='100%' h='50%' radius={4}>
+          <RadialSurface w='100%' h='auto' radius={4}>
             <MyMembershipList />
             <MyMembersList />
           </RadialSurface>
-          <RadialSurface w='100%' h='50%' radius={4}>
+          <RadialSurface w='100%' h='auto' radius={4}>
             <WatchlistList />
           </RadialSurface>
         </VStack>
