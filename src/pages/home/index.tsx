@@ -2,7 +2,6 @@ import { ErrorFallback, GQLRenderer, Head } from '../../shared';
 import {
   AnalyticsSummary,
   MembershipValueSummary,
-  MonthlySalesSummary,
   ProfileSummary,
   RecommendedArtists,
   TrendingClubs,
@@ -31,7 +30,6 @@ function HomePage() {
             {currentUser.role === 'artist' && (
               <Fragment>
                 <MembershipValueSummary />
-                <MonthlySalesSummary />
                 <AnalyticsSummary />
               </Fragment>
             )}
