@@ -36,7 +36,7 @@ export const dummyAuctionMembershipData: OnSaleMembershipModel = {
 
 export const dummySecondarySaleMembershipData: OnSaleMembershipModel = {
   price: 100.11,
-  name: 'Name',
+  name: 'Name Secondary',
   artist: dummyArtist,
   isOnWatchlist: false,
 };
