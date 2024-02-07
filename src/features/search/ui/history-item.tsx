@@ -26,7 +26,7 @@ function HistoryItem({ data }: { data: UserModel }) {
           <Circle
             size={{ '@bp1': 30, '@bp3': 40 }}
             bgColor='base800'
-            color='primary400'
+            color='white50'
             css={{ flexShrink: 0 }}
           >
             <Icon name='search-outline' />

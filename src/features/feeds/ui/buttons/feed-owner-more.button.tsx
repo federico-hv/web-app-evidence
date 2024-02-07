@@ -38,7 +38,7 @@ function FeedOwnerMoreButton({}: { ghost?: boolean }) {
               <IconButton
                 variant='ghost'
                 size={{ '@bp1': 'sm', '@bp3': 'base' }}
-                colorTheme='primary400'
+                colorTheme='white50'
                 blur='xl'
                 icon='more-fill'
                 boxShadow='none'

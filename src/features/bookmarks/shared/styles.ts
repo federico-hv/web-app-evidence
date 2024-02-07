@@ -1,4 +1,4 @@
-import { styled } from '../../../configs';
+import { styled } from '@holdr-ui/react';
 
 const FlexLabel = styled('label', {
   display: 'flex',

@@ -19,7 +19,7 @@ function LgNavigation() {
               backgroundColor: '#141317',
             }}
           >
-            <HStack placeholder='' h={64} w='100%' gap={4}>
+            <HStack h={64} w='100%' gap={4}>
               <HStack
                 items='center'
                 w={{ '@bp3': 90, '@bp7': 308 }}
@@ -47,7 +47,7 @@ function LgNavigation() {
                   <NotificationPopover />
                   <IconButton
                     variant='ghost'
-                    colorTheme='primary400'
+                    colorTheme='white50'
                     icon='settings-outline'
                     ariaLabel='View settings'
                   />

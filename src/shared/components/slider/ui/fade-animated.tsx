@@ -1,13 +1,12 @@
-import React, { Fragment, useEffect, useRef, useState } from 'react';
+import React, { Fragment, useEffect, useRef } from 'react';
 import { GenericProps } from '../../../interfaces';
-import { Box, HStack, useKeyBind } from '@holdr-ui/react';
+import { Box, HStack, theme, useKeyBind } from '@holdr-ui/react';
 import { useSliderContext } from '../shared';
 import { MotionBox } from '../../../styles';
 import { getSubComponent, makeArray } from '../../../utilities';
 import { AnimatePresence } from 'framer-motion';
 import { circular } from '../index';
 import { useInterval } from '../../../hooks';
-import { theme } from 'configs';
 
 const variants = {
   visible: { opacity: 1 },

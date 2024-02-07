@@ -1,5 +1,4 @@
-import { styled } from '@holdr-ui/react';
-import { css } from '../../../../configs';
+import { styled, css } from '@holdr-ui/react';
 
 export const Slider = styled('input', {
   '&': {

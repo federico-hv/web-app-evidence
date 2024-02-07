@@ -112,7 +112,7 @@ function PostCard({ data }: { data: PostModel }) {
         <HStack items='center' gap={2} zIndex={5}>
           <IconButton
             variant='ghost'
-            colorTheme='primary400'
+            colorTheme='white50'
             icon='heart-outline'
             ariaLabel='like post'
           />
@@ -121,7 +121,7 @@ function PostCard({ data }: { data: PostModel }) {
         <HStack items='center' gap={2} zIndex={5}>
           <IconButton
             variant='ghost'
-            colorTheme='primary400'
+            colorTheme='white50'
             icon='chat-alt-outline'
             ariaLabel='view comments'
           />
@@ -130,7 +130,7 @@ function PostCard({ data }: { data: PostModel }) {
         <HStack items='center' gap={2} zIndex={5}>
           <IconButton
             variant='ghost'
-            colorTheme='primary400'
+            colorTheme='white50'
             icon='bookmark-outline'
             ariaLabel='bookmark feed'
           />

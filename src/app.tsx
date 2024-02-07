@@ -9,6 +9,7 @@ import { Tooltip } from '@holdr-ui/react';
 import Router from './router';
 import { loadErrorMessages, loadDevMessages } from '@apollo/client/dev';
 import { useEffect } from 'react';
+import { HelmetProvider } from 'react-helmet-async';
 
 if (import.meta.env.DEV) {
   // Print out error and dev messages for GraphQL in dev mode
@@ -34,19 +35,21 @@ export function App() {
 
   return (
     <CookiesProvider>
-      <ApolloProvider client={GQLClient}>
-        <AuthProvider>
-          <AlertDialogProvider>
-            <BrowserRouter basename={import.meta.env.VITE_APP_BASE_PATH}>
-              <ToastProvider>
-                <Tooltip.Provider>
-                  <Router />
-                </Tooltip.Provider>
-              </ToastProvider>
-            </BrowserRouter>
-          </AlertDialogProvider>
-        </AuthProvider>
-      </ApolloProvider>
+      <HelmetProvider>
+        <ApolloProvider client={GQLClient}>
+          <AuthProvider>
+            <AlertDialogProvider>
+              <BrowserRouter basename={import.meta.env.VITE_APP_BASE_PATH}>
+                <ToastProvider>
+                  <Tooltip.Provider>
+                    <Router />
+                  </Tooltip.Provider>
+                </ToastProvider>
+              </BrowserRouter>
+            </AlertDialogProvider>
+          </AuthProvider>
+        </ApolloProvider>
+      </HelmetProvider>
     </CookiesProvider>
   );
 }

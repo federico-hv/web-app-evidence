@@ -1,5 +1,4 @@
-import { Center, Text } from '@holdr-ui/react';
-import { theme } from '../../../../../configs';
+import { Center, Text, theme } from '@holdr-ui/react';
 import { AnswerPollButtonProps } from './types';
 
 function AnswerPollButton({ label, onClick }: AnswerPollButtonProps) {

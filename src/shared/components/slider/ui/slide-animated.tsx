@@ -3,8 +3,13 @@ import { useSliderContext } from '../shared';
 import { GenericProps } from '../../../interfaces';
 import { getSubComponent, makeArray } from '../../../utilities';
 import { circular } from '../index';
-import { Box, HStack, useKeyBind, useSwitch } from '@holdr-ui/react';
-import { theme } from '../../../../configs';
+import {
+  Box,
+  HStack,
+  theme,
+  useKeyBind,
+  useSwitch,
+} from '@holdr-ui/react';
 import { useInterval } from '../../../hooks';
 import { KeyboardKey } from '../../../constants';
 

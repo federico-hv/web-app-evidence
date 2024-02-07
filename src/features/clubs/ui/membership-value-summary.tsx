@@ -43,7 +43,7 @@ function MembershipValueSummary() {
             backgroundColor: 'rgba(152, 152, 255, 0.10)',
           }}
         />
-        <VStack gap={3}>
+        <VStack gap={3} justify='flex-end'>
           <ValueStatistic label='Average price' value={0} />
           <ValueStatistic label='Entry price' value={0} />
           <ValueStatistic label='List price' value={0} />

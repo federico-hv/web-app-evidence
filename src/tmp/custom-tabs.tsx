@@ -10,6 +10,7 @@ import {
   HStackProps,
   StackProps,
 } from '@holdr-ui/react/dist/components/stack/src/stack.types';
+import { Fragment } from 'react';
 
 interface CustomTabsState {
   currentValue: string;
@@ -40,7 +41,7 @@ CustomTabs.displayName = 'CustomTabs';
 
 function CustomTabsHeader({ children, ...props }: HStackProps) {
   return (
-    <HStack placeholder='' w='100%' h='100%' {...props}>
+    <HStack w='100%' h='100%' {...props}>
       {children}
     </HStack>
   );
@@ -77,7 +78,7 @@ function CustomTabsTrigger({
       overflow='hidden'
       borderBottom={2}
       borderColor={
-        value === state.currentValue ? 'secondary400' : 'transparent'
+        value === state.currentValue ? 'purple500' : 'transparent'
       }
       {...props}
       css={{

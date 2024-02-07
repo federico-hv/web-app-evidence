@@ -82,7 +82,7 @@ function ArtistSelectionStep() {
               _hover={{ backgroundColor: hexToRGB('#d3190b', 0.075) }}
               onClick={() => update({ ids: [] })}
             >
-              <Text color='danger' weight={500}>
+              <Text color='danger400' weight={500}>
                 Remove All
               </Text>
             </Center>
@@ -146,7 +146,7 @@ function ArtistOption({
               value={`${visible}`}
               checked={visible}
               size='sm'
-              colorTheme='secondary400'
+              colorTheme='purple500'
               labelledBy='artist-name'
             />
           )}

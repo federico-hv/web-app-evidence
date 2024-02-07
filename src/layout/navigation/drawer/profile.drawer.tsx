@@ -187,7 +187,7 @@ function ProfileDrawer() {
                         <Button
                           radius={4}
                           size='sm'
-                          colorTheme='secondary400'
+                          colorTheme='purple500'
                           fullWidth
                           className={extraBtnPadding()}
                         >

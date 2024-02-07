@@ -31,7 +31,7 @@ function RecommendedArtist({
           </HStack>
         </VStack>
       </HStack>
-      <Button colorTheme='primary400' variant='outline'>
+      <Button colorTheme='white50' variant='outline'>
         Follow
       </Button>
     </HStack>

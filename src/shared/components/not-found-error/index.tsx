@@ -69,7 +69,7 @@ function NotFoundError({ q }: { q?: string }) {
                   </Text>
                 </VStack>
                 <Button
-                  colorTheme='primary400'
+                  colorTheme='white50'
                   className={makeButtonLarger('3rem')}
                   onClick={() => navigate(`/${Paths.discover}${query}`)}
                   label='Search'

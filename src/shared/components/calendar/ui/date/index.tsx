@@ -15,7 +15,7 @@ function Date({ date, active, onClick, disabled }: DateProps) {
       }
     >
       {active ? (
-        <Text color={'primary100'} size={2}>
+        <Text color={'white50'} size={2}>
           {DateUtility.get(date, 'day')}
         </Text>
       ) : (

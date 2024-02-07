@@ -125,7 +125,7 @@ function DetailsHeader() {
                 </Text>
               )}
               <Text
-                color='primary400'
+                color='white50'
                 size={{ '@bp1': 3, '@bp3': 7 }}
                 weight={600}
               >

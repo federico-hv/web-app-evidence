@@ -13,7 +13,7 @@ export default function CreatePostMentionItem({
     <Box _hover={{ cursor: 'pointer' }}>
       <Text
         size={3}
-        {...(selected && { weight: 600, color: 'secondary400' })}
+        {...(selected && { weight: 600, color: 'purple500' })}
         className={selected ? selectedMentionOption() : mentionOption()}
       >
         {data.username}

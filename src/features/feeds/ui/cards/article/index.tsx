@@ -92,7 +92,7 @@ function ArticleCard({ data }: { data: ArticleModel }) {
                   </TextGroup.Subheading>
                   <TextGroup.Heading
                     size={{ '@bp1': 3, '@bp3': 4 }}
-                    color='primary400'
+                    color='white50'
                     as='h2'
                     noOfLines={2}
                   >
@@ -118,7 +118,7 @@ function ArticleCard({ data }: { data: ArticleModel }) {
                     <BookmarkPopover position='right' sideOffset={0}>
                       <IconButton
                         variant='ghost'
-                        colorTheme='primary400'
+                        colorTheme='white50'
                         ariaLabel={
                           !bookmarked
                             ? 'create bookmark'
@@ -140,7 +140,7 @@ function ArticleCard({ data }: { data: ArticleModel }) {
                       >
                         <IconButton
                           variant='ghost'
-                          colorTheme='primary400'
+                          colorTheme='white50'
                           ariaLabel={reaction ? reaction : 'add reaction'}
                           icon={
                             reaction
@@ -160,7 +160,7 @@ function ArticleCard({ data }: { data: ArticleModel }) {
                     >
                       <Button
                         size={{ '@bp1': 'sm', '@bp3': 'base' }}
-                        colorTheme='primary400'
+                        colorTheme='white50'
                       >
                         Read
                       </Button>

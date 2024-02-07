@@ -27,7 +27,7 @@ function MyMembershipList() {
       <Button
         fullWidth
         className={makeButtonLarger('2.5rem')}
-        colorTheme='secondary400'
+        colorTheme='purple500'
       >
         Browse Clubs
       </Button>

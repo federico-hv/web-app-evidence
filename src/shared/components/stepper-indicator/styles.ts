@@ -1,12 +1,11 @@
-import { HStack } from '@holdr-ui/react';
-import { styled } from '../../../configs';
+import { HStack, styled } from '@holdr-ui/react';
 
 export const StyledStepperIndicator = styled(HStack, {
   '& .stepper__step': {
     variants: {
       active: {
         true: {
-          backgroundColor: '$secondary400',
+          backgroundColor: '$purple500',
         },
       },
     },

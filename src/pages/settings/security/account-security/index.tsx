@@ -28,7 +28,7 @@ function AccountSecuritySettingsPage() {
               authentication app, or security key.
             </Text>
             <a href=''>
-              <Text size={1} as='sm' color='secondary400'>
+              <Text size={1} as='sm' color='purple500'>
                 Learn more
               </Text>
             </a>

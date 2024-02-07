@@ -1,10 +1,9 @@
 import * as Slider from '@radix-ui/react-slider';
-import { styled } from 'configs';
 import { VideoSliderCommonProps } from '../shared';
-import { Box } from '@holdr-ui/react';
+import { Box, styled } from '@holdr-ui/react';
 
 function VideoSlider({
-  primaryColor = '$secondary300',
+  primaryColor = '$purple400',
   secondaryColor = '$base700',
 }: VideoSliderCommonProps) {
   const SliderRoot = styled(Slider.Root, {

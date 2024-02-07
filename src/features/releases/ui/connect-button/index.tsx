@@ -7,13 +7,13 @@ import {
   Image,
   Skeleton,
   Text,
+  theme,
 } from '@holdr-ui/react';
 import {
   ConnectorProvider,
   useConnectedAccounts,
 } from '../../../connected-accounts';
 import { dummyFn, GQLRenderer } from '../../../../shared';
-import { theme } from '../../../../configs';
 import { ConnectButtonProps } from './types';
 
 function ConnectButton({ provider, onClick }: ConnectButtonProps) {

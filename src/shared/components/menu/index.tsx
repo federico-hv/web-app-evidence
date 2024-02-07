@@ -22,7 +22,7 @@ import Responsive, { ResponsiveItem } from '../responsive';
 import { extraBtnPadding } from '../../styles';
 import { IconName } from '@holdr-ui/react/dist/shared/types';
 import { useActOnScroll } from '../../hooks';
-import { theme } from '../../../configs';
+import { theme } from '@holdr-ui/react';
 
 function Menu({
   children,
@@ -131,7 +131,7 @@ function MenuTrigger({ children }: GenericProps) {
           size={{ '@bp1': 'sm', '@bp3': 'base' }}
           variant='ghost'
           icon='more-fill'
-          color='primary400'
+          color='white50'
           ariaLabel='view options'
         />
       )}
@@ -184,12 +184,12 @@ function MenuItem({
       radius={2}
       cursor='pointer'
       p={4}
-      color='primary400'
+      color='white500'
       _hover={{
         backgroundColor: dangerous
           ? 'rgba(255,205,205,0.38)'
           : hexToRGB('#0E0E1B', 0.5),
-        color: dangerous ? '$danger' : '$primary400',
+        color: dangerous ? '$danger400' : '$white50',
       }}
       onClick={action}
       css={{

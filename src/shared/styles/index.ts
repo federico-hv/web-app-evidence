@@ -1,7 +1,10 @@
-import { css, styled } from '../../configs';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Box, Circle } from '@holdr-ui/react';
+import { Box, Circle, css, styled } from '@holdr-ui/react';
+
+export const noShrink = css({
+  flexShrink: 0,
+});
 
 export const MotionBox = motion(Box);
 export const MotionDot = motion(Circle);

@@ -38,7 +38,7 @@ function NavigationItem({ label, icon, active, to }: NavigationItemProps) {
         p={3}
         _hover={{ background: '#9898FF26' }}
       >
-        <Box css={{ fontSize: '24px' }}>
+        <Box css={{ fontSize: '24px', marginTop: '5px' }}>
           <Icon name={active ? icon.active : icon.inactive} />
         </Box>
         <Responsive>
@@ -79,7 +79,10 @@ function NavigationList() {
         active={!!matchPath(currentUser.username, pathname)}
         label='My Profile'
         to={currentUser.username}
-        icon={{ active: 'user-fill', inactive: 'user-outline' }}
+        icon={{
+          active: 'user-circle-fill',
+          inactive: 'user-circle-outline',
+        }}
       />
       <NavigationItem
         active={!!matchPath(makePath([Paths.clubs, '/*']), pathname)}

@@ -226,7 +226,11 @@ function AddPoll({ update, remove, reset }: AddPollProps) {
         borderColor='base200'
         _hover={{ backgroundColor: '#f2464617' }}
       >
-        <Text size={{ '@bp1': 2, '@bp3': 3 }} weight={500} color='danger'>
+        <Text
+          size={{ '@bp1': 2, '@bp3': 3 }}
+          weight={500}
+          color='danger400'
+        >
           Remove poll
         </Text>
       </Center>

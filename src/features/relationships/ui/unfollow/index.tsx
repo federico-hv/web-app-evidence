@@ -1,5 +1,4 @@
-import { css } from '../../../../configs';
-import { Button, useSwitch } from '@holdr-ui/react';
+import { Button, useSwitch, css } from '@holdr-ui/react';
 import { useRemoveRelationshipAction } from '../../shared';
 import { useAlertDialog } from '../../../../shared';
 import { Fragment } from 'react';

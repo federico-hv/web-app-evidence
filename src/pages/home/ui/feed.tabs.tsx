@@ -67,7 +67,6 @@ function FeedTabs() {
         }}
       >
         <HStack
-          placeholder=''
           items='center'
           w='100%'
           css={{
@@ -99,7 +98,7 @@ function FeedTabs() {
           {/*    radius={4}*/}
           {/*    variant='outline'*/}
           {/*    icon='settings-outline'*/}
-          {/*    colorTheme='primary400'*/}
+          {/*    colorTheme='white50'*/}
           {/*    ariaLabel={'settings'}*/}
           {/*  />*/}
           {/*</HStack>*/}
