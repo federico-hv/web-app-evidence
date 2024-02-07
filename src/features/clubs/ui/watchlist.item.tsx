@@ -3,18 +3,25 @@ import { OnSaleMembershipModel } from '../shared';
 
 interface WatchlistItemProps {
   data: OnSaleMembershipModel,
+  active: boolean
 }
 function WatchlistItem({
-  data
+  data,
+  active
 }: WatchlistItemProps) {
   return (
     <HStack
-      w='95%'
+      w='100%'
       gap={4}
-      px={3}
+      pl={3}
+      pr={4}
       py={2}
-      radius={1}
+      radius={4}
       items={'center'}
+      _hover={{ background: '#9898FF26', cursor:'pointer' }}
+      css={{
+        background: active ? '#9898FF26' : 'transparent',
+      }}
     >
       <Avatar size='xl' variant='squircle' />
       <VStack gap={3} w='100%' h='80%' py={2}>
@@ -42,16 +49,16 @@ function WatchlistItem({
             <Text size={1} weight={300} color='white700'>
               {data.endDate ? 'Entry Price' : 'Buy Now'}
             </Text>
-            <Text size={1} weight={400}>
+            <Text size={2} weight={400}>
               {`$${data.price.toFixed(2)} USD`}
             </Text>
           </VStack>
           {data.endDate &&
-          <VStack>
+          <VStack css={{minWidth: '73px'}}>
             <Text size={1} weight={300} color='white700'>
               Time Left
             </Text>
-            <Countdown size={'sm'} targetDate={data.endDate} color='white500'/>
+            <Countdown size={'sm'} targetDate={data.endDate} color='white500' />
           </VStack>}
         </HStack>
       </VStack>

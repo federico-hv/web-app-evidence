@@ -1,9 +1,14 @@
-import { Box, Button, Heading, VStack } from '@holdr-ui/react';
-import { makeButtonLarger } from '../../../shared';
+import { Box, Button, Heading, VStack, hexToRGB } from '@holdr-ui/react';
+import { Paths, makeButtonLarger } from '../../../shared';
 import { WatchlistItem } from './index';
-import { dummyAuctionMembershipData, dummySecondarySaleMembershipData} from '../../../pages/clubs/shared';
+import {
+  dummyAuctionMembershipData,
+  dummySecondarySaleMembershipData,
+} from '../../../pages/clubs/shared';
+import { matchPath, useLocation } from 'react-router-dom';
 
 function Watchlist() {
+  const { pathname } = useLocation();
   return (
     <VStack as='nav' p={4}>
       <Heading size={3} weight={500} css={{ userSelect: 'none' }}>
@@ -18,18 +23,20 @@ function Watchlist() {
           backgroundColor: 'rgba(152, 152, 255, 0.10)',
         }}
       />
-      <Button
+      {/* <Button
         fullWidth
         className={makeButtonLarger('2.5rem')}
         colorTheme='purple500'
       >
         Browse Clubs
-      </Button>
-      <VStack gap={3}>
+      </Button> */}
+      <VStack gap={3} items={'center'}>
         <WatchlistItem
+          active={true}
           data={dummyAuctionMembershipData}
         />
         <WatchlistItem
+          active={!matchPath(Paths.root, pathname)}
           data={dummySecondarySaleMembershipData}
         />
       </VStack>
