@@ -10,7 +10,7 @@ import { dummySecondarySaleMembershipData } from '../shared';
 
 function SecondarySalesContent() {
   return (
-    <VStack minHeight={0} w='100%' as='aside' gap={4}>
+    <VStack minHeight={0} w='100%' gap={4}>
       <VStack gap={6}>
         <VStack mt={32}>
           <FlatList<OnSaleMembershipModel>

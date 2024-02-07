@@ -118,6 +118,7 @@ function FeedTabs() {
       </CustomTabsHeader>
       <CustomTabsContent
         value='for-you'
+        minHeight='calc(100vh - 158px)'
         css={{
           borderRight: '1px solid rgba(152, 152, 255, 0.10)',
           borderLeft: '1px solid rgba(152, 152, 255, 0.10)',
@@ -131,21 +132,18 @@ function FeedTabs() {
           <Feeds filter={filter} type='following' />
         </VStack>
       </CustomTabsContent>
-      <CustomTabsContent value='following'>
-        <VStack
-          minHeight={0}
-          w='100%'
-          p={3}
-          as='aside'
-          gap={4}
-          css={{
-            borderLeft: '1px solid rgba(152, 152, 255, 0.10)',
-            borderRight: '1px solid rgba(152, 152, 255, 0.10)',
-            borderBottom: '1px solid rgba(152, 152, 255, 0.10)',
-            borderBottomLeftRadius: '$4',
-            borderBottomRightRadius: '$4',
-          }}
-        >
+      <CustomTabsContent
+        value='following'
+        minHeight='calc(100vh - 158px)'
+        css={{
+          borderRight: '1px solid rgba(152, 152, 255, 0.10)',
+          borderLeft: '1px solid rgba(152, 152, 255, 0.10)',
+          borderBottom: '1px solid rgba(152, 152, 255, 0.10)',
+          borderBottomLeftRadius: '$4',
+          borderBottomRightRadius: '$4',
+        }}
+      >
+        <VStack w='100%' p={3} gap={4}>
           <CreatePost />
           <Feeds filter={filter} type='recommended' />
         </VStack>
