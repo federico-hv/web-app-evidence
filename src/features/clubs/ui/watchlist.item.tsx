@@ -1,16 +1,11 @@
-import { HStack, Avatar, Text, VStack, Circle } from '@holdr-ui/react';
+import { HStack, Avatar, Text, VStack, Circle, Countdown } from '@holdr-ui/react';
+import { OnSaleMembershipModel } from '../shared';
 
 interface WatchlistItemProps {
-  auctionName: string;
-  timeLeft: Date;
-  price: number;
-  live: boolean;
+  data: OnSaleMembershipModel,
 }
 function WatchlistItem({
-  auctionName,
-  timeLeft,
-  price,
-  live,
+  data
 }: WatchlistItemProps) {
   return (
     <HStack
@@ -31,9 +26,9 @@ function WatchlistItem({
           h='100%'
         >
           <Text size={2} weight={500}>
-            {auctionName}
+            {data.name}
           </Text>
-          {live && (
+          {data.endDate && (
             <HStack gap={2} items={'center'}>
               <Circle size='6px' bgColor='success500' />
               <Text size={1} weight={500} color='success500'>
@@ -45,22 +40,19 @@ function WatchlistItem({
         <HStack justify={'space-between'}>
           <VStack>
             <Text size={1} weight={300} color='white700'>
-              {live ? 'Entry Price' : 'Buy Now'}
+              {data.endDate ? 'Entry Price' : 'Buy Now'}
             </Text>
             <Text size={1} weight={400}>
-              {`$${price.toFixed(2)} USD`}
+              {`$${data.price.toFixed(2)} USD`}
             </Text>
           </VStack>
+          {data.endDate &&
           <VStack>
             <Text size={1} weight={300} color='white700'>
               Time Left
             </Text>
-            <Text size={1} weight={400}>
-              {`${timeLeft.getHours().toString().padStart(2, '0')} hr${
-                timeLeft.getHours() > 1 && 's'
-              } ${timeLeft.getMinutes().toString().padStart(2, '0')}min`}
-            </Text>
-          </VStack>
+            <Countdown size={'sm'} targetDate={data.endDate} color='white500'/>
+          </VStack>}
         </HStack>
       </VStack>
     </HStack>

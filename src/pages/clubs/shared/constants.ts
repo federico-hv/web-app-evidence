@@ -23,9 +23,11 @@ export const dummyMember: UserModel = {
   username: 'member_username',
 };
 
+let tomorrow = new Date();
+tomorrow.setDate(tomorrow.getDate() + 1);
 
 export const dummyAuctionMembershipData: OnSaleMembershipModel = {
-  isLive: true,
+  endDate: tomorrow,
   isOnWatchlist: false,
   price: 100.11,
   name: 'Name',

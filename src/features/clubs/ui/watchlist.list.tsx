@@ -1,6 +1,7 @@
 import { Box, Button, Heading, VStack } from '@holdr-ui/react';
 import { makeButtonLarger } from '../../../shared';
 import { WatchlistItem } from './index';
+import { dummyAuctionMembershipData, dummySecondarySaleMembershipData} from '../../../pages/clubs/shared';
 
 function Watchlist() {
   return (
@@ -26,16 +27,10 @@ function Watchlist() {
       </Button>
       <VStack gap={3}>
         <WatchlistItem
-          auctionName="I'm live!"
-          timeLeft={new Date()}
-          price={100}
-          live={true}
+          data={dummyAuctionMembershipData}
         />
         <WatchlistItem
-          auctionName='Not live :P'
-          timeLeft={new Date()}
-          price={0}
-          live={false}
+          data={dummySecondarySaleMembershipData}
         />
       </VStack>
     </VStack>
