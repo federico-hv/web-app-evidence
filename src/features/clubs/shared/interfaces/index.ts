@@ -1,7 +1,7 @@
 import { UserModel } from '../../../../shared';
 
 export interface OnSaleMembershipModel {
-  isLive?: boolean;
+  endDate?: boolean;
   name: string;
   coverImage?: string;
   artist: UserModel;

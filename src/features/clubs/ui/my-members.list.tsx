@@ -34,8 +34,8 @@ function MyMembers() {
         Create Club
       </Button>
       <VStack gap={2}>
-        <MyMembersItem data={dummyMember} online={true}></MyMembersItem>
-        <MyMembersItem data={dummyMember} online={false}/>
+        <MyMembersItem data={dummyMember} isOnline={true}></MyMembersItem>
+        <MyMembersItem data={dummyMember} isOnline={false}/>
       </VStack>
     </VStack>
   );

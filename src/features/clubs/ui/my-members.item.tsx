@@ -10,14 +10,14 @@ import {
   
   interface MyMembersItemProps {
     data: UserModel;
-    online: boolean;
+    isOnline: boolean;
   }
   
-  function MyMembersItem({ data, online }: MyMembersItemProps) {
+  function MyMembersItem({ data, isOnline }: MyMembersItemProps) {
     return (
       <HStack p={2} gap={4} radius={2} items={'center'}>
       <Avatar size='base' src={data.avatar}>
-        {online && (
+        {isOnline && (
           <AvatarBadge size={1}>
             <Circle
               size='13px'

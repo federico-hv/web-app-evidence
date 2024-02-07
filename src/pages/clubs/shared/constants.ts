@@ -25,7 +25,7 @@ export const dummyMember: UserModel = {
 
 
 export const dummyAuctionMembershipData: OnSaleMembershipModel = {
-  isLive: true,
+  endDate: true,
   isOnWatchlist: false,
   price: 100.11,
   name: 'Name',
