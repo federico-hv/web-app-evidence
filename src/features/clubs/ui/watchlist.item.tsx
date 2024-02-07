@@ -23,11 +23,12 @@ function WatchlistItem({ data, active, to }: WatchlistItemProps) {
         pl={3}
         pr={4}
         py={2}
-        radius={4}
+        radius={3}
         items={'center'}
         _hover={{ background: '#9898FF26', cursor: 'pointer' }}
         css={{
           background: active ? '#9898FF26' : 'transparent',
+          transition: 'background 0.3s ease'
         }}
       >
         <Avatar size='xl' variant='squircle' />
