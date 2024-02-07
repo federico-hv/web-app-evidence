@@ -21,8 +21,8 @@ export const changeDimensions = ({
   width,
   height,
 }: {
-  width: string;
-  height: string;
+  width?: string;
+  height?: string;
 }) =>
   css({
     height: `${height ? height : 'initial'} !important`,

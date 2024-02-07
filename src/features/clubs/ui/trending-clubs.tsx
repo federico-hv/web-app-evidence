@@ -1,4 +1,9 @@
-import { RadialSurface } from '../../../shared';
+import {
+  LinkOverlay,
+  makePath,
+  Paths,
+  RadialSurface,
+} from '../../../shared';
 import {
   Avatar,
   Box,
@@ -9,28 +14,32 @@ import {
 } from '@holdr-ui/react';
 
 function TrendingClub({
-  position,
+  id,
   name,
+  tags,
 }: {
-  position: number;
+  id: string;
   name: string;
+  tags?: string[];
 }) {
   return (
-    <HStack gap={4}>
-      <Box fontSize={5} mt={2} w='1rem'>
-        {position}
-      </Box>
-      <HStack gap={3}>
-        <Avatar size='lg' variant='squircle' />
-        <VStack mt={2} gap={2}>
-          <Text casing='capitalize' size='14px' weight={500}>
-            {name}
-          </Text>
-          <Text size='14px' color='base300'>
-            660 memberships
-          </Text>
-        </VStack>
-      </HStack>
+    <HStack gap={3} position='relative'>
+      <LinkOverlay to={makePath([Paths.clubs, id])} />
+      <Avatar size='lg' variant='squircle' />
+      <VStack mt={2} gap={2}>
+        <Text casing='capitalize' size='14px' weight={500}>
+          {name}
+        </Text>
+        {tags && (
+          <HStack>
+            {tags.map((tag) => (
+              <Text noOfLines={1} key={tag} size='12px' color='info400'>
+                #{tag}
+              </Text>
+            ))}
+          </HStack>
+        )}
+      </VStack>
     </HStack>
   );
 }
@@ -42,7 +51,7 @@ function TrendingClubs() {
         <Heading
           casing='capitalize'
           size={3}
-          weight={400}
+          weight={500}
           css={{ userSelect: 'none' }}
         >
           Trending clubs
@@ -57,11 +66,11 @@ function TrendingClubs() {
           }}
         />
         <VStack gap={4}>
-          <TrendingClub position={1} name='Name 1' />
-          <TrendingClub position={2} name='Name 2' />
-          <TrendingClub position={3} name='Name 3' />
-          <TrendingClub position={4} name='Name 4' />
-          <TrendingClub position={5} name='Name 5' />
+          <TrendingClub id='name-1' name='Name 1' tags={['example']} />
+          <TrendingClub id='name-2' name='Name 2' tags={['example']} />
+          <TrendingClub id='name-3' name='Name 3' tags={['example']} />
+          <TrendingClub id='name-4' name='Name 4' tags={['example']} />
+          <TrendingClub id='name-5' name='Name 5' tags={['example']} />
         </VStack>
       </VStack>
     </RadialSurface>

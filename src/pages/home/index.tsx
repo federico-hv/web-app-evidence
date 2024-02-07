@@ -14,6 +14,7 @@ import {
   ContentLayoutMain,
 } from '../../layout';
 import { Fragment } from 'react';
+
 function HomePage() {
   const currentUser = useCurrentUser();
 
