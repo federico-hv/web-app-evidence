@@ -15,7 +15,7 @@ function MyMembers() {
   }
 
   return (
-    <VStack as='nav' p={4}>
+    <VStack as='nav' p={4} >
       <Heading size={3} weight={500} css={{ userSelect: 'none' }}>
         My Members
       </Heading>
