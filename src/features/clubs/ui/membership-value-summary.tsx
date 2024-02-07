@@ -1,11 +1,13 @@
-import { RadialSurface } from '../../../shared';
+import { RadialSurface, StringNumeric } from '../../../shared';
 import { Box, Heading, HStack, Text, VStack } from '@holdr-ui/react';
 
 export function ValueStatistic({
   label,
   value,
+  prefix = '$',
 }: {
-  value: number;
+  prefix?: string;
+  value: StringNumeric;
   label: string;
 }) {
   return (
@@ -17,14 +19,17 @@ export function ValueStatistic({
       <Text casing='capitalize' color='base300'>
         {label}
       </Text>
-      <Text>${value}</Text>
+      <Text>
+        {prefix}
+        {value}
+      </Text>
     </HStack>
   );
 }
 
 function MembershipValueSummary() {
   return (
-    <RadialSurface radius={4} h={145} w='100%' css={{ flexShrink: 0 }}>
+    <RadialSurface radius={4} h={171} w='100%' css={{ flexShrink: 0 }}>
       <VStack p={4}>
         <Heading
           casing='capitalize'
@@ -46,7 +51,12 @@ function MembershipValueSummary() {
         <VStack gap={3} justify='flex-end'>
           <ValueStatistic label='Average price' value={0} />
           <ValueStatistic label='Entry price' value={0} />
-          <ValueStatistic label='List price' value={0} />
+          <ValueStatistic label='Last sale' value={0} />
+          <ValueStatistic
+            label='Memberships sold'
+            prefix=''
+            value='0/1000'
+          />
         </VStack>
       </VStack>
     </RadialSurface>
