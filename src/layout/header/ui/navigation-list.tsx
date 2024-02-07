@@ -89,8 +89,8 @@ function NavigationList() {
         label='Clubs'
         to={Paths.clubs}
         icon={{
-          active: 'store-fill',
-          inactive: 'store-outline',
+          active: 'collections-fill',
+          inactive: 'collections-outline',
         }}
       />
       <NavigationItem

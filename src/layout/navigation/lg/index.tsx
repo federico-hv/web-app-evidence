@@ -5,8 +5,9 @@ import {
 } from '../../../shared/components';
 import { Box, Container, HStack, IconButton } from '@holdr-ui/react';
 import { Search } from '../../../features/search';
-import MessagePopover from './message-popver';
+import MessagePopover from './message-popover';
 import NotificationPopover from './notification-popoover';
+import SettingsPopover from './settings-popover';
 
 function LgNavigation() {
   return (
@@ -45,12 +46,7 @@ function LgNavigation() {
                 >
                   <MessagePopover />
                   <NotificationPopover />
-                  <IconButton
-                    variant='ghost'
-                    colorTheme='white50'
-                    icon='settings-outline'
-                    ariaLabel='View settings'
-                  />
+                  <SettingsPopover />
                 </HStack>
               </Box>
             </HStack>

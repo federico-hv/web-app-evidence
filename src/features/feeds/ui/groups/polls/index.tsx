@@ -75,7 +75,7 @@ function Polls({ id, items, endDate }: PollsProps) {
             <HStack
               fontSize={2}
               gap={2}
-              items='flex-end'
+              items='center'
               w='fit-content'
               css={{ userSelect: 'none' }}
               {...(user?.id === owner.id && {
@@ -86,11 +86,7 @@ function Polls({ id, items, endDate }: PollsProps) {
                 onClick: onOpen,
               })}
             >
-              <Image
-                size={{ '@bp1': 13, '@bp3': 16 }}
-                alt=''
-                src={pollAlt}
-              />
+              <Icon name='poll-fill' color='base400' />
               <Text size={{ '@bp1': 1, '@bp3': 2 }} color='base400'>
                 {total} {total > 1 ? 'votes' : 'vote'}
               </Text>

@@ -12,6 +12,7 @@ import {
   getSubComponent,
   TextGroupSubheading,
   GenericProps,
+  hexToRGB,
 } from 'shared';
 
 function NotificationItem({ children, onClick }: GenericProps) {
@@ -36,9 +37,9 @@ function NotificationItem({ children, onClick }: GenericProps) {
     <HStack
       justify='space-between'
       cursor='pointer'
-      radius={2}
+      radius={3}
       _hover={{
-        backgroundColor: '$base100',
+        backgroundColor: hexToRGB('#0E0E1B', 0.5),
       }}
       p={4}
       onClick={onClick}
