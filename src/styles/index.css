@@ -1,4 +1,5 @@
-@import url('./matter.font.css');
+@import url('matter.font.css');
+@import url('general-sans.font.css');
 
 .hide-scrollbar::-webkit-scrollbar {
     display: none;

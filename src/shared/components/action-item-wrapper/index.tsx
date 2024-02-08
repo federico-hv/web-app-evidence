@@ -1,6 +1,8 @@
 import { HStack } from '@holdr-ui/react';
 import { GenericProps } from '../../interfaces';
 
+// TODO Deprecate
+
 function ActionItemWrapper({ children }: GenericProps) {
   return (
     <HStack

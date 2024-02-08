@@ -50,14 +50,14 @@ function FeedFilterMenu({
         <MenuItem action={() => onClick('all')}>
           <Label value='all' checked={current === 'all'} />
         </MenuItem>
-        <MenuItem action={() => onClick('news')}>
-          <Label value='news' checked={current === 'news'} />
+        <MenuItem action={() => onClick('article')}>
+          <Label value='news' checked={current === 'article'} />
         </MenuItem>
         <MenuItem action={() => onClick('music')}>
           <Label value='music' checked={current === 'music'} />
         </MenuItem>
-        <MenuItem action={() => onClick('polls')}>
-          <Label value='polls' checked={current === 'polls'} />
+        <MenuItem action={() => onClick('poll')}>
+          <Label value='polls' checked={current === 'poll'} />
         </MenuItem>
       </MenuContent>
     </Menu>

@@ -16,7 +16,7 @@ function Feeds({
     { type: string }
   >(GET_FEEDS, {
     variables: {
-      type: 'all',
+      type: filter,
     },
   });
 

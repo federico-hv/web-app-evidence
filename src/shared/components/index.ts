@@ -26,7 +26,7 @@ export {
   default as StepperIndicator,
   StepperIndicatorStep,
 } from './stepper-indicator';
-export { default as ForgotPasswordLink } from './forgot-password';
+export { default as ForgotPasswordLink } from './forgot-password-link';
 export { default as Stepper, StepperStep } from './stepper';
 export { default as UserNamesGroup } from './user-names-group';
 export { default as ActionItemWrapper } from './action-item-wrapper';
