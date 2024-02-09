@@ -3,17 +3,13 @@ import {
   Avatar,
   Text,
   VStack,
-  Circle,
   Countdown,
+  theme,
 } from '@holdr-ui/react';
-import { OnSaleMembershipModel } from '../shared';
 import { Link } from 'react-router-dom';
+import { WatchlistItemProps } from './watchlist.types';
+import {LiveTag} from './index';
 
-interface WatchlistItemProps {
-  data: OnSaleMembershipModel;
-  active: boolean;
-  to: string;
-}
 function WatchlistItem({ data, active, to }: WatchlistItemProps) {
   return (
     <Link to={to} style={{width: '100%'}}>
@@ -24,19 +20,19 @@ function WatchlistItem({ data, active, to }: WatchlistItemProps) {
         pr={4}
         py={2}
         radius={3}
-        items={'center'}
+        items='center'
         _hover={{ background: '#9898FF26', cursor: 'pointer' }}
         css={{
           background: active ? '#9898FF26' : 'transparent',
-          transition: 'background 0.3s ease'
+          transition: theme.transitions['duration-normal']
         }}
       >
         <Avatar size='xl' variant='squircle' />
         <VStack gap={3} w='100%' h='80%' py={2}>
           <HStack
             gap={2}
-            justify={'space-between'}
-            items={'center'}
+            justify='space-between'
+            items='center'
             w='100%'
             h='100%'
           >
@@ -44,15 +40,10 @@ function WatchlistItem({ data, active, to }: WatchlistItemProps) {
               {data.name}
             </Text>
             {data.endDate && (
-              <HStack gap={2} items={'center'}>
-                <Circle size='6px' bgColor='success500' />
-                <Text size={1} weight={500} color='success500'>
-                  LIVE
-                </Text>
-              </HStack>
+              <LiveTag/>
             )}
           </HStack>
-          <HStack justify={'space-between'}>
+          <HStack justify='space-between'>
             <VStack>
               <Text size={1} weight={300} color='white700'>
                 {data.endDate ? 'Entry Price' : 'Buy Now'}
@@ -67,7 +58,7 @@ function WatchlistItem({ data, active, to }: WatchlistItemProps) {
                   Time Left
                 </Text>
                 <Countdown
-                  size={'sm'}
+                  size='sm'
                   targetDate={data.endDate}
                   color='white500'
                 />
@@ -80,6 +71,6 @@ function WatchlistItem({ data, active, to }: WatchlistItemProps) {
   );
 }
 
-WatchlistItem.displayName = 'Watchlist item';
+WatchlistItem.displayName = 'WatchlistItem';
 
 export default WatchlistItem;
