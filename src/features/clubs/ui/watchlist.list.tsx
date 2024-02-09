@@ -1,10 +1,10 @@
 import { Box, Button, Heading, VStack, hexToRGB } from '@holdr-ui/react';
-import { Paths, makeButtonLarger } from '../../../../shared';
-import { WatchlistItem } from './index';
+import { Paths, makeButtonLarger } from '../../../shared';
+import { WatchlistItem } from './watchlist-item/index';
 import {
   dummyAuctionMembershipData,
   dummySecondarySaleMembershipData,
-} from '../../../../pages/clubs/shared';
+} from '../../../pages/clubs/shared';
 import { matchPath, useLocation } from 'react-router-dom';
 
 function Watchlist() {

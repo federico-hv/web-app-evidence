@@ -7,7 +7,7 @@ import {
   theme,
 } from '@holdr-ui/react';
 import { Link } from 'react-router-dom';
-import { WatchlistItemProps } from './watchlist.types';
+import { WatchlistItemProps } from './watchlist-item.types';
 import {LiveTag} from './index';
 
 function WatchlistItem({ data, active, to }: WatchlistItemProps) {
