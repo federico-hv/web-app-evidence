@@ -4,17 +4,11 @@ import {
   VStack,
   Text,
   AvatarBadge,
-  Circle,
+  Icon,
 } from '@holdr-ui/react';
 import { Link } from 'react-router-dom';
-import { UserModel } from 'shared';
+import { MyMembersItemProps } from './members-item.types';
 
-interface MyMembersItemProps {
-  data: UserModel;
-  isOnline: boolean;
-  active: boolean;
-  to: string;
-}
 
 function MyMembersItem({
   data,
@@ -28,7 +22,7 @@ function MyMembersItem({
         p={3}
         gap={4}
         radius={3}
-        items={'center'}
+        items='center'
         _hover={{ backgroundColor: '#9898FF26', cursor: 'pointer' }}
         css={{
           background: active ? '#9898FF26' : 'transparent',
@@ -37,14 +31,18 @@ function MyMembersItem({
         <Avatar size='base' src={data.avatar}>
           {isOnline && (
             <AvatarBadge size={1}>
-              <Circle
+
+              {/* LOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOK OVER HEEEERE!!!!!!!!!!!!!!!!!!!!!!! */}
+
+              <Icon name="middle-dot-fill" color="success400" css={{border: '1px solid red'}}/>
+              {/* <Circle
                 size='13px'
                 css={{
-                  backgroundColor: '#34C05A',
-                  borderColor: '#141317',
+                  backgroundColor: 'success500',
+                  borderColor: 'purple1000',
                 }}
                 border={1}
-              />
+              /> */}
             </AvatarBadge>
           )}
         </Avatar>
@@ -61,6 +59,6 @@ function MyMembersItem({
   );
 }
 
-MyMembersItem.displayName = 'MyMembers item';
+MyMembersItem.displayName = 'MyMembersItem';
 
 export default MyMembersItem;

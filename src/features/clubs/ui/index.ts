@@ -6,4 +6,4 @@ export { default as MembershipValueSummary } from './membership-value-summary';
 export { default as TrendingClubs } from './trending-clubs';
 export { default as MembershipAuctionCard } from './membership-auction.card';
 export { default as MembershipSecondarySaleCard } from './membership-secondary-sale.card';
-export { default as MyMembersItem } from './my-members.item';
+export { default as MyMembersItem } from './members-item/my-members.item';
