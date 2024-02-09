@@ -4,7 +4,7 @@ import {
   VStack,
   Text,
   AvatarBadge,
-  Icon,
+  Circle,
 } from '@holdr-ui/react';
 import { Link } from 'react-router-dom';
 import { MyMembersItemProps } from './members-item.types';
@@ -31,18 +31,14 @@ function MyMembersItem({
         <Avatar size='base' src={data.avatar}>
           {isOnline && (
             <AvatarBadge size={1}>
-
-              {/* LOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOK OVER HEEEERE!!!!!!!!!!!!!!!!!!!!!!! */}
-
-              <Icon name="middle-dot-fill" color="success400" css={{border: '1px solid red'}}/>
-              {/* <Circle
+              <Circle
                 size='13px'
                 css={{
-                  backgroundColor: 'success500',
-                  borderColor: 'purple1000',
+                  backgroundColor: '$success400',
+                  borderColor: '$purple1000',
                 }}
                 border={1}
-              /> */}
+              />
             </AvatarBadge>
           )}
         </Avatar>
