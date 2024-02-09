@@ -1,10 +1,9 @@
-import { HStack, Text } from '@holdr-ui/react';
-import { MiddleDotFill } from '@holdr-ui/icons';
+import { HStack, Text, Icon } from '@holdr-ui/react';
 
 function LiveTag() {
   return (
     <HStack gap={2} items='center'>
-      <MiddleDotFill color='success500' />
+      <Icon name="middle-dot-fill" color="success500"/>
       <Text size={1} weight={500} color='success500' casing='uppercase'>
         Live
       </Text>
