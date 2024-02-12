@@ -46,18 +46,18 @@ function WatchlistItem({ data, to }: WatchlistItemProps) {
           </HStack>
           <HStack justify='space-between'>
             <TextGroup gap={1}>
-              <TextGroupHeading size={1} weight={300} color='white700'>
+              <TextGroupSubheading size={1} weight={300} color='white700'>
                 {data.endDate ? 'Entry Price' : 'Buy Now'}
-              </TextGroupHeading>
+              </TextGroupSubheading>
               <TextGroupSubheading size={2} weight={400}>
                 {`$${data.price.toFixed(2)} USD`}
               </TextGroupSubheading>
             </TextGroup>
             {data.endDate && (
               <TextGroup gap={1} minWidth='73px'>
-                <TextGroupHeading size={1} weight={300} color='white700'>
+                <TextGroupSubheading size={1} weight={300} color='white700'>
                   Time Left
-                </TextGroupHeading>
+                </TextGroupSubheading>
                 <Countdown
                   size='sm'
                   targetDate={data.endDate}
