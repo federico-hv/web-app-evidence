@@ -32,20 +32,15 @@ function Watchlist() {
       </Button> */}
       <VStack gap={3} items='center'>
         <WatchlistItem
-          active={
-            !!matchPath(encodeURIComponent(dummyAuctionMembershipData.name), pathname)
-          }
           data={dummyAuctionMembershipData}
           to={dummyAuctionMembershipData.name}
         />
         <WatchlistItem
-          active={!!matchPath(encodeURIComponent(dummySecondarySaleMembershipData.name), pathname)}
           data={dummySecondarySaleMembershipData}
           to={dummySecondarySaleMembershipData.name}
         />
 
         <WatchlistItem
-          active={!!matchPath('dummy3', pathname)}
           data={dummySecondarySaleMembershipData}
           to={'dummy3'}
         />

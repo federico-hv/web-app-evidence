@@ -5,12 +5,14 @@ import {
   VStack,
   Countdown,
   theme,
+  Heading,
 } from '@holdr-ui/react';
 import { Link } from 'react-router-dom';
 import { WatchlistItemProps } from './watchlist-item.types';
 import {LiveTag} from './index';
+import { TextGroup, TextGroupHeading, TextGroupSubheading } from 'shared';
 
-function WatchlistItem({ data, active, to }: WatchlistItemProps) {
+function WatchlistItem({ data, to }: WatchlistItemProps) {
   return (
     <Link to={to} style={{width: '100%'}}>
       <HStack
@@ -23,7 +25,6 @@ function WatchlistItem({ data, active, to }: WatchlistItemProps) {
         items='center'
         _hover={{ background: '#9898FF26', cursor: 'pointer' }}
         css={{
-          background: active ? '#9898FF26' : 'transparent',
           transition: theme.transitions['duration-normal']
         }}
       >
@@ -44,25 +45,25 @@ function WatchlistItem({ data, active, to }: WatchlistItemProps) {
             )}
           </HStack>
           <HStack justify='space-between'>
-            <VStack>
-              <Text size={1} weight={300} color='white700'>
+            <TextGroup gap={1}>
+              <TextGroupHeading size={1} weight={300} color='white700'>
                 {data.endDate ? 'Entry Price' : 'Buy Now'}
-              </Text>
-              <Text size={2} weight={400}>
+              </TextGroupHeading>
+              <TextGroupSubheading size={2} weight={400}>
                 {`$${data.price.toFixed(2)} USD`}
-              </Text>
-            </VStack>
+              </TextGroupSubheading>
+            </TextGroup>
             {data.endDate && (
-              <VStack css={{ minWidth: '73px' }}>
-                <Text size={1} weight={300} color='white700'>
+              <TextGroup gap={1} minWidth='73px'>
+                <TextGroupHeading size={1} weight={300} color='white700'>
                   Time Left
-                </Text>
+                </TextGroupHeading>
                 <Countdown
                   size='sm'
                   targetDate={data.endDate}
                   color='white500'
                 />
-              </VStack>
+              </TextGroup>
             )}
           </HStack>
         </VStack>
