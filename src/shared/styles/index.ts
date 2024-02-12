@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Box, Circle, css, styled } from '@holdr-ui/react';
+import { Box, Circle, css, styled, theme } from '@holdr-ui/react';
+import { CSS } from '@stitches/react';
 
 export const noShrink = css({
   flexShrink: 0,
@@ -68,3 +69,9 @@ export const CenteredImage = css({
     minHeight: 'unset',
   },
 });
+
+export const tabsHoverStyle: CSS<typeof theme> = {
+  transitionDuration: theme.transitions['duration-slow'],
+  transitionProperty: 'background',
+  transitionTimingFunction: 'linear',
+};
