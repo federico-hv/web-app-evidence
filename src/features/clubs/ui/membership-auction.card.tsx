@@ -1,28 +1,36 @@
 import {
   Box,
   Card,
-  Circle,
-  HStack,
   IconButton,
   Image,
   Text,
   VStack,
 } from '@holdr-ui/react';
-import { Asset, TextGroup, TextGroupSubheading } from '../../../shared';
+import {
+  Asset,
+  LiveTag,
+  TextGroup,
+  TextGroupSubheading,
+} from '../../../shared';
 import { OnSaleMembershipModel } from '../shared';
-import { keyframes } from '@stitches/react';
-
-export const blink = keyframes({
-  '0%': { opacity: 1 },
-  '100%': { opacity: 0 },
-});
+import { cardFooterStyle, cardHoverStyle } from '../shared/styles';
+import OpaquePlaceholder from './opaque-placeholder';
+import MembershipCardPerkDetails from './membership-card-perk-details';
 
 function MembershipAuctionCard({ data }: { data: OnSaleMembershipModel }) {
   return (
-    <Card w='288px' minWidth='288px' boxShadow='none' position='relative'>
+    <Card
+      w='288px'
+      minWidth='288px'
+      h={376}
+      boxShadow='none'
+      position='relative'
+      _hover={cardHoverStyle}
+    >
       <Card.Header
+        className='membership-card__header'
         position='absolute'
-        zIndex={1}
+        zIndex={2}
         l='16px'
         r='16px'
         t='16px'
@@ -30,63 +38,51 @@ function MembershipAuctionCard({ data }: { data: OnSaleMembershipModel }) {
         direction='horizontal'
         items='center'
       >
-        <HStack
-          items='center'
-          px='12px'
-          py='10px'
-          gap={2}
-          bgColor='darkTint500'
-          radius='full'
-          css={{
-            userSelect: 'none',
-            backdropFilter: 'blur(4px)',
-            border: '1px solid rgba(254, 254, 253, 0.25)',
-          }}
-        >
-          <Circle
-            size='6px'
-            css={{
-              backgroundColor: '#5CE581',
-              animation: `1s ease 0s infinite normal none running ${blink}`,
-            }}
-          />
-          <Text size='12px' casing='uppercase' css={{ color: '#5CE581' }}>
-            Live
-          </Text>
-        </HStack>
+        <LiveTag />
         <IconButton
           colorTheme='darkTint500'
           icon='eye-show'
           ariaLabel='add to watchlist'
         />
       </Card.Header>
-      <Card.Body h={256}>
+      <Card.Body className='membership-card__body' h={376}>
         <Image
           src={data.coverImage}
           fallbackSrc={Asset.Image.LightPlaceholder}
         />
       </Card.Body>
       <Card.Footer
-        css={{
-          backgroundColor: '#30304B',
-          border: '1px solid rgba(152, 152, 255, 0.10)',
-        }}
+        position='relative'
+        className='membership-card__footer'
+        css={cardFooterStyle}
         px={4}
         pt={4}
         pb={6}
       >
-        <VStack gap={4}>
-          <Box fontSize='20px'>
-            <Text>{data.name}</Text>
-          </Box>
-          <TextGroup>
-            <TextGroupSubheading size='12px' casing='uppercase'>
-              Entry Price
-            </TextGroupSubheading>
-            <TextGroupSubheading weight={500} size='18px'>
-              ${data.price.toFixed(2)} USD
-            </TextGroupSubheading>
-          </TextGroup>
+        <OpaquePlaceholder />
+        <VStack h={376}>
+          <VStack
+            className='membership-card__footer-content'
+            gap={4}
+            css={{
+              transition: 'all 0.25s linear',
+            }}
+          >
+            <Box fontSize='20px'>
+              <Text>{data.name}</Text>
+            </Box>
+            <TextGroup>
+              <TextGroupSubheading size='12px' casing='uppercase'>
+                Entry Price
+              </TextGroupSubheading>
+              <TextGroupSubheading weight={500} size='18px'>
+                ${data.price.toFixed(2)} USD
+              </TextGroupSubheading>
+            </TextGroup>
+          </VStack>
+          <MembershipCardPerkDetails
+            perks={['Perk 1', 'Perk 2', 'Perk 3']}
+          />
         </VStack>
       </Card.Footer>
     </Card>

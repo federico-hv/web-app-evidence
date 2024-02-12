@@ -33,6 +33,7 @@ export { default as ActionItemWrapper } from './action-item-wrapper';
 export { default as OgMetadataCard } from './og-metadata-card';
 export { default as MediaItem } from './media-item';
 export { default as Calendar } from './calendar';
+export { default as LiveTag } from './live-tag';
 export { default as Editor } from './editor';
 export {
   default as Menu,
