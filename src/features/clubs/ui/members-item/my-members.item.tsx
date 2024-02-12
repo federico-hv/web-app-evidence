@@ -13,7 +13,6 @@ import { MyMembersItemProps } from './members-item.types';
 function MyMembersItem({
   data,
   isOnline,
-  active,
   to,
 }: MyMembersItemProps) {
   return (
@@ -24,9 +23,6 @@ function MyMembersItem({
         radius={3}
         items='center'
         _hover={{ backgroundColor: '#9898FF26', cursor: 'pointer' }}
-        css={{
-          background: active ? '#9898FF26' : 'transparent',
-        }}
       >
         <Avatar size='base' src={data.avatar}>
           {isOnline && (

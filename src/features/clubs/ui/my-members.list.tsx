@@ -36,10 +36,10 @@ function MyMembers() {
         Create Club
       </Button> */}
       <VStack gap={3}>
-        <MyMembersItem data={dummyMember} isOnline={true} to={dummyMember.username} active={!!matchPath(dummyMember.username, pathname)}/>
-        <MyMembersItem data={dummyMember} isOnline={true} to={"dummyMember2"} active={!!matchPath("dummyMember2", pathname)}/>
-        <MyMembersItem data={dummyMember} isOnline={false} to={"dummyMember3"} active={!!matchPath("dummyMember3", pathname)}/>
-        <MyMembersItem data={dummyMember} isOnline={false} to={"dummyMember4"} active={!!matchPath("dummyMember4", pathname)}/>
+        <MyMembersItem data={dummyMember} isOnline={true} to={dummyMember.username}/>
+        <MyMembersItem data={dummyMember} isOnline={true} to={"dummyMember2"}/>
+        <MyMembersItem data={dummyMember} isOnline={false} to={"dummyMember3"}/>
+        <MyMembersItem data={dummyMember} isOnline={false} to={"dummyMember4"}/>
       </VStack>
     </VStack>
   );
