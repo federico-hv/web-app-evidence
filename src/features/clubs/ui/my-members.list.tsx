@@ -2,20 +2,18 @@ import { useCurrentUser } from '../../auth';
 import { Fragment } from 'react';
 import { Box, Button, Heading, VStack } from '@holdr-ui/react';
 import { makeButtonLarger } from '../../../shared';
-import {MyMembersItem} from './index';
+import { MyMembersItem } from './index';
 import { dummyMember } from '../../../pages/clubs/shared';
-import { matchPath, useLocation } from 'react-router-dom';
 
 function MyMembers() {
   const currentUser = useCurrentUser();
-  const {pathname} = useLocation();
 
   if (!currentUser || (currentUser && currentUser.role === 'general')) {
     return <Fragment />;
   }
 
   return (
-    <VStack as='nav' p={4} >
+    <VStack as='nav' p={4}>
       <Heading size={3} weight={500} css={{ userSelect: 'none' }}>
         My Members
       </Heading>
@@ -36,10 +34,10 @@ function MyMembers() {
         Create Club
       </Button> */}
       <VStack gap={3}>
-        <MyMembersItem data={dummyMember} isOnline={true} to={dummyMember.username}/>
-        <MyMembersItem data={dummyMember} isOnline={true} to={"dummyMember2"}/>
-        <MyMembersItem data={dummyMember} isOnline={false} to={"dummyMember3"}/>
-        <MyMembersItem data={dummyMember} isOnline={false} to={"dummyMember4"}/>
+        <MyMembersItem data={dummyMember} isOnline={true} />
+        <MyMembersItem data={dummyMember} isOnline={true} />
+        <MyMembersItem data={dummyMember} isOnline={false} />
+        <MyMembersItem data={dummyMember} isOnline={false} />
       </VStack>
     </VStack>
   );

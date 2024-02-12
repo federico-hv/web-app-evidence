@@ -1,1 +1,1 @@
-export {default as MyMembersItem} from "./my-members.item";
+export { default as MyMembersItem } from './my-members.item';
