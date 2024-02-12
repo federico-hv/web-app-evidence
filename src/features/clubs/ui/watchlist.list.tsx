@@ -1,5 +1,6 @@
 import { Box, Button, Heading, VStack } from '@holdr-ui/react';
-import { makeButtonLarger } from '../../../shared';
+import { makeButtonLarger, Paths, prefix } from '../../../shared';
+import { Link } from 'react-router-dom';
 
 function Watchlist() {
   return (
@@ -16,13 +17,15 @@ function Watchlist() {
           backgroundColor: 'rgba(152, 152, 255, 0.10)',
         }}
       />
-      <Button
-        fullWidth
-        className={makeButtonLarger('2.5rem')}
-        colorTheme='purple500'
-      >
-        Browse Clubs
-      </Button>
+      <Link to={prefix('/', Paths.clubs)}>
+        <Button
+          fullWidth
+          className={makeButtonLarger('2.5rem')}
+          colorTheme='purple500'
+        >
+          Browse Clubs
+        </Button>
+      </Link>
     </VStack>
   );
 }

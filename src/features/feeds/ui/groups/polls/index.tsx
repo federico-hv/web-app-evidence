@@ -5,7 +5,6 @@ import {
   Countdown,
   HStack,
   Icon,
-  Image,
   Skeleton,
   Text,
   VStack,
@@ -15,7 +14,6 @@ import dayjs from 'dayjs';
 import { DialogContextProvider, Loader } from '../../../../../shared';
 import { PollResponse } from '../index';
 import { AnswerPollButton } from '../../buttons';
-import pollAlt from '../../../../../assets/images/poll-alt.png';
 import { PollsProps } from './types';
 import { PollVotesDialog } from '../../dialogs';
 import { useCurrentUser } from '../../../../auth';
@@ -101,6 +99,7 @@ function Polls({ id, items, endDate }: PollsProps) {
                   Ends in
                 </Text>
                 <Countdown
+                  color='white500'
                   size='sm'
                   targetDate={dayjs(endDate, 'x').toDate()}
                 />

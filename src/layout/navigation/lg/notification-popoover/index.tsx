@@ -55,7 +55,7 @@ function NotificationPopover() {
       <Popover.Portal>
         <Popover.Content
           color='white50'
-          alignOffset={-50}
+          alignOffset={-100}
           sideOffset={20}
           align='end'
           h='calc(98.5vh - 68px)'

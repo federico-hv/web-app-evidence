@@ -1,4 +1,3 @@
-import { Editor, UserModel, useDialogTabContext } from 'shared';
 import { MentionNode } from '../../../../../../../shared/components/editor/shared';
 import { HashtagNode } from '@lexical/hashtag';
 import { HashtagPlugin } from '@lexical/react/LexicalHashtagPlugin';
@@ -7,13 +6,18 @@ import {
   MentionsPlugin,
 } from '../../../../../../../shared/components/editor/ui';
 import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin';
-import { useSearch } from '../../../../../../../features/search';
 import { CreatePostInput } from 'features/feeds/shared';
 import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin';
 import CreatePostPlaceholder from '../placeholder';
 import CreatePostMentionItem from '../mention-item';
 import { nodeStyle as useNodeStyle } from '../styles';
 import { omit } from 'lodash';
+import {
+  Editor,
+  useDialogTabContext,
+  UserModel,
+} from '../../../../../../../shared';
+import { useSearch } from '../../../../../../search';
 
 export default function CreatePostEditor({
   update,

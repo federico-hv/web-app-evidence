@@ -5,27 +5,26 @@ import {
   HStack,
   Heading,
   HoverCard,
-  Popover,
   Text,
 } from '@holdr-ui/react';
-import {
-  useFeedContext,
-  useCurrentUser,
-  CommonRelationshipButton,
-  IProfile,
-  GET_PROFILE,
-  useRelationshipUsers,
-} from '../../..';
+import { useSuspenseQuery } from '@apollo/client';
+import { Fragment } from 'react';
+import { useCurrentUser } from '../../../auth';
+import { useFeedContext } from '../../shared';
 import {
   GQLRenderer,
   LinkText,
-  TextGroup,
   prefix,
+  TextGroup,
   useActOnScroll,
   useDialogContext,
-} from 'shared';
-import { useSuspenseQuery } from '@apollo/client';
-import { Fragment } from 'react';
+} from '../../../../shared';
+import {
+  CommonRelationshipButton,
+  GET_PROFILE,
+  IProfile,
+  useRelationshipUsers,
+} from '../../../relationships';
 
 // TODO: add mobile support
 //       fix popover to stay active while mouse is over it

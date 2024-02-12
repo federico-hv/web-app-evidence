@@ -10,6 +10,12 @@ import {
 } from '@holdr-ui/react';
 import { Asset, TextGroup, TextGroupSubheading } from '../../../shared';
 import { OnSaleMembershipModel } from '../shared';
+import { keyframes } from '@stitches/react';
+
+export const blink = keyframes({
+  '0%': { opacity: 1 },
+  '100%': { opacity: 0 },
+});
 
 function MembershipAuctionCard({ data }: { data: OnSaleMembershipModel }) {
   return (
@@ -37,7 +43,13 @@ function MembershipAuctionCard({ data }: { data: OnSaleMembershipModel }) {
             border: '1px solid rgba(254, 254, 253, 0.25)',
           }}
         >
-          <Circle size='6px' css={{ backgroundColor: '#5CE581' }} />
+          <Circle
+            size='6px'
+            css={{
+              backgroundColor: '#5CE581',
+              animation: `1s ease 0s infinite normal none running ${blink}`,
+            }}
+          />
           <Text size='12px' casing='uppercase' css={{ color: '#5CE581' }}>
             Live
           </Text>

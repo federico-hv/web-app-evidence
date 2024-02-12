@@ -18,10 +18,11 @@ import { capitalize } from 'lodash';
 import { useCurrentUser } from '../../../../auth';
 import { FeedOwnerMoreButton, GeneralPostMoreButton } from '../../buttons';
 import { PostMedia, Polls } from '../../groups';
+import { BookmarkPopover } from '../../../../bookmarks';
 
 function PostCard({ data }: { data: PostModel }) {
   const currentUser = useCurrentUser();
-  const { owner, createdAt } = useFeedContext();
+  const { owner, createdAt, bookmarked } = useFeedContext();
 
   return (
     <Card boxShadow='none' gap={3}>
@@ -107,7 +108,7 @@ function PostCard({ data }: { data: PostModel }) {
         direction='horizontal'
         items='center'
         w='100%'
-        gap={7}
+        gap={6}
       >
         <HStack items='center' gap={2} zIndex={5}>
           <IconButton
@@ -131,9 +132,22 @@ function PostCard({ data }: { data: PostModel }) {
           <IconButton
             variant='ghost'
             colorTheme='white50'
-            icon='bookmark-outline'
+            icon='send-outline'
             ariaLabel='bookmark feed'
           />
+          <Box cursor='pointer'>0</Box>
+        </HStack>
+        <HStack items='center' gap={2} zIndex={5}>
+          <BookmarkPopover position='right' sideOffset={0}>
+            <IconButton
+              variant='ghost'
+              colorTheme='white50'
+              ariaLabel={
+                !bookmarked ? 'create bookmark' : 'remove bookmark'
+              }
+              icon={!bookmarked ? 'bookmark-outline' : 'bookmark-fill'}
+            />
+          </BookmarkPopover>
           <Box cursor='pointer'>0</Box>
         </HStack>
       </Card.Footer>

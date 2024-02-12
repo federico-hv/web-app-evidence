@@ -1,5 +1,9 @@
-import { maximumLengthMsg, minimumLengthMsg, requiredField } from 'shared';
 import { object, string } from 'yup';
+import {
+  maximumLengthMsg,
+  minimumLengthMsg,
+  requiredField,
+} from '../../../../shared';
 
 const ArticleSchema = object({
   title: string()

@@ -20,7 +20,7 @@ function MessagePopover() {
           <IconButton
             variant='ghost'
             colorTheme='white50'
-            icon='chat-alt-outline'
+            icon='chat-outline'
             ariaLabel='View messages'
           />
         </ButtonWrapper>
@@ -28,7 +28,7 @@ function MessagePopover() {
       <Popover.Portal>
         <Popover.Content
           color='white50'
-          alignOffset={-100}
+          alignOffset={-50}
           sideOffset={20}
           align='end'
           h='calc(98.5vh - 68px)'

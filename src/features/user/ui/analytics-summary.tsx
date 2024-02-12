@@ -21,7 +21,7 @@ function AnalyticsStatistic({
   description?: string;
 }) {
   return (
-    <VStack py={3} gap={2} css={{ userSelect: 'none' }}>
+    <VStack py={3} gap={3} mt={1} css={{ userSelect: 'none' }}>
       <HStack items='center' gap={2}>
         <Box>
           <Text casing='capitalize' color='base300' size='14px'>
@@ -29,9 +29,9 @@ function AnalyticsStatistic({
           </Text>
         </Box>
         {description && (
-          <Box mt='5px'>
+          <Box mt='1px'>
             <Tooltip color='white50' label={description}>
-              <Box fontSize='14px'>
+              <Box fontSize='12px'>
                 <Icon color='base400' name='information-outline' />
               </Box>
             </Tooltip>

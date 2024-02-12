@@ -1,4 +1,3 @@
-import * as Slider from '@radix-ui/react-slider';
 import {
   VideoContextProvider,
   VideoControlsProps,
@@ -15,17 +14,17 @@ import {
   useVideoContext,
 } from './shared';
 import { Box, Center, HStack, Image, Text, VStack } from '@holdr-ui/react';
-import { getSubComponent } from 'shared';
 import { useState } from 'react';
 import { VideoSlider } from './ui';
+import { getSubComponent } from '../../utilities';
 
 function Video({
-  playsInline,
-  autoPlay,
-  interactive,
-  volumeLevel,
-  speed,
-  src,
+  // playsInline,
+  // autoPlay,
+  // interactive,
+  // volumeLevel,
+  // speed,
+  // src,
   w = 'full',
   h = 'full',
   children,

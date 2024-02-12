@@ -5,7 +5,16 @@
     display: none;
 }
 
+.thin-scrollbar::-webkit-scrollbar {
+    width: 3px;
+}
+
 .hide-scrollbar {
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
+}
+
+.thin-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: thin;  /* Firefox */
 }
