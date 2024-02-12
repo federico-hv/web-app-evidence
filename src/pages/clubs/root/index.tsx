@@ -12,7 +12,16 @@ import {
   Paths,
   RadialSurface,
 } from '../../../shared';
-import { Box, Card, Heading, HStack, Icon, VStack } from '@holdr-ui/react';
+import {
+  Box,
+  Card,
+  Heading,
+  HStack,
+  Icon,
+  VStack,
+  theme,
+  Center,
+} from '@holdr-ui/react';
 import {
   dummyAuctionMembershipData,
   dummySecondarySaleMembershipData,
@@ -24,11 +33,37 @@ import { Link } from 'react-router-dom';
 
 function SectionTitle({ label, to }: { label: string; to?: string }) {
   const Content = () => (
-    <HStack items='center' gap={2} css={{ userSelect: 'none' }}>
+    <HStack
+      _hover={{
+        '.section-title__caret': {
+          transform: 'translateX(2px)',
+          scale: '1.05',
+        },
+      }}
+      items='center'
+      gap={1}
+      css={{
+        userSelect: 'none',
+      }}
+    >
       <Heading as='h2' size={3} weight={400} casing='capitalize'>
         {label}
       </Heading>
-      {to && <Icon size='lg' name='caret-right-outline' />}
+      {to && (
+        <Center
+          css={{
+            transitionDuration: theme.transitions['duration-normal'],
+            transitionProperty: 'all',
+            transitionTimingFunction: 'linear',
+          }}
+        >
+          <Icon
+            className='section-title__caret'
+            size='lg'
+            name='caret-right-outline'
+          />
+        </Center>
+      )}
     </HStack>
   );
   return (
