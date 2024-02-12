@@ -1,6 +1,5 @@
-import { OnSaleMembershipModel } from "features/clubs/shared";
+import { OnSaleMembershipModel } from 'features/clubs/shared';
 
 export interface WatchlistItemProps {
-    data: OnSaleMembershipModel;
-    to: string;
-  }
+  data: OnSaleMembershipModel;
+}
