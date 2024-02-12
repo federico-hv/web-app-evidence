@@ -8,6 +8,7 @@ import {
 } from '@holdr-ui/react';
 import { Link } from 'react-router-dom';
 import { MyMembersItemProps } from './members-item.types';
+import { TextGroup, TextGroupHeading, TextGroupSubheading } from 'shared';
 
 
 function MyMembersItem({
@@ -38,14 +39,14 @@ function MyMembersItem({
             </AvatarBadge>
           )}
         </Avatar>
-        <VStack gap={1}>
-          <Text size={3} weight={500}>
+        <TextGroup gap={1}>
+          <TextGroupHeading size={3}>
             {data.displayName}
-          </Text>
-          <Text size={1} weight={300}>
+          </TextGroupHeading>
+          <TextGroupSubheading size={1} weight={300}>
             {`@${data.username}`}
-          </Text>
-        </VStack>
+          </TextGroupSubheading>
+        </TextGroup>
       </HStack>
     </Link>
   );
