@@ -72,9 +72,9 @@ function ClubsPage() {
                     ...arrayFrom(4).map(() => dummyAuctionMembershipData),
                   ])}
                   renderItem={(data) => {
-                    if (data.isLive) {
+                    if (data.endDate) {
                       return <MembershipAuctionCard data={data} />;
-                    } else if (!data.isLive) {
+                    } else if (!data.endDate) {
                       return <MembershipSecondarySaleCard data={data} />;
                     }
                     return <Fragment />;
@@ -98,9 +98,9 @@ function ClubsPage() {
                     ...arrayFrom(4).map(() => dummyAuctionMembershipData),
                   ])}
                   renderItem={(data) => {
-                    if (data.isLive) {
+                    if (data.endDate) {
                       return <MembershipAuctionCard data={data} />;
-                    } else if (!data.isLive) {
+                    } else if (!data.endDate) {
                       return <MembershipSecondarySaleCard data={data} />;
                     }
                     return <Fragment />;
@@ -124,9 +124,9 @@ function ClubsPage() {
                     ...arrayFrom(4).map(() => dummyAuctionMembershipData),
                   ])}
                   renderItem={(data) => {
-                    if (data.isLive) {
+                    if (data.endDate) {
                       return <MembershipAuctionCard data={data} />;
-                    } else if (!data.isLive) {
+                    } else if (!data.endDate) {
                       return <MembershipSecondarySaleCard data={data} />;
                     }
                     return <Fragment />;
@@ -147,9 +147,9 @@ function ClubsPage() {
                     ...arrayFrom(4).map(() => dummyAuctionMembershipData),
                   ])}
                   renderItem={(data) => {
-                    if (data.isLive) {
+                    if (data.endDate) {
                       return <MembershipAuctionCard data={data} />;
-                    } else if (!data.isLive) {
+                    } else if (!data.endDate) {
                       return <MembershipSecondarySaleCard data={data} />;
                     }
                     return <Fragment />;
