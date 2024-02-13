@@ -1,5 +1,12 @@
 import { CreatePost } from '../../../features';
-import { HStack, Icon, IconButton, Text, VStack } from '@holdr-ui/react';
+import {
+  Box,
+  HStack,
+  Icon,
+  IconButton,
+  Text,
+  VStack,
+} from '@holdr-ui/react';
 import CustomTabs, {
   CustomTabsContent,
   CustomTabsHeader,
@@ -26,7 +33,7 @@ function FeedFilterMenu({
     value: string;
     checked: boolean;
   }) => (
-    <HStack items='center' gap={4}>
+    <HStack items='center' gap={3}>
       {checked && <Icon name='check' color='purple400' />}
       <Text casing='capitalize' color={checked ? 'purple400' : 'initial'}>
         {value}
@@ -113,9 +120,9 @@ function FeedTabs() {
               Following
             </CustomTabsTrigger>
           </CustomTabsList>
-          <HStack p={4}>
+          <Box p={4}>
             <FeedFilterMenu current={filter} onClick={updateFilter} />
-          </HStack>
+          </Box>
         </HStack>
       </CustomTabsHeader>
       <CustomTabsContent

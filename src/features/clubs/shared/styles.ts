@@ -11,6 +11,9 @@ export const cardHoverStyle = {
   '.membership-card__footer-wrapper': {
     top: 48,
   },
+  '.membership-card__header': {
+    zIndex: 2,
+  },
   // '.membership-card__perk-details': {
   //   display: 'flex',
   // },

@@ -10,15 +10,21 @@ import {
   Head,
   RadialSurface,
 } from '../../../shared';
-import { Box, Grid, Heading } from '@holdr-ui/react';
+import { Box, Grid, Heading, HStack } from '@holdr-ui/react';
 import { shuffle } from 'lodash';
 import {
   dummyAuctionMembershipData,
   dummySecondarySaleMembershipData,
 } from '../shared';
+import { Filter, SortMemberships } from '../ui';
+import { useSearchParams } from 'react-router-dom';
 
 function ClubsMyWatchlistPage() {
   const currentUser = useCurrentUser();
+
+  const [searchParams] = useSearchParams();
+
+  const filters = String(searchParams.get('filters')).split(',');
 
   return (
     <GQLRenderer ErrorFallback={ErrorFallback}>
@@ -35,12 +41,27 @@ function ClubsMyWatchlistPage() {
                 Watchlist
               </Heading>
             </Box>
-            {/*<Box*/}
-            {/*  my={4}*/}
-            {/*  h='1px'*/}
-            {/*  css={{ backgroundColor: 'rgba(152, 152, 255, 0.10)' }}*/}
-            {/*/>*/}
-            <Grid gap={3} templateColumns='repeat(3, 1fr)'>
+            <HStack justify='space-between'>
+              <HStack gap={3}>
+                <Filter
+                  active={filters.includes('live')}
+                  name='live'
+                  label='Live auction'
+                />
+                <Filter
+                  name='sale'
+                  active={filters.includes('sale')}
+                  label='Secondary sale'
+                />
+              </HStack>
+              <SortMemberships />
+            </HStack>
+            <Box
+              my={3}
+              h='1px'
+              css={{ backgroundColor: 'rgba(152, 152, 255, 0.10)' }}
+            />
+            <Grid gap={2} templateColumns='repeat(3, 1fr)'>
               {shuffle([
                 ...arrayFrom(10).map(
                   () => dummySecondarySaleMembershipData,

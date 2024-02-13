@@ -21,7 +21,7 @@ function AnalyticsStatistic({
   description?: string;
 }) {
   return (
-    <VStack py={3} gap={3} mt={1} css={{ userSelect: 'none' }}>
+    <VStack py={1} gap={3} mt={1} css={{ userSelect: 'none' }}>
       <HStack items='center' gap={2}>
         <Box>
           <Text casing='capitalize' color='base300' size='14px'>
@@ -66,7 +66,7 @@ function AnalyticsSummary() {
             backgroundColor: 'rgba(152, 152, 255, 0.10)',
           }}
         />
-        <VStack gap={3}>
+        <VStack gap={2}>
           <AnalyticsStatistic
             label='club views'
             description='A description'

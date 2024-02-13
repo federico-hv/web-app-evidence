@@ -15,8 +15,8 @@ function TrendingClubs() {
           Trending clubs
         </Heading>
         <Box
-          mt={{ '@bp1': '8px', '@bp3': '8px' }}
-          mb={{ '@bp1': '16px', '@bp3': '16px' }}
+          mt={2}
+          mb={3}
           h='1px'
           w='100%'
           css={{

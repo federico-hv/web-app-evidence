@@ -19,8 +19,8 @@ function CreatePostCard() {
             boxShadow: '0px 0px 50px 0px rgba(0, 0, 0, 0.25)',
           }}
         >
-          <Card w='full' gap={4} p={3}>
-            <Card.Body direction='horizontal' gap={3} items='center'>
+          <Card w='full' gap={4} p={2}>
+            <Card.Body direction='horizontal' gap={2} items='center'>
               <Avatar
                 variant='squircle'
                 src={currentUser.avatar}
@@ -50,31 +50,6 @@ function CreatePostCard() {
                 </Text>
               </VStack>
             </Card.Body>
-            {/*<Card.Footer*/}
-            {/*  direction='horizontal'*/}
-            {/*  gap={3}*/}
-            {/*  px={4}*/}
-            {/*  pb={4}*/}
-            {/*  css={{*/}
-            {/*    justifyContent: 'space-evenly',*/}
-            {/*  }}*/}
-            {/*>*/}
-            {/*  <AddToPostButton*/}
-            {/*    onClick={() => onOpen('media')}*/}
-            {/*    logo={MediaIcon}*/}
-            {/*    label='Media'*/}
-            {/*  />*/}
-            {/*  <AddToPostButton*/}
-            {/*    onClick={() => onOpen('poll')}*/}
-            {/*    logo={PollIcon}*/}
-            {/*    label='Poll'*/}
-            {/*  />*/}
-            {/*  <AddToPostButton*/}
-            {/*    onClick={() => onOpen('article')}*/}
-            {/*    logo={NewsIcon}*/}
-            {/*    label='Article'*/}
-            {/*  />*/}
-            {/*</Card.Footer>*/}
           </Card>
         </Box>
       )}
