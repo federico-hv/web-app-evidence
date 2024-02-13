@@ -12,10 +12,13 @@ import {
   TextGroup,
   TextGroupSubheading,
 } from '../../../../../shared';
-import { cardFooterStyle, cardHoverStyle } from '../../../shared/styles';
+import {
+  cardFooterStyle,
+  cardHoverStyle,
+  transitionDelay,
+} from '../../../shared/styles';
 import { MembershipAuctionCardProps } from './types';
 import { MembershipPerkDetails } from '../../groups';
-import { OpaquePlaceholder } from '../../support';
 
 function MembershipAuctionCard({ data }: MembershipAuctionCardProps) {
   return (
@@ -59,28 +62,39 @@ function MembershipAuctionCard({ data }: MembershipAuctionCardProps) {
         pt={4}
         pb={6}
       >
-        <OpaquePlaceholder />
-        <VStack h={376}>
-          <VStack
-            className='membership-card__footer-content'
-            gap={4}
+        <VStack h={376} position='relative'>
+          <Box
+            className='membership-card__footer-wrapper'
+            t={0}
+            l={0}
+            h='100%'
+            w='100%'
+            position='absolute'
             css={{
-              transition: 'all 0.25s linear',
+              transitionDelay: `${transitionDelay}s`,
             }}
           >
-            <Box fontSize='20px'>
-              <Text>{data.name}</Text>
-            </Box>
-            <TextGroup>
-              <TextGroupSubheading size='12px' casing='uppercase'>
-                Entry Price
-              </TextGroupSubheading>
-              <TextGroupSubheading weight={500} size='18px'>
-                ${data.price.toFixed(2)} USD
-              </TextGroupSubheading>
-            </TextGroup>
-          </VStack>
-          <MembershipPerkDetails perks={['Perk 1', 'Perk 2', 'Perk 3']} />
+            <VStack
+              h={90}
+              className='membership-card__footer-content'
+              gap={4}
+            >
+              <Box fontSize='20px'>
+                <Text>{data.name}</Text>
+              </Box>
+              <TextGroup>
+                <TextGroupSubheading size='12px' casing='uppercase'>
+                  Entry Price
+                </TextGroupSubheading>
+                <TextGroupSubheading weight={500} size='18px'>
+                  ${data.price.toFixed(2)} USD
+                </TextGroupSubheading>
+              </TextGroup>
+            </VStack>
+            <MembershipPerkDetails
+              perks={['Perk 1', 'Perk 2', 'Perk 3']}
+            />
+          </Box>
         </VStack>
       </Card.Footer>
     </Card>

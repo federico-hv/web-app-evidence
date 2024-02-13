@@ -3,7 +3,7 @@ import { MembershipPerkDetailsProps } from './types';
 
 function MembershipPerkDetails({ perks }: MembershipPerkDetailsProps) {
   return (
-    <VStack className='membership-card__perk-details' display='none'>
+    <VStack className='membership-card__perk-details' display='flex'>
       <Box
         my={4}
         h='1px'
@@ -11,6 +11,7 @@ function MembershipPerkDetails({ perks }: MembershipPerkDetailsProps) {
         css={{ backgroundColor: 'rgba(240,240,255,0.1)' }}
       />
       <Heading
+        noOfLines={1}
         size={3}
         weight={500}
         as='h3'
