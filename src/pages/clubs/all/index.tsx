@@ -26,7 +26,7 @@ import {
   dummyAuctionMembershipData,
   dummySecondarySaleMembershipData,
 } from '../shared';
-import { Fragment } from 'react';
+import { Fragment, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 function Filter({
@@ -43,6 +43,10 @@ function Filter({
   const filters = String(searchParams.get('filters')).split(',');
 
   const { switchState, toggle } = useSwitch(active);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <HStack
@@ -64,7 +68,7 @@ function Filter({
         toggle();
       }}
       items='center'
-      radius='full'
+      radius={3}
       cursor='pointer'
       _hover={
         switchState
@@ -78,7 +82,6 @@ function Filter({
       }}
       fontSize={2}
     >
-      {label}
       {switchState && (
         <Circle
           size='14px'
@@ -88,6 +91,7 @@ function Filter({
           <Icon color='purple400' name='check' />
         </Circle>
       )}
+      {label}
     </HStack>
   );
 }
