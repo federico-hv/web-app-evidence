@@ -21,7 +21,7 @@ function MembershipSecondarySaleCard({
 }: MembershipSecondarySaleCardProps) {
   return (
     <Card
-      w='288px'
+      w='100%'
       minWidth='288px'
       h={376}
       boxShadow='none'

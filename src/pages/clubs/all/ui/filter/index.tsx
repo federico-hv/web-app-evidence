@@ -18,7 +18,7 @@ function Filter({ label, active, name }: FilterProps) {
         if (switchState) {
           setSearchParams((prev) => ({
             ...prev,
-            filters: filters.filter((item) => item === name).join(','),
+            filters: filters.filter((item) => item !== name).join(','),
           }));
         } else {
           setSearchParams((prev) => ({

@@ -20,7 +20,7 @@ import { OpaquePlaceholder } from '../../support';
 function MembershipAuctionCard({ data }: MembershipAuctionCardProps) {
   return (
     <Card
-      w='288px'
+      w='100%'
       minWidth='288px'
       h={376}
       boxShadow='none'

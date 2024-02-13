@@ -1,7 +1,6 @@
 import {
   MembershipAuctionCard,
   MembershipSecondarySaleCard,
-  OnSaleMembershipModel,
   useCurrentUser,
 } from '../../../features';
 import {
@@ -11,14 +10,12 @@ import {
   Head,
   RadialSurface,
 } from '../../../shared';
-import { Box, Heading, HStack, VStack } from '@holdr-ui/react';
-import { FlatList } from '../../../tmp/flat-list';
+import { Box, Grid, Heading, HStack, VStack } from '@holdr-ui/react';
 import { shuffle } from 'lodash';
 import {
   dummyAuctionMembershipData,
   dummySecondarySaleMembershipData,
 } from '../shared';
-import { Fragment } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Filter } from './ui';
 
@@ -68,25 +65,29 @@ function ClubsAllPage() {
                   label='Secondary sale'
                 />
               </HStack>
-              <FlatList<OnSaleMembershipModel>
-                gap={4}
-                css={{ flexWrap: 'wrap' }}
-                data={shuffle([
-                  ...arrayFrom(10).map(
+              <Box
+                my={3}
+                h='1px'
+                css={{ backgroundColor: 'rgba(152, 152, 255, 0.10)' }}
+              />
+              <Grid gap={3} templateColumns='repeat(3, 1fr)'>
+                {shuffle([
+                  ...arrayFrom(filters.includes('sale') ? 10 : 0).map(
                     () => dummySecondarySaleMembershipData,
                   ),
-                  ...arrayFrom(10).map(() => dummyAuctionMembershipData),
-                ])}
-                renderItem={(data) => {
-                  if (data.isLive) {
-                    return <MembershipAuctionCard data={data} />;
-                  } else if (!data.isLive) {
-                    return <MembershipSecondarySaleCard data={data} />;
-                  }
-                  return <Fragment />;
-                }}
-                keyExtractor={(_, idx) => idx}
-              />
+                  ...arrayFrom(filters.includes('live') ? 10 : 0).map(
+                    () => dummyAuctionMembershipData,
+                  ),
+                ]).map((data, idx) => (
+                  <Grid.Item key={`all-clubs${filters.join('-')}${idx}`}>
+                    {data.isLive ? (
+                      <MembershipAuctionCard data={data} />
+                    ) : (
+                      <MembershipSecondarySaleCard data={data} />
+                    )}
+                  </Grid.Item>
+                ))}
+              </Grid>
             </VStack>
           </Box>
         </RadialSurface>

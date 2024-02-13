@@ -1,8 +1,4 @@
-import {
-  MembershipCard,
-  OwnedMembershipModel,
-  useCurrentUser,
-} from '../../../features';
+import { MembershipCard, useCurrentUser } from '../../../features';
 import {
   arrayFrom,
   ErrorFallback,
@@ -10,10 +6,8 @@ import {
   Head,
   RadialSurface,
 } from '../../../shared';
-import { Box, Heading, VStack } from '@holdr-ui/react';
-import { shuffle } from 'lodash';
+import { Box, Grid, Heading, VStack } from '@holdr-ui/react';
 import { dummyOwnedMembershipData } from '../shared';
-import { FlatList } from '../../../tmp/flat-list';
 
 function ClubsMyMembershipsPage() {
   const currentUser = useCurrentUser();
@@ -30,19 +24,23 @@ function ClubsMyMembershipsPage() {
           <Box px='16px' py='20px'>
             <Box py='13.5px' mb='20px'>
               <Heading weight={400} size='24px'>
-                Holdr Clubs
+                My memberships
               </Heading>
             </Box>
+            {/*<Box*/}
+            {/*  h='1px'*/}
+            {/*  css={{ backgroundColor: 'rgba(152, 152, 255, 0.10)' }}*/}
+            {/*/>*/}
             <VStack>
-              <FlatList<OwnedMembershipModel>
-                gap={4}
-                css={{ flexWrap: 'wrap' }}
-                data={shuffle(
-                  arrayFrom(2).map(() => dummyOwnedMembershipData),
-                )}
-                renderItem={(data) => <MembershipCard data={data} />}
-                keyExtractor={(_, idx) => idx}
-              />
+              <Grid gap={3} templateColumns='repeat(3, 1fr)'>
+                {arrayFrom(10)
+                  .map(() => dummyOwnedMembershipData)
+                  .map((data, idx) => (
+                    <Grid.Item key={`my-membership-${idx}`}>
+                      <MembershipCard data={data} />
+                    </Grid.Item>
+                  ))}
+              </Grid>
             </VStack>
           </Box>
         </RadialSurface>
