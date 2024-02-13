@@ -8,16 +8,17 @@ import {
 } from '@holdr-ui/react';
 import {
   Asset,
-  LiveTag,
   TextGroup,
   TextGroupSubheading,
-} from '../../../shared';
-import { OnSaleMembershipModel } from '../shared';
-import { cardFooterStyle, cardHoverStyle } from '../shared/styles';
-import OpaquePlaceholder from './opaque-placeholder';
-import MembershipCardPerkDetails from './membership-card-perk-details';
+} from '../../../../../shared';
+import { cardFooterStyle, cardHoverStyle } from '../../../shared/styles';
+import { MembershipPerkDetails } from '../../groups';
+import { MembershipSecondarySaleCardProps } from './types';
+import { OpaquePlaceholder } from '../../support';
 
-function MembershipAuctionCard({ data }: { data: OnSaleMembershipModel }) {
+function MembershipSecondarySaleCard({
+  data,
+}: MembershipSecondarySaleCardProps) {
   return (
     <Card
       w='288px'
@@ -30,15 +31,13 @@ function MembershipAuctionCard({ data }: { data: OnSaleMembershipModel }) {
       <Card.Header
         className='membership-card__header'
         position='absolute'
-        zIndex={2}
+        zIndex={1}
         l='16px'
         r='16px'
         t='16px'
-        justify='space-between'
+        justify='flex-end'
         direction='horizontal'
-        items='center'
       >
-        <LiveTag />
         <IconButton
           colorTheme='darkTint500'
           icon='eye-show'
@@ -80,15 +79,12 @@ function MembershipAuctionCard({ data }: { data: OnSaleMembershipModel }) {
               </TextGroupSubheading>
             </TextGroup>
           </VStack>
-          <MembershipCardPerkDetails
-            perks={['Perk 1', 'Perk 2', 'Perk 3']}
-          />
+          <MembershipPerkDetails perks={['Perk 1', 'Perk 2', 'Perk 3']} />
         </VStack>
       </Card.Footer>
     </Card>
   );
 }
+MembershipSecondarySaleCard.displayName = 'MembershipSecondarySaleCard';
 
-MembershipAuctionCard.displayName = 'MembershipAuctionCard';
-
-export default MembershipAuctionCard;
+export default MembershipSecondarySaleCard;

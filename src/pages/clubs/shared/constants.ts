@@ -1,5 +1,8 @@
 import { UserModel } from '../../../shared';
-import { OnSaleMembershipModel } from '../../../features';
+import {
+  OnSaleMembershipModel,
+  OwnedMembershipModel,
+} from '../../../features';
 
 export const TabOptions = {
   all: 'all',
@@ -29,4 +32,10 @@ export const dummySecondarySaleMembershipData: OnSaleMembershipModel = {
   name: 'Name',
   artist: dummyArtist,
   isOnWatchlist: false,
+};
+
+export const dummyOwnedMembershipData: OwnedMembershipModel = {
+  salePrice: 200,
+  name: 'Name',
+  artist: dummyArtist,
 };

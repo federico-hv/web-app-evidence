@@ -8,3 +8,9 @@ export interface OnSaleMembershipModel {
   price: number;
   isOnWatchlist: boolean;
 }
+
+export interface OwnedMembershipModel {
+  name: string;
+  salePrice: number;
+  artist: UserModel;
+}

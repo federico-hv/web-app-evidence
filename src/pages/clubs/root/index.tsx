@@ -1,7 +1,9 @@
 import {
   MembershipAuctionCard,
+  MembershipCard,
   MembershipSecondarySaleCard,
   OnSaleMembershipModel,
+  OwnedMembershipModel,
   useCurrentUser,
 } from '../../../features';
 import {
@@ -12,10 +14,11 @@ import {
   Paths,
   RadialSurface,
 } from '../../../shared';
-import { Box, Card, Heading, VStack } from '@holdr-ui/react';
+import { Box, Heading, VStack } from '@holdr-ui/react';
 import {
   dummyAuctionMembershipData,
   dummySecondarySaleMembershipData,
+  dummyOwnedMembershipData,
 } from '../shared';
 import { FlatList } from '../../../tmp/flat-list';
 import { shuffle } from 'lodash';
@@ -24,6 +27,8 @@ import { SectionTitle } from './ui';
 
 function ClubsPage() {
   const currentUser = useCurrentUser();
+
+  // useScrollToWindowTop();
 
   return (
     <GQLRenderer ErrorFallback={ErrorFallback}>
@@ -47,12 +52,14 @@ function ClubsPage() {
                   label='Your memberships'
                   to={Paths.club.memberships}
                 />
-                <FlatList<OnSaleMembershipModel>
+                <FlatList<OwnedMembershipModel>
                   overflow='auto'
                   className='hide-scrollbar'
                   gap={3}
-                  data={shuffle([])}
-                  renderItem={() => <Card />}
+                  data={shuffle(
+                    arrayFrom(2).map(() => dummyOwnedMembershipData),
+                  )}
+                  renderItem={(data) => <MembershipCard data={data} />}
                   keyExtractor={(_, idx) => idx}
                 />
               </VStack>

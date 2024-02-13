@@ -1,11 +1,19 @@
-import { useCurrentUser } from '../../../features';
 import {
+  MembershipCard,
+  OwnedMembershipModel,
+  useCurrentUser,
+} from '../../../features';
+import {
+  arrayFrom,
   ErrorFallback,
   GQLRenderer,
   Head,
   RadialSurface,
 } from '../../../shared';
-import { Box, Heading } from '@holdr-ui/react';
+import { Box, Heading, VStack } from '@holdr-ui/react';
+import { shuffle } from 'lodash';
+import { dummyOwnedMembershipData } from '../shared';
+import { FlatList } from '../../../tmp/flat-list';
 
 function ClubsMyMembershipsPage() {
   const currentUser = useCurrentUser();
@@ -25,6 +33,17 @@ function ClubsMyMembershipsPage() {
                 Holdr Clubs
               </Heading>
             </Box>
+            <VStack>
+              <FlatList<OwnedMembershipModel>
+                gap={4}
+                css={{ flexWrap: 'wrap' }}
+                data={shuffle(
+                  arrayFrom(2).map(() => dummyOwnedMembershipData),
+                )}
+                renderItem={(data) => <MembershipCard data={data} />}
+                keyExtractor={(_, idx) => idx}
+              />
+            </VStack>
           </Box>
         </RadialSurface>
       )}

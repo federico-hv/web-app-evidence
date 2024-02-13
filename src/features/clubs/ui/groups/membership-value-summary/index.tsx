@@ -1,31 +1,6 @@
-import { RadialSurface, StringNumeric } from '../../../shared';
-import { Box, Heading, HStack, Text, VStack } from '@holdr-ui/react';
-
-export function ValueStatistic({
-  label,
-  value,
-  prefix = '$',
-}: {
-  prefix?: string;
-  value: StringNumeric;
-  label: string;
-}) {
-  return (
-    <HStack
-      items='center'
-      justify='space-between'
-      css={{ fontSize: '14px' }}
-    >
-      <Text casing='capitalize' color='base300'>
-        {label}
-      </Text>
-      <Text>
-        {prefix}
-        {value}
-      </Text>
-    </HStack>
-  );
-}
+import { RadialSurface } from '../../../../../shared';
+import { Box, Heading, VStack } from '@holdr-ui/react';
+import ValueStatistic from './value-statistic';
 
 function MembershipValueSummary() {
   return (

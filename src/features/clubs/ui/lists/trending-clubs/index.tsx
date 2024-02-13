@@ -1,48 +1,6 @@
-import {
-  LinkOverlay,
-  makePath,
-  Paths,
-  RadialSurface,
-} from '../../../shared';
-import {
-  Avatar,
-  Box,
-  Heading,
-  HStack,
-  Text,
-  VStack,
-} from '@holdr-ui/react';
-
-function TrendingClub({
-  id,
-  name,
-  tags,
-}: {
-  id: string;
-  name: string;
-  tags?: string[];
-}) {
-  return (
-    <HStack gap={3} position='relative'>
-      <LinkOverlay to={makePath([Paths.clubs, id])} />
-      <Avatar size='lg' variant='squircle' />
-      <VStack mt={2} gap={2}>
-        <Text casing='capitalize' size='14px' weight={500}>
-          {name}
-        </Text>
-        {tags && (
-          <HStack>
-            {tags.map((tag) => (
-              <Text noOfLines={1} key={tag} size='12px' color='info400'>
-                #{tag}
-              </Text>
-            ))}
-          </HStack>
-        )}
-      </VStack>
-    </HStack>
-  );
-}
+import { RadialSurface } from '../../../../../shared';
+import { Box, Heading, VStack } from '@holdr-ui/react';
+import TrendingClub from './trending-club';
 
 function TrendingClubs() {
   return (

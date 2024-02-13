@@ -1,6 +1,7 @@
 import { Box, Heading, Icon, List, Text, VStack } from '@holdr-ui/react';
+import { MembershipPerkDetailsProps } from './types';
 
-function MembershipCardPerkDetails({ perks }: { perks: string[] }) {
+function MembershipPerkDetails({ perks }: MembershipPerkDetailsProps) {
   return (
     <VStack className='membership-card__perk-details' display='none'>
       <Box
@@ -33,6 +34,6 @@ function MembershipCardPerkDetails({ perks }: { perks: string[] }) {
     </VStack>
   );
 }
-MembershipCardPerkDetails.displayName = 'MembershipCardPerkDetails';
+MembershipPerkDetails.displayName = 'MembershipPerkDetails';
 
-export default MembershipCardPerkDetails;
+export default MembershipPerkDetails;

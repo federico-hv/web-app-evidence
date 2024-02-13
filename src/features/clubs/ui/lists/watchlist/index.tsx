@@ -1,5 +1,5 @@
 import { Box, Button, Heading, VStack } from '@holdr-ui/react';
-import { makeButtonLarger, Paths, prefix } from '../../../shared';
+import { makeButtonLarger, Paths, prefix } from '../../../../../shared';
 import { Link } from 'react-router-dom';
 
 function Watchlist() {

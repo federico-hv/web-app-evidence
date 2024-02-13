@@ -1,6 +1,5 @@
 import { useCurrentUser } from '../../features';
 import { Box, Container, HStack, VStack } from '@holdr-ui/react';
-// import { Outlet } from 'react-router-dom';
 import { LgNavigation } from '../navigation';
 // import { Header } from '../header';
 import { Header } from '../header';
@@ -8,6 +7,7 @@ import { Outlet } from 'react-router-dom';
 
 function MainLayout() {
   const currentUser = useCurrentUser();
+
   return (
     <VStack w='100vw' h='100vh'>
       {currentUser && <LgNavigation />}
