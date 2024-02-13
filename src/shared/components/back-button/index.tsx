@@ -1,4 +1,4 @@
-import { css, IconButton } from '@holdr-ui/react';
+import { IconButton } from '@holdr-ui/react';
 import { useGoBack } from '../../hooks';
 import { noShrink } from '../../styles';
 

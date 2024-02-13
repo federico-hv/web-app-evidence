@@ -16,14 +16,14 @@ import {
   prefix,
   TextGroup,
 } from '../../../../../shared';
-import { ArticleModel, Reaction, useFeedContext } from '../../../shared';
+import { ArticleModel, useFeedContext } from '../../../shared';
 import { useCurrentUser } from '../../../../auth';
 import { BookmarkPopover } from '../../../../bookmarks';
 import {
   FeedOwnerMoreButton,
   GeneralArticleMoreButton,
 } from '../../buttons';
-import { ReactionPopover } from '../../popovers';
+//
 //import ProfileHoverCard from '../profile.hovercard';
 
 // `https://logo.clearbit.com/${domainUrl}` logo finder
@@ -132,25 +132,13 @@ function ArticleCard({ data }: { data: ArticleModel }) {
                         size={{ '@bp1': 'base', '@bp3': 'lg' }}
                       />
                     </BookmarkPopover>
-                    <Box>
-                      <ReactionPopover
-                        alignOffset={-6}
-                        sideOffset={10}
-                        position='right'
-                      >
-                        <IconButton
-                          variant='ghost'
-                          colorTheme='white50'
-                          ariaLabel={reaction ? reaction : 'add reaction'}
-                          icon={
-                            reaction
-                              ? Reaction[reaction].icon
-                              : 'reaction-add'
-                          }
-                          size={{ '@bp1': 'base', '@bp3': 'lg' }}
-                        />
-                      </ReactionPopover>
-                    </Box>
+                    <IconButton
+                      variant='ghost'
+                      colorTheme='white50'
+                      ariaLabel={reaction ? reaction : 'add reaction'}
+                      icon='heart-outline'
+                      size={{ '@bp1': 'base', '@bp3': 'lg' }}
+                    />
                   </HStack>
                   <Box>
                     <Link
@@ -160,7 +148,7 @@ function ArticleCard({ data }: { data: ArticleModel }) {
                     >
                       <Button
                         size={{ '@bp1': 'sm', '@bp3': 'base' }}
-                        colorTheme='white50'
+                        colorTheme='purple500'
                       >
                         Read
                       </Button>
@@ -172,15 +160,15 @@ function ArticleCard({ data }: { data: ArticleModel }) {
           </Box>
         </Card.Footer>
       </Card>
-      <Link to={`https://${data.source.url}`} target='_blank'>
-        <HStack
-          fontSize={{ '@bp1': 2, '@bp3': 3 }}
-          gap={2}
-          justify='flex-end'
-        >
-          from <Text weight={500}>{data.source.name}</Text>
-        </HStack>
-      </Link>
+      {/*<Link to={`https://${data.source.url}`} target='_blank'>*/}
+      {/*  <HStack*/}
+      {/*    fontSize={{ '@bp1': 2, '@bp3': 3 }}*/}
+      {/*    gap={2}*/}
+      {/*    justify='flex-end'*/}
+      {/*  >*/}
+      {/*    from <Text weight={500}>{data.source.name}</Text>*/}
+      {/*  </HStack>*/}
+      {/*</Link>*/}
     </VStack>
   );
 }

@@ -21,6 +21,7 @@ import {
 import { useState } from 'react';
 import { Notification, useNotification } from '../../../../features';
 import { Link } from 'react-router-dom';
+import { ButtonWrapper } from '../../ui';
 
 interface INotificationContext {
   isOpen: boolean;
@@ -40,31 +41,46 @@ function NotificationPopover() {
   });
 
   return (
-    <Popover isOpen={isOpen} onOpenChange={setIsOpen}>
-      <Popover.Trigger onClick={() => setIsOpen(true)} asChild>
-        <IconButton
-          variant='ghost'
-          colorTheme='white50'
-          icon='notification-outline'
-          ariaLabel='View notifications'
-        />
+    <Popover modal isOpen={isOpen} onOpenChange={setIsOpen}>
+      <Popover.Trigger>
+        <ButtonWrapper>
+          <IconButton
+            variant='ghost'
+            colorTheme='white50'
+            icon='notification-outline'
+            ariaLabel='View notifications'
+          />
+        </ButtonWrapper>
       </Popover.Trigger>
       <Popover.Portal>
         <Popover.Content
-          alignOffset={-50}
+          color='white50'
+          alignOffset={-100}
           sideOffset={20}
           align='end'
           h='calc(98.5vh - 68px)'
           w={400}
           zIndex={50}
-          css={{ backgroundColor: '#fff' }}
+          css={{
+            borderRadius: '$4',
+            border: '1px solid rgba(152, 152, 255, 0.10)',
+            background: ' rgba(56, 56, 140, 0.25)',
+            boxShadow: '0px 0px 100px 0px rgba(14, 14, 27, 0.35)',
+            backdropFilter: 'blur(50px)',
+          }}
         >
           <GeneralContextProvider
             value={{ state: { isOpen, onClose, onOpen }, update: dummyFn }}
           >
             <VStack
               gap={3}
-              divider={<Box borderBottom={1} borderColor='base100' />}
+              divider={
+                <Box
+                  css={{
+                    borderTop: '1px solid rgba(152, 152, 255, 0.10)',
+                  }}
+                />
+              }
             >
               <HStack px={4} justify='space-between' items='center'>
                 <Heading as='h3' size={4} weight={500}>
@@ -76,6 +92,7 @@ function NotificationPopover() {
                       ariaLabel='notifications menu'
                       variant='ghost'
                       icon='more-fill'
+                      colorTheme='white50'
                       size='base'
                     />
                   </Menu.Trigger>
@@ -130,13 +147,11 @@ function AllTab() {
         <HStack items='center' px={4} pb={4} justify='space-between'>
           <Text weight={500}>New</Text>
           <Link to={Paths.notifications} onClick={state.onClose}>
-            <Text
-              color='base400'
-              size={2}
-              css={{ textDecoration: 'underline' }}
-            >
-              View All
-            </Text>
+            <Box color='base300' _hover={{ color: '$white50' }}>
+              <Text size={2} css={{ textDecoration: 'underline' }}>
+                View All
+              </Text>
+            </Box>
           </Link>
         </HStack>
         {data.map((notification, idx) => (

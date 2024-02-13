@@ -2,6 +2,8 @@ import { useSuspenseQuery } from '@apollo/client';
 import { Box, Tabs, VStack } from '@holdr-ui/react';
 import { GET_POLL_VOTES } from '../../queries';
 import { IPoll, useFeedContext } from '../../shared';
+import { Fragment } from 'react';
+import { UserWithRelationshipAction } from '../../../relationships';
 import {
   CommonDialog,
   CommonDialogContent,
@@ -10,11 +12,9 @@ import {
   GQLRenderer,
   IConnection,
   IPaginationParams,
-  UserModel,
   useDialogContext,
-} from 'shared';
-import { Fragment } from 'react';
-import { UserWithRelationshipAction } from '../../../relationships';
+  UserModel,
+} from '../../../../shared';
 
 function PollVotesDialog({ items }: { items: IPoll[] }) {
   const { isOpen, onOpen, onClose } = useDialogContext();

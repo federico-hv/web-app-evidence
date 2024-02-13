@@ -28,9 +28,11 @@ function Menu({
   children,
   align = 'end',
   offset = 5,
+  minWidth = 325,
 }: GenericProps & {
   align?: 'start' | 'end' | 'center';
   offset?: number;
+  minWidth?: number;
 }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -58,7 +60,7 @@ function Menu({
             </Popover.Trigger>
             <Popover.Portal>
               <Popover.Content
-                minWidth={325}
+                minWidth={minWidth}
                 side='bottom'
                 align={align}
                 sideOffset={offset}

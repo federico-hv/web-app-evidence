@@ -4,7 +4,7 @@ import { globalCss } from '@stitches/react';
 
 export const globalStyles = globalCss({
   '@import':
-    'url(../../matter.font.css), url(../../general-sans.font.css)',
+    'url(../../styles/matter.font.css), url(../../styles/general-sans.font.css)',
   ':root': {
     fontFamily: 'Matter, ui-sans-serif, system-ui',
     fontSynthesis: 'none',
@@ -32,21 +32,21 @@ export const globalStyles = globalCss({
     fontFamily: 'GeneralSans, ui-sans-serif, system-ui',
   },
   a: {
-    'text-decoration': 'none',
+    textDecoration: 'none',
     color: 'inherit',
   },
   textarea: {
     fontFamily: 'inherit',
   },
   select: {
-    textColor: 'inherit',
+    color: 'inherit',
   },
   'input[type=date]': {
     fontFamily: 'inherit',
   },
   'input:autofill, input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:focus, input:-webkit-autofill:active':
     {
-      background: '#fff',
+      background: 'transparent',
     },
   'input, select': {
     boxSizing: 'border-box',

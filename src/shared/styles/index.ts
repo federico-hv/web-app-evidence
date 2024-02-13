@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Box, Circle, css, styled } from '@holdr-ui/react';
+import { Box, Circle, css, styled, theme } from '@holdr-ui/react';
+import { CSS, keyframes } from '@stitches/react';
 
 export const noShrink = css({
   flexShrink: 0,
@@ -21,8 +22,8 @@ export const changeDimensions = ({
   width,
   height,
 }: {
-  width: string;
-  height: string;
+  width?: string;
+  height?: string;
 }) =>
   css({
     height: `${height ? height : 'initial'} !important`,
@@ -67,4 +68,15 @@ export const CenteredImage = css({
     width: '100%',
     minHeight: 'unset',
   },
+});
+
+export const tabsHoverStyle: CSS<typeof theme> = {
+  transitionDuration: theme.transitions['duration-slow'],
+  transitionProperty: 'background',
+  transitionTimingFunction: 'linear',
+};
+
+export const blink = keyframes({
+  '0%': { opacity: 1 },
+  '100%': { opacity: 0 },
 });

@@ -4,12 +4,12 @@ import { Formik } from 'formik';
 import { FormEvent } from 'react';
 import {
   CustomCommonDialogButtonWrapper,
-  FormInput,
   extraBtnPadding,
+  FormInput,
   isInputDisabled,
   useGeneralContext,
   useStepperContext,
-} from 'shared';
+} from '../../../../shared';
 
 function CreateArticleForm() {
   const { increment } = useStepperContext();

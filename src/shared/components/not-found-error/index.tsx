@@ -5,7 +5,6 @@ import { Paths } from '../../constants';
 import {
   AnalyticsSummary,
   MembershipValueSummary,
-  MonthlySalesSummary,
   ProfileSummary,
   RecommendedArtists,
   TrendingClubs,
@@ -82,7 +81,6 @@ function NotFoundError({ q }: { q?: string }) {
             {currentUser.role === 'artist' && (
               <Fragment>
                 <MembershipValueSummary />
-                <MonthlySalesSummary />
                 <AnalyticsSummary />
               </Fragment>
             )}

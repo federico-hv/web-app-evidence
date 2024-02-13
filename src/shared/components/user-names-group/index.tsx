@@ -1,6 +1,8 @@
 import { TextGroup, TextGroupSubheading } from '../index';
 import { UserNamesGroupProps } from './types';
 
+// TODO Deprecate
+
 function UserNamesGroup({ displayName, username }: UserNamesGroupProps) {
   return (
     <TextGroup w='fit-content' gap={0} p={0}>

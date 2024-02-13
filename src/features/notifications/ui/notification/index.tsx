@@ -41,7 +41,9 @@ function Notification({ data, onClick }: NotificationProps) {
       )}
       {data.type === 'relationship' && (
         <NotificationItemActionWrapper>
-          <Button onClick={voidFn}>Follow</Button>
+          <Button colorTheme='white50' onClick={voidFn}>
+            Follow
+          </Button>
         </NotificationItemActionWrapper>
       )}
     </NotificationItem>

@@ -33,7 +33,10 @@ const ContentLayoutMain = ({
 };
 ContentLayoutMain.displayName = 'ContentLayoutMain';
 
-const ContentLayoutAside = ({ children }: BaseContentLayoutProps) => {
+const ContentLayoutAside = ({
+  children,
+  hideScrollbar = false,
+}: BaseContentLayoutProps) => {
   return (
     <Box
       as='aside'
@@ -43,7 +46,7 @@ const ContentLayoutAside = ({ children }: BaseContentLayoutProps) => {
     >
       <Box h='calc(100% - 80px)' w='100%'>
         <VStack
-          className='hide-scrollbar'
+          className={hideScrollbar ? 'hide-scrollbar' : 'thin-scrollbar'}
           overflow='auto'
           position='fixed'
           gap={4}

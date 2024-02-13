@@ -1,12 +1,12 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import CreateArticleForm from './create-article.form';
+import { ReactElement, useState } from 'react';
 import {
   GeneralContextProvider,
   StepperContextProvider,
   useCounter,
-} from 'shared';
-import { ReactElement, useState } from 'react';
+} from '../../../../shared';
 
 describe('[CreateArticleForm', () => {
   beforeEach(() => {
