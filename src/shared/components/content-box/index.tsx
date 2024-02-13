@@ -1,6 +1,7 @@
 import { Box, Center, Text } from '@holdr-ui/react';
 import { ContentBoxProps } from './types';
 
+//TODO deprecate
 function ContentBox({ children }: ContentBoxProps) {
   return (
     <Box mt={3}>

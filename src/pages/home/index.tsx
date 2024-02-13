@@ -2,7 +2,6 @@ import { ErrorFallback, GQLRenderer, Head } from '../../shared';
 import {
   AnalyticsSummary,
   MembershipValueSummary,
-  MonthlySalesSummary,
   ProfileSummary,
   RecommendedArtists,
   TrendingClubs,
@@ -15,6 +14,7 @@ import {
   ContentLayoutMain,
 } from '../../layout';
 import { Fragment } from 'react';
+
 function HomePage() {
   const currentUser = useCurrentUser();
 
@@ -31,7 +31,6 @@ function HomePage() {
             {currentUser.role === 'artist' && (
               <Fragment>
                 <MembershipValueSummary />
-                <MonthlySalesSummary />
                 <AnalyticsSummary />
               </Fragment>
             )}

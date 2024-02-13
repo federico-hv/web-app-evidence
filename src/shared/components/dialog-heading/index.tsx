@@ -1,6 +1,7 @@
 import { Box, Heading, HStack } from '@holdr-ui/react';
 import { DialogHeadingProps } from './types';
 
+//TODO deprecate
 function DialogHeading({ id, title }: DialogHeadingProps) {
   return (
     <Box w='full' position='relative' css={{ zIndex: -1 }}>

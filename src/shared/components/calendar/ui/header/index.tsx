@@ -1,12 +1,11 @@
 import { Heading } from '@holdr-ui/react';
-import {
-  CommonDialog,
+import { useDialogContext } from '../../../../hooks';
+import { DateUtility } from '../../../../utilities';
+import EmptyMessage from '../../../empty-message';
+import CommonDialog, {
   CommonDialogContent,
   CommonDialogHeader,
-  DateUtility,
-  EmptyMessage,
-  useDialogContext,
-} from 'shared';
+} from '../../../common-dialog';
 
 function DateDialog({ date, past }: { date: Date; past: boolean }) {
   const { isOpen, onOpen, onClose } = useDialogContext();

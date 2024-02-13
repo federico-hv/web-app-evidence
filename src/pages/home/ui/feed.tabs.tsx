@@ -1,53 +1,74 @@
-import { useQuery } from '@apollo/client';
-import {
-  // CreatePost,
-  FeedsReturnModel,
-  GET_FEEDS,
-  FeedCard,
-  CreatePost,
-} from '../../../features';
-import { Error, Loader } from '../../../shared';
-import { Alert, HStack, VStack } from '@holdr-ui/react';
+import { CreatePost } from '../../../features';
+import { HStack, Icon, IconButton, Text, VStack } from '@holdr-ui/react';
 import CustomTabs, {
   CustomTabsContent,
   CustomTabsHeader,
   CustomTabsList,
   CustomTabsTrigger,
 } from '../../../tmp/custom-tabs';
+import { ButtonWrapper } from '../../../layout/navigation/ui';
+import Feeds from './feeds';
+import { Menu, MenuContent, MenuItem, MenuTrigger } from '../../../shared';
+import { useState } from 'react';
+import { FeedFilterValue } from '../shared';
 
-function Feeds({ type = 'all' }: { type: 'all' | 'article' | 'post' }) {
-  const { loading, data, error } = useQuery<
-    { feeds: FeedsReturnModel },
-    { type: string }
-  >(GET_FEEDS, {
-    variables: {
-      type,
-    },
-  });
+function FeedFilterMenu({
+  current,
+  onClick,
+}: {
+  current: FeedFilterValue;
+  onClick: (value: FeedFilterValue) => void;
+}) {
+  const Label = ({
+    value,
+    checked,
+  }: {
+    value: string;
+    checked: boolean;
+  }) => (
+    <HStack items='center' gap={4}>
+      {checked && <Icon name='check' color='purple400' />}
+      <Text casing='capitalize' color={checked ? 'purple400' : 'initial'}>
+        {value}
+      </Text>
+    </HStack>
+  );
 
   return (
-    <Error
-      hasError={!!error}
-      errorEl={
-        <Alert>
-          <Alert.Description>{error?.message}</Alert.Description>
-        </Alert>
-      }
-    >
-      <Loader loading={loading}>
-        {data && (
-          <VStack w='100%' gap={5} pb={6}>
-            {data.feeds.data.map((item) => (
-              <FeedCard key={item.id} data={item} />
-            ))}
-          </VStack>
-        )}
-      </Loader>
-    </Error>
+    <Menu minWidth={200} offset={18}>
+      <MenuTrigger>
+        <ButtonWrapper>
+          <IconButton
+            variant='ghost'
+            icon='filter-outline'
+            colorTheme='white50'
+            ariaLabel={'settings'}
+          />
+        </ButtonWrapper>
+      </MenuTrigger>
+      <MenuContent>
+        <MenuItem action={() => onClick('all')}>
+          <Label value='all' checked={current === 'all'} />
+        </MenuItem>
+        <MenuItem action={() => onClick('article')}>
+          <Label value='news' checked={current === 'article'} />
+        </MenuItem>
+        <MenuItem action={() => onClick('music')}>
+          <Label value='music' checked={current === 'music'} />
+        </MenuItem>
+        <MenuItem action={() => onClick('poll')}>
+          <Label value='polls' checked={current === 'poll'} />
+        </MenuItem>
+      </MenuContent>
+    </Menu>
   );
 }
 
 function FeedTabs() {
+  const [filter, setFilter] = useState<FeedFilterValue>('all');
+
+  const updateFilter = (value: FeedFilterValue) => setFilter(value);
+
   return (
     <CustomTabs
       defaultValue='for-you'
@@ -61,9 +82,9 @@ function FeedTabs() {
         h={64}
         position='sticky'
         t={80}
-        zIndex={10}
         css={{
           backgroundColor: '#141317',
+          zIndex: 6,
         }}
       >
         <HStack
@@ -87,25 +108,19 @@ function FeedTabs() {
             </CustomTabsTrigger>
             <CustomTabsTrigger
               _hover={{ background: '#9898FF26' }}
-              css={{ borderTopRightRadius: '$4' }}
               value='following'
             >
               Following
             </CustomTabsTrigger>
           </CustomTabsList>
-          {/*<HStack placeholder='' p={4}>*/}
-          {/*  <IconButton*/}
-          {/*    radius={4}*/}
-          {/*    variant='outline'*/}
-          {/*    icon='settings-outline'*/}
-          {/*    colorTheme='white50'*/}
-          {/*    ariaLabel={'settings'}*/}
-          {/*  />*/}
-          {/*</HStack>*/}
+          <HStack p={4}>
+            <FeedFilterMenu current={filter} onClick={updateFilter} />
+          </HStack>
         </HStack>
       </CustomTabsHeader>
       <CustomTabsContent
         value='for-you'
+        minHeight='calc(100vh - 158px)'
         css={{
           borderRight: '1px solid rgba(152, 152, 255, 0.10)',
           borderLeft: '1px solid rgba(152, 152, 255, 0.10)',
@@ -116,26 +131,23 @@ function FeedTabs() {
       >
         <VStack minHeight={0} w='100%' p={3} as='aside' gap={4}>
           <CreatePost />
-          <Feeds type='all' />
+          <Feeds filter={filter} type='following' />
         </VStack>
       </CustomTabsContent>
-      <CustomTabsContent value='following'>
-        <VStack
-          minHeight={0}
-          w='100%'
-          p={3}
-          as='aside'
-          gap={4}
-          css={{
-            borderLeft: '1px solid rgba(152, 152, 255, 0.10)',
-            borderRight: '1px solid rgba(152, 152, 255, 0.10)',
-            borderBottom: '1px solid rgba(152, 152, 255, 0.10)',
-            borderBottomLeftRadius: '$4',
-            borderBottomRightRadius: '$4',
-          }}
-        >
+      <CustomTabsContent
+        value='following'
+        minHeight='calc(100vh - 158px)'
+        css={{
+          borderRight: '1px solid rgba(152, 152, 255, 0.10)',
+          borderLeft: '1px solid rgba(152, 152, 255, 0.10)',
+          borderBottom: '1px solid rgba(152, 152, 255, 0.10)',
+          borderBottomLeftRadius: '$4',
+          borderBottomRightRadius: '$4',
+        }}
+      >
+        <VStack w='100%' p={3} gap={4}>
           <CreatePost />
-          <Feeds type='all' />
+          <Feeds filter={filter} type='recommended' />
         </VStack>
       </CustomTabsContent>
     </CustomTabs>

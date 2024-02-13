@@ -2,17 +2,18 @@ import { Avatar, Box, Center, HStack, Image } from '@holdr-ui/react';
 import { AvatarProps } from '@holdr-ui/react/dist/components/avatar/src/avatar.types';
 import { ImageProps } from '@holdr-ui/react/dist/components/image/src/image.types';
 import {
+  DateUtility,
+  GenericProps,
+  getSubComponent,
+  hexToRGB,
+  TextGroup,
+  TextGroupSubheading,
+} from '../../../../shared';
+import {
   NotificationActionWrapperProps,
   NotificationDetailsProps,
   NotificationItemSCName,
-} from 'features/notifications/shared';
-import {
-  DateUtility,
-  TextGroup,
-  getSubComponent,
-  TextGroupSubheading,
-  GenericProps,
-} from 'shared';
+} from '../../shared';
 
 function NotificationItem({ children, onClick }: GenericProps) {
   const Avatar = getSubComponent<NotificationItemSCName>(
@@ -36,9 +37,9 @@ function NotificationItem({ children, onClick }: GenericProps) {
     <HStack
       justify='space-between'
       cursor='pointer'
-      radius={2}
+      radius={3}
       _hover={{
-        backgroundColor: '$base100',
+        backgroundColor: hexToRGB('#0E0E1B', 0.5),
       }}
       p={4}
       onClick={onClick}

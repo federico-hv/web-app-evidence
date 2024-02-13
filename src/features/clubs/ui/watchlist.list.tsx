@@ -1,10 +1,11 @@
 import { Box, Button, Heading, VStack } from '@holdr-ui/react';
-import { Paths, makeButtonLarger } from '../../../shared';
+import { Paths, makeButtonLarger, prefix } from '../../../shared';
 import { WatchlistItem } from './watchlist-item/index';
 import {
   dummyAuctionMembershipData,
   dummySecondarySaleMembershipData,
 } from '../../../pages/clubs/shared';
+import { Link } from 'react-router-dom';
 
 function Watchlist() {
   return (
@@ -21,13 +22,15 @@ function Watchlist() {
           backgroundColor: 'rgba(152, 152, 255, 0.10)',
         }}
       />
-      {/* <Button
-        fullWidth
-        className={makeButtonLarger('2.5rem')}
-        colorTheme='purple500'
-      >
-        Browse Clubs
-      </Button> */}
+      {/* <Link to={prefix('/', Paths.clubs)}>
+        <Button
+          fullWidth
+          className={makeButtonLarger('2.5rem')}
+          colorTheme='purple500'
+        >
+          Browse Clubs
+        </Button>
+      </Link> */}
       <VStack gap={3} items='center'>
         <WatchlistItem data={dummyAuctionMembershipData} />
         <WatchlistItem data={dummySecondarySaleMembershipData} />

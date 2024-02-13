@@ -42,10 +42,11 @@ function CreatePostCard() {
               >
                 <Text
                   noOfLines={1}
+                  italic
                   color='base300'
-                  size={{ '@bp1': 2, '@bp3': 3 }}
+                  size={{ '@bp1': '12px', '@bp3': '14px' }}
                 >
-                  What do you want your fans to know?
+                  Share something with your fans
                 </Text>
               </VStack>
             </Card.Body>

@@ -1,7 +1,7 @@
 @font-face {
     font-family: "Matter";
     src: local("MatterBold"),
-    url("./assets/fonts/matter/matter-bold.otf") format("opentype");
+    url("public/fonts/matter/matter-bold.otf") format("opentype");
     font-weight: 700;
     font-style: normal;
 }
@@ -9,7 +9,7 @@
 @font-face {
     font-family: "Matter";
     src: local("MatterBoldItalic"),
-    url("./assets/fonts/matter/matter-bolditalic.otf") format("opentype");
+    url("public/fonts/matter/matter-bolditalic.otf") format("opentype");
     font-weight: 700;
     font-style: italic;
 }
@@ -17,7 +17,7 @@
 @font-face {
     font-family: "Matter";
     src: local("MatterRegular"),
-    url("./assets/fonts/matter/matter-regular.otf") format("opentype");
+    url("public/fonts/matter/matter-regular.otf") format("opentype");
     font-weight: 400;
     font-style: normal;
 }
@@ -25,7 +25,7 @@
 @font-face {
     font-family: "Matter";
     src: local("MatterRegularItalic"),
-    url("./assets/fonts/matter/matter-regularitalic.otf") format("opentype");
+    url("public/fonts/matter/matter-regularitalic.otf") format("opentype");
     font-weight: 400;
     font-style: italic;
 }
@@ -33,7 +33,7 @@
 @font-face {
     font-family: "Matter";
     src: local("MatterLight"),
-    url("./assets/fonts/matter/matter-light.otf") format("opentype");
+    url("public/fonts/matter/matter-light.otf") format("opentype");
     font-weight: 300;
     font-style: normal;
 }
@@ -41,7 +41,7 @@
 @font-face {
     font-family: "Matter";
     src: local("MatterLightItalic"),
-    url("./assets/fonts/matter/matter-lightitalic.otf") format("opentype");
+    url("public/fonts/matter/matter-lightitalic.otf") format("opentype");
     font-weight: 300;
     font-style: italic;
 }
@@ -49,7 +49,7 @@
 @font-face {
     font-family: "Matter";
     src: local("MatterMedium"),
-    url("./assets/fonts/matter/matter-medium.otf") format("opentype");
+    url("public/fonts/matter/matter-medium.otf") format("opentype");
     font-weight: 500;
     font-style: normal;
 }
@@ -57,7 +57,7 @@
 @font-face {
     font-family: "Matter";
     src: local("MatterMediumItalic"),
-    url("./assets/fonts/matter/matter-mediumitalic.otf") format("opentype");
+    url("public/fonts/matter/matter-mediumitalic.otf") format("opentype");
     font-weight: 500;
     font-style: italic;
 }
@@ -65,7 +65,7 @@
 @font-face {
     font-family: "Matter";
     src: local("MatterHeavy"),
-    url("./assets/fonts/matter/matter-heavy.otf") format("opentype");
+    url("public/fonts/matter/matter-heavy.otf") format("opentype");
     font-weight: 800;
     font-style: normal;
 }
@@ -73,7 +73,7 @@
 @font-face {
     font-family: "Matter";
     src: local("MatterHeavyItalic"),
-    url("./assets/fonts/matter/matter-heavyitalic.otf") format("opentype");
+    url("public/fonts/matter/matter-heavyitalic.otf") format("opentype");
     font-weight: 800;
     font-style: italic;
 }
