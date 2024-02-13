@@ -85,7 +85,7 @@ function ClubsPage() {
               <VStack gap={4}>
                 <SectionTitle
                   label='Following'
-                  to={`${Paths.all}?filters=following`}
+                  to={`${Paths.all}?filters=following,live,sale`}
                 />
                 <FlatList<OnSaleMembershipModel>
                   overflow='auto'
@@ -111,7 +111,7 @@ function ClubsPage() {
               <VStack gap={4}>
                 <SectionTitle
                   label='For you'
-                  to={`${Paths.all}?filters=recommended`}
+                  to={`${Paths.all}?filters=recommended,live,sale`}
                 />
                 <FlatList<OnSaleMembershipModel>
                   overflow='auto'
@@ -135,7 +135,10 @@ function ClubsPage() {
                 />
               </VStack>
               <VStack gap={4}>
-                <SectionTitle label='Featured' to='all?filters=featured' />
+                <SectionTitle
+                  label='Featured'
+                  to='all?filters=featured,live,sale'
+                />
                 <FlatList<OnSaleMembershipModel>
                   overflow='auto'
                   className='hide-scrollbar'
