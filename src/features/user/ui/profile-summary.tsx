@@ -1,6 +1,13 @@
 import { Avatar, Box, HStack, Text, VStack } from '@holdr-ui/react';
-import { RadialSurface } from '../../../shared';
+import {
+  RadialSurface,
+  TextGroup,
+  TextGroupSubheading,
+} from '../../../shared';
 import { useCurrentUser } from '../../auth';
+import { useSuspenseQuery } from '@apollo/client';
+import { GET_PROFILE_SUMMARY } from '../queries';
+import { Fragment } from 'react';
 
 function Members() {
   return (
@@ -24,8 +31,22 @@ function Memberships() {
   );
 }
 
+interface FollwingSummary {
+  followers: { total: number };
+  following: { total: number };
+}
+
 function ProfileSummary() {
   const currentUser = useCurrentUser();
+  const { data } = useSuspenseQuery<FollwingSummary, { username: string }>(
+    GET_PROFILE_SUMMARY,
+    { variables: { username: currentUser?.username || '' } },
+  );
+
+  if (!currentUser) {
+    return <Fragment />;
+  }
+
   return (
     <RadialSurface radius={4} h={117} w='100%'>
       <VStack
@@ -44,24 +65,30 @@ function ProfileSummary() {
         }
       >
         <HStack items='center' gap={3} w='100%' h='100%' pt={4} px={4}>
-          <Avatar name={''} css={{ size: '50px' }} />
-          <VStack gap={1}>
-            <Text>Name</Text>
-            <Text size={2} color='base300'>
-              Name
-            </Text>
-          </VStack>
+          <Avatar
+            src={currentUser.avatar}
+            name={''}
+            css={{ size: '50px' }}
+          />
+          <TextGroup gap={1}>
+            <TextGroupSubheading size={3} weight={500}>
+              {currentUser.displayName}
+            </TextGroupSubheading>
+            <TextGroupSubheading size={2} color='base300'>
+              {currentUser.username}
+            </TextGroupSubheading>
+          </TextGroup>
         </HStack>
         <HStack pb={4} px={4} w='100%' h='100%' justify='space-between'>
           {currentUser?.role === 'artist' ? <Members /> : <Memberships />}
           <HStack gap={2}>
-            <Text size={2}>0</Text>
+            <Text size={2}>{data.followers.total}</Text>
             <Text size={2} color='base300'>
               Followers
             </Text>
           </HStack>
           <HStack gap={2}>
-            <Text size={2}>0</Text>
+            <Text size={2}>{data.following.total}</Text>
             <Text size={2} color='base300'>
               Following
             </Text>

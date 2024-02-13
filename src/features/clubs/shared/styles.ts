@@ -16,7 +16,7 @@ export const cardHoverStyle = {
   // },
 };
 
-export const transitionDelay = 0.75;
+export const transitionDelay = 1;
 
 export const cardFooterStyle = {
   backgroundColor: '#30304B',
