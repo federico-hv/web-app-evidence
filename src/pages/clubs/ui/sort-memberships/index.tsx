@@ -34,6 +34,7 @@ function SortMemberships() {
         />
         <SelectContent sticky='always'>
           <SelectItemList
+            _active={{ color: '$purple400' }}
             w={190}
             divider={
               <Box
@@ -47,7 +48,7 @@ function SortMemberships() {
             position='relative'
             css={{
               boxShadow: '0px 0px 100px 0px rgba(14, 14, 27, 0.35)',
-              backgroundColor: 'rgba(49, 49, 73, 0.85)',
+              backgroundColor: 'rgba(49, 49, 73, 0.75)',
               backdropFilter: 'blur(50px)',
               borderBottomLeftRadius: '$3',
               borderBottomRightRadius: '$3',
@@ -55,6 +56,7 @@ function SortMemberships() {
           >
             <SelectItem
               py={3}
+              radius={1}
               _hover={{ background: 'rgba(14, 14, 27, 0.50)' }}
               css={{ fontSize: '$2' }}
               value='newest'
@@ -62,6 +64,7 @@ function SortMemberships() {
             />
             <SelectItem
               py={3}
+              radius={1}
               _hover={{ background: 'rgba(14, 14, 27, 0.50)' }}
               css={{ fontSize: '$2' }}
               value='oldest'
@@ -69,6 +72,7 @@ function SortMemberships() {
             />
             <SelectItem
               py={3}
+              radius={1}
               _hover={{ background: 'rgba(14, 14, 27, 0.50)' }}
               css={{ fontSize: '$2' }}
               value='price:high-to-low'
@@ -76,8 +80,9 @@ function SortMemberships() {
             />
             <SelectItem
               py={3}
-              _hover={{ background: 'rgba(14, 14, 27, 0.50)' }}
+              radius={1}
               css={{ fontSize: '$2' }}
+              _hover={{ background: 'rgba(14, 14, 27, 0.50)' }}
               value='price:low-to-high'
               label='Price: Low to high'
             />

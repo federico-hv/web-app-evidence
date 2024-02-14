@@ -1,75 +1,15 @@
 import { CreatePost } from '../../../features';
-import {
-  Box,
-  HStack,
-  Icon,
-  IconButton,
-  Text,
-  VStack,
-} from '@holdr-ui/react';
+import { Box, HStack, VStack } from '@holdr-ui/react';
 import CustomTabs, {
   CustomTabsContent,
   CustomTabsHeader,
   CustomTabsList,
   CustomTabsTrigger,
 } from '../../../tmp/custom-tabs';
-import { ButtonWrapper } from '../../../layout/navigation/ui';
-import Feeds from './feeds';
-import { Menu, MenuContent, MenuItem, MenuTrigger } from '../../../shared';
 import { useState } from 'react';
 import { FeedFilterValue } from '../shared';
-
-function FeedFilterMenu({
-  current,
-  onClick,
-}: {
-  current: FeedFilterValue;
-  onClick: (value: FeedFilterValue) => void;
-}) {
-  const Label = ({
-    value,
-    checked,
-  }: {
-    value: string;
-    checked: boolean;
-  }) => (
-    <HStack items='center' gap={3}>
-      {checked && <Icon name='check' color='purple400' />}
-      <Text casing='capitalize' color={checked ? 'purple400' : 'initial'}>
-        {value}
-      </Text>
-    </HStack>
-  );
-
-  return (
-    <Menu minWidth={200} offset={18}>
-      <MenuTrigger>
-        <ButtonWrapper>
-          <IconButton
-            variant='ghost'
-            icon='filter-outline'
-            colorTheme='white50'
-            ariaLabel={'settings'}
-          />
-        </ButtonWrapper>
-      </MenuTrigger>
-      <MenuContent>
-        <MenuItem action={() => onClick('all')}>
-          <Label value='all' checked={current === 'all'} />
-        </MenuItem>
-        <MenuItem action={() => onClick('article')}>
-          <Label value='news' checked={current === 'article'} />
-        </MenuItem>
-        <MenuItem action={() => onClick('music')}>
-          <Label value='music' checked={current === 'music'} />
-        </MenuItem>
-        <MenuItem action={() => onClick('poll')}>
-          <Label value='polls' checked={current === 'poll'} />
-        </MenuItem>
-      </MenuContent>
-    </Menu>
-  );
-}
+import FeedFilter from './feed-filter';
+import Feeds from './feeds';
 
 function FeedTabs() {
   const [filter, setFilter] = useState<FeedFilterValue>('all');
@@ -121,7 +61,7 @@ function FeedTabs() {
             </CustomTabsTrigger>
           </CustomTabsList>
           <Box p={4}>
-            <FeedFilterMenu current={filter} onClick={updateFilter} />
+            <FeedFilter current={filter} onClick={updateFilter} />
           </Box>
         </HStack>
       </CustomTabsHeader>

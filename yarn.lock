@@ -2049,10 +2049,10 @@
   dependencies:
     np "8.0.4"
 
-"@holdr-ui/react@^2.0.4":
-  version "2.0.4"
-  resolved "https://registry.yarnpkg.com/@holdr-ui/react/-/react-2.0.4.tgz#00e2d3946d923a8fc8ef623a7eb27d85534664a4"
-  integrity sha512-omEc3w515KZnook5TAR5YwTLoW69/9Du6/UEag+iKHdZPx+kC3I3hLh1w8qZyx82VedHnQkk7qBwu+KLeNDFUw==
+"@holdr-ui/react@^2.0.9":
+  version "2.0.9"
+  resolved "https://registry.yarnpkg.com/@holdr-ui/react/-/react-2.0.9.tgz#97d688915ac3e58effddfe50295cadf80ee3c5fd"
+  integrity sha512-VnmVFevjzgtakS5BNDbN4Oo802bGJm+ETqDx6RmRGmSi8CBxJM8opNeBT0Qx4SYtCJX2hOdND8sCVoCwIHIsTQ==
   dependencies:
     "@holdr-ui/icons" "^3.0.4"
     "@radix-ui/react-accordion" "^1.0.1"
