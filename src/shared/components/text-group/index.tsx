@@ -16,6 +16,7 @@ function TextGroup({
     </Stack>
   );
 }
+
 TextGroup.displayName = 'TextGroup';
 
 const TextGroupHeading = ({
