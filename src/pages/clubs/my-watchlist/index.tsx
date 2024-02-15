@@ -69,7 +69,7 @@ function ClubsMyWatchlistPage() {
                 ...arrayFrom(10).map(() => dummyAuctionMembershipData),
               ]).map((data, idx) => (
                 <Grid.Item key={`watchlist-clubs-${idx}`}>
-                  {data.isLive ? (
+                  {data.endDate ? (
                     <MembershipAuctionCard data={data} />
                   ) : (
                     <MembershipSecondarySaleCard data={data} />

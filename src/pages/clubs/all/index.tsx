@@ -83,7 +83,7 @@ function ClubsAllPage() {
                   ),
                 ]).map((data, idx) => (
                   <Grid.Item key={`all-clubs${filters.join('-')}${idx}`}>
-                    {data.isLive ? (
+                    {data.endDate ? (
                       <MembershipAuctionCard data={data} />
                     ) : (
                       <MembershipSecondarySaleCard data={data} />
