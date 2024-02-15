@@ -1,35 +1,17 @@
 import { FeedFilterValue } from '../../shared';
 import {
   Box,
-  HStack,
-  Icon,
   IconButton,
   Select,
   SelectContent,
   SelectItem,
   SelectItemList,
   SelectTrigger,
-  Text,
 } from '@holdr-ui/react';
 import { ButtonWrapper } from '../../../../layout/navigation/ui';
 import { FeedFilterProps } from './types';
 
 function FeedFilter({ current, onClick }: FeedFilterProps) {
-  const Label = ({
-    value,
-    checked,
-  }: {
-    value: string;
-    checked: boolean;
-  }) => (
-    <HStack items='center' gap={3}>
-      {checked && <Icon name='check' color='purple400' />}
-      <Text casing='capitalize' color={checked ? 'purple400' : 'initial'}>
-        {value}
-      </Text>
-    </HStack>
-  );
-
   return (
     <Select
       value={current}
@@ -97,8 +79,8 @@ function FeedFilter({ current, onClick }: FeedFilterProps) {
             radius={2}
             _hover={{ background: 'rgba(14, 14, 27, 0.50)' }}
             css={{ fontSize: '$2' }}
-            value='poll'
-            label='Polls'
+            value='post'
+            label='Posts'
           />
           <SelectItem
             py={3}
