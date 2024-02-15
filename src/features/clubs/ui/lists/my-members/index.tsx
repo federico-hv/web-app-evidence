@@ -4,6 +4,9 @@ import { Box, Button, Heading, VStack } from '@holdr-ui/react';
 import { makeButtonLarger, Paths, prefix } from '../../../../../shared';
 import { Link } from 'react-router-dom';
 
+import { dummyMember } from '../../../../../pages/clubs/shared';
+import { MyMembersItem } from '../../members-item';
+
 function MyMembers() {
   const currentUser = useCurrentUser();
 
@@ -25,7 +28,7 @@ function MyMembers() {
           backgroundColor: 'rgba(152, 152, 255, 0.10)',
         }}
       />
-      <Link to={prefix('/', Paths.clubs)}>
+      {/* <Link to={prefix('/', Paths.clubs)}>
         <Button
           fullWidth
           className={makeButtonLarger('2.5rem')}
@@ -33,7 +36,13 @@ function MyMembers() {
         >
           Browse Club
         </Button>
-      </Link>
+      </Link> */}
+      <VStack gap={3}>
+        <MyMembersItem data={dummyMember} isOnline={true} />
+        <MyMembersItem data={dummyMember} isOnline={true} />
+        <MyMembersItem data={dummyMember} isOnline={false} />
+        <MyMembersItem data={dummyMember} isOnline={false} />
+      </VStack>
     </VStack>
   );
 }
