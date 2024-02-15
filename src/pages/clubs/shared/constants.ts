@@ -21,7 +21,7 @@ export const dummyArtist: UserModel = {
 
 export const dummyMember: UserModel = {
   id: '1',
-  avatar: 'https://cdna.artstation.com/p/assets/images/images/071/001/504/smaller_square/icy-tamtam-asset.jpg?1704218440',
+  avatar: 'https://cdn.discordapp.com/attachments/824040811926519879/1207812411650736168/Untitled3448_20240215141502.png?ex=65e101f7&is=65ce8cf7&hm=52c23d9358adb9492da6194b8766aa686835f1056ed9ab185d35af641b3cc603&',
   displayName: 'Member Name',
   username: 'member_username',
 };
@@ -46,7 +46,7 @@ export const dummySecondarySaleMembershipData: OnSaleMembershipModel = {
 
 export const dummyOwnedMembershipData: OwnedMembershipModel = {
   salePrice: 200,
-  name: 'RisingMembershipName',
+  name: 'Rising Name',
   artist: dummyArtist,
   membershipNum: 3,
   priceChange: 42,
@@ -55,7 +55,7 @@ export const dummyOwnedMembershipData: OwnedMembershipModel = {
 
 export const dummyOwnedMembershipData2: OwnedMembershipModel = {
   salePrice: 200,
-  name: 'FallingMembershipName',
+  name: 'Falling Name',
   artist: dummyArtist,
   membershipNum: 3,
   priceChange: 42,
