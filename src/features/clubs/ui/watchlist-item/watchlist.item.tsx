@@ -17,7 +17,7 @@ function WatchlistItem({ data }: WatchlistItemProps) {
       gap={4}
       pl={3}
       pr={4}
-      py={2}
+      py={0}
       radius={3}
       items='center'
       _hover={{ background: '#9898FF26', cursor: 'pointer' }}
@@ -26,7 +26,7 @@ function WatchlistItem({ data }: WatchlistItemProps) {
       }}
     >
       <Avatar size='xl' variant='squircle' />
-      <VStack gap={3} w='100%' h='80%' py={2}>
+      <VStack gap={1} w='100%' h='80%' py={2}>
         <HStack
           gap={2}
           justify='space-between'
@@ -40,7 +40,7 @@ function WatchlistItem({ data }: WatchlistItemProps) {
           {data.endDate && <LiveTag />}
         </HStack>
         <HStack justify='space-between'>
-          <TextGroup gap={1}>
+          <TextGroup gap={0}>
             <TextGroupSubheading size={1} weight={300} color='white700'>
               {data.endDate ? 'Entry Price' : 'Buy Now'}
             </TextGroupSubheading>
@@ -49,7 +49,7 @@ function WatchlistItem({ data }: WatchlistItemProps) {
             </TextGroupSubheading>
           </TextGroup>
           {data.endDate && (
-            <TextGroup gap={1} minWidth='73px'>
+            <TextGroup gap={0} minWidth='73px'>
               <TextGroupSubheading size={1} weight={300} color='white700'>
                 Time Left
               </TextGroupSubheading>
