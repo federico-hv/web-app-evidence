@@ -7,8 +7,11 @@ import {
   theme,
 } from '@holdr-ui/react';
 import { WatchlistItemProps } from './watchlist-item.types';
-import { LiveTag } from './index';
-import { TextGroup, TextGroupSubheading } from 'shared';
+import {
+  LiveTag,
+  TextGroup,
+  TextGroupSubheading,
+} from '../../../../shared';
 
 function WatchlistItem({ data }: WatchlistItemProps) {
   return (
