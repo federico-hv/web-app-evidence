@@ -78,5 +78,5 @@ export const tabsHoverStyle: CSS<typeof theme> = {
 
 export const blink = keyframes({
   '0%': { opacity: 1 },
-  '100%': { opacity: 0 },
+  '100%': { opacity: 0.2 },
 });

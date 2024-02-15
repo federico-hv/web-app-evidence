@@ -34,8 +34,9 @@ function NavigationItem({ label, icon, active, to }: NavigationItemProps) {
         items='center'
         justify={{ '@bp1': 'center', '@bp7': 'flex-start' }}
         w='100%'
+        h='100%'
         gap={3}
-        p={3}
+        px={4}
         _hover={{ background: '#9898FF26' }}
       >
         <Box css={{ fontSize: '24px', marginTop: '5px' }}>
@@ -68,7 +69,7 @@ function NavigationList() {
   }
 
   return (
-    <VStack as='nav' p={4} gap={3}>
+    <VStack as='nav' p={4} gap={2}>
       <NavigationItem
         active={!!matchPath(Paths.root, pathname)}
         label='Home'

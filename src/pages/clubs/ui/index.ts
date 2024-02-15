@@ -1,3 +1,2 @@
-export { default as LiveAuctionContent } from './live-auction.content';
-export { default as SecondarySalesContent } from './secondary-sales.content';
-export { default as WatchlistContent } from './watchlist.content';
+export { default as SortMemberships } from './sort-memberships';
+export { default as Filter } from './filter';

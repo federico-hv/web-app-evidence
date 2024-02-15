@@ -26,7 +26,7 @@ function HomePage() {
           <ContentLayoutMain>
             <FeedTabs />
           </ContentLayoutMain>
-          <ContentLayoutAside>
+          <ContentLayoutAside hideScrollbar>
             <ProfileSummary />
             {currentUser.role === 'artist' && (
               <Fragment>

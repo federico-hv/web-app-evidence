@@ -1,10 +1,10 @@
-import { useCurrentUser } from '../../auth';
+import { useCurrentUser } from '../../../../auth';
 import { Fragment } from 'react';
 import { Box, Button, Heading, VStack } from '@holdr-ui/react';
-import { makeButtonLarger, Paths, prefix } from '../../../shared';
+import { makeButtonLarger, Paths, prefix } from '../../../../../shared';
 import { Link } from 'react-router-dom';
 
-function MyMembershipList() {
+function MyMemberships() {
   const currentUser = useCurrentUser();
 
   if (!currentUser || (currentUser && currentUser.role === 'artist')) {
@@ -37,6 +37,6 @@ function MyMembershipList() {
     </VStack>
   );
 }
-MyMembershipList.displayName = 'MyMembershipList';
+MyMemberships.displayName = 'MyMemberships';
 
-export default MyMembershipList;
+export default MyMemberships;

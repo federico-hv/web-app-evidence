@@ -1,10 +1,11 @@
-import { useCurrentUser } from '../../auth';
+import { useCurrentUser } from '../../../../auth';
 import { Fragment } from 'react';
 import { Box, Button, Heading, VStack } from '@holdr-ui/react';
-import { makeButtonLarger, Paths, prefix } from '../../../shared';
+import { makeButtonLarger, Paths, prefix } from '../../../../../shared';
 import { Link } from 'react-router-dom';
-import { MyMembersItem } from './members-item';
-import { dummyMember } from '../../../pages/clubs/shared';
+
+import { dummyMember } from '../../../../../pages/clubs/shared';
+import { MyMembersItem } from '../../members-item';
 
 function MyMembers() {
   const currentUser = useCurrentUser();
