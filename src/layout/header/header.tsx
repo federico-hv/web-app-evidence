@@ -25,8 +25,6 @@ function Header() {
           gap={4}
           w={{ '@bp4': 90, '@bp7': 308 }}
           h='100%'
-          overflowY='scroll'
-          className='hide-scrollbar'
         >
           <RadialSurface
             w='100%'
