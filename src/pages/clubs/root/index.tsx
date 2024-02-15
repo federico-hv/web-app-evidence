@@ -12,7 +12,7 @@ import {
   Paths,
   RadialSurface,
 } from '../../../shared';
-import { Box, Card, Heading, VStack } from '@holdr-ui/react';
+import { Box, Heading, VStack } from '@holdr-ui/react';
 import {
   dummyAuctionMembershipData,
   dummySecondarySaleMembershipData,
@@ -24,6 +24,8 @@ import { SectionTitle } from './ui';
 
 function ClubsPage() {
   const currentUser = useCurrentUser();
+
+  // useScrollToWindowTop();
 
   return (
     <GQLRenderer ErrorFallback={ErrorFallback}>
@@ -44,15 +46,39 @@ function ClubsPage() {
             <VStack gap={6}>
               <VStack gap={4}>
                 <SectionTitle
-                  label='Your memberships'
-                  to={Paths.club.memberships}
+                  label='Live Auctions'
+                  to={`${Paths.all}?filters=following,live`}
                 />
                 <FlatList<OnSaleMembershipModel>
                   overflow='auto'
                   className='hide-scrollbar'
-                  gap={3}
-                  data={shuffle([])}
-                  renderItem={() => <Card />}
+                  gap={2}
+                  data={shuffle(
+                    arrayFrom(6).map(() => dummyAuctionMembershipData),
+                  )}
+                  renderItem={(data) => (
+                    <MembershipAuctionCard data={data} />
+                  )}
+                  keyExtractor={(_, idx) => idx}
+                />
+              </VStack>
+              <VStack gap={4}>
+                <SectionTitle
+                  label='Secondary Sales'
+                  to={`${Paths.all}?filters=following,sale`}
+                />
+                <FlatList<OnSaleMembershipModel>
+                  overflow='auto'
+                  className='hide-scrollbar'
+                  gap={2}
+                  data={shuffle(
+                    arrayFrom(6).map(
+                      () => dummySecondarySaleMembershipData,
+                    ),
+                  )}
+                  renderItem={(data) => (
+                    <MembershipSecondarySaleCard data={data} />
+                  )}
                   keyExtractor={(_, idx) => idx}
                 />
               </VStack>
@@ -64,12 +90,12 @@ function ClubsPage() {
                 <FlatList<OnSaleMembershipModel>
                   overflow='auto'
                   className='hide-scrollbar'
-                  gap={3}
+                  gap={2}
                   data={shuffle([
-                    ...arrayFrom(4).map(
+                    ...arrayFrom(3).map(
                       () => dummySecondarySaleMembershipData,
                     ),
-                    ...arrayFrom(4).map(() => dummyAuctionMembershipData),
+                    ...arrayFrom(3).map(() => dummyAuctionMembershipData),
                   ])}
                   renderItem={(data) => {
                     if (data.endDate) {
@@ -84,62 +110,13 @@ function ClubsPage() {
               </VStack>
               <VStack gap={4}>
                 <SectionTitle
-                  label='Following'
-                  to={`${Paths.all}?filters=following`}
+                  label='Featured'
+                  to='all?filters=featured,live,sale'
                 />
                 <FlatList<OnSaleMembershipModel>
                   overflow='auto'
                   className='hide-scrollbar'
-                  gap={3}
-                  data={shuffle([
-                    ...arrayFrom(4).map(
-                      () => dummySecondarySaleMembershipData,
-                    ),
-                    ...arrayFrom(4).map(() => dummyAuctionMembershipData),
-                  ])}
-                  renderItem={(data) => {
-                    if (data.endDate) {
-                      return <MembershipAuctionCard data={data} />;
-                    } else if (!data.endDate) {
-                      return <MembershipSecondarySaleCard data={data} />;
-                    }
-                    return <Fragment />;
-                  }}
-                  keyExtractor={(_, idx) => idx}
-                />
-              </VStack>
-              <VStack gap={4}>
-                <SectionTitle
-                  label='For you'
-                  to={`${Paths.all}?filters=recommended`}
-                />
-                <FlatList<OnSaleMembershipModel>
-                  overflow='auto'
-                  className='hide-scrollbar'
-                  gap={3}
-                  data={shuffle([
-                    ...arrayFrom(4).map(
-                      () => dummySecondarySaleMembershipData,
-                    ),
-                    ...arrayFrom(4).map(() => dummyAuctionMembershipData),
-                  ])}
-                  renderItem={(data) => {
-                    if (data.endDate) {
-                      return <MembershipAuctionCard data={data} />;
-                    } else if (!data.endDate) {
-                      return <MembershipSecondarySaleCard data={data} />;
-                    }
-                    return <Fragment />;
-                  }}
-                  keyExtractor={(_, idx) => idx}
-                />
-              </VStack>
-              <VStack gap={4}>
-                <SectionTitle label='Featured' to='all?filters=featured' />
-                <FlatList<OnSaleMembershipModel>
-                  overflow='auto'
-                  className='hide-scrollbar'
-                  gap={3}
+                  gap={2}
                   data={shuffle([
                     ...arrayFrom(4).map(
                       () => dummySecondarySaleMembershipData,

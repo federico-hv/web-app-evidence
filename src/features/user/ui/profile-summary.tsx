@@ -1,31 +1,54 @@
 import { Avatar, Box, HStack, Text, VStack } from '@holdr-ui/react';
-import { RadialSurface } from '../../../shared';
+import {
+  RadialSurface,
+  TextGroup,
+  TextGroupSubheading,
+} from '../../../shared';
 import { useCurrentUser } from '../../auth';
+import { useSuspenseQuery } from '@apollo/client';
+import { GET_PROFILE_SUMMARY } from '../queries';
+import { Fragment } from 'react';
 
 function Members() {
   return (
-    <HStack gap={2}>
-      <Text size={2}>0</Text>
-      <Text size={2} color='base300'>
+    <TextGroup w='fit-content' direction='horizontal' gap={1}>
+      <TextGroupSubheading size={1}>0</TextGroupSubheading>
+      <TextGroupSubheading size={1} color='base300'>
         Members
-      </Text>
-    </HStack>
+      </TextGroupSubheading>
+    </TextGroup>
   );
 }
 
 function Memberships() {
   return (
-    <HStack gap={2}>
-      <Text size={2}>0</Text>
-      <Text size={2} color='base300'>
+    <TextGroup w='fit-content' direction='horizontal' gap={1}>
+      <TextGroupSubheading size={1}>0</TextGroupSubheading>
+      <TextGroupSubheading size={1} color='base300'>
         Memberships
-      </Text>
-    </HStack>
+      </TextGroupSubheading>
+    </TextGroup>
   );
+}
+
+interface FollowingSummary {
+  followers: { total: number };
+  following: { total: number };
 }
 
 function ProfileSummary() {
   const currentUser = useCurrentUser();
+  const { data } = useSuspenseQuery<
+    FollowingSummary,
+    { username: string }
+  >(GET_PROFILE_SUMMARY, {
+    variables: { username: currentUser?.username || '' },
+  });
+
+  if (!currentUser) {
+    return <Fragment />;
+  }
+
   return (
     <RadialSurface radius={4} h={117} w='100%'>
       <VStack
@@ -43,29 +66,39 @@ function ProfileSummary() {
           />
         }
       >
-        <HStack items='center' gap={3} w='100%' h='100%' pt={4} px={4}>
-          <Avatar name={''} css={{ size: '50px' }} />
-          <VStack gap={1}>
-            <Text>Name</Text>
-            <Text size={2} color='base300'>
-              Name
-            </Text>
-          </VStack>
+        <HStack items='center' gap={2} w='100%' h='100%' pt={4} px={4}>
+          <Avatar
+            src={currentUser.avatar}
+            name={''}
+            css={{ size: '50px' }}
+          />
+          <TextGroup w='fit-content' gap={1}>
+            <TextGroupSubheading size={2} weight={500}>
+              {currentUser.displayName}
+            </TextGroupSubheading>
+            <TextGroupSubheading size={1} color='base300'>
+              {currentUser.username}
+            </TextGroupSubheading>
+          </TextGroup>
         </HStack>
         <HStack pb={4} px={4} w='100%' h='100%' justify='space-between'>
           {currentUser?.role === 'artist' ? <Members /> : <Memberships />}
-          <HStack gap={2}>
-            <Text size={2}>0</Text>
-            <Text size={2} color='base300'>
+          <TextGroup w='fit-content' direction='horizontal' gap={1}>
+            <TextGroupSubheading size={1}>
+              {data.followers.total}
+            </TextGroupSubheading>
+            <Text size={1} color='base300'>
               Followers
             </Text>
-          </HStack>
-          <HStack gap={2}>
-            <Text size={2}>0</Text>
-            <Text size={2} color='base300'>
+          </TextGroup>
+          <TextGroup w='fit-content' direction='horizontal' gap={1}>
+            <TextGroupSubheading size={1}>
+              {data.following.total}
+            </TextGroupSubheading>
+            <TextGroupSubheading size={1} color='base300'>
               Following
-            </Text>
-          </HStack>
+            </TextGroupSubheading>
+          </TextGroup>
         </HStack>
       </VStack>
     </RadialSurface>

@@ -1,6 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 import { HeadProps } from './types';
-import { prefix } from '../../index';
+import { prefix, useScrollToWindowTop } from '../../index';
 
 function Head({
   title,
@@ -9,6 +9,8 @@ function Head({
   image,
   url,
 }: HeadProps) {
+  useScrollToWindowTop();
+
   return (
     <Helmet>
       <meta charSet='utf-8' />

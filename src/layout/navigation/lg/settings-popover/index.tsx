@@ -62,7 +62,7 @@ function SettingsPopover() {
           }}
         >
           <VStack
-            gap={3}
+            gap={2}
             divider={
               <Box
                 h='1px'
@@ -70,7 +70,7 @@ function SettingsPopover() {
               />
             }
           >
-            <VStack gap={3}>
+            <VStack gap={1}>
               <SettingsItem label='Account Settings' onClick={close} />
               <SettingsItem label='Safety & Privacy' onClick={close} />
               <SettingsItem label='Personalize' onClick={close} />

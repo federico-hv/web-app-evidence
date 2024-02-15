@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Box, FormControl, HStack, Select, Text } from '@holdr-ui/react';
+import { Box, FormControl, HStack, Text } from '@holdr-ui/react';
 import dayjs from 'dayjs';
 import localeData from 'dayjs/plugin/localeData';
 import { DatePickerProps } from './types';
@@ -66,17 +66,17 @@ function DatePicker({
           <FormControl.Label color='base400'>
             <Text size={2}>Month</Text>
           </FormControl.Label>
-          <Select
-            size={{ '@bp1': 'sm', '@bp3': 'base' }}
-            value={state.month}
-            onChange={(e) => update({ month: e.target.value })}
-          >
-            {monthNames.map((monthName) => (
-              <option value={monthName} key={monthName}>
-                {monthName}
-              </option>
-            ))}
-          </Select>
+          {/*<Select*/}
+          {/*  size={{ '@bp1': 'sm', '@bp3': 'base' }}*/}
+          {/*  value={state.month}*/}
+          {/*  onChange={(e) => update({ month: e.target.value })}*/}
+          {/*>*/}
+          {/*  {monthNames.map((monthName) => (*/}
+          {/*    <option value={monthName} key={monthName}>*/}
+          {/*      {monthName}*/}
+          {/*    </option>*/}
+          {/*  ))}*/}
+          {/*</Select>*/}
         </FormControl>
       </Box>
 
@@ -85,17 +85,17 @@ function DatePicker({
           <FormControl.Label color='base400'>
             <Text size={2}>Day</Text>
           </FormControl.Label>
-          <Select
-            size={{ '@bp1': 'sm', '@bp3': 'base' }}
-            value={state.day}
-            onChange={(e) => update({ day: e.target.value })}
-          >
-            {days.map((day) => (
-              <option value={day + 1} key={day}>
-                {day + 1}
-              </option>
-            ))}
-          </Select>
+          {/*<Select*/}
+          {/*  size={{ '@bp1': 'sm', '@bp3': 'base' }}*/}
+          {/*  value={state.day}*/}
+          {/*  onChange={(e) => update({ day: e.target.value })}*/}
+          {/*>*/}
+          {/*  {days.map((day) => (*/}
+          {/*    <option value={day + 1} key={day}>*/}
+          {/*      {day + 1}*/}
+          {/*    </option>*/}
+          {/*  ))}*/}
+          {/*</Select>*/}
         </FormControl>
       </Box>
 
@@ -104,17 +104,17 @@ function DatePicker({
           <FormControl.Label color='base400'>
             <Text size={2}>Year</Text>
           </FormControl.Label>
-          <Select
-            size={{ '@bp1': 'sm', '@bp3': 'base' }}
-            value={state.year}
-            onChange={(e) => update({ year: e.target.value })}
-          >
-            {years.map((year, idx) => (
-              <option value={parseInt(Maximum.year) - idx} key={year}>
-                {parseInt(Maximum.year) - idx}
-              </option>
-            ))}
-          </Select>
+          {/*<Select*/}
+          {/*  size={{ '@bp1': 'sm', '@bp3': 'base' }}*/}
+          {/*  value={state.year}*/}
+          {/*  onChange={(e) => update({ year: e.target.value })}*/}
+          {/*>*/}
+          {/*  {years.map((year, idx) => (*/}
+          {/*    <option value={parseInt(Maximum.year) - idx} key={year}>*/}
+          {/*      {parseInt(Maximum.year) - idx}*/}
+          {/*    </option>*/}
+          {/*  ))}*/}
+          {/*</Select>*/}
         </FormControl>
       </Box>
     </HStack>

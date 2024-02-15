@@ -12,6 +12,7 @@ export const globalStyles = globalCss({
     '-webkit-font-smoothing': 'antialiased',
     '-moz-osx-font-smoothing': 'grayscale',
     '-webkit-text-size-adjust': '100%',
+    fontSize: '16px',
   },
   '*': {
     margin: 0,
@@ -19,14 +20,9 @@ export const globalStyles = globalCss({
     padding: 0,
     border: 0,
   },
-  // html: {
-  //   overflow: 'unset !important',
-  //   position: 'unset !important',
-  // },
   body: {
     backgroundColor: '#141317',
     color: '#FFFFFF',
-    // fontFamily: 'Matter, ui-sans-serif, system-ui',
   },
   'h1, h2, h3, h4, h5': {
     fontFamily: 'GeneralSans, ui-sans-serif, system-ui',

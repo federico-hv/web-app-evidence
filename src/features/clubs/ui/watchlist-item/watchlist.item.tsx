@@ -6,7 +6,6 @@ import {
   Countdown,
   theme,
 } from '@holdr-ui/react';
-import { Link } from 'react-router-dom';
 import { WatchlistItemProps } from './watchlist-item.types';
 import { LiveTag } from './index';
 import { TextGroup, TextGroupSubheading } from 'shared';

@@ -23,19 +23,19 @@ function PhoneInput({ phone, onChange, prefix }: PhoneInputProps) {
     <VStack gap={3}>
       <FormControl>
         <FormControl.Label>Country Code</FormControl.Label>
-        <Select
-          value={`${current?.dial_code} ${current?.name}`}
-          onChange={(e) => {
-            const code = e.target.value.split(' ')[0];
-            handleChange({ code });
-          }}
-        >
-          {phoneCodes.map((phone) => (
-            <option key={phone.code}>
-              {phone.dial_code} {phone.name}
-            </option>
-          ))}
-        </Select>
+        {/*<Select*/}
+        {/*  value={`${current?.dial_code} ${current?.name}`}*/}
+        {/*  onChange={(e) => {*/}
+        {/*    const code = e.target.value.split(' ')[0];*/}
+        {/*    handleChange({ code });*/}
+        {/*  }}*/}
+        {/*>*/}
+        {/*  {phoneCodes.map((phone) => (*/}
+        {/*    <option key={phone.code}>*/}
+        {/*      {phone.dial_code} {phone.name}*/}
+        {/*    </option>*/}
+        {/*  ))}*/}
+        {/*</Select>*/}
       </FormControl>
       <FormControl>
         <FormControl.Label>Phone</FormControl.Label>

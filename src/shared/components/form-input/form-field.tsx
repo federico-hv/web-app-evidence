@@ -42,7 +42,7 @@ function FormField({
           className={textareaCSS()}
         />
       )}
-      {type === 'select' && <Select id={name} {...field} {...others} />}
+      {/*{type === 'select' && <Select id={name} {...field} {...others} />}*/}
       {type === 'date' && (
         <DatePicker
           date={field.value}

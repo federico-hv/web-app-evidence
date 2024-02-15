@@ -1,7 +1,7 @@
-import { useCurrentUser } from '../../auth';
+import { useCurrentUser } from '../../../../auth';
 import { Fragment } from 'react';
 import { Box, Button, Heading, VStack } from '@holdr-ui/react';
-import { makeButtonLarger, Paths, prefix } from '../../../shared';
+import { makeButtonLarger, Paths, prefix } from '../../../../../shared';
 import { Link } from 'react-router-dom';
 
 function MyMembers() {

@@ -1,18 +1,19 @@
 import { GenericProps } from '../../../shared';
-import { Circle } from '@holdr-ui/react';
+import { Box, Circle } from '@holdr-ui/react';
 
 function ButtonWrapper(props: GenericProps) {
   return (
-    <Circle
-      size={32}
-      border={1}
+    <Box
+      h='100%'
+      w='100%'
       css={{
+        radius: '100%',
         border: '1px solid rgba(152, 152, 255, 0.10)',
         background: 'rgba(133, 133, 255, 0.10)',
       }}
     >
       {props.children}
-    </Circle>
+    </Box>
   );
 }
 ButtonWrapper.displayName = 'ButtonWrapper';
