@@ -16,7 +16,7 @@ import {
   cardFooterStyle,
   cardHoverStyle,
   transitionDelay,
-} from '../../../shared/styles';
+} from '../../../shared';
 import { MembershipAuctionCardProps } from './types';
 import { MembershipPerkDetails } from '../../groups';
 

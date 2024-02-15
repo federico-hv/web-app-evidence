@@ -4,6 +4,7 @@ import { blink } from '../../styles';
 function LiveTag() {
   return (
     <HStack
+      w='fit-content'
       items='center'
       px='12px'
       py='10px'
