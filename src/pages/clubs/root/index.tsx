@@ -52,7 +52,7 @@ function ClubsPage() {
                 <FlatList<OnSaleMembershipModel>
                   overflow='auto'
                   className='hide-scrollbar'
-                  gap={3}
+                  gap={2}
                   data={shuffle(
                     arrayFrom(6).map(() => dummyAuctionMembershipData),
                   )}
@@ -70,7 +70,7 @@ function ClubsPage() {
                 <FlatList<OnSaleMembershipModel>
                   overflow='auto'
                   className='hide-scrollbar'
-                  gap={3}
+                  gap={2}
                   data={shuffle(
                     arrayFrom(6).map(
                       () => dummySecondarySaleMembershipData,
@@ -90,7 +90,7 @@ function ClubsPage() {
                 <FlatList<OnSaleMembershipModel>
                   overflow='auto'
                   className='hide-scrollbar'
-                  gap={3}
+                  gap={2}
                   data={shuffle([
                     ...arrayFrom(3).map(
                       () => dummySecondarySaleMembershipData,
@@ -116,7 +116,7 @@ function ClubsPage() {
                 <FlatList<OnSaleMembershipModel>
                   overflow='auto'
                   className='hide-scrollbar'
-                  gap={3}
+                  gap={2}
                   data={shuffle([
                     ...arrayFrom(4).map(
                       () => dummySecondarySaleMembershipData,

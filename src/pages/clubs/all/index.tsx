@@ -17,7 +17,7 @@ import {
   dummySecondarySaleMembershipData,
 } from '../shared';
 import { useSearchParams } from 'react-router-dom';
-import { Filter } from './ui';
+import { Filter, SortMemberships } from '../ui';
 
 function ClubsAllPage() {
   const currentUser = useCurrentUser();
@@ -43,34 +43,37 @@ function ClubsAllPage() {
               </Heading>
             </Box>
             <VStack gap={5}>
-              <HStack gap={3}>
-                <Filter
-                  active={filters.includes('following')}
-                  name='following'
-                  label='Following'
-                />
-                <Filter
-                  active={filters.includes('recommended')}
-                  name='recommended'
-                  label='Recommended'
-                />
-                <Filter
-                  active={filters.includes('live')}
-                  name='live'
-                  label='Live auction'
-                />
-                <Filter
-                  name='sale'
-                  active={filters.includes('sale')}
-                  label='Secondary sale'
-                />
+              <HStack justify='space-between'>
+                <HStack gap={3}>
+                  <Filter
+                    active={filters.includes('following')}
+                    name='following'
+                    label='Following'
+                  />
+                  <Filter
+                    active={filters.includes('recommended')}
+                    name='recommended'
+                    label='Recommended'
+                  />
+                  <Filter
+                    active={filters.includes('live')}
+                    name='live'
+                    label='Live auction'
+                  />
+                  <Filter
+                    name='sale'
+                    active={filters.includes('sale')}
+                    label='Secondary sale'
+                  />
+                </HStack>
+                <SortMemberships />
               </HStack>
               <Box
                 my={3}
                 h='1px'
                 css={{ backgroundColor: 'rgba(152, 152, 255, 0.10)' }}
               />
-              <Grid gap={3} templateColumns='repeat(3, 1fr)'>
+              <Grid gap={2} templateColumns='repeat(3, 1fr)'>
                 {shuffle([
                   ...arrayFrom(filters.includes('sale') ? 10 : 0).map(
                     () => dummySecondarySaleMembershipData,

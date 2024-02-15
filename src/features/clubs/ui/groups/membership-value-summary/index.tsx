@@ -15,15 +15,15 @@ function MembershipValueSummary() {
           Membership value
         </Heading>
         <Box
-          mt={{ '@bp1': '8px', '@bp3': '8px' }}
-          mb={{ '@bp1': '16px', '@bp3': '16px' }}
+          mt={2}
+          mb={3}
           h='1px'
           w='100%'
           css={{
             backgroundColor: 'rgba(152, 152, 255, 0.10)',
           }}
         />
-        <VStack gap={3} justify='flex-end'>
+        <VStack gap={2} justify='flex-end'>
           <ValueStatistic label='Average price' value={0} />
           <ValueStatistic label='Entry price' value={0} />
           <ValueStatistic label='Last sale' value={0} />

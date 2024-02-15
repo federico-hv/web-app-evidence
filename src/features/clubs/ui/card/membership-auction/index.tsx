@@ -33,13 +33,13 @@ function MembershipAuctionCard({ data }: MembershipAuctionCardProps) {
       <Card.Header
         className='membership-card__header'
         position='absolute'
-        zIndex={2}
         l='16px'
         r='16px'
         t='16px'
         justify='space-between'
         direction='horizontal'
         items='center'
+        zIndex={1}
       >
         <LiveTag />
         <IconButton
