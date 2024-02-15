@@ -12,7 +12,8 @@ import { TextGroup, TextGroupHeading, TextGroupSubheading } from 'shared';
 function MyMembersItem({ data, isOnline }: MyMembersItemProps) {
   return (
     <HStack
-      p={3}
+      px={3}
+      py={2}
       gap={4}
       radius={3}
       items='center'
