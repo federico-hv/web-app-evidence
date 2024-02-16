@@ -10,6 +10,10 @@ import {
 } from '../../queries';
 import { useParams } from 'react-router-dom';
 
+/*
+  TODO: Deprecate
+ */
+
 export function useAddReactionAction(): {
   addReaction: (id: string, reaction: FeedReactionName) => Promise<void>;
   love: (id: string) => Promise<void>;

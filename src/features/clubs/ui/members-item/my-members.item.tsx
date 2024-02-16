@@ -1,21 +1,13 @@
-import {
-  Avatar,
-  HStack,
-  VStack,
-  Text,
-  AvatarBadge,
-  Circle,
-} from '@holdr-ui/react';
+import { Avatar, HStack, AvatarBadge, Circle } from '@holdr-ui/react';
 import { MyMembersItemProps } from './members-item.types';
 import { TextGroup, TextGroupHeading, TextGroupSubheading } from 'shared';
 
 function MyMembersItem({ data, isOnline }: MyMembersItemProps) {
   return (
     <HStack
-      px={3}
-      py={2}
+      p={2}
       gap={4}
-      radius={3}
+      radius={2}
       items='center'
       _hover={{ backgroundColor: '#9898FF26', cursor: 'pointer' }}
     >
@@ -33,8 +25,8 @@ function MyMembersItem({ data, isOnline }: MyMembersItemProps) {
           </AvatarBadge>
         )}
       </Avatar>
-      <TextGroup gap={1}>
-        <TextGroupHeading size={3}>{data.displayName}</TextGroupHeading>
+      <TextGroup gap={0}>
+        <TextGroupHeading size={2}>{data.displayName}</TextGroupHeading>
         <TextGroupSubheading size={1} weight={300}>
           {`@${data.username}`}
         </TextGroupSubheading>

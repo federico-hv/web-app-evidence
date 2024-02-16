@@ -50,7 +50,7 @@ export const Reaction: Record<
   excited: { icon: 'emotion-happy-fill', name: 'Excited' },
 };
 
-export const feedStatistic = ['views', 'bookmarks', 'reactions'] as const;
+export const feedStatistic = ['views', 'bookmarks', 'love'] as const;
 
 export const feedReactionFetchType = [
   'love',

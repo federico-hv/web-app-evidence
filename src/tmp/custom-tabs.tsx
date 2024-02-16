@@ -10,7 +10,6 @@ import {
   HStackProps,
   StackProps,
 } from '@holdr-ui/react/dist/components/stack/src/stack.types';
-import { Fragment } from 'react';
 
 interface CustomTabsState {
   currentValue: string;
@@ -63,6 +62,7 @@ function CustomTabsTrigger({
   children,
   value,
   css,
+  // flex = 1,
   ...props
 }: StackProps & { value: string }) {
   const { update } = useGeneralContext<CustomTabsState>();
@@ -71,7 +71,7 @@ function CustomTabsTrigger({
   return (
     <Stack
       onClick={() => update({ currentValue: value })}
-      flex={1}
+      w='100%'
       justify='center'
       items='center'
       cursor='pointer'

@@ -10,6 +10,9 @@ import {
 } from '../../queries';
 import { useParams } from 'react-router-dom';
 
+/*
+  TODO: Deprecate
+ */
 export function useRemoveReactionAction(): {
   removeReaction: (
     id: string,

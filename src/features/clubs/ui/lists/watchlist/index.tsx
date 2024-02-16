@@ -1,6 +1,4 @@
-import { Box, Button, Heading, VStack } from '@holdr-ui/react';
-import { makeButtonLarger, Paths, prefix } from '../../../../../shared';
-import { Link } from 'react-router-dom';
+import { Box, Heading, VStack } from '@holdr-ui/react';
 import { WatchlistItem } from '../../watchlist-item';
 import { dummyAuctionMembershipData } from '../../../../../pages/clubs/shared';
 import { dummySecondarySaleMembershipData } from '../../../../../pages/clubs/shared';
@@ -29,11 +27,12 @@ function Watchlist() {
           Browse Clubs
         </Button>
       </Link> */}
-      <VStack gap={3} items='center'>
+      <VStack gap={0} items='center'>
         <WatchlistItem data={dummyAuctionMembershipData} />
         <WatchlistItem data={dummySecondarySaleMembershipData} />
-
+        <WatchlistItem data={dummyAuctionMembershipData} />
         <WatchlistItem data={dummySecondarySaleMembershipData} />
+        {/*<WatchlistItem data={dummySecondarySaleMembershipData} />*/}
       </VStack>
     </VStack>
   );

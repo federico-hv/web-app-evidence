@@ -21,11 +21,7 @@ function Header() {
         h='calc(100% - 80px)'
         pb={4}
       >
-        <VStack
-          gap={4}
-          w={{ '@bp4': 90, '@bp7': 308 }}
-          h='100%'
-        >
+        <VStack gap={4} w={{ '@bp4': 90, '@bp7': 308 }} h='100%'>
           <RadialSurface
             w='100%'
             h={248}
@@ -36,11 +32,11 @@ function Header() {
           >
             <NavigationList />
           </RadialSurface>
-          <RadialSurface w='100%' h='auto' radius={4}>
+          <RadialSurface w='100%' radius={4}>
             <MyMembershipList />
             <MyMembersList />
           </RadialSurface>
-          <RadialSurface w='100%' h='auto' radius={4}>
+          <RadialSurface w='100%' radius={4}>
             <WatchlistList />
           </RadialSurface>
         </VStack>

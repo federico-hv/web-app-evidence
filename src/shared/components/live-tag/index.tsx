@@ -1,6 +1,8 @@
 import { Circle, HStack, Text } from '@holdr-ui/react';
 import { blink } from '../../styles';
 
+//
+
 function LiveTag() {
   return (
     <HStack
