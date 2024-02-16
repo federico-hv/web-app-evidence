@@ -13,8 +13,8 @@ function PopoverButton({
         cursor='pointer'
         radius='full'
         _hover={{ backgroundColor: '$base100' }}
-        p={3}
-        fontSize={{ '@bp1': 1, '@bp3': 2 }}
+        p={1}
+        fontSize={{ '@bp1': 1, '@bp3': 1 }}
       >
         {children}
       </Box>

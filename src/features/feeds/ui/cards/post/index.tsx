@@ -1,13 +1,5 @@
 import { PostModel, useFeedContext } from '../../../shared';
-import {
-  Avatar,
-  Box,
-  Card,
-  HStack,
-  IconButton,
-  Text,
-  VStack,
-} from '@holdr-ui/react';
+import { Avatar, Box, Card, HStack, Text, VStack } from '@holdr-ui/react';
 import {
   DateUtility,
   LinkOverlay,
@@ -18,11 +10,14 @@ import { capitalize } from 'lodash';
 import { useCurrentUser } from '../../../../auth';
 import { FeedOwnerMoreButton, GeneralPostMoreButton } from '../../buttons';
 import { PostMedia, Polls } from '../../groups';
-import { BookmarkPopover } from '../../../../bookmarks';
+import FeedLikeGroup from './feed-like-group';
+import FeedShareGroup from './feed-share-group';
+import FeedBookmarkGroup from './feed-bookmark-group';
+import FeedCommentGroup from './feed-comment-group';
 
 function PostCard({ data }: { data: PostModel }) {
   const currentUser = useCurrentUser();
-  const { owner, createdAt, bookmarked } = useFeedContext();
+  const { owner, createdAt } = useFeedContext();
 
   return (
     <Card boxShadow='none' gap={3}>
@@ -36,13 +31,11 @@ function PostCard({ data }: { data: PostModel }) {
           <LinkOverlay to={prefix('/', owner.username)} />
           <VStack>
             <Avatar
-              // size={{ '@bp1': 'base', '@bp3': 'lg' }}
               variant='squircle'
               src={owner.avatar}
               css={{
                 size: '55px',
               }}
-              // name={owner.displayName}
             />
           </VStack>
           <TextGroup>
@@ -104,52 +97,15 @@ function PostCard({ data }: { data: PostModel }) {
       <Card.Footer
         px={{ '@bp1': 3, '@bp3': 4 }}
         pb={{ '@bp1': 3, '@bp3': 4 }}
-        // py={{ '@bp1': 2, '@bp3': 3 }}
         direction='horizontal'
         items='center'
         w='100%'
         gap={6}
       >
-        <HStack items='center' gap={2} zIndex={5}>
-          <IconButton
-            variant='ghost'
-            colorTheme='white50'
-            icon='heart-outline'
-            ariaLabel='like post'
-          />
-          <Box cursor='pointer'>0</Box>
-        </HStack>
-        <HStack items='center' gap={2} zIndex={5}>
-          <IconButton
-            variant='ghost'
-            colorTheme='white50'
-            icon='chat-alt-outline'
-            ariaLabel='view comments'
-          />
-          <Box cursor='pointer'>0</Box>
-        </HStack>
-        <HStack items='center' gap={2} zIndex={5}>
-          <IconButton
-            variant='ghost'
-            colorTheme='white50'
-            icon='send-outline'
-            ariaLabel='bookmark feed'
-          />
-          <Box cursor='pointer'>0</Box>
-        </HStack>
-        <HStack items='center' gap={2} zIndex={5}>
-          <BookmarkPopover position='right' sideOffset={0}>
-            <IconButton
-              variant='ghost'
-              colorTheme='white50'
-              ariaLabel={
-                !bookmarked ? 'create bookmark' : 'remove bookmark'
-              }
-              icon={!bookmarked ? 'bookmark-outline' : 'bookmark-fill'}
-            />
-          </BookmarkPopover>
-          <Box cursor='pointer'>0</Box>
-        </HStack>
+        <FeedLikeGroup />
+        <FeedCommentGroup />
+        <FeedShareGroup />
+        <FeedBookmarkGroup />
       </Card.Footer>
     </Card>
   );

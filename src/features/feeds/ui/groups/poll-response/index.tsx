@@ -8,8 +8,8 @@ function PollResponse({ data, total }: PollResponseProps) {
     <HStack
       items='center'
       gap={3}
-      p={3}
-      radius={4}
+      p={2}
+      radius={2}
       position='relative'
       overflow='hidden'
       css={{ userSelect: 'none' }}

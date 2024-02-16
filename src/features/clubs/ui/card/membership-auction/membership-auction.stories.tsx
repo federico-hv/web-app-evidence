@@ -1,9 +1,8 @@
 import { Meta, StoryObj } from '@storybook/react';
-import MembershipAuctionCard from '../index';
-import { OnSaleMembershipModel } from '../../../../shared';
+import MembershipAuctionCard from './index';
+import { OnSaleMembershipModel } from '../../../shared';
 
 const auctionData: OnSaleMembershipModel = {
-  isLive: true,
   isOnWatchlist: false,
   price: 100.11,
   name: 'Name',

@@ -1,11 +1,18 @@
 import { useCurrentUser } from '../../../../auth';
 import { Fragment } from 'react';
-import { Box, Button, Heading, VStack } from '@holdr-ui/react';
-import { makeButtonLarger, Paths, prefix } from '../../../../../shared';
-import { Link } from 'react-router-dom';
+import {
+  Box,
+  Heading,
+  HStack,
+  Icon,
+  Text,
+  Tooltip,
+  VStack,
+} from '@holdr-ui/react';
 
 import { dummyMember } from '../../../../../pages/clubs/shared';
-import { MyMembersItem } from '../../members-item';
+import { MyMemberItem } from '../../groups';
+import millify from 'millify';
 
 function MyMembers() {
   const currentUser = useCurrentUser();
@@ -16,9 +23,21 @@ function MyMembers() {
 
   return (
     <VStack as='nav' p={4}>
-      <Heading size={3} weight={500} css={{ userSelect: 'none' }}>
-        My Members
-      </Heading>
+      <HStack items='center' justify='space-between'>
+        <HStack items='center' gap={1}>
+          <Heading size={3} weight={500} css={{ userSelect: 'none' }}>
+            My Members
+          </Heading>
+          <Tooltip color='white50' label='These are your top members.'>
+            <Box fontSize='12px' mt='5px'>
+              <Icon color='base400' name='information-outline' />
+            </Box>
+          </Tooltip>
+        </HStack>
+        <Text color='white700' size={1}>
+          {millify(3, { precision: 2 })} Members Online
+        </Text>
+      </HStack>
       <Box
         mt={{ '@bp1': '8px', '@bp3': '8px' }}
         mb={{ '@bp1': '16px', '@bp3': '16px' }}
@@ -37,11 +56,11 @@ function MyMembers() {
           Browse Club
         </Button>
       </Link> */}
-      <VStack gap={3}>
-        <MyMembersItem data={dummyMember} isOnline={true} />
-        <MyMembersItem data={dummyMember} isOnline={true} />
-        <MyMembersItem data={dummyMember} isOnline={false} />
-        <MyMembersItem data={dummyMember} isOnline={false} />
+      <VStack>
+        <MyMemberItem data={dummyMember} isOnline={true} />
+        <MyMemberItem data={dummyMember} isOnline={true} />
+        <MyMemberItem data={dummyMember} isOnline={false} />
+        <MyMemberItem data={dummyMember} isOnline={false} />
       </VStack>
     </VStack>
   );

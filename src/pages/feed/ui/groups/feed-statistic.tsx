@@ -11,7 +11,7 @@ import { HStack, Text } from '@holdr-ui/react';
 const Readable = {
   bookmarks: 'bookmark',
   views: 'view',
-  reactions: 'reaction',
+  love: 'like',
 };
 
 function FeedStatistic({
