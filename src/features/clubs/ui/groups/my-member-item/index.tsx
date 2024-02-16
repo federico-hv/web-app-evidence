@@ -1,8 +1,12 @@
 import { Avatar, HStack, AvatarBadge, Circle } from '@holdr-ui/react';
-import { MyMembersItemProps } from './members-item.types';
-import { TextGroup, TextGroupHeading, TextGroupSubheading } from 'shared';
+import {
+  TextGroup,
+  TextGroupHeading,
+  TextGroupSubheading,
+} from '../../../../../shared';
+import { MyMemberItemProps } from './types';
 
-function MyMembersItem({ data, isOnline }: MyMembersItemProps) {
+function MyMemberItem({ data, isOnline }: MyMemberItemProps) {
   return (
     <HStack
       p={2}
@@ -35,6 +39,6 @@ function MyMembersItem({ data, isOnline }: MyMembersItemProps) {
   );
 }
 
-MyMembersItem.displayName = 'MyMembersItem';
+MyMemberItem.displayName = 'MyMemberItem';
 
-export default MyMembersItem;
+export default MyMemberItem;

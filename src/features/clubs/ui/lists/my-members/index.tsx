@@ -11,7 +11,7 @@ import {
 } from '@holdr-ui/react';
 
 import { dummyMember } from '../../../../../pages/clubs/shared';
-import { MyMembersItem } from '../../members-item';
+import { MyMemberItem } from '../../groups';
 import millify from 'millify';
 
 function MyMembers() {
@@ -57,10 +57,10 @@ function MyMembers() {
         </Button>
       </Link> */}
       <VStack>
-        <MyMembersItem data={dummyMember} isOnline={true} />
-        <MyMembersItem data={dummyMember} isOnline={true} />
-        <MyMembersItem data={dummyMember} isOnline={false} />
-        <MyMembersItem data={dummyMember} isOnline={false} />
+        <MyMemberItem data={dummyMember} isOnline={true} />
+        <MyMemberItem data={dummyMember} isOnline={true} />
+        <MyMemberItem data={dummyMember} isOnline={false} />
+        <MyMemberItem data={dummyMember} isOnline={false} />
       </VStack>
     </VStack>
   );

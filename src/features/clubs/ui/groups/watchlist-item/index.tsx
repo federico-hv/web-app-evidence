@@ -7,8 +7,12 @@ import {
   theme,
   Circle,
 } from '@holdr-ui/react';
-import { WatchlistItemProps } from './watchlist-item.types';
-import { blink, TextGroup, TextGroupSubheading } from '../../../../shared';
+import { WatchlistItemProps } from './types';
+import {
+  blink,
+  TextGroup,
+  TextGroupSubheading,
+} from '../../../../../shared';
 
 function WatchlistItem({ data }: WatchlistItemProps) {
   return (

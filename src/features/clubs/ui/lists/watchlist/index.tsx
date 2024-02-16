@@ -1,7 +1,7 @@
 import { Box, Heading, VStack } from '@holdr-ui/react';
-import { WatchlistItem } from '../../watchlist-item';
 import { dummyAuctionMembershipData } from '../../../../../pages/clubs/shared';
 import { dummySecondarySaleMembershipData } from '../../../../../pages/clubs/shared';
+import { WatchlistItem } from '../../groups';
 
 function Watchlist() {
   return (
