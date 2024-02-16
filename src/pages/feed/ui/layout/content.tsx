@@ -14,7 +14,6 @@ import {
   DateUtility,
   DialogTabContextProvider,
   ErrorFallback,
-  GeneralContextProvider,
   GenericProps,
   GQLRenderer,
   Head,
@@ -61,8 +60,7 @@ function Statistics() {
   const [option, setOption] = useState('');
 
   const currentUser = useCurrentUser();
-  const { owner, createdAt, reaction, feedId, bookmarked } =
-    useFeedContext();
+  const { owner } = useFeedContext();
 
   const onOpen = (value: string) => {
     setOption(value);
@@ -97,10 +95,7 @@ function Statistics() {
               action: () => onOpen('views'),
             })}
           />
-          <FeedStatistic
-            name='reactions'
-            action={() => onOpen('reactions')}
-          />
+          <FeedStatistic name='love' action={() => onOpen('reactions')} />
           <FeedStatistic
             name='bookmarks'
             {...(owner.id === currentUser?.id && {
