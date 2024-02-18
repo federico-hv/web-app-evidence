@@ -19,9 +19,9 @@ function MyMembersItem({ data, isOnline }: MyMembersItemProps) {
       items='center'
       _hover={{ backgroundColor: '#9898FF26', cursor: 'pointer' }}
     >
-      <Avatar size='base' src={data.avatar}>
+      <Avatar size='base' src={data.avatar} data-testid="member-item-avatar">
         {isOnline && (
-          <AvatarBadge size={1}>
+          <AvatarBadge size={1} data-testid="member-item-avatar-online">
             <Circle
               size='13px'
               css={{
@@ -34,8 +34,8 @@ function MyMembersItem({ data, isOnline }: MyMembersItemProps) {
         )}
       </Avatar>
       <TextGroup gap={1}>
-        <TextGroupHeading size={3}>{data.displayName}</TextGroupHeading>
-        <TextGroupSubheading size={1} weight={300}>
+        <TextGroupHeading size={3} data-testid="member-item-name">{data.displayName}</TextGroupHeading>
+        <TextGroupSubheading size={1} weight={300} data-testid="member-item-username">
           {`@${data.username}`}
         </TextGroupSubheading>
       </TextGroup>
