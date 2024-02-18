@@ -37,29 +37,46 @@ function WatchlistItem({ data }: WatchlistItemProps) {
           w='100%'
           h='100%'
         >
-          <Text size={2} weight={500}>
+          <Text size={2} weight={500} data-testid='watchlist-item-name'>
             {data.name}
           </Text>
-          {data.endDate && <LiveTag />}
+          {data.endDate && (
+            <LiveTag data-testid='watchlist-item-livetag' />
+          )}
         </HStack>
         <HStack justify='space-between'>
           <TextGroup gap={0}>
-            <TextGroupSubheading size={1} weight={300} color='white700'>
+            <TextGroupSubheading
+              size={1}
+              weight={300}
+              color='white700'
+              data-testid='watchlist-item-endDate-title'
+            >
               {data.endDate ? 'Entry Price' : 'Buy Now'}
             </TextGroupSubheading>
-            <TextGroupSubheading size={2} weight={400}>
+            <TextGroupSubheading
+              size={2}
+              weight={400}
+              data-testid='watchlist-item-price'
+            >
               {`$${data.price.toFixed(2)} USD`}
             </TextGroupSubheading>
           </TextGroup>
           {data.endDate && (
             <TextGroup gap={0} minWidth='73px'>
-              <TextGroupSubheading size={1} weight={300} color='white700'>
+              <TextGroupSubheading
+                size={1}
+                weight={300}
+                color='white700'
+                data-testid='watchlist-item-timeleft-title'
+              >
                 Time Left
               </TextGroupSubheading>
               <Countdown
                 size='sm'
                 targetDate={data.endDate}
                 color='white500'
+                data-testid='watchlist-item-countdown'
               />
             </TextGroup>
           )}

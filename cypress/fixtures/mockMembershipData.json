@@ -1,0 +1,54 @@
+{
+  "auctionMembershipData": {
+    "endDate": "9999-12-31T00:00:00.000Z",
+    "price": 100.11,
+    "name": "Name",
+    "artist": {
+      "id": "1",
+      "avatar": "https://cdna.artstation.com/p/assets/images/images/071/001/504/smaller_square/icy-tamtam-asset.jpg?1704218440",
+      "displayName": "Artist Name",
+      "username": "artist_username"
+    },
+    "isOnWatchlist": false
+  },
+
+  "secondarySaleMembershipData": {
+    "price": 100.11,
+    "name": "Name Secondary",
+    "artist": {
+      "id": "1",
+      "avatar": "https://cdna.artstation.com/p/assets/images/images/071/001/504/smaller_square/icy-tamtam-asset.jpg?1704218440",
+      "displayName": "Artist Name",
+      "username": "artist_username"
+    },
+    "isOnWatchlist": false
+  },
+
+  "risingOwnedMembershipData": {
+    "salePrice": 200,
+    "name": "Rising Name",
+    "artist": {
+      "id": "1",
+      "avatar": "https://cdna.artstation.com/p/assets/images/images/071/001/504/smaller_square/icy-tamtam-asset.jpg?1704218440",
+      "displayName": "Artist Name",
+      "username": "artist_username"
+    },
+    "membershipNum": 3,
+    "priceChange": 42,
+    "priceHasRisen": true
+  },
+
+  "fallingOwnedMembershipData": {
+    "salePrice": 200,
+    "name": "Falling Name",
+    "artist": {
+      "id": "1",
+      "avatar": "https://cdna.artstation.com/p/assets/images/images/071/001/504/smaller_square/icy-tamtam-asset.jpg?1704218440",
+      "displayName": "Artist Name",
+      "username": "artist_username"
+    },
+    "membershipNum": 3,
+    "priceChange": 42
+  }
+}
+
