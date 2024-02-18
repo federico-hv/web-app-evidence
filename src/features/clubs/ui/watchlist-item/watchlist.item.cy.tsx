@@ -6,7 +6,7 @@ describe('<WatchlistItem />', () => {
   let mockSecondaryMembershipData: any;
 
   before(() => {
-    cy.fixture('mockMembershipData.json').then((mockData) => {
+    cy.fixture('watchlist-item.fixture.json').then((mockData) => {
       mockAuctionMembershipData = mockData.auctionMembershipData;
       mockSecondaryMembershipData = mockData.secondarySaleMembershipData;
     });
