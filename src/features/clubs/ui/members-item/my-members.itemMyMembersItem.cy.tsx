@@ -5,7 +5,7 @@ describe('<MyMembersItem />', () => {
   let mockMember: any;
 
   before(() => {
-    cy.fixture('mockMember.json').then((mockData) => {
+    cy.fixture('members-item.fixture.json').then((mockData) => {
       mockMember = mockData;
     });
   });
