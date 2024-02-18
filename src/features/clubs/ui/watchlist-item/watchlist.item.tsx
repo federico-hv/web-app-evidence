@@ -28,7 +28,7 @@ function WatchlistItem({ data }: WatchlistItemProps) {
         transition: theme.transitions['duration-normal'],
       }}
     >
-      <Avatar size='xl' variant='squircle' />
+      <Avatar size='xl' variant='squircle' data-testid="watchlist-item-avatar"/>
       <VStack gap={1} w='100%' h='80%' py={2}>
         <HStack
           gap={2}
@@ -50,7 +50,7 @@ function WatchlistItem({ data }: WatchlistItemProps) {
               size={1}
               weight={300}
               color='white700'
-              data-testid='watchlist-item-endDate-title'
+              data-testid='watchlist-item-price-title'
             >
               {data.endDate ? 'Entry Price' : 'Buy Now'}
             </TextGroupSubheading>
