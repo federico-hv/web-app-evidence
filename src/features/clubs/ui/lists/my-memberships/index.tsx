@@ -16,7 +16,7 @@ function MyMemberships() {
   return (
     <VStack as='nav' p={4}>
       <Heading size={3} weight={500} css={{ userSelect: 'none' }}>
-        My Holdr Memberships
+        My Memberships
       </Heading>
       <Box
         mt={{ '@bp1': '8px', '@bp3': '8px' }}
