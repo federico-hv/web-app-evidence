@@ -27,7 +27,7 @@ function WatchlistItem({ data }: WatchlistItemProps) {
         transition: theme.transitions['duration-normal'],
       }}
     >
-      <Avatar css={{ size: '60px' }} variant='squircle' />
+      <Avatar css={{ size: '60px' }} variant='squircle'/>
       <VStack gap={1} w='100%' h='80%'>
         <HStack
           gap={2}
@@ -36,11 +36,11 @@ function WatchlistItem({ data }: WatchlistItemProps) {
           w='100%'
           h='100%'
         >
-          <Text size={2} weight={500}>
+          <Text size={2} weight={500} data-testid='watchlist-item-name' >
             {data.name}
           </Text>
           {data.endDate && (
-            <HStack items='center' gap={2}>
+            <HStack items='center' gap={2} data-testid="watchlist-item-live-blinker">
               <Circle
                 size='6px'
                 css={{
@@ -61,16 +61,16 @@ function WatchlistItem({ data }: WatchlistItemProps) {
         </HStack>
         <HStack justify='space-between'>
           <TextGroup fontSize={1} gap={0}>
-            <TextGroupSubheading weight={300} color='white700'>
+            <TextGroupSubheading weight={300} color='white700' data-testid='watchlist-item-price-title' >
               {data.endDate ? 'Entry Price' : 'Buy Now'}
             </TextGroupSubheading>
-            <TextGroupSubheading weight={400}>
+            <TextGroupSubheading weight={400} data-testid='watchlist-item-price' >
               {`$${data.price.toFixed(2)} USD`}
             </TextGroupSubheading>
           </TextGroup>
           {data.endDate && (
             <VStack gap={0} flex={1}>
-              <TextGroupSubheading size={1} weight={300} color='white700'>
+              <TextGroupSubheading size={1} weight={300} color='white700' data-testid='watchlist-item-timeleft-title' >
                 Time Left
               </TextGroupSubheading>
 
