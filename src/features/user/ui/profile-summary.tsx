@@ -8,11 +8,14 @@ import { useCurrentUser } from '../../auth';
 import { useSuspenseQuery } from '@apollo/client';
 import { GET_PROFILE_SUMMARY } from '../queries';
 import { Fragment } from 'react';
+import millify from 'millify';
 
 function Members() {
   return (
     <TextGroup w='fit-content' direction='horizontal' gap={1}>
-      <TextGroupSubheading size={1}>0</TextGroupSubheading>
+      <TextGroupSubheading size={1}>
+        {millify(0, { precision: 2 })}
+      </TextGroupSubheading>
       <TextGroupSubheading size={1} color='base300'>
         Members
       </TextGroupSubheading>
@@ -23,7 +26,9 @@ function Members() {
 function Memberships() {
   return (
     <TextGroup w='fit-content' direction='horizontal' gap={1}>
-      <TextGroupSubheading size={1}>0</TextGroupSubheading>
+      <TextGroupSubheading size={1}>
+        {millify(0, { precision: 2 })}
+      </TextGroupSubheading>
       <TextGroupSubheading size={1} color='base300'>
         Memberships
       </TextGroupSubheading>
@@ -85,7 +90,7 @@ function ProfileSummary() {
           {currentUser?.role === 'artist' ? <Members /> : <Memberships />}
           <TextGroup w='fit-content' direction='horizontal' gap={1}>
             <TextGroupSubheading size={1}>
-              {data.followers.total}
+              {millify(data.followers.total, { precision: 2 })}
             </TextGroupSubheading>
             <Text size={1} color='base300'>
               Followers
@@ -93,7 +98,7 @@ function ProfileSummary() {
           </TextGroup>
           <TextGroup w='fit-content' direction='horizontal' gap={1}>
             <TextGroupSubheading size={1}>
-              {data.following.total}
+              {millify(data.following.total, { precision: 2 })}
             </TextGroupSubheading>
             <TextGroupSubheading size={1} color='base300'>
               Following

@@ -4,7 +4,6 @@ import {
   Button,
   Card,
   HStack,
-  IconButton,
   Text,
   VStack,
 } from '@holdr-ui/react';
@@ -20,19 +19,19 @@ import { ArticleModel, useFeedContext } from '../../../shared';
 import { useCurrentUser } from '../../../../auth';
 import { BookmarkPopover } from '../../../../bookmarks';
 import {
+  BookmarkButton,
   FeedOwnerMoreButton,
   GeneralArticleMoreButton,
+  LikeButton,
 } from '../../buttons';
-//
-//import ProfileHoverCard from '../profile.hovercard';
 
-// `https://logo.clearbit.com/${domainUrl}` logo finder
+// Notes: Logo finder
+// `https://logo.clearbit.com/${domainUrl}`
 
 function ArticleCard({ data }: { data: ArticleModel }) {
   const location = useLocation();
   const currentUser = useCurrentUser();
-  const { owner, createdAt, reaction, feedId, bookmarked } =
-    useFeedContext();
+  const { owner, createdAt, feedId } = useFeedContext();
 
   return (
     <VStack gap={3}>
@@ -53,7 +52,6 @@ function ArticleCard({ data }: { data: ArticleModel }) {
                 size={{ '@bp1': 'base', '@bp3': 'xl' }}
                 variant='squircle'
                 src={owner.avatar}
-                name={owner.displayName}
               />
             </VStack>
           </Link>
@@ -116,29 +114,11 @@ function ArticleCard({ data }: { data: ArticleModel }) {
                 >
                   <HStack items='center'>
                     <BookmarkPopover position='right' sideOffset={0}>
-                      <IconButton
-                        variant='ghost'
-                        colorTheme='white50'
-                        ariaLabel={
-                          !bookmarked
-                            ? 'create bookmark'
-                            : 'remove bookmark'
-                        }
-                        icon={
-                          !bookmarked
-                            ? 'bookmark-outline'
-                            : 'bookmark-fill'
-                        }
+                      <BookmarkButton
                         size={{ '@bp1': 'base', '@bp3': 'lg' }}
                       />
                     </BookmarkPopover>
-                    <IconButton
-                      variant='ghost'
-                      colorTheme='white50'
-                      ariaLabel={reaction ? reaction : 'add reaction'}
-                      icon='heart-outline'
-                      size={{ '@bp1': 'base', '@bp3': 'lg' }}
-                    />
+                    <LikeButton size={{ '@bp1': 'base', '@bp3': 'lg' }} />
                   </HStack>
                   <Box>
                     <Link

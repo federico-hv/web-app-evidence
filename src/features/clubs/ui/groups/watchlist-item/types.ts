@@ -1,4 +1,4 @@
-import { OnSaleMembershipModel } from 'features/clubs/shared';
+import { OnSaleMembershipModel } from '../../../shared';
 
 export interface WatchlistItemProps {
   data: OnSaleMembershipModel;

@@ -8,7 +8,7 @@ function AnswerPollButton({ label, onClick }: AnswerPollButtonProps) {
       onClick={onClick}
       cursor='pointer'
       role='button'
-      p={3}
+      p={2}
       border={1}
       radius='full'
       borderColor='base200'

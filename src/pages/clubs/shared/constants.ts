@@ -3,6 +3,7 @@ import {
   OnSaleMembershipModel,
   OwnedMembershipModel,
 } from '../../../features';
+import dayjs from 'dayjs';
 
 export const TabOptions = {
   all: 'all',
@@ -21,16 +22,14 @@ export const dummyArtist: UserModel = {
 
 export const dummyMember: UserModel = {
   id: '1',
-  avatar: 'https://cdn.discordapp.com/attachments/824040811926519879/1207812411650736168/Untitled3448_20240215141502.png?ex=65e101f7&is=65ce8cf7&hm=52c23d9358adb9492da6194b8766aa686835f1056ed9ab185d35af641b3cc603&',
+  avatar:
+    'https://cdna.artstation.com/p/assets/images/images/071/001/504/smaller_square/icy-tamtam-asset.jpg?1704218440',
   displayName: 'Member Name',
   username: 'member_username',
 };
 
-let tomorrow = new Date();
-tomorrow.setDate(tomorrow.getDate() + 1);
-
 export const dummyAuctionMembershipData: OnSaleMembershipModel = {
-  endDate: tomorrow,
+  endDate: dayjs().add(1, 'day').toDate(),
   isOnWatchlist: false,
   price: 100.11,
   name: 'Name',
@@ -39,7 +38,7 @@ export const dummyAuctionMembershipData: OnSaleMembershipModel = {
 
 export const dummySecondarySaleMembershipData: OnSaleMembershipModel = {
   price: 100.11,
-  name: 'Name Secondary',
+  name: 'Name',
   artist: dummyArtist,
   isOnWatchlist: false,
 };

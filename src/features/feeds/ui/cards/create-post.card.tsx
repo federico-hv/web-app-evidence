@@ -32,7 +32,7 @@ function CreatePostCard() {
                 justify='center'
                 w='full'
                 px={{ '@bp1': 3, '@bp3': 4 }}
-                radius={3}
+                radius={1}
                 h={{ '@bp1': 24, '@bp3': '32px' }}
                 cursor='pointer'
                 css={{
@@ -42,7 +42,6 @@ function CreatePostCard() {
               >
                 <Text
                   noOfLines={1}
-                  italic
                   color='base300'
                   size={{ '@bp1': '12px', '@bp3': '14px' }}
                 >

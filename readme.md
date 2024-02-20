@@ -36,7 +36,7 @@ The web-application was developed using
 - Vite
 - Stitches JS
 - Framer Motion
-- Formik
+- Formik (with Yup)
 - ESLint
 - Prettier
 - Husky
@@ -229,7 +229,7 @@ type ExampleFnType = (param?: any) => IExampleReturnType;
 
 const example: ExampleFnType = (param) => ({
     someItem: "this is an example" 
-  });
+});
 ```
 
 - In the case that a named function is required (when you want the function
