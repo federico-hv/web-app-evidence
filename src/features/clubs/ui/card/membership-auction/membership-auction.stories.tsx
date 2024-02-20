@@ -1,8 +1,10 @@
 import { Meta, StoryObj } from '@storybook/react';
 import MembershipAuctionCard from './index';
 import { OnSaleMembershipModel } from '../../../shared';
+import dayjs from 'dayjs';
 
 const auctionData: OnSaleMembershipModel = {
+  endDate: dayjs().add(1, 'hour').toDate(),
   isOnWatchlist: false,
   price: 100.11,
   name: 'Name',
