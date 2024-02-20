@@ -60,7 +60,7 @@ function BookmarkPopover({
         </Popover.Trigger>
         <Popover.Portal>
           <Popover.Content
-            p={2}
+            p={1}
             align='center'
             side={position}
             alignOffset={alignOffset}
@@ -70,7 +70,7 @@ function BookmarkPopover({
             css={{ backgroundColor: '#FFF', zIndex: 20 }}
           >
             <HStack
-              p={{ '@bp1': 1, '@bp3': 2 }}
+              p={{ '@bp1': 1, '@bp3': 1 }}
               gap={3}
               items='center'
               divider={<Box h={1} w='1px' bgColor='base100' />}
