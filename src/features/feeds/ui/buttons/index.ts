@@ -4,3 +4,5 @@ export { default as GeneralArticleMoreButton } from './general-article-more.butt
 export { default as GeneralPostMoreButton } from './general-post-more.button';
 export { default as FeedOwnerMoreButton } from './feed-owner-more.button';
 export { default as AnswerPollButton } from './answer-poll';
+export { default as LikeButton } from './like';
+export { default as BookmarkButton } from './bookmark';

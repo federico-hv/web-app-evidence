@@ -218,3 +218,99 @@ export const HIDE_FEED = gql`
     hideFeed(id: $id, reason: $reason) # returns Feed Id, ["nullable", "string"]
   }
 `;
+
+export const LIKE_FEED = gql`
+  mutation likeFeed($id: String!) {
+    likeFeed(id: $id) {
+      id
+      type
+      isPinned
+      createdAt
+      reaction
+      owner {
+        id
+        displayName
+        username
+        avatar
+      }
+      node {
+        __typename
+        ... on PostModel {
+          id
+          description
+          media {
+            id
+            url
+            type
+          }
+          polls {
+            id
+            text
+            count
+            voted
+          }
+        }
+        ... on ArticleModel {
+          id
+          title
+          description
+          imageUrl
+          url
+          source {
+            name
+            logo
+            url
+          }
+        }
+      }
+    }
+  }
+`;
+
+export const UNLIKE_FEED = gql`
+  mutation unlikeFeed($id: String!) {
+    unlikeFeed(id: $id) {
+      id
+      type
+      isPinned
+      createdAt
+      reaction
+      owner {
+        id
+        displayName
+        username
+        avatar
+      }
+      node {
+        __typename
+        ... on PostModel {
+          id
+          description
+          media {
+            id
+            url
+            type
+          }
+          polls {
+            id
+            text
+            count
+            voted
+          }
+        }
+        ... on ArticleModel {
+          id
+          title
+          description
+          imageUrl
+          url
+          source {
+            name
+            logo
+            url
+          }
+        }
+      }
+    }
+  }
+`;
