@@ -66,7 +66,7 @@ function AnalyticsSummary() {
             backgroundColor: 'rgba(152, 152, 255, 0.10)',
           }}
         />
-        <VStack gap={2}>
+        <VStack gap={2} pt={2}>
           <AnalyticsStatistic
             label='club views'
             description='A description'
