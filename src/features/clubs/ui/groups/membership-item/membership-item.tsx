@@ -25,7 +25,7 @@ function MembershipItem({ data }: MembershipItemProps) {
       <Avatar size='xl' src={data.artist.avatar} variant='squircle' />
       <VStack gap={2}>
         <TextGroup gap={0}>
-          <TextGroupHeading size={2} css={{ lineHeight: 1.45 }}>
+          <TextGroupHeading size={2} css={{ lineHeight: 1.45 }} data-testid="membership-item-name">
             {data.name}
           </TextGroupHeading>
           <TextGroupSubheading
@@ -33,6 +33,7 @@ function MembershipItem({ data }: MembershipItemProps) {
             weight={300}
             color='white700'
             css={{ lineHeight: 1 }}
+            data-testid="membership-item-number"
           >
             {`Membership #${data.membershipNum}`}
           </TextGroupSubheading>
@@ -45,11 +46,13 @@ function MembershipItem({ data }: MembershipItemProps) {
                 : 'arrow-down-outline'
             }
             color={data.priceHasRisen ? 'success500' : 'danger400'}
+            data-testid="membership-item-change-icon"
           />
           <Text
             weight={500}
             size={2}
             color={data.priceHasRisen ? 'success500' : 'danger400'}
+            data-testid="membership-item-priceChange"
           >
             {`$${data.priceChange.toFixed(2)} USD`}
           </Text>
