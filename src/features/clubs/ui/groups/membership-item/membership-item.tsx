@@ -25,7 +25,7 @@ function MembershipItem({ data }: MembershipItemProps) {
       <Avatar size='xl' src={data.artist.avatar} variant='squircle'/>
       <VStack gap={2}>
         <TextGroup gap={0}>
-          <TextGroupHeading size={2} css={{ lineHeight: 1.45 }} role='membership-item name'>
+          <TextGroupHeading size={2} css={{ lineHeight: 1.45 }} aria-label="membership-item name">
             {data.name}
           </TextGroupHeading>
           <TextGroupSubheading
