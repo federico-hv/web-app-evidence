@@ -55,6 +55,7 @@ function ArticleCard({ data }: { data: ArticleModel }) {
               />
             </VStack>
           </Link>
+
           {currentUser && currentUser.id === owner.id ? (
             <FeedOwnerMoreButton ghost />
           ) : (

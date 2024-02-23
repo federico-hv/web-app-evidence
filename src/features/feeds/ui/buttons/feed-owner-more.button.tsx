@@ -18,7 +18,7 @@ import stats from '../../../../assets/images/stats.png';
 import pinOutlined from '../../../../assets/images/pin-outlined.png';
 import pinFilled from '../../../../assets/images/pin-filled.png';
 
-function FeedOwnerMoreButton({}: { ghost?: boolean }) {
+function FeedOwnerMoreButton({ ghost }: { ghost?: boolean }) {
   const { openWith } = useAlertDialog();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { owner, isPinned, feedId } = useFeedContext();
@@ -36,9 +36,9 @@ function FeedOwnerMoreButton({}: { ghost?: boolean }) {
           <Menu>
             <Menu.Trigger>
               <IconButton
-                variant='ghost'
                 size={{ '@bp1': 'sm', '@bp3': 'base' }}
-                colorTheme='white50'
+                colorTheme={ghost ? 'darkTint400' : 'white500'}
+                variant={ghost ? 'filled' : 'ghost'}
                 blur='xl'
                 icon='more-fill'
                 boxShadow='none'

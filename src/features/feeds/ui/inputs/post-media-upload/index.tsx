@@ -1,9 +1,24 @@
 import { Box, Input } from '@holdr-ui/react';
 import { PostMediaUploadProps } from './types';
+import { useRef } from 'react';
 
 function PostMediaUpload({ onChange }: PostMediaUploadProps) {
+  const ref = useRef<HTMLLabelElement>(null);
+
   return (
-    <Box cursor='pointer' as='label' position='absolute' h='100%' w='100%'>
+    <Box
+      innerRef={ref}
+      cursor='pointer'
+      as='label'
+      position='absolute'
+      h='100%'
+      w='100%'
+      onDragOver={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+      }}
+      onDrop={onChange}
+    >
       <Input
         hidden
         multiple

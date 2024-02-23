@@ -1,6 +1,6 @@
 import { Box, Image } from '@holdr-ui/react';
 import { MediaItemProps } from './types';
-import { CenteredImage, StyledVideo } from '../../styles';
+import { CenteredImage } from '../../styles';
 import { Fragment } from 'react';
 import Video, {
   VideoControls,

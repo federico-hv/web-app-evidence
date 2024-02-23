@@ -1,9 +1,28 @@
-import { UserModel, UserNamesGroup } from '../../../shared';
+import {
+  TextGroup,
+  TextGroupSubheading,
+  UserModel,
+} from '../../../shared';
 import { Avatar, Circle, HStack, Icon } from '@holdr-ui/react';
 
-function ResultItem({ data }: { data: UserModel; display?: string[] }) {
+function ResultItem({
+  data,
+  isSelected,
+}: {
+  data: UserModel;
+  display?: string[];
+  isSelected?: boolean;
+}) {
   return (
-    <HStack gap={3} items='center' py={3} px={2}>
+    <HStack
+      bgColor={isSelected ? 'clearTint300' : 'transparent'}
+      _hover={{ backgroundColor: '$clearTint300' }}
+      gap={3}
+      radius={2}
+      items='center'
+      py={3}
+      px={2}
+    >
       {data.avatar ? (
         <Avatar src={data.avatar} name={data.displayName} />
       ) : (
@@ -16,10 +35,12 @@ function ResultItem({ data }: { data: UserModel; display?: string[] }) {
           <Icon name='search-outline' />
         </Circle>
       )}
-      <UserNamesGroup
-        displayName={data.displayName}
-        username={data.username}
-      />
+      <TextGroup gap={0}>
+        <TextGroupSubheading weight={500} size={2}>
+          {data.displayName}
+        </TextGroupSubheading>
+        <TextGroupSubheading size={1}>{data.username}</TextGroupSubheading>
+      </TextGroup>
     </HStack>
   );
 }

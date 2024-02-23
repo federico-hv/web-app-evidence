@@ -1,4 +1,4 @@
-import { CreatePostDialog, useCurrentUser } from '../../../features';
+import { CreateFeedDialog, useCurrentUser } from '../../../features';
 import {
   DialogTabContextProvider,
   Paths,
@@ -101,7 +101,7 @@ function SmNavigation() {
                   // colorTheme='purple500'
                   ariaLabel={'create post'}
                 />
-                <CreatePostDialog />
+                <CreateFeedDialog />
               </DialogTabContextProvider>
             )}
             <NavigationLink

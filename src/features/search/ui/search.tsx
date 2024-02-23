@@ -60,9 +60,6 @@ function Search() {
     <Box
       w='full'
       css={{
-        '& .spotlight__input-wrapper > div:nth-child(2)': {
-          backgroundColor: '#FFF !important',
-        },
         '@bp1': {
           fontSize: '$2 !important',
           'input, input::placeholder': {
@@ -85,7 +82,13 @@ function Search() {
     >
       <Spotlight theme='dark'>
         <Spotlight.Input onValueChange={handleValueChange} />
-        <Spotlight.Content isLoading={loading}>
+        <Spotlight.Content
+          isLoading={loading}
+          css={{
+            backgroundColor: 'rgba(49, 49, 73, 0.75)',
+            backdropFilter: 'blur(50px)',
+          }}
+        >
           <Spotlight.Header>
             <Loader loading={historyLoading}>
               {history && <HistoryHeader history={history} />}
@@ -96,7 +99,9 @@ function Search() {
               data={results}
               onClickItem={onClickResultItem}
               onClickSearchItem={onClickSearchItem}
-              renderItem={({ item }: Item) => <ResultItem data={item} />}
+              renderItem={({ item }: Item, isSelected) => (
+                <ResultItem isSelected={isSelected} data={item} />
+              )}
               keyExtractor={keyExtractor}
             />
           )}
@@ -104,7 +109,9 @@ function Search() {
             <Spotlight.List
               data={history.data}
               onClickItem={onClickHistoryItem}
-              renderItem={({ item }: Item) => <HistoryItem data={item} />}
+              renderItem={({ item }: Item, isSelected) => (
+                <HistoryItem isSelected={isSelected} data={item} />
+              )}
               keyExtractor={keyExtractor}
             />
           )}

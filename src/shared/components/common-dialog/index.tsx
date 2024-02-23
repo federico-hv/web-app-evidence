@@ -182,7 +182,7 @@ function CommonDialogHeader({
           </Heading>
         )}
       </HStack>
-      <Box>{ActionButton}</Box>
+      {ActionButton && <Box>{ActionButton}</Box>}
     </Fragment>
   );
 }

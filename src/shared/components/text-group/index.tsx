@@ -11,7 +11,7 @@ function TextGroup({
   ...props
 }: TextGroupProps) {
   return (
-    <Stack direction={direction} gap={2} w='100%' {...props}>
+    <Stack direction={direction} gap={1} w='100%' {...props}>
       {children}
     </Stack>
   );

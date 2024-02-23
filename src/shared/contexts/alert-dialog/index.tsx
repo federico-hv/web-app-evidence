@@ -58,29 +58,36 @@ function AlertDialogProvider({ children }: GenericProps) {
           ariaDescribedBy='alert-dialog__heading'
         >
           <Dialog.Portal>
-            <Dialog.Overlay />
+            <Dialog.Overlay zIndex={10} bgColor='darkTint500' />
             <Dialog.Content
+              zIndex={10}
               h={{ '@bp1': 275, '@bp3': 225 }}
               w={{ '@bp1': '90vw', '@bp3': 400 }}
               css={{
-                backgroundColor: '#FFF',
+                backgroundColor: '#1A1A29',
               }}
             >
-              <Dialog.Body pt={5} px={0}>
+              <Dialog.Header
+                css={{
+                  backgroundColor: '#1A1A29',
+                }}
+              >
+                <Heading
+                  id='alert-dialog__heading'
+                  as='h2'
+                  weight={600}
+                  size={{ '@bp1': 2, '@bp3': 3 }}
+                  casing='uppercase'
+                >
+                  {current.title}
+                </Heading>
+              </Dialog.Header>
+              <Dialog.Body pt={5} px={0} color='white500'>
                 <VStack
                   gap={4}
                   px={4}
-                  divider={<Box borderBottom={1} borderColor='base100' />}
+                  divider={<Box borderBottom={1} borderColor='base700' />}
                 >
-                  <Heading
-                    id='alert-dialog__heading'
-                    as='h2'
-                    weight={500}
-                    size={{ '@bp1': 2, '@bp3': 3 }}
-                    casing='uppercase'
-                  >
-                    {current.title}
-                  </Heading>
                   <Text size={{ '@bp1': 2, '@bp3': 3 }}>
                     {current.description}
                   </Text>
@@ -91,6 +98,7 @@ function AlertDialogProvider({ children }: GenericProps) {
                 direction={{ '@bp1': 'vertical', '@bp3': 'horizontal' }}
               >
                 <Button
+                  colorTheme='base100'
                   onClick={close}
                   variant='ghost'
                   fullWidth
@@ -100,6 +108,7 @@ function AlertDialogProvider({ children }: GenericProps) {
                   {current.cancelText || 'Close'}
                 </Button>
                 <Button
+                  colorTheme='white500'
                   onClick={action}
                   fullWidth
                   size={{ '@bp1': 'sm', '@bp3': 'base' }}
