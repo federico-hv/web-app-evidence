@@ -19,8 +19,9 @@ import {
 } from '../../../../../../../shared';
 import { useCreateFeedContext } from '../../context';
 
-function WebsiteForm({ onBadLink }: { onBadLink?: VoidFunction }) {
-  const { websiteUrl, handleOnWebsiteChange } = useCreateFeedContext();
+function WebsiteForm() {
+  const { websiteUrl, handleOnWebsiteChange, onBadLink } =
+    useCreateFeedContext();
 
   return (
     <VStack w='100%' as='form' pt={4} gap={1} justify='space-between'>
@@ -150,24 +151,11 @@ function CantFindLinkForm() {
   );
 }
 
-function CreateArticle() {
-  const { currentStep, decrement } = useStepperContext();
-  const { badLink, onBadLink, articleState, resetWebsiteUrl } =
-    useCreateFeedContext();
+function PreviewArticleCard() {
+  const { articleState, resetWebsiteUrl } = useCreateFeedContext();
+  const { decrement } = useStepperContext();
 
-  const StepOne = () => {
-    return (
-      <Fragment>
-        {badLink ? (
-          <CantFindLinkForm />
-        ) : (
-          <WebsiteForm onBadLink={onBadLink} />
-        )}
-      </Fragment>
-    );
-  };
-
-  const StepTwo = () => (
+  return (
     <Box
       position='relative'
       p={4}
@@ -203,11 +191,20 @@ function CreateArticle() {
       />
     </Box>
   );
+}
+
+function CreateArticle() {
+  const { currentStep } = useStepperContext();
+  const { badLink } = useCreateFeedContext();
 
   return (
     <VStack t='1rem' l={0} r={0} overflowY='auto' pb={4} gap={4}>
-      {currentStep === 1 && <StepOne />}
-      {currentStep === 2 && <StepTwo />}
+      {currentStep === 1 && (
+        <Fragment>
+          {badLink ? <CantFindLinkForm /> : <WebsiteForm />}
+        </Fragment>
+      )}
+      {currentStep === 2 && <PreviewArticleCard />}
       <ChooseFeedType />
     </VStack>
   );
