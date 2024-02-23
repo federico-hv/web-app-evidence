@@ -106,6 +106,7 @@ function ClubsPage() {
                 value='all'
                 minHeight='calc(100vh - 158px)'
               >
+                {switchState && <FiltersList />}
                 <ClubsAllContent />
               </CustomTabsContent>
               <CustomTabsContent
