@@ -29,7 +29,12 @@ function CustomTabs({
 
   return (
     <GeneralContextProvider value={{ state, update }}>
-      <Box {...props}>
+      <Box
+        css={{
+          transition: 'all 0.3s ease-in-out',
+        }}
+        {...props}
+      >
         {TabsHeader}
         {TabsContent}
       </Box>

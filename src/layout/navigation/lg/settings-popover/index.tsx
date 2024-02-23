@@ -1,7 +1,6 @@
 import { useState } from 'react';
-import { hexToRGB, useLogout } from '../../../../shared';
+import { hexToRGB, customBgColor, useLogout } from '../../../../shared';
 import { Box, IconButton, Popover, VStack } from '@holdr-ui/react';
-import { popoverTriggerStyle } from '../styles';
 
 function SettingsItem({
   label,
@@ -36,7 +35,7 @@ function SettingsPopover() {
     <Popover modal isOpen={state} onOpenChange={set}>
       <Popover.Trigger asChild onClick={() => set(true)}>
         <IconButton
-          className={popoverTriggerStyle()}
+          className={customBgColor()}
           variant='ghost'
           colorTheme='white50'
           icon='settings-outline'

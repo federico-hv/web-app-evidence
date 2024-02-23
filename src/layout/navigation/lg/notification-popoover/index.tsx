@@ -16,12 +16,12 @@ import {
   Loader,
   Menu,
   Paths,
+  customBgColor,
   useGeneralContext,
 } from '../../../../shared';
 import { useState } from 'react';
 import { Notification, useNotification } from '../../../../features';
 import { Link } from 'react-router-dom';
-import { popoverTriggerStyle } from '../styles';
 
 interface INotificationContext {
   isOpen: boolean;
@@ -44,7 +44,7 @@ function NotificationPopover() {
     <Popover modal isOpen={isOpen} onOpenChange={setIsOpen}>
       <Popover.Trigger asChild>
         <IconButton
-          className={popoverTriggerStyle()}
+          className={customBgColor()}
           variant='ghost'
           colorTheme='white50'
           icon='notification-outline'
