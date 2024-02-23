@@ -17,7 +17,7 @@ function MyMemberItem({ data, isOnline }: MyMemberItemProps) {
     >
       <Avatar size='base' src={data.avatar}>
         {isOnline && (
-          <AvatarBadge size={1}>
+          <AvatarBadge size={1} aria-label="members-item online status" role='status'>
             <Circle
               size='13px'
               css={{
@@ -30,8 +30,8 @@ function MyMemberItem({ data, isOnline }: MyMemberItemProps) {
         )}
       </Avatar>
       <TextGroup gap={0}>
-        <TextGroupHeading size={2}>{data.displayName}</TextGroupHeading>
-        <TextGroupSubheading size={1} weight={300}>
+        <TextGroupHeading size={2} aria-label="members-item displayName">{data.displayName}</TextGroupHeading>
+        <TextGroupSubheading size={1} weight={300} aria-label="members-item username">
           {`@${data.username}`}
         </TextGroupSubheading>
       </TextGroup>
