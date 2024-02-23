@@ -36,5 +36,5 @@
 //   }
 // }
 
-export const sample = {};
 
+export const sample = {};

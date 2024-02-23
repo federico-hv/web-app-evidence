@@ -59,7 +59,7 @@ function MyMembers() {
       <VStack>
         <MyMemberItem data={dummyMember} isOnline={true} />
         <MyMemberItem data={dummyMember} isOnline={true} />
-        <MyMemberItem data={dummyMember} isOnline={true} />
+        <MyMemberItem data={dummyMember} isOnline={false} />
         <MyMemberItem data={dummyMember} isOnline={false} />
       </VStack>
     </VStack>
