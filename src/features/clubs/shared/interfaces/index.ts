@@ -13,4 +13,7 @@ export interface OwnedMembershipModel {
   name: string;
   salePrice: number;
   artist: UserModel;
+  membershipNum: number;
+  priceChange: number;
+  priceHasRisen?: boolean;
 }

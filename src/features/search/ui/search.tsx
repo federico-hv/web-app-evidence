@@ -1,14 +1,6 @@
 import { useState } from 'react';
 import { Spotlight, Box } from '@holdr-ui/react';
-
-import {
-  prefix,
-  UserModel,
-  Loader,
-  SwitchConditional,
-  SwitchConditionalCase,
-  Paths,
-} from '../../../shared';
+import { prefix, UserModel, Loader, Paths } from '../../../shared';
 import { Item } from './type';
 import {
   useSaveSearchHistory,
@@ -91,7 +83,7 @@ function Search() {
         },
       }}
     >
-      <Spotlight>
+      <Spotlight theme='dark'>
         <Spotlight.Input onValueChange={handleValueChange} />
         <Spotlight.Content isLoading={loading}>
           <Spotlight.Header>
@@ -99,29 +91,23 @@ function Search() {
               {history && <HistoryHeader history={history} />}
             </Loader>
           </Spotlight.Header>
-          <SwitchConditional>
-            <SwitchConditionalCase
-              on={value.length > 0 && !error && !loading}
-            >
-              <Spotlight.List
-                data={results}
-                onClickItem={onClickResultItem}
-                onClickSearchItem={onClickSearchItem}
-                renderItem={({ item }: Item) => <ResultItem data={item} />}
-                keyExtractor={keyExtractor}
-              />
-            </SwitchConditionalCase>
-            <SwitchConditionalCase on={value.length === 0}>
-              <Spotlight.List
-                data={history.data}
-                onClickItem={onClickHistoryItem}
-                renderItem={({ item }: Item) => (
-                  <HistoryItem data={item} />
-                )}
-                keyExtractor={keyExtractor}
-              />
-            </SwitchConditionalCase>
-          </SwitchConditional>
+          {value.length > 0 && !error && !loading && (
+            <Spotlight.List
+              data={results}
+              onClickItem={onClickResultItem}
+              onClickSearchItem={onClickSearchItem}
+              renderItem={({ item }: Item) => <ResultItem data={item} />}
+              keyExtractor={keyExtractor}
+            />
+          )}
+          {value.length === 0 && (
+            <Spotlight.List
+              data={history.data}
+              onClickItem={onClickHistoryItem}
+              renderItem={({ item }: Item) => <HistoryItem data={item} />}
+              keyExtractor={keyExtractor}
+            />
+          )}
         </Spotlight.Content>
       </Spotlight>
     </Box>

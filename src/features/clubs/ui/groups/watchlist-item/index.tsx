@@ -14,9 +14,7 @@ import {
   TextGroupSubheading,
 } from '../../../../../shared';
 
-
 function WatchlistItem({ data }: WatchlistItemProps) {
-
   return (
     <HStack
       w='100%'
@@ -29,7 +27,7 @@ function WatchlistItem({ data }: WatchlistItemProps) {
         transition: theme.transitions['duration-normal'],
       }}
     >
-      <Avatar css={{ size: '60px' }} variant='squircle'/>
+      <Avatar css={{ size: '60px' }} variant='squircle' />
       <VStack gap={1} w='100%' h='80%'>
         <HStack
           gap={2}
@@ -73,6 +71,7 @@ function WatchlistItem({ data }: WatchlistItemProps) {
           {data.endDate && (
             <VStack gap={0} flex={1}>
               <TextGroupSubheading size={1} weight={300} color='white700' aria-label='watchlist-item timeleft title' >
+
                 Time Left
               </TextGroupSubheading>
 

@@ -15,7 +15,7 @@ export const TabOptions = {
 // TODO remove whne we have real data
 export const dummyArtist: UserModel = {
   id: '1',
-  avatar: '',
+  avatar: 'https://cdna.artstation.com/p/assets/images/images/071/001/504/smaller_square/icy-tamtam-asset.jpg?1704218440',
   displayName: 'Artist Name',
   username: 'artist username',
 };
@@ -45,6 +45,17 @@ export const dummySecondarySaleMembershipData: OnSaleMembershipModel = {
 
 export const dummyOwnedMembershipData: OwnedMembershipModel = {
   salePrice: 200,
-  name: 'Name',
+  name: 'Rising Name',
   artist: dummyArtist,
+  membershipNum: 3,
+  priceChange: 42,
+  priceHasRisen: true
+};
+
+export const dummyOwnedMembershipData2: OwnedMembershipModel = {
+  salePrice: 200,
+  name: 'Falling Name',
+  artist: dummyArtist,
+  membershipNum: 3,
+  priceChange: 42,
 };
