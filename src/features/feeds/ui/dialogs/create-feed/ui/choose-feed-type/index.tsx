@@ -1,4 +1,4 @@
-import { useCreateFeedContext } from '../../context';
+import { useCreateFeedContext } from '../../shared';
 import { HStack, IconButton, Tooltip } from '@holdr-ui/react';
 import { SelectAudience } from '../index';
 

@@ -1,7 +1,8 @@
-import { ReactNode } from 'react';
+import { ReactNode, Ref } from 'react';
 import { IconName } from '@holdr-ui/react/dist/shared/types';
 
 export interface GenericProps {
+  innerRef?: Ref<any>;
   children?: ReactNode;
   onClick?: VoidFunction;
 }

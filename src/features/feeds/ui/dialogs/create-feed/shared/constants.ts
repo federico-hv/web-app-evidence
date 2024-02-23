@@ -1,4 +1,4 @@
-import { CreateArticleInput, CreatePostInput } from '../../../shared';
+import { CreateArticleInput, CreatePostInput } from '../../../../shared';
 
 export const defaultPostState: CreatePostInput = {
   description: '',

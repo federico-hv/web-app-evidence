@@ -1,14 +1,32 @@
-import { useCreatePost } from '../../../../../shared';
+import {
+  PollSchema,
+  PostSchema,
+  useCreatePost,
+} from '../../../../../shared';
 import { Button } from '@holdr-ui/react';
 import { makeButtonLarger } from '../../../../../../../shared';
-import { useCreateFeedContext } from '../../context';
+import { useCreateFeedContext } from '../../shared';
 
 function CreatePostButton() {
   const { createPost, loading } = useCreatePost();
   const { postState, close } = useCreateFeedContext();
+
+  const checkIsDisabled = () => {
+    try {
+      PostSchema.validateSync(postState);
+      if (postState.responses) {
+        PollSchema.validateSync(postState);
+      }
+      return false;
+    } catch (e) {
+      return true;
+    }
+  };
+
   return (
     <Button
       isLoading={loading}
+      disabled={checkIsDisabled()}
       loadingText={loading ? '' : 'Posting'}
       onClick={async () => {
         const result = await createPost(postState);

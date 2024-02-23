@@ -1,4 +1,4 @@
-import { useCreateFeedContext } from '../../context';
+import { useCreateFeedContext } from '../../shared';
 import { VStack } from '@holdr-ui/react';
 import { CreatePostEditor } from '../index';
 import AddMedia from '../../../../groups/add-media';

@@ -1,16 +1,21 @@
+import { Button } from '@holdr-ui/react';
+import { Fragment } from 'react';
 import {
   CreateArticleInput,
   useCreateArticle,
   useCreateOgMetadata,
 } from '../../../../../shared';
-import { Button } from '@holdr-ui/react';
 import {
   makeButtonLarger,
   useStepperContext,
 } from '../../../../../../../shared';
-import { useCreateFeedContext } from '../../context';
-import { Fragment } from 'react';
-import { defaultArticleState } from '../../constants';
+import {
+  useCreateFeedContext,
+  defaultArticleState,
+  ArticleSchema,
+  MaxArticleDescription,
+  MaxArticleTitle,
+} from '../../shared';
 
 function CreateArticleButton() {
   const { createArticle, loading: loadingCreateArticle } =
@@ -27,10 +32,33 @@ function CreateArticleButton() {
   } = useCreateFeedContext();
 
   const { currentStep, increment } = useStepperContext();
+
+  const isWebsiteInvalid = () => {
+    const websiteRegex = new RegExp(
+      '(https:\\/\\/www\\.|http:\\/\\/www\\.|https:\\/\\/|http:\\/\\/)?[a-zA-Z0-9]{2,}(\\.[a-zA-Z0-9]{2,})(\\.[a-zA-Z0-9]{2,})?\\/[a-zA-Z0-9]{2,}',
+    );
+
+    if (websiteUrl.length < 1) {
+      return true;
+    }
+
+    return !websiteRegex.test(websiteUrl);
+  };
+
+  const isArticleInvalid = () => {
+    try {
+      ArticleSchema.validateSync(articleState);
+      return false;
+    } catch (e) {
+      return true;
+    }
+  };
+
   return (
     <Fragment>
       {currentStep === 1 && (
         <Button
+          disabled={isWebsiteInvalid()}
           isLoading={loadingCreateOgMetadata}
           loadingText={loadingCreateOgMetadata ? '' : 'Posting'}
           onClick={async () => {
@@ -41,11 +69,12 @@ function CreateArticleButton() {
                 resetWebsiteUrl();
 
                 updateArticleState({
-                  title: result.title.replace(/<\/?[^>]+(>|$)/g, ''),
-                  description: result.description.replace(
-                    /<\/?[^>]+(>|$)/g,
-                    '',
-                  ),
+                  title: result.title
+                    .replace(/<\/?[^>]+(>|$)/g, '')
+                    .slice(0, MaxArticleTitle),
+                  description: result.description
+                    .replace(/<\/?[^>]+(>|$)/g, '')
+                    .slice(0, MaxArticleDescription),
                   imageUrl: result.images[0].url,
                   url: result.url,
                   site: {
@@ -79,6 +108,7 @@ function CreateArticleButton() {
       )}
       {currentStep === 2 && (
         <Button
+          disabled={isArticleInvalid()}
           isLoading={loadingCreateArticle}
           loadingText={loadingCreateArticle ? '' : 'Posting'}
           onClick={async () => {

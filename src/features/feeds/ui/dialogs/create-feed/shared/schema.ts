@@ -5,11 +5,14 @@ import {
   requiredField,
 } from '../../../../../../shared';
 
+export const MaxArticleTitle = 125;
+export const MaxArticleDescription = 175;
+
 export const ArticleSchema = object({
   title: string()
     .required(requiredField('title', 'A title is required.'))
     .min(1, minimumLengthMsg(1))
-    .max(75, maximumLengthMsg(75)),
+    .max(MaxArticleTitle, maximumLengthMsg(MaxArticleTitle)),
 
   url: string()
     .required(requiredField('url', 'A url is required.'))
@@ -24,5 +27,5 @@ export const ArticleSchema = object({
   description: string()
     .required(requiredField('description', 'A description is required.'))
     .min(1, minimumLengthMsg(1))
-    .max(150, maximumLengthMsg(75)),
+    .max(MaxArticleDescription, maximumLengthMsg(MaxArticleDescription)),
 });

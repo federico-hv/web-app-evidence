@@ -32,9 +32,12 @@ import {
   CreatePost,
   CreatePostButton,
 } from './ui';
-import { CreateFeedContextProvider } from './context';
-import { defaultArticleState, defaultPostState } from './constants';
-import { PostType } from './types';
+import {
+  CreateFeedContextProvider,
+  defaultArticleState,
+  defaultPostState,
+} from './shared';
+import { PostType } from './shared';
 
 function CreateFeedDialog() {
   const currentUser = useCurrentUser();

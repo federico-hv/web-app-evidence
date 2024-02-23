@@ -1,6 +1,6 @@
-import { CreateArticleInput, CreatePostInput } from '../../../shared';
+import { CreateArticleInput, CreatePostInput } from '../../../../shared';
 import { ChangeEvent, createContext, useContext } from 'react';
-import { dummyFn } from '../../../../../shared';
+import { dummyFn } from '../../../../../../shared';
 import { defaultArticleState, defaultPostState } from './constants';
 import { PostType } from './types';
 

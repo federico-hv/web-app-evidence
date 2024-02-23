@@ -17,7 +17,7 @@ import {
   OgMetadataCard,
   useStepperContext,
 } from '../../../../../../../shared';
-import { useCreateFeedContext } from '../../context';
+import { useCreateFeedContext } from '../../shared';
 
 function WebsiteForm() {
   const { websiteUrl, handleOnWebsiteChange, onBadLink } =
