@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { hexToRGB, useLogout, useMenuNavigate } from '../../../../shared';
+import { hexToRGB, useLogout } from '../../../../shared';
 import { Box, IconButton, Popover, VStack } from '@holdr-ui/react';
-import { ButtonWrapper } from '../../ui';
+import { popoverTriggerStyle } from '../styles';
 
 function SettingsItem({
   label,
@@ -34,15 +34,14 @@ function SettingsPopover() {
 
   return (
     <Popover modal isOpen={state} onOpenChange={set}>
-      <Popover.Trigger onClick={() => set(true)}>
-        <ButtonWrapper>
-          <IconButton
-            variant='ghost'
-            colorTheme='white50'
-            icon='settings-outline'
-            ariaLabel='View messages'
-          />
-        </ButtonWrapper>
+      <Popover.Trigger asChild onClick={() => set(true)}>
+        <IconButton
+          className={popoverTriggerStyle()}
+          variant='ghost'
+          colorTheme='white50'
+          icon='settings-outline'
+          ariaLabel='View messages'
+        />
       </Popover.Trigger>
       <Popover.Portal>
         <Popover.Content

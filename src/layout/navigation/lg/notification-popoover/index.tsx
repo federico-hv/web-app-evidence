@@ -21,7 +21,7 @@ import {
 import { useState } from 'react';
 import { Notification, useNotification } from '../../../../features';
 import { Link } from 'react-router-dom';
-import { ButtonWrapper } from '../../ui';
+import { popoverTriggerStyle } from '../styles';
 
 interface INotificationContext {
   isOpen: boolean;
@@ -42,15 +42,14 @@ function NotificationPopover() {
 
   return (
     <Popover modal isOpen={isOpen} onOpenChange={setIsOpen}>
-      <Popover.Trigger>
-        <ButtonWrapper>
-          <IconButton
-            variant='ghost'
-            colorTheme='white50'
-            icon='notification-outline'
-            ariaLabel='View notifications'
-          />
-        </ButtonWrapper>
+      <Popover.Trigger asChild>
+        <IconButton
+          className={popoverTriggerStyle()}
+          variant='ghost'
+          colorTheme='white50'
+          icon='notification-outline'
+          ariaLabel='View notifications'
+        />
       </Popover.Trigger>
       <Popover.Portal>
         <Popover.Content

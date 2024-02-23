@@ -1,5 +1,6 @@
 import {
   Box,
+  css,
   Heading,
   HStack,
   IconButton,
@@ -8,22 +9,21 @@ import {
 } from '@holdr-ui/react';
 import { useState } from 'react';
 import { useMenuNavigate } from '../../../../shared';
-import { ButtonWrapper } from '../../ui';
+import { popoverTriggerStyle } from '../styles';
 
 function MessagePopover() {
   const [state, set] = useState(false);
   const { goto } = useMenuNavigate();
   return (
     <Popover modal isOpen={state} onOpenChange={set}>
-      <Popover.Trigger onClick={() => set(true)}>
-        <ButtonWrapper>
-          <IconButton
-            variant='ghost'
-            colorTheme='white50'
-            icon='chat-outline'
-            ariaLabel='View messages'
-          />
-        </ButtonWrapper>
+      <Popover.Trigger asChild onClick={() => set(true)}>
+        <IconButton
+          className={popoverTriggerStyle()}
+          variant='ghost'
+          colorTheme='white50'
+          icon='chat-outline'
+          ariaLabel='View messages'
+        />
       </Popover.Trigger>
       <Popover.Portal>
         <Popover.Content
