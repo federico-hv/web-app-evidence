@@ -13,7 +13,7 @@ function SettingsItem({
   return (
     <Box
       p={4}
-      radius={3}
+      radius={2}
       _hover={{
         backgroundColor: hexToRGB('#0E0E1B', 0.5),
       }}
@@ -27,7 +27,6 @@ function SettingsItem({
 
 function SettingsPopover() {
   const logout = useLogout();
-  const { goto } = useMenuNavigate();
 
   const [state, set] = useState(false);
 
@@ -47,14 +46,14 @@ function SettingsPopover() {
       </Popover.Trigger>
       <Popover.Portal>
         <Popover.Content
+          p={3}
           color='white50'
-          alignOffset={0}
           sideOffset={20}
           align='end'
           w={308}
           zIndex={50}
+          radius={2}
           css={{
-            borderRadius: '$4',
             border: '1px solid rgba(152, 152, 255, 0.10)',
             background: ' rgba(56, 56, 140, 0.25)',
             boxShadow: '0px 0px 100px 0px rgba(14, 14, 27, 0.35)',

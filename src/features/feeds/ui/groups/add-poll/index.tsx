@@ -124,7 +124,7 @@ function AddPoll({ update }: AddPollProps) {
             </TextGroupSubheading>
           </TextGroup>
           <Switch
-            colorTheme='purple500'
+            colorTheme='success500'
             size={{ '@bp1': 'sm', '@bp3': 'base' }}
             value={String(withEndDate)}
             onChange={(e) =>

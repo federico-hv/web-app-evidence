@@ -41,8 +41,11 @@ function CreateArticleButton() {
                 resetWebsiteUrl();
 
                 updateArticleState({
-                  title: result.title,
-                  description: result.description,
+                  title: result.title.replace(/<\/?[^>]+(>|$)/g, ''),
+                  description: result.description.replace(
+                    /<\/?[^>]+(>|$)/g,
+                    '',
+                  ),
                   imageUrl: result.images[0].url,
                   url: result.url,
                   site: {

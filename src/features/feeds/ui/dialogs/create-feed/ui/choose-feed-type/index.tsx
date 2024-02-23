@@ -1,35 +1,57 @@
 import { useCreateFeedContext } from '../../context';
-import { ButtonGroup, HStack, IconButton } from '@holdr-ui/react';
+import { HStack, IconButton, Tooltip } from '@holdr-ui/react';
 import { SelectAudience } from '../index';
 
 function ChooseFeedType() {
-  const { toggleType, type } = useCreateFeedContext();
+  const { toggleType, type, onGoodLink } = useCreateFeedContext();
   return (
-    <HStack justify='space-between' items='center'>
+    <HStack position='relative' justify='space-between' items='center'>
       <SelectAudience />
-      <ButtonGroup size='lg' variant='ghost' colorTheme='white500' gap={1}>
-        <IconButton
-          onClick={() => toggleType('with-image')}
-          icon={type === 'with-image' ? 'image-fill' : 'image-outline'}
-          ariaLabel='add an image'
-        />
-        <IconButton
-          onClick={() => toggleType('as-article')}
-          icon={
-            type === 'as-article'
-              ? 'article-read-fill'
-              : 'article-read-outline'
-          }
-          ariaLabel='add and article'
-        />
-        <IconButton
-          onClick={() => {
-            toggleType('with-poll');
-          }}
-          icon={type === 'with-poll' ? 'poll-fill' : 'poll-outline'}
-          ariaLabel=''
-        />
-      </ButtonGroup>
+      <HStack gap={1} zIndex={10}>
+        <Tooltip label='Add image'>
+          <IconButton
+            size='lg'
+            variant='ghost'
+            colorTheme='white500'
+            onClick={() => {
+              toggleType('with-image');
+              onGoodLink();
+            }}
+            icon={type === 'with-image' ? 'image-fill' : 'image-outline'}
+            ariaLabel='add an image'
+          />
+        </Tooltip>
+        <Tooltip label='Add article'>
+          <IconButton
+            size='lg'
+            variant='ghost'
+            colorTheme='white500'
+            onClick={() => {
+              toggleType('as-article');
+              onGoodLink();
+            }}
+            icon={
+              type === 'as-article'
+                ? 'article-read-fill'
+                : 'article-read-outline'
+            }
+            ariaLabel='add an article'
+          />
+        </Tooltip>
+        <Tooltip label='Add poll'>
+          <IconButton
+            size='lg'
+            variant='ghost'
+            colorTheme='white500'
+            onClick={() => {
+              toggleType('with-poll');
+              onGoodLink();
+            }}
+            icon={type === 'with-poll' ? 'poll-fill' : 'poll-outline'}
+            ariaLabel='add a poll'
+          />
+        </Tooltip>
+      </HStack>
     </HStack>
   );
 }

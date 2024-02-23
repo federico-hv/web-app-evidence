@@ -50,7 +50,11 @@ function CreateFeedDialog() {
     useRecordState<CreatePostInput>(defaultPostState);
   const [type, setType] = useState<PostType | undefined>();
   const { current, increment, decrement, reset } = useCounter();
-  const { switchState: badLink, turnOn: onBadLink, turnOff } = useSwitch();
+  const {
+    switchState: badLink,
+    turnOn: onBadLink,
+    turnOff: onGoodLink,
+  } = useSwitch();
 
   const toggleType = (next: PostType) => {
     if (type === next) {
@@ -67,8 +71,10 @@ function CreateFeedDialog() {
   const close = () => {
     onClose();
     setType(undefined);
+    updateArticleState(defaultArticleState);
+    updatePostState(defaultPostState);
     reset();
-    turnOff();
+    onGoodLink();
   };
 
   return (
@@ -80,6 +86,7 @@ function CreateFeedDialog() {
         resetWebsiteUrl,
         badLink,
         onBadLink,
+        onGoodLink,
         articleState,
         updateArticleState,
         postState,

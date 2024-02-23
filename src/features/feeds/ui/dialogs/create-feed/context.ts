@@ -9,6 +9,7 @@ interface ICreateFeedContext {
 
   badLink?: boolean;
   onBadLink: VoidFunction;
+  onGoodLink: VoidFunction;
 
   websiteUrl: string;
   resetWebsiteUrl: VoidFunction;
@@ -32,6 +33,7 @@ const CreateFeedContext = createContext<ICreateFeedContext>({
 
   badLink: false,
   onBadLink: dummyFn,
+  onGoodLink: dummyFn,
 
   websiteUrl: '',
   handleOnWebsiteChange: dummyFn,

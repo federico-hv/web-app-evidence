@@ -1,5 +1,6 @@
 import {
   Box,
+  CloseButton,
   hexToRGB,
   HStack,
   Icon,
@@ -79,6 +80,7 @@ function CantFindLinkForm() {
           css={{ backgroundColor: hexToRGB('#9898FF', 0.15) }}
         >
           <Input
+            radius={1}
             focusColor='transparent'
             name='title'
             value={articleState.title}
@@ -97,6 +99,7 @@ function CantFindLinkForm() {
           css={{ backgroundColor: hexToRGB('#9898FF', 0.15) }}
         >
           <Input
+            radius={1}
             focusColor='transparent'
             name='url'
             value={articleState.url}
@@ -114,6 +117,7 @@ function CantFindLinkForm() {
           css={{ backgroundColor: hexToRGB('#9898FF', 0.15) }}
         >
           <Input
+            radius={1}
             focusColor='transparent'
             name='imageUrl'
             value={articleState.imageUrl}
@@ -131,6 +135,7 @@ function CantFindLinkForm() {
           css={{ backgroundColor: hexToRGB('#9898FF', 0.15) }}
         >
           <Textarea
+            radius={1}
             focusColor='transparent'
             name='description'
             value={articleState.description}
@@ -146,8 +151,9 @@ function CantFindLinkForm() {
 }
 
 function CreateArticle() {
-  const { currentStep } = useStepperContext();
-  const { badLink, onBadLink, articleState } = useCreateFeedContext();
+  const { currentStep, decrement } = useStepperContext();
+  const { badLink, onBadLink, articleState, resetWebsiteUrl } =
+    useCreateFeedContext();
 
   const StepOne = () => {
     return (
@@ -163,10 +169,29 @@ function CreateArticle() {
 
   const StepTwo = () => (
     <Box
+      position='relative'
       p={4}
       radius={1}
       css={{ backgroundColor: hexToRGB('#9898FF', 0.15) }}
     >
+      <Box
+        css={{ backgroundColor: 'rgba(45, 45, 71)' }}
+        position='absolute'
+        t='0.5rem'
+        r='0.5rem'
+        zIndex={5}
+        p={1}
+        radius='full'
+      >
+        <CloseButton
+          onClick={() => {
+            resetWebsiteUrl();
+            decrement();
+          }}
+          variant='outline'
+          colorTheme='white500'
+        />
+      </Box>
       <OgMetadataCard
         data={{
           title: articleState.title,
