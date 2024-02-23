@@ -22,10 +22,10 @@ function MembershipItem({ data }: MembershipItemProps) {
         transition: theme.transitions['duration-normal'],
       }}
     >
-      <Avatar size='xl' src={data.artist.avatar} variant='squircle' />
+      <Avatar size='xl' src={data.artist.avatar} variant='squircle'/>
       <VStack gap={2}>
         <TextGroup gap={0}>
-          <TextGroupHeading size={2} css={{ lineHeight: 1.45 }}>
+          <TextGroupHeading size={2} css={{ lineHeight: 1.45 }} aria-label="membership-item name">
             {data.name}
           </TextGroupHeading>
           <TextGroupSubheading
@@ -33,6 +33,7 @@ function MembershipItem({ data }: MembershipItemProps) {
             weight={300}
             color='white700'
             css={{ lineHeight: 1 }}
+            aria-label='membership-item number'
           >
             {`Membership #${data.membershipNum}`}
           </TextGroupSubheading>
@@ -45,11 +46,17 @@ function MembershipItem({ data }: MembershipItemProps) {
                 : 'arrow-down-outline'
             }
             color={data.priceHasRisen ? 'success500' : 'danger400'}
+            aria-label={
+              `${data.priceHasRisen
+              ? 'increase'
+              : 'decrease'} in value`
+            }
           />
           <Text
             weight={500}
             size={2}
             color={data.priceHasRisen ? 'success500' : 'danger400'}
+            aria-label='membership-item price change'
           >
             {`$${data.priceChange.toFixed(2)} USD`}
           </Text>
