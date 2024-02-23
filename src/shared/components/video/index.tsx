@@ -68,7 +68,7 @@ function Video({
         bgColor='base600'
         css={{ userSelect: 'none' }}
         position='relative'
-        zIndex={1000}
+        zIndex={10}
       >
         <Box w={w} h={h} onClick={togglePause}>
           {/* {Thumbnail} */}
