@@ -1,5 +1,4 @@
-import { Center, Text } from '@holdr-ui/react';
-import { theme } from '../../../../../configs';
+import { Center, Text, theme } from '@holdr-ui/react';
 import { AnswerPollButtonProps } from './types';
 
 function AnswerPollButton({ label, onClick }: AnswerPollButtonProps) {
@@ -9,7 +8,7 @@ function AnswerPollButton({ label, onClick }: AnswerPollButtonProps) {
       onClick={onClick}
       cursor='pointer'
       role='button'
-      p={3}
+      p={2}
       border={1}
       radius='full'
       borderColor='base200'
@@ -17,6 +16,7 @@ function AnswerPollButton({ label, onClick }: AnswerPollButtonProps) {
       overflow='hidden'
       _hover={{
         backgroundColor: '$base100',
+        color: '$black500',
       }}
       css={{
         userSelect: 'none',

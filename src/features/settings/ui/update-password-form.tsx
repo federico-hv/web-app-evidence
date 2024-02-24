@@ -33,7 +33,7 @@ function InnerForm() {
             placeholder='··········'
           />
           {data && !data.status && (
-            <Text size={2} color='danger'>
+            <Text size={2} color='danger500'>
               {data.message}
             </Text>
           )}

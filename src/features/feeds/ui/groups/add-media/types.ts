@@ -1,7 +1,7 @@
 import { CreatePostInput } from '../../../shared';
+import { ReactElement } from 'react';
 
 export interface AddMediaProps {
-  remove: VoidFunction;
-  reset: VoidFunction;
+  as?: ReactElement;
   update: (state: Partial<CreatePostInput>) => void;
 }

@@ -1,0 +1,71 @@
+@font-face {
+    font-family: "GeneralSans";
+    src: local("GeneralSansBold"),
+    url("public/fonts/general-sans/generalsans-bold.otf") format("opentype");
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "GeneralSans";
+    src: local("GeneralSansBoldItalic"),
+    url("public/fonts/general-sans/generalsans-bolditalic.otf") format("opentype");
+    font-weight: 700;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: "GeneralSans";
+    src: local("GeneralSansExtraLight"),
+    url("public/fonts/general-sans/generalsans-extralight.otf") format("opentype");
+    font-weight: 200;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "GeneralSans";
+    src: local("GeneralSansExtraLightItalic"),
+    url("public/fonts/general-sans/generalsans-extralightitalic.otf") format("opentype");
+    font-weight: 200;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: "GeneralSans";
+    src: local("GeneralSansLight"),
+    url("public/fonts/general-sans/generalsans-light.otf") format("opentype");
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "GeneralSans";
+    src: local("GeneralSansLightItalic"),
+    url("public/fonts/general-sans/generalsans-lightitalic.otf") format("opentype");
+    font-weight: 300;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: "GeneralSans";
+    src: local("GeneralSansRegular"),
+    url("public/fonts/general-sans/generalsans-regular.otf") format("opentype");
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "GeneralSans";
+    src: local("GeneralSansMedium"),
+    url("public/fonts/general-sans/generalsans-medium.otf") format("opentype");
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "GeneralSans";
+    src: local("GeneralSansMediumItalic"),
+    url("public/fonts/general-sans/generalsans-mediumitalic.otf") format("opentype");
+    font-weight: 500;
+    font-style: italic;
+}

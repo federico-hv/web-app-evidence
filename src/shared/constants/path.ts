@@ -1,6 +1,8 @@
 export const Paths = {
   root: '',
+  all: 'all',
   discover: 'discover',
+  clubs: 'clubs',
   channels: 'channels',
   connect: 'connect',
   bookmarks: 'bookmarks',
@@ -10,6 +12,10 @@ export const Paths = {
   settings: 'settings',
   username: ':username',
   feed: 'feeds/:id',
+  club: {
+    watchlist: 'watchlist',
+    memberships: 'memberships',
+  },
   setting: {
     account: 'account',
     username: 'username',

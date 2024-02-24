@@ -63,7 +63,7 @@ function MediaView({
   useKeyBind(27, onClose);
 
   return (
-    <Fragment>
+    <>
       {Trigger && (
         <Box w='100%' h='100%' onClick={onOpen}>
           {Trigger}
@@ -116,7 +116,7 @@ function MediaView({
                       <Button
                         onClick={onClose}
                         className={extraBtnPadding()}
-                        colorTheme='primary400'
+                        colorTheme='white50'
                         variant='ghost'
                       >
                         Close
@@ -130,7 +130,7 @@ function MediaView({
         </Fragment>,
         document.querySelector('#root') || document.body,
       )}
-    </Fragment>
+    </>
   );
 }
 MediaView.displayName = 'MediaView';

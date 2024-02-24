@@ -1,4 +1,4 @@
-import { css } from '../../../configs';
+import { css } from '@holdr-ui/react';
 
 export const smaller = css({
   height: '1rem !important',

@@ -9,7 +9,13 @@ import {
   Icon,
 } from '@holdr-ui/react';
 
-function HistoryItem({ data }: { data: UserModel }) {
+function HistoryItem({
+  data,
+  isSelected,
+}: {
+  data: UserModel;
+  isSelected?: boolean;
+}) {
   const { remove } = useRemoveSearchHistoryItem<UserModel>();
 
   return (
@@ -17,6 +23,9 @@ function HistoryItem({ data }: { data: UserModel }) {
       position='relative'
       items='center'
       justify='space-between'
+      radius={2}
+      bgColor={isSelected ? 'clearTint300' : 'transparent'}
+      _hover={{ backgroundColor: '$clearTint300' }}
       px={2}
     >
       <HStack gap={3} items='center' py={3}>
@@ -26,7 +35,7 @@ function HistoryItem({ data }: { data: UserModel }) {
           <Circle
             size={{ '@bp1': 30, '@bp3': 40 }}
             bgColor='base800'
-            color='primary400'
+            color='white50'
             css={{ flexShrink: 0 }}
           >
             <Icon name='search-outline' />

@@ -1,25 +1,27 @@
-import { DialogTabContextProvider } from '../../../../shared';
+import { DialogContextProvider } from '../../../../shared';
 import { useDisclosure } from '@holdr-ui/react';
-import { useState } from 'react';
-import { CreatePostDialog, AddArticleDialog } from '../dialogs';
 import { CreatePostCard } from '../cards';
+import { useCurrentUser } from '../../../auth';
+import CreateFeedDialog from '../dialogs/create-feed';
 
 function CreatePost() {
-  // 🔧 Hack: using the option to select which additional component to add when creating a post
-  const [option, setOption] = useState('');
+  const currentUser = useCurrentUser();
+
   const { isOpen, onOpen: open, onClose } = useDisclosure();
 
-  const onOpen = (option: string) => {
-    setOption(option);
+  const onOpen = () => {
     open();
   };
 
+  if (!currentUser || currentUser.role !== 'artist') {
+    return <></>;
+  }
+
   return (
-    <DialogTabContextProvider value={{ isOpen, onOpen, option, onClose }}>
+    <DialogContextProvider value={{ isOpen, onOpen, onClose }}>
       <CreatePostCard />
-      {isOpen && option !== 'article' && <CreatePostDialog />}
-      {isOpen && option === 'article' && <AddArticleDialog />}
-    </DialogTabContextProvider>
+      <CreateFeedDialog />
+    </DialogContextProvider>
   );
 }
 CreatePost.displayName = 'CreatePost';

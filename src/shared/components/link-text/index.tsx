@@ -1,6 +1,5 @@
-import { Box, Text } from '@holdr-ui/react';
+import { Box, Text, theme } from '@holdr-ui/react';
 import { LinkOverlay } from '../../styles';
-import { theme } from '../../../configs';
 import { LinkTextProps } from './types';
 
 function LinkText({

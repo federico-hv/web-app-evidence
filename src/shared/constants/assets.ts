@@ -5,8 +5,9 @@ import facebookLogo from '../../assets/images/facebook-logo.png';
 import googleLogo from '../../assets/images/google-logo.png';
 import instagramLogo from '../../assets/images/instagram-logo.png';
 import lightPlaceholder from '../../assets/images/light-placeholder.jpg';
-import logo from '../../assets/images/logo.png';
+import logo from '../../assets/icons/logo.svg';
 import logoDark from '../../assets/images/logo-dark.png';
+import logoLight from '../../assets/images/logo-dark.png';
 import spotifyLogo from '../../assets/images/spotify-logo.png';
 import youtubeLogo from '../../assets/images/yt-logo.png';
 
@@ -27,6 +28,7 @@ export const Asset = {
     LightPlaceholder: lightPlaceholder,
     Logo: logo,
     LogoDark: logoDark,
+    LogoLight: logoLight,
     SpotifyLogo: spotifyLogo,
     YoutubeLogo: youtubeLogo,
   },

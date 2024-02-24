@@ -1,6 +1,6 @@
 import { createContext, useContext } from 'react';
 import { IVideoContext } from '../types';
-import { dummyFn } from 'shared';
+import { dummyFn } from '../../../../utilities';
 
 const VideoContext = createContext<IVideoContext>({
   paused: false,

@@ -1,6 +1,6 @@
-import { dummyFn } from 'shared';
 import { ISliderContext, SliderProviderProps } from '../types';
 import { createContext, useContext, useState } from 'react';
+import { dummyFn } from '../../../../utilities';
 
 const SliderContext = createContext<ISliderContext>({
   numberOfSlides: 0,

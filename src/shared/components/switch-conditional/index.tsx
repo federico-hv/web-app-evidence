@@ -5,6 +5,8 @@ import {
 } from './types';
 import { getSubComponent } from '../../index';
 
+//TODO deprecate
+
 /* NOTE: DOES NOT WORK AS INTENDED */
 
 // Supposed to switch between components based on some case. Will redo this (FUCK)

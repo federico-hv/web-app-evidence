@@ -1,47 +1,48 @@
+import { ErrorFallback, GQLRenderer, Head } from '../../shared';
 import {
-  Error,
-  ErrorFallback,
-  GQLRenderer,
-  Head,
-  Responsive,
-  ResponsiveItem,
-} from '../../shared';
-import { Box } from '@holdr-ui/react';
-import { SuggestionsCard, useCurrentUser } from '../../features';
+  AnalyticsSummary,
+  MembershipValueSummary,
+  ProfileSummary,
+  RecommendedArtists,
+  TrendingClubs,
+  useCurrentUser,
+} from '../../features';
 import { FeedTabs } from './ui';
 import {
   ContentLayout,
   ContentLayoutAside,
   ContentLayoutMain,
-  SmHeader,
 } from '../../layout';
+import { Fragment } from 'react';
 
-//TODO: Rename move
 function HomePage() {
   const currentUser = useCurrentUser();
 
   return (
     <GQLRenderer ErrorFallback={ErrorFallback}>
-      <Error hasError={!currentUser} errorEl={<></>}>
-        <Head prefix='Holdr Base' title='' description='Home page' />
-        <Responsive>
-          <ResponsiveItem mobile='show'>
-            <SmHeader />
-          </ResponsiveItem>
-        </Responsive>
-        {currentUser && (
-          <ContentLayout>
-            <ContentLayoutMain>
-              <Box mt={{ '@bp1': 56, '@bp3': 0 }} w='100%'>
-                <FeedTabs />
-              </Box>
-            </ContentLayoutMain>
-            <ContentLayoutAside>
-              <SuggestionsCard />
-            </ContentLayoutAside>
-          </ContentLayout>
-        )}
-      </Error>
+      <Head prefix='Holdr' title='' description='Home page' />
+      {currentUser && (
+        <ContentLayout>
+          <ContentLayoutMain>
+            <FeedTabs />
+          </ContentLayoutMain>
+          <ContentLayoutAside hideScrollbar>
+            <ProfileSummary />
+            {currentUser.role === 'artist' && (
+              <Fragment>
+                <MembershipValueSummary />
+                <AnalyticsSummary />
+              </Fragment>
+            )}
+            {currentUser.role === 'general' && (
+              <Fragment>
+                <TrendingClubs />
+                <RecommendedArtists />
+              </Fragment>
+            )}
+          </ContentLayoutAside>
+        </ContentLayout>
+      )}
     </GQLRenderer>
   );
 }

@@ -12,7 +12,7 @@ function MenuButton({ label, icon, onClick, dangerous }: MenuButtonProps) {
       p={4}
       _hover={{
         backgroundColor: dangerous ? 'rgba(255,205,205,0.38)' : '$base100',
-        color: dangerous ? '$danger' : '$base800',
+        color: dangerous ? '$danger400' : '$base800',
       }}
       onClick={onClick}
     >

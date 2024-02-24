@@ -51,7 +51,7 @@ function OTPVerificationForm() {
       </VStack>
       <Box
         position='fixed'
-        bgColor='primary400'
+        bgColor='white50'
         px={4}
         l={0}
         r={0}

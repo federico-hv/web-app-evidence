@@ -2,6 +2,8 @@ import { HStack, Image } from '@holdr-ui/react';
 import { TextGroup, TextGroupSubheading } from '../index';
 import { InfoItemProps } from './types';
 
+//TODO deprecate
+
 function InfoItem({
   title,
   description,

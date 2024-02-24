@@ -1,14 +1,9 @@
 import { FormInputProps } from './form-input.types';
 import { useField } from 'formik';
-import { Input, Select, Textarea } from '@holdr-ui/react';
+import { Input, Textarea } from '@holdr-ui/react';
 import { textareaCSS } from './form-input.style';
 import React from 'react';
-import { styled } from '../../../configs';
 import DatePicker from '../date-picker';
-
-export const selectCss = styled('select', {
-  'box-sizing': 'border-box',
-});
 
 function FormField({
   name,
@@ -27,6 +22,7 @@ function FormField({
         type !== 'phone' && (
           <Input
             variant='unstyled'
+            color='white500'
             id={name}
             type={type}
             placeholder={placeholder}
@@ -47,14 +43,7 @@ function FormField({
           className={textareaCSS()}
         />
       )}
-      {type === 'select' && (
-        <Select
-          id={name}
-          placeholder={placeholder}
-          {...field}
-          {...others}
-        />
-      )}
+      {/*{type === 'select' && <Select id={name} {...field} {...others} />}*/}
       {type === 'date' && (
         <DatePicker
           date={field.value}

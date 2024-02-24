@@ -1,12 +1,6 @@
 import { Box, Center, HStack, IconButton } from '@holdr-ui/react';
 import { Fragment } from 'react';
 import {
-  arrayFrom,
-  GenericProps,
-  getSubComponent,
-  makeArray,
-} from 'shared';
-import {
   SliderControlsSCNames,
   SliderIndicatorProps,
   SliderProps,
@@ -20,6 +14,8 @@ import {
 } from './shared';
 import { AnimatePresence } from 'framer-motion';
 import { CenterProps } from '@holdr-ui/react/dist/components/center/src/center.types';
+import { arrayFrom, getSubComponent, makeArray } from '../../utilities';
+import { GenericProps } from '../../interfaces';
 
 export function circular(num: number, max: number) {
   if (num === max) return 0;

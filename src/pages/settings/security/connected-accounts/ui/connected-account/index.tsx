@@ -65,7 +65,7 @@ function ConnectedAccount({
         isLoading={loading}
         loadingText={loading ? '' : 'disconnect'}
         size='sm'
-        colorTheme='danger'
+        colorTheme='danger400'
         variant='ghost'
       >
         Disconnect

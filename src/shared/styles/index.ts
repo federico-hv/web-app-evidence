@@ -1,7 +1,11 @@
-import { css, styled } from '../../configs';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Box, Circle } from '@holdr-ui/react';
+import { Box, Circle, css, styled } from '@holdr-ui/react';
+import { keyframes } from '@stitches/react';
+
+export const noShrink = css({
+  flexShrink: 0,
+});
 
 export const MotionBox = motion(Box);
 export const MotionDot = motion(Circle);
@@ -18,8 +22,8 @@ export const changeDimensions = ({
   width,
   height,
 }: {
-  width: string;
-  height: string;
+  width?: string;
+  height?: string;
 }) =>
   css({
     height: `${height ? height : 'initial'} !important`,
@@ -64,4 +68,17 @@ export const CenteredImage = css({
     width: '100%',
     minHeight: 'unset',
   },
+});
+
+export const blink = keyframes({
+  '0%': { opacity: 1 },
+  '100%': { opacity: 0.2 },
+});
+
+export const customBgColor = css({
+  minHeight: '2rem !important',
+  minWidth: '2rem !important',
+  radius: '9999px',
+  border: '1px solid rgba(152, 152, 255, 0.10)',
+  background: 'rgba(133, 133, 255, 0.2)',
 });

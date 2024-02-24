@@ -1,18 +1,9 @@
 import { Route, Routes } from 'react-router';
-import {
-  AuthRedirectPage,
-  HomePage,
-  DiscoverPage,
-  NotificationsPage,
-  ChannelsPage,
-} from '../pages';
+import { AuthRedirectPage, HomePage } from '../pages';
 import { AuthGuard, NotFoundError, Paths, prefix } from '../shared';
 import {
-  BookmarksRoutes,
+  ClubRoutes,
   ConnectRoutes,
-  MessagesRoutes,
-  ReleasesRoutes,
-  SettingsRoutes,
   SetupFlowRoutes,
   UserRoutes,
 } from './routes';
@@ -37,43 +28,48 @@ function Router() {
           <Route path='/' element={<AuthGuard />}>
             {/* Home Route*/}
             <Route path={Paths.root} element={<HomePage />} />
-            {/* Discover Route*/}
-            <Route path={Paths.discover} element={<DiscoverPage />} />
-            {/* Settings Route*/}
+            {/* Club Routes */}
             <Route
-              path={prefix(Paths.settings, '/*')}
-              element={<SettingsRoutes />}
+              path={prefix(Paths.clubs, '/*')}
+              element={<ClubRoutes />}
             />
-            {/* Profile Route*/}
+            {/*/!* Discover Route*!/*/}
+            {/*<Route path={Paths.discover} element={<DiscoverPage />} />*/}
+            {/*/!* Settings Route*!/*/}
+            {/*<Route*/}
+            {/*  path={prefix(Paths.settings, '/*')}*/}
+            {/*  element={<SettingsRoutes />}*/}
+            {/*/>*/}
+            {/*/!* Profile Route*!/*/}
             <Route
               path={prefix(Paths.username, '/*')}
               element={<UserRoutes />}
             />
-            {/* Bookmarks Route */}
-            <Route
-              path={prefix(Paths.bookmarks, '/*')}
-              element={<BookmarksRoutes />}
-            />
-            {/* Notifications Route */}
-            <Route
-              path={prefix(Paths.notifications, '/*')}
-              element={<NotificationsPage />}
-            />
-            {/* Messages Route */}
-            <Route
-              path={prefix(Paths.messages, '/*')}
-              element={<MessagesRoutes />}
-            />
-            {/* Releases Route */}
-            <Route
-              path={prefix(Paths.releases, '/*')}
-              element={<ReleasesRoutes />}
-            />
-            {/* Channels Route */}
-            <Route
-              path={prefix(Paths.channels, '/*')}
-              element={<ChannelsPage />}
-            />
+            {/*/!* Bookmarks Route *!/*/}
+            {/*<Route*/}
+            {/*  path={prefix(Paths.bookmarks, '/*')}*/}
+            {/*  element={<BookmarksRoutes />}*/}
+            {/*/>*/}
+            {/*/!* Notifications Route *!/*/}
+            {/*<Route*/}
+            {/*  path={prefix(Paths.notifications, '/*')}*/}
+            {/*  element={<NotificationsPage />}*/}
+            {/*/>*/}
+            {/*/!* Messages Route *!/*/}
+            {/*<Route*/}
+            {/*  path={prefix(Paths.messages, '/*')}*/}
+            {/*  element={<MessagesRoutes />}*/}
+            {/*/>*/}
+            {/*/!* Releases Route *!/*/}
+            {/*<Route*/}
+            {/*  path={prefix(Paths.releases, '/*')}*/}
+            {/*  element={<ReleasesRoutes />}*/}
+            {/*/>*/}
+            {/*/!* Channels Route *!/*/}
+            {/*<Route*/}
+            {/*  path={prefix(Paths.channels, '/*')}*/}
+            {/*  element={<ChannelsPage />}*/}
+            {/*/>*/}
           </Route>
           <Route path='*' element={<NotFoundError />} />
         </Route>

@@ -22,7 +22,7 @@ export default function IndicatorDot({
   return (
     <MotionDot
       onClick={onClick}
-      bgColor={isActive ? 'primary400' : 'clearTint400'}
+      bgColor={isActive ? 'white50' : 'clearTint400'}
       aria-label='change slide'
       zIndex={zIndex}
       size={size}

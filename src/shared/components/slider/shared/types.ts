@@ -1,10 +1,8 @@
-import { HStackProps } from '@holdr-ui/react/dist/components/stack/src/stack.types';
 import { Dispatch, ReactElement, SetStateAction } from 'react';
-import { BoxProps } from '@holdr-ui/react/dist/components/box/src/box.types';
 import { TransitionSpeed } from '../../../types';
 import { GenericProps } from '../../../interfaces';
 import { ZIndex } from '@holdr-ui/react/dist/shared/types';
-import { IconButtonProps } from '@holdr-ui/react/dist/components/icon-button/src/icon-button.styles';
+import { IconButtonProps, HStackProps, BoxProps } from '@holdr-ui/react';
 
 export interface SliderIndicatorProps extends HStackProps {
   renderItem?: (

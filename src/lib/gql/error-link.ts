@@ -2,13 +2,13 @@ import { onError } from '@apollo/client/link/error';
 import { REFRESH_ACCESS_TOKEN } from '../../features/auth/queries';
 import * as querystring from 'querystring';
 import { Cookies } from 'react-cookie';
+import { Operation, fromPromise } from '@apollo/client';
 import {
   GQLClient,
   isAuthError,
   useRemoveCookie,
   useSetCookie,
-} from 'shared';
-import { Operation, fromPromise } from '@apollo/client';
+} from '../../shared';
 
 let pendingRequests: VoidFunction[] = [];
 let isRefreshingToken: boolean;
@@ -79,7 +79,6 @@ export const errorLink = onError(
     ) {
       if (!isRefreshingToken) {
         setRefreshingToken(true);
-        
         // refresh the access token
         return fromPromise(refreshAccessToken()).flatMap(() => {
           // token is successfully refreshed

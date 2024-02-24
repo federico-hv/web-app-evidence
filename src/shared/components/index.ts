@@ -26,13 +26,14 @@ export {
   default as StepperIndicator,
   StepperIndicatorStep,
 } from './stepper-indicator';
-export { default as ForgotPasswordLink } from './forgot-password';
+export { default as ForgotPasswordLink } from './forgot-password-link';
 export { default as Stepper, StepperStep } from './stepper';
 export { default as UserNamesGroup } from './user-names-group';
 export { default as ActionItemWrapper } from './action-item-wrapper';
 export { default as OgMetadataCard } from './og-metadata-card';
 export { default as MediaItem } from './media-item';
 export { default as Calendar } from './calendar';
+export { default as LiveTag } from './live-tag';
 export { default as Editor } from './editor';
 export {
   default as Menu,
@@ -66,3 +67,4 @@ export { default as TabBorderFix } from './tab-border-fix';
 export { default as InfoItem } from './info-item';
 export { default as Slider } from './slider';
 // export { default as Form, FormInput } from './forms';
+export { RadialSurface } from './surface';

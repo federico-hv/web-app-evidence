@@ -1,6 +1,6 @@
 import { GenericProps } from '../../interfaces';
 import { MenuItemProps, SCNames } from './types';
-import { getSubComponent } from '../../utilities';
+import { getSubComponent, hexToRGB } from '../../utilities';
 import { StackProps } from '@holdr-ui/react/dist/components/stack/src/stack.types';
 import {
   Box,
@@ -17,19 +17,22 @@ import {
   VStack,
 } from '@holdr-ui/react';
 import { MenuContextProvider } from './context';
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 import Responsive, { ResponsiveItem } from '../responsive';
 import { extraBtnPadding } from '../../styles';
 import { IconName } from '@holdr-ui/react/dist/shared/types';
 import { useActOnScroll } from '../../hooks';
+import { theme } from '@holdr-ui/react';
 
 function Menu({
   children,
   align = 'end',
   offset = 5,
+  minWidth = 325,
 }: GenericProps & {
   align?: 'start' | 'end' | 'center';
   offset?: number;
+  minWidth?: number;
 }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -57,12 +60,18 @@ function Menu({
             </Popover.Trigger>
             <Popover.Portal>
               <Popover.Content
-                minWidth={325}
+                minWidth={minWidth}
                 side='bottom'
                 align={align}
                 sideOffset={offset}
                 boxShadow='rgba(99, 99, 99, 0.2) 0px 2px 8px 0px'
-                css={{ backgroundColor: '#fff' }}
+                css={{
+                  borderRadius: '$4',
+                  border: '1px solid rgba(152, 152, 255, 0.10)',
+                  background: ' rgba(56, 56, 140, 0.25)',
+                  backdropFilter: 'blur(50px)',
+                  boxShadow: '0px 0px 100px 0px rgba(14, 14, 27, 0.35)',
+                }}
               >
                 {Content}
               </Popover.Content>
@@ -78,7 +87,13 @@ function Menu({
                 <VStack
                   w='full'
                   minHeight='1px'
-                  divider={<Box borderBottom={1} borderColor='base100' />}
+                  divider={
+                    <Box
+                      h='1px'
+                      w='100%'
+                      css={{ background: 'rgba(152, 152, 255, 0.10)' }}
+                    />
+                  }
                   css={{
                     backgroundColor: '#fff',
                     borderTopLeftRadius: '$3',
@@ -118,6 +133,7 @@ function MenuTrigger({ children }: GenericProps) {
           size={{ '@bp1': 'sm', '@bp3': 'base' }}
           variant='ghost'
           icon='more-fill'
+          color='white50'
           ariaLabel='view options'
         />
       )}
@@ -139,7 +155,15 @@ function MenuContent({ children }: GenericProps) {
   const Items = getSubComponent<SCNames>(children, 'MenuItem');
 
   return (
-    <VStack divider={<Box borderBottom={1} borderColor='base100' />}>
+    <VStack
+      divider={
+        <Box
+          h='1px'
+          w='100%'
+          css={{ background: 'rgba(152, 152, 255, 0.10)' }}
+        />
+      }
+    >
       {Items}
     </VStack>
   );
@@ -162,24 +186,30 @@ function MenuItem({
       radius={2}
       cursor='pointer'
       p={4}
+      color='white500'
       _hover={{
-        backgroundColor: dangerous ? 'rgba(255,205,205,0.38)' : '$base100',
-        color: dangerous ? '$danger' : '$base800',
+        backgroundColor: dangerous
+          ? 'rgba(255,205,205,0.38)'
+          : hexToRGB('#0E0E1B', 0.5),
+        color: dangerous ? '$danger400' : '$white50',
       }}
       onClick={action}
-      css={{ userSelect: 'none' }}
+      css={{
+        userSelect: 'none',
+        transitionDuration: theme.transitions['duration-fast'],
+        transitionTimingFunction: 'ease-in',
+        transitionProperty: theme.transitions['property-all'],
+      }}
     >
       {!children ? (
-        <>
-          <Text size={{ '@bp1': 2, '@bp3': 3 }}>{label}</Text>
-        </>
+        <Text size={{ '@bp1': 2, '@bp3': 3 }}>{label}</Text>
       ) : (
-        <>{children}</>
+        <Fragment>{children}</Fragment>
       )}
       {icon && !(icon as JSX.Element).props ? (
         <Icon name={icon as IconName} />
       ) : (
-        <>{icon}</>
+        <Fragment>{icon}</Fragment>
       )}
     </HStack>
   );

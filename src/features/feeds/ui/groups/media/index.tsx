@@ -4,10 +4,10 @@ import {
   MediaItem,
   MediaView,
   MediaViewContent,
+  Slider,
 } from '../../../../../shared';
 import { PostMediaProps } from './types';
 import { Box, useDisclosure, useKeyBind } from '@holdr-ui/react';
-import { Slider } from 'shared';
 import { IndicatorDot } from '../../../../../shared/components/slider/ui';
 
 function PostMedia({ items }: PostMediaProps) {

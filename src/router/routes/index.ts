@@ -5,3 +5,4 @@ export { default as MessagesRoutes } from './messages.routes';
 export { default as ReleasesRoutes } from './releases.routes';
 export { default as SetupFlowRoutes } from './setup-flow.routes';
 export { default as ConnectRoutes } from './connect.routes';
+export { default as ClubRoutes } from './club.routes';

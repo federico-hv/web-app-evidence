@@ -8,6 +8,6 @@ export interface StepperIndicatorProps {
 
 export interface StepProps {
   active?: boolean;
-  fillColor?: ThemeColor; //default: secondary400
+  fillColor?: ThemeColor; //default: purple500
   variant?: 'pill' | 'bar'; //default: bar
 }

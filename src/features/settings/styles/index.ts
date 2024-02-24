@@ -1,4 +1,4 @@
-import { css } from '../../../configs';
+import { css } from '@holdr-ui/react';
 
 export const settingButtonHoverCss = css({
   '&:hover': {

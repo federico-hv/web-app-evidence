@@ -20,7 +20,7 @@ const StepperIndicatorStep = ({ active }: StepProps) => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      bgColor={active ? 'secondary400' : 'base200'}
+      bgColor={active ? 'purple500' : 'base200'}
       className='stepper__step'
       h='3px'
       w='100%'

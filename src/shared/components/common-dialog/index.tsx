@@ -28,7 +28,7 @@ function CommonDialog({
   isOpen,
   onOpen,
   onClose,
-  ariaDescribedBy,
+  ariaDescribedBy = '',
   children,
   minHeight = 500,
 }: CommonDialogProps) {
@@ -182,7 +182,7 @@ function CommonDialogHeader({
           </Heading>
         )}
       </HStack>
-      <Box>{ActionButton}</Box>
+      {ActionButton && <Box>{ActionButton}</Box>}
     </Fragment>
   );
 }

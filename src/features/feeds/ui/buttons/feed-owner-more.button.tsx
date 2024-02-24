@@ -34,20 +34,18 @@ function FeedOwnerMoreButton({ ghost }: { ghost?: boolean }) {
       <DialogContextProvider value={{ isOpen, onOpen, onClose }}>
         {data && (
           <Menu>
-            {ghost ? (
-              <Menu.Trigger>
-                <IconButton
-                  size={{ '@bp1': 'sm', '@bp3': 'base' }}
-                  colorTheme='darkTint400'
-                  blur='xl'
-                  icon='more-fill'
-                  boxShadow='none'
-                  ariaLabel='view options'
-                />
-              </Menu.Trigger>
-            ) : (
-              <Menu.Trigger />
-            )}
+            <Menu.Trigger>
+              <IconButton
+                size={{ '@bp1': 'sm', '@bp3': 'base' }}
+                colorTheme={ghost ? 'darkTint400' : 'white500'}
+                variant={ghost ? 'filled' : 'ghost'}
+                blur='xl'
+                icon='more-fill'
+                boxShadow='none'
+                ariaLabel='view options'
+              />
+            </Menu.Trigger>
+
             <Menu.Header />
             <Menu.Content>
               <Menu.Item

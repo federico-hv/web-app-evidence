@@ -39,7 +39,7 @@ function DeletePhoneNumber() {
     <Button
       label='Delete'
       variant='ghost'
-      colorTheme='danger'
+      colorTheme='danger400'
       onClick={() =>
         openWith({
           title: 'Delete phone number',

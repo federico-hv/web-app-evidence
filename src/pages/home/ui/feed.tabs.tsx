@@ -1,99 +1,103 @@
-import { useQuery } from '@apollo/client';
-import {
-  CreatePost,
-  FeedsReturnModel,
-  GET_FEEDS,
-  useCurrentUser,
-  FeedCard,
-} from '../../../features';
-import {
-  Error,
-  Loader,
-  useIsBottom,
-  useScrollDirection,
-} from '../../../shared';
-import { Alert, Container, Tabs, VStack } from '@holdr-ui/react';
-
-function Feeds({ type = 'all' }: { type: 'all' | 'article' | 'post' }) {
-  const currentUser = useCurrentUser();
-  const { loading, data, error } = useQuery<
-    { feeds: FeedsReturnModel },
-    { type: string }
-  >(GET_FEEDS, {
-    variables: {
-      type,
-    },
-  });
-
-  return (
-    <Error
-      hasError={!!error}
-      errorEl={
-        <Alert>
-          <Alert.Description>{error?.message}</Alert.Description>
-        </Alert>
-      }
-    >
-      <Loader loading={loading}>
-        {data && (
-          <Container maxWidth={600} pt={4}>
-            <VStack w='100%' gap={5} pb={6}>
-              {currentUser && currentUser.role === 'artist' && (
-                <CreatePost />
-              )}
-              {data.feeds.data.map((item) => (
-                <FeedCard key={item.id} data={item} />
-              ))}
-            </VStack>
-          </Container>
-        )}
-      </Loader>
-    </Error>
-  );
-}
+import { CreatePost } from '../../../features';
+import { Box, HStack, VStack } from '@holdr-ui/react';
+import CustomTabs, {
+  CustomTabsContent,
+  CustomTabsHeader,
+  CustomTabsList,
+  CustomTabsTrigger,
+} from '../../../tmp/custom-tabs';
+import { useState } from 'react';
+import { FeedFilterValue } from '../shared';
+import FeedFilter from './feed-filter';
+import Feeds from './feeds';
 
 function FeedTabs() {
-  const isBottom = useIsBottom();
-  const { direction, delta } = useScrollDirection();
+  const [filter, setFilter] = useState<FeedFilterValue>('all');
+
+  const updateFilter = (value: FeedFilterValue) => setFilter(value);
 
   return (
-    <Tabs defaultValue='all'>
-      <Tabs.List
+    <CustomTabs
+      defaultValue='for-you'
+      flex={1}
+      css={{
+        background:
+          'radial-gradient(50% 100% at 50% 100%, rgba(128, 128, 255, 0.15) 0%, rgba(128, 128, 255, 0.05) 100%)',
+      }}
+    >
+      <CustomTabsHeader
+        h={64}
+        position='sticky'
+        t={80}
         css={{
-          position: 'sticky',
-          backgroundColor: '$clearTint500',
-          blur: '12px',
-          zIndex: 11,
-          py: '$4',
-          px: '$1',
-          '& button:not(:last-child)': {
-            marginRight: '$4',
-          },
-          '@bp1': {
-            top:
-              direction === 'down' && !isBottom && delta > 0 ? 0 : '56px',
-          },
-          '@bp3': {
-            top: 65,
-          },
+          backgroundColor: '#141317',
+          zIndex: 6,
         }}
       >
-        <Container maxWidth={600}>
-          <Tabs.Trigger value='all'>All</Tabs.Trigger>
-          <Tabs.Trigger value='holdr'>Holdr</Tabs.Trigger>
-          <Tabs.Trigger value='news'>News</Tabs.Trigger>
-        </Container>
-      </Tabs.List>
-      <Tabs.Content value='all'>
-        <Feeds type='all' />
-      </Tabs.Content>
-      <Tabs.Content value='holdr'>
-        <Feeds type='post' />
-      </Tabs.Content>
-      <Tabs.Content value='news'>
-        <Feeds type='article' />
-      </Tabs.Content>
-    </Tabs>
+        <HStack
+          items='center'
+          w='100%'
+          css={{
+            border: '1px solid rgba(152, 152, 255, 0.10)',
+            borderTopLeftRadius: '$4',
+            borderTopRightRadius: '$4',
+            background:
+              'radial-gradient(50% 100% at 50% 100%, rgba(128, 128, 255, 0.15) 0%, rgba(128, 128, 255, 0.05) 100%)',
+          }}
+        >
+          <CustomTabsList>
+            <CustomTabsTrigger
+              _hover={{ background: '#9898FF26' }}
+              css={{ borderTopLeftRadius: '$4' }}
+              value='for-you'
+            >
+              For you
+            </CustomTabsTrigger>
+            <CustomTabsTrigger
+              _hover={{ background: '#9898FF26' }}
+              value='following'
+            >
+              Following
+            </CustomTabsTrigger>
+          </CustomTabsList>
+          <Box p={4}>
+            <FeedFilter current={filter} onClick={updateFilter} />
+          </Box>
+        </HStack>
+      </CustomTabsHeader>
+      <CustomTabsContent
+        value='for-you'
+        minHeight='calc(100vh - 158px)'
+        css={{
+          borderRight: '1px solid rgba(152, 152, 255, 0.10)',
+          borderLeft: '1px solid rgba(152, 152, 255, 0.10)',
+          borderBottom: '1px solid rgba(152, 152, 255, 0.10)',
+          borderBottomLeftRadius: '$4',
+          borderBottomRightRadius: '$4',
+        }}
+      >
+        <VStack minHeight={0} w='100%' p={3} as='aside' gap={4}>
+          <CreatePost />
+          <Feeds filter={filter} type='following' />
+        </VStack>
+      </CustomTabsContent>
+      <CustomTabsContent
+        value='following'
+        minHeight='calc(100vh - 158px)'
+        css={{
+          borderRight: '1px solid rgba(152, 152, 255, 0.10)',
+          borderLeft: '1px solid rgba(152, 152, 255, 0.10)',
+          borderBottom: '1px solid rgba(152, 152, 255, 0.10)',
+          borderBottomLeftRadius: '$4',
+          borderBottomRightRadius: '$4',
+        }}
+      >
+        <VStack w='100%' p={3} gap={4}>
+          <CreatePost />
+          <Feeds filter={filter} type='recommended' />
+        </VStack>
+      </CustomTabsContent>
+    </CustomTabs>
   );
 }
 FeedTabs.displayName = 'FeedTabs';

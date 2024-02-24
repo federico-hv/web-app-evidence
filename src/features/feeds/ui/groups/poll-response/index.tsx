@@ -8,23 +8,18 @@ function PollResponse({ data, total }: PollResponseProps) {
     <HStack
       items='center'
       gap={3}
-      p={3}
-      radius={4}
+      p={2}
+      radius={2}
       position='relative'
       overflow='hidden'
       css={{ userSelect: 'none' }}
     >
       {data.voted ? (
-        <Circle zIndex={10} size={20} bgColor='secondary400'>
-          <Icon size='sm' color='primary400' name='check' />
+        <Circle zIndex={10} size={20} bgColor='purple500'>
+          <Icon size='sm' color='white50' name='check' />
         </Circle>
       ) : (
-        <Circle
-          zIndex={10}
-          border={1}
-          borderColor='secondary400'
-          size={20}
-        />
+        <Circle zIndex={10} border={1} borderColor='white500' size={20} />
       )}
       <Box
         position='absolute'
@@ -42,7 +37,7 @@ function PollResponse({ data, total }: PollResponseProps) {
         <HStack justify='space-between'>
           <Text
             size={{ '@bp1': 2, '@bp3': 3 }}
-            color='secondary400'
+            color={data.voted ? 'purple500' : 'white500'}
             weight={data.voted ? 500 : 400}
           >
             {data.text}
@@ -50,7 +45,7 @@ function PollResponse({ data, total }: PollResponseProps) {
           <Text
             size={{ '@bp1': 2, '@bp3': 3 }}
             weight={500}
-            color='base400'
+            color={data.voted ? 'base800' : 'base100'}
           >
             {percentage.toFixed(0)}%
           </Text>

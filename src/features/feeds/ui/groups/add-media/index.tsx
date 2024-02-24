@@ -3,18 +3,21 @@ import {
   Box,
   Center,
   Grid,
-  Icon,
-  Text,
   VStack,
   Button,
   HStack,
+  Icon,
+  hexToRGB,
 } from '@holdr-ui/react';
 import { FileUtility, MediaItem, useToast } from '../../../../../shared';
-import { ChangeEvent, Fragment, useState } from 'react';
+import { Fragment, useState } from 'react';
 import { PostMediaUpload } from '../../inputs';
 import { AddMediaProps } from './types';
 
-function AddMedia({ update, remove, reset }: AddMediaProps) {
+function AddMedia({
+  as = <Icon color='white500' size='xl' name='image-add-fill' />,
+  update,
+}: AddMediaProps) {
   const Maximum = {
     images: 4,
     videos: 1,
@@ -23,14 +26,24 @@ function AddMedia({ update, remove, reset }: AddMediaProps) {
   const [canAddMore, setCanAddMore] = useState(true);
   const { openWith } = useToast();
 
-  const handleOnChange = (event: ChangeEvent<HTMLInputElement>) => {
-    if (!event.target.files) return;
+  const handleOnChange = (event: any) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    let files: File[];
+
+    if (event.dataTransfer?.files) {
+      // files retrieved from a drag image upload
+      files = event.dataTransfer.files;
+    } else if (event.target.files) {
+      // files retrieved from an image upload
+      files = event.target.files;
+    } else {
+      return;
+    }
 
     // merge new files and currently stored files
-    const allFiles = [
-      ...media.map((item) => item.file),
-      ...event.target.files,
-    ];
+    const allFiles = [...media.map((item) => item.file), ...files];
 
     //TODO: Ensure that the files are size limited:
     // 1. 5MB per image max
@@ -64,7 +77,7 @@ function AddMedia({ update, remove, reset }: AddMediaProps) {
     if (allFiles.length <= Maximum.images) {
       const mediaFiles: { file: File }[] = [];
 
-      for (const mediaFile of event.target.files) {
+      for (const mediaFile of files) {
         mediaFiles.push({ file: mediaFile });
       }
 
@@ -92,23 +105,17 @@ function AddMedia({ update, remove, reset }: AddMediaProps) {
   return (
     <VStack
       position='relative'
-      border={1}
-      borderColor='base200'
-      minHeight={{ '@bp1': 250, '@bp3': 350 }}
+      h='400px'
       w='100%'
-      radius={4}
+      radius={1}
+      css={{
+        backgroundColor: hexToRGB('#9898FF', 0.15),
+      }}
     >
-      <Box h='full' w='full' radius={2} p={3}>
+      <Box h='full' w='full' radius={2}>
         {media.length < 1 ? (
-          <Center
-            role='button'
-            radius={2}
-            h='100%'
-            bgColor='base100'
-            fontSize={8}
-            position='relative'
-          >
-            <Icon name='image-add-fill' />
+          <Center role='button' h='100%' w='100%' position='relative'>
+            {as}
             <PostMediaUpload onChange={handleOnChange} />
           </Center>
         ) : (
@@ -116,7 +123,7 @@ function AddMedia({ update, remove, reset }: AddMediaProps) {
             <HStack gap={3} p={3} zIndex={10} position='absolute'>
               <Button
                 size={{ '@bp1': 'sm', '@bp3': 'base' }}
-                colorTheme='primary400'
+                colorTheme='white50'
                 leftIcon='settings-alt-outline'
               >
                 Edit
@@ -124,7 +131,7 @@ function AddMedia({ update, remove, reset }: AddMediaProps) {
               {canAddMore && (
                 <Button
                   size={{ '@bp1': 'sm', '@bp3': 'base' }}
-                  colorTheme='primary400'
+                  colorTheme='white50'
                   leftIcon='add'
                 >
                   <PostMediaUpload onChange={handleOnChange} />
@@ -179,20 +186,6 @@ function AddMedia({ update, remove, reset }: AddMediaProps) {
           </Fragment>
         )}
       </Box>
-      <Center
-        onClick={() => {
-          remove();
-          reset();
-        }}
-        p={{ '@bp1': 3, '@bp3': 4 }}
-        borderTop={1}
-        borderColor='base200'
-        _hover={{ backgroundColor: '#f2464617' }}
-      >
-        <Text size={{ '@bp1': 2, '@bp3': 3 }} weight={500} color='danger'>
-          Remove media
-        </Text>
-      </Center>
     </VStack>
   );
 }

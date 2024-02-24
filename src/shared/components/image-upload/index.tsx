@@ -111,7 +111,7 @@ function ImageUpload({
               className={removeButtonCSS()}
             >
               <Icon
-                color='primary400'
+                color='white50'
                 size='base'
                 name='camera-fill'
                 aria-label='change image'

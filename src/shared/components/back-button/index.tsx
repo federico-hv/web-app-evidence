@@ -1,10 +1,6 @@
 import { IconButton } from '@holdr-ui/react';
 import { useGoBack } from '../../hooks';
-import { css } from '../../../configs';
-
-const noShrink = css({
-  flexShrink: 0,
-});
+import { noShrink } from '../../styles';
 
 function BackButton({ fallbackPath }: { fallbackPath?: string }) {
   const goBack = useGoBack(fallbackPath);

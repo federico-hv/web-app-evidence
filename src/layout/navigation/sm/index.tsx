@@ -1,5 +1,4 @@
-import { CreatePostDialog, useCurrentUser } from '../../../features';
-import { css } from '../../../configs';
+import { CreateFeedDialog, useCurrentUser } from '../../../features';
 import {
   DialogTabContextProvider,
   Paths,
@@ -18,6 +17,7 @@ import {
   IconButton,
   NavigationLink,
   useDisclosure,
+  css,
 } from '@holdr-ui/react';
 
 const largeIcon = css({
@@ -98,10 +98,10 @@ function SmNavigation() {
                   className={largeIcon()}
                   icon={'add'}
                   radius={4}
-                  // colorTheme='secondary400'
+                  // colorTheme='purple500'
                   ariaLabel={'create post'}
                 />
-                <CreatePostDialog />
+                <CreateFeedDialog />
               </DialogTabContextProvider>
             )}
             <NavigationLink
