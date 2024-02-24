@@ -1,7 +1,6 @@
 import { useState } from 'react';
-import { hexToRGB, useLogout, useMenuNavigate } from '../../../../shared';
+import { hexToRGB, customBgColor, useLogout } from '../../../../shared';
 import { Box, IconButton, Popover, VStack } from '@holdr-ui/react';
-import { ButtonWrapper } from '../../ui';
 
 function SettingsItem({
   label,
@@ -13,7 +12,7 @@ function SettingsItem({
   return (
     <Box
       p={4}
-      radius={3}
+      radius={2}
       _hover={{
         backgroundColor: hexToRGB('#0E0E1B', 0.5),
       }}
@@ -27,7 +26,6 @@ function SettingsItem({
 
 function SettingsPopover() {
   const logout = useLogout();
-  const { goto } = useMenuNavigate();
 
   const [state, set] = useState(false);
 
@@ -35,26 +33,25 @@ function SettingsPopover() {
 
   return (
     <Popover modal isOpen={state} onOpenChange={set}>
-      <Popover.Trigger onClick={() => set(true)}>
-        <ButtonWrapper>
-          <IconButton
-            variant='ghost'
-            colorTheme='white50'
-            icon='settings-outline'
-            ariaLabel='View messages'
-          />
-        </ButtonWrapper>
+      <Popover.Trigger asChild onClick={() => set(true)}>
+        <IconButton
+          className={customBgColor()}
+          variant='ghost'
+          colorTheme='white50'
+          icon='settings-outline'
+          ariaLabel='View messages'
+        />
       </Popover.Trigger>
       <Popover.Portal>
         <Popover.Content
+          p={3}
           color='white50'
-          alignOffset={0}
           sideOffset={20}
           align='end'
           w={308}
           zIndex={50}
+          radius={2}
           css={{
-            borderRadius: '$4',
             border: '1px solid rgba(152, 152, 255, 0.10)',
             background: ' rgba(56, 56, 140, 0.25)',
             boxShadow: '0px 0px 100px 0px rgba(14, 14, 27, 0.35)',

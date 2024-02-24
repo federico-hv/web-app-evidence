@@ -16,6 +16,7 @@ function AnswerPollButton({ label, onClick }: AnswerPollButtonProps) {
       overflow='hidden'
       _hover={{
         backgroundColor: '$base100',
+        color: '$black500',
       }}
       css={{
         userSelect: 'none',

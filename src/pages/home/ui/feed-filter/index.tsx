@@ -8,8 +8,8 @@ import {
   SelectItemList,
   SelectTrigger,
 } from '@holdr-ui/react';
-import { ButtonWrapper } from '../../../../layout/navigation/ui';
 import { FeedFilterProps } from './types';
+import { customBgColor } from '../../../../shared';
 
 function FeedFilter({ current, onClick }: FeedFilterProps) {
   return (
@@ -17,19 +17,16 @@ function FeedFilter({ current, onClick }: FeedFilterProps) {
       value={current}
       onValueChange={(value) => onClick(value as FeedFilterValue)}
     >
-      <SelectTrigger
-        as={
-          <ButtonWrapper>
-            <IconButton
-              variant='ghost'
-              size='lg'
-              icon='filter-outline'
-              colorTheme='white50'
-              ariaLabel='filter feeds'
-            />
-          </ButtonWrapper>
-        }
-      />
+      <SelectTrigger asChild>
+        <IconButton
+          className={customBgColor()}
+          variant='ghost'
+          size='lg'
+          icon='filter-outline'
+          colorTheme='white50'
+          ariaLabel='filter feeds'
+        />
+      </SelectTrigger>
 
       <SelectContent
         align='end'

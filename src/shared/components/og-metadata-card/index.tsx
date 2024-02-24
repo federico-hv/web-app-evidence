@@ -1,4 +1,4 @@
-import { Box, Image, Stack } from '@holdr-ui/react';
+import { Box, Image, Text, Stack, VStack } from '@holdr-ui/react';
 import { LinkOverlay } from '../../styles';
 import {
   TextGroup,
@@ -6,6 +6,7 @@ import {
   TextGroupSubheading,
 } from '../index';
 import { OgMetadata } from '../../interfaces';
+import { Asset } from '../../constants';
 
 function OgMetadataCard({ data }: { data: OgMetadata }) {
   return (
@@ -14,13 +15,12 @@ function OgMetadataCard({ data }: { data: OgMetadata }) {
         '@bp1': 'vertical',
         '@bp3': 'horizontal',
       }}
-      border={1}
-      borderColor='base100'
       position='relative'
-      r={2}
-      divider={
-        <Box borderRight={1} borderColor='base100' position='relative' />
-      }
+      radius={1}
+      h='100%'
+      css={{
+        backgroundColor: '#1A1A29',
+      }}
     >
       <LinkOverlay target='_blank' to={data.url} />
 
@@ -30,29 +30,40 @@ function OgMetadataCard({ data }: { data: OgMetadata }) {
           h={{ '@bp1': '250px', '@bp3': '100px' }}
           src={data.images[0].url}
           alt={data.title}
+          fallbackSrc={Asset.Image.DarkPlaceholder}
         />
       </Box>
 
-      <TextGroup p={3}>
-        <TextGroupHeading
-          noOfLines={2}
-          title={data.title}
-          size={3}
+      <VStack h='100%' w='100%' py={3} pr={3} justify='space-between'>
+        <TextGroup>
+          <TextGroupHeading
+            noOfLines={1}
+            title={data.title}
+            size={5}
+            color='white500'
+            weight={500}
+          >
+            {data.title}
+          </TextGroupHeading>
+          <TextGroupSubheading
+            color='white500'
+            weight={300}
+            size={2}
+            noOfLines={2}
+          >
+            {data.description}
+          </TextGroupSubheading>
+        </TextGroup>
+        <Text
+          size={1}
           weight={500}
-        >
-          {data.title}
-        </TextGroupHeading>
-        <TextGroupSubheading size={2} noOfLines={2}>
-          {data.description}
-        </TextGroupSubheading>
-        <TextGroupSubheading
-          size={2}
-          weight={500}
+          casing='capitalize'
+          color='white500'
           css={{ marginTop: '$2' }}
         >
           {data.site.name}
-        </TextGroupSubheading>
-      </TextGroup>
+        </Text>
+      </VStack>
     </Stack>
   );
 }

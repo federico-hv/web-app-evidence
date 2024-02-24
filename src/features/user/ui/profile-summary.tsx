@@ -77,7 +77,7 @@ function ProfileSummary() {
             name={''}
             css={{ size: '50px' }}
           />
-          <TextGroup w='fit-content' gap={1}>
+          <TextGroup w='fit-content' gap={0}>
             <TextGroupSubheading size={2} weight={500}>
               {currentUser.displayName}
             </TextGroupSubheading>

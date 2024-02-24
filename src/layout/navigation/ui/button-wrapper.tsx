@@ -1,13 +1,12 @@
 import { GenericProps } from '../../../shared';
-import { Box, Circle } from '@holdr-ui/react';
+import { Box } from '@holdr-ui/react';
+import { forwardRef } from 'react';
 
-function ButtonWrapper(props: GenericProps) {
+function BaseButtonWrapper(props: GenericProps) {
   return (
     <Box
-      h='100%'
-      w='100%'
       css={{
-        radius: '100%',
+        radius: '9999px',
         border: '1px solid rgba(152, 152, 255, 0.10)',
         background: 'rgba(133, 133, 255, 0.10)',
       }}
@@ -16,6 +15,10 @@ function ButtonWrapper(props: GenericProps) {
     </Box>
   );
 }
+
+const ButtonWrapper = forwardRef<HTMLDivElement, GenericProps>(
+  (props, ref) => <BaseButtonWrapper {...props} innerRef={ref} />,
+);
 ButtonWrapper.displayName = 'ButtonWrapper';
 
 export default ButtonWrapper;

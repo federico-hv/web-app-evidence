@@ -12,6 +12,7 @@ import { capitalize } from 'lodash';
 import {
   DateUtility,
   LinkOverlay,
+  makeButtonLarger,
   prefix,
   TextGroup,
 } from '../../../../../shared';
@@ -55,6 +56,7 @@ function ArticleCard({ data }: { data: ArticleModel }) {
               />
             </VStack>
           </Link>
+
           {currentUser && currentUser.id === owner.id ? (
             <FeedOwnerMoreButton ghost />
           ) : (
@@ -127,8 +129,9 @@ function ArticleCard({ data }: { data: ArticleModel }) {
                       state={{ from: location }}
                     >
                       <Button
+                        className={makeButtonLarger('2rem')}
                         size={{ '@bp1': 'sm', '@bp3': 'base' }}
-                        colorTheme='purple500'
+                        colorTheme='white500'
                       >
                         Read
                       </Button>

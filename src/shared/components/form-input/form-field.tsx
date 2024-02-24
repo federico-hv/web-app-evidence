@@ -1,6 +1,6 @@
 import { FormInputProps } from './form-input.types';
 import { useField } from 'formik';
-import { Input, Select, Textarea } from '@holdr-ui/react';
+import { Input, Textarea } from '@holdr-ui/react';
 import { textareaCSS } from './form-input.style';
 import React from 'react';
 import DatePicker from '../date-picker';
@@ -22,6 +22,7 @@ function FormField({
         type !== 'phone' && (
           <Input
             variant='unstyled'
+            color='white500'
             id={name}
             type={type}
             placeholder={placeholder}

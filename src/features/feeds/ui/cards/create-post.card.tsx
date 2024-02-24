@@ -1,9 +1,10 @@
 import { Avatar, Box, Card, Text, VStack } from '@holdr-ui/react';
 import { useCurrentUser } from '../../../auth';
-import { Error, useDialogTabContext } from '../../../../shared';
+import { Error, useDialogContext } from '../../../../shared';
+
 function CreatePostCard() {
   const currentUser = useCurrentUser();
-  const { onOpen } = useDialogTabContext();
+  const { onOpen } = useDialogContext();
 
   return (
     <Error hasError={!currentUser} errorEl={<></>}>
@@ -38,7 +39,7 @@ function CreatePostCard() {
                 css={{
                   background: 'rgba(152, 152, 255, 0.15)',
                 }}
-                onClick={() => onOpen('')}
+                onClick={onOpen}
               >
                 <Text
                   noOfLines={1}

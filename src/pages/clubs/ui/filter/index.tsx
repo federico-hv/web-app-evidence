@@ -15,7 +15,7 @@ function Filter({ label, active, name }: FilterProps) {
         toggle();
       }}
       items='center'
-      radius={3}
+      radius={2}
       cursor='pointer'
       _hover={
         isActive

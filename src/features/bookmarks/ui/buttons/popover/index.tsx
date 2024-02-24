@@ -9,11 +9,12 @@ function PopoverButton({
   return (
     <button disabled={disabled} onClick={onClick}>
       <Box
-        color='base800'
+        color='white500'
         cursor='pointer'
         radius='full'
-        _hover={{ backgroundColor: '$base100' }}
-        p={1}
+        _hover={{ background: 'rgba(14, 14, 27, 0.50)' }}
+        px={3}
+        py={2}
         fontSize={{ '@bp1': 1, '@bp3': 1 }}
       >
         {children}

@@ -1,7 +1,12 @@
 import { Route, Routes } from 'react-router';
 import { AuthRedirectPage, HomePage } from '../pages';
 import { AuthGuard, NotFoundError, Paths, prefix } from '../shared';
-import { ClubRoutes, ConnectRoutes, SetupFlowRoutes } from './routes';
+import {
+  ClubRoutes,
+  ConnectRoutes,
+  SetupFlowRoutes,
+  UserRoutes,
+} from './routes';
 import { MainLayout } from '../layout';
 import { Fragment } from 'react';
 import { useLocation } from 'react-router-dom';
@@ -36,10 +41,10 @@ function Router() {
             {/*  element={<SettingsRoutes />}*/}
             {/*/>*/}
             {/*/!* Profile Route*!/*/}
-            {/*<Route*/}
-            {/*  path={prefix(Paths.username, '/*')}*/}
-            {/*  element={<UserRoutes />}*/}
-            {/*/>*/}
+            <Route
+              path={prefix(Paths.username, '/*')}
+              element={<UserRoutes />}
+            />
             {/*/!* Bookmarks Route *!/*/}
             {/*<Route*/}
             {/*  path={prefix(Paths.bookmarks, '/*')}*/}

@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Box, Circle, css, styled, theme } from '@holdr-ui/react';
-import { CSS, keyframes } from '@stitches/react';
+import { Box, Circle, css, styled } from '@holdr-ui/react';
+import { keyframes } from '@stitches/react';
 
 export const noShrink = css({
   flexShrink: 0,
@@ -70,13 +70,15 @@ export const CenteredImage = css({
   },
 });
 
-export const tabsHoverStyle: CSS<typeof theme> = {
-  transitionDuration: theme.transitions['duration-slow'],
-  transitionProperty: 'background',
-  transitionTimingFunction: 'linear',
-};
-
 export const blink = keyframes({
   '0%': { opacity: 1 },
   '100%': { opacity: 0.2 },
+});
+
+export const customBgColor = css({
+  minHeight: '2rem !important',
+  minWidth: '2rem !important',
+  radius: '9999px',
+  border: '1px solid rgba(152, 152, 255, 0.10)',
+  background: 'rgba(133, 133, 255, 0.2)',
 });

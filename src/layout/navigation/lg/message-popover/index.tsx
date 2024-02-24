@@ -7,23 +7,21 @@ import {
   Text,
 } from '@holdr-ui/react';
 import { useState } from 'react';
-import { useMenuNavigate } from '../../../../shared';
-import { ButtonWrapper } from '../../ui';
+import { customBgColor, useMenuNavigate } from '../../../../shared';
 
 function MessagePopover() {
   const [state, set] = useState(false);
   const { goto } = useMenuNavigate();
   return (
     <Popover modal isOpen={state} onOpenChange={set}>
-      <Popover.Trigger onClick={() => set(true)}>
-        <ButtonWrapper>
-          <IconButton
-            variant='ghost'
-            colorTheme='white50'
-            icon='chat-outline'
-            ariaLabel='View messages'
-          />
-        </ButtonWrapper>
+      <Popover.Trigger asChild onClick={() => set(true)}>
+        <IconButton
+          className={customBgColor()}
+          variant='ghost'
+          colorTheme='white50'
+          icon='chat-outline'
+          ariaLabel='View messages'
+        />
       </Popover.Trigger>
       <Popover.Portal>
         <Popover.Content

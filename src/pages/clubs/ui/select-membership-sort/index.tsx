@@ -9,7 +9,7 @@ import {
 } from '@holdr-ui/react';
 import { useSearchParams } from 'react-router-dom';
 
-function SortMemberships() {
+function SelectMembershipsSort() {
   const { handleOnValueChange, value } = useOnValueChange('');
   const [, setSearchParams] = useSearchParams();
 
@@ -26,10 +26,11 @@ function SortMemberships() {
     <Box w={190} fontSize={2}>
       <Select value={value} onValueChange={update}>
         <SelectTrigger
+          radius={2}
           placeholder='Sort By'
           css={{
             border: '1px solid rgba(152, 152, 255, 0.10)',
-            backgroundColor: 'rgba(49, 49, 73, 0.85)',
+            background: 'rgba(133, 133, 255, 0.2)',
           }}
         />
         <SelectContent sticky='always'>
@@ -41,7 +42,7 @@ function SortMemberships() {
                 h='1px'
                 w='100%'
                 css={{
-                  backgroundColor: 'rgba(152, 152, 255, 0.10)',
+                  background: 'rgba(133, 133, 255, 0.2)',
                 }}
               />
             }
@@ -50,8 +51,8 @@ function SortMemberships() {
               boxShadow: '0px 0px 100px 0px rgba(14, 14, 27, 0.35)',
               backgroundColor: 'rgba(49, 49, 73, 0.75)',
               backdropFilter: 'blur(50px)',
-              borderBottomLeftRadius: '$3',
-              borderBottomRightRadius: '$3',
+              borderBottomLeftRadius: '$2',
+              borderBottomRightRadius: '$2',
             }}
           >
             <SelectItem
@@ -92,6 +93,6 @@ function SortMemberships() {
     </Box>
   );
 }
-SortMemberships.displayName = 'SortMemberships';
+SelectMembershipsSort.displayName = 'SelectMembershipsSort';
 
-export default SortMemberships;
+export default SelectMembershipsSort;

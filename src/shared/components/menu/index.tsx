@@ -69,8 +69,8 @@ function Menu({
                   borderRadius: '$4',
                   border: '1px solid rgba(152, 152, 255, 0.10)',
                   background: ' rgba(56, 56, 140, 0.25)',
-                  boxShadow: '0px 0px 100px 0px rgba(14, 14, 27, 0.35)',
                   backdropFilter: 'blur(50px)',
+                  boxShadow: '0px 0px 100px 0px rgba(14, 14, 27, 0.35)',
                 }}
               >
                 {Content}

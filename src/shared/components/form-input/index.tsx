@@ -52,12 +52,15 @@ function FormInput({
         />
       ) : (
         <InputGroup
+          color='white500'
+          focusColor='purple50'
           size={{ '@bp1': 'sm', '@bp3': 'base' }}
           variant='filled'
+          radius={2}
         >
           {leftIcon && (
             <InputGroup.LeftElement>
-              <Icon color='base300' name={leftIcon} />
+              <Icon color='white500' name={leftIcon} />
             </InputGroup.LeftElement>
           )}
           <FormField

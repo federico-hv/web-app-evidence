@@ -60,14 +60,19 @@ function BookmarkPopover({
         </Popover.Trigger>
         <Popover.Portal>
           <Popover.Content
-            p={1}
+            p={0}
             align='center'
             side={position}
             alignOffset={alignOffset}
             sideOffset={sideOffset}
             minWidth={1}
             radius='full'
-            css={{ backgroundColor: '#FFF', zIndex: 20 }}
+            zIndex={5}
+            shadow='lg'
+            css={{
+              backgroundColor: 'rgba(101,101,218,0.25)',
+              backdropFilter: 'blur(50px)',
+            }}
           >
             <HStack
               p={{ '@bp1': 1, '@bp3': 1 }}
