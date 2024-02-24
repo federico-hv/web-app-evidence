@@ -17,18 +17,16 @@ function FeedFilter({ current, onClick }: FeedFilterProps) {
       value={current}
       onValueChange={(value) => onClick(value as FeedFilterValue)}
     >
-      <SelectTrigger
-        as={
-          <IconButton
-            className={customBgColor()}
-            variant='ghost'
-            size='lg'
-            icon='filter-outline'
-            colorTheme='white50'
-            ariaLabel='filter feeds'
-          />
-        }
-      />
+      <SelectTrigger asChild>
+        <IconButton
+          className={customBgColor()}
+          variant='ghost'
+          size='lg'
+          icon='filter-outline'
+          colorTheme='white50'
+          ariaLabel='filter feeds'
+        />
+      </SelectTrigger>
 
       <SelectContent
         align='end'

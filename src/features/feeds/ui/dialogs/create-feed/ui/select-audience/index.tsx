@@ -7,39 +7,39 @@ import {
   SelectItem,
   SelectItemList,
   SelectTrigger,
-  Text,
   useOnValueChange,
 } from '@holdr-ui/react';
 import { Fragment } from 'react';
+import { IconName } from '@holdr-ui/react/dist/shared/types';
+
+export interface CustomSelectOptionPair {
+  label: string;
+  icon: IconName;
+}
+
+type Options = 'public' | 'members' | 'followers';
 
 function SelectAudience() {
-  const { value, handleOnValueChange } = useOnValueChange('option-1');
-  const Trigger = () => (
-    <HStack
-      items='center'
-      radius={2}
-      px={3}
-      py={2}
-      color='white500'
-      justify='space-between'
-      css={{
-        backgroundColor: 'rgb(45, 45, 71)',
-      }}
-    >
-      <HStack gap={2}>
-        <Icon name='global-outline' />
-        <Text>Public</Text>
-      </HStack>
-      <Icon name='caret-down-outline' />
-    </HStack>
-  );
+  const options: Record<Options, CustomSelectOptionPair> = {
+    public: { label: 'Public', icon: 'global-outline' },
+    members: { label: 'Members', icon: 'user-square-outline' },
+    followers: { label: 'Followers', icon: 'user-group-outline' },
+  };
+
+  const { value, handleOnValueChange } = useOnValueChange('public');
 
   return (
     <Box w='150px'>
       <Select value={value} onValueChange={handleOnValueChange}>
-        <SelectTrigger as={<Trigger />} />
+        <SelectTrigger css={{ backgroundColor: 'rgb(45, 45, 71)' }}>
+          <HStack gap={3} items='center'>
+            <Icon name={options[value as Options].icon} />
+            {options[value as Options].label}
+          </HStack>
+        </SelectTrigger>
         <SelectContent zIndex={100} sticky='always'>
           <SelectItemList
+            _active={{ color: '$white500' }}
             divider={<Fragment />}
             css={{
               borderBottomLeftRadius: '$2',
@@ -47,36 +47,26 @@ function SelectAudience() {
               backgroundColor: 'rgb(45, 45, 71)',
             }}
           >
-            <SelectItem asChild value='public'>
-              <HStack
-                onClick={() => handleOnValueChange('public')}
-                gap={2}
-                p={3}
-              >
-                <Icon name='global-outline' />
-                <Text>Public</Text>
-              </HStack>
-            </SelectItem>
-            <SelectItem asChild value='followers'>
-              <HStack
-                onClick={() => handleOnValueChange('followers')}
-                gap={2}
-                p={3}
-              >
-                <Icon name='user-group-outline' />
-                <Text>Followers</Text>
-              </HStack>
-            </SelectItem>
-            <SelectItem asChild value='members'>
-              <HStack
-                onClick={() => handleOnValueChange('members')}
-                gap={2}
-                p={3}
-              >
-                <Icon name='user-square-outline' />
-                <Text>Members</Text>
-              </HStack>
-            </SelectItem>
+            <SelectItem
+              value='public'
+              _hover={{ background: 'rgba(14, 14, 27, 0.50)' }}
+              label={options.public.label}
+              icon={options.public.icon}
+            />
+            <SelectItem
+              value='followers'
+              _hover={{ background: 'rgba(14, 14, 27, 0.50)' }}
+              label={options.followers.label}
+              icon={options.followers.icon}
+            />
+            <SelectItem
+              value='members'
+              _hover={{
+                background: 'rgba(14, 14, 27, 0.50)',
+              }}
+              label={options.members.label}
+              icon={options.members.icon}
+            />
           </SelectItemList>
         </SelectContent>
       </Select>

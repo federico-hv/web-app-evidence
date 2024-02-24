@@ -152,7 +152,7 @@ function CreateFeedDialog() {
                   w='100%'
                   css={{ backgroundColor: 'rgba(204, 204, 204, 0.10)' }}
                 />
-                <Stack gap={3}>
+                <Stack direction='vertical' gap={3}>
                   <Button
                     onClick={close}
                     className={makeButtonLarger('2.5rem', '15px')}

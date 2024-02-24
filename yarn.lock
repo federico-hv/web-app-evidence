@@ -2847,8 +2847,10 @@
   dependencies:
     np "8.0.4"
 
-"@holdr-ui/react@file:../react-library":
-  version "2.0.9"
+"@holdr-ui/react@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@holdr-ui/react/-/react-2.1.0.tgz#e41c2df7ef652c4a7d6604015435fa6a1b5e6020"
+  integrity sha512-Yg1ofzUvHD9wlbcCzuYqbK3n5pXhXp8qp+oIg6aIdj5/sCZ6P4Z2bANDAQmu6qu9HTRwKc7EGLFzZWoBuiDpCg==
   dependencies:
     "@holdr-ui/icons" "^3.0.4"
     "@radix-ui/react-accordion" "^1.0.1"
@@ -6648,9 +6650,9 @@ ajv@^8.11.0:
     uri-js "^4.2.2"
 
 all-package-names@^2.0.2:
-  version "2.0.864"
-  resolved "https://registry.yarnpkg.com/all-package-names/-/all-package-names-2.0.864.tgz#0473c1da2ca72e4e80969fecdaf7ed4b89efc58a"
-  integrity sha512-IzYa1uIv2XE1ihCSQ/qdqs332AX/V9/vJC0FbDrMc+E0iE2irJpb89mN/8qFQ3Vp0MATSB8JQMdK7e/37jwsYg==
+  version "2.0.865"
+  resolved "https://registry.yarnpkg.com/all-package-names/-/all-package-names-2.0.865.tgz#75072ea981ef4274ab712ea351f6327235eeb930"
+  integrity sha512-WzufmIQRee543SGYZ6hf5mKKBMDRLowAxpe48rUkbA1sJPtmaBzYf8g3gsvxToUW43Toe9Pv+XS+6cglOHPEHw==
   dependencies:
     commander-version "^1.1.0"
     p-lock "^2.0.0"

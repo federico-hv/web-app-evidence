@@ -58,7 +58,7 @@ function CreateArticleButton() {
     <Fragment>
       {currentStep === 1 && (
         <Button
-          disabled={isWebsiteInvalid()}
+          disabled={!badLink ? isWebsiteInvalid() : isArticleInvalid()}
           isLoading={loadingCreateOgMetadata}
           loadingText={loadingCreateOgMetadata ? '' : 'Posting'}
           onClick={async () => {
