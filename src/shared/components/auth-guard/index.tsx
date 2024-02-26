@@ -3,6 +3,7 @@ import { AuthGuardProps } from './types';
 import NotFoundError from '../not-found-error';
 import { Paths, prefix } from '../../index';
 import { useCurrentUser } from '../../../features';
+import { Box } from '@holdr-ui/react';
 
 function AuthGuard({ roles = ['general', 'artist'] }: AuthGuardProps) {
   const currentUser = useCurrentUser();
@@ -15,14 +16,14 @@ function AuthGuard({ roles = ['general', 'artist'] }: AuthGuardProps) {
       ) : currentUser && !roles.includes(currentUser.role) ? (
         <NotFoundError />
       ) : (
-        <Navigate
-          to={prefix(
-            '/',
-            `${Paths.authRedirect}?from=${location.pathname}`,
-          )}
-          state={{ from: location }}
-          // replace
-        />
+        // <Navigate
+        //   to={prefix(
+        //     '/',
+        //     `${Paths.authRedirect}?from=${location.pathname}`,
+        //   )}
+        //   state={{ from: location }}
+        // />
+        <Box>What the hell</Box>
       )}
     </>
   );
