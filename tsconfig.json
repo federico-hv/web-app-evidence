@@ -20,38 +20,6 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "baseUrl": "src",
-    "paths": {
-      "components/*": [
-        "src/components/*"
-      ],
-      "configs/*": [
-        "src/configs/*"
-      ],
-      "context/*": [
-        "src/contexts/*"
-      ],
-      "hooks/*": [
-        "src/hooks/*"
-      ],
-      "lib/*": [
-        "src/lib/*"
-      ],
-      "layouts/*": [
-        "src/layouts/*"
-      ],
-      "pages/*": [
-        "src/pages/*"
-      ],
-      "utilities/*": [
-        "src/utilities/*"
-      ],
-      "shared/*": [
-        "src/shared/*"
-      ],
-      "content/*": [
-        "src/content/*"
-      ]
-    }
   },
   "include": [
     "commitlint.config.cjs",

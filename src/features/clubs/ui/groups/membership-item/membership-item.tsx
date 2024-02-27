@@ -6,8 +6,12 @@ import {
   Icon,
   theme,
 } from '@holdr-ui/react';
-import { TextGroup, TextGroupHeading, TextGroupSubheading } from 'shared';
 import { MembershipItemProps } from './membership-item.types';
+import {
+  TextGroup,
+  TextGroupHeading,
+  TextGroupSubheading,
+} from '../../../../../shared';
 
 function MembershipItem({ data }: MembershipItemProps) {
   return (
@@ -22,10 +26,14 @@ function MembershipItem({ data }: MembershipItemProps) {
         transition: theme.transitions['duration-normal'],
       }}
     >
-      <Avatar size='xl' src={data.artist.avatar} variant='squircle'/>
+      <Avatar size='xl' src={data.artist.avatar} variant='squircle' />
       <VStack gap={2}>
         <TextGroup gap={0}>
-          <TextGroupHeading size={2} css={{ lineHeight: 1.45 }} aria-label="membership-item name">
+          <TextGroupHeading
+            size={2}
+            css={{ lineHeight: 1.45 }}
+            aria-label='membership-item name'
+          >
             {data.name}
           </TextGroupHeading>
           <TextGroupSubheading
@@ -46,11 +54,9 @@ function MembershipItem({ data }: MembershipItemProps) {
                 : 'arrow-down-outline'
             }
             color={data.priceHasRisen ? 'success500' : 'danger400'}
-            aria-label={
-              `${data.priceHasRisen
-              ? 'increase'
-              : 'decrease'} in value`
-            }
+            aria-label={`${
+              data.priceHasRisen ? 'increase' : 'decrease'
+            } in value`}
           />
           <Text
             weight={500}

@@ -2,7 +2,6 @@
 import { defineConfig, loadEnv } from 'vite';
 import type { ConfigEnv } from 'vite';
 import react from '@vitejs/plugin-react';
-import path from 'path';
 
 // https://vitejs.dev/config/
 export default (configEnv: ConfigEnv) => {
@@ -14,7 +13,6 @@ export default (configEnv: ConfigEnv) => {
 
   return defineConfig({
     plugins: [react()],
-    base: process.env.VITE_APP_BASE_URL,
     server: {
       watch: {
         usePolling: true,
@@ -30,51 +28,6 @@ export default (configEnv: ConfigEnv) => {
       coverage: {
         reporter: ['text', 'json', 'html'],
       },
-    },
-    resolve: {
-      alias: [
-        {
-          find: 'hooks',
-          replacement: path.resolve(__dirname, './src/hooks'),
-        },
-        {
-          find: 'layout',
-          replacement: path.resolve(__dirname, './src/layout'),
-        },
-        {
-          find: 'utilities',
-          replacement: path.resolve(__dirname, './src/utilities'),
-        },
-        { find: 'lib', replacement: path.resolve(__dirname, './src/lib') },
-        {
-          find: 'pages',
-          replacement: path.resolve(__dirname, './src/pages'),
-        },
-        {
-          find: 'contexts',
-          replacement: path.resolve(__dirname, './src/contexts'),
-        },
-        {
-          find: 'configs',
-          replacement: path.resolve(__dirname, './src/configs'),
-        },
-        {
-          find: 'component',
-          replacement: path.resolve(__dirname, './src/react'),
-        },
-        {
-          find: 'shared',
-          replacement: path.resolve(__dirname, './src/shared'),
-        },
-        {
-          find: 'assets',
-          replacement: path.resolve(__dirname, './src/assets'),
-        },
-        {
-          find: 'content',
-          replacement: path.resolve(__dirname, './src/content'),
-        },
-      ],
     },
   });
 };

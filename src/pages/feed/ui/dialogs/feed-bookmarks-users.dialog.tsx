@@ -1,6 +1,12 @@
 import { useSuspenseQuery } from '@apollo/client';
 import { GET_BOOKMARKED_USERS } from '../../queries';
 import {
+  UserWithRelationshipAction,
+  useFeedContext,
+} from '../../../../features';
+import { Box, VStack } from '@holdr-ui/react';
+import { Fragment } from 'react';
+import {
   CommonDialog,
   CommonDialogContent,
   CommonDialogHeader,
@@ -8,16 +14,10 @@ import {
   GQLRenderer,
   IConnection,
   IPaginationParams,
-  UserModel,
   useDialogContext,
   useDialogTabContext,
-} from 'shared';
-import {
-  UserWithRelationshipAction,
-  useFeedContext,
-} from '../../../../features';
-import { Box, VStack } from '@holdr-ui/react';
-import { Fragment } from 'react';
+  UserModel,
+} from '../../../../shared';
 
 function FeedBookmarksUsersDialog() {
   const { isOpen, onOpen, onClose, option } = useDialogTabContext();
