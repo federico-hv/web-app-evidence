@@ -5,8 +5,7 @@ import {
   CommonDialogHeader,
   EmptyMessage,
   useDialogTabContext,
-} from 'shared';
-
+} from '../../../../shared';
 function FeedViewsUsersDialog() {
   const { isOpen, onOpen, onClose, option } = useDialogTabContext();
 
