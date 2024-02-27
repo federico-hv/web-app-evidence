@@ -12,6 +12,8 @@ function AuthProvider({ children }: AuthProviderProps) {
   const { height } = useWindowSize();
   const { data, loading } = useQuery<{ me: IMe }>(GET_ME);
 
+  console.log('AuthProvider: ', { data });
+
   return (
     <Loader loading={loading} h={height} as={<FullPageLoadingFallback />}>
       <Content data={data ? data.me : null}>{children}</Content>
