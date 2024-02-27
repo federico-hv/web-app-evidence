@@ -7,7 +7,7 @@ import { Box, Center, Text } from '@holdr-ui/react';
 
 function AuthGuard({ roles = ['general', 'artist'] }: AuthGuardProps) {
   const currentUser = useCurrentUser();
-  const location = useLocation();
+  // const location = useLocation();
 
   console.log({ currentUser });
 
