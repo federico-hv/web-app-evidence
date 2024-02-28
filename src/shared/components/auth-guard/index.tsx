@@ -21,7 +21,7 @@ function AuthGuard({ roles = ['general', 'artist'] }: AuthGuardProps) {
             `${Paths.authRedirect}?from=${location.pathname}`,
           )}
           state={{ from: location }}
-          // replace
+          replace
         />
       )}
     </>
