@@ -40,7 +40,7 @@ const authLink = setContext((operation, { headers }) => {
 export const GQLClient = new ApolloClient({
   link: ApolloLink.from([
     authLink,
-    errorLink,
+    // errorLink,
     uploadLink as unknown as ApolloLink,
   ]),
   cache: GQLCache,
