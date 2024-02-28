@@ -8,8 +8,6 @@ function AuthGuard({ roles = ['general', 'artist'] }: AuthGuardProps) {
   const currentUser = useCurrentUser();
   const location = useLocation();
 
-  console.log({ currentUser });
-
   return (
     <>
       {currentUser && roles.includes(currentUser.role) ? (
