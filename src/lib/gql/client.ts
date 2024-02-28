@@ -21,14 +21,9 @@ function getOperationToken(operation: GraphQLRequest) {
 
 // Required to upload images/videos
 const authLink = setContext((operation, { headers }) => {
-  const token = cookie.get('access_token');
-
-  console.log('access token: ', token);
-
-  // const token = getOperationToken(operation);
+  const token = getOperationToken(operation);
   // return the headers to the profile so httpLink can read them
 
-  console.log({ token });
   return {
     headers: {
       ...headers,
@@ -40,7 +35,7 @@ const authLink = setContext((operation, { headers }) => {
 export const GQLClient = new ApolloClient({
   link: ApolloLink.from([
     authLink,
-    // errorLink,
+    errorLink,
     uploadLink as unknown as ApolloLink,
   ]),
   cache: GQLCache,
