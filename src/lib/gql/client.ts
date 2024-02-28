@@ -21,9 +21,11 @@ function getOperationToken(operation: GraphQLRequest) {
 
 // Required to upload images/videos
 const authLink = setContext((operation, { headers }) => {
-  console.log('access token: ', cookie.get('access_token'));
+  const token = cookie.get('access_token');
 
-  const token = getOperationToken(operation);
+  console.log('access token: ', token);
+
+  // const token = getOperationToken(operation);
   // return the headers to the profile so httpLink can read them
 
   console.log({ token });
