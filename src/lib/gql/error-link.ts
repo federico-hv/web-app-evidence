@@ -46,7 +46,9 @@ const onRefreshError = () => {
   // might want to change this
   const fromPath = new URLSearchParams(window.location.search).get('from');
   const queryParams = querystring.encode({
-    redirect_url: `${import.meta.env.VITE_APP_BASE_URL}${fromPath}`,
+    redirect_url: `${import.meta.env.VITE_APP_BASE_URL}${
+      fromPath ? fromPath : ''
+    }`,
   });
 
   window.open(
