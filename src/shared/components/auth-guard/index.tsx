@@ -6,7 +6,8 @@ import { useCurrentUser } from '../../../features';
 
 function AuthGuard({ roles = ['general', 'artist'] }: AuthGuardProps) {
   const currentUser = useCurrentUser();
-  // const location = useLocation();
+
+  const location = useLocation();
 
   return (
     <>
