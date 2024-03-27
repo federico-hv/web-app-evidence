@@ -156,7 +156,7 @@ function CreateFeedDialog() {
                 <Stack direction='vertical' gap={3}>
                   <Button
                     onClick={close}
-                    className={makeButtonLarger('2.5rem', '16px')}
+                    className={makeButtonLarger('3.0rem', '16px')}
                     colorTheme='white500'
                     variant='ghost'
                     fullWidth
