@@ -157,6 +157,7 @@ function CantFindLinkForm() {
             maxLength={150}
             maxLines={2}
             placeholder='Share something with your fans'
+            style={{height: '100%', background: 'none', border: 'none'}}
           />
         </Box>
       </VStack>
