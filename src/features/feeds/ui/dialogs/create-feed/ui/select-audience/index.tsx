@@ -44,7 +44,7 @@ function SelectAudience() {
             css={{
               borderBottomLeftRadius: '$2',
               borderBottomRightRadius: '$2',
-              backgroundColor: 'rgb(45, 45, 71)',
+              backgroundColor: 'rgba(26, 26, 41, 0.75)',
             }}
           >
             <SelectItem
