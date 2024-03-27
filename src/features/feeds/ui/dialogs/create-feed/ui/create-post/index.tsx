@@ -12,7 +12,7 @@ import {
 function CreatePost() {
   const { updatePostState, type } = useCreateFeedContext();
   return (
-    <VStack t='1rem' l={0} r={0} overflowY='auto' pb={4} gap={4}>
+    <VStack t='1rem' l={0} r={0} overflowY='auto' pb={0} gap={4}>
       <CreatePostEditor update={updatePostState} />
       <ChooseFeedType />
       {type === 'with-image' && (
