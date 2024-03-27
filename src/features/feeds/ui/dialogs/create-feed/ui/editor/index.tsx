@@ -30,7 +30,7 @@ export default function CreatePostEditor({
   return (
     <Box
       radius={1}
-      py={4}
+      py={3}
       as='label'
       color='white500'
       minHeight={{ '@bp1': 75, '@bp3': 125 }}
