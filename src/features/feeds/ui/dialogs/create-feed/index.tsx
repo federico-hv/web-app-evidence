@@ -116,6 +116,8 @@ function CreateFeedDialog() {
                 backgroundColor: 'rgba(48, 48, 75, 1)',
                 transition: 'all 0.35s ease-in-out',
               }}
+              py={3}
+              px={4}
             >
               <DialogHeader gap={0} css={{ backgroundColor: 'rgba(48, 48, 75, 1)' }}>
                 <DialogClose />
