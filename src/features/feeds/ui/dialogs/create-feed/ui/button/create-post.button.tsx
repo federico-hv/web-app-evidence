@@ -34,7 +34,7 @@ function CreatePostButton() {
           close();
         }
       }}
-      className={makeButtonLarger('2.5rem', '15px')}
+      className={makeButtonLarger('2.5rem', '16px')}
       colorTheme='purple500'
       fullWidth
     >
