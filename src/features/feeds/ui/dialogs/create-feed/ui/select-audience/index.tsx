@@ -62,7 +62,7 @@ function SelectAudience() {
             <SelectItem
               value='members'
               _hover={{
-                background: 'rgba(14, 14, 27, 0.50)',
+                background: 'rgba(48, 48, 75, 0.50)',
               }}
               label={options.members.label}
               icon={options.members.icon}
