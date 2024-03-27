@@ -21,6 +21,7 @@ import {
   DialogPortal,
   HStack,
   Stack,
+  THEME_COLOR,
   Text,
   useCounter,
   useInputChange,
@@ -155,10 +156,11 @@ function CreateFeedDialog() {
                 <Stack direction='vertical' gap={3}>
                   <Button
                     onClick={close}
-                    className={makeButtonLarger('2.5rem', '15px')}
+                    className={makeButtonLarger('2.5rem', '16px')}
                     colorTheme='white500'
                     variant='ghost'
                     fullWidth
+                    style={{border: `0.75px solid ${THEME_COLOR.white700}`}}
                   >
                     Cancel
                   </Button>
