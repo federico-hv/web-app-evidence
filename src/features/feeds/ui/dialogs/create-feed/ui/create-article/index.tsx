@@ -90,7 +90,7 @@ function CantFindLinkForm() {
         </Text>
         <Box
           radius={1}
-          css={{ backgroundColor: hexToRGB('#9898FF', 0.15) }}
+          css={{ backgroundColor: 'rgba(26, 26, 41, 0.75)' }}
         >
           <Input
             radius={1}
@@ -109,7 +109,7 @@ function CantFindLinkForm() {
         </Text>
         <Box
           radius={1}
-          css={{ backgroundColor: hexToRGB('#9898FF', 0.15) }}
+          css={{ backgroundColor: 'rgba(26, 26, 41, 0.75)' }}
         >
           <Input
             radius={1}
@@ -127,7 +127,7 @@ function CantFindLinkForm() {
         </Text>
         <Box
           radius={1}
-          css={{ backgroundColor: hexToRGB('#9898FF', 0.15) }}
+          css={{ backgroundColor: 'rgba(26, 26, 41, 0.75)' }}
         >
           <Input
             radius={1}
@@ -145,7 +145,7 @@ function CantFindLinkForm() {
         </Text>
         <Box
           radius={1}
-          css={{ backgroundColor: hexToRGB('#9898FF', 0.15) }}
+          css={{ backgroundColor: 'rgba(26, 26, 41, 0.75)' }}
         >
           <Textarea
             radius={1}
