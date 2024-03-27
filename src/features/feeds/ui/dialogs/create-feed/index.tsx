@@ -116,7 +116,7 @@ function CreateFeedDialog() {
                 transition: 'all 0.35s ease-in-out',
               }}
             >
-              <DialogHeader gap={0} css={{ backgroundColor: '#1A1A29' }}>
+              <DialogHeader gap={0} css={{ backgroundColor: 'rgba(48, 48, 75, 1)' }}>
                 <DialogClose />
                 <HStack items='center' gap={4}>
                   <Avatar variant='squircle' size='lg' src='' name='' />
