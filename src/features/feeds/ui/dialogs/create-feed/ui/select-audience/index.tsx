@@ -32,7 +32,7 @@ function SelectAudience() {
     <Box w='150px'>
       <Select value={value} onValueChange={handleOnValueChange}>
         <SelectTrigger css={{ backgroundColor: 'rgba(26, 26, 41, 0.75)' }}>
-          <HStack gap={3} items='center'>
+          <HStack gap={2} items='center'>
             <Icon name={options[value as Options].icon} />
             {options[value as Options].label}
           </HStack>
@@ -45,6 +45,7 @@ function SelectAudience() {
               borderBottomLeftRadius: '$2',
               borderBottomRightRadius: '$2',
               backgroundColor: 'rgba(26, 26, 41, 0.75)',
+              boxShadow: `0px 0px 50px 0px rgba(0, 0, 0, 0.25)`,
             }}
           >
             <SelectItem
@@ -52,12 +53,18 @@ function SelectAudience() {
               _hover={{ background: 'rgba(48, 48, 75, 0.50)' }}
               label={options.public.label}
               icon={options.public.icon}
+              m={0}
+              px={4}
+              radius={0}
             />
             <SelectItem
               value='followers'
               _hover={{ background: 'rgba(48, 48, 75, 0.50)' }}
               label={options.followers.label}
               icon={options.followers.icon}
+              m={0}
+              px={4}
+              radius={0}
             />
             <SelectItem
               value='members'
@@ -66,6 +73,9 @@ function SelectAudience() {
               }}
               label={options.members.label}
               icon={options.members.icon}
+              m={0}
+              px={4}
+              radius={0}
             />
           </SelectItemList>
         </SelectContent>
