@@ -18,9 +18,11 @@ import {
   useStepperContext,
 } from '../../../../../../../shared';
 import { useCreateFeedContext } from '../../shared';
+import CreatePost from '../create-post';
+import CreatePostEditor from '../editor';
 
 function WebsiteForm() {
-  const { websiteUrl, handleOnWebsiteChange, onBadLink } =
+  const { websiteUrl, handleOnWebsiteChange, onBadLink, updatePostState } =
     useCreateFeedContext();
 
   return (
@@ -59,6 +61,7 @@ function WebsiteForm() {
           </Box>
         </HStack>
       </VStack>
+      <CreatePostEditor update={updatePostState}/>
     </VStack>
   );
 }
