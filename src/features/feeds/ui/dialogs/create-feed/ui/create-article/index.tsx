@@ -35,7 +35,7 @@ function WebsiteForm() {
           css={{ backgroundColor: 'rgba(26, 26, 41, 0.75)' }}
           py={1}
         >
-          <InputGroup radius={1} focusColor='transparent' >
+          <InputGroup radius={1} focusColor='transparent'>
             <InputGroupLeftElement>
               <Icon color='white500' name='global-outline' />
             </InputGroupLeftElement>
@@ -48,7 +48,7 @@ function WebsiteForm() {
             />
           </InputGroup>
         </Box>
-        <HStack flex={1} justify='flex-end' pb={2} >
+        <HStack flex={1} justify='flex-end' pb={2}>
           <Box
             onClick={onBadLink}
             w='fit-content'
@@ -60,7 +60,7 @@ function WebsiteForm() {
           </Box>
         </HStack>
       </VStack>
-      <CreatePostEditor update={updatePostState}/>
+      <CreatePostEditor update={updatePostState} />
     </VStack>
   );
 }
@@ -76,6 +76,14 @@ function CantFindLinkForm() {
 
   return (
     <VStack w='100%' as='form' gap={4} justify='space-between'>
+      <Text size={6} color='white500'>
+        Add Article
+      </Text>
+      <Box
+        h='1px'
+        w='100%'
+        css={{ backgroundColor: 'rgba(204, 204, 204, 0.10)' }}
+      />
       <VStack as='label' w='100%' gap={1}>
         <Text color='base400' size={2} css={{ pl: '$1' }}>
           Title
@@ -148,6 +156,7 @@ function CantFindLinkForm() {
             colorTheme='white500'
             maxLength={150}
             maxLines={2}
+            placeholder='Share something with your fans'
           />
         </Box>
       </VStack>
