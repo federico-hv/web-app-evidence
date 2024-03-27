@@ -145,7 +145,7 @@ function CreateFeedDialog() {
                 direction='vertical'
                 gap={4}
                 zIndex={10}
-                css={{ backgroundColor: '#1A1A29' }}
+                css={{ backgroundColor: 'rgba(48, 48, 75, 1)' }}
               >
                 <Box
                   h='1px'
