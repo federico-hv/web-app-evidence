@@ -85,7 +85,7 @@ function CantFindLinkForm() {
         css={{ backgroundColor: 'rgba(204, 204, 204, 0.10)' }}
       />
       <VStack as='label' w='100%' gap={1}>
-        <Text color='base400' size={2} css={{ pl: '$1' }}>
+        <Text color='base400' size={2}>
           Title
         </Text>
         <Box
@@ -100,11 +100,12 @@ function CantFindLinkForm() {
             onChange={handleChange}
             color='white500'
             maxLength={75}
+            css={{ $$hoverColor: 'transparent' }}
           />
         </Box>
       </VStack>
       <VStack as='label' w='100%' gap={1}>
-        <Text color='base400' size={2} css={{ pl: '$1' }}>
+        <Text color='base400' size={2}>
           Website URL
         </Text>
         <Box
@@ -118,11 +119,12 @@ function CantFindLinkForm() {
             value={articleState.url}
             onChange={handleChange}
             color='white500'
+            css={{ $$hoverColor: 'transparent' }}
           />
         </Box>
       </VStack>
       <VStack as='label' w='100%' gap={1}>
-        <Text color='base400' size={2} css={{ pl: '$1' }}>
+        <Text color='base400' size={2}>
           Image URL
         </Text>
         <Box
@@ -136,11 +138,12 @@ function CantFindLinkForm() {
             value={articleState.imageUrl}
             onChange={handleChange}
             color='white500'
+            css={{ $$hoverColor: 'transparent' }}
           />
         </Box>
       </VStack>
       <VStack as='label' w='100%' gap={1}>
-        <Text color='base400' size={2} css={{ pl: '$1' }}>
+        <Text color='base400' size={2}>
           Description
         </Text>
         <Box
@@ -157,7 +160,7 @@ function CantFindLinkForm() {
             maxLength={150}
             maxLines={2}
             placeholder='Share something with your fans'
-            style={{height: '100%', background: 'none', border: 'none'}}
+            style={{ height: '100%', background: 'none', border: 'none' }}
           />
         </Box>
       </VStack>
