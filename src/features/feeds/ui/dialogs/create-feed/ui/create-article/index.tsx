@@ -25,23 +25,25 @@ function WebsiteForm() {
 
   return (
     <VStack w='100%' as='form' pt={4} gap={1} justify='space-between'>
-      <VStack as='label' w='100%' gap={1}>
+      <VStack as='label' w='100%' gap={2}>
         <Text color='base400' size={2} css={{ pl: '$1' }}>
           Website URL
         </Text>
         <Box
           radius={2}
-          css={{ backgroundColor: hexToRGB('#9898FF', 0.15) }}
+          css={{ backgroundColor: 'rgba(26, 26, 41, 0.75)' }}
+          py={1}
         >
-          <InputGroup radius={1} focusColor='transparent'>
+          <InputGroup radius={1} focusColor='transparent' >
             <InputGroupLeftElement>
               <Icon color='white500' name='global-outline' />
             </InputGroupLeftElement>
             <Input
               name='website'
+              placeholder='Share an article with your fans'
               value={websiteUrl}
               onChange={handleOnWebsiteChange}
-              color='white500'
+              color='white700'
             />
           </InputGroup>
         </Box>
