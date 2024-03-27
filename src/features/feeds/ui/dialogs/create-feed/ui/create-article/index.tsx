@@ -26,7 +26,7 @@ function WebsiteForm() {
 
   return (
     <VStack w='100%' as='form' pt={0} gap={1} justify='space-between'>
-      <VStack as='label' w='100%' gap={2}>
+      <VStack as='label' w='100%' gap={1}>
         <Text color='base400' size={2} css={{ pl: '$1' }}>
           Website URL
         </Text>
@@ -48,7 +48,7 @@ function WebsiteForm() {
             />
           </InputGroup>
         </Box>
-        <HStack flex={1} justify='flex-end' pb={2}>
+        <HStack flex={1} justify='flex-end' pb={2} >
           <Box
             onClick={onBadLink}
             w='fit-content'
