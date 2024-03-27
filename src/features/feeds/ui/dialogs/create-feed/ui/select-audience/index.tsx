@@ -49,7 +49,7 @@ function SelectAudience() {
           >
             <SelectItem
               value='public'
-              _hover={{ background: 'rgba(14, 14, 27, 0.50)' }}
+              _hover={{ background: 'rgba(48, 48, 75, 0.50)' }}
               label={options.public.label}
               icon={options.public.icon}
             />
