@@ -55,7 +55,7 @@ function SelectAudience() {
             />
             <SelectItem
               value='followers'
-              _hover={{ background: 'rgba(14, 14, 27, 0.50)' }}
+              _hover={{ background: 'rgba(48, 48, 75, 0.50)' }}
               label={options.followers.label}
               icon={options.followers.icon}
             />
