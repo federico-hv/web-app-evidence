@@ -122,7 +122,7 @@ function CreateFeedDialog() {
               <DialogHeader gap={0} css={{ backgroundColor: 'rgba(48, 48, 75, 1)' }}>
                 <DialogClose />
                 <HStack items='center' gap={4}>
-                  <Avatar variant='squircle' size='lg' src='' name='' />
+                  <Avatar variant='squircle' size='base' src='' name='' />
                   <Text color='white500' size={6}>
                     {currentUser.displayName}
                   </Text>
