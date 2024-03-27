@@ -20,7 +20,7 @@ function CreatePost() {
           as={
             <TextGroup items='center' w='fit-content' gap={0}>
               <TextGroupSubheading size={2} color='white500'>
-                Add photos/videos
+                Add Photos/Videos
               </TextGroupSubheading>
               <TextGroupSubheading color='base300' size={2}>
                 or drag and drop
