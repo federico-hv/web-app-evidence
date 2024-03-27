@@ -18,7 +18,6 @@ import {
   useStepperContext,
 } from '../../../../../../../shared';
 import { useCreateFeedContext } from '../../shared';
-import CreatePost from '../create-post';
 import CreatePostEditor from '../editor';
 
 function WebsiteForm() {
@@ -26,7 +25,7 @@ function WebsiteForm() {
     useCreateFeedContext();
 
   return (
-    <VStack w='100%' as='form' pt={4} gap={1} justify='space-between'>
+    <VStack w='100%' as='form' pt={0} gap={1} justify='space-between'>
       <VStack as='label' w='100%' gap={2}>
         <Text color='base400' size={2} css={{ pl: '$1' }}>
           Website URL
@@ -49,7 +48,7 @@ function WebsiteForm() {
             />
           </InputGroup>
         </Box>
-        <HStack flex={1} justify='flex-end'>
+        <HStack flex={1} justify='flex-end' pb={2}>
           <Box
             onClick={onBadLink}
             w='fit-content'
@@ -203,7 +202,7 @@ function CreateArticle() {
   const { badLink } = useCreateFeedContext();
 
   return (
-    <VStack t='1rem' l={0} r={0} overflowY='auto' pb={4} gap={4}>
+    <VStack t='1rem' l={0} r={0} overflowY='auto' pb={0} gap={4}>
       {currentStep === 1 && (
         <Fragment>
           {badLink ? <CantFindLinkForm /> : <WebsiteForm />}
