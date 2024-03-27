@@ -112,7 +112,7 @@ function CreateFeedDialog() {
               radius={2}
               w={608}
               css={{
-                backgroundColor: '#1A1A29',
+                backgroundColor: 'rgba(48, 48, 75, 1)',
                 transition: 'all 0.35s ease-in-out',
               }}
             >
