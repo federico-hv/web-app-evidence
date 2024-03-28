@@ -113,13 +113,13 @@ function CreateFeedDialog() {
               radius={2}
               w={608}
               css={{
-                backgroundColor: 'rgba(48, 48, 75, 1)',
+                backgroundColor: '#30304b',
                 transition: 'all 0.35s ease-in-out',
               }}
               py={3}
               px={4}
             >
-              <DialogHeader gap={0} css={{ backgroundColor: 'rgba(48, 48, 75, 1)' }}>
+              <DialogHeader gap={0} css={{ backgroundColor: '#30304b' }}>
                 <DialogClose />
                 <HStack items='center' gap={4}>
                   <Avatar variant='squircle' size='base' src='' name='' />
@@ -148,7 +148,7 @@ function CreateFeedDialog() {
                 direction='vertical'
                 gap={4}
                 zIndex={10}
-                css={{ backgroundColor: 'rgba(48, 48, 75, 1)' }}
+                css={{ backgroundColor: '#30304b' }}
               >
                 <Box
                   h='1px'
