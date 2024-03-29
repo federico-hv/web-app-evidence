@@ -15,6 +15,7 @@ function AnalyticsStatistic({
   value,
   percent,
   description,
+  suffix
 }: AnalyticsStatisticProps) {
 
   const upArrow = <Icon name='arrow-up-outline' color='success500' size='xl'/>
@@ -39,7 +40,7 @@ function AnalyticsStatistic({
         )}
       </HStack>
       <HStack items='flex-end' justify='space-between'>
-        <Box fontSize={4}>{value}</Box>
+        <Box fontSize={4}>{value}{suffix && suffix}</Box>
         {percent !== undefined && (
           <HStack items='center' gap={2}>
             {percent >= 0 ? upArrow : downArrow}
@@ -88,7 +89,8 @@ function AnalyticsSummary({data}: AnalyticsSummaryProps) {
           <AnalyticsStatistic
             label='social interactions'
             description='A description'
-            value='0%'
+            value='0'
+            suffix='%'
             percent={0}
           />
           <AnalyticsStatistic

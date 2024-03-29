@@ -10,4 +10,5 @@ export interface AnalyticsStatisticProps {
   value: StringNumeric;
   percent?: number;
   description?: string;
+  suffix?: string;
 }
