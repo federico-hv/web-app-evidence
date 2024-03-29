@@ -53,7 +53,7 @@ function AnalyticsStatistic({
 
 function AnalyticsSummary() {
   return (
-    <RadialSurface radius={4} h={618} w='100%' css={{ flexShrink: 0 }}>
+    <RadialSurface radius={4} h='auto' w='100%' css={{ flexShrink: 0 }}>
       <VStack as='nav' p={4}>
         <Heading size={3} weight={500} css={{ userSelect: 'none' }}>
           Analytics
