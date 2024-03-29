@@ -59,4 +59,6 @@ function AnalyticsStatistic({
   );
 }
 
+AnalyticsStatistic.displayName = 'Analytics Statistic';
+
 export default AnalyticsStatistic;
