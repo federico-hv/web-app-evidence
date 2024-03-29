@@ -96,12 +96,6 @@ function AnalyticsSummary() {
             percent={0}
           />
           <AnalyticsStatistic
-            label='total membership sales'
-            description='A description'
-            value={0}
-            percent={0}
-          />
-          <AnalyticsStatistic
             label='peak engagement time'
             description='A description'
             value='-'
