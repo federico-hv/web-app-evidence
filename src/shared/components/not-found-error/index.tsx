@@ -18,6 +18,7 @@ import {
 import { RadialSurface } from '../surface';
 import { makeButtonLarger } from '../../styles';
 import { Fragment } from 'react';
+import { dummyAnalyticsSummaryData } from 'pages/home/shared/constants';
 
 //TODO: make this a component.
 
@@ -81,7 +82,7 @@ function NotFoundError({ q }: { q?: string }) {
             {currentUser.role === 'artist' && (
               <Fragment>
                 <MembershipValueSummary />
-                <AnalyticsSummary />
+                <AnalyticsSummary data={dummyAnalyticsSummaryData}/>
               </Fragment>
             )}
             {currentUser.role === 'general' && (
