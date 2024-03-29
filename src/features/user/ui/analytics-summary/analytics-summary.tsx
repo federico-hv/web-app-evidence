@@ -53,7 +53,7 @@ function AnalyticsStatistic({
           {suffix && suffix}
         </Box>
         {percent !== undefined && (
-          <HStack items='center' gap={2}>
+          <HStack items='center' justify='space-between' minWidth={65}>
             {percent >= 0 ? upArrow : downArrow}
             <Box fontSize={4}>{Math.abs(percent)}%</Box>
           </HStack>
