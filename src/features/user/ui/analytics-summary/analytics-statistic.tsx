@@ -18,13 +18,13 @@ function AnalyticsStatistic({
   return (
     <VStack
       py={1}
-      gap={'0.15rem' as any}
+      gap={'0.10rem' as any}
       mt={1}
       css={{ userSelect: 'none' }}
     >
       <HStack items='center' gap={2}>
         <Box>
-          <Text casing='capitalize' color='base300' size='14px'>
+          <Text casing='capitalize' color='base300' size={2}>
             {label}
           </Text>
         </Box>
