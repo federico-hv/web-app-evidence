@@ -20,6 +20,10 @@ function AnalyticsStatistic({
   percent?: number;
   description?: string;
 }) {
+
+  const upArrow = <Icon name='arrow-up-outline' color='success500' size='xl'/>
+  const downArrow = <Icon name='arrow-down-outline' color='danger400' size='xl'/>
+
   return (
     <VStack py={1} gap={3} mt={1} css={{ userSelect: 'none' }}>
       <HStack items='center' gap={2}>
@@ -39,11 +43,11 @@ function AnalyticsStatistic({
         )}
       </HStack>
       <HStack items='flex-end' justify='space-between'>
-        <Box fontSize='32px'>{value}</Box>
+        <Box fontSize={4}>{value}</Box>
         {percent !== undefined && (
-          <HStack>
-            {/* arrow coming soon...*/}
-            <Box>{percent}%</Box>
+          <HStack items='center' gap={2}>
+            {percent >= 0 ? upArrow : downArrow}
+            <Box fontSize={4}>{percent}%</Box>
           </HStack>
         )}
       </HStack>
