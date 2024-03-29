@@ -1,23 +1,22 @@
-import dayjs from "dayjs";
-import { AnalyticsSummaryData } from "features";
+import dayjs from 'dayjs';
+import { AnalyticsSummaryData } from 'features';
 
 export const dummyAnalyticsSummaryData: AnalyticsSummaryData = {
-    clubViews: {
-        value: 0,
-        changePercentage: 0
-    },
-
-    averageBidders: {
-        value: 0,
-        changePercentage: 0
-    },
-    totalResales: {
-        value: 0,
-        changePercentage: 0
-    },
-    socialInteractions: {
-        value: 0,
-        changePercentage: 0
-    },
-    peakEngagementTime: new Date()
-}
+  clubViews: {
+    value: 258,
+    changePercentage: -4.2,
+  },
+  averageBidders: {
+    value: 14,
+    changePercentage: 5,
+  },
+  totalResales: {
+    value: 24,
+    changePercentage: 10,
+  },
+  socialInteractions: {
+    value: 32,
+    changePercentage: 8,
+  },
+  peakEngagementTime: new Date(),
+};

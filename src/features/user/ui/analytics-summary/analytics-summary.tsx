@@ -55,7 +55,7 @@ function AnalyticsStatistic({
         {percent !== undefined && (
           <HStack items='center' gap={2}>
             {percent >= 0 ? upArrow : downArrow}
-            <Box fontSize={4}>{percent}%</Box>
+            <Box fontSize={4}>{Math.abs(percent)}%</Box>
           </HStack>
         )}
       </HStack>

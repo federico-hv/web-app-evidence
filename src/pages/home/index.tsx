@@ -32,7 +32,7 @@ function HomePage() {
             {currentUser.role === 'artist' && (
               <Fragment>
                 <MembershipValueSummary />
-                <AnalyticsSummary data={dummyAnalyticsSummaryData}/>
+                <AnalyticsSummary data={dummyAnalyticsSummaryData} />
               </Fragment>
             )}
             {currentUser.role === 'general' && (
