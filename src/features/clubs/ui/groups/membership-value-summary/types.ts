@@ -1,3 +1,4 @@
+import { MembershipValueModel } from 'features/clubs/shared';
 import { StringNumeric } from '../../../../../shared';
 
 export interface ValueStatisticProps {
@@ -6,3 +7,4 @@ export interface ValueStatisticProps {
   value: StringNumeric;
   label: string;
 }
+
