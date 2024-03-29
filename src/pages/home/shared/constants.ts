@@ -1,4 +1,3 @@
-import dayjs from 'dayjs';
 import { AnalyticsSummaryData } from 'features';
 
 export const dummyAnalyticsSummaryData: AnalyticsSummaryData = {
