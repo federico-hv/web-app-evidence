@@ -8,7 +8,7 @@ function MembershipValueSummary({data}: MembershipValueProps) {
   const lossArrow = <Icon name='arrow-down-outline' color='danger400' size='xl'/>;
 
   return (
-    <RadialSurface radius={4} h={171} w='100%' css={{ flexShrink: 0 }}>
+    <RadialSurface radius={4} h='auto' w='100%' css={{ flexShrink: 0 }}>
       <VStack p={4}>
         <Heading
           casing='capitalize'
