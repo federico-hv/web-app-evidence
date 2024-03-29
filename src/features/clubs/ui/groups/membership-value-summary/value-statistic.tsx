@@ -1,4 +1,4 @@
-import { HStack, Text } from '@holdr-ui/react';
+import { VStack, Text } from '@holdr-ui/react';
 import { ValueStatisticProps } from './types';
 
 function ValueStatistic({
@@ -7,19 +7,18 @@ function ValueStatistic({
   prefix = '$',
 }: ValueStatisticProps) {
   return (
-    <HStack
+    <VStack
       items='center'
       justify='space-between'
-      css={{ fontSize: '14px' }}
     >
-      <Text casing='capitalize' color='base300'>
+      <Text casing='capitalize' color='base300' size={2}>
         {label}
       </Text>
-      <Text>
+      <Text size={4}>
         {prefix}
         {value}
       </Text>
-    </HStack>
+    </VStack>
   );
 }
 

@@ -25,7 +25,7 @@ function MembershipValueSummary() {
         />
         <VStack gap={2} justify='flex-end'>
           <ValueStatistic label='Average price' value={0} />
-          <ValueStatistic label='Entry price' value={0} />
+          <ValueStatistic label='Gains/Losses' value={0} />
           <ValueStatistic label='Last sale' value={0} />
           <ValueStatistic
             label='Memberships sold'
