@@ -1,21 +1,11 @@
 import { RadialSurface } from '../../../../../shared';
 import { Box, Heading, Icon, VStack } from '@holdr-ui/react';
 import ValueStatistic from './value-statistic';
-import { MembershipValueModel } from 'features/clubs/shared';
+import { MembershipValueProps } from './types';
 
-function MembershipValueSummary({
-  averagePrice = 147,
-  priceChange = 180,
-  priceHasRisen = true,
-  membershipsSold = 20,
-  numOfMemberships = 250,
-}: MembershipValueModel) {
-  const gainArrow = (
-    <Icon name='arrow-up-outline' color='success500' size='xl' />
-  );
-  const lossArrow = (
-    <Icon name='arrow-down-outline' color='danger400' size='xl' />
-  );
+function MembershipValueSummary({data}: MembershipValueProps) {
+  const gainArrow = <Icon name='arrow-up-outline' color='success500' size='xl'/>;
+  const lossArrow = <Icon name='arrow-down-outline' color='danger400' size='xl'/>;
 
   return (
     <RadialSurface radius={4} h={171} w='100%' css={{ flexShrink: 0 }}>
@@ -38,19 +28,16 @@ function MembershipValueSummary({
           }}
         />
         <VStack gap={2} justify='flex-end'>
-          <ValueStatistic
-            label='Average price'
-            value={averagePrice.toFixed(2)}
-          />
+          <ValueStatistic label='Average price' value={data.averagePrice} />
           <ValueStatistic
             label='Gains/Losses'
-            value={priceChange.toFixed(2)}
-            leftAddon={priceHasRisen ? gainArrow : lossArrow}
+            value={data.priceChange}
+            leftAddon={data.priceHasRisen? gainArrow : lossArrow}
           />
           <ValueStatistic
             label='Memberships sold'
             prefix=''
-            value={`${membershipsSold}/${numOfMemberships}`}
+            value={`${data.membershipsSold}/${data.numOfMemberships}`}
           />
         </VStack>
       </VStack>

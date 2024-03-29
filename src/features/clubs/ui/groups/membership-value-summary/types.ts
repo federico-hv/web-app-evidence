@@ -8,3 +8,6 @@ export interface ValueStatisticProps {
   label: string;
 }
 
+export interface MembershipValueProps {
+  data: MembershipValueModel;
+}
