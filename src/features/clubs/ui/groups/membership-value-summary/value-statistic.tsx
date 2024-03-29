@@ -8,13 +8,13 @@ function ValueStatistic({
 }: ValueStatisticProps) {
   return (
     <VStack
-      items='center'
+      items='flex-start'
       justify='space-between'
     >
-      <Text casing='capitalize' color='base300' size={2}>
+      <Text casing='capitalize' color='base300' size={2} weight={400}>
         {label}
       </Text>
-      <Text size={4}>
+      <Text size={4} weight={400}>
         {prefix}
         {value}
       </Text>
