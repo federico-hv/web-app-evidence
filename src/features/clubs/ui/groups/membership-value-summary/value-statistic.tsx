@@ -8,7 +8,7 @@ function ValueStatistic({
   leftAddon,
 }: ValueStatisticProps) {
   return (
-    <VStack items='flex-start' justify='space-between' gap='0.15rem'>
+    <VStack items='flex-start' justify='space-between' gap={'0.15rem' as any}>
       <Text casing='capitalize' color='base300' size={2} weight={400}>
         {label}
       </Text>
