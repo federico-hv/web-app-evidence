@@ -1,4 +1,4 @@
-import { RadialSurface, StringNumeric } from '../../../shared';
+import { RadialSurface, StringNumeric } from '../../../../shared';
 import {
   Box,
   Heading,
@@ -8,18 +8,14 @@ import {
   Tooltip,
   VStack,
 } from '@holdr-ui/react';
+import { AnalyticsStatisticProps, AnalyticsSummaryProps } from './types';
 
 function AnalyticsStatistic({
   label,
   value,
   percent,
   description,
-}: {
-  label: string;
-  value: StringNumeric;
-  percent?: number;
-  description?: string;
-}) {
+}: AnalyticsStatisticProps) {
 
   const upArrow = <Icon name='arrow-up-outline' color='success500' size='xl'/>
   const downArrow = <Icon name='arrow-down-outline' color='danger400' size='xl'/>
@@ -55,7 +51,7 @@ function AnalyticsStatistic({
   );
 }
 
-function AnalyticsSummary() {
+function AnalyticsSummary({data}: AnalyticsSummaryProps) {
   return (
     <RadialSurface radius={4} h='auto' w='100%' css={{ flexShrink: 0 }}>
       <VStack as='nav' p={4}>

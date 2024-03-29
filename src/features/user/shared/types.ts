@@ -10,13 +10,14 @@ export interface UpdateProfilePayload {
 }
 
 interface Statistic {
-  value: number,
-  changePercentage: number,
+  value: number;
+  changePercentage: number;
 }
+
 export interface AnalyticsSummaryData {
-  clubViews: Statistic,
-  totalResales: Statistic,
-  conversionRate: Statistic,
-  socialInteractions: Statistic,
-  peakEngagementTime: Date
+  clubViews: Statistic;
+  totalResales: Statistic;
+  conversionRate: Statistic;
+  socialInteractions: Statistic;
+  peakEngagementTime: Date;
 }
