@@ -17,7 +17,7 @@ interface Statistic {
 export interface AnalyticsSummaryData {
   clubViews: Statistic;
   totalResales: Statistic;
-  conversionRate: Statistic;
+  averageBidders: Statistic;
   socialInteractions: Statistic;
   peakEngagementTime: Date;
 }

@@ -15,14 +15,22 @@ function AnalyticsStatistic({
   value,
   percent,
   description,
-  suffix
+  suffix,
 }: AnalyticsStatisticProps) {
-
-  const upArrow = <Icon name='arrow-up-outline' color='success500' size='xl'/>
-  const downArrow = <Icon name='arrow-down-outline' color='danger400' size='xl'/>
+  const upArrow = (
+    <Icon name='arrow-up-outline' color='success500' size='xl' />
+  );
+  const downArrow = (
+    <Icon name='arrow-down-outline' color='danger400' size='xl' />
+  );
 
   return (
-    <VStack py={1} gap={'0.15rem' as any} mt={1} css={{ userSelect: 'none' }}>
+    <VStack
+      py={1}
+      gap={'0.15rem' as any}
+      mt={1}
+      css={{ userSelect: 'none' }}
+    >
       <HStack items='center' gap={2}>
         <Box>
           <Text casing='capitalize' color='base300' size='14px'>
@@ -40,7 +48,10 @@ function AnalyticsStatistic({
         )}
       </HStack>
       <HStack items='flex-end' justify='space-between'>
-        <Box fontSize={4}>{value}{suffix && suffix}</Box>
+        <Box fontSize={4}>
+          {value}
+          {suffix && suffix}
+        </Box>
         {percent !== undefined && (
           <HStack items='center' gap={2}>
             {percent >= 0 ? upArrow : downArrow}
@@ -52,7 +63,12 @@ function AnalyticsStatistic({
   );
 }
 
-function AnalyticsSummary({data}: AnalyticsSummaryProps) {
+function AnalyticsSummary({ data }: AnalyticsSummaryProps) {
+
+  const getPeakEngagementTime = (time: Date) => {
+    return `${time.getHours() > 12 ? time.getHours() - 12 : time.getHours()}:${time.getMinutes()}`;
+  }
+
   return (
     <RadialSurface radius={4} h='auto' w='100%' css={{ flexShrink: 0 }}>
       <VStack as='nav' p={4}>
@@ -71,32 +87,34 @@ function AnalyticsSummary({data}: AnalyticsSummaryProps) {
           <AnalyticsStatistic
             label='club views'
             description='A description'
-            value={0}
-            percent={0}
+            value={data.clubViews.value}
+            percent={data.clubViews.changePercentage}
           />
           <AnalyticsStatistic
-            label='total resales'
+            label='resales'
             description='A description'
-            value={0}
-            percent={0}
+            value={data.totalResales.value}
+            percent={data.totalResales.changePercentage}
           />
           <AnalyticsStatistic
-            label='conversion rate'
+            label='average bidders'
             description='A description'
-            value='0%'
-            percent={0}
+            value={data.averageBidders.value}
+            percent={data.averageBidders.changePercentage}
+            suffix='%'
           />
           <AnalyticsStatistic
             label='social interactions'
             description='A description'
-            value='0'
+            value={data.socialInteractions.value}
+            percent={data.socialInteractions.changePercentage}
             suffix='%'
-            percent={0}
           />
           <AnalyticsStatistic
             label='peak engagement time'
             description='A description'
-            value='-'
+            value={getPeakEngagementTime(data.peakEngagementTime)}
+            suffix={data.peakEngagementTime.getHours() >= 12 ? ' p.m.' : ' a.m'}
           />
         </VStack>
       </VStack>
