@@ -102,11 +102,6 @@ function AnalyticsSummary() {
             description='A description'
             value='-'
           />
-          <AnalyticsStatistic
-            label='geographic location'
-            description='A description'
-            value='-'
-          />
         </VStack>
       </VStack>
     </RadialSurface>
