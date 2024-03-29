@@ -25,7 +25,7 @@ function AnalyticsStatistic({
   const downArrow = <Icon name='arrow-down-outline' color='danger400' size='xl'/>
 
   return (
-    <VStack py={1} gap={3} mt={1} css={{ userSelect: 'none' }}>
+    <VStack py={1} gap={'0.15rem' as any} mt={1} css={{ userSelect: 'none' }}>
       <HStack items='center' gap={2}>
         <Box>
           <Text casing='capitalize' color='base300' size='14px'>
