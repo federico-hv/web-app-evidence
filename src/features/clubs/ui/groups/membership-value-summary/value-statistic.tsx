@@ -23,4 +23,6 @@ function ValueStatistic({
   );
 }
 
+ValueStatistic.displayName = "Membership Value Statistic";
+
 export default ValueStatistic;
