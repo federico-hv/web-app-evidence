@@ -18,10 +18,9 @@ export interface OwnedMembershipModel {
   priceHasRisen?: boolean;
 }
 
-export interface MembershipValueModel {
+export interface MembershipValueData {
   averagePrice: number;
   priceChange: number;
-  priceHasRisen?: boolean;
   membershipsSold: number;
   numOfMemberships: number;
 }

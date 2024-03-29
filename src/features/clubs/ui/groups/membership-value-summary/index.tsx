@@ -41,9 +41,9 @@ function MembershipValueSummary({ data }: MembershipValueProps) {
           <ValueStatistic
             label='Gains/Losses'
             value={
-              data.priceChange === 0 ? 0 : data.priceChange.toFixed(2)
+              data.priceChange === 0 ? 0 : Math.abs(data.priceChange).toFixed(2)
             }
-            leftAddon={data.priceHasRisen ? gainArrow : lossArrow}
+            leftAddon={data.priceChange >= 0 ? gainArrow : lossArrow}
           />
           <ValueStatistic
             label='Memberships sold'

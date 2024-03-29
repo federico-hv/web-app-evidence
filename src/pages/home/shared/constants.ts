@@ -1,9 +1,8 @@
-import { MembershipValueModel } from 'features';
+import { MembershipValueData } from 'features';
 
-export const dummyMembershipValueData: MembershipValueModel = {
+export const dummyMembershipValueData: MembershipValueData = {
   averagePrice: 147,
   priceChange: 180,
-  priceHasRisen: true,
   membershipsSold: 20,
   numOfMemberships: 250,
 };
