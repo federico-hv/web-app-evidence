@@ -1,6 +1,4 @@
-import { AnalyticsSummaryData } from 'features';
-
-export const dummyAnalyticsSummaryData: AnalyticsSummaryData = {
+export const dummyAnalyticsSummaryData = {
   clubViews: {
     value: 258,
     changePercentage: -4.2,

@@ -4,10 +4,10 @@ import {
   Heading,
   VStack,
 } from '@holdr-ui/react';
-import { AnalyticsSummaryProps } from './types';
 import AnalyticsStatistic from './analytics-statistic';
+import { dummyAnalyticsSummaryData } from '../../shared/constants'
 
-function AnalyticsSummary({ data }: AnalyticsSummaryProps) {
+function AnalyticsSummary() {
 
   const getPeakEngagementTime = (time: Date) => {
     return `${time.getHours() > 12 ? time.getHours() - 12 : time.getHours()}:${time.getMinutes()}`;
@@ -31,34 +31,34 @@ function AnalyticsSummary({ data }: AnalyticsSummaryProps) {
           <AnalyticsStatistic
             label='club views'
             description='A description'
-            value={data.clubViews.value}
-            percent={data.clubViews.changePercentage}
+            value={dummyAnalyticsSummaryData.clubViews.value}
+            percent={dummyAnalyticsSummaryData.clubViews.changePercentage}
           />
           <AnalyticsStatistic
             label='resales'
             description='A description'
-            value={data.totalResales.value}
-            percent={data.totalResales.changePercentage}
+            value={dummyAnalyticsSummaryData.totalResales.value}
+            percent={dummyAnalyticsSummaryData.totalResales.changePercentage}
           />
           <AnalyticsStatistic
             label='average bidders'
             description='A description'
-            value={data.averageBidders.value}
-            percent={data.averageBidders.changePercentage}
+            value={dummyAnalyticsSummaryData.averageBidders.value}
+            percent={dummyAnalyticsSummaryData.averageBidders.changePercentage}
             suffix='%'
           />
           <AnalyticsStatistic
             label='social interactions'
             description='A description'
-            value={data.socialInteractions.value}
-            percent={data.socialInteractions.changePercentage}
+            value={dummyAnalyticsSummaryData.socialInteractions.value}
+            percent={dummyAnalyticsSummaryData.socialInteractions.changePercentage}
             suffix='%'
           />
           <AnalyticsStatistic
             label='peak engagement time'
             description='A description'
-            value={getPeakEngagementTime(data.peakEngagementTime)}
-            suffix={data.peakEngagementTime.getHours() >= 12 ? ' p.m.' : ' a.m'}
+            value={getPeakEngagementTime(dummyAnalyticsSummaryData.peakEngagementTime)}
+            suffix={dummyAnalyticsSummaryData.peakEngagementTime.getHours() >= 12 ? ' p.m.' : ' a.m'}
           />
         </VStack>
       </VStack>
