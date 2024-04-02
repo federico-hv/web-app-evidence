@@ -18,8 +18,6 @@ import {
 import { RadialSurface } from '../surface';
 import { makeButtonLarger } from '../../styles';
 import { Fragment } from 'react';
-import { dummyMembershipValueData } from '../../../pages/home/shared/constants';
-
 
 //TODO: make this a component.
 
@@ -82,7 +80,7 @@ function NotFoundError({ q }: { q?: string }) {
             <ProfileSummary />
             {currentUser.role === 'artist' && (
               <Fragment>
-                <MembershipValueSummary data={dummyMembershipValueData}/>
+                <MembershipValueSummary />
                 <AnalyticsSummary />
               </Fragment>
             )}

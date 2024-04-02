@@ -14,7 +14,6 @@ import {
   ContentLayoutMain,
 } from '../../layout';
 import { Fragment } from 'react';
-import { dummyMembershipValueData } from './shared/constants';
 
 function HomePage() {
   const currentUser = useCurrentUser();
@@ -31,7 +30,7 @@ function HomePage() {
             <ProfileSummary />
             {currentUser.role === 'artist' && (
               <Fragment>
-                <MembershipValueSummary data={dummyMembershipValueData}/>
+                <MembershipValueSummary />
                 <AnalyticsSummary />
               </Fragment>
             )}

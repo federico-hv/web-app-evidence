@@ -1,4 +1,3 @@
-import { MembershipValueData } from 'features/clubs/shared';
 import { StringNumeric } from '../../../../../shared';
 
 export interface ValueStatisticProps {
@@ -8,6 +7,3 @@ export interface ValueStatisticProps {
   label: string;
 }
 
-export interface MembershipValueProps {
-  data: MembershipValueData;
-}
