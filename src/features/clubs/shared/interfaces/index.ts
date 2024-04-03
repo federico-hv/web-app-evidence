@@ -17,3 +17,10 @@ export interface OwnedMembershipModel {
   priceChange: number;
   priceHasRisen?: boolean;
 }
+
+export interface MembershipValueData {
+  averagePrice: number;
+  priceChange: number;
+  membershipsSold: number;
+  numOfMemberships: number;
+}
