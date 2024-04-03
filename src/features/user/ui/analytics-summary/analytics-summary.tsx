@@ -2,12 +2,9 @@ import { RadialSurface } from '../../../../shared';
 import { Box, Heading, VStack } from '@holdr-ui/react';
 import AnalyticsStatistic from './analytics-statistic';
 import { dummyAnalyticsSummaryData } from '../../shared/constants';
-import dayjs from 'dayjs';
+import { getFormattedTime } from '../../../../shared/utilities/time.utility';
 
 function AnalyticsSummary() {
-  const getFormattedTime = (date: Date) => {
-    return dayjs(date).format('h:mm');
-  };
 
   return (
     <RadialSurface radius={4} h='auto' w='100%' css={{ flexShrink: 0 }}>
@@ -62,11 +59,6 @@ function AnalyticsSummary() {
             value={getFormattedTime(
               dummyAnalyticsSummaryData.peakEngagementTime,
             )}
-            suffix={
-              dummyAnalyticsSummaryData.peakEngagementTime.getHours() >= 12
-                ? ' p.m.'
-                : ' a.m'
-            }
           />
         </VStack>
       </VStack>
