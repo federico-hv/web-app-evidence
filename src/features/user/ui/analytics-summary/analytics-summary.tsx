@@ -10,7 +10,7 @@ import { dummyAnalyticsSummaryData } from '../../shared/constants'
 function AnalyticsSummary() {
 
   const getPeakEngagementTime = (time: Date) => {
-    return `${time.getHours() > 12 ? time.getHours() - 12 : time.getHours()}:${time.getMinutes()}`;
+    return `${time.getHours() > 12 ? time.getHours() - 12 : time.getHours()}:${time.getMinutes() > 10 ? time.getMinutes() : time.getMinutes().toString().padStart(2,'0')}`;
   }
 
   return (
