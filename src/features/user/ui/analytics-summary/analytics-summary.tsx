@@ -2,16 +2,11 @@ import { RadialSurface } from '../../../../shared';
 import { Box, Heading, VStack } from '@holdr-ui/react';
 import AnalyticsStatistic from './analytics-statistic';
 import { dummyAnalyticsSummaryData } from '../../shared/constants';
+import dayjs from 'dayjs';
 
 function AnalyticsSummary() {
-  const getPeakEngagementTime = (time: Date) => {
-    return `${
-      time.getHours() > 12 ? time.getHours() - 12 : time.getHours()
-    }:${
-      time.getMinutes() > 10
-        ? time.getMinutes()
-        : time.getMinutes().toString().padStart(2, '0')
-    }`;
+  const getFormattedTime = (date: Date) => {
+    return dayjs(date).format('h:mm');
   };
 
   return (
@@ -64,7 +59,7 @@ function AnalyticsSummary() {
           <AnalyticsStatistic
             label='peak engagement time'
             description='A description'
-            value={getPeakEngagementTime(
+            value={getFormattedTime(
               dummyAnalyticsSummaryData.peakEngagementTime,
             )}
             suffix={
