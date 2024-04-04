@@ -1,6 +1,6 @@
 import { Icon, VStack, HStack, Box, Text, Tooltip } from '@holdr-ui/react';
 import { AnalyticsStatisticProps } from './types';
-import GainLossIndicator from 'shared/components/gain-loss-indicator';
+import GainLossIndicator from '../../../../shared/components/gain-loss-indicator';
 
 function AnalyticsStatistic({
   label,
@@ -44,11 +44,7 @@ function AnalyticsStatistic({
             minWidth={65}
             gap={3}
           >
-            {percent >= 0 ? (
-              <GainLossIndicator isGain={true} />
-            ) : (
-              <GainLossIndicator isGain={false} />
-            )}
+            {percent !== 0 && <GainLossIndicator isGain={percent > 0} />}
             <Box fontSize={4}>{Math.abs(percent)}%</Box>
           </HStack>
         )}
