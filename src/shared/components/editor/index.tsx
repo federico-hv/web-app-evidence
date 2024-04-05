@@ -20,7 +20,7 @@ const defaultConfig: InitialConfigType = {
 };
 
 export default function Editor({
-  Placeholder = <div>Write...</div>,
+  Placeholder = <div style={{pointerEvents: 'none'}}>Write...</div>,
   plugins = [],
   config = defaultConfig,
   onChange,
