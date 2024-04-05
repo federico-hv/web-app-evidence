@@ -1,16 +1,11 @@
 import { RadialSurface } from '../../../../../shared';
-import { Box, Heading, Icon, VStack } from '@holdr-ui/react';
+import { Box, Heading, VStack } from '@holdr-ui/react';
 import ValueStatistic from './value-statistic';
 import { dummyMembershipValueData } from '../../../shared/constants';
+import GainLossIndicator from '../../../../../shared/components/gain-loss-indicator';
+import { getFormattedPriceVal } from '../../../../../shared/utilities/price.utility';
 
 function MembershipValueSummary() {
-  const gainArrow = (
-    <Icon name='arrow-up-outline' color='success500' size='xl' />
-  );
-  const lossArrow = (
-    <Icon name='arrow-down-outline' color='danger400' size='xl' />
-  );
-
   return (
     <RadialSurface radius={4} h='auto' w='100%' css={{ flexShrink: 0 }}>
       <VStack p={4}>
@@ -35,15 +30,15 @@ function MembershipValueSummary() {
           <ValueStatistic
             label='Average price'
             value={
-              dummyMembershipValueData.averagePrice === 0 ? 0 : dummyMembershipValueData.averagePrice.toFixed(2)
+              getFormattedPriceVal(dummyMembershipValueData.averagePrice)
             }
           />
           <ValueStatistic
             label='Gains/Losses'
             value={
-              dummyMembershipValueData.priceChange === 0 ? 0 : Math.abs(dummyMembershipValueData.priceChange).toFixed(2)
+              getFormattedPriceVal(dummyMembershipValueData.priceChange)
             }
-            leftAddon={dummyMembershipValueData.priceChange >= 0 ? gainArrow : lossArrow}
+            leftAddon={dummyMembershipValueData.priceChange !== 0 && <GainLossIndicator isGain={dummyMembershipValueData.priceChange > 0}/>}
           />
           <ValueStatistic
             label='Memberships sold'
