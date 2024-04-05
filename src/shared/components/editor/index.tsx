@@ -63,7 +63,6 @@ export default function Editor({
         id='input-field'
         data-cy='editor'
         position='relative'
-        css={{ background: 'red' }}
       >
         <PlainTextPlugin
           contentEditable={<ContentEditable className={editorStyles()} />}
