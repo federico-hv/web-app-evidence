@@ -37,6 +37,7 @@ export default function CreatePostEditor({
       css={{
         // backgroundColor: hexToRGB('#9898FF', 0.15),
         backgroundColor: 'green',
+        display: 'flex'
 
       }}
     >
