@@ -152,7 +152,7 @@ function ArtistOption({
           )}
         </Box>
         <Box position='relative' zIndex={1}>
-          <Avatar variant='squircle' size='lg' />
+          <Avatar variant='squircle' size='lg' name={name} />
         </Box>
         <Text css={{ width: '100%', textAlign: 'center' }} size={2}>
           {name}
