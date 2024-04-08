@@ -81,6 +81,8 @@ function CreateFeedDialog() {
     onGoodLink();
   };
 
+  const cancelButtonSize = makeButtonLarger('3.0rem', '16px');
+
   return (
     <CreateFeedContextProvider
       value={{
@@ -158,7 +160,7 @@ function CreateFeedDialog() {
                 <Stack direction='vertical' gap={3}>
                   <Button
                     onClick={close}
-                    className={makeButtonLarger('3.0rem', '16px')}
+                    className={cancelButtonSize}
                     colorTheme='white500'
                     variant='ghost'
                     fullWidth

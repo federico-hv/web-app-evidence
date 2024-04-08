@@ -23,6 +23,8 @@ function CreatePostButton() {
     }
   };
 
+  const postButtonSize = makeButtonLarger('3.0rem', '16px');
+
   return (
     <Button
       isLoading={loading}
@@ -34,7 +36,7 @@ function CreatePostButton() {
           close();
         }
       }}
-      className={makeButtonLarger('3.0rem', '16px')}
+      className={postButtonSize}
       colorTheme='purple500'
       fullWidth
     >
