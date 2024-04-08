@@ -56,7 +56,7 @@ function SelectMembershipsSort() {
             }}
           >
             <SelectItem
-              py={3}
+              py={2}
               radius={1}
               _hover={{ background: 'rgba(14, 14, 27, 0.50)' }}
               css={{ fontSize: '$2' }}
@@ -64,7 +64,7 @@ function SelectMembershipsSort() {
               label='Oldest to newest'
             />
             <SelectItem
-              py={3}
+              py={2}
               radius={1}
               _hover={{ background: 'rgba(14, 14, 27, 0.50)' }}
               css={{ fontSize: '$2' }}
@@ -72,7 +72,7 @@ function SelectMembershipsSort() {
               label='Newest to oldest'
             />
             <SelectItem
-              py={3}
+              py={2}
               radius={1}
               _hover={{ background: 'rgba(14, 14, 27, 0.50)' }}
               css={{ fontSize: '$2' }}
@@ -80,7 +80,7 @@ function SelectMembershipsSort() {
               label='Price: High to low'
             />
             <SelectItem
-              py={3}
+              py={2}
               radius={1}
               css={{ fontSize: '$2' }}
               _hover={{ background: 'rgba(14, 14, 27, 0.50)' }}
