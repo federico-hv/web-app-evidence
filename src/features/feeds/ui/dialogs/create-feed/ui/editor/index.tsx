@@ -36,6 +36,7 @@ export default function CreatePostEditor({
       minHeight={{ '@bp1': 75, '@bp3': 125 }}
       css={{
         backgroundColor: hexToRGB('#9898FF', 0.15),
+        display: 'flex'
       }}
     >
       <Editor

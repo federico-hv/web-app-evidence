@@ -20,7 +20,7 @@ const defaultConfig: InitialConfigType = {
 };
 
 export default function Editor({
-  Placeholder = <div>Write...</div>,
+  Placeholder = <div style={{ pointerEvents: 'none' }}>Write...</div>,
   plugins = [],
   config = defaultConfig,
   onChange,
@@ -59,7 +59,6 @@ export default function Editor({
     <LexicalComposer initialConfig={config}>
       <Box
         w='full'
-        h='full'
         className='editor-container'
         id='input-field'
         data-cy='editor'
