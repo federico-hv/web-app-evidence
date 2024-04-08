@@ -15,7 +15,7 @@ function MyMemberItem({ data, isOnline }: MyMemberItemProps) {
       items='center'
       _hover={{ backgroundColor: '#9898FF26', cursor: 'pointer' }}
     >
-      <Avatar size='base' src={data.avatar}>
+      <Avatar size='base' src={data.avatar} name={data.displayName}>
         {isOnline && (
           <AvatarBadge
             size={1}
