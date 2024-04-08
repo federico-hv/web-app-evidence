@@ -60,16 +60,16 @@ function SelectMembershipsSort() {
               radius={1}
               _hover={{ background: 'rgba(14, 14, 27, 0.50)' }}
               css={{ fontSize: '$2' }}
-              value='newest'
-              label='Newest'
+              value='oldest'
+              label='Oldest to newest'
             />
             <SelectItem
               py={3}
               radius={1}
               _hover={{ background: 'rgba(14, 14, 27, 0.50)' }}
               css={{ fontSize: '$2' }}
-              value='oldest'
-              label='Oldest'
+              value='newest'
+              label='Newest to oldest'
             />
             <SelectItem
               py={3}
