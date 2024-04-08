@@ -53,6 +53,7 @@ function ArticleCard({ data }: { data: ArticleModel }) {
                 size={{ '@bp1': 'base', '@bp3': 'xl' }}
                 variant='squircle'
                 src={owner.avatar}
+                name={owner.displayName}
               />
             </VStack>
           </Link>
