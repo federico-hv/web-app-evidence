@@ -31,8 +31,8 @@ function SelectAudience() {
   return (
     <Box w='150px'>
       <Select value={value} onValueChange={handleOnValueChange}>
-        <SelectTrigger css={{ backgroundColor: 'rgb(45, 45, 71)' }}>
-          <HStack gap={3} items='center'>
+        <SelectTrigger css={{ backgroundColor: 'rgba(26, 26, 41, 0.75)', paddingLeft: '15px', margin: '0'}}>
+          <HStack gap={2} items='center'>
             <Icon name={options[value as Options].icon} />
             {options[value as Options].label}
           </HStack>
@@ -44,28 +44,38 @@ function SelectAudience() {
             css={{
               borderBottomLeftRadius: '$2',
               borderBottomRightRadius: '$2',
-              backgroundColor: 'rgb(45, 45, 71)',
+              backgroundColor: 'rgba(26, 26, 41, 0.75)',
+              boxShadow: `0px 0px 50px 0px rgba(0, 0, 0, 0.25)`,
             }}
           >
             <SelectItem
               value='public'
-              _hover={{ background: 'rgba(14, 14, 27, 0.50)' }}
+              _hover={{ background: 'rgba(48, 48, 75, 0.50)' }}
               label={options.public.label}
               icon={options.public.icon}
+              m={0}
+              px={4}
+              radius={0}
             />
             <SelectItem
               value='followers'
-              _hover={{ background: 'rgba(14, 14, 27, 0.50)' }}
+              _hover={{ background: 'rgba(48, 48, 75, 0.50)' }}
               label={options.followers.label}
               icon={options.followers.icon}
+              m={0}
+              px={4}
+              radius={0}
             />
             <SelectItem
               value='members'
               _hover={{
-                background: 'rgba(14, 14, 27, 0.50)',
+                background: 'rgba(48, 48, 75, 0.50)',
               }}
               label={options.members.label}
               icon={options.members.icon}
+              m={0}
+              px={4}
+              radius={0}
             />
           </SelectItemList>
         </SelectContent>
