@@ -164,7 +164,9 @@ function CreateFeedDialog() {
                     colorTheme='white500'
                     variant='ghost'
                     fullWidth
-                    style={{border: `0.75px solid ${THEME_COLOR.white700}`}}
+                    style={{
+                      border: `0.75px solid ${THEME_COLOR.white700}`,
+                    }}
                   >
                     Cancel
                   </Button>
