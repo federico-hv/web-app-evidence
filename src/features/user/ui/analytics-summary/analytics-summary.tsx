@@ -1,0 +1,70 @@
+import { RadialSurface } from '../../../../shared';
+import { Box, Heading, VStack } from '@holdr-ui/react';
+import AnalyticsStatistic from './analytics-statistic';
+import { dummyAnalyticsSummaryData } from '../../shared/constants';
+import { getFormattedTime } from '../../../../shared/utilities/time.utility';
+
+function AnalyticsSummary() {
+
+  return (
+    <RadialSurface radius={4} h='auto' w='100%' css={{ flexShrink: 0 }}>
+      <VStack as='nav' p={4}>
+        <Heading size={3} weight={500} css={{ userSelect: 'none' }}>
+          Analytics
+        </Heading>
+        <Box
+          mt={{ '@bp1': '8px', '@bp3': '8px' }}
+          h='1px'
+          w='100%'
+          css={{
+            backgroundColor: 'rgba(152, 152, 255, 0.10)',
+          }}
+        />
+        <VStack gap={2} pt={2}>
+          <AnalyticsStatistic
+            label='club views'
+            description='A description'
+            value={dummyAnalyticsSummaryData.clubViews.value}
+            percent={dummyAnalyticsSummaryData.clubViews.changePercentage}
+          />
+          <AnalyticsStatistic
+            label='resales'
+            description='A description'
+            value={dummyAnalyticsSummaryData.totalResales.value}
+            percent={
+              dummyAnalyticsSummaryData.totalResales.changePercentage
+            }
+          />
+          <AnalyticsStatistic
+            label='average bidders'
+            description='A description'
+            value={dummyAnalyticsSummaryData.averageBidders.value}
+            percent={
+              dummyAnalyticsSummaryData.averageBidders.changePercentage
+            }
+            suffix='%'
+          />
+          <AnalyticsStatistic
+            label='social interactions'
+            description='A description'
+            value={dummyAnalyticsSummaryData.socialInteractions.value}
+            percent={
+              dummyAnalyticsSummaryData.socialInteractions.changePercentage
+            }
+            suffix='%'
+          />
+          <AnalyticsStatistic
+            label='peak engagement time'
+            description='A description'
+            value={getFormattedTime(
+              dummyAnalyticsSummaryData.peakEngagementTime,
+            )}
+          />
+        </VStack>
+      </VStack>
+    </RadialSurface>
+  );
+}
+AnalyticsSummary.displayName = 'AnalyticsSummary';
+
+export default AnalyticsSummary;

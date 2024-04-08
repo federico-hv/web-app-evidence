@@ -80,7 +80,7 @@ function BlockedSettingsPage() {
                   {data.blockedUsers.users.map((item) => (
                     <ActionItemWrapper key={item.id}>
                       <LinkOverlay to={prefix('/', item.username)} />
-                      <Avatar src={item.avatar} />
+                      <Avatar src={item.avatar} name={item.displayName} />
                       <UserNamesGroup
                         displayName={item.displayName}
                         username={item.username}

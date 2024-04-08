@@ -36,6 +36,7 @@ function PostCard({ data }: { data: PostModel }) {
               css={{
                 size: '55px',
               }}
+              name={owner.displayName}
             />
           </VStack>
           <TextGroup>

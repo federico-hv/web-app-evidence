@@ -1,5 +1,6 @@
 import { UserModel } from '../../../shared';
 import {
+  MembershipValueData,
   OnSaleMembershipModel,
   OwnedMembershipModel,
 } from '../../../features';
