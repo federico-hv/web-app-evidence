@@ -33,14 +33,30 @@ function CreateArticleButton() {
 
   const { currentStep, increment } = useStepperContext();
 
-  const isWebsiteInvalid = () => {
-    const websiteRegex = new RegExp(
-      '(https:\\/\\/www\\.|http:\\/\\/www\\.|https:\\/\\/|http:\\/\\/)?[a-zA-Z0-9]{2,}(\\.[a-zA-Z0-9]{2,})(\\.[a-zA-Z0-9]{2,})?\\/[a-zA-Z0-9]{2,}',
-    );
+  /*
+    Valid URL examples
 
+    https://pages.github.com -> with subdomain
+    https://pages.github.com/onepath -> One path
+    https://pages.github.com/onepath/twopaths/morepaths -> Multiple paths
+    https://random.random.random.pages.github.com -> Multiple subdomains
+
+
+    Invalid URL examples
+
+    github.com -> No scheme or www subdomain
+    www.github.com -> No scheme
+    http://pages.github.com -> Not secure
+
+  */
+  const isWebsiteInvalid = () => {
     if (websiteUrl.length < 1) {
       return true;
     }
+
+    const websiteRegex = new RegExp(
+      /^https:\/\/(?:[a-zA-Z0-9-]+\.)+[a-z]{2,6}(?:\/[-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)?$/,
+    );
 
     return !websiteRegex.test(websiteUrl);
   };
