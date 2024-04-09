@@ -50,12 +50,8 @@ function CreateArticleButton() {
 
   */
   const isWebsiteInvalid = () => {
-    if (websiteUrl.length < 1) {
-      return true;
-    }
-
     const websiteRegex = new RegExp(
-      /^https:\/\/(?:[a-zA-Z0-9-]+\.)+[a-z]{2,6}(?:\/[-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)?$/,
+      /^https:\/\/(?:[a-zA-Z0-9-]+\.)+[a-z]{1,6}(?:\/[-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)?$/,
     );
 
     return !websiteRegex.test(websiteUrl);
