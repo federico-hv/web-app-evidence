@@ -23,7 +23,7 @@ function SelectMembershipsSort() {
   };
 
   return (
-    <Box w={190} fontSize={2}>
+    <Box w={180} fontSize={1}>
       <Select value={value} onValueChange={update}>
         <SelectTrigger
           radius={2}
@@ -31,28 +31,30 @@ function SelectMembershipsSort() {
           css={{
             border: '1px solid rgba(152, 152, 255, 0.10)',
             background: 'rgba(152, 152, 255, 0.1)',
-          }}
+          }}   
         />
         <SelectContent sticky='always'>
           <SelectItemList
             _active={{ color: '$purple200' }}
-            w={190}
+            w={180}
             divider={
               <Box
                 h='1px'
                 w='100%'
                 css={{
-                  background: 'rgba(133, 133, 255, 0.2)',
+                  background: 'rgba(152, 152, 255, 0.1)',
                 }}
               />
             }
             position='relative'
             css={{
-              boxShadow: '0px 0px 100px 0px rgba(14, 14, 27, 0.35)',
+              boxShadow: '0px 4px 12px 0px rgba(14, 14, 27, 0.08)',
               backgroundColor: 'rgba(49, 49, 73, 0.85)',
-              backdropFilter: 'blur(50px)',
+              backdropFilter: 'blur(40px)',
               borderBottomLeftRadius: '$2',
               borderBottomRightRadius: '$2',
+              border: '1px solid rgba(152, 152, 255, 0.1)',
+              borderTop: 'none'
             }}
           >
             <SelectItem
