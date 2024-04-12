@@ -87,6 +87,15 @@ function ClubsPage() {
                   >
                     Watchlist
                   </CustomTabsTrigger>
+                  <CustomTabsTrigger
+                    w='fit-content'
+                    py={2}
+                    px={5}
+                    _hover={{ background: '#9898FF26' }}
+                    value='activeBids'
+                  >
+                    Active Bids
+                  </CustomTabsTrigger>
                 </CustomTabsList>
                 <HStack gap={4}>
                   <IconButton
