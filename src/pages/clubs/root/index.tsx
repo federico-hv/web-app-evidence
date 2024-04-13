@@ -44,7 +44,7 @@ function ClubsPage() {
         <RadialSurface w='100%' radius={4} minHeight='calc(100vh - 96px)'>
           <Box px='16px' py='20px'>
             <Box py='13.5px' mb='20px'>
-              <Heading weight={400} size='24px'>
+              <Heading weight={400} size={6}>
                 Holdr Clubs
               </Heading>
             </Box>
@@ -55,6 +55,7 @@ function ClubsPage() {
                     w='fit-content'
                     py={2}
                     px={5}
+                    fontSize={2}
                     _hover={{ background: '#9898FF26' }}
                     value='all'
                   >
@@ -64,6 +65,7 @@ function ClubsPage() {
                     w='fit-content'
                     py={2}
                     px={5}
+                    fontSize={2}
                     _hover={{ background: '#9898FF26' }}
                     value='live'
                   >
@@ -73,6 +75,7 @@ function ClubsPage() {
                     w='fit-content'
                     py={2}
                     px={5}
+                    fontSize={2}
                     _hover={{ background: '#9898FF26' }}
                     value='sale'
                   >
@@ -82,6 +85,7 @@ function ClubsPage() {
                     w='fit-content'
                     py={2}
                     px={5}
+                    fontSize={2}
                     _hover={{ background: '#9898FF26' }}
                     value='watchlist'
                   >
@@ -91,6 +95,7 @@ function ClubsPage() {
                     w='fit-content'
                     py={2}
                     px={5}
+                    fontSize={2}
                     _hover={{ background: '#9898FF26' }}
                     value='activeBids'
                   >
