@@ -16,7 +16,7 @@ import { Fragment } from 'react';
 
 function ClubsAllContent() {
   return (
-    <VStack gap={6}>
+    <VStack gap={7}>
       <VStack gap={4}>
         <SectionTitle label='Live Auctions' />
         <FlatList<OnSaleMembershipModel>

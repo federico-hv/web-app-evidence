@@ -69,7 +69,7 @@ function ClubsPage() {
                     _hover={{ background: '#9898FF26' }}
                     value='live'
                   >
-                    Live Auction
+                    Live Auctions
                   </CustomTabsTrigger>
                   <CustomTabsTrigger
                     w='fit-content'
