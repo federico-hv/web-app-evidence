@@ -1,4 +1,4 @@
-import { Box, Stack, Text } from '@holdr-ui/react';
+import { Stack, Text } from '@holdr-ui/react';
 
 function ActiveBidsContent() {
   return (

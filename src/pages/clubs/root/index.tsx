@@ -154,7 +154,7 @@ function ClubsPage() {
                 minHeight='calc(100vh - 158px)'
               >
                 {switchState && <FiltersList />}
-                <ActiveBidsContent/>
+                <ActiveBidsContent />
               </CustomTabsContent>
             </CustomTabs>
           </Box>
