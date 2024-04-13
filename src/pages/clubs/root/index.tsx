@@ -27,6 +27,7 @@ import {
   FiltersList,
 } from './ui';
 import { SelectMembershipSort } from '../ui';
+import ActiveBidsContent from './ui/active-bids-content';
 
 function ClubsPage() {
   const currentUser = useCurrentUser();
@@ -146,6 +147,14 @@ function ClubsPage() {
               >
                 {switchState && <FiltersList />}
                 <ClubsWatchlistContent />
+              </CustomTabsContent>
+              <CustomTabsContent
+                py={8}
+                value='activeBids'
+                minHeight='calc(100vh - 158px)'
+              >
+                {switchState && <FiltersList />}
+                <ActiveBidsContent/>
               </CustomTabsContent>
             </CustomTabs>
           </Box>
