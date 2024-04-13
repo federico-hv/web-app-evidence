@@ -50,11 +50,11 @@ function ClubsPage() {
             </Box>
             <CustomTabs defaultValue='all' flex={1}>
               <CustomTabsHeader h={44}>
-                <CustomTabsList>
+                <CustomTabsList gap={1}>
                   <CustomTabsTrigger
                     w='fit-content'
                     py={2}
-                    px={5}
+                    px={6}
                     fontSize={2}
                     _hover={{ background: '#9898FF26' }}
                     value='all'
@@ -64,7 +64,7 @@ function ClubsPage() {
                   <CustomTabsTrigger
                     w='fit-content'
                     py={2}
-                    px={5}
+                    px={6}
                     fontSize={2}
                     _hover={{ background: '#9898FF26' }}
                     value='live'
@@ -74,7 +74,7 @@ function ClubsPage() {
                   <CustomTabsTrigger
                     w='fit-content'
                     py={2}
-                    px={5}
+                    px={6}
                     fontSize={2}
                     _hover={{ background: '#9898FF26' }}
                     value='sale'
@@ -84,7 +84,7 @@ function ClubsPage() {
                   <CustomTabsTrigger
                     w='fit-content'
                     py={2}
-                    px={5}
+                    px={6}
                     fontSize={2}
                     _hover={{ background: '#9898FF26' }}
                     value='watchlist'
@@ -94,7 +94,7 @@ function ClubsPage() {
                   <CustomTabsTrigger
                     w='fit-content'
                     py={2}
-                    px={5}
+                    px={6}
                     fontSize={2}
                     _hover={{ background: '#9898FF26' }}
                     value='activeBids'
