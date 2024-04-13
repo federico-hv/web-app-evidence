@@ -43,8 +43,8 @@ function ClubsPage() {
       />
       {currentUser && (
         <RadialSurface w='100%' radius={4} minHeight='calc(100vh - 96px)'>
-          <Box px='16px' py='20px'>
-            <Box py='13.5px' mb='20px'>
+          <Box px={5} py={5}>
+            <Box py={3} mb={5}>
               <Heading weight={400} size={6}>
                 Holdr Clubs
               </Heading>
