@@ -27,6 +27,7 @@ import {
   FiltersList,
 } from './ui';
 import { SelectMembershipSort } from '../ui';
+import ActiveBidsContent from './ui/active-bids-content';
 
 function ClubsPage() {
   const currentUser = useCurrentUser();
@@ -42,19 +43,20 @@ function ClubsPage() {
       />
       {currentUser && (
         <RadialSurface w='100%' radius={4} minHeight='calc(100vh - 96px)'>
-          <Box px='16px' py='20px'>
-            <Box py='13.5px' mb='20px'>
-              <Heading weight={400} size='24px'>
+          <Box px={5} py={5}>
+            <Box py={3} mb={5}>
+              <Heading weight={400} size={6}>
                 Holdr Clubs
               </Heading>
             </Box>
             <CustomTabs defaultValue='all' flex={1}>
               <CustomTabsHeader h={44}>
-                <CustomTabsList>
+                <CustomTabsList gap={1}>
                   <CustomTabsTrigger
                     w='fit-content'
                     py={2}
-                    px={5}
+                    px={6}
+                    fontSize={2}
                     _hover={{ background: '#9898FF26' }}
                     value='all'
                   >
@@ -63,16 +65,18 @@ function ClubsPage() {
                   <CustomTabsTrigger
                     w='fit-content'
                     py={2}
-                    px={5}
+                    px={6}
+                    fontSize={2}
                     _hover={{ background: '#9898FF26' }}
                     value='live'
                   >
-                    Live Auction
+                    Live Auctions
                   </CustomTabsTrigger>
                   <CustomTabsTrigger
                     w='fit-content'
                     py={2}
-                    px={5}
+                    px={6}
+                    fontSize={2}
                     _hover={{ background: '#9898FF26' }}
                     value='sale'
                   >
@@ -81,11 +85,22 @@ function ClubsPage() {
                   <CustomTabsTrigger
                     w='fit-content'
                     py={2}
-                    px={5}
+                    px={6}
+                    fontSize={2}
                     _hover={{ background: '#9898FF26' }}
                     value='watchlist'
                   >
                     Watchlist
+                  </CustomTabsTrigger>
+                  <CustomTabsTrigger
+                    w='fit-content'
+                    py={2}
+                    px={6}
+                    fontSize={2}
+                    _hover={{ background: '#9898FF26' }}
+                    value='activeBids'
+                  >
+                    Active Bids
                   </CustomTabsTrigger>
                 </CustomTabsList>
                 <HStack gap={4}>
@@ -132,6 +147,14 @@ function ClubsPage() {
               >
                 {switchState && <FiltersList />}
                 <ClubsWatchlistContent />
+              </CustomTabsContent>
+              <CustomTabsContent
+                py={8}
+                value='activeBids'
+                minHeight='calc(100vh - 158px)'
+              >
+                {switchState && <FiltersList />}
+                <ActiveBidsContent />
               </CustomTabsContent>
             </CustomTabs>
           </Box>
