@@ -9,6 +9,7 @@ import {
 } from '@holdr-ui/react';
 import { WatchlistItemProps } from './types';
 import {
+  Asset,
   blink,
   TextGroup,
   TextGroupSubheading,
@@ -27,7 +28,12 @@ function WatchlistItem({ data }: WatchlistItemProps) {
         transition: theme.transitions['duration-normal'],
       }}
     >
-      <Avatar css={{ size: '60px' }} variant='squircle'/>
+      <Avatar
+        name={data.name}
+        src={Asset.Image.DarkPlaceholder}
+        css={{ size: '60px' }}
+        variant='squircle'
+      />
       <VStack gap={1} w='100%' h='80%'>
         <HStack
           gap={2}
@@ -36,11 +42,11 @@ function WatchlistItem({ data }: WatchlistItemProps) {
           w='100%'
           h='100%'
         >
-          <Text size={2} weight={500} aria-label='watchlist-item name' >
+          <Text size={2} weight={500} aria-label='watchlist-item name'>
             {data.name}
           </Text>
           {data.endDate && (
-            <HStack items='center' gap={2} role="live-blinker">
+            <HStack items='center' gap={2} role='live-blinker'>
               <Circle
                 size='6px'
                 css={{
@@ -61,17 +67,28 @@ function WatchlistItem({ data }: WatchlistItemProps) {
         </HStack>
         <HStack justify='space-between'>
           <TextGroup fontSize={1} gap={0}>
-            <TextGroupSubheading weight={300} color='white700' aria-label='watchlist-item price title' >
+            <TextGroupSubheading
+              weight={300}
+              color='white700'
+              aria-label='watchlist-item price title'
+            >
               {data.endDate ? 'Entry Price' : 'Buy Now'}
             </TextGroupSubheading>
-            <TextGroupSubheading weight={400} aria-label='watchlist-item price' >
+            <TextGroupSubheading
+              weight={400}
+              aria-label='watchlist-item price'
+            >
               {`$${data.price.toFixed(2)} USD`}
             </TextGroupSubheading>
           </TextGroup>
           {data.endDate && (
             <VStack gap={0} flex={1}>
-              <TextGroupSubheading size={1} weight={300} color='white700' aria-label='watchlist-item timeleft title' >
-
+              <TextGroupSubheading
+                size={1}
+                weight={300}
+                color='white700'
+                aria-label='watchlist-item timeleft title'
+              >
                 Time Left
               </TextGroupSubheading>
 
