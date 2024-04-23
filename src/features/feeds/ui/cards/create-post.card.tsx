@@ -26,6 +26,7 @@ function CreatePostCard() {
                 variant='squircle'
                 src={currentUser.avatar}
                 css={{ size: '32px' }}
+                name={currentUser.displayName}
               />
               <VStack
                 as='button'

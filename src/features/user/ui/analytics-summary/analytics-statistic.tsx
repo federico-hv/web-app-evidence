@@ -1,5 +1,6 @@
 import { Icon, VStack, HStack, Box, Text, Tooltip } from '@holdr-ui/react';
 import { AnalyticsStatisticProps } from './types';
+import GainLossIndicator from '../../../../shared/components/gain-loss-indicator';
 
 function AnalyticsStatistic({
   label,
@@ -8,13 +9,6 @@ function AnalyticsStatistic({
   description,
   suffix,
 }: AnalyticsStatisticProps) {
-  const upArrow = (
-    <Icon name='arrow-up-outline' color='success500' size='xl' />
-  );
-  const downArrow = (
-    <Icon name='arrow-down-outline' color='danger400' size='xl' />
-  );
-
   return (
     <VStack
       py={1}
@@ -50,7 +44,7 @@ function AnalyticsStatistic({
             minWidth={65}
             gap={3}
           >
-            {percent >= 0 ? upArrow : downArrow}
+            {percent !== 0 && <GainLossIndicator isGain={percent > 0} />}
             <Box fontSize={4}>{Math.abs(percent)}%</Box>
           </HStack>
         )}

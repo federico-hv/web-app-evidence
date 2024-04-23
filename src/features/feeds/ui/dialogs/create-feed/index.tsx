@@ -21,6 +21,7 @@ import {
   DialogPortal,
   HStack,
   Stack,
+  THEME_COLOR,
   Text,
   useCounter,
   useInputChange,
@@ -80,6 +81,8 @@ function CreateFeedDialog() {
     onGoodLink();
   };
 
+  const cancelButtonSize = makeButtonLarger('3.0rem', '16px');
+
   return (
     <CreateFeedContextProvider
       value={{
@@ -112,14 +115,16 @@ function CreateFeedDialog() {
               radius={2}
               w={608}
               css={{
-                backgroundColor: '#1A1A29',
+                backgroundColor: '#30304b',
                 transition: 'all 0.35s ease-in-out',
               }}
+              py={3}
+              px={4}
             >
-              <DialogHeader gap={0} css={{ backgroundColor: '#1A1A29' }}>
+              <DialogHeader gap={0} css={{ backgroundColor: '#30304b' }}>
                 <DialogClose />
                 <HStack items='center' gap={4}>
-                  <Avatar variant='squircle' size='lg' src='' name='' />
+                  <Avatar variant='squircle' size='lg' src='' name={currentUser.displayName} />
                   <Text color='white500' size={6}>
                     {currentUser.displayName}
                   </Text>
@@ -145,7 +150,7 @@ function CreateFeedDialog() {
                 direction='vertical'
                 gap={4}
                 zIndex={10}
-                css={{ backgroundColor: '#1A1A29' }}
+                css={{ backgroundColor: '#30304b' }}
               >
                 <Box
                   h='1px'
@@ -155,10 +160,13 @@ function CreateFeedDialog() {
                 <Stack direction='vertical' gap={3}>
                   <Button
                     onClick={close}
-                    className={makeButtonLarger('2.5rem', '15px')}
+                    className={cancelButtonSize}
                     colorTheme='white500'
                     variant='ghost'
                     fullWidth
+                    style={{
+                      border: `0.75px solid ${THEME_COLOR.white700}`,
+                    }}
                   >
                     Cancel
                   </Button>

@@ -74,7 +74,7 @@ function ProfileSummary() {
         <HStack items='center' gap={2} w='100%' h='100%' pt={4} px={4}>
           <Avatar
             src={currentUser.avatar}
-            name={''}
+            name={currentUser.displayName}
             css={{ size: '50px' }}
           />
           <TextGroup w='fit-content' gap={0}>

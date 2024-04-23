@@ -20,18 +20,19 @@ import {
 import { useCreateFeedContext } from '../../shared';
 
 function WebsiteForm() {
-  const { websiteUrl, handleOnWebsiteChange, onBadLink } =
+  const { websiteUrl, handleOnWebsiteChange, onBadLink, updatePostState } =
     useCreateFeedContext();
 
   return (
-    <VStack w='100%' as='form' pt={4} gap={1} justify='space-between'>
+    <VStack w='100%' as='form' pt={0} gap={1} justify='space-between'>
       <VStack as='label' w='100%' gap={1}>
         <Text color='base400' size={2} css={{ pl: '$1' }}>
           Website URL
         </Text>
         <Box
           radius={2}
-          css={{ backgroundColor: hexToRGB('#9898FF', 0.15) }}
+          css={{ backgroundColor: 'rgba(26, 26, 41, 0.75)' }}
+          py={1}
         >
           <InputGroup radius={1} focusColor='transparent'>
             <InputGroupLeftElement>
@@ -39,13 +40,14 @@ function WebsiteForm() {
             </InputGroupLeftElement>
             <Input
               name='website'
+              placeholder='Share an article with your fans'
               value={websiteUrl}
               onChange={handleOnWebsiteChange}
-              color='white500'
+              color='white700'
             />
           </InputGroup>
         </Box>
-        <HStack flex={1} justify='flex-end'>
+        <HStack flex={1} justify='flex-end' pb={2}>
           <Box
             onClick={onBadLink}
             w='fit-content'
@@ -57,6 +59,8 @@ function WebsiteForm() {
           </Box>
         </HStack>
       </VStack>
+      {/*DO NOT UNCOMMENT -- Design Team has not had time to update the designs.*/}
+      {/*<CreatePostEditor update={updatePostState} />*/}
     </VStack>
   );
 }
@@ -72,78 +76,66 @@ function CantFindLinkForm() {
 
   return (
     <VStack w='100%' as='form' gap={4} justify='space-between'>
+      <Box
+        h='1px'
+        w='100%'
+        css={{ backgroundColor: 'rgba(204, 204, 204, 0.10)' }}
+      />
       <VStack as='label' w='100%' gap={1}>
-        <Text color='base400' size={2} css={{ pl: '$1' }}>
+        <Text color='base400' size={2}>
           Title
         </Text>
         <Box
-          radius={1}
-          css={{ backgroundColor: hexToRGB('#9898FF', 0.15) }}
+          radius={2}
+          css={{ backgroundColor: 'rgba(26, 26, 41, 0.75)' }}
         >
           <Input
-            radius={1}
+            radius={2}
             focusColor='transparent'
             name='title'
             value={articleState.title}
             onChange={handleChange}
             color='white500'
             maxLength={75}
+            css={{ $$hoverColor: 'transparent' }}
           />
         </Box>
       </VStack>
       <VStack as='label' w='100%' gap={1}>
-        <Text color='base400' size={2} css={{ pl: '$1' }}>
+        <Text color='base400' size={2}>
           Website URL
         </Text>
         <Box
-          radius={1}
-          css={{ backgroundColor: hexToRGB('#9898FF', 0.15) }}
+          radius={2}
+          css={{ backgroundColor: 'rgba(26, 26, 41, 0.75)' }}
         >
           <Input
-            radius={1}
+            radius={2}
             focusColor='transparent'
             name='url'
             value={articleState.url}
             onChange={handleChange}
             color='white500'
+            css={{ $$hoverColor: 'transparent' }}
           />
         </Box>
       </VStack>
       <VStack as='label' w='100%' gap={1}>
-        <Text color='base400' size={2} css={{ pl: '$1' }}>
+        <Text color='base400' size={2}>
           Image URL
         </Text>
         <Box
-          radius={1}
-          css={{ backgroundColor: hexToRGB('#9898FF', 0.15) }}
+          radius={2}
+          css={{ backgroundColor: 'rgba(26, 26, 41, 0.75)' }}
         >
           <Input
-            radius={1}
+            radius={2}
             focusColor='transparent'
             name='imageUrl'
             value={articleState.imageUrl}
             onChange={handleChange}
             color='white500'
-          />
-        </Box>
-      </VStack>
-      <VStack as='label' w='100%' gap={1}>
-        <Text color='base400' size={2} css={{ pl: '$1' }}>
-          Description
-        </Text>
-        <Box
-          radius={1}
-          css={{ backgroundColor: hexToRGB('#9898FF', 0.15) }}
-        >
-          <Textarea
-            radius={1}
-            focusColor='transparent'
-            name='description'
-            value={articleState.description}
-            onChange={handleChange}
-            colorTheme='white500'
-            maxLength={150}
-            maxLines={2}
+            css={{ $$hoverColor: 'transparent' }}
           />
         </Box>
       </VStack>
@@ -198,7 +190,7 @@ function CreateArticle() {
   const { badLink } = useCreateFeedContext();
 
   return (
-    <VStack t='1rem' l={0} r={0} overflowY='auto' pb={4} gap={4}>
+    <VStack t='1rem' l={0} r={0} overflowY='auto' pb={0} gap={4}>
       {currentStep === 1 && (
         <Fragment>
           {badLink ? <CantFindLinkForm /> : <WebsiteForm />}

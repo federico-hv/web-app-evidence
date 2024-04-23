@@ -5,6 +5,7 @@ function ValueStatistic({
   label,
   value,
   prefix = '$',
+  suffix = '',
   leftAddon,
 }: ValueStatisticProps) {
   return (
@@ -17,6 +18,7 @@ function ValueStatistic({
         <Text size={4} weight={400}>
           {prefix}
           {value}
+          {suffix}
         </Text>
       </HStack>
     </VStack>

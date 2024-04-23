@@ -27,7 +27,7 @@ function WatchlistItem({ data }: WatchlistItemProps) {
         transition: theme.transitions['duration-normal'],
       }}
     >
-      <Avatar css={{ size: '60px' }} variant='squircle' />
+      <Avatar css={{ size: '60px' }} variant='squircle'/>
       <VStack gap={1} w='100%' h='80%'>
         <HStack
           gap={2}
