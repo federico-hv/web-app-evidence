@@ -1,4 +1,5 @@
 import {
+  Asset,
   changeDimensions,
   LinkOverlay,
   prefix,
@@ -32,7 +33,12 @@ function RecommendedArtist({
         position='relative'
       >
         <LinkOverlay to={prefix('/', username)} />
-        <Avatar variant='squircle' css={{ size: '40px' }} />
+        <Avatar
+          name={displayName}
+          src={Asset.Image.DarkPlaceholder}
+          variant='squircle'
+          css={{ size: '40px' }}
+        />
         <VStack w='calc(100% - 40px)' overflow='hidden'>
           <Text casing='capitalize' size='14px' weight={500}>
             {displayName}

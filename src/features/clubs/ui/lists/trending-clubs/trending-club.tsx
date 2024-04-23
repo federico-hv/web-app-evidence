@@ -1,12 +1,22 @@
 import { Avatar, HStack, Text, VStack } from '@holdr-ui/react';
-import { LinkOverlay, makePath, Paths } from '../../../../../shared';
+import {
+  Asset,
+  LinkOverlay,
+  makePath,
+  Paths,
+} from '../../../../../shared';
 import { TrendingClubProps } from './types';
 
 function TrendingClub({ id, name, tags }: TrendingClubProps) {
   return (
     <HStack gap={3} position='relative'>
       <LinkOverlay to={makePath([Paths.clubs, id])} />
-      <Avatar size='lg' variant='squircle' />
+      <Avatar
+        name={name}
+        src={Asset.Image.DarkPlaceholder}
+        size='lg'
+        variant='squircle'
+      />
       <VStack mt={2} gap={2}>
         <Text casing='capitalize' size='14px' weight={500}>
           {name}
