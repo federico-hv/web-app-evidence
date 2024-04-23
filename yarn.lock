@@ -2847,10 +2847,10 @@
   dependencies:
     np "8.0.4"
 
-"@holdr-ui/react@^2.2.1":
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/@holdr-ui/react/-/react-2.2.1.tgz#4fe73ab51c02d0c2d8976410affb59c5e6019116"
-  integrity sha512-vltmXiHhrjc1EGS7ILip32J7kkKGHrESlrZ7nTj2/9OjowOMKC8oMzTu0pnxvQjQp2P4Y4WS7UwRBAnrONV4/w==
+"@holdr-ui/react@^2.2.2":
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/@holdr-ui/react/-/react-2.2.2.tgz#deb1117b6ebebdd2969a2536b70a0434934a072b"
+  integrity sha512-3orXvtAJR8WOqFPTyHEACeBbHMPIVGO0LErm8Ass66e/sNKVA57GnYckC8qkb9Z2CSQ+aKkn50xMLEyzSue+IQ==
   dependencies:
     "@holdr-ui/icons" "^3.1.0"
     "@radix-ui/react-accordion" "^1.0.1"
