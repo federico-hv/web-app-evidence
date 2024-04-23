@@ -7,9 +7,9 @@ function GainLossIndicator({ isGain }: { isGain: boolean }) {
   return (
     <Fragment>
       {isGain ? (
-        <Icon name='arrow-up-outline' color='success500' size='xl' />
+        <Icon name='triangle-up-fill' color='success500' size='xl' />
       ) : (
-        <Icon name='arrow-down-outline' color='danger400' size='xl' />
+        <Icon name='triangle-down-fill' color='danger400' size='xl' />
       )}
     </Fragment>
   );

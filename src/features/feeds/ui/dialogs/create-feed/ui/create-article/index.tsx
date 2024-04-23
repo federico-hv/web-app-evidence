@@ -18,7 +18,6 @@ import {
   useStepperContext,
 } from '../../../../../../../shared';
 import { useCreateFeedContext } from '../../shared';
-import CreatePostEditor from '../editor';
 
 function WebsiteForm() {
   const { websiteUrl, handleOnWebsiteChange, onBadLink, updatePostState } =
@@ -60,7 +59,8 @@ function WebsiteForm() {
           </Box>
         </HStack>
       </VStack>
-      <CreatePostEditor update={updatePostState} />
+      {/*DO NOT UNCOMMENT -- Design Team has not had time to update the designs.*/}
+      {/*<CreatePostEditor update={updatePostState} />*/}
     </VStack>
   );
 }
@@ -76,9 +76,6 @@ function CantFindLinkForm() {
 
   return (
     <VStack w='100%' as='form' gap={4} justify='space-between'>
-      <Text size={6} color='white500'>
-        Add Article
-      </Text>
       <Box
         h='1px'
         w='100%'
@@ -89,11 +86,11 @@ function CantFindLinkForm() {
           Title
         </Text>
         <Box
-          radius={1}
+          radius={2}
           css={{ backgroundColor: 'rgba(26, 26, 41, 0.75)' }}
         >
           <Input
-            radius={1}
+            radius={2}
             focusColor='transparent'
             name='title'
             value={articleState.title}
@@ -109,11 +106,11 @@ function CantFindLinkForm() {
           Website URL
         </Text>
         <Box
-          radius={1}
+          radius={2}
           css={{ backgroundColor: 'rgba(26, 26, 41, 0.75)' }}
         >
           <Input
-            radius={1}
+            radius={2}
             focusColor='transparent'
             name='url'
             value={articleState.url}
@@ -128,39 +125,17 @@ function CantFindLinkForm() {
           Image URL
         </Text>
         <Box
-          radius={1}
+          radius={2}
           css={{ backgroundColor: 'rgba(26, 26, 41, 0.75)' }}
         >
           <Input
-            radius={1}
+            radius={2}
             focusColor='transparent'
             name='imageUrl'
             value={articleState.imageUrl}
             onChange={handleChange}
             color='white500'
             css={{ $$hoverColor: 'transparent' }}
-          />
-        </Box>
-      </VStack>
-      <VStack as='label' w='100%' gap={1}>
-        <Text color='base400' size={2}>
-          Description
-        </Text>
-        <Box
-          radius={1}
-          css={{ backgroundColor: 'rgba(26, 26, 41, 0.75)' }}
-        >
-          <Textarea
-            radius={1}
-            focusColor='transparent'
-            name='description'
-            value={articleState.description}
-            onChange={handleChange}
-            colorTheme='white500'
-            maxLength={150}
-            maxLines={2}
-            placeholder='Share something with your fans'
-            style={{ height: '100%', background: 'none', border: 'none' }}
           />
         </Box>
       </VStack>
