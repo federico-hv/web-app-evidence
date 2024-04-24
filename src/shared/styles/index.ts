@@ -57,18 +57,18 @@ export const RadioWrapper = styled('label', {
   alignItems: 'center',
 });
 
-export const CenteredImage = css({
-  '& span': {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  '& img': {
-    height: 'auto',
-    width: '100%',
-    minHeight: 'unset',
-  },
-});
+// export const CenteredImage = css({
+//   '& span': {
+//     display: 'flex',
+//     alignItems: 'center',
+//     justifyContent: 'center',
+//   },
+//   '& img': {
+//     height: 'auto',
+//     width: '100%',
+//     minHeight: 'unset',
+//   },
+// });
 
 export const blink = keyframes({
   '0%': { opacity: 1 },
