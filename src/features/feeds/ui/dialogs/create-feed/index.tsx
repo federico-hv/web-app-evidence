@@ -124,7 +124,12 @@ function CreateFeedDialog() {
               <DialogHeader gap={0} css={{ backgroundColor: '#30304b' }}>
                 <DialogClose />
                 <HStack items='center' gap={4}>
-                  <Avatar variant='squircle' size='lg' src='' name={currentUser.displayName} />
+                  <Avatar
+                    variant='squircle'
+                    size='lg'
+                    src=''
+                    name={currentUser.displayName}
+                  />
                   <Text color='white500' size={6}>
                     {currentUser.displayName}
                   </Text>
@@ -160,7 +165,7 @@ function CreateFeedDialog() {
                 <Stack direction='vertical' gap={3}>
                   <Button
                     onClick={close}
-                    className={cancelButtonSize}
+                    // className={cancelButtonSize}
                     colorTheme='white500'
                     variant='ghost'
                     fullWidth
