@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useCurrentUser } from '../../../../auth';
 import { CreateArticleInput, CreatePostInput } from '../../../shared';
 import {
-  makeButtonLarger,
   StepperContextProvider,
   useDialogContext,
   useRecordState,
@@ -81,8 +80,6 @@ function CreateFeedDialog() {
     onGoodLink();
   };
 
-  const cancelButtonSize = makeButtonLarger('3.0rem', '16px');
-
   return (
     <CreateFeedContextProvider
       value={{
@@ -127,7 +124,7 @@ function CreateFeedDialog() {
                   <Avatar
                     variant='squircle'
                     size='lg'
-                    src=''
+                    src={currentUser.avatar}
                     name={currentUser.displayName}
                   />
                   <Text color='white500' size={6}>
