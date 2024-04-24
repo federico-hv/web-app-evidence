@@ -51,6 +51,8 @@ function MediaItem({
         >
           {blurred && (
             <Image
+              h='100%'
+              w='100%'
               fit='cover'
               src={url}
               alt={title}
@@ -60,10 +62,12 @@ function MediaItem({
           )}
           <Box w='full' h='full' position='absolute' t={0} r={0}>
             <Image
+              h='100%'
+              w='100%'
+              fit='contain'
               src={url}
               alt={title}
               fallbackSrc={Asset.Image.DarkPlaceholder}
-              fit='contain'
             />
           </Box>
         </Box>
