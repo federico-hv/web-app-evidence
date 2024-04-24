@@ -1,6 +1,5 @@
 import { Box, Image } from '@holdr-ui/react';
 import { MediaItemProps } from './types';
-import { CenteredImage } from '../../styles';
 import { Fragment } from 'react';
 import Video, {
   VideoControls,
@@ -12,6 +11,7 @@ import Video, {
   VideoThumbnail,
   VideoVolume,
 } from '../video';
+import { Asset } from '../../constants';
 
 function MediaItem({
   url,
@@ -49,22 +49,22 @@ function MediaItem({
           radius={4}
           overflow='hidden'
         >
-          {/*{blurred && (*/}
-          {/*  <Image*/}
-          {/*    fit='cover'*/}
-          {/*    src={url}*/}
-          {/*    alt={title}*/}
-          {/*    css={{ filter: 'blur(24px)', scale: 2 }}*/}
-          {/*  />*/}
-          {/*)}*/}
+          {blurred && (
+            <Image
+              fit='cover'
+              src={url}
+              alt={title}
+              fallbackSrc={Asset.Image.DarkPlaceholder}
+              css={{ filter: 'blur(24px)', scale: 2 }}
+            />
+          )}
           <Box w='full' h='full' position='absolute' t={0} r={0}>
-            {/*<Image*/}
-            {/*  className={CenteredImage()}*/}
-            {/*  src={url}*/}
-            {/*  alt={title}*/}
-            {/*  fit='contain'*/}
-            {/*/>*/}
-            <img alt={title} style={{ objectFit: 'contain' }} src={url} />
+            <Image
+              src={url}
+              alt={title}
+              fallbackSrc={Asset.Image.DarkPlaceholder}
+              fit='contain'
+            />
           </Box>
         </Box>
       )}
