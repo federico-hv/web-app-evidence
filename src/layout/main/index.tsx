@@ -1,16 +1,21 @@
-import { useCurrentUser } from '../../features';
+import { CompleteArtistSetupBanner, useCurrentUser } from '../../features';
 import { Box, Container, HStack, VStack } from '@holdr-ui/react';
 import { LgNavigation } from '../navigation';
-// import { Header } from '../header';
 import { Header } from '../header';
 import { Outlet } from 'react-router-dom';
+import { Fragment } from 'react';
 
 function MainLayout() {
   const currentUser = useCurrentUser();
 
   return (
     <VStack w='100vw' h='100vh'>
-      {currentUser && <LgNavigation />}
+      {currentUser && (
+        <Fragment>
+          <CompleteArtistSetupBanner />
+          <LgNavigation />
+        </Fragment>
+      )}
       <Container maxWidth={1280} mt={80} position='relative'>
         <Box w='100%'>
           <HStack w='100%' h='100%' gap={4}>
