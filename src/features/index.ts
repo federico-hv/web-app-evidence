@@ -9,3 +9,5 @@ export * from './user';
 export * from './notifications';
 export * from './connected-accounts';
 export * from './clubs';
+export * from './memberships';
+export * from './artist';
