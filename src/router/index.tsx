@@ -5,6 +5,7 @@ import {
   ClubRoutes,
   ConnectRoutes,
   SetupFlowRoutes,
+  SetupProfileRoutes,
   UserRoutes,
 } from './routes';
 import { MainLayout } from '../layout';
@@ -79,6 +80,10 @@ function Router() {
           <Route
             path={prefix(Paths.setupFlow, '/*')}
             element={<SetupFlowRoutes />}
+          />
+          <Route
+            path={prefix(Paths.setupProfile, '/*')}
+            element={<SetupProfileRoutes />}
           />
         </Fragment>
       </Routes>
