@@ -27,7 +27,8 @@ function SetupArtistFlow() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const paths = location.pathname.split('/');
+  // remove "" from '/' splitting
+  const paths = location.pathname.split('/').filter((path) => path.length);
   const currentPath = paths[paths.length - 1];
 
   const onClose = () => {

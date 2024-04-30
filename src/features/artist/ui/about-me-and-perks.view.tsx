@@ -17,7 +17,7 @@ import {
   TextGroupHeading,
   TextGroupSubheading,
 } from '../../../shared';
-import { useGetAvailablePerks } from '../../memberships';
+import { useGetAvailablePerks } from '../../clubs';
 
 function AboutMeAndPerksView() {
   const perks = useGetAvailablePerks();
