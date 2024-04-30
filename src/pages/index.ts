@@ -11,5 +11,7 @@ export { default as MessagePage } from './message';
 export { default as ReleasesPage } from './releases';
 export { default as ChannelsPage } from './channels';
 export { default as SetupReleasesFlow } from './setup-flow/releases';
+export { default as SetupArtistFlow } from './setup-flow/artist-profile';
 export { default as ConnectSpotifyRedirect } from './connect/spotify';
+
 export * from './clubs';
