@@ -19,7 +19,7 @@ import {
 import { useCreateFeedContext } from '../../shared';
 
 function WebsiteForm() {
-  const { websiteUrl, handleOnWebsiteChange, onBadLink, updatePostState } =
+  const { websiteUrl, handleOnWebsiteChange, onBadLink } =
     useCreateFeedContext();
 
   return (
