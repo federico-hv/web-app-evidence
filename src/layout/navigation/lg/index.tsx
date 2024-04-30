@@ -24,7 +24,6 @@ function LgNavigation() {
               <HStack
                 items='center'
                 w={{ '@bp3': 90, '@bp7': 308 }}
-                // bgColor='base500'
                 h='100%'
               >
                 <Logo />
@@ -32,11 +31,7 @@ function LgNavigation() {
               <HStack flex={1} py={4} items='center' h='100%'>
                 <Search />
               </HStack>
-              <Box
-                w={{ '@bp3': 150, '@bp5': 308 }}
-                // bgColor='base500'
-                h='100%'
-              >
+              <Box w={{ '@bp3': 150, '@bp5': 308 }} h='100%'>
                 <HStack
                   justify='flex-end'
                   gap={4}
