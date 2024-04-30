@@ -7,6 +7,8 @@ import {
   Icon,
   Text,
   Tooltip,
+  TooltipContent,
+  TooltipTrigger,
   VStack,
 } from '@holdr-ui/react';
 
@@ -28,10 +30,13 @@ function MyMembers() {
           <Heading size={3} weight={500} css={{ userSelect: 'none' }}>
             My Members
           </Heading>
-          <Tooltip color='white50' label='These are your top members.'>
-            <Box fontSize='12px' mt='5px'>
-              <Icon color='base400' name='information-outline' />
-            </Box>
+          <Tooltip>
+            <TooltipTrigger>
+              <Box fontSize='12px' mt='5px'>
+                <Icon color='base400' name='information-outline' />
+              </Box>
+            </TooltipTrigger>
+            <TooltipContent>These are your top members</TooltipContent>
           </Tooltip>
         </HStack>
         <Text color='white700' size={1}>
