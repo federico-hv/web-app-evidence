@@ -1,3 +1,6 @@
+import { Route } from 'react-router';
+import { Box } from '@holdr-ui/react';
+
 export const Paths = {
   root: '',
   all: 'all',
@@ -15,6 +18,13 @@ export const Paths = {
   club: {
     watchlist: 'watchlist',
     memberships: 'memberships',
+  },
+  setupArtist: {
+    uploadPhoto: 'upload-photos',
+    aboutMeAndPerks: 'about-me-and-perks',
+    socialMediaAccounts: 'social-media-accounts',
+    connectOnboarding: 'connect-onboarding',
+    customURL: 'custom-url',
   },
   setting: {
     account: 'account',
@@ -45,6 +55,9 @@ export const Paths = {
   },
   support: 'support',
   setupFlow: 'setup/flow',
+  setupProfile: 'setup/profile',
+  artist: 'artist',
+  general: 'general',
   messages: 'messages',
   authRedirect: 'auth-guard/auth-redirect',
 };
