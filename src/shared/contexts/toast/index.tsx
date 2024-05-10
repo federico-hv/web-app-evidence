@@ -4,7 +4,7 @@ import { IToastContext, ToastContextState } from './toast.types';
 import { dummyFn } from '../../utilities';
 import { GenericProps } from '../../interfaces';
 import { ThemeColor } from '@holdr-ui/react/dist/shared/types';
-import { AlertStatus } from '@holdr-ui/react/src/compositions/alert/src';
+import { AlertStatus } from '@holdr-ui/react/dist/compositions/alert/src/alert.types';
 
 const StatusColor: Record<AlertStatus, ThemeColor> = {
   success: 'success500',
