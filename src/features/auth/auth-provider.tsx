@@ -1,11 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useQuery } from '@apollo/client';
 import { Image, Center, Box, useWindowSize } from '@holdr-ui/react';
 import { motion } from 'framer-motion';
 import { GenericProps, IMe, Loader } from '../../shared';
 import { AuthContextProvider, AuthProviderProps } from './shared';
 import { GET_ME } from './queries';
-import { usePushToPendo } from '../tracking';
 
 const MotionBox = motion(Box);
 
@@ -24,7 +23,24 @@ AuthProvider.displayName = 'AuthProvider';
 function Content({ children, data }: GenericProps & { data: IMe | null }) {
   const [currentUser, setCurrentUser] = useState<IMe | null>(data);
 
-  usePushToPendo();
+  useEffect(() => {
+    // Track the current user in Pendo
+
+    if (currentUser) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      window['pendo'].initialize({
+        visitor: {
+          id: currentUser.id,
+          username: currentUser.username,
+          role: currentUser.role,
+        },
+        account: {
+          id: `holdr:account::${currentUser.id}`,
+        },
+      });
+    }
+  }, [currentUser]);
 
   return (
     <AuthContextProvider value={{ currentUser, setCurrentUser }}>
