@@ -5,14 +5,13 @@ import { motion } from 'framer-motion';
 import { GenericProps, IMe, Loader } from '../../shared';
 import { AuthContextProvider, AuthProviderProps } from './shared';
 import { GET_ME } from './queries';
+import { usePushToPendo } from '../tracking';
 
 const MotionBox = motion(Box);
 
 function AuthProvider({ children }: AuthProviderProps) {
   const { height } = useWindowSize();
   const { data, loading } = useQuery<{ me: IMe }>(GET_ME);
-
-  console.log('AuthProvider: ', { data });
 
   return (
     <Loader loading={loading} h={height} as={<FullPageLoadingFallback />}>
@@ -24,6 +23,9 @@ AuthProvider.displayName = 'AuthProvider';
 
 function Content({ children, data }: GenericProps & { data: IMe | null }) {
   const [currentUser, setCurrentUser] = useState<IMe | null>(data);
+
+  usePushToPendo();
+
   return (
     <AuthContextProvider value={{ currentUser, setCurrentUser }}>
       {children}
