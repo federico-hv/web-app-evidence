@@ -12,7 +12,6 @@ import { useLocation } from 'react-router-dom';
 
 function FeedCard({ data }: { data: FeedModel }) {
   const location = useLocation();
-  console.log("data: ", data);
 
   return (
     <Box
