@@ -6,6 +6,7 @@ export function usePushToPendo() {
 
   useEffect(() => {
     if (currentUser) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       window['pendo'].initialize({
         visitor: {
@@ -13,7 +14,10 @@ export function usePushToPendo() {
           username: currentUser.username,
           role: currentUser.role,
         },
+        account: {
+          id: `holdr:account::${currentUser.id}`,
+        },
       });
     }
-  }, []);
+  }, [currentUser]);
 }
