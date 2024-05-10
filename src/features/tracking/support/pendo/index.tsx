@@ -1,5 +1,5 @@
-import { GenericProps } from '../../interfaces';
 import { Fragment, useEffect } from 'react';
+import { GenericProps } from '@holdr-ui/react';
 
 function Pendo({ children }: GenericProps) {
   useEffect(() => {
@@ -12,6 +12,7 @@ function Pendo({ children }: GenericProps) {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         o._q = o._q || [];
+        // eslint-disable-next-line prefer-const
         v = [
           'initialize',
           'identify',
@@ -31,14 +32,17 @@ function Pendo({ children }: GenericProps) {
                 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                 // @ts-ignore
                 o._q[m === v[0] ? 'unshift' : 'push'](
+                  // eslint-disable-next-line prefer-rest-params
                   [m].concat([].slice.call(arguments, 0)),
                 );
               };
           })(v[w]);
+        // eslint-disable-next-line prefer-const
         y = e.createElement(n);
         y.async = !0;
         y.src =
           'https://cdn.pendo.io/agent/static/' + apiKey + '/pendo.js';
+        // eslint-disable-next-line prefer-const
         z = e.getElementsByTagName(n)[0];
         z.parentNode.insertBefore(y, z);
       })(window, document, 'script', 'pendo');
