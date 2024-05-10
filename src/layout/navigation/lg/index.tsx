@@ -1,9 +1,5 @@
-import {
-  Logo,
-  Responsive,
-  ResponsiveItem,
-} from '../../../shared/components';
 import { Box, Container, HStack } from '@holdr-ui/react';
+import { Logo, Responsive, ResponsiveItem } from '../../../shared';
 import { Search } from '../../../features/search';
 import MessagePopover from './message-popover';
 import NotificationPopover from './notification-popoover';

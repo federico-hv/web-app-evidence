@@ -6,7 +6,9 @@ import {
   useCreateOgMetadata,
 } from '../../../../../shared';
 import {
+  isValidURL,
   makeButtonLarger,
+  URLPattern,
   useStepperContext,
 } from '../../../../../../../shared';
 import {
@@ -33,30 +35,6 @@ function CreateArticleButton() {
 
   const { currentStep, increment } = useStepperContext();
 
-  /*
-    Valid URL examples
-
-    https://pages.github.com -> with subdomain
-    https://pages.github.com/onepath -> One path
-    https://pages.github.com/onepath/twopaths/morepaths -> Multiple paths
-    https://random.random.random.pages.github.com -> Multiple subdomains
-
-
-    Invalid URL examples
-
-    github.com -> No scheme or www subdomain
-    www.github.com -> No scheme
-    http://pages.github.com -> Not secure
-
-  */
-  const isWebsiteInvalid = () => {
-    const websiteRegex = new RegExp(
-      /^https:\/\/(?:[a-zA-Z0-9-]+\.)+[a-z]{2,}(?:\/[-a-zA-Z0-9@:%_\+.~#?&\/\/=]*)?$/,
-    );
-
-    return !websiteRegex.test(websiteUrl);
-  };
-
   const isArticleInvalid = () => {
     try {
       ArticleSchema.validateSync(articleState);
@@ -70,7 +48,9 @@ function CreateArticleButton() {
     <Fragment>
       {currentStep === 1 && (
         <Button
-          disabled={!badLink ? isWebsiteInvalid() : isArticleInvalid()}
+          disabled={
+            !badLink ? !isValidURL(websiteUrl) : isArticleInvalid()
+          }
           isLoading={loadingCreateOgMetadata}
           loadingText={loadingCreateOgMetadata ? '' : 'Posting'}
           onClick={async () => {

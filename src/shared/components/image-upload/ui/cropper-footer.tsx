@@ -12,7 +12,7 @@ function CropperFooter({ zoom, setZoom }: CropperFooterProps) {
       mx='auto'
       w={{ '@bp1': '95%', '@bp3': '75%' }}
     >
-      <Icon name='subtract-line' color='base300' size='xl' />
+      <Icon name='subtract-line' color='base300' size='lg' />
       <Box flex={1} h='1.5rem'>
         <Slider
           aria-label='zoom in and out of image'
@@ -26,7 +26,7 @@ function CropperFooter({ zoom, setZoom }: CropperFooterProps) {
           }}
         />
       </Box>
-      <Icon name='add' color='base300' size='xl' />
+      <Icon name='add' color='base300' size='lg' />
     </HStack>
   );
 }

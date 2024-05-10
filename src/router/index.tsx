@@ -11,6 +11,7 @@ import {
 import { MainLayout } from '../layout';
 import { Fragment } from 'react';
 import { useLocation } from 'react-router-dom';
+import { DevRoutes } from './__dev__';
 
 function Router() {
   const location = useLocation();
@@ -21,6 +22,9 @@ function Router() {
     <Fragment>
       <Routes location={previousLocation || location}>
         <Route path={Paths.authRedirect} element={<AuthRedirectPage />} />
+        {import.meta.env.VITE_ENVIRONMENT === 'development' && (
+          <Route path='__dev__/*' element={<DevRoutes />} />
+        )}
         <Route element={<MainLayout />}>
           <Route
             path={prefix(Paths.connect, '/*')}
@@ -72,6 +76,7 @@ function Router() {
             {/*  element={<ChannelsPage />}*/}
             {/*/>*/}
           </Route>
+
           <Route path='*' element={<NotFoundError />} />
         </Route>
       </Routes>

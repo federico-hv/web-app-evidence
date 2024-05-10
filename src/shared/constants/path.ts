@@ -1,6 +1,3 @@
-import { Route } from 'react-router';
-import { Box } from '@holdr-ui/react';
-
 export const Paths = {
   root: '',
   all: 'all',

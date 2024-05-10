@@ -1,40 +1,66 @@
 import { Route, Routes } from 'react-router';
-import { Paths } from '../../shared';
+import { Paths, voidFn } from '../../shared';
+import { useCurrentUser, useGetClub } from '../../features';
 import {
-  AboutMeAndPerksView,
-  UploadPhotoView,
-  SocialMediaAccountsView,
-  CustomURLView,
+  BioAndPerksView,
   ConnectOnboardingView,
-} from '../../features';
-import { SetupArtistFlow } from '../../pages';
+  CustomURLView,
+  SetupArtistFlow,
+  SocialMediaAccountsView,
+  UploadPhotoView,
+} from '../../pages';
+import { GeneralContextProvider } from '@holdr-ui/react';
+import { Fragment } from 'react';
 
-const SetupProfileRoutes = () => (
-  <Routes>
-    <Route path={Paths.artist} element={<SetupArtistFlow />}>
-      <Route
-        path={Paths.setupArtist.uploadPhoto}
-        element={<UploadPhotoView />}
-      />
-      <Route
-        path={Paths.setupArtist.aboutMeAndPerks}
-        element={<AboutMeAndPerksView />}
-      />
-      <Route
-        path={Paths.setupArtist.socialMediaAccounts}
-        element={<SocialMediaAccountsView />}
-      />
-      <Route
-        path={Paths.setupArtist.customURL}
-        element={<CustomURLView />}
-      />
-      <Route
-        path={Paths.setupArtist.connectOnboarding}
-        element={<ConnectOnboardingView />}
-      />
-    </Route>
-  </Routes>
-);
+const SetupProfileRoutes = () => {
+  const account = useCurrentUser();
 
+  console.log(account?.id);
+
+  const { data, loading, error } = useGetClub({
+    accountId: account?.id,
+  });
+
+  if (!data) {
+    return <Fragment />;
+  }
+
+  return (
+    <GeneralContextProvider
+      value={{
+        state: data.club,
+        update: voidFn,
+      }}
+    >
+      <Routes>
+        <Route
+          path={Paths.artist}
+          element={<SetupArtistFlow error={error} loading={loading} />}
+        >
+          <Route
+            path={Paths.setupArtist.uploadPhoto}
+            element={<UploadPhotoView />}
+          />
+          <Route
+            path={Paths.setupArtist.aboutMeAndPerks}
+            element={<BioAndPerksView />}
+          />
+          <Route
+            path={Paths.setupArtist.socialMediaAccounts}
+            element={<SocialMediaAccountsView />}
+          />
+          <Route
+            path={Paths.setupArtist.customURL}
+            element={<CustomURLView />}
+          />
+          <Route
+            path={Paths.setupArtist.connectOnboarding}
+            element={<ConnectOnboardingView />}
+          />
+        </Route>
+      </Routes>
+    </GeneralContextProvider>
+  );
+};
 SetupProfileRoutes.displayName = 'SetupProfileRoutes';
 export default SetupProfileRoutes;

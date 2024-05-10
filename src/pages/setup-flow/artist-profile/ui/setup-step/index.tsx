@@ -20,7 +20,7 @@ function SetupStep({ number, path, description, active }: SetupStepProps) {
           {number}
         </Circle>
         <Text
-          weight={active ? 500 : 400}
+          weight={300}
           casing='capitalize'
           color={active ? 'purple200' : 'white700'}
         >

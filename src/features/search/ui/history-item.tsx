@@ -48,6 +48,7 @@ function HistoryItem({
       </HStack>
       <Box position='relative' zIndex={10}>
         <CloseButton
+          colorTheme='white500'
           size={{ '@bp1': 'sm', '@bp3': 'base' }}
           variant='ghost'
           onClick={async (e) => {

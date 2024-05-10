@@ -12,7 +12,12 @@ function CropperHeader({ saveImage, title }: CropperHeaderProps) {
       <Heading casing='capitalize' id='channels-modal__heading' as='h5'>
         {title}
       </Heading>
-      <Button onClick={saveImage} size={{ '@bp1': 'sm', '@bp2': 'base' }}>
+      <Button
+        colorTheme='purple500'
+        radius={2}
+        onClick={saveImage}
+        size={{ '@bp1': 'sm', '@bp2': 'base' }}
+      >
         Apply
       </Button>
     </HStack>

@@ -80,14 +80,30 @@ function Search() {
         },
       }}
     >
-      <Spotlight theme='dark'>
-        <Spotlight.Input onValueChange={handleValueChange} />
+      <Spotlight
+        px={3}
+        border={0}
+        bgColor='black400'
+        color='white800'
+        radius='full'
+        css={{ opacity: 0.5 }}
+        _active={{
+          opacity: 1,
+          backgroundColor: 'transparent',
+          borderWidth: '1px',
+          borderColor: '$black400',
+          color: '$white500',
+        }}
+      >
+        <Spotlight.Input
+          onValueChange={handleValueChange}
+          clearButtonStyles={{ colorTheme: 'white500' }}
+        />
         <Spotlight.Content
+          p={results.length > 0 ? 2 : 0}
           isLoading={loading}
-          css={{
-            backgroundColor: 'rgba(49, 49, 73, 0.75)',
-            backdropFilter: 'blur(50px)',
-          }}
+          bgColor='rgba(49, 49, 73, 0.75)'
+          blur='xl'
         >
           <Spotlight.Header>
             <Loader loading={historyLoading}>

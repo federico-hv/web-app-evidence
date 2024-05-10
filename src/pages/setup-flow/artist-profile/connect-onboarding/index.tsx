@@ -1,4 +1,4 @@
-import { useCurrentUser } from '../../auth';
+import { useCurrentUser } from '../../../../features';
 import { useLocation, useNavigate } from 'react-router-dom';
 import {
   makePath,
@@ -7,7 +7,7 @@ import {
   TextGroup,
   TextGroupHeading,
   TextGroupSubheading,
-} from '../../../shared';
+} from '../../../../shared';
 import { Button, HStack, VStack } from '@holdr-ui/react';
 
 function ConnectOnboardingView() {
@@ -53,7 +53,7 @@ function ConnectOnboardingView() {
               makePath([
                 Paths.setupProfile,
                 Paths.artist,
-                Paths.setupArtist.socialMediaAccounts,
+                Paths.setupArtist.customURL,
               ]),
             )
           }

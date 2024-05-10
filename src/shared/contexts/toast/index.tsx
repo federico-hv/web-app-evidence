@@ -3,6 +3,15 @@ import { Box, Toast } from '@holdr-ui/react';
 import { IToastContext, ToastContextState } from './toast.types';
 import { dummyFn } from '../../utilities';
 import { GenericProps } from '../../interfaces';
+import { ThemeColor } from '@holdr-ui/react/dist/shared/types';
+import { AlertStatus } from '@holdr-ui/react/src/compositions/alert/src';
+
+const StatusColor: Record<AlertStatus, ThemeColor> = {
+  success: 'success500',
+  danger: 'danger500',
+  info: 'info500',
+  warning: 'warning500',
+};
 
 const ToastContext = createContext<IToastContext>({
   current: undefined,
@@ -40,6 +49,17 @@ function ToastProvider({ children }: GenericProps) {
             onOpenChange={setOpen}
           >
             <Toast.Message
+              color={
+                current && current.status
+                  ? StatusColor[current.status]
+                  : 'inherit'
+              }
+              closeButtonProps={{
+                colorTheme:
+                  current && current.status
+                    ? StatusColor[current.status]
+                    : 'inherit',
+              }}
               status={current?.status}
               description={current?.description}
               onCloseClick={onClose}

@@ -37,7 +37,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.8.3",
-    "@holdr-ui/react": "^3.0.1",
+    "@holdr-ui/react": "file:../react-library",
     "@lexical/react": "^0.12.2",
     "@radix-ui/react-slider": "^1.1.2",
     "@stitches/react": "^1.2.8",
@@ -45,6 +45,7 @@
     "@storybook/manager-api": "^7.6.15",
     "@storybook/theming": "^7.6.15",
     "@types/country-list": "^2.1.1",
+    "@types/react-input-mask": "^3.0.5",
     "apollo-upload-client": "^17.0.0",
     "country-list": "^2.3.0",
     "dayjs": "^1.11.10",

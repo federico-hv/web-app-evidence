@@ -9,6 +9,7 @@ interface ImportMetaEnv {
   readonly VITE_SPOTIFY_CLIENT_ID: string;
   readonly VITE_CLUBS_APP_URL: string;
   readonly VITE_SPOTIFY_REDIRECT_URI: string;
+  VITE_ENVIRONMENT: 'staging' | 'development' | 'production';
 }
 
 interface ImportMeta {

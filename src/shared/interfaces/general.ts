@@ -14,7 +14,20 @@ export interface IDate {
 }
 
 export interface IReturnMany<T> {
+  // TODO: Reset this
   count: number;
+  data: T[];
+}
+
+export interface IOffsetPaginationOption {
+  limit: number;
+  offset: number;
+}
+
+export interface IOffsetPage<T> {
+  next: IOffsetPaginationOption;
+  previous: IOffsetPaginationOption;
+  total: number;
   data: T[];
 }
 

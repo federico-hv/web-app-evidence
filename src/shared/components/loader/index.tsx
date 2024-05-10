@@ -7,7 +7,7 @@ const MotionBox = motion(Box);
 function Loader({
   children,
   loading,
-  h = 150,
+  h = 'full',
   as = <CircularProgress size={30} isIndeterminate />,
 }: LoaderProps) {
   return (
@@ -15,6 +15,7 @@ function Loader({
       {!loading ? (
         <MotionBox
           h='100%'
+          w='100%'
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.1 }}
@@ -22,7 +23,9 @@ function Loader({
           {children}
         </MotionBox>
       ) : (
-        <Center h={h}>{as}</Center>
+        <Center h={h} w='100%'>
+          {as}
+        </Center>
       )}
     </AnimatePresence>
   );
