@@ -15,8 +15,6 @@ import { Fragment } from 'react';
 const SetupProfileRoutes = () => {
   const account = useCurrentUser();
 
-  console.log(account?.id);
-
   const { data, loading, error } = useGetClub({
     accountId: account?.id,
   });

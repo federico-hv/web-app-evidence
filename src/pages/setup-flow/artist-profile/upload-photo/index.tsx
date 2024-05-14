@@ -144,22 +144,40 @@ function ChangeClubImage() {
             setValue(URL.createObjectURL(item));
             await updateClub({ coverImage: item });
           }}
-          title='Update auction image'
-          name='avatar'
+          title='Edit auction image'
+          name='coverImage'
           placeholder={state.coverImage}
         >
           <ImageUploadContext.Consumer>
-            {({ name, src }) => (
+            {({ src }) => (
               <Fragment>
                 {!src ? (
-                  <Center h='100%' w='100%'>
-                    <Center p={1} bgColor='#1A1A29' radius='full'>
-                      <Icon color='white500' name='add' />
+                  <Center position='relative'>
+                    <Center
+                      position='absolute'
+                      t={0}
+                      l={0}
+                      w='100%'
+                      h='100%'
+                    >
+                      <Center
+                        className='image-add-icon'
+                        p={1}
+                        bgColor='#1A1A29'
+                        radius='full'
+                      >
+                        <Icon color='white500' name='add' />
+                      </Center>
                     </Center>
                   </Center>
                 ) : (
                   <Box id='imagess' h='100%' w='100%'>
-                    <Image key={src} src={src} alt='clubs image' />
+                    <Image
+                      fallback={<Fragment />}
+                      alt='clubs banner image'
+                      key={src}
+                      src={src}
+                    />
                   </Box>
                 )}
               </Fragment>
@@ -204,8 +222,8 @@ function ChangeClubBannerImage() {
           setValue(URL.createObjectURL(item));
           await updateClub({ bannerImage: item });
         }}
-        title='Edit Avatar'
-        name='avatar'
+        title='Edit banner image'
+        name='bannerImage'
         placeholder={state.bannerImage}
       >
         <ImageUploadContext.Consumer>
@@ -232,7 +250,12 @@ function ChangeClubBannerImage() {
                 </Center>
               ) : (
                 <Box id='imagess' h='100%' w='100%'>
-                  <Image alt='clubs banner image' key={src} src={src} />
+                  <Image
+                    fallback={<Fragment />}
+                    alt='clubs banner image'
+                    key={src}
+                    src={src}
+                  />
                 </Box>
               )}
             </Fragment>
