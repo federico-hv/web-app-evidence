@@ -36,6 +36,7 @@ export function useOnboardingConnectInstance() {
           fetchClientSecret: fetchClientSecret,
           appearance: {
             variables: {
+              fontFamily: 'GeneralSans, ui-sans-serif, system-ui',
               colorPrimary: '#6666FF',
               colorBackground: '#30304B',
               actionPrimaryColorText: '#9898FF',
