@@ -11,3 +11,4 @@ export * from './connected-accounts';
 export * from './clubs';
 export * from './artist';
 export * from './connect-account';
+export * from './app';

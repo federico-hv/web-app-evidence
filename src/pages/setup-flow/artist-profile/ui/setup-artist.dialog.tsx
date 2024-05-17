@@ -1,4 +1,4 @@
-import { Paths, prefix } from '../../../../shared';
+import { Paths, prefix, usePreviousLocation } from '../../../../shared';
 import { useCurrentUser } from '../../../../features';
 import {
   Alert,
@@ -14,12 +14,10 @@ import {
   VStack,
 } from '@holdr-ui/react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
-import { Fragment, useEffect } from 'react';
+import { Fragment } from 'react';
 import { SetupStep } from './index';
 
-//TODO: Link previous location
-
-function SetupArtistFlow({
+function SetupArtistDialog({
   loading,
   error,
 }: {
@@ -28,13 +26,12 @@ function SetupArtistFlow({
 }) {
   const height = {
     [Paths.setupArtist.uploadPhoto]: 785,
-    [Paths.setupArtist.aboutMeAndPerks]: 615,
-    [Paths.setupArtist.socialMediaAccounts]: 625,
+    [Paths.setupArtist.aboutMeAndPerks]: 695,
+    [Paths.setupArtist.socialMediaAccounts]: 695,
     [Paths.setupArtist.customURL]: 500,
-    [Paths.setupArtist.connectOnboarding]: 785,
+    [Paths.setupArtist.connectOnboarding]: 650,
   };
 
-  const user = useCurrentUser();
   const disclosure = useDisclosure(true);
 
   const location = useLocation();
@@ -45,14 +42,8 @@ function SetupArtistFlow({
   const currentPath = paths[paths.length - 1];
 
   const onClose = () => {
-    const previousLocation = location.state?.previousLocation;
-
-    navigate(previousLocation || prefix('/', user ? user.username : ''));
+    navigate(location.state.previousLocation || '/');
   };
-
-  useEffect(() => {
-    if (currentPath === Paths.artist) navigate('upload-photos');
-  }, []);
 
   return (
     <Dialog
@@ -80,7 +71,7 @@ function SetupArtistFlow({
           transitionDuration='0.25s'
           transitionTimingFunction='easeInOut'
         >
-          <Dialog.Body h='full' id='profile-setup-content'>
+          <Dialog.Body py={56} px={56} h='full' id='profile-setup-content'>
             {loading || error ? (
               <Center h='100%' w='100%'>
                 {error ? (
@@ -101,25 +92,25 @@ function SetupArtistFlow({
               </Center>
             ) : (
               <Fragment>
-                <Box pt='1.5rem' px='3rem' minHeight='fit-content'>
+                <Box minHeight='fit-content'>
                   <Heading id='profile-setup-heading' mb={8}>
                     Profile
                   </Heading>
                 </Box>
                 <HStack
-                  px='3rem'
                   position='relative'
-                  h='calc(100% - 6rem)'
-                  pb='1.5rem'
+                  h='calc(100% - 72px)'
                   gap={8}
                   divider={
                     <Box
+                      zIndex={25}
                       w='1px'
                       h='100%'
                       bgColor='rgba(152, 152, 255, 0.10)'
                     />
                   }
                 >
+                  {/** Navigation Stepper **/}
                   <VStack gap={6}>
                     <SetupStep
                       path={Paths.setupArtist.uploadPhoto}
@@ -197,6 +188,6 @@ function SetupArtistFlow({
     </Dialog>
   );
 }
-SetupArtistFlow.dipslayName = 'SetupArtistFlow';
+SetupArtistDialog.dipslayName = 'SetupArtistDialog';
 
-export default SetupArtistFlow;
+export default SetupArtistDialog;

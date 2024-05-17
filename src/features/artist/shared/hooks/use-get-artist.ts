@@ -1,7 +1,7 @@
 import { useQuery, useSuspenseQuery } from '@apollo/client';
 import { GET_ARTIST } from '../../queries';
 import { SuspenseQueryHookFetchPolicy } from '@apollo/client/react/types/types';
-import { IArtist } from '../interface';
+import { IArtist } from '../types';
 
 /**
  * Get an artist's account

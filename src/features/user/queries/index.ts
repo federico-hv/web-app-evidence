@@ -11,6 +11,15 @@ export const GET_PROFILE_SUMMARY = gql`
   }
 `;
 
+export const GET_USER_GENRES = gql`
+  query userGenres {
+    userGenres {
+      id
+      label
+    }
+  }
+`;
+
 export const GET_EXTERNAL_ACCOUNT = gql`
   query externalAccount($provider: String!) {
     externalAccount(provider: $provider) {

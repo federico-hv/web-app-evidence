@@ -14,7 +14,7 @@ function Loader({
     <AnimatePresence>
       {!loading ? (
         <MotionBox
-          h='100%'
+          h={h}
           w='100%'
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}

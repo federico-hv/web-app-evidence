@@ -1,7 +1,7 @@
 import { useToast } from '../../../../shared';
 import { useMutation } from '@apollo/client';
 import { UPDATE_SOCIAL_LINKS } from '../../mutations';
-import { ISocialLink } from '../interface';
+import { ISocialLink } from '../types';
 
 export function useUpdateSocialLinks() {
   const { openWith } = useToast();

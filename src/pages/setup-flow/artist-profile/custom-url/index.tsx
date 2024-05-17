@@ -17,6 +17,7 @@ import {
   TextGroup,
   TextGroupHeading,
   TextGroupSubheading,
+  usePreviousLocation,
 } from '../../../../shared';
 import { ChangeEvent, useState } from 'react';
 import { IClub, useUpdateClub } from '../../../../features';
@@ -24,6 +25,8 @@ import { useDebounceIsUniqueClubUrl } from '../../../../features';
 import { AnimatePresence } from 'framer-motion';
 
 function CustomURLView() {
+  const previousLocation = usePreviousLocation('/');
+
   const [checkIsUnique, { loading, result }] =
     useDebounceIsUniqueClubUrl();
 
@@ -103,9 +106,9 @@ function CustomURLView() {
       <HStack
         justify='flex-end'
         position='absolute'
-        b='1.5rem'
-        l='3rem'
-        r='3rem'
+        b={0}
+        r={0}
+        w='fit-content'
         bgColor='#30304B'
         gap={3}
       >
@@ -117,6 +120,11 @@ function CustomURLView() {
                 Paths.artist,
                 Paths.setupArtist.socialMediaAccounts,
               ]),
+              {
+                state: {
+                  previousLocation,
+                },
+              },
             )
           }
           variant='ghost'
@@ -143,6 +151,11 @@ function CustomURLView() {
                 Paths.artist,
                 Paths.setupArtist.connectOnboarding,
               ]),
+              {
+                state: {
+                  previousLocation,
+                },
+              },
             );
           }}
           radius={1}

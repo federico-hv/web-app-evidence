@@ -8,7 +8,16 @@ export const UPDATE_BIO_AND_PERKS = gql`
     updateArtistDetails(payload: $payload) {
       bio
     }
-    addPerks(perks: $perks) {
+    updatePerks(perks: $perks) {
+      id
+      label
+    }
+  }
+`;
+
+export const UPDATE_ARTIST_GENRES = gql`
+  mutation updateArtistGenres($genres: [Int!]!) {
+    updateArtistGenres(genres: $genres) {
       id
       label
     }

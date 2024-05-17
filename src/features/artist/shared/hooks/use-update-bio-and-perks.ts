@@ -12,7 +12,7 @@ export function useUpdateBioAndPerks() {
   const [mutate, { loading, error, data }] = useMutation<
     {
       updateArtistDetails: IUpdateArtistDetails;
-      addPerks: number[];
+      updatePerks: number[];
     },
     { payload: IUpdateArtistDetails; perks: number[] }
   >(UPDATE_BIO_AND_PERKS);

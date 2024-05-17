@@ -7,3 +7,5 @@ export { default as SetupFlowRoutes } from './setup-flow.routes';
 export { default as ConnectRoutes } from './connect.routes';
 export { default as ClubRoutes } from './club.routes';
 export { default as SetupProfileRoutes } from './setup-profile.routes';
+export { default as SetupArtistAccountRoutes } from './setup-artist-account.routes';
+// export { default as SetupFanAccountRoutes } from './setup-fan-account.routes';

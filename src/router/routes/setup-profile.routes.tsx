@@ -1,5 +1,5 @@
 import { Route, Routes } from 'react-router';
-import { Paths, voidFn } from '../../shared';
+import { NavigateWithPreviousLocation, Paths, voidFn } from '../../shared';
 import { useCurrentUser, useGetClub } from '../../features';
 import {
   BioAndPerksView,
@@ -35,6 +35,15 @@ const SetupProfileRoutes = () => {
           path={Paths.artist}
           element={<SetupArtistFlow error={error} loading={loading} />}
         >
+          <Route
+            path=''
+            element={
+              <NavigateWithPreviousLocation
+                to={Paths.setupArtist.uploadPhoto}
+                fallback='/'
+              />
+            }
+          />
           <Route
             path={Paths.setupArtist.uploadPhoto}
             element={<UploadPhotoView />}

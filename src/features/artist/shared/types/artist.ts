@@ -5,3 +5,7 @@ export interface IArtist {
   avatar: string;
   isVerified: boolean;
 }
+
+export interface IMeArtist {
+  id: string;
+}

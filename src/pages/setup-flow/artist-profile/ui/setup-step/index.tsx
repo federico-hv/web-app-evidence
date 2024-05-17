@@ -1,13 +1,23 @@
 import { Box, Circle, HStack, Text } from '@holdr-ui/react';
-import { LinkOverlay, makePath, Paths } from '../../../../../shared';
+import {
+  LinkOverlay,
+  makePath,
+  Paths,
+  usePreviousLocation,
+} from '../../../../../shared';
 import { SetupStepProps } from './types';
+import { Link } from 'react-router-dom';
 
 function SetupStep({ number, path, description, active }: SetupStepProps) {
+  const previousLocation = usePreviousLocation('/');
+
   return (
     <Box position='relative'>
       <LinkOverlay
+        state={{ previousLocation }}
         to={makePath([Paths.setupProfile, Paths.artist, path])}
       />
+
       <HStack items='center' gap={3}>
         <Circle
           fontSize={2}

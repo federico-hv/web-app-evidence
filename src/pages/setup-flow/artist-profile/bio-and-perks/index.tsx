@@ -1,129 +1,35 @@
 import { useNavigate } from 'react-router-dom';
 import {
-  Box,
   Button,
   HStack,
   mergeStyles,
-  Skeleton,
   Textarea,
   useGeneralContext,
   useRecordState,
   VStack,
 } from '@holdr-ui/react';
 import {
-  arrayFrom,
   customInputStyles,
+  Head,
   makePath,
   Paths,
   textAreaClassName,
   TextGroup,
   TextGroupHeading,
   TextGroupSubheading,
+  usePreviousLocation,
 } from '../../../../shared';
 import {
   IClub,
   useGetClubPerks,
-  usePresetPerks,
   useUpdateBioAndPerks,
 } from '../../../../features';
-import { ChangeEvent, Fragment, useEffect } from 'react';
-
-interface PerkOptionProps {
-  isSelected: boolean;
-  onSelect: (value: number) => void;
-  label: string;
-  id: number;
-}
-
-function PerkOption({ isSelected, onSelect, label, id }: PerkOptionProps) {
-  return (
-    <Box
-      role='checkbox'
-      onClick={() => onSelect(id)}
-      className='perk-option'
-      fontSize={1}
-      px={2}
-      py={1}
-      color={isSelected ? '#30304b' : 'purple100'}
-      borderColor={isSelected ? '#30304b' : 'purple100'}
-      border={1}
-      radius='full'
-      bgColor={isSelected ? 'purple100' : '#30304b'}
-    >
-      {label}
-    </Box>
-  );
-}
-
-interface IAboutMeState {
-  bio: string;
-  perks: number[];
-}
-
-function PerksLoading() {
-  return (
-    <HStack gap={2} wrap='wrap' css={{ opacity: 0.25 }}>
-      {arrayFrom(9).map((idx) => (
-        <Box radius='full' key={idx} overflow='hidden'>
-          <Skeleton theme='dark' h='28px' w='100px' />
-        </Box>
-      ))}
-    </HStack>
-  );
-}
-
-function PerkList({
-  selected,
-  onSelect,
-}: {
-  selected: number[];
-  onSelect: (next: Partial<IAboutMeState>) => void;
-}) {
-  const { loading, data, error } = usePresetPerks();
-
-  if (error) {
-    // should we show the error?
-  }
-
-  if (loading) {
-    return <PerksLoading />;
-  }
-
-  return (
-    <Fragment>
-      {data && (
-        <HStack gap={2} wrap='wrap'>
-          {data.presetPerks.map(({ id, label }) => {
-            const isSelected =
-              selected.findIndex((item) => item === id) > -1;
-
-            const insert = (value: number) =>
-              onSelect({ perks: [...selected, value] });
-
-            const remove = (value: number) =>
-              onSelect({
-                perks: selected.filter((item) => item !== value),
-              });
-
-            return (
-              <PerkOption
-                isSelected={isSelected}
-                onSelect={(value) =>
-                  isSelected ? remove(value) : insert(value)
-                }
-                key={id}
-                id={id}
-                label={label}
-              />
-            );
-          })}
-        </HStack>
-      )}
-    </Fragment>
-  );
-}
+import { ChangeEvent, useEffect } from 'react';
+import { IAboutMeState } from './shared';
+import { PerkList, PerksListLoader } from './ui';
 
 function BioAndPerksView() {
+  const previousLocation = usePreviousLocation('/');
   const { state: club } = useGeneralContext<IClub>();
 
   const { updateBioAndPerks, loading: loadingUpdate } =
@@ -150,10 +56,6 @@ function BioAndPerksView() {
 
   if (errorPerks) {
     // show error message
-  }
-
-  if (loadingPerks) {
-    return <PerksLoading />;
   }
 
   return (
@@ -190,14 +92,19 @@ function BioAndPerksView() {
             Choose what perks you would like to offer to your fans
           </TextGroupSubheading>
         </TextGroup>
-        <PerkList selected={state.perks} onSelect={update} />
+
+        {loadingPerks ? (
+          <PerksListLoader />
+        ) : (
+          <PerkList selected={state.perks} onSelect={update} />
+        )}
       </VStack>
       <HStack
         justify='flex-end'
         position='absolute'
-        b='1.5rem'
-        l='3rem'
-        r='3rem'
+        b={0}
+        r={0}
+        w='fit-content'
         bgColor='#30304B'
         gap={3}
       >
@@ -209,6 +116,11 @@ function BioAndPerksView() {
                 Paths.artist,
                 Paths.setupArtist.uploadPhoto,
               ]),
+              {
+                state: {
+                  previousLocation,
+                },
+              },
             )
           }
           variant='ghost'
@@ -229,6 +141,11 @@ function BioAndPerksView() {
                   Paths.artist,
                   Paths.setupArtist.socialMediaAccounts,
                 ]),
+                {
+                  state: {
+                    previousLocation,
+                  },
+                },
               ),
             );
           }}

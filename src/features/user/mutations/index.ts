@@ -19,6 +19,15 @@ export const ADD_EXTERNAL_ACCOUNT = gql`
   }
 `;
 
+export const UPDATE_USER_GENRES = gql`
+  mutation updateUserGenres($genres: [Int!]!) {
+    updateUserGenres(genres: $genres) {
+      id
+      label
+    }
+  }
+`;
+
 export const REMOVE_EXTERNAL_ACCOUNT = gql`
   mutation removeExternalAccount($id: Int!) {
     removeExternalAccount(id: $id) {

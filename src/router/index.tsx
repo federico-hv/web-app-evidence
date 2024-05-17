@@ -4,14 +4,16 @@ import { AuthGuard, NotFoundError, Paths, prefix } from '../shared';
 import {
   ClubRoutes,
   ConnectRoutes,
+  SetupArtistAccountRoutes,
   SetupFlowRoutes,
   SetupProfileRoutes,
   UserRoutes,
 } from './routes';
 import { MainLayout } from '../layout';
 import { Fragment } from 'react';
-import { useLocation } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 import { DevRoutes } from './__dev__';
+import SetupFanAccountRoutes from './routes/setup-fan-account.routes';
 
 function Router() {
   const location = useLocation();
@@ -20,6 +22,7 @@ function Router() {
 
   return (
     <Fragment>
+      {/*Main page routes*/}
       <Routes location={previousLocation || location}>
         <Route path={Paths.authRedirect} element={<AuthRedirectPage />} />
         {import.meta.env.VITE_ENVIRONMENT === 'development' && (
@@ -80,17 +83,39 @@ function Router() {
           <Route path='*' element={<NotFoundError />} />
         </Route>
       </Routes>
+      {/*Dialog routes*/}
       <Routes>
-        <Fragment>
+        <Route
+          element={
+            <AuthGuard roles={['artist']} fallback={<Navigate to='/' />} />
+          }
+        >
           <Route
-            path={prefix(Paths.setupFlow, '/*')}
-            element={<SetupFlowRoutes />}
+            path={prefix(Paths.setupArtistAccount, '/*')}
+            element={<SetupArtistAccountRoutes />}
           />
           <Route
             path={prefix(Paths.setupProfile, '/*')}
             element={<SetupProfileRoutes />}
           />
-        </Fragment>
+        </Route>
+        <Route
+          element={
+            <AuthGuard
+              roles={['general']}
+              fallback={<Navigate to='/' />}
+            />
+          }
+        >
+          <Route
+            path={prefix(Paths.setupFanAccount, '/*')}
+            element={<SetupFanAccountRoutes />}
+          />
+        </Route>
+        <Route
+          path={prefix(Paths.setupFlow, '/*')}
+          element={<SetupFlowRoutes />}
+        />
       </Routes>
     </Fragment>
   );

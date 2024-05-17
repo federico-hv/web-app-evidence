@@ -1,12 +1,21 @@
 import { gql } from '@apollo/client';
 
 export const GET_ARTIST = gql`
-  query artist {
-    artist {
+  query artist($id: String!) {
+    artist(id: $id) {
       id
+      bio
       avatar
       name
       isVerified
+    }
+  }
+`;
+
+export const GET_ME_ARTIST = gql`
+  query meArtist {
+    meArtist {
+      id
     }
   }
 `;
@@ -37,6 +46,21 @@ export const GET_SPOTIFY_ARTISTS = gql`
           url
         }
       }
+    }
+  }
+`;
+
+export const REQUIRES_PROFILE_UPDATE = gql`
+  query requiresProfileUpdate {
+    requiresProfileUpdate
+  }
+`;
+
+export const GET_ARTIST_GENRES = gql`
+  query artistGenres($id: String!) {
+    artistGenres(id: $id) {
+      id
+      label
     }
   }
 `;
