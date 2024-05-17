@@ -4,7 +4,7 @@ import { CookiesProvider } from 'react-cookie';
 import { ApolloProvider } from '@apollo/client';
 import { GQLClient } from './lib';
 import { AlertDialogProvider, ToastProvider } from './shared';
-import { AuthProvider, Pendo } from './features';
+import { ArtistProvider, Pendo, AuthProvider } from './features';
 import { Tooltip } from '@holdr-ui/react';
 import Router from './router';
 import { loadErrorMessages, loadDevMessages } from '@apollo/client/dev';
@@ -21,14 +21,13 @@ export function App() {
 
   return (
     <Pendo>
-      <CookiesProvider>
-        <HelmetProvider>
-          <ApolloProvider client={GQLClient}>
-            <AuthProvider>
+    <CookiesProvider>
+      <HelmetProvider>
+        <ApolloProvider client={GQLClient}>
+          <AuthProvider>
+            <ArtistProvider>
               <AlertDialogProvider>
-                <BrowserRouter
-                  basename={import.meta.env.VITE_APP_BASE_PATH}
-                >
+                <BrowserRouter basename={import.meta.env.VITE_APP_BASE_PATH}>
                   <ToastProvider>
                     <Tooltip.Provider>
                       <Router />
@@ -36,10 +35,11 @@ export function App() {
                   </ToastProvider>
                 </BrowserRouter>
               </AlertDialogProvider>
-            </AuthProvider>
-          </ApolloProvider>
-        </HelmetProvider>
-      </CookiesProvider>
+            </ArtistProvider>
+          </AuthProvider>
+        </ApolloProvider>
+      </HelmetProvider>
+    </CookiesProvider>
     </Pendo>
   );
 }
