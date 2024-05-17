@@ -11,7 +11,7 @@ const SetupArtistAccountRoutes = () => (
     <Route path='' element={<SetupAccountDialog />}>
       <Route
         path=''
-        element={<NavigateWithPreviousLocation fallback='/' />}
+        element={<NavigateWithPreviousLocation to='genres' fallback='/' />}
       />
       <Route path='genres' element={<FanGenresPage />} />
       <Route path='recommended' element={<FanRecommendationsPage />} />
