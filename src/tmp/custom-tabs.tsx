@@ -88,7 +88,7 @@ function CustomTabsTrigger({
       {...props}
       css={{
         userSelect: 'none',
-        fontWeight: value === state.currentValue ? 500 : 400,
+        fontWeight: value === state.currentValue ? 500 : 300,
         ...css,
       }}
     >
