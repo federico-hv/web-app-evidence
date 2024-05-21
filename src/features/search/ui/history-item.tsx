@@ -30,7 +30,7 @@ function HistoryItem({
       py={3}
       px={2}
     >
-      <HStack gap={3} items='center' py={3}>
+      <HStack gap={3} items='center'>
         {data.avatar ? (
           <Avatar src={data.avatar} name={data.displayName} />
         ) : (

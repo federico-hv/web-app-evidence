@@ -27,7 +27,9 @@ export function App() {
           <AuthProvider>
             <ArtistProvider>
               <AlertDialogProvider>
-                <BrowserRouter basename={import.meta.env.VITE_APP_BASE_PATH}>
+                <BrowserRouter
+                  basename={import.meta.env.VITE_APP_BASE_PATH}
+                >
                   <ToastProvider>
                     <Tooltip.Provider>
                       <Router />
