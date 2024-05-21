@@ -1,29 +1,53 @@
-import { useState } from 'react';
-import { useQuery } from '@apollo/client';
-import { Box, useWindowSize } from '@holdr-ui/react';
-import { motion } from 'framer-motion';
-import { FullPageLoader, GenericProps, IMe, Loader } from '../../shared';
-import { AuthContextProvider, AuthProviderProps } from './shared';
+import { useEffect, useState } from 'react';
+import { useSuspenseQuery } from '@apollo/client';
+import { GenericProps, GQLRenderer, IMe, Loader } from '../../shared';
+import {
+  AuthContextProvider,
+  AuthProviderProps,
+  IAuthContext,
+} from './shared';
 import { GET_ME } from './queries';
+import AuthRedirect from '../../pages/auth-redirect';
+import { useWindowSize } from '@holdr-ui/react';
 
 function AuthProvider({ children }: AuthProviderProps) {
-  const { height } = useWindowSize();
-  const { data, loading } = useQuery<{ me: IMe }>(GET_ME);
+  const [currentUser, setCurrentUser] = useState<IMe>({
+    id: '',
+    username: '',
+    displayName: '',
+    avatar: '',
+    role: 'general',
+  });
 
   return (
-    <Loader loading={loading} h={height} as={<FullPageLoader />}>
-      <Content data={data ? data.me : null}>{children}</Content>
-    </Loader>
+    <Content currentUser={currentUser} setCurrentUser={setCurrentUser}>
+      {children}
+    </Content>
   );
 }
 AuthProvider.displayName = 'AuthProvider';
 
-function Content({ children, data }: GenericProps & { data: IMe | null }) {
-  const [currentUser, setCurrentUser] = useState<IMe | null>(data);
+function Content({
+  currentUser,
+  setCurrentUser,
+  children,
+}: IAuthContext & GenericProps) {
+  const { height } = useWindowSize();
+  const { data } = useSuspenseQuery<{ me: IMe }>(GET_ME);
+
+  useEffect(() => {
+    setCurrentUser(data.me);
+  }, [data, setCurrentUser]);
+
   return (
-    <AuthContextProvider value={{ currentUser, setCurrentUser }}>
-      {children}
-    </AuthContextProvider>
+    <GQLRenderer
+      ErrorFallback={() => <AuthRedirect />}
+      LoadingFallback={<Loader loading={true} h={height} />}
+    >
+      <AuthContextProvider value={{ currentUser, setCurrentUser }}>
+        {children}
+      </AuthContextProvider>
+    </GQLRenderer>
   );
 }
 

@@ -8,7 +8,11 @@ import {
   useGeneralContext,
 } from '@holdr-ui/react';
 import { ImageUpload, Squircle } from '../../../../../shared';
-import { IClub, useUpdateAvatar } from '../../../../../features';
+import {
+  IClub,
+  useClubContext,
+  useUpdateAvatar,
+} from '../../../../../features';
 import { ImageUploadContext } from '../../../../../shared/components/image-upload/context';
 
 function AvatarPlaceholder() {
@@ -41,7 +45,7 @@ function AvatarPlaceholder() {
 }
 
 function ChangeProfileAvatar() {
-  const { state } = useGeneralContext<IClub>();
+  const club = useClubContext();
 
   const { updateAvatar } = useUpdateAvatar();
 
@@ -56,7 +60,7 @@ function ChangeProfileAvatar() {
         }}
         title='Update avatar'
         name='avatar'
-        placeholder={state.artist.avatar}
+        placeholder={club.artist.avatar}
       >
         <ImageUploadContext.Consumer>
           {({ name, src }) => (

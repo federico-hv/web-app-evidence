@@ -1,4 +1,4 @@
-import { useMutation } from '@apollo/client';
+import { gql, Reference, useMutation } from '@apollo/client';
 import { IGenre } from '../../../app';
 import { UPDATE_USER_GENRES } from '../../mutations';
 
@@ -13,6 +13,39 @@ export function useUpdateUserGenres() {
       return await mutate({
         variables: {
           genres,
+        },
+        update(cache, { data }) {
+          cache.modify({
+            fields: {
+              userGenres(current = []) {
+                let newPerksList: Reference[] = current;
+
+                try {
+                  newPerksList = data?.updateUserGenres.map(
+                    ({ id, label }) => {
+                      return cache.writeFragment({
+                        id: `GenreModel:${id}`,
+                        fragment: gql`
+                          fragment NewGenreModel on GenreModel {
+                            id
+                            label
+                          }
+                        `,
+                        data: {
+                          id,
+                          label,
+                        },
+                      }) as Reference;
+                    },
+                  ) as Reference[];
+                } catch (e) {
+                  console.error(e);
+                }
+
+                return [...newPerksList];
+              },
+            },
+          });
         },
       });
     } catch (error) {

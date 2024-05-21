@@ -21,16 +21,18 @@ import {
 } from '../../../../shared';
 import {
   IClub,
+  useClubContext,
   useGetClubPerks,
   useUpdateBioAndPerks,
 } from '../../../../features';
 import { ChangeEvent, useEffect } from 'react';
 import { IAboutMeState } from './shared';
 import { PerkList, PerksListLoader } from './ui';
+import { difference, isEqual } from 'lodash';
 
 function BioAndPerksView() {
   const previousLocation = usePreviousLocation('/');
-  const { state: club } = useGeneralContext<IClub>();
+  const club = useClubContext();
 
   const { updateBioAndPerks, loading: loadingUpdate } =
     useUpdateBioAndPerks();
@@ -47,6 +49,21 @@ function BioAndPerksView() {
   });
 
   const navigate = useNavigate();
+
+  const nextStep = () => {
+    navigate(
+      makePath([
+        Paths.setupProfile,
+        Paths.artist,
+        Paths.setupArtist.socialMediaAccounts,
+      ]),
+      {
+        state: {
+          previousLocation,
+        },
+      },
+    );
+  };
 
   useEffect(() => {
     if (data) {
@@ -134,20 +151,29 @@ function BioAndPerksView() {
           isLoading={loadingUpdate}
           loadingText={loadingUpdate ? 'Continue' : 'Continue'}
           onClick={async () => {
-            await updateBioAndPerks(state).then(() =>
-              navigate(
-                makePath([
-                  Paths.setupProfile,
-                  Paths.artist,
-                  Paths.setupArtist.socialMediaAccounts,
-                ]),
-                {
-                  state: {
-                    previousLocation,
-                  },
-                },
-              ),
-            );
+            if (!data) return;
+
+            const hasBioChanged = !isEqual(state.bio, club.artist.bio);
+
+            const havePerksChanged =
+              [
+                ...difference(
+                  state.perks,
+                  data.clubPerks.map(({ id }) => id),
+                ),
+                ...difference(
+                  data.clubPerks.map(({ id }) => id),
+                  state.perks,
+                ),
+              ].length > 0;
+
+            if (havePerksChanged || hasBioChanged) {
+              await updateBioAndPerks(club.id, state).then(() =>
+                nextStep(),
+              );
+            }
+
+            nextStep();
           }}
           radius={1}
           colorTheme='purple500'

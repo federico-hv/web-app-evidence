@@ -27,7 +27,13 @@ function HistoryHeader({ history }: { history: IReturnMany<UserModel> }) {
         </Box>
       )}
       {history.count > 0 && (
-        <HStack items='center' justify='space-between' pt={2} pb={4}>
+        <HStack
+          items='center'
+          justify='space-between'
+          px={3}
+          pt={2}
+          pb={4}
+        >
           <Heading as='h3' size={{ '@bp1': 3, '@bp3': 4 }}>
             Recent
           </Heading>

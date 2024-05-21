@@ -50,9 +50,9 @@ export const GET_SPOTIFY_ARTISTS = gql`
   }
 `;
 
-export const REQUIRES_PROFILE_UPDATE = gql`
-  query requiresProfileUpdate {
-    requiresProfileUpdate
+export const IS_ARTIST_PROFILE_COMPLETE = gql`
+  query isArtistProfileComplete {
+    isArtistProfileComplete
   }
 `;
 
@@ -66,8 +66,8 @@ export const GET_ARTIST_GENRES = gql`
 `;
 
 export const GET_SOCIAL_LINKS = gql`
-  query socialLinks {
-    socialLinks {
+  query socialLinks($id: String!) {
+    socialLinks(id: $id) {
       provider
       url
     }

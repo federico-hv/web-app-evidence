@@ -12,29 +12,29 @@ import {
   Box,
   Container,
 } from '@holdr-ui/react';
-import { useRef } from 'react';
+import { Fragment, useRef } from 'react';
+import {
+  useCurrentArtist,
+  useSuspenseIsArtistProfileComplete,
+} from '../../artist';
 
-function CompleteArtistSetupBanner({
-  onClose,
-}: {
-  onClose: VoidFunction;
-}) {
+function CompleteArtistSetupBanner() {
+  const currentArtist = useCurrentArtist();
+
+  const { data } = useSuspenseIsArtistProfileComplete();
+
   const { pathname } = useLocation();
 
   const navigate = useNavigate();
 
   const ref = useRef<HTMLDivElement>(null);
 
+  if (data.isArtistProfileComplete || !currentArtist) {
+    return <Fragment />;
+  }
+
   return (
-    <Box
-      ref={ref}
-      as='header'
-      w='100%'
-      h={80}
-      t={0}
-      position='fixed'
-      zIndex={15}
-    >
+    <Box ref={ref} as='header' w='100%' t={0} position='fixed' zIndex={15}>
       <Container
         maxWidth={1280}
         mt={2}
@@ -75,7 +75,6 @@ function CompleteArtistSetupBanner({
             </AlertAction>
             <AlertClose
               onClick={() => {
-                onClose();
                 ref && ref.current && ref.current.remove();
               }}
               colorTheme='white500'

@@ -1,6 +1,7 @@
 import {
   ConnectedAccountStatus,
   GET_CONNECT_ACCOUNT_STATUS,
+  useLazyIsArtistProfileComplete,
 } from '../../../../features';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -13,8 +14,7 @@ import {
   usePreviousLocation,
 } from '../../../../shared';
 import { Button, HStack, useDisclosure, VStack } from '@holdr-ui/react';
-import { Fragment } from 'react';
-import { useQuery } from '@apollo/client';
+import { useLazyQuery, useQuery } from '@apollo/client';
 import { OnboardingStatus, OnboardingFormDialog } from './ui';
 
 function ConnectOnboardingView() {
@@ -26,14 +26,29 @@ function ConnectOnboardingView() {
     onClose: onCloseDialog,
   } = useDisclosure();
 
+  const [getConnectAccountStatus, { loading: loading2 }] = useLazyQuery<{
+    connectAccountStatus: ConnectedAccountStatus;
+  }>(GET_CONNECT_ACCOUNT_STATUS, { fetchPolicy: 'network-only' });
+
+  const { getIsArtistProfileComplete, loading: loading3 } =
+    useLazyIsArtistProfileComplete();
+
   const { loading, data } = useQuery<{
     connectAccountStatus: ConnectedAccountStatus;
-  }>(GET_CONNECT_ACCOUNT_STATUS);
+  }>(GET_CONNECT_ACCOUNT_STATUS, { fetchPolicy: 'network-only' });
 
   const navigate = useNavigate();
 
-  const onClose = () => {
+  const onClose = async () => {
+    await getIsArtistProfileComplete();
+
     navigate(previousLocation);
+  };
+
+  const handleCloseDialog = async () => {
+    onCloseDialog();
+
+    await getConnectAccountStatus();
   };
 
   return (
@@ -46,8 +61,7 @@ function ConnectOnboardingView() {
           </TextGroupSubheading>
         </TextGroup>
       </VStack>
-      <Loader loading={loading}>
-        <Fragment></Fragment>
+      <Loader loading={loading || loading2}>
         {data && !data.connectAccountStatus && (
           <Button
             onClick={onOpenDialog}
@@ -78,7 +92,7 @@ function ConnectOnboardingView() {
           <OnboardingFormDialog
             isOpen={isDialogOpen}
             onOpen={onOpenDialog}
-            onClose={onCloseDialog}
+            onClose={handleCloseDialog}
           />
         )}
 
@@ -114,6 +128,8 @@ function ConnectOnboardingView() {
             Go back
           </Button>
           <Button
+            isLoading={loading3}
+            loadingText='Continue'
             radius={1}
             colorTheme='purple500'
             onClick={onClose}

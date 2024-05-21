@@ -1,4 +1,4 @@
-import { useMutation } from '@apollo/client';
+import { gql, Reference, useMutation } from '@apollo/client';
 import { UPDATE_CLUB } from '../../mutations';
 import { IClub } from '../interfaces';
 
@@ -29,6 +29,33 @@ export function useUpdateClub() {
           headers: {
             'apollo-require-preflight': true,
           },
+        },
+        update(cache, { data }) {
+          cache.modify({
+            fields: {
+              club(current = {}) {
+                let newClub: Reference = current;
+
+                try {
+                  newClub = cache.writeFragment({
+                    id: current.__ref,
+                    data: data?.updateClub,
+                    fragment: gql`
+                      fragment NewClub on ClubModel {
+                        coverImage
+                        bannerImage
+                        url
+                      }
+                    `,
+                  }) as Reference;
+                } catch (e) {
+                  console.error(e);
+                }
+
+                return newClub;
+              },
+            },
+          });
         },
       });
     } catch (error) {}

@@ -7,7 +7,6 @@ export const UPDATE_CLUB = gql`
       bannerImage
       coverImage
       url
-      # perks
       artist {
         id
         name

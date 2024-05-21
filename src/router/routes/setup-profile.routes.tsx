@@ -1,6 +1,11 @@
 import { Route, Routes } from 'react-router';
 import { NavigateWithPreviousLocation, Paths, voidFn } from '../../shared';
-import { useCurrentUser, useGetClub } from '../../features';
+import {
+  ClubContextProvider,
+  IClub,
+  useCurrentUser,
+  useGetClub,
+} from '../../features';
 import {
   BioAndPerksView,
   ConnectOnboardingView,
@@ -10,7 +15,7 @@ import {
   UploadPhotoView,
 } from '../../pages';
 import { GeneralContextProvider } from '@holdr-ui/react';
-import { Fragment } from 'react';
+import { createContext, Fragment, useContext } from 'react';
 
 const SetupProfileRoutes = () => {
   const account = useCurrentUser();
@@ -20,16 +25,12 @@ const SetupProfileRoutes = () => {
   });
 
   if (!data) {
+    // maybe return home / throw error.
     return <Fragment />;
   }
 
   return (
-    <GeneralContextProvider
-      value={{
-        state: data.club,
-        update: voidFn,
-      }}
-    >
+    <ClubContextProvider value={data.club}>
       <Routes>
         <Route
           path={Paths.artist}
@@ -66,7 +67,7 @@ const SetupProfileRoutes = () => {
           />
         </Route>
       </Routes>
-    </GeneralContextProvider>
+    </ClubContextProvider>
   );
 };
 SetupProfileRoutes.displayName = 'SetupProfileRoutes';

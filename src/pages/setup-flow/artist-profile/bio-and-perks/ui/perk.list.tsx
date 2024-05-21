@@ -39,6 +39,7 @@ function PerkList({
 
             return (
               <Box
+                key={label}
                 role='checkbox'
                 onClick={() => {
                   isSelected ? remove(id) : insert(id);

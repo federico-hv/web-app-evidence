@@ -5,19 +5,13 @@ import { GQLRendererProps } from './types';
 
 function GQLRenderer({
   children,
-  LoadingFallback,
-  ErrorFallback,
+  LoadingFallback = <Loader loading={true} />,
+  ErrorFallback = () => <Fragment />,
 }: GQLRendererProps) {
   return (
     <Fragment>
       <ErrorBoundary FallbackComponent={ErrorFallback}>
-        <Suspense
-          fallback={
-            LoadingFallback ? LoadingFallback : <Loader loading={true} />
-          }
-        >
-          {children}
-        </Suspense>
+        <Suspense fallback={LoadingFallback}>{children}</Suspense>
       </ErrorBoundary>
     </Fragment>
   );

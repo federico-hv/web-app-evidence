@@ -1,10 +1,11 @@
 import {
   SocialProvider,
+  useCurrentArtist,
   useSuspenseSocialLinks,
 } from '../../../../../features';
-import { useGeneralContext, VStack } from '@holdr-ui/react';
+import { VStack } from '@holdr-ui/react';
 import { ChangeEvent, useEffect } from 'react';
-import { matchesPattern } from '../../../../../shared';
+import { matchesPattern, useGeneralContext } from '../../../../../shared';
 import {
   ISocialMediaAccountsViewContext,
   PlatformInfo,
@@ -13,7 +14,9 @@ import {
 import TextInputField from './text-input-field';
 
 function SocialLinksForm() {
-  const { data } = useSuspenseSocialLinks();
+  const artist = useCurrentArtist();
+
+  const { data } = useSuspenseSocialLinks(artist?.id || '');
 
   const { update, state } =
     useGeneralContext<ISocialMediaAccountsViewContext>();
@@ -62,7 +65,7 @@ function SocialLinksForm() {
       <VStack gap={2}>
         <TextInputField
           name='instagramURL'
-          label='instagram URL'
+          label='Instagram URL'
           value={state.links.instagramURL}
           tooltip='Enter your Instagram URL for your fans to connect with you'
           placeholder='Enter your Instagram link'

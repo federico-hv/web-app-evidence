@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { Spotlight, Box } from '@holdr-ui/react';
 import { prefix, UserModel, Loader, Paths } from '../../../shared';
 import { Item } from './type';
@@ -13,6 +13,8 @@ import ResultItem from './result-item';
 import HistoryHeader from './history-header';
 
 function Search() {
+  const ref = useRef<HTMLDivElement>();
+
   const navigate = useNavigate();
   const [value, setValue] = useState('');
   // get ui history
@@ -43,6 +45,8 @@ function Search() {
 
     clearValue && clearValue();
 
+    if (ref && ref.current) ref.current.focus();
+
     // might make this
     save(item.id, 'account').then(() =>
       navigate(prefix('/', item.username)),
@@ -58,6 +62,7 @@ function Search() {
 
   return (
     <Box
+      innerRef={ref}
       w='full'
       css={{
         '@bp1': {
@@ -100,7 +105,7 @@ function Search() {
           clearButtonStyles={{ colorTheme: 'white500' }}
         />
         <Spotlight.Content
-          p={results.length > 0 ? 2 : 0}
+          p={results.length || history.data.length > 0 ? 2 : 0}
           isLoading={loading}
           bgColor='rgba(49, 49, 73, 0.75)'
           blur='xl'

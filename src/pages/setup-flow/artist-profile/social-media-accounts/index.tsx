@@ -1,12 +1,7 @@
 import { useNavigate } from 'react-router-dom';
+import { Button, HStack, useRecordState, VStack } from '@holdr-ui/react';
 import {
-  Button,
   GeneralContextProvider,
-  HStack,
-  useRecordState,
-  VStack,
-} from '@holdr-ui/react';
-import {
   GQLRenderer,
   makePath,
   Paths,
@@ -18,6 +13,7 @@ import {
 import { Fragment } from 'react';
 import {
   ISpotifySearchResult,
+  useCurrentArtist,
   useUpdateSocialLinks,
 } from '../../../../features';
 import {
@@ -30,6 +26,8 @@ import { SearchSpotifyArtist, SocialLinksForm } from './ui';
 export type Item = { item: ISpotifySearchResult; index: number };
 
 function SocialMediaAccountsView() {
+  const artist = useCurrentArtist();
+
   const previousLocation = usePreviousLocation('/');
 
   const { updateSocialLink, loading, error } = useUpdateSocialLinks();
@@ -124,7 +122,7 @@ function SocialMediaAccountsView() {
 
               // [OPTIMIZATION]: Check if the links have even changed before trying to update
 
-              await updateSocialLink(links).then(() =>
+              await updateSocialLink(artist?.id || '', links).then(() =>
                 navigate(
                   makePath([
                     Paths.setupProfile,

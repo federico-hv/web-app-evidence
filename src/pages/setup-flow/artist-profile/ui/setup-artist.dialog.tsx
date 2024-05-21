@@ -1,5 +1,5 @@
-import { Paths, prefix, usePreviousLocation } from '../../../../shared';
-import { useCurrentUser } from '../../../../features';
+import { Loader, Paths } from '../../../../shared';
+import { useLazyIsArtistProfileComplete } from '../../../../features';
 import {
   Alert,
   AlertContent,
@@ -24,6 +24,9 @@ function SetupArtistDialog({
   loading: boolean;
   error: any;
 }) {
+  const { getIsArtistProfileComplete, loading: loading2 } =
+    useLazyIsArtistProfileComplete();
+
   const height = {
     [Paths.setupArtist.uploadPhoto]: 785,
     [Paths.setupArtist.aboutMeAndPerks]: 695,
@@ -41,7 +44,9 @@ function SetupArtistDialog({
   const paths = location.pathname.split('/').filter((path) => path.length);
   const currentPath = paths[paths.length - 1];
 
-  const onClose = () => {
+  const onClose = async () => {
+    await getIsArtistProfileComplete();
+    disclosure.onClose();
     navigate(location.state.previousLocation || '/');
   };
 
@@ -72,116 +77,124 @@ function SetupArtistDialog({
           transitionTimingFunction='easeInOut'
         >
           <Dialog.Body py={56} px={56} h='full' id='profile-setup-content'>
-            {loading || error ? (
-              <Center h='100%' w='100%'>
-                {error ? (
-                  <Alert status='danger'>
-                    <AlertContent>
-                      <AlertDescription color='black800'>
-                        Oops, something went wrong. Please try again later.
-                      </AlertDescription>
-                    </AlertContent>
-                  </Alert>
-                ) : (
-                  <CircularProgress
-                    size='50px'
-                    isIndeterminate
-                    colorTheme='purple500'
-                  />
-                )}
-              </Center>
-            ) : (
-              <Fragment>
-                <Box minHeight='fit-content'>
-                  <Heading id='profile-setup-heading' mb={8}>
-                    Profile
-                  </Heading>
-                </Box>
-                <HStack
-                  position='relative'
-                  h='calc(100% - 72px)'
-                  gap={8}
-                  divider={
-                    <Box
-                      zIndex={25}
-                      w='1px'
-                      h='100%'
-                      bgColor='rgba(152, 152, 255, 0.10)'
+            <Loader loading={loading2}>
+              {loading || error ? (
+                <Center h='100%' w='100%'>
+                  {error ? (
+                    <Alert status='danger'>
+                      <AlertContent>
+                        <AlertDescription color='black800'>
+                          Oops, something went wrong. Please try again
+                          later.
+                        </AlertDescription>
+                      </AlertContent>
+                    </Alert>
+                  ) : (
+                    <CircularProgress
+                      size='50px'
+                      isIndeterminate
+                      colorTheme='purple500'
                     />
-                  }
-                >
-                  {/** Navigation Stepper **/}
-                  <VStack gap={6}>
-                    <SetupStep
-                      path={Paths.setupArtist.uploadPhoto}
-                      active={
-                        currentPath === Paths.setupArtist.uploadPhoto ||
-                        currentPath ===
-                          Paths.setupArtist.aboutMeAndPerks ||
-                        currentPath ===
-                          Paths.setupArtist.socialMediaAccounts ||
-                        currentPath === Paths.setupArtist.customURL ||
-                        currentPath === Paths.setupArtist.connectOnboarding
-                      }
-                      number={1}
-                      description='upload photos'
-                    />
-                    <SetupStep
-                      path={Paths.setupArtist.aboutMeAndPerks}
-                      active={
-                        currentPath ===
-                          Paths.setupArtist.aboutMeAndPerks ||
-                        currentPath ===
-                          Paths.setupArtist.socialMediaAccounts ||
-                        currentPath === Paths.setupArtist.customURL ||
-                        currentPath === Paths.setupArtist.connectOnboarding
-                      }
-                      number={2}
-                      description='about me & perks'
-                    />
-                    <SetupStep
-                      path={Paths.setupArtist.socialMediaAccounts}
-                      active={
-                        currentPath ===
-                          Paths.setupArtist.socialMediaAccounts ||
-                        currentPath === Paths.setupArtist.customURL ||
-                        currentPath === Paths.setupArtist.connectOnboarding
-                      }
-                      number={3}
-                      description='social media accounts'
-                    />
-                    <SetupStep
-                      path={Paths.setupArtist.customURL}
-                      active={
-                        currentPath === Paths.setupArtist.customURL ||
-                        currentPath === Paths.setupArtist.connectOnboarding
-                      }
-                      number={4}
-                      description='Custom URL'
-                    />
-                    <SetupStep
-                      path={Paths.setupArtist.connectOnboarding}
-                      active={
-                        currentPath === Paths.setupArtist.connectOnboarding
-                      }
-                      number={5}
-                      description='connect onboarding'
-                    />
-                  </VStack>
-                  <VStack
-                    flex={1}
-                    mb='4rem'
-                    overflow='auto'
-                    css={{
-                      scrollbarColor:
-                        'rgba(152, 152, 255, 0.15) transparent',
-                    }}
+                  )}
+                </Center>
+              ) : (
+                <Fragment>
+                  <Box minHeight='fit-content'>
+                    <Heading id='profile-setup-heading' mb={8}>
+                      Profile
+                    </Heading>
+                  </Box>
+                  <HStack
+                    position='relative'
+                    h='calc(100% - 72px)'
+                    gap={8}
+                    divider={
+                      <Box
+                        zIndex={25}
+                        w='1px'
+                        h='100%'
+                        bgColor='rgba(152, 152, 255, 0.10)'
+                      />
+                    }
                   >
-                    <Outlet />
-                  </VStack>
-                </HStack>
-              </Fragment>
-            )}
+                    {/** Navigation Stepper **/}
+                    <VStack gap={6}>
+                      <SetupStep
+                        path={Paths.setupArtist.uploadPhoto}
+                        active={
+                          currentPath === Paths.setupArtist.uploadPhoto ||
+                          currentPath ===
+                            Paths.setupArtist.aboutMeAndPerks ||
+                          currentPath ===
+                            Paths.setupArtist.socialMediaAccounts ||
+                          currentPath === Paths.setupArtist.customURL ||
+                          currentPath ===
+                            Paths.setupArtist.connectOnboarding
+                        }
+                        number={1}
+                        description='upload photos'
+                      />
+                      <SetupStep
+                        path={Paths.setupArtist.aboutMeAndPerks}
+                        active={
+                          currentPath ===
+                            Paths.setupArtist.aboutMeAndPerks ||
+                          currentPath ===
+                            Paths.setupArtist.socialMediaAccounts ||
+                          currentPath === Paths.setupArtist.customURL ||
+                          currentPath ===
+                            Paths.setupArtist.connectOnboarding
+                        }
+                        number={2}
+                        description='about me & perks'
+                      />
+                      <SetupStep
+                        path={Paths.setupArtist.socialMediaAccounts}
+                        active={
+                          currentPath ===
+                            Paths.setupArtist.socialMediaAccounts ||
+                          currentPath === Paths.setupArtist.customURL ||
+                          currentPath ===
+                            Paths.setupArtist.connectOnboarding
+                        }
+                        number={3}
+                        description='social media accounts'
+                      />
+                      <SetupStep
+                        path={Paths.setupArtist.customURL}
+                        active={
+                          currentPath === Paths.setupArtist.customURL ||
+                          currentPath ===
+                            Paths.setupArtist.connectOnboarding
+                        }
+                        number={4}
+                        description='Custom URL'
+                      />
+                      <SetupStep
+                        path={Paths.setupArtist.connectOnboarding}
+                        active={
+                          currentPath ===
+                          Paths.setupArtist.connectOnboarding
+                        }
+                        number={5}
+                        description='connect onboarding'
+                      />
+                    </VStack>
+                    <VStack
+                      flex={1}
+                      mb='4rem'
+                      overflow='auto'
+                      css={{
+                        scrollbarColor:
+                          'rgba(152, 152, 255, 0.15) transparent',
+                      }}
+                    >
+                      <Outlet />
+                    </VStack>
+                  </HStack>
+                </Fragment>
+              )}
+            </Loader>
           </Dialog.Body>
         </Dialog.Content>
       </Dialog.Portal>

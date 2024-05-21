@@ -15,7 +15,7 @@ import {
 } from '../../../../shared';
 import { VStack } from '@holdr-ui/react';
 import { GenresForm } from '../ui';
-import { difference, isEqual, join } from 'lodash';
+import { difference } from 'lodash';
 
 function ArtistGenresPage() {
   const artist = useCurrentArtist();

@@ -20,7 +20,11 @@ import {
   usePreviousLocation,
 } from '../../../../shared';
 import { ChangeEvent, useState } from 'react';
-import { IClub, useUpdateClub } from '../../../../features';
+import {
+  IClub,
+  useClubContext,
+  useUpdateClub,
+} from '../../../../features';
 import { useDebounceIsUniqueClubUrl } from '../../../../features';
 import { AnimatePresence } from 'framer-motion';
 
@@ -32,9 +36,9 @@ function CustomURLView() {
 
   const { updateClub, loading: loadingMutation } = useUpdateClub();
 
-  const { state } = useGeneralContext<IClub>();
+  const club = useClubContext();
 
-  const [url, setURL] = useState<string | undefined>(state.url);
+  const [url, setURL] = useState<string | undefined>(club.url);
 
   const navigate = useNavigate();
 
@@ -43,7 +47,7 @@ function CustomURLView() {
 
     setURL(value);
 
-    checkIsUnique(value, state.id);
+    checkIsUnique(value, club.id);
   };
 
   return (

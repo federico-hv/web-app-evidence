@@ -11,7 +11,11 @@ import {
   Text,
   useGeneralContext,
 } from '@holdr-ui/react';
-import { IClub, useUpdateClub } from '../../../../../features';
+import {
+  IClub,
+  useClubContext,
+  useUpdateClub,
+} from '../../../../../features';
 import { Fragment, useState } from 'react';
 import {
   ImageUpload,
@@ -22,7 +26,7 @@ import {
 import { ImageUploadContext } from '../../../../../shared/components/image-upload/context';
 
 function ChangeClubImage() {
-  const { state } = useGeneralContext<IClub>();
+  const club = useClubContext();
 
   const { updateClub } = useUpdateClub();
 
@@ -65,7 +69,7 @@ function ChangeClubImage() {
           }}
           title='Edit auction image'
           name='coverImage'
-          placeholder={state.coverImage}
+          placeholder={club.coverImage}
         >
           <ImageUploadContext.Consumer>
             {({ src }) => (

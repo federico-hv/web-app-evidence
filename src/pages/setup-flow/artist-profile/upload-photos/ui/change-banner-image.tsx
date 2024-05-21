@@ -5,13 +5,17 @@ import {
   Image,
   useGeneralContext,
 } from '@holdr-ui/react';
-import { IClub, useUpdateClub } from '../../../../../features';
+import {
+  IClub,
+  useClubContext,
+  useUpdateClub,
+} from '../../../../../features';
 import { Fragment, useState } from 'react';
 import { ImageUpload } from '../../../../../shared';
 import { ImageUploadContext } from '../../../../../shared/components/image-upload/context';
 
 function ChangeClubBannerImage() {
-  const { state } = useGeneralContext<IClub>();
+  const club = useClubContext();
 
   const [, setValue] = useState<string>();
 
@@ -34,7 +38,7 @@ function ChangeClubBannerImage() {
         }}
         title='Edit banner image'
         name='bannerImage'
-        placeholder={state.bannerImage}
+        placeholder={club.bannerImage}
       >
         <ImageUploadContext.Consumer>
           {({ src }) => (
