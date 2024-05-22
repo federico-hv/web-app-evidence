@@ -1,14 +1,7 @@
 import { IReturnMany, UserModel } from '../../../shared';
 import { useRemoveSearchHistoryItems } from '../shared';
 import { Fragment } from 'react';
-import {
-  Box,
-  Button,
-  Center,
-  Heading,
-  HStack,
-  Text,
-} from '@holdr-ui/react';
+import { Button, Center, Heading, HStack, Text } from '@holdr-ui/react';
 
 function HistoryHeader({ history }: { history: IReturnMany<UserModel> }) {
   const { removeAll } = useRemoveSearchHistoryItems();
@@ -16,21 +9,17 @@ function HistoryHeader({ history }: { history: IReturnMany<UserModel> }) {
   return (
     <Fragment>
       {history.count === 0 && (
-        <Box p={1}>
-          <Box p={2}>
-            <Center py={4}>
-              <Text size={2} color='base400'>
-                No recent searches
-              </Text>
-            </Center>
-          </Box>
-        </Box>
+        <Center py={4}>
+          <Text size={2} color='base400'>
+            No recent searches
+          </Text>
+        </Center>
       )}
       {history.count > 0 && (
         <HStack
           items='center'
           justify='space-between'
-          px={3}
+          px={2}
           pt={2}
           pb={4}
         >
@@ -39,9 +28,7 @@ function HistoryHeader({ history }: { history: IReturnMany<UserModel> }) {
           </Heading>
           <Button
             onClick={() => removeAll()}
-            //size='sm'
-            radius={2}
-            colorTheme='white500'
+            size='sm'
             variant='ghost'
             label='Clear'
           />
