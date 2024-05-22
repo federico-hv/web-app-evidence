@@ -12,7 +12,7 @@ interface ImportMetaEnv {
   readonly VITE_STRIPE_PUBLISHABLE_KEY: string;
   readonly VITE_PENDO_API_KEY: string;
   readonly VITE_STRIPE_PUBLISHABLE_KEY: string;
-  VITE_ENVIRONMENT: 'staging' | 'development' | 'production';
+  readonly VITE_ENVIRONMENT: 'staging' | 'development' | 'production';
 }
 
 interface ImportMeta {
