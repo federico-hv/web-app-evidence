@@ -1,16 +1,13 @@
 import {
   Box,
   Center,
-  Circle,
   Dialog,
-  Icon,
   Input,
   useDisclosure,
 } from '@holdr-ui/react';
 import React, { ChangeEvent, useCallback } from 'react';
 import { ImageUploadProps } from './types/image-upload.types';
 import { CropperBody, CropperFooter, CropperHeader } from './ui';
-import { removeButtonCSS } from './styles/image-upload.styles';
 import { ImageUploadContextProvider } from './context';
 import { useCroppedImage, useImageUpload } from './hooks';
 import { getCroppedImage, imageFileToUrl } from './utilities';
@@ -35,7 +32,7 @@ function ImageUpload({
     chosenImage,
     onChange: imageUploadOnChange,
     resetChosenImage,
-  } = useImageUpload(imageFileToUrl(value) || placeholder);
+  } = useImageUpload(placeholder);
 
   // use hook to control cropper
   const {
@@ -83,7 +80,7 @@ function ImageUpload({
 
   return (
     <>
-      <Box position='relative' overflow='hidden'>
+      <Box position='relative' overflow='hidden' h='100%' w='100%'>
         <Center h='100%' w='100%' as='label'>
           <Input
             id={name}
@@ -104,20 +101,7 @@ function ImageUpload({
             w='100%'
             h='100%'
             zIndex={50}
-          >
-            <Circle
-              size={40}
-              bgColor='darkTint300'
-              className={removeButtonCSS()}
-            >
-              <Icon
-                color='white50'
-                size='base'
-                name='camera-fill'
-                aria-label='change image'
-              />
-            </Circle>
-          </Center>
+          />
 
           <ImageUploadContextProvider
             value={{
@@ -137,19 +121,21 @@ function ImageUpload({
         ariaDescribedBy='channels-modal__heading'
       >
         <Dialog.Portal>
-          <Dialog.Overlay />
+          <Dialog.Overlay zIndex={50} />
           <Dialog.Content
-            h={{ '@bp1': 'calc(100vh - 150px)', '@bp3': 650 }}
+            bgColor='#30304B'
+            h={{ '@bp1': 'calc(100vh - 150px)', '@bp3': 575 }}
             maxHeight={{ '@bp1': 'calc(100vh - 100px)', '@bp3': '85vh' }}
             radius={3}
-            maxWidth={650}
+            maxWidth={500}
             t={{ '@bp1': 0, '@bp3': '50%' }}
             w={{ '@bp1': '100vw', '@bp2': '95vw', '@bp3': '90vw' }}
+            zIndex={50}
           >
             <Dialog.Header>
               <CropperHeader title={title} saveImage={saveImage} />
             </Dialog.Header>
-            <Dialog.Body>
+            <Dialog.Body h={550}>
               <CropperBody
                 aspect={aspect}
                 setZoom={setZoom}

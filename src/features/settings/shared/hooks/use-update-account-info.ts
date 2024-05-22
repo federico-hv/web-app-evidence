@@ -38,7 +38,7 @@ export function useUpdateAccountInfo() {
 
   const onFinish = () => {
     if (error) {
-      console.log('[UpdateAccountInfo]: ', error);
+      console.error('[UpdateAccountInfo]: ', error);
       throw new Error('Something went wrong. Please try again.');
     }
   };

@@ -1,70 +1,71 @@
 import { useEffect, useState } from 'react';
-import { useQuery } from '@apollo/client';
-import { Image, Center, Box, useWindowSize } from '@holdr-ui/react';
-import { motion } from 'framer-motion';
-import { GenericProps, IMe, Loader } from '../../shared';
-import { AuthContextProvider, AuthProviderProps } from './shared';
+import { useSuspenseQuery } from '@apollo/client';
+import { GenericProps, GQLRenderer, IMe, Loader } from '../../shared';
+import {
+  AuthContextProvider,
+  AuthProviderProps,
+  IAuthContext,
+} from './shared';
 import { GET_ME } from './queries';
-
-const MotionBox = motion(Box);
+import AuthRedirect from '../../pages/auth-redirect';
+import { useWindowSize } from '@holdr-ui/react';
 
 function AuthProvider({ children }: AuthProviderProps) {
-  const { height } = useWindowSize();
-  const { data, loading } = useQuery<{ me: IMe }>(GET_ME);
+  const [currentUser, setCurrentUser] = useState<IMe>({
+    id: '',
+    username: '',
+    displayName: '',
+    avatar: '',
+    role: 'general',
+  });
 
   return (
-    <Loader loading={loading} h={height} as={<FullPageLoadingFallback />}>
-      <Content data={data ? data.me : null}>{children}</Content>
-    </Loader>
+    <Content currentUser={currentUser} setCurrentUser={setCurrentUser}>
+      {children}
+    </Content>
   );
 }
 AuthProvider.displayName = 'AuthProvider';
 
-function Content({ children, data }: GenericProps & { data: IMe | null }) {
-  const [currentUser, setCurrentUser] = useState<IMe | null>(data);
+function Content({
+  currentUser,
+  setCurrentUser,
+  children,
+}: IAuthContext & GenericProps) {
+  const { height } = useWindowSize();
+  const { data } = useSuspenseQuery<{ me: IMe }>(GET_ME);
 
   useEffect(() => {
-    // Track the current user in Pendo
+    setCurrentUser(data.me);
+  }, [data, setCurrentUser]);
 
-    if (currentUser) {
+  useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    if (window['pendo'])
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       window['pendo'].initialize({
         visitor: {
-          id: currentUser.id,
-          username: currentUser.username,
-          role: currentUser.role,
+          id: data.me.id,
+          username: data.me.username,
+          role: data.me.role,
         },
         account: {
-          id: `holdr:account::${currentUser.id}`,
+          id: `holdr:account::${data.me.id}`,
         },
       });
-    }
-  }, [currentUser]);
+  }, [data]);
 
   return (
-    <AuthContextProvider value={{ currentUser, setCurrentUser }}>
-      {children}
-    </AuthContextProvider>
-  );
-}
-
-function FullPageLoadingFallback() {
-  return (
-    <Center position='fixed' h='h-screen' w='w-screen' bgColor='white50'>
-      <MotionBox
-        animate={{ rotate: 360 }}
-        transition={{ repeat: Infinity, ease: 'easeInOut', duration: 1 }}
-      >
-        <Image
-          loading='eager'
-          size={100}
-          src='logo-dark.png'
-          alt='holdr logo'
-          fallback={<Box />}
-        />
-      </MotionBox>
-    </Center>
+    <GQLRenderer
+      ErrorFallback={() => <AuthRedirect />}
+      LoadingFallback={<Loader loading={true} h={height} />}
+    >
+      <AuthContextProvider value={{ currentUser, setCurrentUser }}>
+        {children}
+      </AuthContextProvider>
+    </GQLRenderer>
   );
 }
 

@@ -26,6 +26,7 @@ export const useImageUpload = (currentImage: string) => {
 
   const onChange = (event: ChangeEvent<any>) => {
     const imageUpload = event.target.files[0];
+
     // manage internal state
     setImageType(imageUpload.type);
     setChosenImage(URL.createObjectURL(imageUpload));

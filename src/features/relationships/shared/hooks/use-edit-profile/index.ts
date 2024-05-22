@@ -1,9 +1,10 @@
 import { useMutation } from '@apollo/client';
 import { UPDATE_PROFILE } from '../../../mutations';
-import { GET_ME, GET_PROFILE } from '../../../queries';
+import { GET_PROFILE } from '../../../queries';
 import { useToast } from '../../../../../shared';
 import { UpdateProfileData } from '../../types';
 import { ProfileFormData, UpdateProfilePayload } from '../../../../user';
+import { GET_ME } from '../../../../auth';
 
 export const useEditProfile = () => {
   const [updateProfile, { loading, error }] = useMutation<

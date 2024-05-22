@@ -8,8 +8,8 @@ function LiveTag() {
     <HStack
       w='fit-content'
       items='center'
-      px='12px'
-      py='10px'
+      px='10px'
+      py='8px'
       gap={2}
       bgColor='darkTint500'
       radius='full'

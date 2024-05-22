@@ -1,19 +1,5 @@
 import { gql } from '@apollo/client';
 
-// TODO: move TO user feature
-
-export const GET_ME = gql`
-  query me {
-    me {
-      id
-      username
-      displayName
-      role
-      avatar
-    }
-  }
-`;
-
 export const GET_PROFILE = gql`
   query profile($username: String!) {
     profile(username: $username) {

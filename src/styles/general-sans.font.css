@@ -69,3 +69,19 @@
     font-weight: 500;
     font-style: italic;
 }
+
+@font-face {
+    font-family: "GeneralSans";
+    src: local("GeneralSansSemiBold"),
+    url("fonts/general-sans/generalsans-semibold.otf") format("opentype");
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "GeneralSans";
+    src: local("GeneralSansSemiBoldItalic"),
+    url("fonts/general-sans/generalsans-semiboldItalic.otf") format("opentype");
+    font-weight: 600;
+    font-style: italic;
+}

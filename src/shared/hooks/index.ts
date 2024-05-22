@@ -9,6 +9,7 @@ export * from './use-record-state';
 export * from './use-profile';
 export * from './use-menu-navigate';
 export * from './use-prev-path';
+export * from './use-previous-location';
 export * from './use-dialog-context';
 export * from './use-dialog-tab-context';
 export * from './use-stepper-context';

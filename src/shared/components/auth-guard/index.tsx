@@ -3,19 +3,21 @@ import { AuthGuardProps } from './types';
 import NotFoundError from '../not-found-error';
 import { Paths, prefix } from '../../index';
 import { useCurrentUser } from '../../../features';
+import { Fragment } from 'react';
 
-function AuthGuard({ roles = ['general', 'artist'] }: AuthGuardProps) {
+function AuthGuard({
+  roles = ['general', 'artist'],
+  fallback = <NotFoundError />,
+}: AuthGuardProps) {
   const currentUser = useCurrentUser();
 
   const location = useLocation();
 
+  const hasRole = currentUser && roles.includes(currentUser.role);
+
   return (
-    <>
-      {currentUser && roles.includes(currentUser.role) ? (
-        <Outlet />
-      ) : currentUser && !roles.includes(currentUser.role) ? (
-        <NotFoundError />
-      ) : (
+    <Fragment>
+      {!currentUser && (
         <Navigate
           to={prefix(
             '/',
@@ -25,7 +27,9 @@ function AuthGuard({ roles = ['general', 'artist'] }: AuthGuardProps) {
           replace
         />
       )}
-    </>
+
+      {hasRole ? <Outlet /> : fallback}
+    </Fragment>
   );
 }
 

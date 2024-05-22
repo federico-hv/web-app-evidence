@@ -27,7 +27,9 @@ function HomePage() {
             <FeedTabs />
           </ContentLayoutMain>
           <ContentLayoutAside hideScrollbar>
-            <ProfileSummary />
+            <GQLRenderer ErrorFallback={() => <Fragment />}>
+              <ProfileSummary />
+            </GQLRenderer>
             {currentUser.role === 'artist' && (
               <Fragment>
                 <MembershipValueSummary />

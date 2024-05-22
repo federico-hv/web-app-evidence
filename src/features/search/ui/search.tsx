@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { Spotlight, Box } from '@holdr-ui/react';
 import { prefix, UserModel, Loader, Paths } from '../../../shared';
 import { Item } from './type';
@@ -13,6 +13,8 @@ import ResultItem from './result-item';
 import HistoryHeader from './history-header';
 
 function Search() {
+  const ref = useRef<HTMLDivElement>();
+
   const navigate = useNavigate();
   const [value, setValue] = useState('');
   // get ui history
@@ -43,6 +45,8 @@ function Search() {
 
     clearValue && clearValue();
 
+    if (ref && ref.current) ref.current.focus();
+
     // might make this
     save(item.id, 'account').then(() =>
       navigate(prefix('/', item.username)),
@@ -58,6 +62,7 @@ function Search() {
 
   return (
     <Box
+      innerRef={ref}
       w='full'
       css={{
         '@bp1': {
@@ -80,14 +85,30 @@ function Search() {
         },
       }}
     >
-      <Spotlight theme='dark'>
-        <Spotlight.Input onValueChange={handleValueChange} />
+      <Spotlight
+        px={3}
+        border={0}
+        bgColor='black400'
+        color='white800'
+        radius='full'
+        css={{ opacity: 0.5 }}
+        _active={{
+          opacity: 1,
+          backgroundColor: 'transparent',
+          borderWidth: '1px',
+          borderColor: '$black400',
+          color: '$white500',
+        }}
+      >
+        <Spotlight.Input
+          onValueChange={handleValueChange}
+          clearButtonStyles={{ colorTheme: 'white500' }}
+        />
         <Spotlight.Content
+          p={results.length || history.data.length > 0 ? 2 : 0}
           isLoading={loading}
-          css={{
-            backgroundColor: 'rgba(49, 49, 73, 0.75)',
-            backdropFilter: 'blur(50px)',
-          }}
+          bgColor='rgba(49, 49, 73, 0.75)'
+          blur='xl'
         >
           <Spotlight.Header>
             <Loader loading={historyLoading}>

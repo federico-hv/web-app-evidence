@@ -6,9 +6,9 @@ import {
 } from '../../../shared';
 import { useCurrentUser } from '../../auth';
 import { useSuspenseQuery } from '@apollo/client';
-import { GET_PROFILE_SUMMARY } from '../queries';
 import { Fragment } from 'react';
 import millify from 'millify';
+import { GET_RELATIONSHIP_COUNT } from '../../relationships';
 
 function Members() {
   return (
@@ -46,7 +46,7 @@ function ProfileSummary() {
   const { data } = useSuspenseQuery<
     FollowingSummary,
     { username: string }
-  >(GET_PROFILE_SUMMARY, {
+  >(GET_RELATIONSHIP_COUNT, {
     variables: { username: currentUser?.username || '' },
   });
 

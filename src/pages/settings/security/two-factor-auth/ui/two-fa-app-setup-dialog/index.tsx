@@ -33,7 +33,7 @@ function TwoFAAppSetupDialog() {
     code: '',
     userCode: '',
   });
-  const { current: step, increment, reset } = useCounter(0);
+  const [step, increment, reset] = useCounter(0);
   const ctx = useDialogContext();
 
   return (

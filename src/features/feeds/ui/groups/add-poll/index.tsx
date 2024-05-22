@@ -143,8 +143,6 @@ function AddPoll({ update }: AddPollProps) {
               onValueChange={(value) => {
                 const _value = parseInt(value);
 
-                console.log(_value);
-
                 if (_value === 0) {
                   // -> if hours 0, and minutes 0; set hours to 1
                   if (time.hours === 0 && time.minutes === 0) {

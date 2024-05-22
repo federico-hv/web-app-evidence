@@ -1,18 +1,16 @@
-import { useContext } from 'react';
 import { Cookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
-import { AuthContext } from '../../../features';
 import { prefix } from '../../utilities';
 import { Paths } from '../../constants';
 import { useAlertDialog } from '../use-alert-dialog';
 
 export const useLogout = () => {
-  const { setCurrentUser } = useContext(AuthContext);
   const { openWith } = useAlertDialog();
   const navigate = useNavigate();
 
   const logout = () => {
     const cookie = new Cookies();
+
     cookie.remove('access_token', {
       path: '/',
       domain: import.meta.env.VITE_DOMAIN_URL,
@@ -21,7 +19,6 @@ export const useLogout = () => {
       path: '/',
       domain: import.meta.env.VITE_DOMAIN_URL,
     });
-    setCurrentUser(null);
 
     navigate(prefix('/', Paths.root));
   };

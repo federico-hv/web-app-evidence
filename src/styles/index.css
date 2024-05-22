@@ -6,7 +6,7 @@
 }
 
 .thin-scrollbar::-webkit-scrollbar {
-    width: 3px;
+    width: 5px;
 }
 
 .hide-scrollbar {
@@ -17,4 +17,10 @@
 .thin-scrollbar {
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: thin;  /* Firefox */
+    scrollbar-color: rgba(152, 152, 255, 0.10) rgba(152, 152, 255, 0.10);
+}
+
+.thin-scrollbar::-webkit-scrollbar-thumb {
+    border-radius: 50px;
+    background: rgba(152, 152, 255, 0.10);
 }

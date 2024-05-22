@@ -70,6 +70,9 @@ export async function getCroppedImage(
 }
 
 export const imageFileToUrl = (file: any) => {
-  if (file) return URL.createObjectURL(file);
-  else return null;
+  try {
+    if (file) return URL.createObjectURL(file);
+  } catch (e) {
+    return null;
+  }
 };

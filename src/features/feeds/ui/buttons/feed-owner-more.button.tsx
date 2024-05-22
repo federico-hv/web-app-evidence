@@ -43,6 +43,9 @@ function FeedOwnerMoreButton({ ghost }: { ghost?: boolean }) {
                 icon='more-fill'
                 boxShadow='none'
                 ariaLabel='view options'
+                css={{
+                  color: '$white500',
+                }}
               />
             </Menu.Trigger>
 

@@ -21,14 +21,16 @@ function HistoryItem({
   return (
     <HStack
       position='relative'
-      items='center'
       justify='space-between'
-      radius={2}
       bgColor={isSelected ? 'clearTint300' : 'transparent'}
       _hover={{ backgroundColor: '$clearTint300' }}
+      gap={3}
+      radius={2}
+      items='center'
+      py={3}
       px={2}
     >
-      <HStack gap={3} items='center' py={3}>
+      <HStack gap={3} items='center'>
         {data.avatar ? (
           <Avatar src={data.avatar} name={data.displayName} />
         ) : (
@@ -48,7 +50,8 @@ function HistoryItem({
       </HStack>
       <Box position='relative' zIndex={10}>
         <CloseButton
-          size={{ '@bp1': 'sm', '@bp3': 'base' }}
+          colorTheme='white500'
+          size={{ '@bp1': 'sm', '@bp3': 'sm' }}
           variant='ghost'
           onClick={async (e) => {
             e.stopPropagation();
