@@ -42,16 +42,19 @@ function Content({
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    window['pendo'].initialize({
-      visitor: {
-        id: data.me.id,
-        username: data.me.username,
-        role: data.me.role,
-      },
-      account: {
-        id: `holdr:account::${data.me.id}`,
-      },
-    });
+    if (window['pendo'])
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      window['pendo'].initialize({
+        visitor: {
+          id: data.me.id,
+          username: data.me.username,
+          role: data.me.role,
+        },
+        account: {
+          id: `holdr:account::${data.me.id}`,
+        },
+      });
   }, [data]);
 
   return (
