@@ -1,12 +1,9 @@
 import { Cookies } from 'react-cookie';
-import { useNavigate } from 'react-router-dom';
-import { prefix } from '../../utilities';
-import { Paths } from '../../constants';
 import { useAlertDialog } from '../use-alert-dialog';
 
 export const useLogout = () => {
   const { openWith } = useAlertDialog();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const logout = () => {
     const cookie = new Cookies();
@@ -20,7 +17,7 @@ export const useLogout = () => {
       domain: import.meta.env.VITE_DOMAIN_URL,
     });
 
-    navigate(prefix('/', Paths.authRedirect));
+    window.location.reload();
   };
 
   return () =>
