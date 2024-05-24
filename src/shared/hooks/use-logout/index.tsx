@@ -20,7 +20,7 @@ export const useLogout = () => {
       domain: import.meta.env.VITE_DOMAIN_URL,
     });
 
-    navigate(prefix('/', Paths.root));
+    navigate(prefix('/', Paths.authRedirect));
   };
 
   return () =>
