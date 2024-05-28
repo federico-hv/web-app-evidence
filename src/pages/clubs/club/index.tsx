@@ -28,6 +28,7 @@ import { useParams } from 'react-router-dom';
 import { startCase } from 'lodash';
 import ArtistFeed from './feed';
 import ArtistLiveBids from './livebids';
+import ArtistMembershipPerks from './perks';
 
 function ClubPage() {
   const currentUser = useCurrentUser();
@@ -146,7 +147,7 @@ function ClubPage() {
                 value='membershipPerks'
                 minHeight='calc(100vh - 158px)'
               >
-                {'MEMBERSHIP PERKS'}
+                <ArtistMembershipPerks />
               </CustomTabsContent>
             </CustomTabs>
           </Box>
