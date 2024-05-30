@@ -36,12 +36,6 @@ function SearchSpotifyArtist() {
     search(value);
   };
 
-  useEffect(() => {
-    if (data.externalAccount) {
-      update({ externalAccount: data.externalAccount });
-    }
-  }, [data.externalAccount]);
-
   const keyExtractor = ({ item }: Item) => item.id;
 
   const saveItem = async (item: ISpotifySearchResult) => {
@@ -65,10 +59,17 @@ function SearchSpotifyArtist() {
     );
   };
 
+  useEffect(() => {
+    if (data.externalAccount) {
+      console.log('Updating external account');
+      update({ externalAccount: data.externalAccount });
+    }
+  }, [data, update]);
+
   return (
     <Box zIndex={25}>
-      {state.externalAccount ? (
-        <SpotifyItem />
+      {data.externalAccount ? (
+        <SpotifyItem data={data.externalAccount} />
       ) : (
         <Spotlight
           showSearchIcon={false}

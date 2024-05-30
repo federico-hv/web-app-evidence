@@ -25,3 +25,4 @@ export * from './use-circular-count';
 export * from './use-navigate-with-previous-location';
 export * from './use-set-cookie';
 export * from './use-scroll-to-window-top';
+export * from './use-tab-pathname';

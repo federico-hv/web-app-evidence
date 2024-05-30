@@ -1,20 +1,20 @@
 import { useToast } from '../../../../shared';
 import { gql, Reference, useMutation } from '@apollo/client';
 import { ADD_EXTERNAL_ACCOUNT } from '../../mutations';
-import { IExternalAccount } from '../interface';
+import { IExternalAccountModel } from '../interface';
 
 export function useAddExternalAccount() {
   const { openWith } = useToast();
 
   const [mutate, { loading, error, data }] = useMutation<
     {
-      addExternalAccount: IExternalAccount;
+      addExternalAccount: IExternalAccountModel;
     },
-    { payload: Omit<IExternalAccount, 'id'> }
+    { payload: Omit<IExternalAccountModel, 'id'> }
   >(ADD_EXTERNAL_ACCOUNT);
 
   const addExternalAccount = async (
-    payload: Omit<IExternalAccount, 'id'>,
+    payload: Omit<IExternalAccountModel, 'id'>,
   ) => {
     try {
       const result = await mutate({

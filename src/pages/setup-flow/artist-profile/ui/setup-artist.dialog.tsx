@@ -1,4 +1,4 @@
-import { Loader, Paths } from '../../../../shared';
+import { Loader, makePath, Paths } from '../../../../shared';
 import { useLazyIsArtistProfileComplete } from '../../../../features';
 import {
   Alert,
@@ -120,7 +120,11 @@ function SetupArtistDialog({
                     {/** Navigation Stepper **/}
                     <VStack gap={6}>
                       <SetupStep
-                        path={Paths.setupArtist.uploadPhoto}
+                        path={makePath([
+                          Paths.setupProfile,
+                          Paths.artist,
+                          Paths.setupArtist.uploadPhoto,
+                        ])}
                         active={
                           currentPath === Paths.setupArtist.uploadPhoto ||
                           currentPath ===
@@ -135,7 +139,11 @@ function SetupArtistDialog({
                         description='upload photos'
                       />
                       <SetupStep
-                        path={Paths.setupArtist.aboutMeAndPerks}
+                        path={makePath([
+                          Paths.setupProfile,
+                          Paths.artist,
+                          Paths.setupArtist.aboutMeAndPerks,
+                        ])}
                         active={
                           currentPath ===
                             Paths.setupArtist.aboutMeAndPerks ||
@@ -149,7 +157,11 @@ function SetupArtistDialog({
                         description='about me & perks'
                       />
                       <SetupStep
-                        path={Paths.setupArtist.socialMediaAccounts}
+                        path={makePath([
+                          Paths.setupProfile,
+                          Paths.artist,
+                          Paths.setupArtist.socialMediaAccounts,
+                        ])}
                         active={
                           currentPath ===
                             Paths.setupArtist.socialMediaAccounts ||
@@ -161,7 +173,11 @@ function SetupArtistDialog({
                         description='social media accounts'
                       />
                       <SetupStep
-                        path={Paths.setupArtist.customURL}
+                        path={makePath([
+                          Paths.setupProfile,
+                          Paths.artist,
+                          Paths.setupArtist.customURL,
+                        ])}
                         active={
                           currentPath === Paths.setupArtist.customURL ||
                           currentPath ===
@@ -171,7 +187,11 @@ function SetupArtistDialog({
                         description='Custom URL'
                       />
                       <SetupStep
-                        path={Paths.setupArtist.connectOnboarding}
+                        path={makePath([
+                          Paths.setupProfile,
+                          Paths.artist,
+                          Paths.setupArtist.connectOnboarding,
+                        ])}
                         active={
                           currentPath ===
                           Paths.setupArtist.connectOnboarding

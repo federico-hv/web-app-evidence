@@ -1,23 +1,11 @@
+import { Avatar, Box, CloseButton, HStack, Text } from '@holdr-ui/react';
 import {
-  Avatar,
-  Box,
-  CloseButton,
-  HStack,
-  Text,
-  useGeneralContext,
-} from '@holdr-ui/react';
-import { useRemoveExternalAccount } from '../../../../../features';
-import { Fragment } from 'react';
-import { ISocialMediaAccountsViewContext } from '../shared';
+  IExternalAccountModel,
+  useRemoveExternalAccount,
+} from '../../../../../features';
 
-function SpotifyItem() {
-  const { update, state } =
-    useGeneralContext<ISocialMediaAccountsViewContext>();
+function SpotifyItem({ data }: { data: IExternalAccountModel }) {
   const { removeExternalAccount } = useRemoveExternalAccount();
-
-  if (!state.externalAccount) {
-    return <Fragment />;
-  }
 
   return (
     <HStack
@@ -33,23 +21,21 @@ function SpotifyItem() {
     >
       <HStack items='center' gap={2}>
         <Avatar
-          src={state.externalAccount.avatar}
+          src={data.avatar}
           variant='squircle'
           css={{
             size: '40px',
           }}
         />
         <Text weight={500} noOfLines={2} whiteSpace='pre-wrap'>
-          {state.externalAccount.username}
+          {data.username}
         </Text>
       </HStack>
       <Box>
         <CloseButton
           onClick={async () => {
-            if (state.externalAccount) {
-              await removeExternalAccount(state.externalAccount.id).then(
-                () => update({ externalAccount: undefined }),
-              );
+            if (data) {
+              await removeExternalAccount(data.id);
             }
           }}
           size='sm'

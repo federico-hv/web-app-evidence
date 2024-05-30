@@ -4,8 +4,8 @@ export interface TextInputFieldProps {
   name: string;
   label: string;
   value?: string;
-  tooltip: string;
+  tooltip?: string;
   placeholder: string;
   errorText?: string;
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
 }

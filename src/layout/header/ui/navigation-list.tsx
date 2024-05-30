@@ -6,6 +6,7 @@ import {
   Responsive,
   ResponsiveItem,
   Paths,
+  prefix,
 } from '../../../shared';
 import { useCurrentUser } from '../../../features';
 import { Fragment } from 'react';
@@ -77,9 +78,18 @@ function NavigationList() {
         icon={{ active: 'home-fill', inactive: 'home-outline' }}
       />
       <NavigationItem
-        active={!!matchPath(currentUser.username, pathname)}
+        active={
+          !!matchPath(makePath([currentUser.username, '/*']), pathname) ||
+          !!matchPath(
+            makePath(['artist', currentUser.username, '/*']),
+            pathname,
+          )
+        }
         label='My Profile'
-        to={currentUser.username}
+        to={prefix(
+          currentUser.role === 'artist' ? '/artist/' : '/',
+          currentUser.username,
+        )}
         icon={{
           active: 'user-circle-fill',
           inactive: 'user-circle-outline',

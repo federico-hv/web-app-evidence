@@ -1,4 +1,7 @@
-import { IExternalAccount, SocialProvider } from '../../../../../features';
+import {
+  IExternalAccountModel,
+  SocialProvider,
+} from '../../../../../features';
 
 export type SocialURLName = 'instagramURL' | 'xURL' | 'tiktokURL';
 
@@ -16,5 +19,5 @@ export interface ISocialLink {
 export interface ISocialMediaAccountsViewContext {
   isDisabled: boolean;
   links: ISocialAccounts;
-  externalAccount?: IExternalAccount;
+  externalAccount?: IExternalAccountModel;
 }

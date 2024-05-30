@@ -47,6 +47,8 @@ function Search() {
 
     if (ref && ref.current) ref.current.focus();
 
+    console.log(item);
+
     // might make this
     save(item.id, 'account').then(() =>
       navigate(prefix('/', item.username)),

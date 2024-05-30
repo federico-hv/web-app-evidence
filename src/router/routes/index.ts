@@ -8,4 +8,7 @@ export { default as ConnectRoutes } from './connect.routes';
 export { default as ClubRoutes } from './club.routes';
 export { default as SetupProfileRoutes } from './setup-profile.routes';
 export { default as SetupArtistAccountRoutes } from './setup-artist-account.routes';
-// export { default as SetupFanAccountRoutes } from './setup-fan-account.routes';
+export { default as SetupFanAccountRoutes } from './setup-fan-account.routes';
+export { default as UserRelationshipRoutes } from './user-relationships.routes';
+export { default as EditGeneralUserProfileRoutes } from './edit-general-user-profile.routes';
+export { default as ArtistProfileRoutes } from './artist-profile.routes';

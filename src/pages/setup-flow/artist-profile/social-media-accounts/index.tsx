@@ -51,9 +51,8 @@ function SocialMediaAccountsView() {
               Search for the Spotify account that is yours.
             </TextGroupSubheading>
           </TextGroup>
-          <GQLRenderer ErrorFallback={() => <Fragment />}>
-            <SearchSpotifyArtist />
-          </GQLRenderer>
+
+          <SearchSpotifyArtist />
         </VStack>
         <VStack gap={4}>
           <TextGroup gap={0}>

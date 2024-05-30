@@ -1,6 +1,6 @@
 import {
   SocialProvider,
-  useCurrentArtist,
+  useCurrentUser,
   useSuspenseSocialLinks,
 } from '../../../../../features';
 import { VStack } from '@holdr-ui/react';
@@ -14,9 +14,9 @@ import {
 import TextInputField from './text-input-field';
 
 function SocialLinksForm() {
-  const artist = useCurrentArtist();
+  const currentUser = useCurrentUser();
 
-  const { data } = useSuspenseSocialLinks(artist?.id || '');
+  const { data } = useSuspenseSocialLinks(currentUser.id);
 
   const { update, state } =
     useGeneralContext<ISocialMediaAccountsViewContext>();

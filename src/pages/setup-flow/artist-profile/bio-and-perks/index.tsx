@@ -4,13 +4,11 @@ import {
   HStack,
   mergeStyles,
   Textarea,
-  useGeneralContext,
   useRecordState,
   VStack,
 } from '@holdr-ui/react';
 import {
   customInputStyles,
-  Head,
   makePath,
   Paths,
   textAreaClassName,
@@ -20,7 +18,6 @@ import {
   usePreviousLocation,
 } from '../../../../shared';
 import {
-  IClub,
   useClubContext,
   useGetClubPerks,
   useUpdateBioAndPerks,

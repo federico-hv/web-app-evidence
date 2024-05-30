@@ -71,3 +71,10 @@ export { default as Slider } from './slider';
 export { RadialSurface } from './surface';
 export { default as NavigateWithPreviousLocation } from './navigate-with-previous-location';
 export { default as FullPageLoader } from './full-page-loader';
+export {
+  default as RoutingTabs,
+  RoutingTabsContent,
+  RoutingTabsTrigger,
+  RoutingTabsList,
+  RoutingTabsHeader,
+} from './routing-tabs';

@@ -4,16 +4,18 @@ import { AuthGuard, NotFoundError, Paths, prefix } from '../shared';
 import {
   ClubRoutes,
   ConnectRoutes,
+  UserRelationshipRoutes,
   SetupArtistAccountRoutes,
-  SetupFlowRoutes,
   SetupProfileRoutes,
   UserRoutes,
+  EditGeneralUserProfileRoutes,
+  ArtistProfileRoutes,
+  SetupFanAccountRoutes,
 } from './routes';
 import { MainLayout } from '../layout';
 import { Fragment } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import { DevRoutes } from './__dev__';
-import SetupFanAccountRoutes from './routes/setup-fan-account.routes';
 
 function Router() {
   const location = useLocation();
@@ -50,9 +52,33 @@ function Router() {
             {/*/>*/}
             {/*/!* Profile Route*!/*/}
             <Route
-              path={prefix(Paths.username, '/*')}
-              element={<UserRoutes />}
-            />
+              element={
+                <AuthGuard
+                  roles={['general']}
+                  fallback={<Navigate to='/' />}
+                />
+              }
+            >
+              <Route
+                path={prefix(Paths.username, '/*')}
+                element={<UserRoutes />}
+              />
+            </Route>
+            <Route
+              element={
+                <AuthGuard
+                  roles={['artist']}
+                  fallback={<Navigate to='/' />}
+                />
+              }
+            >
+              <Route path={prefix('artist', '/*')}>
+                <Route
+                  path={prefix(':username', '/*')}
+                  element={<ArtistProfileRoutes />}
+                />
+              </Route>
+            </Route>
             {/*/!* Bookmarks Route *!/*/}
             {/*<Route*/}
             {/*  path={prefix(Paths.bookmarks, '/*')}*/}
@@ -112,9 +138,14 @@ function Router() {
             element={<SetupFanAccountRoutes />}
           />
         </Route>
+
         <Route
-          path={prefix(Paths.setupFlow, '/*')}
-          element={<SetupFlowRoutes />}
+          path={prefix(':username/edit', '/*')}
+          element={<EditGeneralUserProfileRoutes />}
+        />
+        <Route
+          path={prefix(':username', '/*')}
+          element={<UserRelationshipRoutes />}
         />
       </Routes>
     </Fragment>

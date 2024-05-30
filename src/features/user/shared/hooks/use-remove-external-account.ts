@@ -1,6 +1,6 @@
 import { useToast } from '../../../../shared';
 import { useMutation } from '@apollo/client';
-import { IExternalAccount } from '../interface';
+import { IExternalAccountModel } from '../interface';
 import { REMOVE_EXTERNAL_ACCOUNT } from '../../mutations';
 
 export function useRemoveExternalAccount() {
@@ -8,7 +8,7 @@ export function useRemoveExternalAccount() {
 
   const [mutate, { loading, error, data }] = useMutation<
     {
-      removeExternalAccount: IExternalAccount;
+      removeExternalAccount: IExternalAccountModel;
     },
     { id: number }
   >(REMOVE_EXTERNAL_ACCOUNT);
@@ -19,12 +19,18 @@ export function useRemoveExternalAccount() {
         variables: {
           id,
         },
-      });
+        update(cache, { data }) {
+          cache.modify({
+            fields: {
+              externalAccount(current = {}) {
+                cache.evict({ id: current.__ref });
 
-      // openWith({
-      //   status: 'success',
-      //   description: 'We have saved your bio and perks',
-      // });
+                return;
+              },
+            },
+          });
+        },
+      });
 
       return result;
     } catch (e) {

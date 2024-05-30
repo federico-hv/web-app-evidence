@@ -23,6 +23,7 @@ export const GET_SEARCH_HISTORY = gql`
         avatar
         username
         displayName
+        role
       }
     }
   }

@@ -12,11 +12,8 @@ export interface OnSaleMembershipModel {
 
 export interface OwnedMembershipModel {
   name: string;
-  salePrice: number;
+  coverImage?: string;
   artist: UserModel;
-  membershipNum: number;
-  priceChange: number;
-  priceHasRisen?: boolean;
 }
 
 export interface MembershipValueData {

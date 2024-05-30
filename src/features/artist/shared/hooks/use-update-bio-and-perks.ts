@@ -1,20 +1,17 @@
 import { gql, Reference, useMutation } from '@apollo/client';
 import { UPDATE_BIO_AND_PERKS } from '../../mutations';
 import { useToast } from '../../../../shared';
-
-interface IUpdateArtistDetails {
-  bio: string;
-}
+import { IProfile } from '../../../relationships';
 
 export function useUpdateBioAndPerks() {
   const { openWith } = useToast();
 
   const [mutate, { loading, error, data }] = useMutation<
     {
-      updateArtistDetails: IUpdateArtistDetails;
+      updateProfile: IProfile;
       updatePerks: number[];
     },
-    { payload: IUpdateArtistDetails; perks: number[] }
+    { payload: { bio: string }; perks: number[] }
   >(UPDATE_BIO_AND_PERKS);
 
   const updateBioAndPerks = async (
@@ -71,7 +68,7 @@ export function useUpdateBioAndPerks() {
                     `,
                     data: {
                       artist: {
-                        bio: data?.updateArtistDetails.bio,
+                        bio: data?.updateProfile.bio,
                       },
                     },
                   }) as Reference;

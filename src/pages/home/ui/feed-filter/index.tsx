@@ -38,6 +38,8 @@ function FeedFilter({ current, onClick }: FeedFilterProps) {
         <SelectItemList
           w={200}
           _active={{ color: '$purple400' }}
+          _hover={{ background: 'rgba(14, 14, 27, 0.50)' }}
+          _highlighted={{ background: 'rgba(14, 14, 27, 0.50)' }}
           divider={
             <Box
               h='1px'

@@ -15,6 +15,6 @@ export const PlatformInfo: Record<
   },
   xURL: {
     name: 'X',
-    regExp: /^https:\/\/(www\.)?twitter.com\/.+/,
+    regExp: /^https:\/\/(www\.)?x.com\/.+/,
   },
 };

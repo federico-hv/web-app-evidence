@@ -32,26 +32,32 @@ function TextInputField({
           <Text size={1} as='label' htmlFor={name}>
             {label}
           </Text>
-          <Tooltip>
-            <TooltipTrigger display='flex' css={{ alignItems: 'center' }}>
-              <Icon name='information-outline' />
-            </TooltipTrigger>
-            <TooltipContent
-              arrowWidth={0}
-              arrowHeight={0}
-              maxWidth={250}
-              sideOffset={-16}
-              side='right'
-              align='start'
-              fontSize={1}
-              container={node}
-              bgColor='#202032'
-              border={1}
-              borderColor={hexToRGB('#9898FF', 0.25)}
-            >
-              {tooltip}
-            </TooltipContent>
-          </Tooltip>
+          {tooltip && (
+            <Tooltip>
+              <TooltipTrigger
+                display='flex'
+                css={{ alignItems: 'center' }}
+              >
+                <Icon name='information-outline' />
+              </TooltipTrigger>
+
+              <TooltipContent
+                arrowWidth={0}
+                arrowHeight={0}
+                maxWidth={250}
+                sideOffset={-16}
+                side='right'
+                align='start'
+                fontSize={1}
+                container={node}
+                bgColor='#202032'
+                border={1}
+                borderColor={hexToRGB('#9898FF', 0.25)}
+              >
+                {tooltip}
+              </TooltipContent>
+            </Tooltip>
+          )}
         </HStack>
         <Input
           name={name}
