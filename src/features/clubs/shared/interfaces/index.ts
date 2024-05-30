@@ -16,13 +16,6 @@ export interface OwnedMembershipModel {
   artist: UserModel;
 }
 
-export interface MembershipValueData {
-  averagePrice: number;
-  priceChange: number;
-  membershipsSold: number;
-  numOfMemberships: number;
-}
-
 export interface IPerk {
   id: number;
   label: string;

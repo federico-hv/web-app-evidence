@@ -1,5 +1,11 @@
-import { OwnedMembershipModel } from "features/clubs/shared";
+import { UserModel } from '../../../../../shared';
 
 export interface MembershipItemProps {
-    data: OwnedMembershipModel;
+  data: {
+    price: number;
+    percentage: number;
+    number: string;
+    name: string;
+    artist: UserModel;
+  };
 }
