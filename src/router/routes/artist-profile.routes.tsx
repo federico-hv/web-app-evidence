@@ -5,10 +5,13 @@ import {
   Avatar,
   AvatarBadge,
   Box,
+  Countdown,
   Grid,
   GridItem,
   Heading,
   HStack,
+  Icon,
+  IconButton,
   Progress,
   Select,
   SelectContent,
@@ -21,16 +24,7 @@ import {
 } from '@holdr-ui/react';
 import { BoxProps } from '@holdr-ui/react/dist/components/box/src/box.types';
 import GainLossIndicator from '../../shared/components/gain-loss-indicator';
-import { shuffle } from 'lodash';
 import { arrayFrom, TextGroup, TextGroupSubheading } from '../../shared';
-import {
-  dummyAuctionMembershipData,
-  dummySecondarySaleMembershipData,
-} from '../../pages/clubs/shared';
-import {
-  MembershipAuctionCard,
-  MembershipSecondarySaleCard,
-} from '../../features';
 import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
 import { FlatList } from '../../tmp/flat-list';
@@ -260,7 +254,7 @@ function DashboardContent() {
   );
 }
 
-function ClubMembers() {
+function ClubMembersContent() {
   return (
     <RadialBox2 w='100%' h='100%' p={4} radius={3}>
       <Box pb={2} w='100%' borderBottom={1} borderColor='#9898FF1A'>
@@ -331,22 +325,86 @@ function ClubMembers() {
   );
 }
 
-function Watchlist() {
+function ArtistWatchlistItem() {
+  const price = 829.12;
+
   return (
-    <Grid gap={2} templateColumns='repeat(3, 1fr)'>
-      {shuffle([
-        ...arrayFrom(10).map(() => dummySecondarySaleMembershipData),
-        ...arrayFrom(10).map(() => dummyAuctionMembershipData),
-      ]).map((data, idx) => (
-        <Grid.Item key={`watchlist-item-${idx}`}>
-          {data.endDate ? (
-            <MembershipAuctionCard data={data} />
-          ) : (
-            <MembershipSecondarySaleCard data={data} />
-          )}
-        </Grid.Item>
-      ))}
-    </Grid>
+    <HStack items='center'>
+      <HStack flex={1} gap={2} items='center'>
+        <Avatar size='44px' variant='squircle' name='D D'></Avatar>
+        <VStack mb={1}>
+          <HStack gap={1} items='center'>
+            <Text weight={500}>Abraham Curtis’ Club</Text>
+            <Icon name='verified-outline' />
+          </HStack>
+          <Text color='white700' size={1} weight={300}>
+            @AbCurt
+          </Text>
+        </VStack>
+      </HStack>
+      <Box basis='156px'>
+        <Text weight={300}>${price.toFixed(2)}</Text>
+      </Box>
+      <Box basis='180px'>
+        <Countdown
+          color='white500'
+          targetDate={dayjs().add(1, 'day').toDate()}
+        />
+      </Box>
+      <Box basis='108px'>
+        <Box
+          radius={1}
+          px={1}
+          w='fit-content'
+          border={1}
+          borderColor='#5CE581'
+        >
+          <Text weight={500} color='#5CE581' size={2}>
+            LIVE
+          </Text>
+        </Box>
+      </Box>
+      <Box basis='40px'>
+        <IconButton
+          colorTheme='purple600'
+          icon='more-fill'
+          ariaLabel='options'
+          variant='ghost'
+        />
+      </Box>
+    </HStack>
+  );
+}
+
+function WatchlistContent() {
+  return (
+    <RadialBox2 w='100%' h='100%' p={4} radius={3}>
+      <Box pb={2} w='100%' borderBottom={1} borderColor='#9898FF1A'>
+        <Heading size={5} weight={400}>
+          Watchlist
+        </Heading>
+      </Box>
+      <VStack h='full' radius={2}>
+        <HStack py={4}>
+          <Box flex={1}>
+            <Text weight={500}>Club</Text>
+          </Box>
+          <Box basis='156px'>
+            <Text weight={500}>Entry Price</Text>
+          </Box>
+          <Box basis='180px'>
+            <Text weight={500}>Ends In</Text>
+          </Box>
+          <Box basis='108px'>
+            <Text weight={500}>Status</Text>
+          </Box>
+          <Box basis='40px' />
+        </HStack>
+        <VStack h='calc(100%)' py={4} gap={5}>
+          <ArtistWatchlistItem />
+        </VStack>
+      </VStack>
+    </RadialBox2>
   );
 }
 
@@ -357,8 +415,8 @@ const ArtistProfileRoutes = () => (
       <Route path='dashboard' element={<DashboardContent />} />
       <Route path='club' element={<div>Club</div>} />
       <Route path='membership' element={<div>Membership</div>} />
-      <Route path='members' element={<ClubMembers />} />
-      <Route path='watchlist' element={<Watchlist />} />
+      <Route path='members' element={<ClubMembersContent />} />
+      <Route path='watchlist' element={<WatchlistContent />} />
     </Route>
   </Routes>
 );

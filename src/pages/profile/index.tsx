@@ -302,12 +302,17 @@ function GeneralUserBidHistoryItem() {
 
   return (
     <HStack items='center'>
-      <HStack flex={1} gap={2}>
-        <Avatar size='44px' variant='squircle' name='D D' />
-        <HStack gap={1} items='center'>
-          <Text>Abraham Curtis’ Club</Text>
-          <Icon name='verified-outline' />
-        </HStack>
+      <HStack flex={1} gap={2} items='center'>
+        <Avatar size='44px' variant='squircle' name='D D'></Avatar>
+        <VStack mb={1}>
+          <HStack gap={1} items='center'>
+            <Text weight={500}>Abraham Curtis’ Club</Text>
+            <Icon name='verified-outline' />
+          </HStack>
+          <Text color='white700' size={1} weight={300}>
+            @AbCurt
+          </Text>
+        </VStack>
       </HStack>
       <Box basis='156px'>
         <Text weight={300}>${price.toFixed(2)}</Text>
@@ -335,7 +340,7 @@ export function GeneralUserBidHistoryContent() {
     >
       <HStack p={4}>
         <Box flex={1}>
-          <Text weight={500}>Artist</Text>
+          <Text weight={500}>Club</Text>
         </Box>
         <Box basis='156px'>
           <Text weight={500}>Bid</Text>
@@ -359,12 +364,17 @@ function GeneralUserWatchlistItem() {
 
   return (
     <HStack items='center'>
-      <HStack flex={1} gap={2}>
-        <Avatar size='44px' variant='squircle' name='D D' />
-        <HStack gap={1} items='center'>
-          <Text>Abraham Curtis’ Club</Text>
-          <Icon name='verified-outline' />
-        </HStack>
+      <HStack flex={1} gap={2} items='center'>
+        <Avatar size='44px' variant='squircle' name='D D'></Avatar>
+        <VStack mb={1}>
+          <HStack gap={1} items='center'>
+            <Text weight={500}>Abraham Curtis’ Club</Text>
+            <Icon name='verified-outline' />
+          </HStack>
+          <Text color='white700' size={1} weight={300}>
+            @AbCurt
+          </Text>
+        </VStack>
       </HStack>
       <Box basis='156px'>
         <Text weight={300}>${price.toFixed(2)}</Text>
@@ -413,13 +423,13 @@ export function GeneralUserWatchlistContent() {
     >
       <HStack p={4}>
         <Box flex={1}>
-          <Text weight={500}>Artist</Text>
+          <Text weight={500}>Club</Text>
         </Box>
         <Box basis='156px'>
           <Text weight={500}>Entry Price</Text>
         </Box>
         <Box basis='180px'>
-          <Text weight={500}>Timer</Text>
+          <Text weight={500}>Ends In</Text>
         </Box>
         <Box basis='108px'>
           <Text weight={500}>Status</Text>
