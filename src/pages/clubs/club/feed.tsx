@@ -17,7 +17,11 @@ import {
   AvatarGroup,
   Tag,
 } from '@holdr-ui/react';
-import { ArtistClubPageRightPanel, ArtistProfileCard } from './bio';
+import {
+  ArtistClubPageRightPanel,
+  ArtistProfileCard,
+  ArtistProps,
+} from './bio';
 
 function ArtistPost() {
   return (
@@ -132,7 +136,13 @@ const imageSrcs = [
   'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSyQiewCK1xVeDg4hXiae0MaHWGE9SWqXVSoj87zJFrjshTTBSm',
 ];
 
-function ArtistFeed() {
+type ArtistFeedProps = ArtistProps;
+function ArtistFeed({
+  socialLinks,
+  isVerified,
+  avatar,
+  name,
+}: ArtistFeedProps) {
   return (
     <HStack
       gap={4}
@@ -141,7 +151,13 @@ function ArtistFeed() {
       css={{ scrollbarWidth: 'thin' }}
     >
       <VStack flex={2} gap={4} maxHeight='h-screen' overflow='scroll'>
-        <ArtistProfileCard p={'16px'} />
+        <ArtistProfileCard
+          p={'16px'}
+          socialLinks={socialLinks}
+          isVerified={isVerified}
+          avatar={avatar}
+          name={name}
+        />
         {[1, 2, 3].map((num) => (
           <ArtistPost />
         ))}

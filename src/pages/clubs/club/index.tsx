@@ -1,10 +1,16 @@
-import { useCurrentUser } from '../../../features';
+import {
+  useCurrentArtist,
+  useCurrentUser,
+  useSuspenseGetArtist,
+  useSuspenseSocialLinks,
+} from '../../../features';
 import {
   ErrorFallback,
   GQLRenderer,
   Head,
   customBgColor,
   RadialSurface,
+  Loader,
 } from '../../../shared';
 import {
   Box,
@@ -29,8 +35,19 @@ import { startCase } from 'lodash';
 import ArtistFeed from './feed';
 import ArtistLiveBids from './livebids';
 import ArtistMembershipPerks from './perks';
+import { Suspense } from 'react';
 
 function ClubPage() {
+  const artist = useCurrentArtist();
+  const { data } = useSuspenseGetArtist(artist!.id, 'no-cache');
+  const { data: socialLinksData } = useSuspenseSocialLinks(artist!.id);
+
+  const { bio, avatar, name, isVerified } = data.artist;
+  const { socialLinks } = socialLinksData;
+
+  const artistBioProps = { ...data.artist, socialLinks };
+  const artistFeedProps = { avatar, name, isVerified, socialLinks };
+
   const currentUser = useCurrentUser();
   const { switchState, toggle } = useSwitch();
   let { slug } = useParams();
@@ -126,14 +143,14 @@ function ClubPage() {
                 value='bio'
                 minHeight='calc(100vh - 158px)'
               >
-                <ArtistBio />
+                <ArtistBio {...artistBioProps} />
               </CustomTabsContent>
               <CustomTabsContent
                 py={8}
                 value='feed'
                 minHeight='calc(100vh - 158px)'
               >
-                <ArtistFeed />
+                <ArtistFeed {...artistFeedProps} />
               </CustomTabsContent>
               <CustomTabsContent
                 py={8}

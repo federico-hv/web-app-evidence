@@ -18,6 +18,14 @@ import {
   Dialog,
 } from '@holdr-ui/react';
 import { FlatList } from '../../../tmp/flat-list';
+import {
+  ISocialLink,
+  useCurrentArtist,
+  useGetArtist,
+  useSuspenseGetArtist,
+  useSuspenseSocialLinks,
+} from '../../../features/artist/shared';
+import { useEffect } from 'react';
 
 const imageSrcs = [
   'https://www.gravatar.com/avatar/2c7d99fe281ecd3bcd65ab915bac6dd5?s=250',
@@ -25,6 +33,13 @@ const imageSrcs = [
   'https://avatar.iran.liara.run/public/boy?username=Ash',
   'https://api.dicebear.com/7.x/adventurer-neutral/svg?seed=mail@ashallendesign.co.uk',
 ];
+
+export interface ArtistProps {
+  name: string;
+  avatar: string;
+  isVerified: boolean;
+  socialLinks: ISocialLink[];
+}
 
 export function ArtistClubPageRightPanel() {
   return (
@@ -221,14 +236,61 @@ export function ArtistClubPageRightPanel() {
 
 ArtistClubPageRightPanel.displayName = 'ArtistClubPageRightPanel';
 
-export function ArtistProfileCard({ p }: { p: number | string }) {
+interface ArtistProfileCardProps extends ArtistProps {
+  p: number | string;
+}
+
+export function ArtistProfileCard({
+  name,
+  avatar,
+  isVerified,
+  socialLinks = [],
+  p,
+}: ArtistProfileCardProps) {
+  const getSocialIconName = (provider: string) => {
+    switch (provider) {
+      case 'TikTok':
+        return 'tiktok';
+      case 'X':
+        return 'x-twitter';
+      case 'Instagram':
+        return 'instagram';
+      default:
+        return null;
+    }
+  };
+
+  const getSocialButton = (link: ISocialLink) => {
+    const name = getSocialIconName(link.provider);
+
+    if (!name) return;
+
+    return (
+      <VStack>
+        <a href={link.url} target='_blank'>
+          {/* <Icon name={name} size={'xl'} /> */}
+          <IconButton
+            colorTheme='transparent'
+            size={'xl'}
+            icon={name}
+            ariaLabel=''
+            variant='ghost'
+            css={{
+              color: '$white100',
+            }}
+          />
+        </a>
+      </VStack>
+    );
+  };
+
   return (
     <VStack bg='#30304B' p={p} radius={4} h={'168px'} justify={'center'}>
       <HStack flex={2} maxHeight={'136px'}>
         <VStack flex={1} justify={'center'} items={'center'}>
           <Avatar
-            src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSyQiewCK1xVeDg4hXiae0MaHWGE9SWqXVSoj87zJFrjshTTBSm'
-            name='Micky Weekes'
+            src={avatar}
+            name={name}
             size={'136px'}
             variant='squircle'
           >
@@ -249,10 +311,12 @@ export function ArtistProfileCard({ p }: { p: number | string }) {
               weight={500}
               css={{ lineHeight: '115%' }}
             >
-              {'Jade Lightning'}
+              {name}
             </Heading>
             <VStack pl='6px' pt={1}>
-              <Icon color='white500' name='verified-outline' />
+              {isVerified && (
+                <Icon color='white500' name='verified-outline' />
+              )}
             </VStack>
           </HStack>
           <HStack h={'xl'} items={'center'}>
@@ -303,43 +367,8 @@ export function ArtistProfileCard({ p }: { p: number | string }) {
               Following
             </Text>
           </HStack>
-          <HStack gap={4} h={'xl'} items={'center'}>
-            <svg
-              width='18'
-              height='18'
-              viewBox='0 0 18 18'
-              fill='none'
-              xmlns='http://www.w3.org/2000/svg'
-            >
-              <path
-                d='M5.27263 0.0629438C4.31502 0.108124 3.66107 0.260944 3.08939 0.485584C2.49772 0.716164 1.99623 1.02558 1.49727 1.52634C0.998305 2.0271 0.691042 2.52894 0.462079 3.1215C0.240497 3.69444 0.0903755 4.34892 0.0480751 5.30706C0.00577466 6.2652 -0.00358544 6.57318 0.0010946 9.01722C0.00577465 11.4613 0.0165748 11.7676 0.0630152 12.7277C0.108736 13.6852 0.261017 14.3389 0.485659 14.9108C0.716602 15.5024 1.02566 16.0037 1.52661 16.5029C2.02755 17.002 2.52904 17.3086 3.12305 17.5379C3.69545 17.7591 4.35012 17.9099 5.30809 17.9519C6.26606 17.9938 6.5744 18.0035 9.01775 17.9989C11.4611 17.9942 11.7687 17.9834 12.7287 17.9378C13.6886 17.8923 14.339 17.7389 14.911 17.5154C15.5027 17.2839 16.0043 16.9754 16.5031 16.4743C17.0019 15.9731 17.309 15.4709 17.5378 14.878C17.7595 14.3056 17.9102 13.651 17.9518 12.6937C17.9937 11.7331 18.0036 11.4263 17.9989 8.98266C17.9943 6.53898 17.9833 6.23262 17.9377 5.27286C17.8922 4.3131 17.7397 3.66132 17.5153 3.0891C17.284 2.49744 16.9753 1.9965 16.4745 1.497C15.9737 0.997504 15.4712 0.690604 14.8784 0.462364C14.3057 0.240784 13.6514 0.0897638 12.6934 0.0483638C11.7354 0.00696385 11.4271 -0.00365615 8.98283 0.00102385C6.53858 0.00570385 6.23258 0.0161439 5.27263 0.0629438ZM5.37775 16.3328C4.50024 16.2946 4.02378 16.1488 3.70625 16.0268C3.28577 15.8648 2.98624 15.6689 2.6698 15.3556C2.35336 15.0422 2.15896 14.7416 1.99479 14.322C1.87149 14.0045 1.72299 13.5286 1.68195 12.6511C1.63731 11.7026 1.62795 11.4179 1.62273 9.01506C1.61751 6.61224 1.62669 6.32784 1.66827 5.37906C1.70571 4.50228 1.85241 4.02528 1.97427 3.70794C2.13628 3.28692 2.3314 2.98794 2.6455 2.67168C2.9596 2.35542 3.25931 2.16066 3.67925 1.9965C3.99641 1.87266 4.47234 1.72542 5.34949 1.68366C6.29864 1.63866 6.58304 1.62966 8.98553 1.62444C11.388 1.61922 11.6731 1.62822 12.6226 1.66998C13.4994 1.70814 13.9766 1.8534 14.2936 1.97598C14.7143 2.13798 15.0136 2.33256 15.3299 2.6472C15.6461 2.96184 15.8411 3.26046 16.0052 3.6813C16.1293 3.99756 16.2765 4.4733 16.3179 5.35098C16.3631 6.30012 16.3733 6.5847 16.3777 8.98698C16.382 11.3893 16.3735 11.6746 16.3319 12.623C16.2936 13.5005 16.1482 13.9771 16.0259 14.295C15.8639 14.7153 15.6686 15.015 15.3543 15.3311C15.0401 15.6472 14.7407 15.8419 14.3206 16.0061C14.0038 16.1297 13.5273 16.2773 12.6509 16.3191C11.7018 16.3637 11.4173 16.3731 9.01397 16.3783C6.61058 16.3835 6.32708 16.3738 5.37793 16.3328M12.7148 4.1898C12.7152 4.40342 12.7789 4.61214 12.8978 4.78955C13.0168 4.96697 13.1858 5.10511 13.3833 5.18651C13.5808 5.26792 13.798 5.28892 14.0074 5.24687C14.2169 5.20482 14.4091 5.1016 14.5599 4.95028C14.7107 4.79895 14.8132 4.60631 14.8545 4.39671C14.8957 4.18712 14.8739 3.96999 14.7918 3.77279C14.7097 3.57559 14.5709 3.40717 14.3931 3.28884C14.2152 3.17051 14.0063 3.10758 13.7927 3.108C13.5063 3.10858 13.2319 3.22286 13.0297 3.42573C12.8276 3.62859 12.7143 3.90343 12.7148 4.1898ZM4.37892 9.00894C4.38396 11.5613 6.45686 13.6258 9.00875 13.6209C11.5606 13.616 13.6265 11.5433 13.6217 8.99094C13.6168 6.43854 11.5434 4.37358 8.99111 4.37862C6.43886 4.38366 4.37406 6.4569 4.37892 9.00894ZM6.00002 9.0057C5.99884 8.41235 6.17365 7.83197 6.50232 7.33796C6.831 6.84396 7.29879 6.4585 7.84653 6.23035C8.39428 6.0022 8.99737 5.9416 9.57956 6.0562C10.1617 6.17081 10.6969 6.45548 11.1173 6.87421C11.5377 7.29294 11.8245 7.82694 11.9414 8.40866C12.0583 8.99038 12.0001 9.59371 11.7741 10.1424C11.5481 10.691 11.1645 11.1603 10.6718 11.4909C10.1791 11.8215 9.59941 11.9986 9.00605 11.9998C8.61205 12.0007 8.22176 11.9239 7.85745 11.7738C7.49314 11.6238 7.16196 11.4035 6.88281 11.1254C6.60367 10.8474 6.38203 10.5171 6.23056 10.1534C6.07909 9.78967 6.00075 9.39969 6.00002 9.0057Z'
-                fill='white'
-              />
-            </svg>
-            <svg
-              width='16'
-              height='18'
-              viewBox='0 0 16 18'
-              fill='none'
-              xmlns='http://www.w3.org/2000/svg'
-            >
-              <path
-                d='M13.3975 3.60795C12.4244 2.97584 11.7227 1.96403 11.5034 0.785161C11.4563 0.530514 11.43 0.268192 11.43 0H8.32507L8.32009 12.4018C8.26799 13.7907 7.12095 14.9054 5.71525 14.9054C5.27809 14.9054 4.86675 14.7966 4.50434 14.6065C3.6735 14.1708 3.10497 13.303 3.10497 12.3043C3.10497 10.8699 4.27602 9.70276 5.71479 9.70276C5.98343 9.70276 6.2412 9.74701 6.48492 9.82286V6.66371C6.23259 6.62939 5.97618 6.60817 5.71479 6.60817C2.56362 6.60817 0 9.16322 0 12.3043C0 14.2313 0.96583 15.9366 2.43994 16.9679C3.36817 17.6176 4.49754 18 5.71525 18C8.86642 18 11.43 15.445 11.43 12.3043V6.01535C12.6477 6.8863 14.14 7.39965 15.75 7.39965V4.30506C14.8829 4.30506 14.0752 4.04816 13.3975 3.60795Z'
-                fill='white'
-              />
-            </svg>
-            <svg
-              width='18'
-              height='17'
-              viewBox='0 0 18 17'
-              fill='none'
-              xmlns='http://www.w3.org/2000/svg'
-            >
-              <path
-                d='M14.2213 0H16.9803L10.9224 6.8977L18 16.2546H12.4459L8.0973 10.5685L3.11896 16.2546H0.35988L6.77774 8.87704L0 0H5.6921L9.62079 5.19427L14.2213 0ZM13.2556 14.6351H14.7851L4.88837 1.55948H3.24492L13.2556 14.6351Z'
-                fill='white'
-              />
-            </svg>
+          <HStack h={'xl'} items={'center'}>
+            {socialLinks.map((el) => getSocialButton(el))}
           </HStack>
         </VStack>
       </HStack>
@@ -501,7 +530,16 @@ function ArtistClubMembersList() {
   );
 }
 
-function ArtistBio() {
+interface ArtistBioProps extends ArtistProps {
+  bio: string;
+}
+function ArtistBio({
+  bio,
+  avatar,
+  name,
+  isVerified,
+  socialLinks,
+}: ArtistBioProps) {
   return (
     <HStack gap={4} justify={'space-between'}>
       <VStack
@@ -519,17 +557,20 @@ function ArtistBio() {
           />
         }
       >
-        <ArtistProfileCard p={'0px'} />
+        <ArtistProfileCard
+          socialLinks={socialLinks}
+          isVerified={isVerified}
+          avatar={avatar}
+          name={name}
+          p={'0px'}
+        />
         <VStack py={'16px'}>
           <Heading size={'18px'} weight={500} py='8px'>
             About
           </Heading>
           <VStack flex={1} py='8px'>
             <Text size={'16px'} weight={300} color='white600'>
-              A dynamic rock artist known for her electrifying performances
-              and soulful vocals, captivating audiences with every chord
-              and lyric. With a fiery spirit and a rebellious edge, she's
-              set to redefine the rock genre one stage at a time.
+              {bio}
             </Text>
           </VStack>
         </VStack>
