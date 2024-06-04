@@ -57,7 +57,7 @@ function ProfileSummary() {
   return (
     <RadialSurface radius={4} w='100%'>
       <VStack
-        gap={3}
+        gap={2}
         w='100%'
         h='100%'
         divider={

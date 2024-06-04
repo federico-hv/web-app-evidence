@@ -58,7 +58,7 @@ function ArtistProfilePage() {
                         _hover={{ background: '#9898FF26' }}
                         to='club'
                       >
-                        My Club
+                        My Club Page
                       </RoutingTabsTrigger>
                       <RoutingTabsTrigger
                         w='fit-content'
@@ -68,7 +68,7 @@ function ArtistProfilePage() {
                         _hover={{ background: '#9898FF26' }}
                         to='membership'
                       >
-                        My Membership
+                        My Membership Page
                       </RoutingTabsTrigger>
                       <RoutingTabsTrigger
                         w='fit-content'

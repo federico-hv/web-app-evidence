@@ -60,7 +60,15 @@ function ProfileStatistic({
     <RadialBox2 w='100%' h='fit-content' p={4} radius={3}>
       <VStack gap={3}>
         <HStack>
-          <Heading casing='capitalize' size='14px' weight={400}>
+          <Heading
+            casing='capitalize'
+            size='14px'
+            // py='6px'
+            weight={400}
+            css={{
+              lineHeight: '115%',
+            }}
+          >
             {label}
           </Heading>
         </HStack>
@@ -85,25 +93,27 @@ function DashboardContent() {
     <VStack gap={4}>
       <HStack gap={4}>
         <RadialBox2 shrink={0} w={227} p={4} radius={3}>
-          <Heading mb={4} size='14px' weight={400}>
-            Your Progress
-          </Heading>
-          <VStack gap={3}>
-            <Box>
-              <Heading size={6} weight={600}>
-                20% Complete
-              </Heading>
-            </Box>
-            <Box>
-              <Heading size='14px' weight={400}>
-                Tier 2
-              </Heading>
-            </Box>
-            <VStack gap={1}>
-              <Progress value={20} colorTheme='purple500' size='xl' />
-              <Text size={1} color='white700'>
-                100/10000 members
-              </Text>
+          <VStack>
+            <Heading mb={4} size={2} weight={400}>
+              Your Club Progress
+            </Heading>
+            <VStack gap={3}>
+              <Box>
+                <Heading size={6} weight={600}>
+                  20% Complete
+                </Heading>
+              </Box>
+              <Box>
+                <Heading size='14px' weight={400}>
+                  Level 2
+                </Heading>
+              </Box>
+              <VStack gap={1}>
+                <Progress value={20} colorTheme='purple500' size='xl' />
+                <Text size={1} color='white700'>
+                  100 / 10,000 members
+                </Text>
+              </VStack>
             </VStack>
           </VStack>
         </RadialBox2>

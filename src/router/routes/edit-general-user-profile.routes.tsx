@@ -159,11 +159,11 @@ function EditGeneralUserProfileView() {
           // )}
         />
         <TextInputField
-          name='fullname'
-          label='Full Name'
+          name='displayName'
+          label='Display Name'
           // value={state.links.instagramURL}
           // tooltip='Enter your Instagram URL for your fans to connect with you'
-          placeholder='Enter your full name'
+          placeholder='Enter your display name'
           // onChange={handleOnChange}
           // errorText={isPlatformURL(
           //   'instagramURL',
