@@ -27,6 +27,13 @@ import {
 } from '@holdr-ui/react';
 
 import { FlatList } from '../../../tmp/flat-list';
+import { useCurrentUser } from '../../../features/auth/shared';
+import {
+  IPerk,
+  useClubContext,
+  useGetClub,
+  useGetClubPerks,
+} from '../../../features/clubs/shared';
 
 interface LiveBidCandidateModel {
   name: string;
@@ -189,6 +196,24 @@ function LiveAuctionCandidates({
 }
 
 function ArtistLiveBids() {
+  const account = useCurrentUser();
+
+  const {
+    data: clubData,
+    loading,
+    error,
+  } = useGetClub({
+    accountId: account?.id,
+  });
+
+  const club = useClubContext(); // Not working gives me empty id
+
+  const {
+    loading: loadingPerks,
+    data,
+    error: errorPerks,
+  } = useGetClubPerks(clubData?.club.id as string); //club.id from context not working
+
   function addDays(_date: Date, days: number) {
     let date = new Date(_date);
     date.setDate(date.getDate() + days);
@@ -328,7 +353,7 @@ function ArtistLiveBids() {
     },
   ];
 
-  console.log(eligibleMembers);
+  const perksData = data?.clubPerks || [];
 
   return (
     <VStack gap={4}>
@@ -338,7 +363,7 @@ function ArtistLiveBids() {
             boxShadow='base'
             h='484px'
             w='396px'
-            bgImageUrl='https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcSpFArVIr6d49mC8kfyVw_s9UeySHuXZPdsiLA8Gsm0YnNkFug7'
+            bgImageUrl={clubData?.club.coverImage}
           >
             <Card.Header
               p={4}
@@ -417,36 +442,13 @@ function ArtistLiveBids() {
             </HStack>
             <VStack flex={2} pt={4}>
               <UnorderedList>
-                <List.Item>
-                  <Text size={'16px'} weight={400} color={'white600'}>
-                    Private chat room
-                  </Text>
-                </List.Item>
-                <List.Item>
-                  <Text size={'16px'} weight={400} color={'white600'}>
-                    Direct notifications
-                  </Text>
-                </List.Item>
-                <List.Item>
-                  <Text size={'16px'} weight={400} color={'white600'}>
-                    Community playlist
-                  </Text>
-                </List.Item>
-                <List.Item>
-                  <Text size={'16px'} weight={400} color={'white600'}>
-                    Exclusive Lightning Collective Hoodies
-                  </Text>
-                </List.Item>
-                <List.Item>
-                  <Text size={'16px'} weight={400} color={'white600'}>
-                    VIP Tickets to Infinite Solitude Tour
-                  </Text>
-                </List.Item>
-                <List.Item>
-                  <Text size={'16px'} weight={400} color={'white600'}>
-                    Private access to unreleased music
-                  </Text>
-                </List.Item>
+                {perksData.map((perk: IPerk) => (
+                  <List.Item>
+                    <Text size={'16px'} weight={400} color={'white600'}>
+                      {perk.label}
+                    </Text>
+                  </List.Item>
+                ))}
               </UnorderedList>
             </VStack>
           </VStack>
