@@ -23,6 +23,7 @@ export const GET_CLUB_PERKS = gql`
     clubPerks(id: $id) {
       id
       label
+      description
     }
   }
 `;

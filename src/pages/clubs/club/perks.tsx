@@ -13,21 +13,22 @@ import {
   Avatar,
 } from '@holdr-ui/react';
 import { ArtistProfileCard } from './bio';
+import {
+  IPerk,
+  useClubContext,
+  useGetClub,
+  useGetClubPerks,
+} from '../../../features/clubs/shared';
+import { useCurrentUser } from '../../../features/auth/shared';
 
-interface PerkProps {
-  title: string;
-  detail: string;
-  description: string;
-}
-
-function Perk({ title, detail, description }: PerkProps) {
+function Perk({ label, description }: IPerk) {
   return (
     <VStack py={4}>
       <HStack gap={2} h='21px' items={'center'}>
         <Heading size={'18px'} weight={500} color='white500'>
-          {title}
+          {label}
         </Heading>
-        <Text color='white700'>{detail}</Text>
+        <Text color='white700'>{''}</Text>
       </HStack>
       <Box h='12px' />
       <VStack h='32px'>
@@ -45,60 +46,84 @@ function Perk({ title, detail, description }: PerkProps) {
 }
 
 function ArtistMembershipPerks() {
-  const perksData = [
-    {
-      title: 'Private Chat',
-      detail: '',
-      description: `Access to a dedicated online fan club community, where
-      members can connect, share stories, and discuss their love
-      for the artist. Exclusive forums and chatrooms will foster
-      interaction between fans.`,
-    },
-    {
-      title: 'Direct notifications',
-      detail: '',
-      description: `Members will receive updates and personalized responses
-      providing a unique opportunity for them to connect directly
-      with their favourite artists.`,
-    },
-    {
-      title: 'FOTL (Front of the line) Access',
-      detail: '',
-      description: `Members receive a unique pass granting them VIP access to
-      all of the musician's concerts and performances, including
-      sound checks and meet-and-greet sessions.`,
-    },
-    {
-      title: 'Community Playlist',
-      detail: '',
-      description: `Members receive an invite to Boslen’s exclusive playlist
-      granting them access to all of the musician's favourite new
-      songs, and allowing them to connect and curate the playlist
-      further with other membership owners.`,
-    },
-    {
-      title: 'VIP Tickets to Infinite Solitude Tour',
-      detail: '(2 tickets per member)',
-      description: `Members will have priority access to pre-sale tickets for
-      all concerts and events, ensuring they get the best seats
-      in the house before they go on sale to the general public.`,
-    },
-    {
-      title: 'Exclusive Lightning Collective Hoodies',
-      detail: '(1 product per member)',
-      description: `Members enjoy exclusive discounts on the artist's official
-      merchandise, allowing them to show their support with
-      unique items at a more affordable price.`,
-    },
-    {
-      title: 'Private access to unreleased music and videos',
-      detail: '',
-      description: `Access to an extensive library of unreleased music, demos,
-      and rare recordings. Members can explore the artist's
-      musical journey, discovering hidden gems and unreleased
-      tracks not available anywhere else.`,
-    },
-  ];
+  const account = useCurrentUser();
+
+  const {
+    data: clubData,
+    loading,
+    error,
+  } = useGetClub({
+    accountId: account?.id,
+  });
+
+  // const club = useClubContext(); // Not working gives me empty id
+
+  const {
+    loading: loadingPerks,
+    data,
+    error: errorPerks,
+  } = useGetClubPerks(clubData?.club.id as string); //club.id from context not working
+
+  // console.log('CLUB_DATA:  ', clubData?.club);
+  // console.log('PERKS:  ', data?.clubPerks);
+  // console.log('USE THIS:  ', clubData?.club.id);
+
+  // const perksData = [
+  //   {
+  //     label: 'Private Chat',
+  //     detail: '',
+  //     description: `Access to a dedicated online fan club community, where
+  //     members can connect, share stories, and discuss their love
+  //     for the artist. Exclusive forums and chatrooms will foster
+  //     interaction between fans.`,
+  //   },
+  //   {
+  //     label: 'Direct notifications',
+  //     detail: '',
+  //     description: `Members will receive updates and personalized responses
+  //     providing a unique opportunity for them to connect directly
+  //     with their favourite artists.`,
+  //   },
+  //   {
+  //     label: 'FOTL (Front of the line) Access',
+  //     detail: '',
+  //     description: `Members receive a unique pass granting them VIP access to
+  //     all of the musician's concerts and performances, including
+  //     sound checks and meet-and-greet sessions.`,
+  //   },
+  //   {
+  //     label: 'Community Playlist',
+  //     detail: '',
+  //     description: `Members receive an invite to Boslen’s exclusive playlist
+  //     granting them access to all of the musician's favourite new
+  //     songs, and allowing them to connect and curate the playlist
+  //     further with other membership owners.`,
+  //   },
+  //   {
+  //     label: 'VIP Tickets to Infinite Solitude Tour',
+  //     detail: '(2 tickets per member)',
+  //     description: `Members will have priority access to pre-sale tickets for
+  //     all concerts and events, ensuring they get the best seats
+  //     in the house before they go on sale to the general public.`,
+  //   },
+  //   {
+  //     label: 'Exclusive Lightning Collective Hoodies',
+  //     detail: '(1 product per member)',
+  //     description: `Members enjoy exclusive discounts on the artist's official
+  //     merchandise, allowing them to show their support with
+  //     unique items at a more affordable price.`,
+  //   },
+  //   {
+  //     label: 'Private access to unreleased music and videos',
+  //     detail: '',
+  //     description: `Access to an extensive library of unreleased music, demos,
+  //     and rare recordings. Members can explore the artist's
+  //     musical journey, discovering hidden gems and unreleased
+  //     tracks not available anywhere else.`,
+  //   },
+  // ];
+
+  const perksData = data?.clubPerks || [];
 
   return (
     <VStack
@@ -148,7 +173,7 @@ function ArtistMembershipPerks() {
             borderBottomRadius: '$4',
           }}
         >
-          {perksData.map((perk) => (
+          {perksData.map((perk: IPerk) => (
             <Perk {...perk} />
           ))}
         </Card.Body>
