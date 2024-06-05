@@ -16,12 +16,55 @@ import {
   List,
   AvatarGroup,
   Tag,
+  useGeneralContext,
+  Container,
 } from '@holdr-ui/react';
 import {
   ArtistClubPageRightPanel,
   ArtistProfileCard,
   ArtistProps,
 } from './bio';
+
+import { EmptyMessage, Loader, Error } from '../../../shared';
+import {
+  FeedCard,
+  useFeedContext,
+  useUserFeeds,
+} from '../../../features/feeds';
+import { IProfile } from '../../../pages/profile/shared';
+import { FeedProvider } from '../../../pages/feed/shared/context';
+import { useParams } from 'react-router-dom';
+
+function Feeds({
+  type,
+  emptyMessage,
+}: {
+  type: 'article' | 'post';
+  emptyMessage: { title: string; subtitle: string };
+}) {
+  const { slug } = useParams();
+
+  const username = slug || '';
+  const { loading, data, error } = useUserFeeds(username, type);
+
+  console.log('SLUG: ', slug);
+
+  return (
+    <Error hasError={!!error} errorMessage={error?.message}>
+      <Loader loading={loading}>
+        {data && data.userFeeds.count > 0 ? (
+          <VStack gap={6} w='full' pb={6}>
+            {data.userFeeds.data.map((item) => (
+              <FeedCard key={item.id} data={item} />
+            ))}
+          </VStack>
+        ) : (
+          <EmptyMessage {...emptyMessage} />
+        )}
+      </Loader>
+    </Error>
+  );
+}
 
 function ArtistPost() {
   return (
@@ -158,9 +201,13 @@ function ArtistFeed({
           avatar={avatar}
           name={name}
         />
-        {[1, 2, 3].map((num) => (
-          <ArtistPost />
-        ))}
+        <Feeds
+          type='post'
+          emptyMessage={{
+            title: 'No posts',
+            subtitle: `${name} has not yet created any posts.`,
+          }}
+        />
       </VStack>
       <ArtistClubPageRightPanel />
     </HStack>
