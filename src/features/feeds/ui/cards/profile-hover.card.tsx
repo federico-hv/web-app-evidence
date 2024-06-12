@@ -21,10 +21,9 @@ import {
 } from '../../../../shared';
 import {
   CommonRelationshipButton,
-  GET_PROFILE,
-  IProfile,
   useRelationshipUsers,
 } from '../../../relationships';
+import { GET_PROFILE, IProfile } from '../../../user';
 
 // TODO: add mobile support
 //       fix popover to stay active while mouse is over it
@@ -56,7 +55,12 @@ function ProfileHoverCard() {
       <Card gap={4} w='xs' p={3} bgColor='base100'>
         <Card.Header>
           <HStack justify='space-between' items='center'>
-            <Avatar src={owner.avatar} size='lg' variant='squircle' name={owner.displayName} />
+            <Avatar
+              src={owner.avatar}
+              size='lg'
+              variant='squircle'
+              name={owner.displayName}
+            />
             {currentUser && currentUser.username !== owner.username && (
               <CommonRelationshipButton username={owner.username} />
             )}

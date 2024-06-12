@@ -1,9 +1,9 @@
 import {
+  IProfile,
   useCurrentUser,
   useRelationshipStatusInfo,
 } from '../../../features';
 import { useGeneralContext } from '../../../shared';
-import { IProfile } from './types';
 
 export function useCanViewProfile() {
   const currentUser = useCurrentUser();

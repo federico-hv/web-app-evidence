@@ -8,7 +8,12 @@ import {
   TextGroupSubheading,
   usePreviousLocation,
 } from '../../../../shared';
-import { Button, HStack, VStack } from '@holdr-ui/react';
+import {
+  Button,
+  HStack,
+  useGeneralContext,
+  VStack,
+} from '@holdr-ui/react';
 import {
   ChangeClubBannerImage,
   ChangeClubImage,
@@ -21,7 +26,7 @@ function UploadPhotoView() {
   const navigate = useNavigate();
 
   return (
-    <VStack gap={9} pl={2} h='100%'>
+    <VStack gap={9} pl={2} h='100%' overflowY='auto'>
       <VStack gap={4}>
         <TextGroup gap={0}>
           <TextGroupHeading size={4}>Profile</TextGroupHeading>
@@ -59,6 +64,10 @@ function UploadPhotoView() {
         w='fit-content'
         bgColor='#30304B'
         gap={3}
+        pl={56}
+        pr={56}
+        pb={56}
+        pt='14px'
       >
         <Button
           onClick={() =>

@@ -9,8 +9,7 @@ import { Fragment } from 'react';
 import UnfollowButton from '../unfollow';
 import FollowButton from '../follow';
 import { useSuspenseQuery } from '@apollo/client';
-import { IProfile } from '../../../../pages/profile/shared';
-import { GET_PROFILE } from '../../../../pages/profile/queries';
+import { GET_PROFILE, IProfile } from '../../../user';
 
 function CommonRelationshipButton({
   username,

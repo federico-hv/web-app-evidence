@@ -21,17 +21,16 @@ import { MembershipPerkDetails } from '../../groups';
 //TODO: Extend card to work as an auction card, membership card and secondary sale card
 // using props
 
-function MembershipCard({ data }: MembershipCardProps) {
+function MembershipCard({ data, ...props }: MembershipCardProps) {
   return (
     <Card
-      w='100%'
-      minWidth='272px'
-      maxWidth='272px'
+      w={272}
       h={376}
       boxShadow='none'
       position='relative'
       _hover={cardHoverStyle}
       css={{ border: '1px solid rgba(152, 152, 255, 0.10)' }}
+      {...props}
     >
       <CardHeader
         className='membership-card__header'

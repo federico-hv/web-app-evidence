@@ -28,7 +28,7 @@ function ArtistGenresPage() {
   const { loading: updating, updateGenres } = useUpdateArtistGenres();
 
   const goToRecommended = () =>
-    navigate(makePath([Paths.setupArtistAccount, 'recommended']), {
+    navigate(makePath([Paths.setupAccount, 'artist', 'recommended']), {
       state: {
         previousLocation: previousLocation,
       },

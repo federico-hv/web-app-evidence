@@ -23,6 +23,7 @@ import { extraBtnPadding } from '../../styles';
 import { IconName } from '@holdr-ui/react/dist/shared/types';
 import { useActOnScroll } from '../../hooks';
 import { theme } from '@holdr-ui/react';
+import dayjs from 'dayjs';
 
 function Menu({
   children,
@@ -64,13 +65,15 @@ function Menu({
                 side='bottom'
                 align={align}
                 sideOffset={offset}
+                radius={2}
                 boxShadow='rgba(99, 99, 99, 0.2) 0px 2px 8px 0px'
+                border={1}
+                p={2}
+                borderColor='rgba(152, 152, 255, 0.10)'
+                // bgColor='rgba(56, 56, 140, 0.25)'
+                bgColor='rgba(20, 19, 23, 0.65)'
                 css={{
-                  borderRadius: '$4',
-                  border: '1px solid rgba(152, 152, 255, 0.10)',
-                  background: ' rgba(56, 56, 140, 0.25)',
                   backdropFilter: 'blur(50px)',
-                  boxShadow: '0px 0px 100px 0px rgba(14, 14, 27, 0.35)',
                 }}
               >
                 {Content}
@@ -133,7 +136,7 @@ function MenuTrigger({ children }: GenericProps) {
           size={{ '@bp1': 'sm', '@bp3': 'base' }}
           variant='ghost'
           icon='more-fill'
-          color='white50'
+          colorTheme='white500'
           ariaLabel='view options'
         />
       )}
@@ -183,15 +186,15 @@ function MenuItem({
       justify='space-between'
       role='button'
       items='center'
-      radius={2}
+      radius={1}
       cursor='pointer'
-      p={4}
-      color='white500'
+      py={3}
+      px={5}
+      color={dangerous ? 'danger300' : 'white500'}
       _hover={{
         backgroundColor: dangerous
-          ? 'rgba(255,205,205,0.38)'
-          : hexToRGB('#0E0E1B', 0.5),
-        color: dangerous ? '$danger400' : '$white50',
+          ? '#b750502e'
+          : 'rgba(152, 152, 255, 0.15)',
       }}
       onClick={action}
       css={{

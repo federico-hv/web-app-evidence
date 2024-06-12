@@ -14,40 +14,35 @@ function BookmarkGroupItem({ data }: { data: IBookmarkGroup }) {
 
   return (
     <Box
-      p={4}
+      py={2}
+      px={3}
       position='relative'
-      borderLeft={params.id === data.id || params['*'] === data.id ? 2 : 0}
-      borderColor={
-        params.id === data.id || params['*'] === data.id
-          ? 'base800'
-          : 'base100'
-      }
       bgColor={
         params.id === data.id || params['*'] === data.id
-          ? 'base100'
+          ? 'rgba(152, 152, 255, 0.15)'
           : 'initial'
       }
       _hover={{
-        backgroundColor: '$base100',
+        backgroundColor: 'rgba(152, 152, 255, 0.15)',
       }}
     >
       <LinkOverlay to={`/${Paths.bookmarks}/${data.id}`} />
       <HStack items='flex-start'>
-        <TextGroup>
+        <TextGroup gap={0}>
           <TextGroupHeading as='h2' size={{ '@bp1': 2, '@bp3': 3 }}>
             {data.name}
           </TextGroupHeading>
-          <TextGroupSubheading
-            size={{ '@bp1': 1, '@bp3': 2 }}
-            color='base400'
-          >
+          <TextGroupSubheading size={{ '@bp1': 1 }} color='white700'>
             {data.total} item{data.total > 1 ? 's' : ''}
           </TextGroupSubheading>
         </TextGroup>
-        <Icon
-          name={data.private ? 'lock-fill' : 'global-outline'}
-          color='base400'
-        />
+        <Box mt={1}>
+          <Icon
+            size='xs'
+            name={data.private ? 'lock-fill' : 'global-outline'}
+            color='white700'
+          />
+        </Box>
       </HStack>
     </Box>
   );

@@ -12,18 +12,27 @@ import {
   StackDivider,
   StringNumeric,
   Text,
+  useGeneralContext,
   VStack,
 } from '@holdr-ui/react';
 import {
   GQLRenderer,
+  ISocialLink,
+  ITinyArtist,
   LinkOverlay,
   makePath,
+  Menu,
+  MenuContent,
+  MenuItem,
+  MenuTrigger,
+  Paths,
   RadialSurface,
   RoutingTabs,
   RoutingTabsContent,
   RoutingTabsHeader,
   RoutingTabsList,
   RoutingTabsTrigger,
+  SocialProvider,
   TextGroup,
   TextGroupSubheading,
   usePreviousLocation,
@@ -36,7 +45,13 @@ import {
   useNavigate,
   useParams,
 } from 'react-router-dom';
-import { MembershipCard, useCurrentUser } from '../../features';
+import {
+  IExternalId,
+  IProfile,
+  MembershipCard,
+  MusicReleaseProvider,
+  useCurrentUser,
+} from '../../features';
 import dayjs from 'dayjs';
 import LocalizedFormat from 'dayjs/plugin/localizedFormat';
 import membershipCover from '../../assets/dummy/membership-1.jpg';
@@ -49,14 +64,9 @@ import {
   ResponsiveValue,
 } from '@holdr-ui/react/dist/shared/types';
 import { Fragment } from 'react';
-
-const favouriteMusicians = [
-  'Silas Stone',
-  'Sunny Raye',
-  'Big Grit',
-  'Maverick Taylor',
-  'Dylan St Dennis',
-];
+import { orderBy } from 'lodash';
+import millify from 'millify';
+import { FlatList } from '../../tmp/flat-list';
 
 function SpotifyEmbeddedPlayer({ id }: { id: string }) {
   return (
@@ -72,63 +82,160 @@ function SpotifyEmbeddedPlayer({ id }: { id: string }) {
   );
 }
 
-export function GeneralUserBioContent() {
+function EmbeddedPlayer({
+  ids,
+  provider,
+}: {
+  ids: IExternalId<number, MusicReleaseProvider>[];
+  provider: MusicReleaseProvider;
+}) {
+  const item = ids.find((item) => item.provider === provider);
+
   return (
-    <VStack
-      radius={2}
-      p={4}
-      mt={6}
-      gap={8}
-      divider={
-        <StackDivider width={1} color='rgba(152, 152, 255, 0.05)' />
-      }
-      bgColor='rgba(48, 48, 75, 0.60)'
-    >
-      <TextGroup gap={3}>
-        <TextGroupSubheading weight={500} size={4}>
-          About
-        </TextGroupSubheading>
-        <TextGroupSubheading
-          casing='capitalize'
-          weight={300}
-          color='white600'
-        >
-          {
-            "A dynamic rock artist known for her electrifying performances and soulful vocals, captivating audiences with every chord and lyric. With a fiery spirit and a rebellious edge, she's set to redefine the rock genre one stage at a time."
-          }
-        </TextGroupSubheading>
-      </TextGroup>
-      <TextGroup gap={3}>
-        <TextGroupSubheading casing='capitalize' weight={500} size={4}>
-          Based In
-        </TextGroupSubheading>
-        <TextGroupSubheading weight={300} color='white600'>
-          {'Fairfax, Virginia, United States'}
-        </TextGroupSubheading>
-      </TextGroup>
-      <VStack gap={3}>
-        <Text casing='capitalize' weight={500} size={4}>
-          Favourite Song
-        </Text>
+    <Fragment>
+      {provider === 'Spotify' && item && (
         <Box w={288}>
-          <SpotifyEmbeddedPlayer id='7BRD7x5pt8Lqa1eGYC4dzj' />
+          <SpotifyEmbeddedPlayer id={item.externalId} />
         </Box>
-      </VStack>
-      <VStack gap={3}>
-        <Text casing='capitalize' weight={500} size={4}>
-          Favourite Musicians
-        </Text>
-        <HStack
-          items='center'
-          divider={<Circle mx={4} bgColor='black300' size='5px' />}
-        >
-          {favouriteMusicians.map((name) => (
-            <Text key={name} weight={300} color='white600'>
-              {name}
+      )}
+    </Fragment>
+  );
+}
+
+function FavoriteArtist({
+  name,
+  id,
+  externalIds,
+}: {
+  name: string;
+  id?: string;
+  externalIds: Array<
+    IExternalId<number, MusicReleaseProvider> & { externalUrl: string }
+  >;
+}) {
+  const spotifyItem = externalIds.find(
+    (item) => item.provider === 'Spotify',
+  );
+
+  return (
+    <Box
+      position='relative'
+      h='fit-content'
+      w='fit-content'
+      _hover={{
+        '& > *': {
+          textDecoration: 'underline',
+        },
+      }}
+    >
+      {(id || spotifyItem) && (
+        <LinkOverlay
+          target={id ? '_self' : '_blank'}
+          to={
+            id
+              ? makePath([Paths.clubs, 'username'])
+              : spotifyItem?.externalUrl
+          }
+        />
+      )}
+      <Text>{name}</Text>
+    </Box>
+  );
+}
+
+export function GeneralUserBioContent() {
+  const { state: profile } = useGeneralContext<IProfile>();
+
+  const { pathname } = useLocation();
+  const previousLocation = usePreviousLocation(pathname);
+
+  return (
+    <VStack radius={2} p={4} mt={6} bgColor='rgba(48, 48, 75, 0.60)'>
+      {profile.bio && (
+        <Fragment>
+          <TextGroup gap={3}>
+            <TextGroupSubheading weight={500} size={4}>
+              About
+            </TextGroupSubheading>
+            <TextGroupSubheading
+              casing='capitalize'
+              weight={300}
+              color='white600'
+            >
+              {profile.bio}
+            </TextGroupSubheading>
+          </TextGroup>
+          <Box
+            my={4}
+            borderBottom={1}
+            borderColor='rgba(152, 152, 255, 0.05)'
+          />
+        </Fragment>
+      )}
+      {profile.location && (
+        <Fragment>
+          <TextGroup gap={3}>
+            <TextGroupSubheading casing='capitalize' weight={500} size={4}>
+              Based In
+            </TextGroupSubheading>
+            <TextGroupSubheading weight={300} color='white600'>
+              {profile.location}
+            </TextGroupSubheading>
+          </TextGroup>
+          <Box
+            my={4}
+            borderBottom={1}
+            borderColor='rgba(152, 152, 255, 0.05)'
+          />
+        </Fragment>
+      )}
+      {profile.favoriteSong && (
+        <Fragment>
+          <VStack gap={3}>
+            <Text casing='capitalize' weight={500} size={4}>
+              Favorite Song
             </Text>
-          ))}
-        </HStack>
-      </VStack>
+            <EmbeddedPlayer
+              provider='Spotify'
+              ids={profile.favoriteSong.externalIds}
+            />
+          </VStack>
+          <Box
+            my={4}
+            borderBottom={1}
+            borderColor='rgba(152, 152, 255, 0.05)'
+          />
+        </Fragment>
+      )}
+
+      {profile.favoriteArtists && profile.favoriteArtists.length > 0 && (
+        <Fragment>
+          <VStack gap={3}>
+            <Text casing='capitalize' weight={500} size={4}>
+              Favorite Musicians
+            </Text>
+            <FlatList
+              items='center'
+              divider={<Circle mx={4} bgColor='black300' size='5px' />}
+              data={profile.favoriteArtists}
+              keyExtractor={(item) => item.externalIds[0].externalId}
+              renderItem={({ artistId, name, externalIds }) => (
+                <FavoriteArtist
+                  id={artistId}
+                  name={name}
+                  externalIds={externalIds}
+                />
+              )}
+            />
+          </VStack>
+          <Box
+            my={4}
+            borderBottom={1}
+            borderColor='rgba(152, 152, 255, 0.05)'
+          />
+        </Fragment>
+      )}
+
       <VStack gap={5}>
         <HStack justify='space-between'>
           <TextGroup w='fit-content'>
@@ -144,9 +251,12 @@ export function GeneralUserBioContent() {
               7 memberships
             </Text>
           </TextGroup>
-          <Link to=''>
+          <Link
+            to={`/${profile.username}/memberships`}
+            state={{ previousLocation }}
+          >
             <Text size={4} weight={300} color='purple200'>
-              View All
+              View all
             </Text>
           </Link>
         </HStack>
@@ -160,6 +270,7 @@ export function GeneralUserBioContent() {
                 displayName: 'Thomas Selas',
                 id: 'id',
                 avatar: '',
+                role: 'artist',
               },
             }}
           />
@@ -179,9 +290,11 @@ function FollowCountItem({
   label: string;
 }) {
   return (
-    <Box cursor='pointer' onClick={onClick}>
+    <Box onClick={onClick}>
       <TextGroup direction='horizontal' fontSize={4} gap={1}>
-        <TextGroupSubheading weight={500}>{count}</TextGroupSubheading>
+        <TextGroupSubheading weight={500}>
+          {millify(count, { precision: 2 })}
+        </TextGroupSubheading>
         <TextGroupSubheading weight={300} color='white700'>
           {label}
         </TextGroupSubheading>
@@ -209,12 +322,36 @@ function IconLink({
   );
 }
 
+function BioSocialLinks({ links }: { links: ISocialLink[] }) {
+  const toIcon: Record<SocialProvider, IconName> = {
+    Instagram: 'instagram',
+    X: 'x-twitter',
+    TikTok: 'tiktok',
+  };
+
+  console.log(links);
+
+  return (
+    <HStack gap={4}>
+      {orderBy(links, ['provider'], 'asc').map((link) => (
+        <IconLink
+          key={link.provider}
+          to={link.url}
+          iconName={toIcon[link.provider]}
+        />
+      ))}
+    </HStack>
+  );
+}
+
 function GeneralUserProfileHeader() {
   const currentUser = useCurrentUser();
   const navigate = useNavigate();
-  const { pathname } = useLocation();
   const { username } = useParams();
+  const { pathname } = useLocation();
   const previousLocation = usePreviousLocation(pathname);
+
+  const { state: profile } = useGeneralContext<IProfile>();
 
   if (!username) {
     return <Fragment />;
@@ -222,7 +359,13 @@ function GeneralUserProfileHeader() {
 
   return (
     <HStack items='center' gap={3} mb={5}>
-      <Avatar fallbackTextSize={8} size={124} name='Elena Gilbert'>
+      <Avatar
+        key={profile.displayName}
+        fallbackTextSize={10}
+        size={124}
+        src={profile.avatar}
+        name={profile.displayName}
+      >
         <AvatarBadge
           zIndex={1}
           size={18}
@@ -237,29 +380,35 @@ function GeneralUserProfileHeader() {
         <HStack flex={1} justify='space-between'>
           <VStack gap={1}>
             <VStack>
-              <Text size={6}>Elena Gilbert</Text>
+              <Text size={6}>{profile.displayName}</Text>
             </VStack>
             <HStack gap={3}>
               <FollowCountItem
-                onClick={() =>
-                  navigate(makePath([username, 'followers']), {
-                    state: {
-                      previousLocation: pathname,
-                    },
-                  })
+                onClick={
+                  profile.protected
+                    ? undefined
+                    : () =>
+                        navigate(makePath([username, 'followers']), {
+                          state: {
+                            previousLocation: pathname,
+                          },
+                        })
                 }
-                count={129}
+                count={profile.followers}
                 label='Followers'
               />
               <FollowCountItem
-                onClick={() =>
-                  navigate(makePath([username, 'following']), {
-                    state: {
-                      previousLocation: pathname,
-                    },
-                  })
+                onClick={
+                  profile.protected
+                    ? undefined
+                    : () =>
+                        navigate(makePath([username, 'following']), {
+                          state: {
+                            previousLocation: pathname,
+                          },
+                        })
                 }
-                count={701}
+                count={profile.following}
                 label='Following'
               />
             </HStack>
@@ -286,11 +435,9 @@ function GeneralUserProfileHeader() {
             )}
           </HStack>
         </HStack>
-        <HStack gap={4}>
-          <IconLink to='https://instagram.com' iconName='instagram' />
-          <IconLink to='https://x.com' iconName='x-twitter' />
-          <IconLink to='https://tiktok.com' iconName='tiktok' />
-        </HStack>
+        {profile.socialLinks.length > 0 && (
+          <BioSocialLinks links={profile.socialLinks} />
+        )}
       </VStack>
     </HStack>
   );
@@ -318,7 +465,7 @@ function GeneralUserBidHistoryItem() {
         <Text weight={300}>${price.toFixed(2)}</Text>
       </Box>
       <Box basis='180px'>
-        <Text weight={300}>{dayjs(createdAt).format('L')}</Text>
+        <Text weight={300}>{dayjs(createdAt).format('ll')}</Text>
       </Box>
       <Box basis='108px'>
         <Text weight={300}>Pending</Text>
@@ -399,12 +546,20 @@ function GeneralUserWatchlistItem() {
         </Box>
       </Box>
       <Box basis='40px'>
-        <IconButton
-          colorTheme='purple600'
-          icon='more-fill'
-          ariaLabel='options'
-          variant='ghost'
-        />
+        <Menu minWidth={150}>
+          <MenuTrigger>
+            <IconButton
+              colorTheme='purple600'
+              icon='more-fill'
+              ariaLabel='options'
+              variant='ghost'
+            />
+          </MenuTrigger>
+          <MenuContent>
+            <MenuItem dangerous>Remove from Watchlist</MenuItem>
+            <MenuItem>View Artist Club</MenuItem>
+          </MenuContent>
+        </Menu>
       </Box>
     </HStack>
   );
@@ -449,57 +604,49 @@ function ProfilePage() {
       <ProfileProvider>
         <ContentLayout>
           <ContentLayoutMain>
-            <Box h='full'>
-              <RadialSurface
-                w='100%'
-                h='full'
-                p={4}
-                radius={4}
-                minHeight='calc(100vh - 96px)'
-              >
-                <GeneralUserProfileHeader />
-                <RoutingTabs flex={1}>
-                  <RoutingTabsHeader
-                    borderBottom={1}
-                    borderColor='rgba(152, 152, 255, 0.10)'
-                  >
-                    <RoutingTabsList gap={1}>
-                      <RoutingTabsTrigger
-                        to='bio'
-                        w='fit-content'
-                        py={2}
-                        px={6}
-                        fontSize={2}
-                        _hover={{ background: '#9898FF26' }}
-                      >
-                        Bio
-                      </RoutingTabsTrigger>
-                      <RoutingTabsTrigger
-                        to='bid-history'
-                        w='fit-content'
-                        py={2}
-                        px={6}
-                        fontSize={2}
-                        _hover={{ background: '#9898FF26' }}
-                      >
-                        Bid History
-                      </RoutingTabsTrigger>
-                      <RoutingTabsTrigger
-                        to='watchlist'
-                        w='fit-content'
-                        py={2}
-                        px={6}
-                        fontSize={2}
-                        _hover={{ background: '#9898FF26' }}
-                      >
-                        Watchlist
-                      </RoutingTabsTrigger>
-                    </RoutingTabsList>
-                  </RoutingTabsHeader>
-                  <RoutingTabsContent h='full' />
-                </RoutingTabs>
-              </RadialSurface>
-            </Box>
+            <RadialSurface w='100%' p={4} radius={4}>
+              <GeneralUserProfileHeader />
+              <RoutingTabs flex={1}>
+                <RoutingTabsHeader
+                  borderBottom={1}
+                  borderColor='rgba(152, 152, 255, 0.10)'
+                >
+                  <RoutingTabsList gap={1}>
+                    <RoutingTabsTrigger
+                      to='bio'
+                      w='fit-content'
+                      py={2}
+                      px={6}
+                      fontSize={2}
+                      _hover={{ background: '#9898FF26' }}
+                    >
+                      Bio
+                    </RoutingTabsTrigger>
+                    <RoutingTabsTrigger
+                      to='bid-history'
+                      w='fit-content'
+                      py={2}
+                      px={6}
+                      fontSize={2}
+                      _hover={{ background: '#9898FF26' }}
+                    >
+                      Bid History
+                    </RoutingTabsTrigger>
+                    <RoutingTabsTrigger
+                      to='watchlist'
+                      w='fit-content'
+                      py={2}
+                      px={6}
+                      fontSize={2}
+                      _hover={{ background: '#9898FF26' }}
+                    >
+                      Watchlist
+                    </RoutingTabsTrigger>
+                  </RoutingTabsList>
+                </RoutingTabsHeader>
+                <RoutingTabsContent h='full' />
+              </RoutingTabs>
+            </RadialSurface>
           </ContentLayoutMain>
         </ContentLayout>
       </ProfileProvider>

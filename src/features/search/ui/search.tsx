@@ -34,7 +34,9 @@ function Search() {
   const keyExtractor = ({ item }: Item) => item.id;
 
   const onClickHistoryItem = ({ item }: Item) => {
-    navigate(prefix('/', item.username));
+    navigate(
+      prefix(item.role === 'artist' ? '/clubs/' : '/', item.username),
+    );
   };
 
   const onClickResultItem = (
@@ -47,11 +49,11 @@ function Search() {
 
     if (ref && ref.current) ref.current.focus();
 
-    console.log(item);
-
     // might make this
     save(item.id, 'account').then(() =>
-      navigate(prefix('/', item.username)),
+      navigate(
+        prefix(item.role === 'artist' ? '/clubs/' : '/', item.username),
+      ),
     );
   };
 

@@ -4,6 +4,7 @@ import NotFoundError from '../not-found-error';
 import { Paths, prefix } from '../../index';
 import { useCurrentUser } from '../../../features';
 import { Fragment } from 'react';
+import { has } from 'lodash';
 
 function AuthGuard({
   roles = ['general', 'artist'],

@@ -4,8 +4,8 @@ import {
   removeRelationshipActions,
   requestRelationshipActions,
 } from '../constants';
-import { IProfile } from '../interfaces';
 import { IFetchUsersResponse } from '../../../../shared';
+import { IProfile } from '../../../user';
 
 export type RelationshipStatusCode =
   (typeof relationshipStatusCode)[number];

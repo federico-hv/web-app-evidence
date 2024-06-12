@@ -10,8 +10,8 @@ function UserNamesGroup({ displayName, username }: UserNamesGroupProps) {
         {displayName}
       </TextGroupSubheading>
       <TextGroup.Subheading
-        size={{ '@bp1': 1, '@bp3': 2 }}
-        weight={500}
+        size={{ '@bp1': 1, '@bp3': 1 }}
+        weight={400}
         color='base400'
       >
         @{username}

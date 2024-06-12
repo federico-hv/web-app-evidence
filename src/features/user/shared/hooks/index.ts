@@ -3,3 +3,8 @@ export * from './use-add-external-account';
 export * from './use-remove-external-account';
 export * from './use-external-account';
 export * from './use-user-genres';
+export * from './use-update-profile-and-links';
+export * from './use-save-favorite-song';
+export * from './use-remove-favorite-song';
+export * from './use-save-favorite-artist';
+export * from './use-remove-favorite-artist';

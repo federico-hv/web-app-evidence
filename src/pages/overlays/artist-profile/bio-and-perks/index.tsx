@@ -121,6 +121,10 @@ function BioAndPerksView() {
         w='fit-content'
         bgColor='#30304B'
         gap={3}
+        pl={56}
+        pr={56}
+        pb={56}
+        pt='14px'
       >
         <Button
           onClick={() =>

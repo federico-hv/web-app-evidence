@@ -1,13 +1,22 @@
-import { Heading, useDisclosure } from '@holdr-ui/react';
-import { useNavigate, useParams } from 'react-router-dom';
+import {
+  Box,
+  Heading,
+  HStack,
+  IconButton,
+  StackDivider,
+  useDisclosure,
+} from '@holdr-ui/react';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import {
   DialogContextProvider,
   Head,
+  makePath,
   Menu,
   MenuHeader,
   MenuTrigger,
   Paths,
   useAlertDialog,
+  usePreviousLocation,
 } from '../../../shared';
 import { useSuspenseQuery } from '@apollo/client';
 import {
@@ -24,8 +33,7 @@ import { Formik } from 'formik';
 import { UpdateBookmarkGroupValues } from '../constants';
 
 function Header() {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-
+  const { pathname } = useLocation();
   const navigate = useNavigate();
 
   const { openWith } = useAlertDialog();
@@ -42,15 +50,32 @@ function Header() {
   });
 
   const { removeBookmarkGroup } = useRemoveBookmarkGroup();
-  const { renameBookmarkGroup } = useRenameBookmarkGroup();
 
   return (
     <Fragment>
       <Head prefix={`Bookmarks -`} title={data.bookmarkGroup.name} />
-      <Fragment>
-        {data.bookmarkGroup.name}
-        <Menu>
-          <MenuTrigger />
+      <HStack
+        items='center'
+        justify='space-between'
+        p={3}
+        border={1}
+        borderColor='rgba(152, 152, 255, 0.10)'
+      >
+        <Box>
+          <Heading color='white600' size={4} weight={500}>
+            {data.bookmarkGroup.name}
+          </Heading>
+        </Box>
+        <Menu minWidth={270}>
+          <MenuTrigger>
+            <IconButton
+              size='sm'
+              variant='ghost'
+              icon='more-fill'
+              colorTheme='white500'
+              ariaLabel='view options'
+            />
+          </MenuTrigger>
           <MenuHeader items='center' justify='center'>
             <Heading size={3} weight={500}>
               {data.bookmarkGroup.name}
@@ -58,9 +83,23 @@ function Header() {
           </MenuHeader>
           <Menu.Content>
             <Menu.Item
-              label='Rename bookmark'
+              label='Rename bookmark group'
               icon='edit-box-outline'
-              action={onOpen}
+              action={() =>
+                navigate(
+                  makePath([
+                    Paths.bookmarks,
+                    'rename',
+                    data.bookmarkGroup.id,
+                  ]),
+                  {
+                    state: {
+                      name: data.bookmarkGroup.name,
+                      previousLocation: pathname,
+                    },
+                  },
+                )
+              }
             />
             <Menu.Item
               icon='close'
@@ -87,27 +126,7 @@ function Header() {
             />
           </Menu.Content>
         </Menu>
-
-        <DialogContextProvider value={{ isOpen, onOpen, onClose }}>
-          <Formik<IUpdateBookmarkGroup>
-            initialValues={UpdateBookmarkGroupValues}
-            validationSchema={UpdateBookmarkSchema}
-            onSubmit={async (values, { resetForm }) => {
-              const success = await renameBookmarkGroup(
-                data.bookmarkGroup.id,
-                values.name,
-              );
-
-              if (success) {
-                onClose();
-                resetForm();
-              }
-            }}
-          >
-            <RenameBookmarkGroupDialog />
-          </Formik>
-        </DialogContextProvider>
-      </Fragment>
+      </HStack>
     </Fragment>
   );
 }

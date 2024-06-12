@@ -420,11 +420,9 @@ function WatchlistContent() {
 
 const ArtistProfileRoutes = () => (
   <Routes>
-    <Route path='' element={<ArtistProfilePage />}>
+    <Route element={<ArtistProfilePage />}>
       <Route path='' element={<Navigate to='dashboard' />} />
       <Route path='dashboard' element={<DashboardContent />} />
-      <Route path='club' element={<div>Club</div>} />
-      <Route path='membership' element={<div>Membership</div>} />
       <Route path='members' element={<ClubMembersContent />} />
       <Route path='watchlist' element={<WatchlistContent />} />
     </Route>

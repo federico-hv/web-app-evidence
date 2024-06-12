@@ -3,3 +3,7 @@ export const KeyboardKey = {
   LeftArrow: 37,
   RightArrow: 39,
 };
+
+export const SocialProviderArr = ['Instagram', 'X', 'TikTok'];
+
+export const socialProvider = ['Instagram', 'X', 'TikTok'] as const;

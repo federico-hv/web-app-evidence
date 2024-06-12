@@ -9,6 +9,7 @@ export const SEARCH = gql`
         displayName
         id
         avatar
+        role
       }
     }
   }

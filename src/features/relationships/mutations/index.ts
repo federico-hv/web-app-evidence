@@ -49,18 +49,3 @@ export const REMOVE_FOLLOWER = gql`
     removeFollower(username: $username)
   }
 `;
-
-// TODO: Move to user
-export const UPDATE_PROFILE = gql`
-  mutation updateProfile($payload: UpdateProfileInput!) {
-    updateProfile(payload: $payload) {
-      avatar
-      bio
-      protected
-      coverImage
-      displayName
-      username
-      role
-    }
-  }
-`;

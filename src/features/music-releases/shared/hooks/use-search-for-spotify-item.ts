@@ -1,31 +1,45 @@
 import { debounce, DebouncedFunc } from 'lodash';
-import {
-  ApolloError,
-  DocumentNode,
-  TypedDocumentNode,
-  useLazyQuery,
-} from '@apollo/client';
+import { ApolloError, useLazyQuery } from '@apollo/client';
 import { useCallback, useState } from 'react';
+import {
+  SEARCH_FOR_SPOTIFY_ARTIST,
+  SEARCH_FOR_SPOTIFY_TRACK,
+} from '../../queries';
+import { ISpotifyArtistResponse, ISpotifyTrackResponse } from '../types';
+import { IOffsetPage } from '../../../../shared';
 
-export function useSearchForSpotifyItem<T>(
-  QueryDocument: DocumentNode | TypedDocumentNode,
-): [
+/**
+ * Search for a spotify artist or track - returns top 5 search results.
+ *
+ * @param type the type of search query: 'track' or 'artist'
+ */
+export function useSearchForSpotifyItem<T>(type: 'track' | 'artist'): [
   DebouncedFunc<(newValue: string) => Promise<void>>,
   {
-    data: T | undefined;
+    result:
+      | IOffsetPage<ISpotifyTrackResponse | ISpotifyArtistResponse>
+      | undefined;
     loading: boolean;
     error: ApolloError | undefined;
   },
 ] {
-  const [data, setData] = useState<T>();
+  const QueryDocument = {
+    track: SEARCH_FOR_SPOTIFY_TRACK,
+    artist: SEARCH_FOR_SPOTIFY_ARTIST,
+  };
+  const [result, setResult] =
+    useState<
+      IOffsetPage<ISpotifyTrackResponse | ISpotifyArtistResponse>
+    >();
   const [query, { loading, error }] = useLazyQuery<
-    T,
+    | { spotifyTrack: any; spotifyArtist?: never }
+    | { spotifyArtist: any; spotifyTrack?: never },
     {
       queryString: string;
       limit?: number;
       offset?: number;
     }
-  >(QueryDocument);
+  >(QueryDocument[type]);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const search = useCallback(
@@ -34,10 +48,11 @@ export function useSearchForSpotifyItem<T>(
         variables: { queryString: newValue, limit: 5, offset: 0 },
       });
 
-      if (data) setData(data);
+      if (data && type === 'track') setResult(data.spotifyTrack);
+      else if (data && type === 'artist') setResult(data.spotifyArtist);
     }, 500),
     [],
   );
 
-  return [search, { data, error, loading }];
+  return [search, { result, error, loading }];
 }

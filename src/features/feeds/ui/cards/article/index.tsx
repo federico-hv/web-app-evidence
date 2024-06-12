@@ -47,15 +47,13 @@ function ArticleCard({ data }: { data: ArticleModel }) {
           position='relative'
           css={{ zIndex: 5 }}
         >
-          <Link to={prefix('/', owner.username)}>
-            <VStack>
-              <Avatar
-                size={{ '@bp1': 'base', '@bp3': 'xl' }}
-                variant='squircle'
-                src={owner.avatar}
-                name={owner.displayName}
-              />
-            </VStack>
+          <Link to={prefix('/clubs/', owner.username)}>
+            <Avatar
+              size={55}
+              variant='squircle'
+              src={owner.avatar}
+              name={owner.displayName}
+            />
           </Link>
 
           {currentUser && currentUser.id === owner.id ? (

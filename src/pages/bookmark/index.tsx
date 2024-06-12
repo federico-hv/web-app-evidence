@@ -1,47 +1,33 @@
-import { Content, Header, Wrapper } from './ui';
+import { Content, Header } from './ui';
 import { Fragment } from 'react';
-import {
-  ErrorFallback,
-  GQLRenderer,
-  Head,
-  Loader,
-  Paths,
-  prefix,
-} from '../../shared';
+import { GQLRenderer, Head } from '../../shared';
 import { useParams } from 'react-router-dom';
-import {
-  PageLayout,
-  PageLayoutContent,
-  PageLayoutHeader,
-} from '../../layout';
+import { Box, Heading } from '@holdr-ui/react';
 
 function BookmarkPage() {
   const params = useParams();
   return (
-    <Wrapper>
-      <GQLRenderer
-        ErrorFallback={ErrorFallback}
-        LoadingFallback={<Loader loading={true} />}
-      >
-        <PageLayout>
-          <PageLayoutHeader fallbackPath={prefix('/', Paths.bookmarks)}>
-            {params.id ? (
-              <Header />
-            ) : (
-              <Fragment>
-                <Head prefix='Bookmarks -' title='All Bookmarks' />
-                All Bookmarks
-              </Fragment>
-            )}
-          </PageLayoutHeader>
-          <PageLayoutContent>
-            <Content />
-          </PageLayoutContent>
-        </PageLayout>
-      </GQLRenderer>
-    </Wrapper>
+    <GQLRenderer>
+      {params.id ? (
+        <Header />
+      ) : (
+        <Fragment>
+          <Head prefix='Bookmarks -' title='All Bookmarks' />
+          <Box
+            borderBottom={1}
+            borderColor='rgba(152, 152, 255, 0.10)'
+            p={3}
+          >
+            <Heading color='white600' size={4} weight={500}>
+              All Bookmarks
+            </Heading>
+          </Box>
+        </Fragment>
+      )}
+      <Content />
+    </GQLRenderer>
   );
 }
-BookmarkPage.dipsplayName = 'Bookmark Page';
+BookmarkPage.displayName = 'BookmarkPage';
 
 export default BookmarkPage;

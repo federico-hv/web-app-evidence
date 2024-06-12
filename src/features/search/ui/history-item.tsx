@@ -22,8 +22,8 @@ function HistoryItem({
     <HStack
       position='relative'
       justify='space-between'
-      bgColor={isSelected ? 'clearTint300' : 'transparent'}
-      _hover={{ backgroundColor: '$clearTint300' }}
+      bgColor={isSelected ? 'rgba(152, 152, 255, 0.15)' : 'transparent'}
+      _hover={{ backgroundColor: 'rgba(152, 152, 255, 0.15)' }}
       gap={3}
       radius={2}
       items='center'

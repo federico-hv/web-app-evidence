@@ -63,6 +63,7 @@ export {
   MediaViewTrigger,
   MediaViewContent,
 } from './media-view';
+export { default as QueryGuard } from './query-guard';
 export { default as SearchBox } from './search-box';
 export { default as TabBorderFix } from './tab-border-fix';
 export { default as InfoItem } from './info-item';

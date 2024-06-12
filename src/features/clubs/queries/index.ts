@@ -7,9 +7,9 @@ export const GET_CLUB = gql`
       bannerImage
       coverImage
       url
+      # perks
       artist {
         id
-        bio
         name
         avatar
         isVerified

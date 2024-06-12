@@ -1,3 +1,5 @@
+import { ISocialLink, ITinyArtist } from '../../../shared';
+
 export interface ProfileFormData {
   displayName: string;
   bio?: string;
@@ -5,19 +7,52 @@ export interface ProfileFormData {
   coverImage?: File;
 }
 
-export interface UpdateProfilePayload {
-  payload: ProfileFormData;
+export interface IExternalId<T = string, U = string> {
+  id: T;
+  provider: U;
+  externalId: string;
+  externalUrl?: string;
 }
 
-interface Statistic {
-  value: number;
-  changePercentage: number;
+export type MusicReleaseProvider = 'Spotify';
+
+export interface IMusicRelease {
+  id: number;
+  name: string;
+  artists: string;
+  coverImage: string;
+  externalIds: IExternalId<number, MusicReleaseProvider>[];
 }
 
-export interface AnalyticsSummaryData {
-  clubViews: Statistic;
-  totalResales: Statistic;
-  averageBidders: Statistic;
-  socialInteractions: Statistic;
-  peakEngagementTime: Date;
+export type ISaveMusicRelease = {
+  name: string;
+  artists: string;
+  coverImage: string;
+  externalIds: Array<
+    Omit<IExternalId<number, MusicReleaseProvider>, 'id'>
+  >;
+};
+
+export type ISaveFavoriteArtist = {
+  name: string;
+  image: string;
+  externalIds: Array<
+    Omit<IExternalId<number, MusicReleaseProvider>, 'id'> & {
+      externalUrl: string;
+    }
+  >;
+};
+
+export interface IProfile {
+  username: string;
+  displayName: string;
+  avatar?: string;
+  bio?: string;
+  protected: boolean;
+  location?: string;
+  following: number;
+  followers: number;
+  favoriteSong: IMusicRelease | null;
+  favoriteArtists: ITinyArtist<number>[];
+  socialLinks: ISocialLink[];
 }

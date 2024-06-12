@@ -1,7 +1,7 @@
 import { gql, Reference, useMutation } from '@apollo/client';
 import { UPDATE_BIO_AND_PERKS } from '../../mutations';
 import { useToast } from '../../../../shared';
-import { IProfile } from '../../../relationships';
+import { IProfile } from '../../../user';
 
 export function useUpdateBioAndPerks() {
   const { openWith } = useToast();

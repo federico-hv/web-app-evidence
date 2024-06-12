@@ -17,6 +17,7 @@ function FeedCard({ data }: { data: FeedModel }) {
     <Box
       position='relative'
       h='fit-content'
+      w='100%'
       radius={4}
       css={{
         border: '1px solid rgba(152, 152, 255, 0.10)',
@@ -24,13 +25,12 @@ function FeedCard({ data }: { data: FeedModel }) {
           'radial-gradient(50% 100% at 50% 100%, rgba(133, 133, 255, 0.15) 0%, rgba(133, 133, 255, 0.05) 100%), linear-gradient(180deg, rgba(208, 208, 255, 0.08) 0%, rgba(208, 208, 255, 0.01) 100%)',
       }}
     >
-      <LinkOverlay
-        to={`/${data.owner.username}/feeds/${data.id}`}
-        state={{ from: location }}
-      />
+      {/*<LinkOverlay*/}
+      {/*  to={`/${data.owner.username}/feeds/${data.id}`}*/}
+      {/*  state={{ from: location }}*/}
+      {/*/>*/}
       <FeedContextProvider
         value={{
-          // TODO: use a lodash pick and cast result
           owner: data.owner,
           feedId: data.id as string,
           bookmarked: data.bookmarked,

@@ -27,6 +27,7 @@ function HistoryHeader({ history }: { history: IReturnMany<UserModel> }) {
             Recent
           </Heading>
           <Button
+            colorTheme='white500'
             onClick={() => removeAll()}
             size='sm'
             variant='ghost'

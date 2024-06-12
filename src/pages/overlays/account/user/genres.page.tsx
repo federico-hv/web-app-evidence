@@ -23,7 +23,7 @@ function FanGenresPage() {
   const { loading: updating, updateGenres } = useUpdateUserGenres();
 
   const goToRecommended = () =>
-    navigate(makePath([Paths.setupFanAccount, 'recommended']), {
+    navigate(makePath([Paths.setupAccount, 'fan', 'recommended']), {
       state: {
         previousLocation: previousLocation,
       },

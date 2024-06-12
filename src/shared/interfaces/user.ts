@@ -5,6 +5,7 @@ export interface UserModel {
   displayName: string;
   id: string;
   avatar: string;
+  role: Role;
 }
 
 export interface IMe {

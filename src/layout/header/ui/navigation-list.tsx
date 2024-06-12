@@ -22,7 +22,7 @@ interface NavigationItemProps {
 function NavigationItem({ label, icon, active, to }: NavigationItemProps) {
   return (
     <Box
-      radius={3}
+      radius={2}
       position='relative'
       h={48}
       _hover={{ backgroundColor: '#9898FF26' }}
@@ -85,7 +85,7 @@ function NavigationList() {
             pathname,
           )
         }
-        label='My Profile'
+        label='Profile'
         to={prefix(
           currentUser.role === 'artist' ? '/artist/' : '/',
           currentUser.username,
@@ -107,7 +107,7 @@ function NavigationList() {
       <NavigationItem
         active={!!matchPath(makePath([Paths.bookmarks, '/*']), pathname)}
         label='Bookmarks'
-        to={Paths.bookmarks}
+        to={makePath([Paths.bookmarks, 'all'])}
         icon={{
           active: 'bookmark-fill',
           inactive: 'bookmark-outline',

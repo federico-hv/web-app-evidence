@@ -15,6 +15,7 @@ export const TabOptions = {
 // TODO remove whne we have real data
 export const dummyArtist: UserModel = {
   id: '1',
+  role: 'artist',
   avatar:
     'https://cdna.artstation.com/p/assets/images/images/071/001/504/smaller_square/icy-tamtam-asset.jpg?1704218440',
   displayName: 'Artist Name',
@@ -23,6 +24,7 @@ export const dummyArtist: UserModel = {
 
 export const dummyMember: UserModel = {
   id: '1',
+  role: 'artist',
   avatar:
     'https://cdna.artstation.com/p/assets/images/images/071/001/504/smaller_square/icy-tamtam-asset.jpg?1704218440',
   displayName: 'Member Name',

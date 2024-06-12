@@ -11,13 +11,13 @@ export interface RelationshipEntity extends GenericItem {
 export interface FeedEntity extends GenericItem {
   // still debating
   imageSrc: string;
-  owner: UserModel;
+  owner: Omit<UserModel, 'role'>;
   action: 'created' | 'liked' | 'shared';
 }
 
 export interface INotification {
   createdAt: Date;
-  actor: UserModel;
+  actor: Omit<UserModel, 'role'>;
   type: NotificationType;
   entity: RelationshipEntity | FeedEntity;
 }

@@ -9,14 +9,14 @@ function LgNavigation() {
   return (
     <Responsive>
       <ResponsiveItem tablet='show' laptop='show' desktop='show'>
-        <Box as='header' w='100%' h={80} position='fixed' zIndex={10}>
+        <Box as='header' w='100%' h={80} position='fixed' t={0} zIndex={5}>
           <Container
             maxWidth={1280}
             css={{
               backgroundColor: '#141317',
             }}
           >
-            <HStack h={64} w='100%' gap={4}>
+            <HStack h={64} w='100%' gap={4} as='nav'>
               <HStack
                 items='center'
                 w={{ '@bp3': 90, '@bp7': 308 }}

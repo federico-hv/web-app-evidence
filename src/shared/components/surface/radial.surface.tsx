@@ -1,9 +1,11 @@
 import { BoxProps } from '@holdr-ui/react/dist/components/box/src/box.types';
-import { Box } from '@holdr-ui/react';
+import { Box, Stack } from '@holdr-ui/react';
+import { StackProps } from '@holdr-ui/react/dist/components/stack/src/stack.types';
 
-function RadialSurface({ css, children, ...props }: BoxProps) {
+function RadialSurface({ css, children, ...props }: StackProps) {
   return (
-    <Box
+    <Stack
+      direction='vertical'
       {...props}
       css={{
         border: '1px solid rgba(152, 152, 255, 0.10)',
@@ -13,7 +15,7 @@ function RadialSurface({ css, children, ...props }: BoxProps) {
       }}
     >
       {children}
-    </Box>
+    </Stack>
   );
 }
 RadialSurface.displayName = 'RadialSurface';
