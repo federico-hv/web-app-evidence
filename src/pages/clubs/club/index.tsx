@@ -27,6 +27,7 @@ import ArtistBio from './bio';
 import { useParams } from 'react-router-dom';
 import { startCase } from 'lodash';
 import ArtistFeed from './feed';
+import ArtistLiveBids from './livebids';
 
 function ClubPage() {
   const currentUser = useCurrentUser();
@@ -138,7 +139,7 @@ function ClubPage() {
                 value='liveBids'
                 minHeight='calc(100vh - 158px)'
               >
-                {'LIVE BIDS'}
+                <ArtistLiveBids />
               </CustomTabsContent>
               <CustomTabsContent
                 py={8}
