@@ -31,7 +31,7 @@ function SelectMembershipsSort() {
           css={{
             border: '1px solid rgba(152, 152, 255, 0.10)',
             background: 'rgba(152, 152, 255, 0.1)',
-          }}   
+          }}
         />
         <SelectContent sticky='always'>
           <SelectItemList
@@ -54,7 +54,7 @@ function SelectMembershipsSort() {
               borderBottomLeftRadius: '$2',
               borderBottomRightRadius: '$2',
               border: '1px solid rgba(152, 152, 255, 0.1)',
-              borderTop: 'none'
+              borderTop: 'none',
             }}
           >
             <SelectItem

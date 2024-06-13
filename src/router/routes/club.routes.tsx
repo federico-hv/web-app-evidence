@@ -1,10 +1,15 @@
 import { Route, Routes } from 'react-router';
-import { ClubsMyMembershipsPage, ClubsRootPage } from '../../pages';
+import {
+  ClubPage,
+  ClubsMyMembershipsPage,
+  ClubsRootPage,
+} from '../../pages';
 import { Paths } from '../../shared';
 
 const BookmarksRoutes = () => (
   <Routes>
     <Route path='' element={<ClubsRootPage />} />
+    <Route path=':slug' element={<ClubPage />} />
     <Route
       path={Paths.club.memberships}
       element={<ClubsMyMembershipsPage />}
