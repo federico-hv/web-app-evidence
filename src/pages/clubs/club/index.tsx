@@ -26,6 +26,7 @@ import { SelectMembershipSort } from '../ui';
 import ArtistBio from './bio';
 import { useParams } from 'react-router-dom';
 import { startCase } from 'lodash';
+import ArtistFeed from './feed';
 
 function ClubPage() {
   const currentUser = useCurrentUser();
@@ -130,7 +131,7 @@ function ClubPage() {
                 value='feed'
                 minHeight='calc(100vh - 158px)'
               >
-                {'FEED STUFF'}
+                <ArtistFeed />
               </CustomTabsContent>
               <CustomTabsContent
                 py={8}
