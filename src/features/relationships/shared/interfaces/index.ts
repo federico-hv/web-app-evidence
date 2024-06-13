@@ -21,10 +21,6 @@ export interface RelationshipStatusInfo {
   isMuted: boolean | null;
   isFollower: boolean | null;
   isFollowing: boolean | null;
-  isFriend: boolean | null;
-  isFavourite: boolean | null;
-  isOwned: boolean | null;
-  hasFriendRequest: boolean | null;
   hasFollowRequest: boolean | null;
 }
 
@@ -32,11 +28,9 @@ export interface CreateRelationshipModel {
   isBlocked?: boolean | null;
   isMuted?: boolean | null;
   isFollowing?: boolean | null;
-  isFavourite?: boolean | null;
 }
 
 export interface RequestRelationshipModel {
-  hasFriendRequest: boolean | null;
   hasFollowRequest: boolean | null;
 }
 

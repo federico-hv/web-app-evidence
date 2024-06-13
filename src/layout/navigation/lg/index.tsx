@@ -9,7 +9,14 @@ function LgNavigation() {
   return (
     <Responsive>
       <ResponsiveItem tablet='show' laptop='show' desktop='show'>
-        <Box as='header' w='100%' h={80} position='fixed' t={0} zIndex={5}>
+        <Box
+          as='header'
+          w='100%'
+          h={80}
+          position='fixed'
+          t={0}
+          zIndex={10}
+        >
           <Container
             maxWidth={1280}
             css={{

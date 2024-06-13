@@ -1,9 +1,4 @@
-import {
-  TextGroup,
-  TextGroupSubheading,
-  UserModel,
-  UserNamesGroup,
-} from '../../../shared';
+import { UserModel, UserNamesGroup } from '../../../shared';
 import { Avatar, Circle, HStack, Icon } from '@holdr-ui/react';
 
 function ResultItem({

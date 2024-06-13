@@ -8,7 +8,6 @@ import {
   DialogContent,
   DialogOverlay,
   DialogPortal,
-  GenericProps,
   HStack,
   Icon,
   IconButton,

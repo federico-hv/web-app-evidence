@@ -86,10 +86,11 @@ function NavigationList() {
           )
         }
         label='Profile'
-        to={prefix(
-          currentUser.role === 'artist' ? '/artist/' : '/',
-          currentUser.username,
-        )}
+        to={
+          currentUser.role === 'artist'
+            ? currentUser.username
+            : `${currentUser.username}/bio`
+        }
         icon={{
           active: 'user-circle-fill',
           inactive: 'user-circle-outline',

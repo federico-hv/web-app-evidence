@@ -17,6 +17,7 @@ import {
 } from '@holdr-ui/react';
 import {
   GQLRenderer,
+  Head,
   ISocialLink,
   ITinyArtist,
   LinkOverlay,
@@ -50,7 +51,10 @@ import {
   IProfile,
   MembershipCard,
   MusicReleaseProvider,
+  SocialButton,
   useCurrentUser,
+  useGetProfile,
+  useRelationshipCount,
 } from '../../features';
 import dayjs from 'dayjs';
 import LocalizedFormat from 'dayjs/plugin/localizedFormat';
@@ -150,133 +154,144 @@ export function GeneralUserBioContent() {
   const previousLocation = usePreviousLocation(pathname);
 
   return (
-    <VStack radius={2} p={4} mt={6} bgColor='rgba(48, 48, 75, 0.60)'>
-      {profile.bio && (
-        <Fragment>
-          <TextGroup gap={3}>
-            <TextGroupSubheading weight={500} size={4}>
-              About
-            </TextGroupSubheading>
-            <TextGroupSubheading
-              casing='capitalize'
-              weight={300}
-              color='white600'
-            >
-              {profile.bio}
-            </TextGroupSubheading>
-          </TextGroup>
-          <Box
-            my={4}
-            borderBottom={1}
-            borderColor='rgba(152, 152, 255, 0.05)'
-          />
-        </Fragment>
-      )}
-      {profile.location && (
-        <Fragment>
-          <TextGroup gap={3}>
-            <TextGroupSubheading casing='capitalize' weight={500} size={4}>
-              Based In
-            </TextGroupSubheading>
-            <TextGroupSubheading weight={300} color='white600'>
-              {profile.location}
-            </TextGroupSubheading>
-          </TextGroup>
-          <Box
-            my={4}
-            borderBottom={1}
-            borderColor='rgba(152, 152, 255, 0.05)'
-          />
-        </Fragment>
-      )}
-      {profile.favoriteSong && (
-        <Fragment>
-          <VStack gap={3}>
-            <Text casing='capitalize' weight={500} size={4}>
-              Favorite Song
-            </Text>
-            <EmbeddedPlayer
-              provider='Spotify'
-              ids={profile.favoriteSong.externalIds}
+    <Fragment>
+      <Head
+        prefix={`${profile.displayName} - `}
+        title='Bio'
+        description='View information about the user.'
+      />
+      <VStack radius={2} p={4} mt={6} bgColor='rgba(48, 48, 75, 0.60)'>
+        {profile.bio && (
+          <Fragment>
+            <TextGroup gap={3}>
+              <TextGroupSubheading weight={500} size={4}>
+                About
+              </TextGroupSubheading>
+              <TextGroupSubheading
+                casing='capitalize'
+                weight={300}
+                color='white600'
+              >
+                {profile.bio}
+              </TextGroupSubheading>
+            </TextGroup>
+            <Box
+              my={4}
+              borderBottom={1}
+              borderColor='rgba(152, 152, 255, 0.05)'
             />
-          </VStack>
-          <Box
-            my={4}
-            borderBottom={1}
-            borderColor='rgba(152, 152, 255, 0.05)'
-          />
-        </Fragment>
-      )}
-
-      {profile.favoriteArtists && profile.favoriteArtists.length > 0 && (
-        <Fragment>
-          <VStack gap={3}>
-            <Text casing='capitalize' weight={500} size={4}>
-              Favorite Musicians
-            </Text>
-            <FlatList
-              items='center'
-              divider={<Circle mx={4} bgColor='black300' size='5px' />}
-              data={profile.favoriteArtists}
-              keyExtractor={(item) => item.externalIds[0].externalId}
-              renderItem={({ artistId, name, externalIds }) => (
-                <FavoriteArtist
-                  id={artistId}
-                  name={name}
-                  externalIds={externalIds}
-                />
-              )}
+          </Fragment>
+        )}
+        {profile.location && (
+          <Fragment>
+            <TextGroup gap={3}>
+              <TextGroupSubheading
+                casing='capitalize'
+                weight={500}
+                size={4}
+              >
+                Based In
+              </TextGroupSubheading>
+              <TextGroupSubheading weight={300} color='white600'>
+                {profile.location}
+              </TextGroupSubheading>
+            </TextGroup>
+            <Box
+              my={4}
+              borderBottom={1}
+              borderColor='rgba(152, 152, 255, 0.05)'
             />
-          </VStack>
-          <Box
-            my={4}
-            borderBottom={1}
-            borderColor='rgba(152, 152, 255, 0.05)'
-          />
-        </Fragment>
-      )}
+          </Fragment>
+        )}
+        {profile.favoriteSong && (
+          <Fragment>
+            <VStack gap={3}>
+              <Text casing='capitalize' weight={500} size={4}>
+                Favorite Song
+              </Text>
+              <EmbeddedPlayer
+                provider='Spotify'
+                ids={profile.favoriteSong.externalIds}
+              />
+            </VStack>
+            <Box
+              my={4}
+              borderBottom={1}
+              borderColor='rgba(152, 152, 255, 0.05)'
+            />
+          </Fragment>
+        )}
 
-      <VStack gap={5}>
-        <HStack justify='space-between'>
-          <TextGroup w='fit-content'>
-            <Text casing='capitalize' weight={500} size={4}>
-              My memberships
-            </Text>
-            <Text
-              casing='capitalize'
-              color='white700'
-              weight={300}
-              size={3}
+        {profile.favoriteArtists && profile.favoriteArtists.length > 0 && (
+          <Fragment>
+            <VStack gap={3}>
+              <Text casing='capitalize' weight={500} size={4}>
+                Favorite Musicians
+              </Text>
+              <FlatList
+                items='center'
+                divider={<Circle mx={4} bgColor='black300' size='5px' />}
+                data={profile.favoriteArtists}
+                keyExtractor={(item) => item.externalIds[0].externalId}
+                renderItem={({ artistId, name, externalIds }) => (
+                  <FavoriteArtist
+                    id={artistId}
+                    name={name}
+                    externalIds={externalIds}
+                  />
+                )}
+              />
+            </VStack>
+            <Box
+              my={4}
+              borderBottom={1}
+              borderColor='rgba(152, 152, 255, 0.05)'
+            />
+          </Fragment>
+        )}
+
+        <VStack gap={5}>
+          <HStack justify='space-between'>
+            <TextGroup w='fit-content'>
+              <Text casing='capitalize' weight={500} size={4}>
+                My memberships
+              </Text>
+              <Text
+                casing='capitalize'
+                color='white700'
+                weight={300}
+                size={3}
+              >
+                7 memberships
+              </Text>
+            </TextGroup>
+            <Link
+              to={`/${profile.username}/memberships`}
+              state={{ previousLocation }}
             >
-              7 memberships
-            </Text>
-          </TextGroup>
-          <Link
-            to={`/${profile.username}/memberships`}
-            state={{ previousLocation }}
-          >
-            <Text size={4} weight={300} color='purple200'>
-              View all
-            </Text>
-          </Link>
-        </HStack>
-        <HStack>
-          <MembershipCard
-            data={{
-              name: 'Thomas Selas Club',
-              coverImage: membershipCover,
-              artist: {
-                username: 'thomasselas',
-                displayName: 'Thomas Selas',
-                id: 'id',
-                avatar: '',
-                role: 'artist',
-              },
-            }}
-          />
-        </HStack>
+              <Text size={4} weight={300} color='purple200'>
+                View all
+              </Text>
+            </Link>
+          </HStack>
+          <HStack>
+            <MembershipCard
+              data={{
+                name: 'Thomas Selas Club',
+                coverImage: membershipCover,
+                artist: {
+                  username: 'thomasselas',
+                  displayName: 'Thomas Selas',
+                  id: 'id',
+                  avatar: '',
+                  role: 'artist',
+                },
+              }}
+            />
+          </HStack>
+        </VStack>
       </VStack>
-    </VStack>
+    </Fragment>
   );
 }
 
@@ -329,8 +344,6 @@ function BioSocialLinks({ links }: { links: ISocialLink[] }) {
     TikTok: 'tiktok',
   };
 
-  console.log(links);
-
   return (
     <HStack gap={4}>
       {orderBy(links, ['provider'], 'asc').map((link) => (
@@ -341,6 +354,63 @@ function BioSocialLinks({ links }: { links: ISocialLink[] }) {
         />
       ))}
     </HStack>
+  );
+}
+
+function UserRelationshipCount({ username }: { username: string }) {
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+
+  const {
+    loading: loading0,
+    data: profileData,
+    error: error0,
+  } = useGetProfile(username);
+  const {
+    loading: loading1,
+    data: relationshipCountData,
+    error: error1,
+  } = useRelationshipCount(username);
+
+  if (error1 || error0 || loading0 || loading1) {
+    return <Fragment />;
+  }
+
+  return (
+    <Fragment>
+      {profileData && relationshipCountData && (
+        <HStack gap={3}>
+          <FollowCountItem
+            onClick={
+              profileData.profile.protected
+                ? undefined
+                : () =>
+                    navigate(makePath([username, 'followers']), {
+                      state: {
+                        previousLocation: pathname,
+                      },
+                    })
+            }
+            count={relationshipCountData.followers.total}
+            label='Followers'
+          />
+          <FollowCountItem
+            onClick={
+              profileData.profile.protected
+                ? undefined
+                : () =>
+                    navigate(makePath([username, 'following']), {
+                      state: {
+                        previousLocation: pathname,
+                      },
+                    })
+            }
+            count={relationshipCountData.following.total}
+            label='Following'
+          />
+        </HStack>
+      )}
+    </Fragment>
   );
 }
 
@@ -382,42 +452,11 @@ function GeneralUserProfileHeader() {
             <VStack>
               <Text size={6}>{profile.displayName}</Text>
             </VStack>
-            <HStack gap={3}>
-              <FollowCountItem
-                onClick={
-                  profile.protected
-                    ? undefined
-                    : () =>
-                        navigate(makePath([username, 'followers']), {
-                          state: {
-                            previousLocation: pathname,
-                          },
-                        })
-                }
-                count={profile.followers}
-                label='Followers'
-              />
-              <FollowCountItem
-                onClick={
-                  profile.protected
-                    ? undefined
-                    : () =>
-                        navigate(makePath([username, 'following']), {
-                          state: {
-                            previousLocation: pathname,
-                          },
-                        })
-                }
-                count={profile.following}
-                label='Following'
-              />
-            </HStack>
+            <UserRelationshipCount username={username} />
           </VStack>
           <HStack>
             {currentUser.username !== username ? (
-              <Button css={{ px: '50px' }} colorTheme='purple100'>
-                Follow
-              </Button>
+              <SocialButton username={username} />
             ) : (
               <Button
                 onClick={() =>
@@ -475,34 +514,43 @@ function GeneralUserBidHistoryItem() {
 }
 
 export function GeneralUserBidHistoryContent() {
+  const { state: profile } = useGeneralContext<IProfile>();
+
   return (
-    <VStack
-      h='full'
-      radius={2}
-      mt={6}
-      divider={
-        <StackDivider width={1} color='rgba(152, 152, 255, 0.05)' />
-      }
-      bgColor='rgba(48, 48, 75, 0.60)'
-    >
-      <HStack p={4}>
-        <Box flex={1}>
-          <Text weight={500}>Club</Text>
-        </Box>
-        <Box basis='156px'>
-          <Text weight={500}>Bid</Text>
-        </Box>
-        <Box basis='180px'>
-          <Text weight={500}>Date</Text>
-        </Box>
-        <Box basis='108px'>
-          <Text weight={500}>Status</Text>
-        </Box>
-      </HStack>
-      <VStack h='calc(100%)' p={4} gap={5}>
-        <GeneralUserBidHistoryItem />
+    <Fragment>
+      <Head
+        prefix={`${profile.displayName} - `}
+        title='Bids'
+        description="View the user's bid history."
+      />
+      <VStack
+        h='full'
+        radius={2}
+        mt={6}
+        divider={
+          <StackDivider width={1} color='rgba(152, 152, 255, 0.05)' />
+        }
+        bgColor='rgba(48, 48, 75, 0.60)'
+      >
+        <HStack p={4}>
+          <Box flex={1}>
+            <Text weight={500}>Club</Text>
+          </Box>
+          <Box basis='156px'>
+            <Text weight={500}>Bid</Text>
+          </Box>
+          <Box basis='180px'>
+            <Text weight={500}>Date</Text>
+          </Box>
+          <Box basis='108px'>
+            <Text weight={500}>Status</Text>
+          </Box>
+        </HStack>
+        <VStack h='calc(100%)' p={4} gap={5}>
+          <GeneralUserBidHistoryItem />
+        </VStack>
       </VStack>
-    </VStack>
+    </Fragment>
   );
 }
 
@@ -566,35 +614,45 @@ function GeneralUserWatchlistItem() {
 }
 
 export function GeneralUserWatchlistContent() {
+  const { state: profile } = useGeneralContext<IProfile>();
+
   return (
-    <VStack
-      h='full'
-      radius={2}
-      mt={6}
-      divider={
-        <StackDivider width={1} color='rgba(152, 152, 255, 0.05)' />
-      }
-      bgColor='rgba(48, 48, 75, 0.60)'
-    >
-      <HStack p={4}>
-        <Box flex={1}>
-          <Text weight={500}>Club</Text>
-        </Box>
-        <Box basis='156px'>
-          <Text weight={500}>Entry Price</Text>
-        </Box>
-        <Box basis='180px'>
-          <Text weight={500}>Ends In</Text>
-        </Box>
-        <Box basis='108px'>
-          <Text weight={500}>Status</Text>
-        </Box>
-        <Box basis='40px' />
-      </HStack>
-      <VStack h='calc(100%)' p={4} gap={5}>
-        <GeneralUserWatchlistItem />
+    <Fragment>
+      <Head
+        prefix={`${profile.displayName} - `}
+        title='Watchlist'
+        description="View the user's watchlist."
+      />
+
+      <VStack
+        h='full'
+        radius={2}
+        mt={6}
+        divider={
+          <StackDivider width={1} color='rgba(152, 152, 255, 0.05)' />
+        }
+        bgColor='rgba(48, 48, 75, 0.60)'
+      >
+        <HStack p={4}>
+          <Box flex={1}>
+            <Text weight={500}>Club</Text>
+          </Box>
+          <Box basis='156px'>
+            <Text weight={500}>Entry Price</Text>
+          </Box>
+          <Box basis='180px'>
+            <Text weight={500}>Ends In</Text>
+          </Box>
+          <Box basis='108px'>
+            <Text weight={500}>Status</Text>
+          </Box>
+          <Box basis='40px' />
+        </HStack>
+        <VStack h='calc(100%)' p={4} gap={5}>
+          <GeneralUserWatchlistItem />
+        </VStack>
       </VStack>
-    </VStack>
+    </Fragment>
   );
 }
 

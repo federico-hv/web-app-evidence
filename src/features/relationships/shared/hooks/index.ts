@@ -6,3 +6,4 @@ export * from './use-relationship-action';
 export * from './use-remove-follower';
 export * from './use-relationship-status-info';
 export * from './use-relationship-users';
+export * from './use-relationship-count';

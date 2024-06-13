@@ -10,7 +10,10 @@ function UnblockButton({ username }: BaseRelationshipButtonProps) {
 
   return (
     <Button
-      colorTheme='danger400'
+      css={{
+        px: '50px',
+      }}
+      colorTheme='danger500'
       onClick={() => removeBlock(username)}
       isLoading={loadingRemoval}
       loadingText={loadingRemoval ? '' : 'Unblocking'}

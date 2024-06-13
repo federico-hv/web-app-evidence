@@ -97,7 +97,7 @@ function ClubsPage() {
                   <SelectMembershipSort />
                 </HStack>
               </RoutingTabsHeader>
-              <RoutingTabsContent minHeight='calc(100vh - 158px)'>
+              <RoutingTabsContent py={4} minHeight='calc(100vh - 158px)'>
                 {switchState && <FiltersList />}
               </RoutingTabsContent>
             </RoutingTabs>

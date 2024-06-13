@@ -7,12 +7,8 @@ export const GET_RELATIONSHIP_STATUS_INFO = gql`
       isMuted
       isFollower
       isFollowing
-      isFriend
-      isFavourite
       isRestricted
-      hasFriendRequest
       hasFollowRequest
-      isOwned
     }
   }
 `;

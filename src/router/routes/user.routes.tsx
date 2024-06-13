@@ -11,15 +11,14 @@ import { Navigate } from 'react-router-dom';
 const UserRoutes = () => (
   <Routes>
     <Route path={Paths.root} element={<ProfilePage />}>
-      <Route path='' element={<Navigate to='bio' />} />
       <Route path='bio' element={<GeneralUserBioContent />} />
       <Route
         path='bid-history'
         element={<GeneralUserBidHistoryContent />}
       />
       <Route path='watchlist' element={<GeneralUserWatchlistContent />} />
+      <Route path='' element={<Navigate to='bio' />} />
     </Route>
-    {/*<Route path={Paths.feed} element={<FeedPage />} />*/}
   </Routes>
 );
 

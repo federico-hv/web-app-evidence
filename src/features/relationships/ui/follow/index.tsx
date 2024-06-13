@@ -6,23 +6,22 @@ import {
 } from '../../shared';
 
 interface FollowButtonProps extends BaseRelationshipButtonProps {
-  type: 'follow_request' | 'follow';
+  isProtected: boolean;
 }
 
-function FollowButton({ type, username }: FollowButtonProps) {
+function FollowButton({ isProtected, username }: FollowButtonProps) {
   const { follow, loading: loadingFollow } = useCreateRelationshipAction();
   const { followRequest, loading: loadingRequest } =
     useRequestRelationshipAction();
 
   return (
     <Button
-      colorTheme='base800'
-      isLoading={
-        type === 'follow_request' ? loadingRequest : loadingFollow
-      }
-      loadingText={loadingRequest || loadingFollow ? '' : 'Loading'}
+      css={{ px: '50px' }}
+      colorTheme='purple100'
+      isLoading={loadingRequest || loadingFollow}
+      loadingText={loadingRequest || loadingFollow ? '' : 'Follow'}
       onClick={
-        type === 'follow_request'
+        isProtected
           ? () => followRequest(username)
           : () => follow(username)
       }

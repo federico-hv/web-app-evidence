@@ -59,7 +59,7 @@ CustomTabs.displayName = 'CustomTabs';
 
 function CustomTabsHeader({ children, ...props }: HStackProps) {
   return (
-    <HStack w='100%' h='100%' {...props}>
+    <HStack zIndex={10} w='100%' h='100%' {...props}>
       {children}
     </HStack>
   );

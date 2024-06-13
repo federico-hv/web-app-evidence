@@ -8,3 +8,4 @@ export * from './use-save-favorite-song';
 export * from './use-remove-favorite-song';
 export * from './use-save-favorite-artist';
 export * from './use-remove-favorite-artist';
+export * from './use-get-profile';
