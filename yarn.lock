@@ -2840,19 +2840,19 @@
   resolved "https://registry.yarnpkg.com/@graphql-typed-document-node/core/-/core-3.1.2.tgz#6fc464307cbe3c8ca5064549b806360d84457b04"
   integrity sha512-9anpBMM9mEgZN4wr2v8wHJI2/u5TnnggewRN6OlvXTTnuVyoY19X6rOv9XTqKRw6dcGKwZsBi8n0kDE2I5i4VA==
 
-"@holdr-ui/icons@^3.1.0":
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/@holdr-ui/icons/-/icons-3.1.0.tgz#7b83e58c77fb40dd71a19708d94aed0a81cdb820"
-  integrity sha512-VDVrY/Kwx6iAB802tIDVsSEQhD8sHHnBmcxlin4K1/jofK6XDNLbDelh+r6fqOuA3L5p5URorYBSJ3Jf26V/+g==
+"@holdr-ui/icons@^3.2.0":
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/@holdr-ui/icons/-/icons-3.2.0.tgz#8c6b801b03967e779ce2a7c757841a41fd6808e4"
+  integrity sha512-g2KC1/NrK7EJmpNkAh8WQi43PFA8YEgf87r3UmGK3ZnVrzohy0pcwy6KyJL8DC4wBKB4sNsz5ZsRkARgzLWFsQ==
   dependencies:
     np "8.0.4"
 
-"@holdr-ui/react@^3.2.4":
-  version "3.2.4"
-  resolved "https://registry.yarnpkg.com/@holdr-ui/react/-/react-3.2.4.tgz#9db2bfe5b071c918c3111e09bb7d6219defe48b3"
-  integrity sha512-HIxqC/n0C5tcjcu+Q8xEBi4Y+tYFknBVShXS7I/oss59Tn9fYB5ODuZbz1+ZC3MQYxF1x8rc3StffVo+tmZgZw==
+"@holdr-ui/react@^3.2.5":
+  version "3.2.5"
+  resolved "https://registry.yarnpkg.com/@holdr-ui/react/-/react-3.2.5.tgz#b2dd4e16bd8c9066ad20a0b3bf871668ca041d2c"
+  integrity sha512-Ir1NMMASjlmOCKMpT+npTyowmNmnQ8ICW0xfmPHlGiuS7SfVzWCQRy06Nck79VzHgF09cDbb0RuQn+6tINTT4Q==
   dependencies:
-    "@holdr-ui/icons" "^3.1.0"
+    "@holdr-ui/icons" "^3.2.0"
     "@radix-ui/react-accordion" "^1.0.1"
     "@radix-ui/react-dropdown-menu" "^2.0.1"
     "@radix-ui/react-hover-card" "^1.0.3"

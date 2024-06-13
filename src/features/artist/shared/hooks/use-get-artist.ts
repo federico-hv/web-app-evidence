@@ -11,9 +11,13 @@ import { IArtist } from '../types';
  * @param fetchPolicy see @{SuspenseQueryHookFetchPolicy}
  */
 export function useSuspenseGetArtist(
+  id: string,
   fetchPolicy?: SuspenseQueryHookFetchPolicy,
 ) {
   return useSuspenseQuery<{ artist: IArtist }>(GET_ARTIST, {
+    variables: {
+      id,
+    },
     fetchPolicy,
   });
 }
@@ -23,8 +27,14 @@ export function useSuspenseGetArtist(
  *
  * @param fetchPolicy see @{SuspenseQueryHookFetchPolicy}
  */
-export function useGetArtist(fetchPolicy?: SuspenseQueryHookFetchPolicy) {
+export function useGetArtist(
+  id: string,
+  fetchPolicy?: SuspenseQueryHookFetchPolicy,
+) {
   return useQuery<{ artist: IArtist }>(GET_ARTIST, {
+    variables: {
+      id,
+    },
     fetchPolicy,
   });
 }
