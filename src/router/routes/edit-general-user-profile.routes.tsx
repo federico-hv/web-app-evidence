@@ -39,14 +39,11 @@ import {
   ImageUpload,
   ISocialLink,
   makePath,
-  matchesPattern,
   NavigateWithPreviousLocation,
   Patterns,
   SocialProvider,
   textAreaClassName,
   usePreviousLocation,
-  useProfile,
-  voidFn,
 } from '../../shared';
 import { SetupStep } from '../../pages/overlays/artist-profile/ui';
 import { ChangeEvent, Fragment, useState } from 'react';
@@ -516,11 +513,7 @@ function EditGeneralUserAddFavouritesView() {
   const { state: profile } = useGeneralContext<IProfile>();
 
   const nextStep = () => {
-    navigate(makePath([username || '', 'edit', 'credit-card']), {
-      state: {
-        previousLocation,
-      },
-    });
+    navigate(previousLocation);
   };
 
   const previousStep = () => {
@@ -759,7 +752,7 @@ function EditGeneralUserAddFavouritesView() {
           colorTheme='purple500'
           css={{ px: '28px' }}
         >
-          Continue
+          Done
         </Button>
       </HStack>
     </VStack>
