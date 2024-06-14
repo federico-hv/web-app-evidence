@@ -1,13 +1,9 @@
 import {
-  Button,
-  Card,
   HStack,
   VStack,
-  Image,
   Text,
   IconButton,
   Avatar,
-  StackDivider,
   AvatarBadge,
   Icon,
   Box,
@@ -18,14 +14,7 @@ import {
   Dialog,
 } from '@holdr-ui/react';
 import { FlatList } from '../../../tmp/flat-list';
-import {
-  ISocialLink,
-  useCurrentArtist,
-  useGetArtist,
-  useSuspenseGetArtist,
-  useSuspenseSocialLinks,
-} from '../../../features/artist/shared';
-import { useEffect } from 'react';
+import { ISocialLink } from '../../../shared';
 
 const imageSrcs = [
   'https://www.gravatar.com/avatar/2c7d99fe281ecd3bcd65ab915bac6dd5?s=250',
