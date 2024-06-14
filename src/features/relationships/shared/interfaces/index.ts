@@ -1,5 +1,6 @@
 import {
   CreateRelationshipAction,
+  RelationshipStatusCode,
   RemoveRelationshipAction,
   RequestRelationshipAction,
 } from '../types';
@@ -15,7 +16,7 @@ export interface RelationshipRequest {
   };
 }
 
-export interface RelationshipStatusInfo {
+export interface IRelationshipStatusInfo {
   isBlocked: boolean | null;
   isRestricted: boolean | null;
   isMuted: boolean | null;
@@ -43,18 +44,15 @@ export interface RemoveRelationshipModel {
 }
 
 export interface CreateRelationshipInput {
-  username: string;
-  action: CreateRelationshipAction;
+  username?: string;
+  id?: string;
+  type: RelationshipStatusCode;
 }
 
 export interface RemoveRelationshipInput {
-  username: string;
-  action: RemoveRelationshipAction;
-}
-
-export interface RequestRelationshipInput {
-  username: string;
-  action: RequestRelationshipAction;
+  username?: string;
+  id?: string;
+  type: RelationshipStatusCode;
 }
 
 export interface BaseRelationshipButtonProps {

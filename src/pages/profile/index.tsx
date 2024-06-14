@@ -55,6 +55,7 @@ import {
   useCurrentUser,
   useGetProfile,
   useRelationshipCount,
+  useRelationshipStatusInfo,
 } from '../../features';
 import dayjs from 'dayjs';
 import LocalizedFormat from 'dayjs/plugin/localizedFormat';
@@ -391,7 +392,7 @@ function UserRelationshipCount({ username }: { username: string }) {
                       },
                     })
             }
-            count={relationshipCountData.followers.total}
+            count={relationshipCountData.relationshipCount.followers}
             label='Followers'
           />
           <FollowCountItem
@@ -405,7 +406,7 @@ function UserRelationshipCount({ username }: { username: string }) {
                       },
                     })
             }
-            count={relationshipCountData.following.total}
+            count={relationshipCountData.relationshipCount.following}
             label='Following'
           />
         </HStack>
@@ -422,6 +423,10 @@ function GeneralUserProfileHeader() {
   const previousLocation = usePreviousLocation(pathname);
 
   const { state: profile } = useGeneralContext<IProfile>();
+
+  const { data: statusInfoData } = useRelationshipStatusInfo(
+    profile.username,
+  );
 
   if (!username) {
     return <Fragment />;
@@ -456,7 +461,10 @@ function GeneralUserProfileHeader() {
           </VStack>
           <HStack>
             {currentUser.username !== username ? (
-              <SocialButton username={username} />
+              <SocialButton
+                statusInfo={statusInfoData.relationshipStatusInfo}
+                username={username}
+              />
             ) : (
               <Button
                 onClick={() =>

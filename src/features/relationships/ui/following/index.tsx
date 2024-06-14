@@ -2,7 +2,7 @@ import { Button } from '@holdr-ui/react';
 import {
   BaseRelationshipButtonProps,
   useRemoveRelationshipAction,
-} from '../../../../features';
+} from '../../shared';
 
 function FollowingButton({ username }: BaseRelationshipButtonProps) {
   const { unfollow, loading } = useRemoveRelationshipAction();

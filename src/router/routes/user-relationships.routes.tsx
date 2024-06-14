@@ -21,6 +21,8 @@ import {
   useParams,
 } from 'react-router-dom';
 import {
+  LinkOverlay,
+  Loader,
   QueryGuard,
   RoutingTabs,
   RoutingTabsContent,
@@ -32,7 +34,15 @@ import {
 import { FlatList } from '../../tmp/flat-list';
 import { Fragment } from 'react';
 import { LoadWithoutPreviousLocation } from './edit-general-user-profile.routes';
-import { CHECK_IS_PROFILE_BLOCKED_OR_PROTECTED } from '../../features';
+import {
+  CHECK_IS_PROFILE_BLOCKED_OR_PROTECTED,
+  SocialButton,
+  useGetFollowers,
+  useGetFollowing,
+  UserWithRelationship,
+} from '../../features';
+import { Simulate } from 'react-dom/test-utils';
+import load = Simulate.load;
 
 function RelationshipsDialog() {
   const { username } = useParams();
@@ -140,115 +150,93 @@ function RelationshipsDialog() {
   );
 }
 
-interface IFollowItem {
-  id: string;
-  avatar?: string;
-  name: string;
-  isVerified: boolean;
-  relationship?: string;
-}
-
-function FollowItem({ data }: { data: IFollowItem }) {
+function FollowItem({ data }: { data: UserWithRelationship }) {
   return (
-    <HStack justify='space-between' items='center'>
+    <HStack justify='space-between' items='center' position='relative'>
+      <LinkOverlay
+        to={`${data.role === 'artist' ? '/clubs' : ''}/${data.username}`}
+      />
       <HStack gap={2} items='center' justify='space-between'>
-        <Avatar size={40} name={data.name} />
+        <Avatar size={40} name={data.avatar} />
         <HStack gap={2} h='fit-content' items='center'>
-          <Text weight={500}>{data.name}</Text>
-          {data.isVerified && (
-            <Box fontSize='18px' mt={1}>
-              <Icon name='verified-outline' />
-            </Box>
-          )}
+          <Text weight={500} style={{ marginBottom: '5px' }}>
+            {data.displayName}
+          </Text>
+          {/*{data.isVerified && (*/}
+          {/*  <Box fontSize='18px' mt={1}>*/}
+          {/*    <Icon name='verified-outline' />*/}
+          {/*  </Box>*/}
+          {/*)}*/}
         </HStack>
       </HStack>
       {/* Show the current viewers relationship with the user*/}
-      <Fragment>
-        {data.relationship === 'following' ? (
-          <Button
-            variant='outline'
-            css={{ padding: '5px 25px', height: 'fit-content' }}
-            size='sm'
-            colorTheme='purple50'
-          >
-            Following
-          </Button>
-        ) : (
-          <Button
-            css={{ padding: '5px 25px', height: 'fit-content' }}
-            size='sm'
-            colorTheme='purple100'
-          >
-            Follow
-          </Button>
-        )}
-      </Fragment>
+      <Box zIndex={5}>
+        <SocialButton
+          username={data.username}
+          statusInfo={data.relationshipStatusInfo}
+        />
+      </Box>
     </HStack>
   );
 }
 
 function FollowersList() {
-  // Get the user's list of followers from the current user's perspective
+  const { username } = useParams();
+
+  const { loading, error, data } = useGetFollowers(username || '');
+
+  if (error) {
+    return <Fragment />;
+  }
 
   return (
-    <FlatList
-      pt={4}
-      direction='vertical'
-      gap={3}
-      w='100%'
-      data={[
-        {
-          id: '1',
-          name: 'James Altman',
-          isVerified: true,
-        },
-        {
-          id: '2',
-          name: 'Sarah Hoffman',
-          isVerified: false,
-        },
-      ]}
-      renderItem={(data) => <FollowItem data={data} />}
-      keyExtractor={({ id }) => id}
-    />
+    <Loader loading={loading}>
+      {data && (
+        <FlatList
+          pt={4}
+          direction='vertical'
+          gap={3}
+          w='100%'
+          data={data.followers.edges}
+          renderItem={(data) => <FollowItem data={data.node} />}
+          keyExtractor={({ node }) => node.id}
+        />
+      )}
+    </Loader>
   );
 }
 
 function FollowingList() {
-  // Get the user's list of followers from the current user's perspective
+  const { username } = useParams();
+
+  const { loading, error, data } = useGetFollowing(username || '');
+
+  if (error) {
+    return <Fragment />;
+  }
 
   return (
-    <FlatList
-      pt={4}
-      direction='vertical'
-      gap={3}
-      w='100%'
-      data={[
-        {
-          id: '4',
-          avatar: '',
-          name: 'Frank Dolt',
-          isVerified: false,
-        },
-        {
-          id: '41',
-          avatar: '',
-          name: 'Julia Cummings',
-          isVerified: true,
-          relationship: 'following',
-        },
-      ]}
-      renderItem={(data) => <FollowItem data={data} />}
-      keyExtractor={({ id }) => id}
-    />
+    <Loader loading={loading}>
+      {data && (
+        <FlatList
+          pt={4}
+          direction='vertical'
+          gap={3}
+          w='100%'
+          data={data.following.edges}
+          renderItem={(data) => <FollowItem data={data.node} />}
+          keyExtractor={({ node }) => node.id}
+        />
+      )}
+    </Loader>
   );
 }
 
 const UserRelationshipsRoutes = () => (
   <Routes>
     <Route element={<RelationshipsDialog />}>
-      <Route path='following' element={<FollowersList />} />
-      <Route path='followers' element={<FollowingList />} />
+      <Route path='followers' element={<FollowersList />} />
+      <Route path='following' element={<FollowingList />} />
     </Route>
   </Routes>
 );

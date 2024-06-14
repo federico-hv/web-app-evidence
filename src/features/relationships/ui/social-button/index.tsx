@@ -1,50 +1,28 @@
-import { Button } from '@holdr-ui/react';
-import { useRelationshipStatusInfo } from '../../shared';
-import { GQLRenderer } from '../../../../shared';
 import { Fragment } from 'react';
+import { IRelationshipStatusInfo } from '../../shared';
 import FollowButton from '../follow';
-import { useSuspenseGetProfile } from '../../../user';
 import UnblockButton from '../unblock';
 import FollowingButton from '../following';
 import RequestedButton from '../requested';
 
-function SocialButton({ username }: { username: string }) {
-  return (
-    <GQLRenderer
-      LoadingFallback={<Fragment />}
-      ErrorFallback={() => <Fragment />}
-    >
-      <Content username={username} />
-    </GQLRenderer>
-  );
+interface SocialButtonProps {
+  username: string;
+  statusInfo: IRelationshipStatusInfo;
 }
 
-function Content({ username }: { username: string }) {
-  const { data: profileData } = useSuspenseGetProfile(username);
-
-  const { data: statusData } = useRelationshipStatusInfo(username);
-
+function SocialButton({ statusInfo, username }: SocialButtonProps) {
   return (
     <Fragment>
-      {statusData.relationshipStatusInfo.isBlocked && (
-        <UnblockButton username={username} />
-      )}
-      {statusData.relationshipStatusInfo.hasFollowRequest && (
+      {statusInfo.isBlocked && <UnblockButton username={username} />}
+      {statusInfo.isFollowing && <FollowingButton username={username} />}
+      {statusInfo.hasFollowRequest && (
         <RequestedButton username={username} />
       )}
-      {statusData.relationshipStatusInfo.isFollowing && (
-        <FollowingButton username={username} />
-      )}
       {!(
-        !!statusData.relationshipStatusInfo.hasFollowRequest ||
-        !!statusData.relationshipStatusInfo.isFollowing ||
-        !!statusData.relationshipStatusInfo.isBlocked
-      ) && (
-        <FollowButton
-          isProtected={profileData.profile.protected}
-          username={username}
-        />
-      )}
+        statusInfo.isFollowing ||
+        statusInfo.isBlocked ||
+        statusInfo.hasFollowRequest
+      ) && <FollowButton username={username} />}
     </Fragment>
   );
 }

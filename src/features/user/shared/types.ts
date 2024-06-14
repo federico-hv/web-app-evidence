@@ -50,8 +50,6 @@ export interface IProfile {
   bio?: string;
   protected: boolean;
   location?: string;
-  following: number;
-  followers: number;
   favoriteSong: IMusicRelease | null;
   favoriteArtists: ITinyArtist<number>[];
   socialLinks: ISocialLink[];

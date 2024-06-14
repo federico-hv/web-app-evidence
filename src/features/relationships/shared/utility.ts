@@ -1,4 +1,4 @@
-import { RelationshipStatusInfo } from './interfaces';
+import { IRelationshipStatusInfo } from './interfaces';
 
 /**
  * parses the relationship status information
@@ -6,7 +6,7 @@ import { RelationshipStatusInfo } from './interfaces';
  * @param accountRelationship an object containing the relationship status information
  */
 export function getRelationshipButton(
-  accountRelationship: RelationshipStatusInfo,
+  accountRelationship: IRelationshipStatusInfo,
 ): 'block' | 'follow_request' | 'following' | 'follow' {
   if (accountRelationship.isBlocked) {
     return 'block';

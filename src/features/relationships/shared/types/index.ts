@@ -4,8 +4,12 @@ import {
   removeRelationshipActions,
   requestRelationshipActions,
 } from '../constants';
-import { IFetchUsersResponse } from '../../../../shared';
-import { IProfile } from '../../../user';
+import {
+  IConnection,
+  IFetchUsersResponse,
+  UserModel,
+} from '../../../../shared';
+import { IRelationshipStatusInfo } from '../interfaces';
 
 export type RelationshipStatusCode =
   (typeof relationshipStatusCode)[number];
@@ -18,8 +22,6 @@ export type RemoveRelationshipAction =
 
 export type RequestRelationshipAction =
   (typeof requestRelationshipActions)[number];
-
-export type UpdateProfileData = { updateProfile: IProfile };
 
 export type QueryType = 'following' | 'followers' | 'mutualUsers';
 
@@ -35,8 +37,16 @@ export type Following = {
   mutualUsers?: never;
 };
 
-export type Mutual = {
-  mutualUsers: IFetchUsersResponse;
-  followers?: never;
-  following?: never;
+export type UserWithRelationship = UserModel & {
+  relationshipStatusInfo: IRelationshipStatusInfo;
 };
+
+export type ManyUsersWithRelationship = IConnection<
+  UserWithRelationship,
+  string
+>;
+
+export type AltManyUsersWithRelationship = IConnection<
+  UserWithRelationship,
+  number
+>;

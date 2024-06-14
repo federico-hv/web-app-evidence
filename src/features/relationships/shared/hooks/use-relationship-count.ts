@@ -1,4 +1,4 @@
-import { useQuery } from '@apollo/client';
+import { useQuery, useSuspenseQuery } from '@apollo/client';
 import { GET_RELATIONSHIP_COUNT } from '../../queries';
 
 interface ITotal {
@@ -7,14 +7,14 @@ interface ITotal {
 
 export function useRelationshipCount(username: string) {
   return useQuery<
-    { following: ITotal; followers: ITotal },
+    { relationshipCount: { following: number; followers: number } },
     { username: string }
   >(GET_RELATIONSHIP_COUNT, { variables: { username } });
 }
 
 export function useSuspenseRelationshipCount(username: string) {
-  return useQuery<
-    { relationshipCount: { following: ITotal; followers: ITotal } },
+  return useSuspenseQuery<
+    { relationshipCount: { following: number; followers: number } },
     { username: string }
   >(GET_RELATIONSHIP_COUNT, { variables: { username } });
 }

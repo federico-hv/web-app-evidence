@@ -31,8 +31,6 @@ export const GET_PROFILE = gql`
       bio
       protected
       location
-      following
-      followers
       favoriteSong {
         id
         name

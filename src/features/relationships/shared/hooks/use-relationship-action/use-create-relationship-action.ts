@@ -1,32 +1,31 @@
 import { useEffect } from 'react';
 import { useCreateRelationship } from '../use-create-relationship';
 import { useToast } from '../../../../../shared';
+import { RelationshipStatusCodeEnum } from '../../constants';
 
 export function useCreateRelationshipAction() {
   const { createRelationship, error, loading } = useCreateRelationship();
-  const { openWith } = useToast();
-
-  useEffect(() => {
-    if (error) {
-      openWith({
-        status: 'danger',
-        description:
-          error.message ||
-          'Oops! Something went wrong. Totally our fault, but try again later.',
-      });
-    }
-  }, [error, openWith]);
 
   const follow = (username: string) =>
-    createRelationship({ username, action: 'follow' });
+    createRelationship({
+      username,
+      type: RelationshipStatusCodeEnum.Following,
+    });
   const mute = (username: string) =>
-    createRelationship({ username, action: 'mute' });
-  const favourite = (username: string) =>
-    createRelationship({ username, action: 'favourite' });
+    createRelationship({
+      username,
+      type: RelationshipStatusCodeEnum.Muted,
+    });
   const block = (username: string) =>
-    createRelationship({ username, action: 'block' });
+    createRelationship({
+      username,
+      type: RelationshipStatusCodeEnum.Blocked,
+    });
   const restrict = (username: string) =>
-    createRelationship({ username, action: 'restrict' });
+    createRelationship({
+      username,
+      type: RelationshipStatusCodeEnum.Restricted,
+    });
 
-  return { mute, favourite, follow, restrict, block, loading };
+  return { mute, follow, restrict, block, loading };
 }
