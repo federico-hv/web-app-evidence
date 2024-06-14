@@ -36,7 +36,9 @@ function SelectMembershipsSort() {
         <SelectContent sticky='always'>
           <SelectItemList
             _active={{ color: '$purple200' }}
-            w={180}
+            _hover={{ background: 'rgba(14, 14, 27, 0.50)' }}
+            _highlighted={{ background: 'rgba(14, 14, 27, 0.50)' }}
+            // w={180}
             divider={
               <Box
                 h='1px'
@@ -60,7 +62,6 @@ function SelectMembershipsSort() {
             <SelectItem
               py={2}
               radius={1}
-              _hover={{ background: 'rgba(14, 14, 27, 0.50)' }}
               css={{ fontSize: '$2' }}
               value='oldest'
               label='Oldest to newest'
@@ -68,7 +69,6 @@ function SelectMembershipsSort() {
             <SelectItem
               py={2}
               radius={1}
-              _hover={{ background: 'rgba(14, 14, 27, 0.50)' }}
               css={{ fontSize: '$2' }}
               value='newest'
               label='Newest to oldest'
@@ -76,7 +76,6 @@ function SelectMembershipsSort() {
             <SelectItem
               py={2}
               radius={1}
-              _hover={{ background: 'rgba(14, 14, 27, 0.50)' }}
               css={{ fontSize: '$2' }}
               value='price:high-to-low'
               label='Price: High to low'
@@ -85,7 +84,6 @@ function SelectMembershipsSort() {
               py={2}
               radius={1}
               css={{ fontSize: '$2' }}
-              _hover={{ background: 'rgba(14, 14, 27, 0.50)' }}
               value='price:low-to-high'
               label='Price: Low to high'
             />

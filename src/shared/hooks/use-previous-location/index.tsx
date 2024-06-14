@@ -12,15 +12,22 @@ export function usePreviousLocation(fallback: string) {
   const navigate = useNavigate();
   const pathName = location.pathname;
 
-  useEffect(() => {
-    if (!location.state?.previousLocation) {
-      navigate(pathName, {
-        state: {
-          previousLocation: fallback,
-        },
-      });
-    }
-  }, []);
+  // 👇🏾 This is supposed to help when a user goes to a dialog page by
+  //    copy-pasting the link into the browser. There won't be a previous
+  //    location.
+  // STATUS: Testing for bugs
+  // useEffect(() => {
+  //   console.log(location.state);
+  //
+  //   if (!location.state?.previousLocation) {
+  //     console.log(`navigate to ${pathName}`);
+  //     navigate(pathName, {
+  //       state: {
+  //         previousLocation: fallback,
+  //       },
+  //     });
+  //   }
+  // }, []);
 
   return !location.state?.previousLocation
     ? fallback

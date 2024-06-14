@@ -5,27 +5,41 @@ import {
   useRecordState,
 } from '../shared';
 import { BoxProps } from '@holdr-ui/react/dist/components/box/src/box.types';
-import { Box, HStack, Stack } from '@holdr-ui/react';
+import { Box, CSSTheme, HStack, Stack } from '@holdr-ui/react';
 import {
   HStackProps,
   StackProps,
 } from '@holdr-ui/react/dist/components/stack/src/stack.types';
+import { useEffect } from 'react';
 
 interface CustomTabsState {
   currentValue: string;
+  value?: string;
+  onValueChange?: (value: string) => void;
 }
 
 function CustomTabs({
   children,
   defaultValue,
+  value = '',
+  onValueChange,
   ...props
-}: BoxProps & { defaultValue?: string }) {
+}: BoxProps & {
+  defaultValue?: string;
+  value?: string;
+  onValueChange?: (value: string) => void;
+}) {
   const [state, update] = useRecordState<CustomTabsState>({
-    currentValue: defaultValue || '',
+    currentValue: defaultValue || value,
+    onValueChange,
   });
 
   const TabsHeader = getSubComponent(children, 'CustomTabsHeader');
   const TabsContent = getSubComponent(children, 'CustomTabsContent');
+
+  useEffect(() => {
+    if (value) update({ currentValue: value });
+  }, [value]);
 
   return (
     <GeneralContextProvider value={{ state, update }}>
@@ -45,7 +59,7 @@ CustomTabs.displayName = 'CustomTabs';
 
 function CustomTabsHeader({ children, ...props }: HStackProps) {
   return (
-    <HStack w='100%' h='100%' {...props}>
+    <HStack zIndex={10} w='100%' h='100%' {...props}>
       {children}
     </HStack>
   );
@@ -67,28 +81,52 @@ function CustomTabsTrigger({
   children,
   value,
   css,
+  onClick,
+  _inactive = {
+    borderBottom: 'none',
+    fontWeight: 500,
+  },
+  _active = {
+    borderBottom: '2px solid $purple500',
+    fontWeight: 500,
+  },
   // flex = 1,
   ...props
-}: StackProps & { value: string }) {
+}: StackProps & {
+  value: string;
+  _inactive?: CSSTheme;
+  _active?: CSSTheme;
+}) {
   const { update } = useGeneralContext<CustomTabsState>();
   const { state } = useGeneralContext<CustomTabsState>();
 
+  const active = state.currentValue === value;
+
   return (
     <Stack
-      onClick={() => update({ currentValue: value })}
+      onClick={(e) => {
+        update({ currentValue: value });
+
+        if (state.onValueChange) {
+          state.onValueChange(value);
+        }
+        if (onClick) onClick(e);
+      }}
+      data-state={active ? 'active' : 'inactive'}
       w='100%'
       justify='center'
       items='center'
       cursor='pointer'
       overflow='hidden'
-      borderBottom={2}
-      borderColor={
-        value === state.currentValue ? 'purple500' : 'transparent'
-      }
       {...props}
       css={{
+        '&[data-state="active"]': {
+          ..._active,
+        },
+        '&[data-state="inactive"]': {
+          ..._inactive,
+        },
         userSelect: 'none',
-        fontWeight: value === state.currentValue ? 500 : 300,
         ...css,
       }}
     >

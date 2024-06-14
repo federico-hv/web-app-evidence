@@ -20,6 +20,8 @@ import {
 import { MembershipAuctionCardProps } from './types';
 import { MembershipPerkDetails } from '../../groups';
 
+// TODO: DEPRECATE
+
 function MembershipAuctionCard({ data }: MembershipAuctionCardProps) {
   return (
     <Card
@@ -28,6 +30,9 @@ function MembershipAuctionCard({ data }: MembershipAuctionCardProps) {
       h={376}
       boxShadow='none'
       position='relative'
+      css={{
+        border: '1px solid rgba(152, 152, 255, 0.10)',
+      }}
       _hover={cardHoverStyle}
     >
       <Card.Header
@@ -51,6 +56,7 @@ function MembershipAuctionCard({ data }: MembershipAuctionCardProps) {
       <Card.Body className='membership-card__body' h={376}>
         <Image
           src={data.coverImage}
+          // fallback src not working
           fallbackSrc={Asset.Image.LightPlaceholder}
         />
       </Card.Body>

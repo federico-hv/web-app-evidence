@@ -28,7 +28,7 @@ function PostCard({ data }: { data: PostModel }) {
         justify='space-between'
       >
         <HStack gap={3} position='relative'>
-          <LinkOverlay to={prefix('/', owner.username)} />
+          <LinkOverlay to={prefix('/clubs/', owner.username)} />
           <VStack>
             <Avatar
               variant='squircle'

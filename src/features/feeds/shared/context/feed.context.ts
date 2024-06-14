@@ -12,7 +12,13 @@ interface IFeedContext {
 }
 
 const FeedContext = createContext<IFeedContext>({
-  owner: { id: '', avatar: '', displayName: '', username: '' },
+  owner: {
+    id: '',
+    avatar: '',
+    displayName: '',
+    username: '',
+    role: 'general',
+  },
   feedId: '',
   reaction: null,
   bookmarked: false,

@@ -1,6 +1,6 @@
 import { useQuery, useSuspenseQuery } from '@apollo/client';
 import { GET_SOCIAL_LINKS } from '../../queries';
-import { ISocialLink } from '../types';
+import { ISocialLink } from '../../../../shared';
 
 export function useSocialLinks(id: string) {
   return useQuery<{ socialLinks: ISocialLink[] }, { id: string }>(

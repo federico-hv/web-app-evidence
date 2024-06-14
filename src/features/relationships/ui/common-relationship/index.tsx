@@ -9,8 +9,7 @@ import { Fragment } from 'react';
 import UnfollowButton from '../unfollow';
 import FollowButton from '../follow';
 import { useSuspenseQuery } from '@apollo/client';
-import { IProfile } from '../../../../pages/profile/shared';
-import { GET_PROFILE } from '../../../../pages/profile/queries';
+import { GET_PROFILE, IProfile } from '../../../user';
 
 function CommonRelationshipButton({
   username,
@@ -30,12 +29,7 @@ function CommonRelationshipButton({
   return (
     <Fragment>
       <Box position='relative' zIndex={5}>
-        {type === 'follow' && (
-          <FollowButton
-            type={profile.protected ? 'follow_request' : 'follow'}
-            username={profile.username}
-          />
-        )}
+        {type === 'follow' && <FollowButton username={profile.username} />}
         {type === 'following' && (
           <UnfollowButton username={profile.username} />
         )}

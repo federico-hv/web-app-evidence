@@ -25,6 +25,12 @@ export function useRemoveRelationship() {
       variables: {
         payload,
       },
+      refetchQueries: [
+        {
+          query: GET_RELATIONSHIP_COUNT,
+          variables: { username: payload.username },
+        },
+      ],
       update: (cache, { data }) => {
         cache.modify({
           fields: {
@@ -37,12 +43,8 @@ export function useRemoveRelationship() {
                     isMuted: null,
                     isFollower: null,
                     isFollowing: null,
-                    isFriend: null,
-                    isFavourite: null,
                     isRestricted: null,
-                    hasFriendRequest: null,
                     hasFollowRequest: null,
-                    isOwned: null,
                     ...current,
                     ...omit(data?.removeRelationship, '__typename'),
                   },
@@ -69,19 +71,15 @@ export function useRemoveRelationship() {
                 },
               });
             },
-            followers(current) {
-              cache.writeQuery({
-                query: GET_RELATIONSHIP_COUNT,
-                data: {
-                  followers: {
-                    total: current.total - 1,
-                  },
-                  following: {
-                    total: current.total, // Bug: might get bug here
-                  },
-                },
-              });
-            },
+            // followers(current) {
+            //   cache.writeQuery({
+            //     query: GET_RELATIONSHIP_COUNT,
+            //     data: {
+            //       followers: current - 1,
+            //       following: current, // Bug: might get bug here
+            //     },
+            //   });
+            // },
           },
         });
       },

@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useRemoveRelationship } from '../use-remove-relationship';
 import { useToast } from '../../../../../shared';
+import { RelationshipStatusCodeEnum } from '../../constants';
 
 export function useRemoveRelationshipAction() {
   const { removeRelationship, loading, error } = useRemoveRelationship();
@@ -18,29 +19,37 @@ export function useRemoveRelationshipAction() {
   }, [error, openWith]);
 
   const unfollow = (username: string) =>
-    removeRelationship({ username, action: 'follow' });
+    removeRelationship({
+      username,
+      type: RelationshipStatusCodeEnum.Following,
+    });
   const unmute = (username: string) =>
-    removeRelationship({ username, action: 'mute' });
-  const removeFavourite = (username: string) =>
-    removeRelationship({ username, action: 'favourite' });
-  const removeFriendRequest = (username: string) =>
-    removeRelationship({ username, action: 'friend request' });
+    removeRelationship({
+      username,
+      type: RelationshipStatusCodeEnum.Muted,
+    });
   const removeFollowRequest = (username: string) =>
-    removeRelationship({ username, action: 'follow request' });
-  const removeFriend = (username: string) =>
-    removeRelationship({ username, action: 'friend' });
+    removeRelationship({
+      username,
+      type: RelationshipStatusCodeEnum.Requested,
+    });
+
   const removeRestriction = (username: string) =>
-    removeRelationship({ username, action: 'restrict' });
+    removeRelationship({
+      username,
+      type: RelationshipStatusCodeEnum.Restricted,
+    });
+
   const removeBlock = (username: string) =>
-    removeRelationship({ username, action: 'block' });
+    removeRelationship({
+      username,
+      type: RelationshipStatusCodeEnum.Blocked,
+    });
   return {
     unfollow,
     unmute,
-    removeFavourite,
-    removeFriendRequest,
     removeFollowRequest,
     removeBlock,
-    removeFriend,
     removeRestriction,
     loading,
   };

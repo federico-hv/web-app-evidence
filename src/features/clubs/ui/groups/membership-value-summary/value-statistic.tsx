@@ -9,8 +9,18 @@ function ValueStatistic({
   leftAddon,
 }: ValueStatisticProps) {
   return (
-    <VStack items='flex-start' justify='space-between' gap={'0.15rem' as any}>
-      <Text casing='capitalize' color='base300' size={2} weight={400}>
+    <VStack
+      items='flex-start'
+      justify='space-between'
+      gap={'0.15rem' as any}
+    >
+      <Text
+        py='4px'
+        casing='capitalize'
+        color='base300'
+        size={2}
+        weight={400}
+      >
         {label}
       </Text>
       <HStack gap={1} items='center'>
@@ -25,6 +35,6 @@ function ValueStatistic({
   );
 }
 
-ValueStatistic.displayName = "Membership Value Statistic";
+ValueStatistic.displayName = 'Membership Value Statistic';
 
 export default ValueStatistic;

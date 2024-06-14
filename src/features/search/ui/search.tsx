@@ -1,6 +1,12 @@
 import { useRef, useState } from 'react';
 import { Spotlight, Box } from '@holdr-ui/react';
-import { prefix, UserModel, Loader, Paths } from '../../../shared';
+import {
+  prefix,
+  UserModel,
+  Loader,
+  Paths,
+  makePath,
+} from '../../../shared';
 import { Item } from './type';
 import {
   useSaveSearchHistory,
@@ -34,7 +40,12 @@ function Search() {
   const keyExtractor = ({ item }: Item) => item.id;
 
   const onClickHistoryItem = ({ item }: Item) => {
-    navigate(prefix('/', item.username));
+    navigate(
+      prefix(
+        item.role === 'artist' ? '/clubs/' : '/',
+        `${item.username}/bio`,
+      ),
+    );
   };
 
   const onClickResultItem = (
@@ -49,7 +60,12 @@ function Search() {
 
     // might make this
     save(item.id, 'account').then(() =>
-      navigate(prefix('/', item.username)),
+      navigate(
+        prefix(
+          item.role === 'artist' ? '/clubs/' : '/',
+          `${item.username}/bio`,
+        ),
+      ),
     );
   };
 

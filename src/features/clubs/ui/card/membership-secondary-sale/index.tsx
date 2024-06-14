@@ -15,9 +15,11 @@ import {
   cardFooterStyle,
   cardHoverStyle,
   transitionDelay,
-} from '../../../shared/styles';
+} from '../../../shared';
 import { MembershipPerkDetails } from '../../groups';
 import { MembershipSecondarySaleCardProps } from './types';
+
+// TODO: DEPRECATE
 
 function MembershipSecondarySaleCard({
   data,

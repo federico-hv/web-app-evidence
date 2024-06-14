@@ -1,6 +1,7 @@
 import { VStack } from '@holdr-ui/react';
 import { useParams } from 'react-router-dom';
 import { FeedCard, useGetBookmarks } from '../../../features';
+import { FlatList } from '../../../tmp/flat-list';
 
 function Content() {
   const params = useParams();
@@ -10,15 +11,19 @@ function Content() {
   });
 
   return (
-    <VStack
-      p={{ '@bp1': 2, '@bp3': 4 }}
-      gap={5}
-      mb={{ '@bp1': 58, '@bp3': 0 }}
-    >
-      {data.bookmarks.edges.map((item) => (
+    <FlatList
+      w='100%'
+      direction='vertical'
+      overflowY='auto'
+      h='calc(100% - 56px)'
+      gap={4}
+      p={{ '@bp1': 2, '@bp3': 3 }}
+      data={data.bookmarks.edges}
+      renderItem={(item) => (
         <FeedCard key={item.node.id} data={item.node.feed} />
-      ))}
-    </VStack>
+      )}
+      keyExtractor={(item) => item.node.id}
+    />
   );
 }
 Content.displayName = 'Content';

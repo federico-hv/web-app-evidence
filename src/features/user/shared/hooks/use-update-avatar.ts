@@ -1,10 +1,9 @@
 import { gql, Reference, useMutation } from '@apollo/client';
 import { UPDATE_PROFILE_AVATAR } from '../../mutations';
-import { AuthContext } from '../../../auth';
-import { useContext } from 'react';
+import { useCurrentUser } from '../../../auth';
 
 export function useUpdateAvatar() {
-  const { setCurrentUser } = useContext(AuthContext);
+  const currentUser = useCurrentUser();
 
   const [mutate, { loading, error, data }] = useMutation<
     { updateProfile: { avatar: string } },
@@ -35,16 +34,36 @@ export function useUpdateAvatar() {
                   }) as Reference;
 
                   // update current user [?? Cache update not going to update avatar]
-                  setCurrentUser((prev) => ({
-                    ...prev,
-                    avatar: data?.updateProfile.avatar || prev.avatar,
-                  }));
+                  // setCurrentUser((prev) => ({
+                  //   ...prev,
+                  //   avatar: data?.updateProfile.avatar || prev.avatar,
+                  // }));
                 } catch (e) {
                   console.error(e);
                 }
 
                 return newMe;
               },
+
+              profile(current = {}) {
+                let newProfile = current;
+
+                try {
+                  newProfile = cache.writeFragment({
+                    id: currentUser.username,
+                    data: { avatar: data?.updateProfile.avatar },
+                    fragment: gql`
+                      fragment NewAvatar on ProfileModel {
+                        avatar
+                      }
+                    `,
+                  }) as Reference;
+                } catch (e) {
+                  console.error(e);
+                }
+                return newProfile;
+              },
+
               club(current = {}) {
                 let newClub: Reference = current;
 

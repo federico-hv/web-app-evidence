@@ -2,10 +2,10 @@ import { gql } from '@apollo/client';
 
 export const UPDATE_BIO_AND_PERKS = gql`
   mutation updateBioAndPerks(
-    $payload: UpdateArtistDetailsInput!
+    $payload: UpdateProfileInput!
     $perks: [Int!]!
   ) {
-    updateArtistDetails(payload: $payload) {
+    updateProfile(payload: $payload) {
       bio
     }
     updatePerks(perks: $perks) {
@@ -20,6 +20,14 @@ export const UPDATE_ARTIST_GENRES = gql`
     updateArtistGenres(genres: $genres) {
       id
       label
+    }
+  }
+`;
+
+export const UPDATE_ARTIST_DETAILS = gql`
+  mutation updateArtistDetails($payload: UpdateArtistDetailsInput!) {
+    updateArtistDetails(payload: $payload) {
+      name
     }
   }
 `;

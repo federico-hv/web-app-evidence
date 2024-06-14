@@ -1,21 +1,15 @@
-import {
-  GeneralContextProvider,
-  GenericProps,
-  voidFn,
-} from '../../../shared';
-import { useParams } from 'react-router-dom';
-import { useSuspenseQuery } from '@apollo/client';
-import { IProfile } from './types';
-import { GET_PROFILE } from '../queries';
+import { GenericProps, voidFn } from '../../../shared';
+import { Navigate, useParams } from 'react-router-dom';
+import { GeneralContextProvider } from '@holdr-ui/react';
+import { useSuspenseGetProfile } from '../../../features';
 
 function ProfileProvider({ children }: GenericProps) {
   const { username } = useParams();
 
-  const { data } = useSuspenseQuery<{ profile: IProfile }>(GET_PROFILE, {
-    variables: {
-      username: username,
-    },
-  });
+  const { data } = useSuspenseGetProfile(username || '');
+  if (!data.profile) {
+    return <Navigate to='/' />;
+  }
 
   return (
     <GeneralContextProvider

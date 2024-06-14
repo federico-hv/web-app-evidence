@@ -21,7 +21,7 @@ function MainLayout() {
             <HStack
               as='main'
               gap={4}
-              h='calc(100% - (64px + $4))'
+              h='calc(100vh - (64px + $4))'
               minWidth={{
                 '@bp1': 'calc(100% - (90px + $4))',
                 '@bp5': 'calc(100% - (308px + $4))',

@@ -1,4 +1,4 @@
-export interface IExternalAccount {
+export interface IExternalAccountModel {
   id: number;
   externalId: string;
   provider: string;

@@ -26,13 +26,7 @@ import {
 } from './bio';
 
 import { EmptyMessage, Loader, Error } from '../../../shared';
-import {
-  FeedCard,
-  useFeedContext,
-  useUserFeeds,
-} from '../../../features/feeds';
-import { IProfile } from '../../../pages/profile/shared';
-import { FeedProvider } from '../../../pages/feed/shared/context';
+import { FeedCard, useUserFeeds } from '../../../features/feeds';
 import { useParams } from 'react-router-dom';
 
 function Feeds({

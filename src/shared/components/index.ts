@@ -63,6 +63,7 @@ export {
   MediaViewTrigger,
   MediaViewContent,
 } from './media-view';
+export { default as QueryGuard } from './query-guard';
 export { default as SearchBox } from './search-box';
 export { default as TabBorderFix } from './tab-border-fix';
 export { default as InfoItem } from './info-item';
@@ -71,3 +72,10 @@ export { default as Slider } from './slider';
 export { RadialSurface } from './surface';
 export { default as NavigateWithPreviousLocation } from './navigate-with-previous-location';
 export { default as FullPageLoader } from './full-page-loader';
+export {
+  default as RoutingTabs,
+  RoutingTabsContent,
+  RoutingTabsTrigger,
+  RoutingTabsList,
+  RoutingTabsHeader,
+} from './routing-tabs';
