@@ -57,18 +57,18 @@ export const RadioWrapper = styled('label', {
   alignItems: 'center',
 });
 
-// export const CenteredImage = css({
-//   '& span': {
-//     display: 'flex',
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//   },
-//   '& img': {
-//     height: 'auto',
-//     width: '100%',
-//     minHeight: 'unset',
-//   },
-// });
+export const customInputStyles = css({
+  border: '1px solid rgba(152, 152, 255, 0.35) !important',
+  backgroundColor: 'rgba(152, 152, 255, 0.15) !important',
+  '&:focus': {
+    border: '1px solid rgba(152, 152, 255, 1) !important',
+    backgroundColor: 'transparent',
+  },
+});
+
+export const textAreaClassName = css({
+  height: '464px !important',
+});
 
 export const blink = keyframes({
   '0%': { opacity: 1 },

@@ -39,4 +39,5 @@ export const GQLClient = new ApolloClient({
     uploadLink as unknown as ApolloLink,
   ]),
   cache: GQLCache,
+  connectToDevTools: true,
 });

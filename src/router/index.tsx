@@ -4,12 +4,21 @@ import { AuthGuard, NotFoundError, Paths, prefix } from '../shared';
 import {
   ClubRoutes,
   ConnectRoutes,
-  SetupFlowRoutes,
+  UserRelationshipRoutes,
+  SetupAccountRoutes,
+  SetupProfileRoutes,
   UserRoutes,
+  EditGeneralUserProfileRoutes,
+  ArtistProfileRoutes,
+  GeneralUserMembershipRoutes,
+  BookmarksRoutes,
+  SettingsRoutes,
+  BookmarkGroupActionRoutes,
 } from './routes';
 import { MainLayout } from '../layout';
 import { Fragment } from 'react';
 import { useLocation } from 'react-router-dom';
+import { DevRoutes } from './__dev__';
 
 function Router() {
   const location = useLocation();
@@ -18,14 +27,21 @@ function Router() {
 
   return (
     <Fragment>
+      {/*Main page routes*/}
       <Routes location={previousLocation || location}>
         <Route path={Paths.authRedirect} element={<AuthRedirectPage />} />
+        {import.meta.env.VITE_ENVIRONMENT === 'development' && (
+          <Route path='__dev__/*' element={<DevRoutes />} />
+        )}
         <Route element={<MainLayout />}>
           <Route
             path={prefix(Paths.connect, '/*')}
             element={<ConnectRoutes />}
           />
-          <Route path='/' element={<AuthGuard />}>
+          <Route
+            path='/'
+            element={<AuthGuard roles={['artist', 'general']} />}
+          >
             {/* Home Route*/}
             <Route path={Paths.root} element={<HomePage />} />
             {/* Club Routes */}
@@ -33,23 +49,38 @@ function Router() {
               path={prefix(Paths.clubs, '/*')}
               element={<ClubRoutes />}
             />
-            {/*/!* Discover Route*!/*/}
-            {/*<Route path={Paths.discover} element={<DiscoverPage />} />*/}
             {/*/!* Settings Route*!/*/}
+            <Route
+              path={prefix(Paths.settings, '/*')}
+              element={<SettingsRoutes />}
+            />
+            <Route
+              path={prefix('artist/:username', '/*')}
+              element={<ArtistProfileRoutes />}
+            />
             {/*<Route*/}
-            {/*  path={prefix(Paths.settings, '/*')}*/}
-            {/*  element={<SettingsRoutes />}*/}
-            {/*/>*/}
+            {/*  element={*/}
+            {/*    <AuthGuard*/}
+            {/*      roles={['artist']}*/}
+            {/*      fallback={<Navigate to='/' />}*/}
+            {/*    />*/}
+            {/*  }*/}
+            {/*>*/}
+            {/*  <Route*/}
+            {/*    path={prefix('artist/:username', '/*')}*/}
+            {/*    element={<ArtistProfileRoutes />}*/}
+            {/*  />*/}
+            {/*</Route>*/}
             {/*/!* Profile Route*!/*/}
             <Route
               path={prefix(Paths.username, '/*')}
               element={<UserRoutes />}
             />
             {/*/!* Bookmarks Route *!/*/}
-            {/*<Route*/}
-            {/*  path={prefix(Paths.bookmarks, '/*')}*/}
-            {/*  element={<BookmarksRoutes />}*/}
-            {/*/>*/}
+            <Route
+              path={prefix(Paths.bookmarks, '/*')}
+              element={<BookmarksRoutes />}
+            />
             {/*/!* Notifications Route *!/*/}
             {/*<Route*/}
             {/*  path={prefix(Paths.notifications, '/*')}*/}
@@ -60,27 +91,45 @@ function Router() {
             {/*  path={prefix(Paths.messages, '/*')}*/}
             {/*  element={<MessagesRoutes />}*/}
             {/*/>*/}
-            {/*/!* Releases Route *!/*/}
-            {/*<Route*/}
-            {/*  path={prefix(Paths.releases, '/*')}*/}
-            {/*  element={<ReleasesRoutes />}*/}
-            {/*/>*/}
-            {/*/!* Channels Route *!/*/}
-            {/*<Route*/}
-            {/*  path={prefix(Paths.channels, '/*')}*/}
-            {/*  element={<ChannelsPage />}*/}
-            {/*/>*/}
           </Route>
+
           <Route path='*' element={<NotFoundError />} />
         </Route>
       </Routes>
+      {/*Dialog routes*/}
       <Routes>
-        <Fragment>
+        <Route
+          path={prefix(Paths.setupAccount, '/*')}
+          element={<SetupAccountRoutes />}
+        />
+        <Route
+          path={prefix(Paths.setupProfile, '/*')}
+          element={<SetupProfileRoutes />}
+        />
+        <Route
+          path={prefix(Paths.bookmarks, '/*')}
+          element={<BookmarkGroupActionRoutes />}
+        />
+        <Route
+          element={
+            <AuthGuard roles={['general']} fallback={<Fragment />} />
+          }
+        >
           <Route
-            path={prefix(Paths.setupFlow, '/*')}
-            element={<SetupFlowRoutes />}
+            path={prefix(':username/edit', '/*')}
+            element={<EditGeneralUserProfileRoutes />}
           />
-        </Fragment>
+
+          <Route
+            path={prefix(':username/memberships', '/*')}
+            element={<GeneralUserMembershipRoutes />}
+          />
+
+          <Route
+            path={prefix(':username', '/*')}
+            element={<UserRelationshipRoutes />}
+          />
+        </Route>
       </Routes>
     </Fragment>
   );

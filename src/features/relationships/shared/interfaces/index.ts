@@ -1,9 +1,9 @@
 import {
   CreateRelationshipAction,
+  RelationshipStatusCode,
   RemoveRelationshipAction,
   RequestRelationshipAction,
 } from '../types';
-import { Role } from '../../../../shared';
 
 export interface RelationshipRequest {
   id: number;
@@ -16,16 +16,12 @@ export interface RelationshipRequest {
   };
 }
 
-export interface RelationshipStatusInfo {
+export interface IRelationshipStatusInfo {
   isBlocked: boolean | null;
   isRestricted: boolean | null;
   isMuted: boolean | null;
   isFollower: boolean | null;
   isFollowing: boolean | null;
-  isFriend: boolean | null;
-  isFavourite: boolean | null;
-  isOwned: boolean | null;
-  hasFriendRequest: boolean | null;
   hasFollowRequest: boolean | null;
 }
 
@@ -33,11 +29,9 @@ export interface CreateRelationshipModel {
   isBlocked?: boolean | null;
   isMuted?: boolean | null;
   isFollowing?: boolean | null;
-  isFavourite?: boolean | null;
 }
 
 export interface RequestRelationshipModel {
-  hasFriendRequest: boolean | null;
   hasFollowRequest: boolean | null;
 }
 
@@ -50,28 +44,15 @@ export interface RemoveRelationshipModel {
 }
 
 export interface CreateRelationshipInput {
-  username: string;
-  action: CreateRelationshipAction;
+  username?: string;
+  id?: string;
+  type: RelationshipStatusCode;
 }
 
 export interface RemoveRelationshipInput {
-  username: string;
-  action: RemoveRelationshipAction;
-}
-
-export interface RequestRelationshipInput {
-  username: string;
-  action: RequestRelationshipAction;
-}
-
-export interface IProfile {
-  role: Role;
-  username: string;
-  protected: boolean;
-  displayName: string;
-  coverImage?: string;
-  avatar?: string;
-  bio?: string;
+  username?: string;
+  id?: string;
+  type: RelationshipStatusCode;
 }
 
 export interface BaseRelationshipButtonProps {

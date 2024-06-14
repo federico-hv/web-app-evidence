@@ -1,19 +1,15 @@
 import { createContext, useContext } from 'react';
 import { GenericProps } from '../../../../../shared';
-import { RelationshipStatusInfo } from '../../interfaces';
+import { IRelationshipStatusInfo } from '../../interfaces';
 import { useRelationshipStatusInfo } from '../../hooks';
 
-const RelationshipStatusContext = createContext<RelationshipStatusInfo>({
+const RelationshipStatusContext = createContext<IRelationshipStatusInfo>({
   isBlocked: false,
   isMuted: false,
   isFollower: false,
   isFollowing: false,
-  isFriend: false,
   isRestricted: false,
-  isFavourite: false,
-  isOwned: false,
   hasFollowRequest: false,
-  hasFriendRequest: false,
 });
 
 const RelationshipStatusContextProvider =

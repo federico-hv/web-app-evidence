@@ -20,14 +20,16 @@ function HomePage() {
 
   return (
     <GQLRenderer ErrorFallback={ErrorFallback}>
-      <Head prefix='Holdr' title='' description='Home page' />
+      <Head prefix='Holdr - ' title='Home' description='Home page' />
       {currentUser && (
         <ContentLayout>
           <ContentLayoutMain>
             <FeedTabs />
           </ContentLayoutMain>
           <ContentLayoutAside hideScrollbar>
-            <ProfileSummary />
+            <GQLRenderer ErrorFallback={() => <Fragment />}>
+              <ProfileSummary />
+            </GQLRenderer>
             {currentUser.role === 'artist' && (
               <Fragment>
                 <MembershipValueSummary />

@@ -15,8 +15,6 @@ function CreatePostCard() {
             border: '1px solid rgba(152, 152, 255, 0.10)',
             background:
               'radial-gradient(50% 100% at 50% 100%, rgba(133, 133, 255, 0.15) 0%, rgba(133, 133, 255, 0.05) 100%)',
-            //background:
-            //'radial-gradient(50% 100% at 50% 100%, rgba(133, 133, 255, 0.15) 0%, rgba(133, 133, 255, 0.05) 100%), linear-gradient(rgba(208, 208, 255, 0.08) 0%, rgba(208, 208, 255, 0.01) 100%)',
             boxShadow: '0px 0px 50px 0px rgba(0, 0, 0, 0.25)',
           }}
         >

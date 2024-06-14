@@ -22,12 +22,12 @@ function SettingItem({
         )}
         <HStack flex={1} justify='space-between' items='center'>
           <VStack gap={1}>
-            <Text casing={capitalize?.heading ? 'capitalize' : 'normal'}>
+            <Text casing={capitalize?.heading ? 'capitalize' : 'none'}>
               {heading}
             </Text>
             {subheading && (
               <Text
-                casing={capitalize?.subheading ? 'capitalize' : 'normal'}
+                casing={capitalize?.subheading ? 'capitalize' : 'none'}
                 size={2}
                 color='base400'
               >

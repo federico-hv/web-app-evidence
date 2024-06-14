@@ -26,8 +26,8 @@ import {
   BlockAccountInfoPoints,
   DialogContextProvider,
 } from '../../../../shared';
-import { IProfile } from '../../shared';
 import {
+  IProfile,
   useCreateRelationshipAction,
   useCurrentUser,
   useRelationshipStatus,
@@ -45,7 +45,11 @@ function BlockAccountDialog() {
       <CommonDialogHeader label='Block' />
       <CommonDialogContent>
         <VStack items='center' gap={3} pb={{ '@bp1': 4, '@bp3': 0 }}>
-          <Avatar src={profile.avatar} size='2xl' name={profile.displayName}/>
+          <Avatar
+            src={profile.avatar}
+            size='2xl'
+            name={profile.displayName}
+          />
           <Text size={2} weight={500} color='base500'>
             @{profile.username}
           </Text>

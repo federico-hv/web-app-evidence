@@ -37,12 +37,15 @@ function FeedOwnerMoreButton({ ghost }: { ghost?: boolean }) {
             <Menu.Trigger>
               <IconButton
                 size={{ '@bp1': 'sm', '@bp3': 'base' }}
-                colorTheme={ghost ? 'darkTint400' : 'white500'}
+                colorTheme={ghost ? 'white500' : 'white500'}
                 variant={ghost ? 'filled' : 'ghost'}
                 blur='xl'
                 icon='more-fill'
                 boxShadow='none'
                 ariaLabel='view options'
+                css={{
+                  color: '$white500',
+                }}
               />
             </Menu.Trigger>
 

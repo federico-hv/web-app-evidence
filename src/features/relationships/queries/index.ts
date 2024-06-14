@@ -1,33 +1,5 @@
 import { gql } from '@apollo/client';
 
-// TODO: move TO user feature
-
-export const GET_ME = gql`
-  query me {
-    me {
-      id
-      username
-      displayName
-      role
-      avatar
-    }
-  }
-`;
-
-export const GET_PROFILE = gql`
-  query profile($username: String!) {
-    profile(username: $username) {
-      username
-      displayName
-      coverImage
-      avatar
-      bio
-      protected
-    }
-  }
-`;
-// ----- //
-
 export const GET_RELATIONSHIP_STATUS_INFO = gql`
   query relationshipStatusInfo($username: String!) {
     relationshipStatusInfo(username: $username) {
@@ -35,39 +7,65 @@ export const GET_RELATIONSHIP_STATUS_INFO = gql`
       isMuted
       isFollower
       isFollowing
-      isFriend
-      isFavourite
       isRestricted
-      hasFriendRequest
       hasFollowRequest
-      isOwned
     }
   }
 `;
 
 export const GET_BLOCKED_ACCOUNTS = gql`
-  query blockedUsers {
-    blockedUsers {
-      total
-      users {
-        id
-        displayName
-        username
-        avatar
+  query blockedAccounts($username: String!) {
+    blockedAccounts(username: $username) {
+      edges {
+        cursor
+        node {
+          id
+          avatar
+          role
+          username
+          displayName
+          relationshipStatusInfo {
+            isFollower
+            isFollowing
+            isRestricted
+            hasFollowRequest
+          }
+        }
+      }
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
       }
     }
   }
 `;
 
 export const GET_MUTED_ACCOUNTS = gql`
-  query mutedUsers {
-    mutedUsers {
-      total
-      users {
-        id
-        displayName
-        username
-        avatar
+  query mutedUsers($username: String!) {
+    mutedUsers(username: $username) {
+      edges {
+        cursor
+        node {
+          id
+          avatar
+          role
+          username
+          displayName
+          relationshipStatusInfo {
+            isFollower
+            isFollowing
+            isRestricted
+            hasFollowRequest
+          }
+        }
+      }
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
       }
     }
   }
@@ -76,13 +74,24 @@ export const GET_MUTED_ACCOUNTS = gql`
 export const GET_RELATIONSHIP_REQUESTS = gql`
   query relationshipRequests {
     relationshipRequests {
-      id
-      requestType
-      requester {
-        id
-        username
-        displayName
-        avatar
+      edges {
+        cursor
+        node {
+          id
+          requester {
+            id
+            role
+            username
+            displayName
+            avatar
+          }
+        }
+      }
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
       }
     }
   }
@@ -91,12 +100,27 @@ export const GET_RELATIONSHIP_REQUESTS = gql`
 export const GET_FOLLOWERS = gql`
   query followers($username: String!) {
     followers(username: $username) {
-      total
-      users {
-        id
-        displayName
-        username
-        avatar
+      edges {
+        cursor
+        node {
+          id
+          avatar
+          role
+          username
+          displayName
+          relationshipStatusInfo {
+            isFollower
+            isFollowing
+            isRestricted
+            hasFollowRequest
+          }
+        }
+      }
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
       }
     }
   }
@@ -104,11 +128,9 @@ export const GET_FOLLOWERS = gql`
 
 export const GET_RELATIONSHIP_COUNT = gql`
   query relationshipCount($username: String!) {
-    followers(username: $username) {
-      total
-    }
-    following(username: $username) {
-      total
+    relationshipCount(username: $username) {
+      followers
+      following
     }
   }
 `;
@@ -116,12 +138,27 @@ export const GET_RELATIONSHIP_COUNT = gql`
 export const GET_FOLLOWING = gql`
   query following($username: String!) {
     following(username: $username) {
-      total
-      users {
-        id
-        displayName
-        username
-        avatar
+      edges {
+        cursor
+        node {
+          id
+          avatar
+          role
+          username
+          displayName
+          relationshipStatusInfo {
+            isFollower
+            isFollowing
+            isRestricted
+            hasFollowRequest
+          }
+        }
+      }
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
       }
     }
   }
@@ -141,15 +178,29 @@ export const GET_MUTUAL_USERS = gql`
   }
 `;
 
-export const GET_RESTRICTED_ACCOUNTS = gql`
-  query restrictedUsers {
-    restrictedUsers {
-      total
-      users {
-        id
-        displayName
-        username
-        avatar
+export const GET_RESTRICTED_USERS = gql`
+  query restrictedUsers($username: String!) {
+    restrictedUsers(username: $username) {
+      edges {
+        cursor
+        node {
+          id
+          avatar
+          role
+          username
+          displayName
+          relationshipStatusInfo {
+            isFollower
+            isFollowing
+            isRestricted
+          }
+        }
+      }
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
       }
     }
   }

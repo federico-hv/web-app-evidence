@@ -1,12 +1,4 @@
-export const relationshipStatusCode = [
-  'B',
-  'C',
-  'F',
-  'M',
-  'O',
-  'P',
-  'R',
-] as const;
+export const relationshipStatusCode = ['B', 'F', 'M', 'P', 'S'] as const;
 
 export const createRelationshipActions = [
   'block',
@@ -31,3 +23,11 @@ export const requestRelationshipActions = [
   'follow request',
   'friend request',
 ] as const;
+
+export enum RelationshipStatusCodeEnum {
+  Following = 'F',
+  Blocked = 'B',
+  Muted = 'M',
+  Restricted = 'S',
+  Requested = 'P',
+}

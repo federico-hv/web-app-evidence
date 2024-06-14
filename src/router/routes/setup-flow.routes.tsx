@@ -5,7 +5,7 @@ import {
   ArtistSelectionStep,
   ConnectionStep,
   GetStartedStep,
-} from '../../pages/setup-flow/releases/ui';
+} from '../../pages/overlays/releases/ui';
 import { Navigate } from 'react-router-dom';
 
 const SetupFlowRoutes = () => (

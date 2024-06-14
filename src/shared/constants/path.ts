@@ -16,6 +16,13 @@ export const Paths = {
     watchlist: 'watchlist',
     memberships: 'memberships',
   },
+  setupArtist: {
+    uploadPhoto: 'upload-photos',
+    aboutMeAndPerks: 'about-me-and-perks',
+    socialMediaAccounts: 'social-media-accounts',
+    connectOnboarding: 'connect-onboarding',
+    customURL: 'custom-url',
+  },
   setting: {
     account: 'account',
     username: 'username',
@@ -45,6 +52,10 @@ export const Paths = {
   },
   support: 'support',
   setupFlow: 'setup/flow',
+  setupAccount: 'setup/account',
+  setupProfile: 'setup/profile',
+  artist: 'artist',
+  general: 'general',
   messages: 'messages',
   authRedirect: 'auth-guard/auth-redirect',
 };

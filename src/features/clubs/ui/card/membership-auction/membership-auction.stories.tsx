@@ -9,6 +9,7 @@ const auctionData: OnSaleMembershipModel = {
   artist: {
     id: '1',
     avatar: '',
+    role: 'artist',
     displayName: 'Artist Name',
     username: 'artist username',
   },

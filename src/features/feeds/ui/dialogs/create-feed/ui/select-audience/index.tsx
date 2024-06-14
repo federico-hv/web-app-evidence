@@ -31,7 +31,13 @@ function SelectAudience() {
   return (
     <Box w='150px'>
       <Select value={value} onValueChange={handleOnValueChange}>
-        <SelectTrigger css={{ backgroundColor: 'rgba(26, 26, 41, 0.75)', paddingLeft: '15px', margin: '0'}}>
+        <SelectTrigger
+          css={{
+            backgroundColor: 'rgba(26, 26, 41, 0.75)',
+            paddingLeft: '15px',
+            margin: '0',
+          }}
+        >
           <HStack gap={2} items='center'>
             <Icon name={options[value as Options].icon} />
             {options[value as Options].label}
@@ -41,6 +47,8 @@ function SelectAudience() {
           <SelectItemList
             _active={{ color: '$white500' }}
             divider={<Fragment />}
+            _hover={{ background: 'rgba(14, 14, 27, 0.70)' }}
+            _highlighted={{ background: 'rgba(14, 14, 27, 0.70)' }}
             css={{
               borderBottomLeftRadius: '$2',
               borderBottomRightRadius: '$2',

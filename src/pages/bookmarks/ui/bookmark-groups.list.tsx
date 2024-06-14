@@ -23,7 +23,7 @@ function AllBookmarkGroupsItem() {
   );
 }
 
-function BookmarkGroupsList({ queryText }: { queryText?: string }) {
+function BookmarkGroupsList() {
   /**
    * TODO:
    * 1. make this a lazy query.
@@ -31,8 +31,9 @@ function BookmarkGroupsList({ queryText }: { queryText?: string }) {
    * 3. load data when page loads.
    */
   const { data } = useGetBookmarkGroups();
+
   return (
-    <VStack divider={<Box borderBottom={2} borderColor='base100' />}>
+    <VStack>
       <AllBookmarkGroupsItem />
       {data.bookmarkGroups.edges.map(({ node }) => (
         <BookmarkGroupItem key={node.id} data={node} />

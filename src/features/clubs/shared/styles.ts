@@ -24,7 +24,6 @@ export const transitionDelay = 1;
 export const cardFooterStyle = {
   backgroundColor: '#30304B',
   transform: 'translateY(-120px)',
-  border: '1px solid rgba(152, 152, 255, 0.10)',
   transition: `all 0.2s ease ${transitionDelay}s`,
   userSelect: 'none',
 };

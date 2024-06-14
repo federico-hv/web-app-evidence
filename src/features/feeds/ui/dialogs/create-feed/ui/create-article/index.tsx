@@ -8,7 +8,6 @@ import {
   InputGroup,
   InputGroupLeftElement,
   Text,
-  Textarea,
   VStack,
 } from '@holdr-ui/react';
 import { ChangeEvent, Fragment } from 'react';
@@ -20,7 +19,7 @@ import {
 import { useCreateFeedContext } from '../../shared';
 
 function WebsiteForm() {
-  const { websiteUrl, handleOnWebsiteChange, onBadLink, updatePostState } =
+  const { websiteUrl, handleOnWebsiteChange, onBadLink } =
     useCreateFeedContext();
 
   return (
@@ -155,7 +154,7 @@ function PreviewArticleCard() {
       css={{ backgroundColor: hexToRGB('#9898FF', 0.15) }}
     >
       <Box
-        css={{ backgroundColor: 'rgba(45, 45, 71)' }}
+        css={{ backgroundColor: 'rgba(63, 63, 99)' }}
         position='absolute'
         t='0.5rem'
         r='0.5rem'

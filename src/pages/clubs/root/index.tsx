@@ -5,6 +5,11 @@ import {
   Head,
   customBgColor,
   RadialSurface,
+  RoutingTabs,
+  RoutingTabsList,
+  RoutingTabsHeader,
+  RoutingTabsTrigger,
+  RoutingTabsContent,
 } from '../../../shared';
 import {
   Box,
@@ -13,26 +18,12 @@ import {
   IconButton,
   useSwitch,
 } from '@holdr-ui/react';
-import CustomTabs, {
-  CustomTabsContent,
-  CustomTabsHeader,
-  CustomTabsList,
-  CustomTabsTrigger,
-} from '../../../tmp/custom-tabs';
-import {
-  ClubsAllContent,
-  ClubsLiveAuctionContent,
-  ClubsSecondarySaleContent,
-  ClubsWatchlistContent,
-  FiltersList,
-} from './ui';
+import { FiltersList } from './ui';
 import { SelectMembershipSort } from '../ui';
-import ActiveBidsContent from './ui/active-bids-content';
 
 function ClubsPage() {
   const currentUser = useCurrentUser();
   const { switchState, toggle } = useSwitch();
-  // const [tab, setTab] = useState('all');
 
   return (
     <GQLRenderer ErrorFallback={ErrorFallback}>
@@ -49,60 +40,50 @@ function ClubsPage() {
                 Holdr Clubs
               </Heading>
             </Box>
-            <CustomTabs defaultValue='all' flex={1}>
-              <CustomTabsHeader h={44}>
-                <CustomTabsList gap={1}>
-                  <CustomTabsTrigger
+            <RoutingTabs flex={1}>
+              <RoutingTabsHeader h={44}>
+                <RoutingTabsList gap={1}>
+                  <RoutingTabsTrigger
+                    to='all'
                     w='fit-content'
                     py={2}
                     px={6}
                     fontSize={2}
                     _hover={{ background: '#9898FF26' }}
-                    value='all'
                   >
                     All
-                  </CustomTabsTrigger>
-                  <CustomTabsTrigger
+                  </RoutingTabsTrigger>
+                  <RoutingTabsTrigger
                     w='fit-content'
                     py={2}
                     px={6}
                     fontSize={2}
                     _hover={{ background: '#9898FF26' }}
-                    value='live'
+                    to='auction'
                   >
                     Live Auctions
-                  </CustomTabsTrigger>
-                  <CustomTabsTrigger
+                  </RoutingTabsTrigger>
+                  <RoutingTabsTrigger
                     w='fit-content'
                     py={2}
                     px={6}
                     fontSize={2}
                     _hover={{ background: '#9898FF26' }}
-                    value='sale'
-                  >
-                    Secondary Sales
-                  </CustomTabsTrigger>
-                  <CustomTabsTrigger
-                    w='fit-content'
-                    py={2}
-                    px={6}
-                    fontSize={2}
-                    _hover={{ background: '#9898FF26' }}
-                    value='watchlist'
+                    to='watchlist'
                   >
                     Watchlist
-                  </CustomTabsTrigger>
-                  <CustomTabsTrigger
+                  </RoutingTabsTrigger>
+                  <RoutingTabsTrigger
                     w='fit-content'
                     py={2}
                     px={6}
                     fontSize={2}
                     _hover={{ background: '#9898FF26' }}
-                    value='activeBids'
+                    to='bids'
                   >
                     Active Bids
-                  </CustomTabsTrigger>
-                </CustomTabsList>
+                  </RoutingTabsTrigger>
+                </RoutingTabsList>
                 <HStack gap={4}>
                   <IconButton
                     onClick={toggle}
@@ -115,48 +96,11 @@ function ClubsPage() {
                   />
                   <SelectMembershipSort />
                 </HStack>
-              </CustomTabsHeader>
-              <CustomTabsContent
-                py={8}
-                value='all'
-                minHeight='calc(100vh - 158px)'
-              >
+              </RoutingTabsHeader>
+              <RoutingTabsContent py={4} minHeight='calc(100vh - 158px)'>
                 {switchState && <FiltersList />}
-                <ClubsAllContent />
-              </CustomTabsContent>
-              <CustomTabsContent
-                py={8}
-                value='live'
-                minHeight='calc(100vh - 158px)'
-              >
-                {switchState && <FiltersList />}
-                <ClubsLiveAuctionContent />
-              </CustomTabsContent>
-              <CustomTabsContent
-                py={8}
-                value='sale'
-                minHeight='calc(100vh - 158px)'
-              >
-                {switchState && <FiltersList />}
-                <ClubsSecondarySaleContent />
-              </CustomTabsContent>
-              <CustomTabsContent
-                py={8}
-                value='watchlist'
-                minHeight='calc(100vh - 158px)'
-              >
-                {switchState && <FiltersList />}
-                <ClubsWatchlistContent />
-              </CustomTabsContent>
-              <CustomTabsContent
-                py={8}
-                value='activeBids'
-                minHeight='calc(100vh - 158px)'
-              >
-                {switchState && <FiltersList />}
-                <ActiveBidsContent />
-              </CustomTabsContent>
-            </CustomTabs>
+              </RoutingTabsContent>
+            </RoutingTabs>
           </Box>
         </RadialSurface>
       )}

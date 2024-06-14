@@ -6,12 +6,7 @@ import { StepperContext, StepperContextProvider } from '../../contexts';
 // TODO: Update this.
 
 function Stepper({ defaultStep = 0, children }: StepperProps) {
-  const {
-    current: step,
-    increment,
-    decrement,
-    reset,
-  } = useCounter(defaultStep);
+  const [step, increment, decrement, reset] = useCounter(defaultStep);
   return (
     <StepperContextProvider
       value={{ currentStep: step, increment, decrement, reset }}

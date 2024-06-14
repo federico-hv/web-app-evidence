@@ -1,4 +1,5 @@
 import { UserModel } from '../../../../shared';
+import { IArtist } from '../../../artist';
 
 export interface OnSaleMembershipModel {
   endDate?: Date;
@@ -11,16 +12,21 @@ export interface OnSaleMembershipModel {
 
 export interface OwnedMembershipModel {
   name: string;
-  salePrice: number;
+  coverImage?: string;
   artist: UserModel;
-  membershipNum: number;
-  priceChange: number;
-  priceHasRisen?: boolean;
 }
 
-export interface MembershipValueData {
-  averagePrice: number;
-  priceChange: number;
-  membershipsSold: number;
-  numOfMemberships: number;
+export interface IPerk {
+  id: number;
+  label: string;
+  description?: string;
+}
+
+export interface IClub {
+  id: string;
+  coverImage?: string;
+  bannerImage?: string;
+  url?: string;
+  createdAt: Date;
+  artist: IArtist;
 }

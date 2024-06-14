@@ -1,9 +1,5 @@
-import {
-  Logo,
-  Responsive,
-  ResponsiveItem,
-} from '../../../shared/components';
 import { Box, Container, HStack } from '@holdr-ui/react';
+import { Logo, Responsive, ResponsiveItem } from '../../../shared';
 import { Search } from '../../../features/search';
 import MessagePopover from './message-popover';
 import NotificationPopover from './notification-popoover';
@@ -13,18 +9,24 @@ function LgNavigation() {
   return (
     <Responsive>
       <ResponsiveItem tablet='show' laptop='show' desktop='show'>
-        <Box as='header' w='100%' h={80} position='fixed' zIndex={10}>
+        <Box
+          as='header'
+          w='100%'
+          h={80}
+          position='fixed'
+          t={0}
+          zIndex={10}
+        >
           <Container
             maxWidth={1280}
             css={{
               backgroundColor: '#141317',
             }}
           >
-            <HStack h={64} w='100%' gap={4}>
+            <HStack h={64} w='100%' gap={4} as='nav'>
               <HStack
                 items='center'
                 w={{ '@bp3': 90, '@bp7': 308 }}
-                // bgColor='base500'
                 h='100%'
               >
                 <Logo />
@@ -32,11 +34,7 @@ function LgNavigation() {
               <HStack flex={1} py={4} items='center' h='100%'>
                 <Search />
               </HStack>
-              <Box
-                w={{ '@bp3': 150, '@bp5': 308 }}
-                // bgColor='base500'
-                h='100%'
-              >
+              <Box w={{ '@bp3': 150, '@bp5': 308 }} h='100%'>
                 <HStack
                   justify='flex-end'
                   gap={4}

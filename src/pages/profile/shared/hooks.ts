@@ -1,9 +1,9 @@
 import {
+  IProfile,
   useCurrentUser,
   useRelationshipStatusInfo,
 } from '../../../features';
 import { useGeneralContext } from '../../../shared';
-import { IProfile } from './types';
 
 export function useCanViewProfile() {
   const currentUser = useCurrentUser();
@@ -13,11 +13,7 @@ export function useCanViewProfile() {
   let canViewProfile = true; // lenient
 
   if (data && profile && currentUser) {
-    if (
-      !data.relationshipStatusInfo.isFollowing &&
-      !data.relationshipStatusInfo.isOwned &&
-      profile.protected
-    ) {
+    if (!data.relationshipStatusInfo.isFollowing && profile.protected) {
       canViewProfile = false;
     }
   }

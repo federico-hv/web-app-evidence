@@ -6,6 +6,7 @@ import {
   Responsive,
   ResponsiveItem,
   Paths,
+  prefix,
 } from '../../../shared';
 import { useCurrentUser } from '../../../features';
 import { Fragment } from 'react';
@@ -21,7 +22,7 @@ interface NavigationItemProps {
 function NavigationItem({ label, icon, active, to }: NavigationItemProps) {
   return (
     <Box
-      radius={3}
+      radius={2}
       position='relative'
       h={48}
       _hover={{ backgroundColor: '#9898FF26' }}
@@ -77,9 +78,19 @@ function NavigationList() {
         icon={{ active: 'home-fill', inactive: 'home-outline' }}
       />
       <NavigationItem
-        active={!!matchPath(currentUser.username, pathname)}
-        label='My Profile'
-        to={currentUser.username}
+        active={
+          !!matchPath(makePath([currentUser.username, '/*']), pathname) ||
+          !!matchPath(
+            makePath(['artist', currentUser.username, '/*']),
+            pathname,
+          )
+        }
+        label='Profile'
+        to={
+          currentUser.role === 'artist'
+            ? currentUser.username
+            : `${currentUser.username}/bio`
+        }
         icon={{
           active: 'user-circle-fill',
           inactive: 'user-circle-outline',
@@ -97,7 +108,7 @@ function NavigationList() {
       <NavigationItem
         active={!!matchPath(makePath([Paths.bookmarks, '/*']), pathname)}
         label='Bookmarks'
-        to={Paths.bookmarks}
+        to={makePath([Paths.bookmarks, 'all'])}
         icon={{
           active: 'bookmark-fill',
           inactive: 'bookmark-outline',

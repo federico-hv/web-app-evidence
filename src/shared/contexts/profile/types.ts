@@ -1,4 +1,4 @@
-import { IProfile } from '../../../pages/profile/shared';
+import { IProfile } from '../../../features';
 
 export interface IProfileContext {
   profile: IProfile;

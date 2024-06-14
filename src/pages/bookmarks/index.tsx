@@ -1,11 +1,26 @@
-import { Box, IconButton, useWindowSize } from '@holdr-ui/react';
+import {
+  Box,
+  Heading,
+  HStack,
+  IconButton,
+  StackDivider,
+  useWindowSize,
+  VStack,
+} from '@holdr-ui/react';
 import {
   ErrorFallback,
   GQLRenderer,
+  makePath,
   Paths,
+  RadialSurface,
   SearchBox,
 } from '../../shared';
-import { Outlet, useNavigate, useParams } from 'react-router-dom';
+import {
+  Outlet,
+  useLocation,
+  useNavigate,
+  useParams,
+} from 'react-router-dom';
 import { useEffect } from 'react';
 import { BookmarkGroupsList } from './ui';
 import {
@@ -21,104 +36,82 @@ import {
 } from '../../features';
 
 function BookmarksPage() {
-  const { width } = useWindowSize();
-  const params = useParams();
+  const { pathname } = useLocation();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    // only navigate to `/all` when screen size is > tablet and there is no bookmark id/ no
-    // specified path param
-
-    if (!params.id && !params['*']) {
-      if (width && width > 768) {
-        navigate(`/${Paths.bookmarks}/all`);
-      }
-    }
-  }, [width, params.id, params, navigate]);
-
   return (
-    <Box h='100%'>
-      <ShelfLayout>
-        {width &&
-          (width > 768 ||
-            (width <= 768 && !(params.id || params['*']))) && (
-            <ShelfLayoutShelf
-              position='relative'
-              as='aside'
-              h='100%'
-              w={{
-                '@bp1': '100%',
-                '@bp4': 300,
-                '@bp5': 350,
-              }}
-              // borderRight={2}
-              // borderColor='base100'
-              css={{
-                flexShrink: 0,
-              }}
-            >
-              <PageLayout
-                t={{ '@bp1': 0, '@bp3': 65 }}
-                b={0}
-                overflowY='auto'
-                h='100%'
-                w={{
-                  '@bp1': '100%',
-                  '@bp4': 300,
-                  '@bp5': 350,
-                }}
-                css={{
-                  '@bp1': {
-                    position: 'unset',
-                  },
-                  '@bp3': {
-                    position: 'fixed',
-                  },
-                }}
-              >
-                <PageLayoutHeader
-                  position='sticky'
-                  // borderRight={2}
-                  // borderColor='base100'
-                  t={0}
-                  css={{ backgroundColor: '#FFF', zIndex: 10 }}
-                >
-                  Bookmarks
-                  <CreateBookmarkGroup
-                    onCreated={(id) =>
-                      navigate(`/${Paths.bookmarks}/${id}`)
-                    }
-                  >
-                    <CreateBookmarkGroupTrigger>
-                      <IconButton
-                        role='button'
-                        variant='ghost'
-                        icon='add'
-                        ariaLabel='Create bookmark group'
-                      />
-                    </CreateBookmarkGroupTrigger>
-                  </CreateBookmarkGroup>
-                </PageLayoutHeader>
-                <PageLayoutContent>
-                  <SearchBox
-                    position='sticky'
-                    t={58}
-                    px={{ '@bp1': 2, '@bp3': 4 }}
-                    py={4}
-                    css={{ backgroundColor: '#FFF', zIndex: 10 }}
-                  />
-                  <GQLRenderer ErrorFallback={ErrorFallback}>
-                    <BookmarkGroupsList />
-                  </GQLRenderer>
-                </PageLayoutContent>
-              </PageLayout>
-            </ShelfLayoutShelf>
-          )}
-        <ShelfLayoutShelf w='100%' role='contentinfo'>
+    <RadialSurface
+      divider={
+        <StackDivider width={1} color='rgba(152, 152, 255, 0.10)' />
+      }
+      w='100%'
+      radius={3}
+      gap={6}
+    >
+      <HStack px={6} pt={6} justify='space-between' items='center'>
+        <Heading weight={400} size={6}>
+          Bookmarks
+        </Heading>
+        <IconButton
+          colorTheme='purple100'
+          icon='add'
+          ariaLabel='add bookmark'
+          onClick={() =>
+            navigate(makePath([Paths.bookmarks, 'create']), {
+              state: {
+                previousLocation: pathname,
+              },
+            })
+          }
+        />
+      </HStack>
+      <HStack
+        px={6}
+        pb={6}
+        gap={4}
+        w='100%'
+        h='calc(100% - 52px)'
+        overflowY='hidden'
+      >
+        <VStack
+          border={1}
+          borderColor='rgba(152, 152, 255, 0.10)'
+          radius={2}
+          bgColor='rgba(48, 48, 75, 0.60)'
+          overflowY='auto'
+          className='hide-scrollbar'
+          basis={325}
+        >
+          <Box
+            position='sticky'
+            t={0}
+            bgColor='#27263c'
+            zIndex={1}
+            borderBottom={1}
+            borderColor='rgba(152, 152, 255, 0.10)'
+            pb={3}
+          >
+            <Heading color='white600' px={3} pt={3} size={4} weight={500}>
+              My Groups
+            </Heading>
+          </Box>
+          <GQLRenderer>
+            <BookmarkGroupsList />
+          </GQLRenderer>
+        </VStack>
+        <Box
+          overflow='hidden'
+          border={1}
+          borderColor='rgba(152, 152, 255, 0.10)'
+          radius={2}
+          bgColor='rgba(48, 48, 75, 0.60)'
+          // h='calc(100% - 16px)'
+          flex={1}
+        >
           <Outlet />
-        </ShelfLayoutShelf>
-      </ShelfLayout>
-    </Box>
+        </Box>
+      </HStack>
+    </RadialSurface>
   );
 }
 BookmarksPage.displayName = 'Bookmarks Page';

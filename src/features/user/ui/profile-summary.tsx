@@ -6,9 +6,12 @@ import {
 } from '../../../shared';
 import { useCurrentUser } from '../../auth';
 import { useSuspenseQuery } from '@apollo/client';
-import { GET_PROFILE_SUMMARY } from '../queries';
 import { Fragment } from 'react';
 import millify from 'millify';
+import {
+  GET_RELATIONSHIP_COUNT,
+  useSuspenseRelationshipCount,
+} from '../../relationships';
 
 function Members() {
   return (
@@ -36,28 +39,18 @@ function Memberships() {
   );
 }
 
-interface FollowingSummary {
-  followers: { total: number };
-  following: { total: number };
-}
-
 function ProfileSummary() {
   const currentUser = useCurrentUser();
-  const { data } = useSuspenseQuery<
-    FollowingSummary,
-    { username: string }
-  >(GET_PROFILE_SUMMARY, {
-    variables: { username: currentUser?.username || '' },
-  });
+  const { data } = useSuspenseRelationshipCount(currentUser.username);
 
   if (!currentUser) {
     return <Fragment />;
   }
 
   return (
-    <RadialSurface radius={4} h={117} w='100%'>
+    <RadialSurface radius={4} w='100%'>
       <VStack
-        gap={3}
+        gap={2}
         w='100%'
         h='100%'
         divider={
@@ -90,7 +83,7 @@ function ProfileSummary() {
           {currentUser?.role === 'artist' ? <Members /> : <Memberships />}
           <TextGroup w='fit-content' direction='horizontal' gap={1}>
             <TextGroupSubheading size={1}>
-              {millify(data.followers.total, { precision: 2 })}
+              {millify(data.relationshipCount.followers, { precision: 2 })}
             </TextGroupSubheading>
             <Text size={1} color='base300'>
               Followers
@@ -98,7 +91,7 @@ function ProfileSummary() {
           </TextGroup>
           <TextGroup w='fit-content' direction='horizontal' gap={1}>
             <TextGroupSubheading size={1}>
-              {millify(data.following.total, { precision: 2 })}
+              {millify(data.relationshipCount.following, { precision: 2 })}
             </TextGroupSubheading>
             <TextGroupSubheading size={1} color='base300'>
               Following

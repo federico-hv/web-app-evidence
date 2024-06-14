@@ -31,21 +31,6 @@ function ClubsAllContent() {
         />
       </VStack>
       <VStack gap={4}>
-        <SectionTitle label='Secondary Sales' />
-        <FlatList<OnSaleMembershipModel>
-          overflow='auto'
-          className='hide-scrollbar'
-          gap={2}
-          data={shuffle(
-            arrayFrom(6).map(() => dummySecondarySaleMembershipData),
-          )}
-          renderItem={(data) => (
-            <MembershipSecondarySaleCard data={data} />
-          )}
-          keyExtractor={(_, idx) => idx}
-        />
-      </VStack>
-      <VStack gap={4}>
         <SectionTitle label='Watchlist' />
         <FlatList<OnSaleMembershipModel>
           overflow='auto'

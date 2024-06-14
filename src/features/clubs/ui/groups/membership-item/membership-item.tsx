@@ -43,28 +43,30 @@ function MembershipItem({ data }: MembershipItemProps) {
             css={{ lineHeight: 1 }}
             aria-label='membership-item number'
           >
-            {`Membership #${data.membershipNum}`}
+            {`Membership #${data.number}`}
           </TextGroupSubheading>
         </TextGroup>
         <HStack gap={1} items='center'>
-          <Icon
-            name={
-              data.priceHasRisen
-                ? 'arrow-up-outline'
-                : 'arrow-down-outline'
-            }
-            color={data.priceHasRisen ? 'success500' : 'danger400'}
-            aria-label={`${
-              data.priceHasRisen ? 'increase' : 'decrease'
-            } in value`}
-          />
+          {data.percentage !== 0 && (
+            <Icon
+              name={
+                data.percentage > 0
+                  ? 'arrow-up-outline'
+                  : 'arrow-down-outline'
+              }
+              color={data.percentage > 0 ? 'success500' : 'danger400'}
+              aria-label={`${
+                data.percentage ? 'increase' : 'decrease'
+              } in value`}
+            />
+          )}
           <Text
             weight={500}
             size={2}
-            color={data.priceHasRisen ? 'success500' : 'danger400'}
+            color={data.percentage ? 'success500' : 'danger400'}
             aria-label='membership-item price change'
           >
-            {`$${data.priceChange.toFixed(2)} USD`}
+            {`$${data.price.toFixed(2)} USD`}
           </Text>
         </HStack>
       </VStack>

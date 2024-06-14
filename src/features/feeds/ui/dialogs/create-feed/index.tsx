@@ -106,9 +106,9 @@ function CreateFeedDialog() {
           onClose={close}
         >
           <DialogPortal>
-            <DialogOverlay bgColor='darkTint500' zIndex={10} />
+            <DialogOverlay bgColor='darkTint500' zIndex={15} />
             <DialogContent
-              zIndex={10}
+              zIndex={20}
               radius={2}
               w={608}
               css={{
