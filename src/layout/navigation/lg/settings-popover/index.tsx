@@ -1,6 +1,12 @@
 import { useState } from 'react';
-import { hexToRGB, customBgColor, useLogout } from '../../../../shared';
+import {
+  hexToRGB,
+  customBgColor,
+  useLogout,
+  Paths,
+} from '../../../../shared';
 import { Box, IconButton, Popover, VStack } from '@holdr-ui/react';
+import { useNavigate } from 'react-router-dom';
 
 function SettingsItem({
   label,
@@ -26,6 +32,7 @@ function SettingsItem({
 
 function SettingsPopover() {
   const logout = useLogout();
+  const navigate = useNavigate();
 
   const [state, set] = useState(false);
 
@@ -68,7 +75,13 @@ function SettingsPopover() {
             }
           >
             <VStack gap={1}>
-              <SettingsItem label='Account Settings' onClick={close} />
+              <SettingsItem
+                label='Account Settings'
+                onClick={() => {
+                  navigate(Paths.settings);
+                  close();
+                }}
+              />
               <SettingsItem label='Safety & Privacy' onClick={close} />
               <SettingsItem label='Personalize' onClick={close} />
             </VStack>
