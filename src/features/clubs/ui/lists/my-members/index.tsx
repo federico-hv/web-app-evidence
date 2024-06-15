@@ -12,12 +12,13 @@ import {
   TooltipTrigger,
   VStack,
 } from '@holdr-ui/react';
-
-import { dummyMember } from '../../../../../pages/clubs/shared';
-import { MyMemberItem } from '../../groups';
-import millify from 'millify';
 import { Link } from 'react-router-dom';
-import { makeButtonLarger, Paths, prefix } from '../../../../../shared';
+import {
+  InformationTooltip,
+  makeButtonLarger,
+  Paths,
+  prefix,
+} from '../../../../../shared';
 
 function MyMembers() {
   const currentUser = useCurrentUser();
@@ -33,14 +34,11 @@ function MyMembers() {
           <Heading size={3} weight={500} css={{ userSelect: 'none' }}>
             My Members
           </Heading>
-          <Tooltip>
-            <TooltipTrigger>
-              <Box fontSize='12px' mt='5px'>
-                <Icon color='base400' name='information-outline' />
-              </Box>
-            </TooltipTrigger>
-            <TooltipContent>These are your top members</TooltipContent>
-          </Tooltip>
+          <InformationTooltip
+            sideOffset={5}
+            side='bottom'
+            description='These are your top members'
+          />
         </HStack>
         {/*<Text color='white700' size={1}>*/}
         {/*  {millify(3, { precision: 2 })} Members Online*/}

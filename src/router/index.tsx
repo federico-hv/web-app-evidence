@@ -9,7 +9,6 @@ import {
 } from '../shared';
 import {
   ClubRoutes,
-  ConnectRoutes,
   UserRelationshipRoutes,
   SetupAccountRoutes,
   SetupProfileRoutes,
@@ -41,10 +40,6 @@ function Router() {
           <Route path='__dev__/*' element={<DevRoutes />} />
         )}
         <Route element={<MainLayout />}>
-          <Route
-            path={prefix(Paths.connect, '/*')}
-            element={<ConnectRoutes />}
-          />
           <Route
             path='/'
             element={<AuthGuard roles={['artist', 'general']} />}

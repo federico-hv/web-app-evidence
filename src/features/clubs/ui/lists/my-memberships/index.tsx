@@ -3,11 +3,6 @@ import { Fragment } from 'react';
 import { Box, Button, Heading, VStack } from '@holdr-ui/react';
 import { makeButtonLarger, Paths, prefix } from '../../../../../shared';
 import { Link } from 'react-router-dom';
-import { MembershipItem } from '../../groups/membership-item';
-import {
-  dummyOwnedMembershipData,
-  dummyOwnedMembershipData2,
-} from '../../../../../pages/clubs/shared';
 
 function MyMemberships() {
   const currentUser = useCurrentUser();

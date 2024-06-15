@@ -7,10 +7,7 @@ import {
 } from '../../../../../../shared';
 import { ConnectedAccountProps } from './types';
 import { Fragment } from 'react';
-import {
-  ReleasesUtility,
-  useRemoveConnectedAccount,
-} from '../../../../../../features';
+import { useRemoveConnectedAccount } from '../../../../../../features';
 import dayjs from 'dayjs';
 
 function ConnectedAccount({

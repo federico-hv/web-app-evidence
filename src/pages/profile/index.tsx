@@ -16,6 +16,7 @@ import {
   VStack,
 } from '@holdr-ui/react';
 import {
+  EmbeddedPlayer,
   GQLRenderer,
   Head,
   ISocialLink,
@@ -71,40 +72,6 @@ import { FlatList } from '../../tmp/flat-list';
 
 dayjs.extend(LocalizedFormat);
 dayjs().format('L LT');
-
-export function SpotifyEmbeddedPlayer({ id }: { id: string }) {
-  return (
-    <iframe
-      style={{ borderRadius: '12px' }}
-      src={`https://open.spotify.com/embed/track/${id}?utm_source=generator`}
-      width='100%'
-      height='152'
-      allowFullScreen
-      allow='autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture'
-      loading='lazy'
-    ></iframe>
-  );
-}
-
-export function EmbeddedPlayer({
-  ids,
-  provider,
-}: {
-  ids: IExternalId<number, MusicReleaseProvider>[];
-  provider: MusicReleaseProvider;
-}) {
-  const item = ids.find((item) => item.provider === provider);
-
-  return (
-    <Fragment>
-      {provider === 'Spotify' && item && (
-        <Box w={288}>
-          <SpotifyEmbeddedPlayer id={item.externalId} />
-        </Box>
-      )}
-    </Fragment>
-  );
-}
 
 function FavoriteArtist({
   name,

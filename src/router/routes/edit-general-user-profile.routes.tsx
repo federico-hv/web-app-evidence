@@ -27,7 +27,6 @@ import {
   VStack,
 } from '@holdr-ui/react';
 import {
-  Navigate,
   Outlet,
   useLocation,
   useNavigate,
@@ -38,6 +37,7 @@ import {
   GQLRenderer,
   ImageUpload,
   ISocialLink,
+  LoadWithoutPreviousLocation,
   makePath,
   NavigateWithPreviousLocation,
   Patterns,
@@ -80,30 +80,6 @@ function retrieveSocialLink(
   const socialLink = links.find((item) => item.provider === provider);
 
   return socialLink;
-}
-
-/**
- * Loading a dialog page without a previous location renders the
- * dialog on top of an empty page. To circumvent this, we provide
- * this component, which takes a previous location to use as a placeholder.
- *
- * @param default
- *
- */
-export function LoadWithoutPreviousLocation({
-  default: previousLocation,
-}: {
-  default: string;
-}) {
-  const location = useLocation();
-
-  if (!location.state?.previousLocation) {
-    return (
-      <Navigate to={location.pathname} state={{ previousLocation }} />
-    );
-  }
-
-  return <Fragment />;
 }
 
 function ChangeAvatar() {

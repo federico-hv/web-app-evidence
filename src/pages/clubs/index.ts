@@ -1,3 +1,8 @@
-export { default as ClubsRootPage } from './root';
-export { default as ClubsMyMembershipsPage } from './my-memberships';
-export { default as ClubPage } from './club';
+export { default as AllClubsPage } from './all';
+export { default as WatchlistClubPage } from './watchlist';
+export { default as LiveAuctionsClubPage } from './live-auctions';
+export { default as ActiveBidsClubsPage } from './active-bids';
+export { default as ClubMembersPage } from './members';
+
+export * from './club';
+export * from './ui';

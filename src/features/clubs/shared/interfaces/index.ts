@@ -31,3 +31,9 @@ export interface IClub {
   createdAt: Date;
   artist: IArtist;
 }
+
+export interface BidderModel {
+  displayName: string;
+  createdAt: Date;
+  amount: number;
+}

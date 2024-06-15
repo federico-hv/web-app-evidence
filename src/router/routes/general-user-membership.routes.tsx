@@ -16,13 +16,15 @@ import {
   useNavigate,
   useParams,
 } from 'react-router-dom';
-import { usePreviousLocation } from '../../shared';
+import {
+  LoadWithoutPreviousLocation,
+  usePreviousLocation,
+} from '../../shared';
 import { FlatList } from '../../tmp/flat-list';
 import { Route, Routes } from 'react-router';
 import { ProfileProvider } from '../../pages/profile/shared';
 import { IProfile, MembershipCard, useCurrentUser } from '../../features';
 import membershipCover from '../../assets/dummy/membership-1.jpg';
-import { LoadWithoutPreviousLocation } from './edit-general-user-profile.routes';
 import { Fragment } from 'react';
 
 function MembershipRouteDialog() {
