@@ -13,3 +13,16 @@ export function useRelationshipStatusInfo(username = '') {
 
   return { data };
 }
+
+//
+// export function useSuspenseRelationshipStatusInfo(username = '') {
+//   const { data } = useSuspenseQuery<{
+//     relationshipStatusInfo: IRelationshipStatusInfo;
+//   }>(GET_RELATIONSHIP_STATUS_INFO, {
+//     variables: {
+//       username: username,
+//     },
+//   });
+//
+//   return { data };
+// }

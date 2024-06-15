@@ -6,16 +6,22 @@ export interface IGetProfileSetupInfoOptions {
   artistId?: string;
   id?: string;
   accountId?: string;
+  slug?: string;
 }
 
 export function useGetClub(options: IGetProfileSetupInfoOptions) {
-  return useQuery<{ club: IClub }, IGetProfileSetupInfoOptions>(GET_CLUB, {
-    variables: options,
+  return useQuery<
+    { club: IClub },
+    { params: IGetProfileSetupInfoOptions }
+  >(GET_CLUB, {
+    variables: { params: options },
   });
 }
 export function useSuspenseGetClub(options: IGetProfileSetupInfoOptions) {
-  return useSuspenseQuery<{ club: IClub }, IGetProfileSetupInfoOptions>(
-    GET_CLUB,
-    { variables: options },
-  );
+  return useSuspenseQuery<
+    { club: IClub },
+    { params: IGetProfileSetupInfoOptions }
+  >(GET_CLUB, {
+    variables: { params: options },
+  });
 }

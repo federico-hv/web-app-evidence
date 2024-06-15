@@ -84,7 +84,7 @@ function RelationshipsDialog() {
               backdropFilter: 'blur(12px)',
             }}
           >
-            <DialogBody zIndex={50} px={6} py={6}>
+            <DialogBody overflowY='hidden' zIndex={50} px={6} py={6}>
               <RoutingTabs flex={1}>
                 <RoutingTabsHeader
                   h='fit-content'
@@ -140,7 +140,7 @@ function RelationshipsDialog() {
                     icon='close'
                   />
                 </RoutingTabsHeader>
-                <RoutingTabsContent h='full' />
+                <RoutingTabsContent />
               </RoutingTabs>
             </DialogBody>
           </DialogContent>
@@ -193,10 +193,12 @@ function FollowersList() {
     <Loader loading={loading}>
       {data && (
         <FlatList
-          pt={4}
+          mt={4}
+          h={480}
+          overflowY='auto'
+          className='thin-scrollbar'
           direction='vertical'
-          gap={3}
-          w='100%'
+          gap={4}
           data={data.followers.edges}
           renderItem={(data) => <FollowItem data={data.node} />}
           keyExtractor={({ node }) => node.id}
@@ -219,10 +221,12 @@ function FollowingList() {
     <Loader loading={loading}>
       {data && (
         <FlatList
-          pt={4}
+          mt={4}
+          h={480}
+          overflowY='auto'
+          className='thin-scrollbar'
           direction='vertical'
-          gap={3}
-          w='100%'
+          gap={4}
           data={data.following.edges}
           renderItem={(data) => <FollowItem data={data.node} />}
           keyExtractor={({ node }) => node.id}

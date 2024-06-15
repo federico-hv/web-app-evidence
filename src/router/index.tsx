@@ -1,6 +1,12 @@
 import { Route, Routes } from 'react-router';
 import { AuthRedirectPage, HomePage } from '../pages';
-import { AuthGuard, NotFoundError, Paths, prefix } from '../shared';
+import {
+  AuthGuard,
+  makePath,
+  NotFoundError,
+  Paths,
+  prefix,
+} from '../shared';
 import {
   ClubRoutes,
   ConnectRoutes,
@@ -14,6 +20,7 @@ import {
   BookmarksRoutes,
   SettingsRoutes,
   BookmarkGroupActionRoutes,
+  ArtistClubOverlayRoutes,
 } from './routes';
 import { MainLayout } from '../layout';
 import { Fragment } from 'react';
@@ -107,8 +114,16 @@ function Router() {
           element={<SetupProfileRoutes />}
         />
         <Route
+          path={makePath([Paths.clubs, '/*'])}
+          element={<ArtistClubOverlayRoutes />}
+        />
+        <Route
           path={prefix(Paths.bookmarks, '/*')}
           element={<BookmarkGroupActionRoutes />}
+        />
+        <Route
+          path={prefix(':username', '/*')}
+          element={<UserRelationshipRoutes />}
         />
         <Route
           element={
@@ -123,11 +138,6 @@ function Router() {
           <Route
             path={prefix(':username/memberships', '/*')}
             element={<GeneralUserMembershipRoutes />}
-          />
-
-          <Route
-            path={prefix(':username', '/*')}
-            element={<UserRelationshipRoutes />}
           />
         </Route>
       </Routes>

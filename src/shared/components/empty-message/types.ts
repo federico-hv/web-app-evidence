@@ -1,4 +1,4 @@
 export interface EmptyMessageProps {
-  title: string;
-  subtitle: string;
+  title?: string;
+  subtitle?: string;
 }

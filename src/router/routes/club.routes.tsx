@@ -12,13 +12,25 @@ import {
   ClubsLiveAuctionContent,
   ClubsWatchlistContent,
 } from '../../pages/clubs/root/ui';
+import ArtistClubBioContent from '../../pages/clubs/club/bio';
+import ArtistClubFeedContent from '../../pages/clubs/club/feed';
+import ArtistClubLiveBidsContent from '../../pages/clubs/club/live-bids';
+import ArtistClubMembershipPerks from '../../pages/clubs/club/perks';
 
-const BookmarksRoutes = () => (
+const ClubRoutes = () => (
   <Routes>
-    <Route path='' element={<ClubsRootPage />} />
-    <Route path=':slug' element={<ClubPage />} />
+    <Route path=':slug' element={<ClubPage />}>
+      <Route path='' element={<Navigate to='bio' replace />} />
+      <Route path='bio' element={<ArtistClubBioContent />} />
+      <Route path='feeds' element={<ArtistClubFeedContent />} />
+      <Route path='live-bids' element={<ArtistClubLiveBidsContent />} />
+      <Route
+        path='membership-perks'
+        element={<ArtistClubMembershipPerks />}
+      />
+    </Route>
     <Route path='' element={<ClubsRootPage />}>
-      <Route path='' element={<Navigate to='all' />} />
+      <Route path='' element={<Navigate to='all' replace />} />
       <Route path='all' element={<ClubsAllContent />} />
       <Route path='auction' element={<ClubsLiveAuctionContent />} />
       <Route path='watchlist' element={<ClubsWatchlistContent />} />
@@ -31,6 +43,6 @@ const BookmarksRoutes = () => (
   </Routes>
 );
 
-BookmarksRoutes.displayName = 'Bookmarks Routes';
+ClubRoutes.displayName = 'Bookmarks Routes';
 
-export default BookmarksRoutes;
+export default ClubRoutes;

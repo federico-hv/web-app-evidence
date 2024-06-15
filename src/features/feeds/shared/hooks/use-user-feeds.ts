@@ -7,7 +7,7 @@ import { FeedsReturnModel } from '../interface';
  */
 export function useUserFeeds(
   username: string,
-  type: 'post' | 'article' = 'post',
+  type: 'post' | 'article' | 'all' = 'post',
 ) {
   const { loading, error, data } = useQuery<
     {
