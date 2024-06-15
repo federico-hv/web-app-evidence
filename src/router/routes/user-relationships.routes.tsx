@@ -157,7 +157,7 @@ function FollowItem({ data }: { data: UserWithRelationship }) {
         to={`${data.role === 'artist' ? '/clubs' : ''}/${data.username}`}
       />
       <HStack gap={2} items='center' justify='space-between'>
-        <Avatar size={40} name={data.avatar} />
+        <Avatar size={40} src={data.avatar} name={data.displayName} />
         <HStack gap={2} h='fit-content' items='center'>
           <Text weight={500} style={{ marginBottom: '5px' }}>
             {data.displayName}
