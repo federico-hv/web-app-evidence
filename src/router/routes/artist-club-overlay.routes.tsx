@@ -177,7 +177,7 @@ function ClubMembersListContent() {
             backdropFilter: 'blur(12px)',
           }}
         >
-          <DialogBody zIndex={50} px={6} py={6}>
+          <DialogBody zIndex={50} px={6} py={6} overflowY='hidden'>
             <HStack
               borderBottom={1}
               borderColor='rgba(152, 152, 255, 0.10)'
