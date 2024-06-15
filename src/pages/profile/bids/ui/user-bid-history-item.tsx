@@ -1,6 +1,9 @@
 import { Avatar, Box, HStack, Icon, Text, VStack } from '@holdr-ui/react';
 import dayjs from 'dayjs';
 
+import localizedFormat from 'dayjs/plugin/localizedFormat';
+dayjs.extend(localizedFormat);
+
 function UserBidHistoryItem() {
   const price = 829.12;
   const createdAt = new Date();

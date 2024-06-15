@@ -16,6 +16,9 @@ import {
 import { FlatList } from '../../../tmp/flat-list';
 import dayjs from 'dayjs';
 
+import localizedFormat from 'dayjs/plugin/localizedFormat';
+dayjs.extend(localizedFormat);
+
 function ArtistProfileMembersPage() {
   return (
     <RadialSurface2 w='100%' h='100%' p={4} radius={3}>
