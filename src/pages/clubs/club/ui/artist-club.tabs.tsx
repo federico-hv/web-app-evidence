@@ -1,6 +1,5 @@
 import { Box, GeneralContextProvider } from '@holdr-ui/react';
-import { Navigate, useParams } from 'react-router-dom';
-import { Fragment } from 'react';
+import { useParams } from 'react-router-dom';
 import {
   GQLRenderer,
   RadialSurface,
