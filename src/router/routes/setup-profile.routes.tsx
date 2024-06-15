@@ -3,11 +3,11 @@ import {
   BioAndPerksView,
   ConnectOnboardingView,
   CustomURLView,
+  SetupArtistDialog,
   SocialMediaAccountsView,
   UploadPhotoView,
 } from '../../pages';
 import { NavigateWithPreviousLocation, Paths } from '../../shared';
-import SetupArtistDialog from '../../pages/overlays/artist-profile/ui/setup-artist.dialog';
 
 const SetupProfileRoutes = () => (
   <Routes>

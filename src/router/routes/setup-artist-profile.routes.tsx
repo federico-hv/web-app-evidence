@@ -1,20 +1,12 @@
 import { Route, Routes } from 'react-router';
-import { NavigateWithPreviousLocation, Paths, voidFn } from '../../shared';
-import {
-  ClubContextProvider,
-  IClub,
-  useCurrentUser,
-  useGetClub,
-} from '../../features';
+import { NavigateWithPreviousLocation, Paths } from '../../shared';
 import {
   BioAndPerksView,
   ConnectOnboardingView,
   CustomURLView,
-  SetupArtistDialog,
   SocialMediaAccountsView,
   UploadPhotoView,
 } from '../../pages';
-import { Fragment } from 'react';
 import { Overlay } from '@holdr-ui/react';
 
 const SetupArtistProfileRoutes = () => (

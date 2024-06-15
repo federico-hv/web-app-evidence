@@ -1,4 +1,9 @@
-import { IClub, useSuspenseSocialLinks } from '../../../../features';
+import {
+  BioSocialLinks,
+  IClub,
+  UserRelationshipCount,
+  useSuspenseSocialLinks,
+} from '../../../../features';
 import {
   Avatar,
   AvatarBadge,
@@ -8,7 +13,6 @@ import {
   useGeneralContext,
   VStack,
 } from '@holdr-ui/react';
-import { BioSocialLinks, UserRelationshipCount } from '../../../profile';
 
 function ArtistClubSummaryCard() {
   const { state: club } = useGeneralContext<IClub>();

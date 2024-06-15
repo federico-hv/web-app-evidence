@@ -10,6 +10,7 @@ import logoDark from '../../assets/images/logo-dark.png';
 import logoLight from '../../assets/images/logo-dark.png';
 import spotifyLogo from '../../assets/images/spotify-logo.png';
 import youtubeLogo from '../../assets/images/yt-logo.png';
+import membershipCoverImage from '../../assets/dummy/membership-1.jpg';
 
 import qrCode from '../../assets/icons/qr-code.svg';
 import keyboard from '../../assets/icons/keyboard.svg';
@@ -31,6 +32,7 @@ export const Asset = {
     LogoLight: logoLight,
     SpotifyLogo: spotifyLogo,
     YoutubeLogo: youtubeLogo,
+    DummyMembershipCover: membershipCoverImage,
   },
 
   Icon: {

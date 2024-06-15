@@ -54,3 +54,17 @@ export interface IProfile {
   favoriteArtists: ITinyArtist<number>[];
   socialLinks: ISocialLink[];
 }
+
+export interface ITinyProfile {
+  username: string;
+  displayName: string;
+  avatar?: string;
+  bio?: string;
+  location?: string;
+}
+
+export interface IUpdateSocialLink {
+  X?: string;
+  Instagram?: string;
+  TikTok?: string;
+}

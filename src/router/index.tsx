@@ -15,7 +15,6 @@ import {
   UserRoutes,
   EditGeneralUserProfileRoutes,
   ArtistProfileRoutes,
-  GeneralUserMembershipRoutes,
   BookmarksRoutes,
   SettingsRoutes,
   BookmarkGroupActionRoutes,
@@ -60,20 +59,6 @@ function Router() {
               path={prefix('artist/:username', '/*')}
               element={<ArtistProfileRoutes />}
             />
-            {/*<Route*/}
-            {/*  element={*/}
-            {/*    <AuthGuard*/}
-            {/*      roles={['artist']}*/}
-            {/*      fallback={<Navigate to='/' />}*/}
-            {/*    />*/}
-            {/*  }*/}
-            {/*>*/}
-            {/*  <Route*/}
-            {/*    path={prefix('artist/:username', '/*')}*/}
-            {/*    element={<ArtistProfileRoutes />}*/}
-            {/*  />*/}
-            {/*</Route>*/}
-            {/*/!* Profile Route*!/*/}
             <Route
               path={prefix(Paths.username, '/*')}
               element={<UserRoutes />}
@@ -128,11 +113,6 @@ function Router() {
           <Route
             path={prefix(':username/edit', '/*')}
             element={<EditGeneralUserProfileRoutes />}
-          />
-
-          <Route
-            path={prefix(':username/memberships', '/*')}
-            element={<GeneralUserMembershipRoutes />}
           />
         </Route>
       </Routes>
