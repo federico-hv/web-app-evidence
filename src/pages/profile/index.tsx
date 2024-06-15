@@ -19,7 +19,6 @@ import {
   GQLRenderer,
   Head,
   ISocialLink,
-  ITinyArtist,
   LinkOverlay,
   makePath,
   Menu,
@@ -42,6 +41,7 @@ import { ProfileProvider } from './shared';
 import { ContentLayout, ContentLayoutMain } from '../../layout';
 import {
   Link,
+  Navigate,
   useLocation,
   useNavigate,
   useParams,
@@ -60,10 +60,6 @@ import {
 import dayjs from 'dayjs';
 import LocalizedFormat from 'dayjs/plugin/localizedFormat';
 import membershipCover from '../../assets/dummy/membership-1.jpg';
-
-dayjs.extend(LocalizedFormat);
-dayjs().format('L LT');
-
 import {
   IconName,
   ResponsiveValue,
@@ -73,7 +69,10 @@ import { orderBy } from 'lodash';
 import millify from 'millify';
 import { FlatList } from '../../tmp/flat-list';
 
-function SpotifyEmbeddedPlayer({ id }: { id: string }) {
+dayjs.extend(LocalizedFormat);
+dayjs().format('L LT');
+
+export function SpotifyEmbeddedPlayer({ id }: { id: string }) {
   return (
     <iframe
       style={{ borderRadius: '12px' }}
@@ -168,18 +167,14 @@ export function GeneralUserBioContent() {
               <TextGroupSubheading weight={500} size={4}>
                 About
               </TextGroupSubheading>
-              <TextGroupSubheading
-                casing='capitalize'
-                weight={300}
-                color='white600'
-              >
+              <TextGroupSubheading weight={300} color='white600'>
                 {profile.bio}
               </TextGroupSubheading>
             </TextGroup>
             <Box
               my={4}
               borderBottom={1}
-              borderColor='rgba(152, 152, 255, 0.05)'
+              borderColor='rgba(152, 152, 255, 0.1)'
             />
           </Fragment>
         )}
@@ -200,7 +195,7 @@ export function GeneralUserBioContent() {
             <Box
               my={4}
               borderBottom={1}
-              borderColor='rgba(152, 152, 255, 0.05)'
+              borderColor='rgba(152, 152, 255, 0.1)'
             />
           </Fragment>
         )}
@@ -218,7 +213,7 @@ export function GeneralUserBioContent() {
             <Box
               my={4}
               borderBottom={1}
-              borderColor='rgba(152, 152, 255, 0.05)'
+              borderColor='rgba(152, 152, 255, 0.1)'
             />
           </Fragment>
         )}
@@ -246,7 +241,7 @@ export function GeneralUserBioContent() {
             <Box
               my={4}
               borderBottom={1}
-              borderColor='rgba(152, 152, 255, 0.05)'
+              borderColor='rgba(152, 152, 255, 0.1)'
             />
           </Fragment>
         )}
@@ -338,7 +333,7 @@ function IconLink({
   );
 }
 
-function BioSocialLinks({ links }: { links: ISocialLink[] }) {
+export function BioSocialLinks({ links }: { links: ISocialLink[] }) {
   const toIcon: Record<SocialProvider, IconName> = {
     Instagram: 'instagram',
     X: 'x-twitter',
@@ -358,7 +353,7 @@ function BioSocialLinks({ links }: { links: ISocialLink[] }) {
   );
 }
 
-function UserRelationshipCount({ username }: { username: string }) {
+export function UserRelationshipCount({ username }: { username: string }) {
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
@@ -380,7 +375,11 @@ function UserRelationshipCount({ username }: { username: string }) {
   return (
     <Fragment>
       {profileData && relationshipCountData && (
-        <HStack gap={3}>
+        <HStack
+          items='center'
+          gap={3}
+          divider={<Circle bgColor='black300' size='5px' />}
+        >
           <FollowCountItem
             onClick={
               profileData.profile.protected
@@ -665,6 +664,14 @@ export function GeneralUserWatchlistContent() {
 }
 
 function ProfilePage() {
+  const { username } = useParams();
+
+  const currentUser = useCurrentUser();
+
+  if (currentUser.role === 'artist' && username === currentUser.username) {
+    return <Navigate to={`/artist/${currentUser.username}`} replace />;
+  }
+
   return (
     <GQLRenderer>
       <ProfileProvider>

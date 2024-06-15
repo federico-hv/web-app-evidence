@@ -7,56 +7,37 @@ import {
   Text,
   IconButton,
   Avatar,
-  StackDivider,
-  AvatarBadge,
   Icon,
   Box,
-  Heading,
-  UnorderedList,
-  List,
-  AvatarGroup,
   Tag,
   useGeneralContext,
-  Container,
 } from '@holdr-ui/react';
-import {
-  ArtistClubPageRightPanel,
-  ArtistProfileCard,
-  ArtistProps,
-} from './bio';
+import { ArtistClubBioAdditionalContent, ArtistProfileCard } from './bio';
 
-import { EmptyMessage, Loader, Error } from '../../../shared';
+import { EmptyMessage, Loader, Head } from '../../../shared';
 import { FeedCard, useUserFeeds } from '../../../features/feeds';
-import { useParams } from 'react-router-dom';
+import { IClub } from '../../../features';
+import { Fragment } from 'react';
 
-function Feeds({
-  type,
-  emptyMessage,
-}: {
-  type: 'article' | 'post';
-  emptyMessage: { title: string; subtitle: string };
-}) {
-  const { slug } = useParams();
+function Feeds({ username }: { username: string }) {
+  const { loading, data, error } = useUserFeeds(username, 'all');
 
-  const username = slug || '';
-  const { loading, data, error } = useUserFeeds(username, type);
-
-  console.log('SLUG: ', slug);
+  if (error) {
+    return <Fragment />;
+  }
 
   return (
-    <Error hasError={!!error} errorMessage={error?.message}>
-      <Loader loading={loading}>
-        {data && data.userFeeds.count > 0 ? (
-          <VStack gap={6} w='full' pb={6}>
-            {data.userFeeds.data.map((item) => (
-              <FeedCard key={item.id} data={item} />
-            ))}
-          </VStack>
-        ) : (
-          <EmptyMessage {...emptyMessage} />
-        )}
-      </Loader>
-    </Error>
+    <Loader loading={loading}>
+      {data && data.userFeeds.count > 0 ? (
+        <VStack gap={6} w='full' pb={6}>
+          {data.userFeeds.data.map((item) => (
+            <FeedCard key={item.id} data={item} />
+          ))}
+        </VStack>
+      ) : (
+        <EmptyMessage subtitle='No posts yet.' />
+      )}
+    </Loader>
   );
 }
 
@@ -162,7 +143,6 @@ function ArtistPost() {
     </Box>
   );
 }
-
 ArtistPost.displayName = 'ArtistPost';
 
 const imageSrcs = [
@@ -173,40 +153,38 @@ const imageSrcs = [
   'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSyQiewCK1xVeDg4hXiae0MaHWGE9SWqXVSoj87zJFrjshTTBSm',
 ];
 
-type ArtistFeedProps = ArtistProps;
-function ArtistFeed({
-  socialLinks,
-  isVerified,
-  avatar,
-  name,
-}: ArtistFeedProps) {
+function ArtistFeed() {
+  const { state: club } = useGeneralContext<IClub>();
+
   return (
-    <HStack
-      gap={4}
-      justify={'space-between'}
-      overflow='scroll'
-      css={{ scrollbarWidth: 'thin' }}
-    >
-      <VStack flex={2} gap={4} maxHeight='h-screen' overflow='scroll'>
-        <ArtistProfileCard
-          p={'16px'}
-          socialLinks={socialLinks}
-          isVerified={isVerified}
-          avatar={avatar}
-          name={name}
-        />
-        <Feeds
-          type='post'
-          emptyMessage={{
-            title: 'No posts',
-            subtitle: `${name} has not yet created any posts.`,
-          }}
-        />
-      </VStack>
-      <ArtistClubPageRightPanel />
-    </HStack>
+    <Fragment>
+      <Head
+        prefix={`${club.artist.name}'s Club -`}
+        title='Feeds'
+        description='A catalog of memberships that are being offered by artists.'
+      />
+      <HStack
+        maxHeight='calc(100vh - 240px)'
+        overflow='hidden'
+        justify='space-between'
+      >
+        <VStack
+          flex={1}
+          shrink={0}
+          gap={4}
+          pr={4}
+          overflow='auto'
+          className='thin-scrollbar'
+        >
+          <ArtistProfileCard />
+          <Feeds username={club.artist.username} />
+        </VStack>
+
+        <ArtistClubBioAdditionalContent />
+      </HStack>
+    </Fragment>
   );
 }
-
 ArtistFeed.displayName = 'ArtistFeed';
+
 export default ArtistFeed;

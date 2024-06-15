@@ -1,16 +1,18 @@
 import { gql } from '@apollo/client';
 
 export const GET_CLUB = gql`
-  query club($id: String, $artistId: String, $accountId: String) {
-    club(id: $id, artistId: $artistId, accountId: $accountId) {
+  query club($params: ClubSearchParamsInput!) {
+    club(params: $params) {
       id
       bannerImage
       coverImage
       url
-      # perks
       artist {
         id
         name
+        bio
+        username
+        accountId
         avatar
         isVerified
       }

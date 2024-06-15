@@ -3,6 +3,8 @@ export interface IArtist {
   name: string;
   bio: string;
   avatar: string;
+  username: string;
+  accountId: string;
   isVerified: boolean;
 }
 

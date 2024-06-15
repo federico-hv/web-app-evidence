@@ -33,15 +33,18 @@ function ClubsPage() {
         description='A catalog of memberships that are being offered by artists.'
       />
       {currentUser && (
-        <RadialSurface w='100%' radius={4} minHeight='calc(100vh - 96px)'>
+        <RadialSurface w='100%' radius={4} h='fit-content'>
           <Box px={5} py={5}>
             <Box py={3} mb={5}>
               <Heading weight={400} size={6}>
                 Holdr Clubs
               </Heading>
             </Box>
-            <RoutingTabs flex={1}>
-              <RoutingTabsHeader h={44}>
+            <RoutingTabs flex={1} h='fit-content'>
+              <RoutingTabsHeader
+                borderBottom={1}
+                borderColor='rgba(152, 152, 255, 0.10)'
+              >
                 <RoutingTabsList gap={1}>
                   <RoutingTabsTrigger
                     to='all'
@@ -97,7 +100,7 @@ function ClubsPage() {
                   <SelectMembershipSort />
                 </HStack>
               </RoutingTabsHeader>
-              <RoutingTabsContent py={4} minHeight='calc(100vh - 158px)'>
+              <RoutingTabsContent py={4} h='full'>
                 {switchState && <FiltersList />}
               </RoutingTabsContent>
             </RoutingTabs>

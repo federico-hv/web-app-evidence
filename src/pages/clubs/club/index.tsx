@@ -1,176 +1,145 @@
 import {
-  useCurrentArtist,
+  IClub,
+  SocialButton,
   useCurrentUser,
-  useSuspenseGetArtist,
-  useSuspenseSocialLinks,
+  useGetClub,
+  useRelationshipStatusInfo,
 } from '../../../features';
 import {
-  ErrorFallback,
-  GQLRenderer,
-  Head,
-  customBgColor,
   RadialSurface,
-  Loader,
+  RoutingTabs,
+  RoutingTabsHeader,
+  RoutingTabsList,
+  RoutingTabsTrigger,
+  RoutingTabsContent,
+  voidFn,
 } from '../../../shared';
 import {
   Box,
-  Button,
+  Center,
+  GeneralContextProvider,
   Heading,
   HStack,
-  IconButton,
-  useSwitch,
-  Text,
-  VStack,
+  useGeneralContext,
 } from '@holdr-ui/react';
-import CustomTabs, {
-  CustomTabsContent,
-  CustomTabsHeader,
-  CustomTabsList,
-  CustomTabsTrigger,
-} from '../../../tmp/custom-tabs';
-import { SelectMembershipSort } from '../ui';
-import ArtistBio from './bio';
-import { useParams } from 'react-router-dom';
-import { startCase } from 'lodash';
-import ArtistFeed from './feed';
-import ArtistLiveBids from './livebids';
-import ArtistMembershipPerks from './perks';
-import { Suspense } from 'react';
+import { Navigate, useParams } from 'react-router-dom';
+import { Fragment } from 'react';
 
-function ClubPage() {
-  const artist = useCurrentArtist();
-  const { data } = useSuspenseGetArtist(artist!.id, 'no-cache');
-  const { data: socialLinksData } = useSuspenseSocialLinks(artist!.id);
-
-  const { bio, avatar, name, isVerified } = data.artist;
-  const { socialLinks } = socialLinksData;
-
-  const artistBioProps = { ...data.artist, socialLinks };
-  const artistFeedProps = { avatar, name, isVerified, socialLinks };
-
-  const currentUser = useCurrentUser();
-  const { switchState, toggle } = useSwitch();
-  let { slug } = useParams();
-
-  const title = `${startCase(slug)}'s ClubPage`;
+function ArtistClubSocialButton({ username }: { username: string }) {
+  const { data } = useRelationshipStatusInfo(username);
 
   return (
-    <GQLRenderer ErrorFallback={ErrorFallback}>
-      <Head
-        prefix='Holdr - Clubs'
-        title=''
-        description='A catalog of memberships that are being offered by artists.'
-      />
-      {currentUser && (
-        <RadialSurface w='100%' radius={4} minHeight='calc(100vh - 96px)'>
-          <Box px={5} py={5}>
-            <HStack py={3} mb={5} items={'center'}>
-              <Heading
-                weight={400}
-                size={'24px'}
-                css={{ lineHeight: '115%' }}
-              >
-                {title}
-              </Heading>
-              <VStack
-                border={1}
-                borderColor='#5CE581'
-                justify={'center'}
-                px={2}
-                radius={1}
-                maxHeight={'xs'}
-                ml={20}
-              >
-                <Text color='#5CE581'>LIVE</Text>
-              </VStack>
-              <Box position='absolute' r={30}>
-                <Button colorTheme='purple100' style={{ width: '150px' }}>
-                  Follow
-                </Button>
-              </Box>
-            </HStack>
-            <CustomTabs defaultValue='bio' flex={1}>
-              <CustomTabsHeader h={44}>
-                <CustomTabsList gap={1}>
-                  <CustomTabsTrigger
-                    w='fit-content'
-                    py={2}
-                    px={6}
-                    _hover={{ background: '#9898FF26' }}
-                    value='bio'
-                    fontSize={'18px'}
-                    color='white500'
-                  >
-                    Bio
-                  </CustomTabsTrigger>
-                  <CustomTabsTrigger
-                    w='fit-content'
-                    py={2}
-                    px={6}
-                    _hover={{ background: '#9898FF26' }}
-                    value='feed'
-                    fontSize={'18px'}
-                    color='white500'
-                  >
-                    Feed
-                  </CustomTabsTrigger>
-                  <CustomTabsTrigger
-                    w='fit-content'
-                    py={2}
-                    px={6}
-                    _hover={{ background: '#9898FF26' }}
-                    value='liveBids'
-                    fontSize={'18px'}
-                    color='white500'
-                  >
-                    Live Bids
-                  </CustomTabsTrigger>
-                  <CustomTabsTrigger
-                    w='fit-content'
-                    py={2}
-                    px={6}
-                    _hover={{ background: '#9898FF26' }}
-                    value='membershipPerks'
-                    fontSize={'18px'}
-                    color='white500'
-                  >
-                    Membership Perks
-                  </CustomTabsTrigger>
-                </CustomTabsList>
-              </CustomTabsHeader>
-              <CustomTabsContent
-                py={8}
-                value='bio'
-                minHeight='calc(100vh - 158px)'
-              >
-                <ArtistBio {...artistBioProps} />
-              </CustomTabsContent>
-              <CustomTabsContent
-                py={8}
-                value='feed'
-                minHeight='calc(100vh - 158px)'
-              >
-                <ArtistFeed {...artistFeedProps} />
-              </CustomTabsContent>
-              <CustomTabsContent
-                py={8}
-                value='liveBids'
-                minHeight='calc(100vh - 158px)'
-              >
-                <ArtistLiveBids />
-              </CustomTabsContent>
-              <CustomTabsContent
-                py={8}
-                value='membershipPerks'
-                minHeight='calc(100vh - 158px)'
-              >
-                <ArtistMembershipPerks />
-              </CustomTabsContent>
-            </CustomTabs>
-          </Box>
-        </RadialSurface>
+    <SocialButton
+      username={username}
+      statusInfo={data.relationshipStatusInfo}
+    />
+  );
+}
+
+function ArtistClubHeader() {
+  const currentUser = useCurrentUser();
+
+  const { state: club } = useGeneralContext<IClub>();
+
+  return (
+    <HStack py={3} gap={4} items='center' justify='space-between'>
+      <HStack gap={4} items='center'>
+        <Heading weight={400} size={6} css={{ lineHeight: '115%' }}>
+          {club.artist.name}'s Club Page
+        </Heading>
+        <Center
+          px={2}
+          border={1}
+          fontWeight={500}
+          fontSize={2}
+          borderColor='success500'
+          color='success500'
+          radius={1}
+        >
+          LIVE
+        </Center>
+      </HStack>
+
+      {currentUser.id !== club.artist.accountId && (
+        <ArtistClubSocialButton username={club.artist.username} />
       )}
-    </GQLRenderer>
+    </HStack>
+  );
+}
+
+function ClubPage() {
+  const { slug } = useParams();
+
+  const { data, error } = useGetClub({ slug: slug || '' });
+
+  if (error) {
+    return <Navigate to='/' />;
+  }
+  return (
+    <Fragment>
+      {data && (
+        <GeneralContextProvider
+          value={{ state: data.club, update: voidFn }}
+        >
+          <RadialSurface w='100%' radius={4} h='fit-content'>
+            <Box px={5} py={5}>
+              <ArtistClubHeader />
+              <RoutingTabs defaultValue='bio' flex={1}>
+                <RoutingTabsHeader
+                  borderBottom={1}
+                  borderColor='rgba(152, 152, 255, 0.10)'
+                >
+                  <RoutingTabsList gap={1}>
+                    <RoutingTabsTrigger
+                      to='bio'
+                      w='fit-content'
+                      py={2}
+                      px={6}
+                      fontSize={2}
+                      _hover={{ background: '#9898FF26' }}
+                    >
+                      Bio
+                    </RoutingTabsTrigger>
+                    <RoutingTabsTrigger
+                      to='feeds'
+                      w='fit-content'
+                      py={2}
+                      px={6}
+                      fontSize={2}
+                      _hover={{ background: '#9898FF26' }}
+                    >
+                      Feed
+                    </RoutingTabsTrigger>
+                    <RoutingTabsTrigger
+                      to='live-bids'
+                      w='fit-content'
+                      py={2}
+                      px={6}
+                      fontSize={2}
+                      _hover={{ background: '#9898FF26' }}
+                    >
+                      Live Bids
+                    </RoutingTabsTrigger>
+                    <RoutingTabsTrigger
+                      to='membership-perks'
+                      w='fit-content'
+                      py={2}
+                      px={6}
+                      fontSize={2}
+                      _hover={{ background: '#9898FF26' }}
+                    >
+                      Membership Perks
+                    </RoutingTabsTrigger>
+                  </RoutingTabsList>
+                </RoutingTabsHeader>
+
+                <RoutingTabsContent mt={4} h='full' />
+              </RoutingTabs>
+            </Box>
+          </RadialSurface>
+        </GeneralContextProvider>
+      )}
+    </Fragment>
   );
 }
 

@@ -20,6 +20,7 @@ export interface IPerk {
   id: number;
   label: string;
   description?: string;
+  additionalInfo?: string;
 }
 
 export interface IClub {

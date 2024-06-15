@@ -88,7 +88,7 @@ function NavigationList() {
         label='Profile'
         to={
           currentUser.role === 'artist'
-            ? currentUser.username
+            ? `/artist/${currentUser.username}`
             : `${currentUser.username}/bio`
         }
         icon={{
@@ -99,7 +99,7 @@ function NavigationList() {
       <NavigationItem
         active={!!matchPath(makePath([Paths.clubs, '/*']), pathname)}
         label='Clubs'
-        to={Paths.clubs}
+        to={makePath([Paths.clubs, 'all'])}
         icon={{
           active: 'collections-fill',
           inactive: 'collections-outline',
