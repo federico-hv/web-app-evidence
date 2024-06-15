@@ -86,7 +86,7 @@ export function SpotifyEmbeddedPlayer({ id }: { id: string }) {
   );
 }
 
-function EmbeddedPlayer({
+export function EmbeddedPlayer({
   ids,
   provider,
 }: {

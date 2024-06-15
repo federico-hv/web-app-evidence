@@ -9,7 +9,6 @@ import {
   Heading,
   AvatarGroup,
   Circle,
-  GeneralContextProvider,
   useGeneralContext,
 } from '@holdr-ui/react';
 import { FlatList } from '../../../tmp/flat-list';
@@ -17,21 +16,18 @@ import {
   GQLRenderer,
   Head,
   ISocialLink,
-  Loader,
   makePath,
   Paths,
   usePreviousLocation,
-  voidFn,
 } from '../../../shared';
-import {
-  IClub,
-  useGetClub,
-  useSuspenseSocialLinks,
-} from '../../../features';
+import { IClub, useSuspenseSocialLinks } from '../../../features';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import { Fragment } from 'react';
-import { BioSocialLinks, UserRelationshipCount } from '../../profile';
-import slug = Mocha.utils.slug;
+import {
+  BioSocialLinks,
+  EmbeddedPlayer,
+  UserRelationshipCount,
+} from '../../profile';
 
 const imageSrcs = [
   'https://www.gravatar.com/avatar/2c7d99fe281ecd3bcd65ab915bac6dd5?s=250',
@@ -112,32 +108,39 @@ export function ArtistClubBioAdditionalContent() {
         pr={3}
       >
         <VStack gap={2}>
-          <iframe
-            style={{ borderRadius: '12px' }}
-            src='https://open.spotify.com/embed/track/0sT4slW2xWai3EwVSiuL9Y?utm_source=generator'
-            width='100%'
-            height='152'
-            allow='autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture'
-            loading='lazy'
-          ></iframe>
-          <br />
-          <iframe
-            style={{ borderRadius: '12px' }}
-            src='https://open.spotify.com/embed/track/0grFc6klR3hxoHLcgCYsF4?utm_source=generator'
-            width='100%'
-            height='152'
-            allow='autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture'
-            loading='lazy'
-          ></iframe>
-          <br />
-          <iframe
-            style={{ borderRadius: '12px' }}
-            src='https://open.spotify.com/embed/track/73M2Vb5MfZh8iGKudkMtlw?utm_source=generator'
-            width='100%'
-            height='152'
-            allow='autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture'
-            loading='lazy'
-          ></iframe>
+          <EmbeddedPlayer
+            provider='Spotify'
+            ids={[
+              {
+                externalId: '73M2Vb5MfZh8iGKudkMtlw',
+                provider: 'Spotify',
+                externalUrl: '',
+                id: 1,
+              },
+            ]}
+          />
+          <EmbeddedPlayer
+            provider='Spotify'
+            ids={[
+              {
+                externalId: '0sT4slW2xWai3EwVSiuL9Y',
+                provider: 'Spotify',
+                externalUrl: '',
+                id: 2,
+              },
+            ]}
+          />
+          <EmbeddedPlayer
+            provider='Spotify'
+            ids={[
+              {
+                externalId: '0grFc6klR3hxoHLcgCYsF4',
+                provider: 'Spotify',
+                externalUrl: '',
+                id: 2,
+              },
+            ]}
+          />
         </VStack>
         <Box
           my={4}
