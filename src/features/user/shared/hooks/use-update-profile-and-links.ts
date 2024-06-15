@@ -1,9 +1,8 @@
 import { gql, Reference, useMutation } from '@apollo/client';
 import { UPDATE_PROFILE_AND_LINKS } from '../../mutations';
 import { ISocialLink } from '../../../../shared';
-import { ITinyProfile } from '../../../../router/routes/edit-general-user-profile.routes';
 import { useCurrentUser } from '../../../auth';
-import { IProfile } from '../types';
+import { IProfile, ITinyProfile } from '../types';
 
 export function useUpdateProfileAndLinks() {
   const currentUser = useCurrentUser();
