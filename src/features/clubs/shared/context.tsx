@@ -8,7 +8,15 @@ import { useGetClub, useSuspenseGetClub } from './hooks';
 import { GQLRenderer } from '../../../shared';
 
 const ClubContext = createContext<IClub>({
-  artist: { name: '', id: '', bio: '', isVerified: false, avatar: '' },
+  artist: {
+    name: '',
+    id: '',
+    bio: '',
+    isVerified: false,
+    avatar: '',
+    username: '',
+    accountId: '',
+  },
   createdAt: new Date(),
   id: '',
 });

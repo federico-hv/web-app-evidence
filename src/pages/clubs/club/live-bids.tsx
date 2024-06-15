@@ -219,7 +219,7 @@ function EligibleMember({
               />
             </Menu.Trigger>
             <Menu.Content>
-              <Menu.Item>Withdraw Bid</Menu.Item>
+              <Menu.Item dangerous>Withdraw Bid</Menu.Item>
               <Menu.Item>My bidding history</Menu.Item>
             </Menu.Content>
           </Menu>
