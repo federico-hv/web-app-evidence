@@ -1,24 +1,14 @@
-import { Loader, makePath, Paths, voidFn } from '../../../../shared';
+import { makePath, Paths } from '../../../../shared';
+import { ClubProvider } from '../../../../features';
 import {
-  ClubProvider,
-  useLazyIsArtistProfileComplete,
-} from '../../../../features';
-import {
-  Alert,
-  AlertContent,
-  AlertDescription,
   Box,
-  Center,
-  CircularProgress,
   Dialog,
-  GeneralContextProvider,
   Heading,
   HStack,
   useDisclosure,
   VStack,
 } from '@holdr-ui/react';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
-import { Fragment } from 'react';
 import { SetupStep } from './index';
 
 function SetupArtistDialog() {
