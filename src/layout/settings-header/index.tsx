@@ -34,7 +34,7 @@ function SettingsHeaderLayout({
           colorTheme='base400'
           onClick={goBack}
         />
-        <Heading size={4} weight={500} css={{ fontSize: 'large' }}>
+        <Heading casing='capitalize' size={4} weight={400}>
           {title}
         </Heading>
       </HStack>
