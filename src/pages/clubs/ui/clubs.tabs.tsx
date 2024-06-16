@@ -10,9 +10,12 @@ import {
   RoutingTabsHeader,
   RoutingTabsTrigger,
   RoutingTabsContent,
+  makePath,
+  Paths,
 } from '../../../shared';
 import {
   Box,
+  Button,
   Heading,
   HStack,
   IconButton,
@@ -20,9 +23,11 @@ import {
 } from '@holdr-ui/react';
 import { SelectMembershipSort } from '../ui';
 import ClubsFilters from './clubs-filters';
+import { useNavigate } from 'react-router-dom';
 
 function ClubsTabs() {
   const currentUser = useCurrentUser();
+  const navigate = useNavigate();
   const { switchState, toggle } = useSwitch();
 
   return (
@@ -35,15 +40,24 @@ function ClubsTabs() {
       {currentUser && (
         <RadialSurface w='100%' radius={4} h='fit-content'>
           <Box px={5} py={5}>
-            <Box py={3} mb={5}>
+            <HStack justify='space-between' items='center' py={3} mb={5}>
               <Heading weight={400} size={6}>
                 Holdr Clubs
               </Heading>
-            </Box>
+              <Button
+                css={{ px: '50px' }}
+                colorTheme='purple100'
+                onClick={() =>
+                  navigate(makePath([Paths.clubs, currentUser.username]))
+                }
+              >
+                View Club
+              </Button>
+            </HStack>
             <RoutingTabs flex={1} h='fit-content'>
               <RoutingTabsHeader
-                borderBottom={1}
-                borderColor='rgba(152, 152, 255, 0.10)'
+              // borderBottom={1}
+              // borderColor='rgba(152, 152, 255, 0.10)'
               >
                 <RoutingTabsList gap={1}>
                   <RoutingTabsTrigger

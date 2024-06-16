@@ -1,4 +1,5 @@
 import {
+  Button,
   Center,
   Heading,
   HStack,
@@ -31,7 +32,15 @@ function ArtistClubHeader() {
         </Center>
       </HStack>
 
-      {currentUser.id !== club.artist.accountId && (
+      {currentUser.id === club.artist.accountId ? (
+        <Button
+          css={{ px: '50px' }}
+          colorTheme='purple100'
+          onClick={() => console.log('Open edit')}
+        >
+          Edit
+        </Button>
+      ) : (
         <ArtistClubSocialButton username={club.artist.username} />
       )}
     </HStack>
