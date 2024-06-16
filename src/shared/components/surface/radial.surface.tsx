@@ -1,5 +1,4 @@
-import { BoxProps } from '@holdr-ui/react/dist/components/box/src/box.types';
-import { Box, Stack } from '@holdr-ui/react';
+import { Stack } from '@holdr-ui/react';
 import { StackProps } from '@holdr-ui/react/dist/components/stack/src/stack.types';
 
 function RadialSurface({ css, children, ...props }: StackProps) {

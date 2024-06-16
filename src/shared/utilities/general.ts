@@ -156,3 +156,22 @@ export async function generateCodeChallenge(
 
   return base64encode(digest);
 }
+
+/**
+ * Generates a random number between 0 and n
+ *
+ * @param n the max number
+ */
+export function getRandomNumber(n: number) {
+  return Math.floor(Math.random() * (n + 1));
+}
+
+/**
+ * Generates a random number between n and m
+ *
+ * @param n the min number
+ * @param m the max number
+ */
+export function getRandomNumberInRange(n: number, m: number) {
+  return Math.floor(Math.random() * (m - n + 1)) + n;
+}

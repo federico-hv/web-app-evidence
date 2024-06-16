@@ -5,34 +5,17 @@ import {
 import { VStack } from '@holdr-ui/react';
 import { ChangeEvent, useEffect } from 'react';
 import {
-  matchesPattern,
+  isMatchingPattern,
+  PatternErrorMessage,
   Patterns,
   SocialProvider,
+  TextField,
   useGeneralContext,
 } from '../../../../../shared';
 import {
   ISocialMediaAccountsViewContext,
   SocialPlatformInfo,
 } from '../shared';
-import TextInputField from './text-input-field';
-
-export const PatternErrorMessage = {
-  invalid: (value = 'value') => `Enter a valid ${value}`,
-  invalidCharacters: (value = 'Value', expecting?: string) =>
-    `${value} contains invalid characters. ${
-      expecting ? `Expecting ${expecting}.` : ''
-    }`,
-};
-
-export function isMatchingPattern(
-  value: string | undefined,
-  pattern: RegExp,
-  message = PatternErrorMessage.invalid(),
-): string | undefined {
-  if (value === undefined || value.length === 0) return undefined;
-
-  return matchesPattern(value, pattern) ? undefined : message;
-}
 
 function SocialLinksForm() {
   const currentUser = useCurrentUser();
@@ -72,7 +55,7 @@ function SocialLinksForm() {
   return (
     <VStack gap={4}>
       <VStack gap={2}>
-        <TextInputField
+        <TextField
           name='Instagram'
           label='Instagram URL'
           value={state.links.Instagram}
@@ -85,7 +68,7 @@ function SocialLinksForm() {
             PatternErrorMessage.invalid('Instagram URL'),
           )}
         />
-        <TextInputField
+        <TextField
           name='TikTok'
           label='TikTok URL'
           value={state.links.TikTok}
@@ -98,7 +81,7 @@ function SocialLinksForm() {
             PatternErrorMessage.invalid('TikTok URL'),
           )}
         />
-        <TextInputField
+        <TextField
           name='X'
           label='X URL'
           value={state.links.X}

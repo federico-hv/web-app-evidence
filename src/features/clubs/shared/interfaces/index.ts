@@ -4,7 +4,7 @@ import { IArtist } from '../../../artist';
 export interface OnSaleMembershipModel {
   endDate?: Date;
   name: string;
-  coverImage?: string;
+  coverImage: string;
   artist: UserModel;
   price: number;
   isOnWatchlist: boolean;
@@ -30,4 +30,10 @@ export interface IClub {
   url?: string;
   createdAt: Date;
   artist: IArtist;
+}
+
+export interface BidderModel {
+  displayName: string;
+  createdAt: Date;
+  amount: number;
 }

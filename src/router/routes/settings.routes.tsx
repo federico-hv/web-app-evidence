@@ -8,7 +8,6 @@ import {
   BirthdaySettingPage,
   BlockedAccountsSettingsPage,
   ChangePasswordSettingPage,
-  ConnectedAccountSettingsPage,
   CountrySettingPage,
   EmailFiltersSettingsPage,
   EmailSettingPage,
@@ -48,10 +47,6 @@ const SettingsRoutes = () => (
       <Route
         path={Paths.setting.account_security}
         element={<AccountSecuritySettingsPage />}
-      />
-      <Route
-        path={Paths.setting.connected_accounts}
-        element={<ConnectedAccountSettingsPage />}
       />
       <Route
         path={Paths.setting.account}

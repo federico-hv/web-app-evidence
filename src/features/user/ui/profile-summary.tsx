@@ -1,17 +1,15 @@
 import { Avatar, Box, HStack, Text, VStack } from '@holdr-ui/react';
 import {
+  makePath,
   RadialSurface,
   TextGroup,
   TextGroupSubheading,
 } from '../../../shared';
 import { useCurrentUser } from '../../auth';
-import { useSuspenseQuery } from '@apollo/client';
 import { Fragment } from 'react';
 import millify from 'millify';
-import {
-  GET_RELATIONSHIP_COUNT,
-  useSuspenseRelationshipCount,
-} from '../../relationships';
+import { useSuspenseRelationshipCount } from '../../relationships';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 function Members() {
   return (
@@ -35,6 +33,41 @@ function Memberships() {
       <TextGroupSubheading size={1} color='base300'>
         Memberships
       </TextGroupSubheading>
+    </TextGroup>
+  );
+}
+
+function SummaryRelationshipCount({
+  count,
+  to,
+}: {
+  count: number;
+  to: string;
+}) {
+  const currentUser = useCurrentUser();
+
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+
+  return (
+    <TextGroup
+      onClick={() =>
+        navigate(makePath([currentUser.username, to]), {
+          state: {
+            previousLocation: pathname,
+          },
+        })
+      }
+      w='fit-content'
+      direction='horizontal'
+      gap={1}
+    >
+      <TextGroupSubheading size={1}>
+        {millify(count, { precision: 2 })}
+      </TextGroupSubheading>
+      <Text size={1} color='base300' casing='capitalize'>
+        {to}
+      </Text>
     </TextGroup>
   );
 }
@@ -81,22 +114,14 @@ function ProfileSummary() {
         </HStack>
         <HStack pb={4} px={4} w='100%' h='100%' justify='space-between'>
           {currentUser?.role === 'artist' ? <Members /> : <Memberships />}
-          <TextGroup w='fit-content' direction='horizontal' gap={1}>
-            <TextGroupSubheading size={1}>
-              {millify(data.relationshipCount.followers, { precision: 2 })}
-            </TextGroupSubheading>
-            <Text size={1} color='base300'>
-              Followers
-            </Text>
-          </TextGroup>
-          <TextGroup w='fit-content' direction='horizontal' gap={1}>
-            <TextGroupSubheading size={1}>
-              {millify(data.relationshipCount.following, { precision: 2 })}
-            </TextGroupSubheading>
-            <TextGroupSubheading size={1} color='base300'>
-              Following
-            </TextGroupSubheading>
-          </TextGroup>
+          <SummaryRelationshipCount
+            count={data.relationshipCount.followers}
+            to='followers'
+          />
+          <SummaryRelationshipCount
+            count={data.relationshipCount.following}
+            to='following'
+          />
         </HStack>
       </VStack>
     </RadialSurface>

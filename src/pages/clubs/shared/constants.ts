@@ -37,21 +37,27 @@ export const dummyAuctionMembershipData: OnSaleMembershipModel = {
   price: 100.11,
   name: 'Name',
   artist: dummyArtist,
-  coverImage: Asset.Image.LightPlaceholder,
+  coverImage: Asset.Image.DummyMembershipCover,
 };
+
+export const dummyPerks = [
+  'Early access to music',
+  'Invite-only special events and performances',
+  'Backstage Concert Passes',
+];
 
 export const dummySecondarySaleMembershipData: OnSaleMembershipModel = {
   price: 100.11,
   name: 'Name',
   artist: dummyArtist,
   isOnWatchlist: false,
-  coverImage: Asset.Image.LightPlaceholder,
+  coverImage: Asset.Image.DummyMembershipCover,
 };
 
 export const dummyOwnedMembershipData: OwnedMembershipModel = {
   name: 'Rising Name',
   artist: dummyArtist,
-  coverImage: Asset.Image.LightPlaceholder,
+  coverImage: Asset.Image.DummyMembershipCover,
 };
 
 export const dummyOwnedMembershipData2: OwnedMembershipModel = {
