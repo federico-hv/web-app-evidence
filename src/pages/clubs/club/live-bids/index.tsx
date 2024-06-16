@@ -48,7 +48,7 @@ function ArtistClubLiveBidsPage() {
               }}
             />
           </Box>
-          <VStack maxHeight='484px' w='468px' radius={4}>
+          <VStack flex={1} radius={4}>
             <ArtistClubMembershipPerksSummaryList clubId={club.id} />
             <VStack gap={2} flex={1} justify={'flex-end'}>
               <HStack gap={2} h={'24px'} items={'center'}>
