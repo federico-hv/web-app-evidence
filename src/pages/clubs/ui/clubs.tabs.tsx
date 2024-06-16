@@ -44,15 +44,17 @@ function ClubsTabs() {
               <Heading weight={400} size={6}>
                 Holdr Clubs
               </Heading>
-              <Button
-                css={{ px: '50px' }}
-                colorTheme='purple100'
-                onClick={() =>
-                  navigate(makePath([Paths.clubs, currentUser.username]))
-                }
-              >
-                View Club
-              </Button>
+              {currentUser.role === 'artist' && (
+                <Button
+                  css={{ px: '50px' }}
+                  colorTheme='purple100'
+                  onClick={() =>
+                    navigate(makePath([Paths.clubs, currentUser.username]))
+                  }
+                >
+                  View Club
+                </Button>
+              )}
             </HStack>
             <RoutingTabs flex={1} h='fit-content'>
               <RoutingTabsHeader
