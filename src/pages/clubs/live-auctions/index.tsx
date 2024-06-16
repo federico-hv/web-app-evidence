@@ -1,7 +1,7 @@
 import { Grid } from '@holdr-ui/react';
 import { arrayFrom } from '../../../shared';
-import { dummyAuctionMembershipData } from '../shared';
-import { MembershipAuctionCard } from '../../../features';
+import { dummyAuctionMembershipData, dummyPerks } from '../shared';
+import { MembershipCard } from '../../../features';
 
 function LiveAuctionsClubPage() {
   return (
@@ -9,8 +9,17 @@ function LiveAuctionsClubPage() {
       {arrayFrom(10)
         .map(() => dummyAuctionMembershipData)
         .map((data, idx) => (
-          <Grid.Item key={`live-auction-${idx}`}>
-            <MembershipAuctionCard data={data} />
+          <Grid.Item key={`live-auction-${idx}`} h='100%'>
+            <MembershipCard
+              data={{
+                coverImage: data.coverImage,
+                name: data.name,
+                slug: data.artist.username,
+                price: data.price,
+                perks: dummyPerks,
+                endDate: data.endDate,
+              }}
+            />
           </Grid.Item>
         ))}
     </Grid>

@@ -1,9 +1,6 @@
 import {
   HStack,
-  Heading,
   VStack,
-  Card,
-  IconButton,
   Button,
   Icon,
   Input,
@@ -17,8 +14,9 @@ import {
   ArtistClubInactiveBiddersList,
   ArtistClubMembershipPerksSummaryList,
 } from './ui';
-import { IClub } from '../../../../features';
-import { Asset, Head } from '../../../../shared';
+import { IClub, MembershipCard } from '../../../../features';
+import { getRandomNumberInRange, Head } from '../../../../shared';
+import { dummyPerks } from '../../shared';
 
 function ArtistClubLiveBidsPage() {
   const { state: club } = useGeneralContext<IClub>();
@@ -39,58 +37,17 @@ function ArtistClubLiveBidsPage() {
         description='A catalog of memberships that are being offered by artists.'
       />
       <VStack gap={6}>
-        <HStack gap={4}>
-          <VStack>
-            <Card
-              boxShadow='base'
-              h='484px'
-              w='396px'
-              bgImageUrl={Asset.Image.LightPlaceholder}
-            >
-              <Card.Header
-                p={4}
-                direction='horizontal'
-                items='center'
-                justify='space-between'
-              >
-                <HStack w='100%' justify={'flex-end'}>
-                  <IconButton
-                    size={'xl'}
-                    colorTheme='base600'
-                    icon='eye-show'
-                    ariaLabel=''
-                  />
-                </HStack>
-              </Card.Header>
-              <Card.Body
-                position='absolute'
-                b={0}
-                l={0}
-                w='full'
-                bgColor='#30304B'
-                p={4}
-                gap={4}
-                css={{
-                  blur: '12px',
-                  borderBottomRadius: '$4',
-                }}
-              >
-                <VStack>
-                  <HStack h='18px'>
-                    <Heading size={'16px'} weight={300} color='white600'>
-                      Entry Price
-                    </Heading>
-                  </HStack>
-                  <Box h='8px' />
-                  <HStack h='23px'>
-                    <Heading size={'20px'} weight={400} color='white500'>
-                      $732.00 USD
-                    </Heading>
-                  </HStack>
-                </VStack>
-              </Card.Body>
-            </Card>
-          </VStack>
+        <HStack gap={4} h={500}>
+          <Box flex={1} h='100%'>
+            <MembershipCard
+              showPerksOnHover={false}
+              data={{
+                coverImage: club.coverImage,
+                price: getRandomNumberInRange(300, 500),
+                perks: dummyPerks,
+              }}
+            />
+          </Box>
           <VStack maxHeight='484px' w='468px' radius={4}>
             <ArtistClubMembershipPerksSummaryList clubId={club.id} />
             <VStack gap={2} flex={1} justify={'flex-end'}>

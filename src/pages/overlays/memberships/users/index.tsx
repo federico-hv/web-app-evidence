@@ -1,5 +1,6 @@
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import {
+  Box,
   Dialog,
   DialogBody,
   DialogContent,
@@ -17,13 +18,14 @@ import {
   usePreviousLocation,
 } from '../../../../shared';
 import { Fragment } from 'react';
-import { ProfileProvider } from '../../../profile/shared';
+import { ProfileProvider } from '../../../user-profile';
 import { FlatList } from '../../../../tmp/flat-list';
 import {
   IProfile,
   MembershipCard,
   useCurrentUser,
 } from '../../../../features';
+import { dummyPerks } from '../../../clubs/shared';
 
 function UserMembershipsPage() {
   const currentUser = useCurrentUser();
@@ -111,23 +113,16 @@ function UserMembershipsPage() {
                     },
                   ]}
                   renderItem={(data) => (
-                    <MembershipCard
-                      css={{ scrollSnapAlign: 'start' }}
-                      w={398}
-                      h='100%'
-                      shrink={0}
-                      data={{
-                        name: 'Thomas Selas Club',
-                        coverImage: Asset.Image.DummyMembershipCover,
-                        artist: {
-                          role: 'artist',
-                          username: 'thomasselas',
-                          displayName: 'Thomas Selas',
-                          id: 'id',
-                          avatar: '',
-                        },
-                      }}
-                    />
+                    <Box h={500}>
+                      <MembershipCard
+                        data={{
+                          name: 'Thomas Selas Club',
+                          coverImage: Asset.Image.DummyMembershipCover,
+                          slug: '',
+                          perks: dummyPerks,
+                        }}
+                      />
+                    </Box>
                   )}
                   keyExtractor={({ id }) => id}
                 />

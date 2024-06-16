@@ -1,16 +1,12 @@
 import { VStack } from '@holdr-ui/react';
-import { Fragment } from 'react';
 import { FlatList } from '../../../tmp/flat-list';
 import { SectionTitle } from '../root/ui';
-import {
-  MembershipAuctionCard,
-  MembershipSecondarySaleCard,
-  OnSaleMembershipModel,
-} from '../../../features';
+import { MembershipCard, OnSaleMembershipModel } from '../../../features';
 import { shuffle } from 'lodash';
 import { arrayFrom } from '../../../shared';
 import {
   dummyAuctionMembershipData,
+  dummyPerks,
   dummySecondarySaleMembershipData,
 } from '../shared';
 
@@ -26,7 +22,18 @@ function AllClubsPage() {
           data={shuffle(
             arrayFrom(6).map(() => dummyAuctionMembershipData),
           )}
-          renderItem={(data) => <MembershipAuctionCard data={data} />}
+          renderItem={(data) => (
+            <MembershipCard
+              data={{
+                coverImage: data.coverImage,
+                name: data.name,
+                slug: data.artist.username,
+                price: data.price,
+                perks: dummyPerks,
+                endDate: data.endDate,
+              }}
+            />
+          )}
           keyExtractor={(_, idx) => idx}
         />
       </VStack>
@@ -40,14 +47,18 @@ function AllClubsPage() {
             ...arrayFrom(3).map(() => dummySecondarySaleMembershipData),
             ...arrayFrom(3).map(() => dummyAuctionMembershipData),
           ])}
-          renderItem={(data) => {
-            if (data.endDate) {
-              return <MembershipAuctionCard data={data} />;
-            } else if (!data.endDate) {
-              return <MembershipSecondarySaleCard data={data} />;
-            }
-            return <Fragment />;
-          }}
+          renderItem={(data) => (
+            <MembershipCard
+              data={{
+                coverImage: data.coverImage,
+                name: data.name,
+                slug: data.artist.username,
+                price: data.price,
+                perks: dummyPerks,
+                endDate: data.endDate,
+              }}
+            />
+          )}
           keyExtractor={(_, idx) => idx}
         />
       </VStack>

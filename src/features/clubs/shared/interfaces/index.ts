@@ -4,7 +4,7 @@ import { IArtist } from '../../../artist';
 export interface OnSaleMembershipModel {
   endDate?: Date;
   name: string;
-  coverImage?: string;
+  coverImage: string;
   artist: UserModel;
   price: number;
   isOnWatchlist: boolean;

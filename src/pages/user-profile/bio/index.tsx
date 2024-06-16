@@ -19,6 +19,7 @@ import {
 } from '../../../shared';
 import { FlatList } from '../../../tmp/flat-list';
 import FavoriteArtist from './ui/favorite-artist';
+import { dummyPerks } from '../../clubs/shared';
 
 export function UserBioPage() {
   const { state: profile } = useGeneralContext<IProfile>();
@@ -146,15 +147,10 @@ export function UserBioPage() {
           <HStack>
             <MembershipCard
               data={{
+                slug: '',
                 name: 'Thomas Selas Club',
                 coverImage: Asset.Image.DummyMembershipCover,
-                artist: {
-                  username: 'thomasselas',
-                  displayName: 'Thomas Selas',
-                  id: 'id',
-                  avatar: '',
-                  role: 'artist',
-                },
+                perks: dummyPerks,
               }}
             />
           </HStack>
