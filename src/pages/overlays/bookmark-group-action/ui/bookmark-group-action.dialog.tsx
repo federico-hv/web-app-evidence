@@ -14,9 +14,14 @@ function BookmarkGroupActionDialog() {
       onClose={() => navigate(previousLocation)}
     >
       <Dialog.Portal>
-        <Dialog.Overlay />
-        <Dialog.Content>
-          <Dialog.Body bgColor='rgb(48, 48, 75)' px={0} py={0}>
+        <Dialog.Overlay zIndex={10} />
+        <Dialog.Content radius={4} zIndex={10} w='fit-content'>
+          <Dialog.Body
+            id='page-dialog-container'
+            bgColor='#404066'
+            px={0}
+            py={0}
+          >
             <Outlet />
           </Dialog.Body>
         </Dialog.Content>

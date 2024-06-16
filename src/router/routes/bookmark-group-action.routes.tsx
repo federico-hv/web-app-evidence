@@ -3,12 +3,14 @@ import {
   BookmarkGroupActionDialog,
   CreateBookmarkGroupPage,
   RenameBookmarkGroupPage,
+  SaveBookmarkGroupPage,
 } from '../../pages';
 
 const BookmarkGroupActionRoutes = () => (
   <Routes>
     <Route path='' element={<BookmarkGroupActionDialog />}>
       <Route path='create' element={<CreateBookmarkGroupPage />} />
+      <Route path='save' element={<SaveBookmarkGroupPage />} />
       <Route path='rename/:id' element={<RenameBookmarkGroupPage />} />
     </Route>
   </Routes>

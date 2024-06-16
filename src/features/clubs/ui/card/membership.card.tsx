@@ -168,18 +168,20 @@ function MembershipCard({
                 <Heading noOfLines={1} size={5} weight={400} as='h5'>
                   {data.name}
                 </Heading>
-                <TextGroup gap={0}>
-                  <TextGroupHeading
-                    size={1}
-                    weight={400}
-                    casing='uppercase'
-                  >
-                    Entry Price
-                  </TextGroupHeading>
-                  <TextGroupSubheading size={5} weight={500}>
-                    ${data.price} USD
-                  </TextGroupSubheading>
-                </TextGroup>
+                {data.price && (
+                  <TextGroup gap={0}>
+                    <TextGroupHeading
+                      size={1}
+                      weight={400}
+                      casing='uppercase'
+                    >
+                      Entry Price
+                    </TextGroupHeading>
+                    <TextGroupSubheading size={5} weight={500}>
+                      ${data.price} USD
+                    </TextGroupSubheading>
+                  </TextGroup>
+                )}
               </VStack>
               <Box
                 my={4}

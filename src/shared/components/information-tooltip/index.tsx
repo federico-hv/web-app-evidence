@@ -5,6 +5,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '@holdr-ui/react';
+import { ThemeColor } from '@holdr-ui/react/dist/shared/types';
 
 interface InformationTooltipProps {
   description: string;
@@ -12,9 +13,11 @@ interface InformationTooltipProps {
   align?: 'center' | 'start' | 'end';
   sideOffset?: number;
   container?: HTMLElement;
+  color?: ThemeColor;
 }
 
 function InformationTooltip({
+  color,
   description,
   side = 'top',
   align = 'center',
@@ -24,10 +27,11 @@ function InformationTooltip({
   return (
     <Tooltip>
       <TooltipTrigger display='flex' css={{ alignItems: 'center' }}>
-        <Icon name='information-outline' />
+        <Icon color={color} name='information-outline' />
       </TooltipTrigger>
 
       <TooltipContent
+        color='white500'
         arrowWidth={0}
         arrowHeight={0}
         maxWidth={250}

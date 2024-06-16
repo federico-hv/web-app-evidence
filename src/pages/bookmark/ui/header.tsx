@@ -8,6 +8,7 @@ import {
 } from '@holdr-ui/react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import {
+  customBgColor,
   DialogContextProvider,
   Head,
   makePath,
@@ -69,6 +70,7 @@ function Header() {
         <Menu minWidth={270}>
           <MenuTrigger>
             <IconButton
+              className={customBgColor()}
               size='sm'
               variant='ghost'
               icon='more-fill'

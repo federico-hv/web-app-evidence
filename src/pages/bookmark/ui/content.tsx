@@ -1,4 +1,3 @@
-import { VStack } from '@holdr-ui/react';
 import { useParams } from 'react-router-dom';
 import { FeedCard, useGetBookmarks } from '../../../features';
 import { FlatList } from '../../../tmp/flat-list';

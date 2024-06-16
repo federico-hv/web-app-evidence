@@ -6,6 +6,7 @@ import { Box, Heading } from '@holdr-ui/react';
 
 function BookmarkPage() {
   const params = useParams();
+
   return (
     <GQLRenderer>
       {params.id ? (

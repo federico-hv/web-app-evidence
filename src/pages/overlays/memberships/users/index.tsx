@@ -99,7 +99,8 @@ function UserMembershipsPage() {
                   overflowY='auto'
                   h='557px'
                   css={{
-                    scrollSnapPointsY: '557px',
+                    paddingInlineEnd: '$3',
+                    scrollSnapPointsY: '600px',
                     scrollSnapType: 'y mandatory',
                   }}
                   data={[

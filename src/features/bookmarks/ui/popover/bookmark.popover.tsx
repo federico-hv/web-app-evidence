@@ -1,21 +1,17 @@
 import {
   DialogContextProvider,
   GenericProps,
+  makePath,
+  Paths,
   useActOnScroll,
 } from '../../../../shared';
-import { Fragment, Suspense, useCallback, useState } from 'react';
-import {
-  Box,
-  HStack,
-  Popover,
-  useDisclosure,
-  useKeyBind,
-} from '@holdr-ui/react';
-import { ErrorBoundary } from 'react-error-boundary';
+import { useCallback, useState } from 'react';
+import { Box, HStack, Popover, useKeyBind } from '@holdr-ui/react';
 import { useCreateBookmark, useRemoveBookmark } from '../../shared';
 import { useFeedContext } from '../../../feeds';
-import { BookmarkGroupDialog } from '../dialogs';
 import { PopoverButton } from '../buttons';
+import { useLocation, useNavigate } from 'react-router-dom';
+
 function BookmarkPopover({
   children,
   position = 'top',
@@ -26,7 +22,9 @@ function BookmarkPopover({
   alignOffset?: number;
   sideOffset?: number;
 }) {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const navigate = useNavigate();
+
+  const { pathname } = useLocation();
 
   const { feedId } = useFeedContext();
 
@@ -53,49 +51,50 @@ function BookmarkPopover({
   useActOnScroll(10, closePopover);
 
   return (
-    <DialogContextProvider value={{ isOpen, onOpen, onClose }}>
-      <Popover isOpen={popoverOpen} onOpenChange={set}>
-        <Popover.Trigger asChild>
-          <Box onClick={() => createBookmark(feedId)}>{children}</Box>
-        </Popover.Trigger>
-        <Popover.Portal>
-          <Popover.Content
-            p={0}
-            align='center'
-            side={position}
-            alignOffset={alignOffset}
-            sideOffset={sideOffset}
-            minWidth={1}
-            radius='full'
-            zIndex={5}
-            shadow='lg'
-            css={{
-              backgroundColor: 'rgba(101,101,218,0.25)',
-              backdropFilter: 'blur(50px)',
-            }}
+    <Popover isOpen={popoverOpen} onOpenChange={set}>
+      <Popover.Trigger asChild>
+        <Box onClick={() => createBookmark(feedId)}>{children}</Box>
+      </Popover.Trigger>
+      <Popover.Portal>
+        <Popover.Content
+          p={0}
+          align='center'
+          side={position}
+          alignOffset={alignOffset}
+          sideOffset={sideOffset}
+          minWidth={1}
+          radius='full'
+          zIndex={5}
+          shadow='lg'
+          css={{
+            backgroundColor: 'rgba(101,101,218,0.25)',
+            backdropFilter: 'blur(50px)',
+          }}
+        >
+          <HStack
+            p={{ '@bp1': 1, '@bp3': 1 }}
+            gap={3}
+            items='center'
+            divider={<Box h={1} w='1px' bgColor='base100' />}
           >
-            <HStack
-              p={{ '@bp1': 1, '@bp3': 1 }}
-              gap={3}
-              items='center'
-              divider={<Box h={1} w='1px' bgColor='base100' />}
+            <PopoverButton
+              onClick={() => closeAfter(feedId, removeBookmark)}
             >
-              <PopoverButton
-                onClick={() => closeAfter(feedId, removeBookmark)}
-              >
-                Remove bookmark
-              </PopoverButton>
-              <PopoverButton onClick={onOpen}>Add to group</PopoverButton>
-            </HStack>
-          </Popover.Content>
-        </Popover.Portal>
-      </Popover>
-      <ErrorBoundary fallback={<Fragment />}>
-        <Suspense fallback={<Fragment />}>
-          <BookmarkGroupDialog />
-        </Suspense>
-      </ErrorBoundary>
-    </DialogContextProvider>
+              Remove bookmark
+            </PopoverButton>
+            <PopoverButton
+              onClick={() =>
+                navigate(makePath([Paths.bookmarks, 'save']), {
+                  state: { previousLocation: pathname, feedId },
+                })
+              }
+            >
+              Add to group
+            </PopoverButton>
+          </HStack>
+        </Popover.Content>
+      </Popover.Portal>
+    </Popover>
   );
 }
 BookmarkPopover.displayName = 'BookmarkPopover';

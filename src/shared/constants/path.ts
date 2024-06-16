@@ -6,6 +6,7 @@ export const Paths = {
   channels: 'channels',
   connect: 'connect',
   bookmarks: 'bookmarks',
+  bookmarkGroups: 'bookmark-groups',
   allBookmarks: 'bookmarks/all',
   releases: 'releases',
   notifications: 'notifications',
