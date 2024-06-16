@@ -72,10 +72,10 @@ function CreateBookmarkGroup() {
               value={state.name}
               focusColor='purple500'
               type='text'
-              maxLength={60}
               radius={1}
               className={customInputStyles()}
               color='white500'
+              maxLength={60}
               placeholder='Enter group name'
             />
             <FormControl.HelperText>

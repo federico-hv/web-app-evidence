@@ -70,6 +70,7 @@ function TwoFAAuthAppCheckbox() {
           />
         ) : (
           <Checkbox
+            colorTheme='white500'
             onClick={ctx.onOpen}
             checked={false}
             value={`${false}`}

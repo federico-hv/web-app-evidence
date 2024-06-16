@@ -14,6 +14,7 @@ function BookmarkGroupItem({ data }: { data: IBookmarkGroup }) {
 
   return (
     <Box
+      radius={1}
       py={2}
       px={3}
       position='relative'
@@ -36,13 +37,6 @@ function BookmarkGroupItem({ data }: { data: IBookmarkGroup }) {
             {data.total} item{data.total > 1 ? 's' : ''}
           </TextGroupSubheading>
         </TextGroup>
-        <Box mt={1}>
-          <Icon
-            size='xs'
-            name={data.private ? 'lock-fill' : 'global-outline'}
-            color='white700'
-          />
-        </Box>
       </HStack>
     </Box>
   );

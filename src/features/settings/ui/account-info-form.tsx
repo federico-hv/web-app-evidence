@@ -7,7 +7,12 @@ import {
   IAccountInfo,
 } from '../shared';
 import { Box, Button, HStack, VStack } from '@holdr-ui/react';
-import { Age, FormInput, isInputDisabled } from '../../../shared';
+import {
+  Age,
+  FormInput,
+  isInputDisabled,
+  makeButtonLarger,
+} from '../../../shared';
 import { UpdateAccountInfoSchema } from '../shared';
 import phones from '../../../assets/json/phone.code.json';
 import dayjs from 'dayjs';
@@ -23,7 +28,7 @@ function InnerForm() {
       onSubmit={(e) => handleSubmit(e as FormEvent<HTMLFormElement>)}
     >
       <VStack>
-        <Box px={4} pb={5} borderBottom={2} borderColor='base100'>
+        <Box px={4} py={4} pb={5}>
           {name === 'username' && (
             <FormInput
               disabled={loading}
@@ -59,6 +64,10 @@ function InnerForm() {
       </VStack>
       <HStack p={4} justify='flex-end'>
         <Button
+          colorTheme='purple500'
+          radius={2}
+          className={makeButtonLarger('2.5rem')}
+          css={{ px: '20px' }}
           type='submit'
           loadingText={loading ? '' : 'Saving'}
           isLoading={loading}

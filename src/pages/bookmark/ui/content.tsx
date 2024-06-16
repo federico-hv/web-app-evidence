@@ -11,12 +11,14 @@ function Content() {
 
   return (
     <FlatList
+      className='thin-scrollbar'
       w='100%'
       direction='vertical'
       overflowY='auto'
       h='calc(100% - 56px)'
       gap={4}
-      p={{ '@bp1': 2, '@bp3': 3 }}
+      p={{ '@bp1': 2, '@bp3': 4 }}
+      css={{ paddingInlineEnd: '$3' }}
       data={data.bookmarks.edges}
       renderItem={(item) => (
         <FeedCard key={item.node.id} data={item.node.feed} />

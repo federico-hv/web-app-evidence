@@ -29,6 +29,7 @@ function SelectMembershipsSort() {
           radius={2}
           placeholder='Sort By'
           css={{
+            whiteSpace: 'nowrap',
             border: '1px solid rgba(152, 152, 255, 0.10)',
             background: 'rgba(152, 152, 255, 0.1)',
           }}

@@ -32,7 +32,7 @@ function BookmarksPage() {
           icon='add'
           ariaLabel='add bookmark'
           onClick={() =>
-            navigate(makePath([Paths.bookmarkGroups, 'create']), {
+            navigate(makePath([Paths.bookmarks, 'create']), {
               state: {
                 previousLocation: pathname,
               },
@@ -64,9 +64,8 @@ function BookmarksPage() {
             zIndex={1}
             borderBottom={1}
             borderColor='rgba(152, 152, 255, 0.10)'
-            pb={3}
           >
-            <Heading color='white600' px={3} pt={3} size={4} weight={500}>
+            <Heading size={5} weight={400} px={3} py={4}>
               My Groups
             </Heading>
           </Box>

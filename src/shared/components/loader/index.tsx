@@ -8,6 +8,7 @@ function Loader({
   children,
   loading,
   h = 'full',
+  w = '100%',
   as = <CircularProgress size={30} isIndeterminate />,
 }: LoaderProps) {
   return (
@@ -15,7 +16,7 @@ function Loader({
       {!loading ? (
         <MotionBox
           h={h}
-          w='100%'
+          w={w}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.1 }}

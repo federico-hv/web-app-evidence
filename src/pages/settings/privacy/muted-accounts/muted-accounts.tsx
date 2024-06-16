@@ -30,6 +30,7 @@ import {
   VStack,
 } from '@holdr-ui/react';
 import SettingsHeaderLayout from '../../../../layout/settings-header';
+import { Fragment } from 'react';
 
 function MutedSettingsPage() {
   const { data, loading, error } = useQuery<{
@@ -39,7 +40,7 @@ function MutedSettingsPage() {
   const { unmute, loading: muteLoading } = useRemoveRelationshipAction();
 
   return (
-    <Error hasError={!!error} errorMessage={error?.message}>
+    <Fragment>
       <Head
         title='Muted accounts'
         description='See the accounts that have been muted.'
@@ -79,7 +80,7 @@ function MutedSettingsPage() {
                   {data.mutedUsers.users.map((item) => (
                     <ActionItemWrapper key={item.id}>
                       <LinkOverlay to={prefix('/', item.username)} />
-                      <Avatar src={item.avatar} name={item.displayName}/>
+                      <Avatar src={item.avatar} name={item.displayName} />
                       <UserNamesGroup
                         displayName={item.displayName}
                         username={item.username}
@@ -101,7 +102,7 @@ function MutedSettingsPage() {
           )}
         </Loader>
       </SettingsHeaderLayout>
-    </Error>
+    </Fragment>
   );
 }
 MutedSettingsPage.displayName = 'MutedSettingsPage';

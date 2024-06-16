@@ -41,8 +41,8 @@ function ProtectAndTaggingSettingsPage() {
         url={to}
       />
       <SettingsHeaderLayout title='Protection' backLink={to}>
-        <Box p={4} borderBottom={2} borderColor='base100'>
-          <HStack justify='space-between' items='center'>
+        <Box cursor='pointer' as='label' p={4}>
+          <HStack pl={4} gap={4} justify='space-between' items='center'>
             <TextGroup>
               <TextGroupHeading size={3} id='protection-checkbox'>
                 Protect your account
@@ -52,9 +52,11 @@ function ProtectAndTaggingSettingsPage() {
                 to see your likes, posts and account information.
               </TextGroupSubheading>
             </TextGroup>
-            <Loader loading={loadingQuery}>
+            <Loader w='fit-content' loading={loadingQuery}>
               {data && (
                 <Checkbox
+                  id='protect-account'
+                  colorTheme='white500'
                   value={`${data.accountInfo.protected}`}
                   disabled={loading}
                   checked={data.accountInfo.protected}

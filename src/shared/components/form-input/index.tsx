@@ -12,6 +12,7 @@ import { FormInputProps } from './form-input.types';
 import { useField } from 'formik';
 import { AnimatePresence, motion } from 'framer-motion';
 import FormField from './form-field';
+import { customInputStyles } from '../../styles';
 
 const AppearingBox = motion(Box);
 

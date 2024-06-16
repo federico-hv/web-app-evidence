@@ -100,24 +100,24 @@ function UserMembershipsPage() {
                   h='557px'
                   css={{
                     paddingInlineEnd: '$3',
-                    scrollSnapPointsY: '600px',
+                    scrollSnapPointsY: '500px',
                     scrollSnapType: 'y mandatory',
                   }}
                   data={[
                     {
                       id: '4',
-                      name: 'Polony',
+                      name: 'James Dean',
                     },
                     {
                       id: '41',
-                      name: 'Bread',
+                      name: 'Altman',
                     },
                   ]}
                   renderItem={(data) => (
-                    <Box h={500}>
+                    <Box h='500px'>
                       <MembershipCard
                         data={{
-                          name: 'Thomas Selas Club',
+                          name: `${data.name}'s Club`,
                           coverImage: Asset.Image.DummyMembershipCover,
                           slug: '',
                           perks: dummyPerks,

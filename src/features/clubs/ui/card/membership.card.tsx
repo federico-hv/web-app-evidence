@@ -163,7 +163,14 @@ function MembershipCard({
           r={0}
         >
           <Box position='relative' display='none' h='100%'>
-            <Box position='absolute' b={0} l={0} w='100%' p={4} h='87.5%'>
+            <VStack
+              position='absolute'
+              b={0}
+              l={0}
+              w='100%'
+              p={4}
+              h='87.5%'
+            >
               <VStack gap={3}>
                 <Heading noOfLines={1} size={5} weight={400} as='h5'>
                   {data.name}
@@ -190,7 +197,7 @@ function MembershipCard({
                 w='100%'
               />
               {data.perks && (
-                <VStack maxHeight='50%' overflow='hidden'>
+                <VStack flex={1} overflow='hidden'>
                   <Heading color='purple50' size={3} as='h3' weight={500}>
                     Membership Perks
                   </Heading>
@@ -211,7 +218,7 @@ function MembershipCard({
                   />
                 </VStack>
               )}
-            </Box>
+            </VStack>
           </Box>
         </Box>
       </CardFooter>

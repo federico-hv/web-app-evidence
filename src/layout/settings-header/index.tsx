@@ -20,7 +20,12 @@ function SettingsHeaderLayout({
   };
 
   return (
-    <VStack w='full' h='58px'>
+    <VStack
+      w='full'
+      h='58px'
+      borderBottom={1}
+      borderColor='rgba(152, 152, 255, 0.10)'
+    >
       <HStack minHeight='58px' flex={1} items='center' px={3} gap={4}>
         <IconButton
           icon='arrow-left-outline'

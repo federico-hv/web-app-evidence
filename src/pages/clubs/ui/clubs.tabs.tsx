@@ -103,7 +103,7 @@ function ClubsTabs() {
                     Active Bids
                   </RoutingTabsTrigger>
                 </RoutingTabsList>
-                <HStack gap={4}>
+                <HStack items='center' gap={4}>
                   <IconButton
                     onClick={toggle}
                     className={customBgColor()}

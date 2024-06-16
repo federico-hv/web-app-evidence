@@ -30,6 +30,7 @@ import {
   useRemoveRelationshipAction,
 } from '../../../../features';
 import SettingsHeaderLayout from '../../../../layout/settings-header';
+import { Fragment } from 'react';
 
 function BlockedSettingsPage() {
   const { data, loading, error } = useQuery<{
@@ -40,7 +41,7 @@ function BlockedSettingsPage() {
     useRemoveRelationshipAction();
 
   return (
-    <Error hasError={!!error} errorMessage={error?.message}>
+    <Fragment>
       <Head
         title='Blocked accounts'
         description='See the accounts that have been blocked.'
@@ -102,7 +103,7 @@ function BlockedSettingsPage() {
           )}
         </Loader>
       </SettingsHeaderLayout>
-    </Error>
+    </Fragment>
   );
 }
 BlockedSettingsPage.displayName = 'BlockedSettingsPage';
