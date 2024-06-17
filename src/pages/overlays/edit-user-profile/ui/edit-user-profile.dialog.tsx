@@ -5,6 +5,7 @@ import {
   DialogContent,
   DialogOverlay,
   DialogPortal,
+  GeneralContextConsumer,
   hexToRGB,
   HStack,
   StackDivider,
@@ -22,10 +23,11 @@ import {
   GQLRenderer,
   LoadWithoutPreviousLocation,
   makePath,
-} from '../../../../../shared';
-import { ProfileProvider } from '../../../../user-profile';
-import { SetupStep } from '../../../setup-artist-profile/ui';
+} from '../../../../shared';
+import { ProfileProvider } from '../../../user-profile';
+import { SetupStep } from '../../setup-artist-profile/ui';
 import ChangeAvatar from './change-avatar';
+import { IProfile } from '../../../../features';
 
 function EditUserProfileDialog() {
   const disclosure = useDisclosure(true);
@@ -84,7 +86,17 @@ function EditUserProfileDialog() {
                     }
                   >
                     <Box py={48} basis={182}>
-                      <ChangeAvatar />
+                      {
+                        <GeneralContextConsumer>
+                          {({ state: profile }: { state: IProfile }) => (
+                            <ChangeAvatar
+                              placeholder={profile.avatar}
+                              name={profile.displayName}
+                              variant='squircle'
+                            />
+                          )}
+                        </GeneralContextConsumer>
+                      }
 
                       <VStack gap={6} mt={9}>
                         <SetupStep

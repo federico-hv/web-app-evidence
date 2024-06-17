@@ -1,4 +1,6 @@
 import { useNavigate, useParams } from 'react-router-dom';
+
+import { ChangeEvent } from 'react';
 import {
   customInputStyles,
   isMatchingPattern,
@@ -11,15 +13,15 @@ import {
   textAreaClassName,
   TextField,
   usePreviousLocation,
-} from '../../../../../shared';
+} from '../../../../shared';
 import {
   Box,
   Button,
   HStack,
   mergeStyles,
-  Text,
   Textarea,
   useGeneralContext,
+  Text,
   useRecordState,
   VStack,
 } from '@holdr-ui/react';
@@ -29,8 +31,7 @@ import {
   IUpdateSocialLink,
   retrieveSocialLink,
   useUpdateProfileAndLinks,
-} from '../../../../../features';
-import { ChangeEvent } from 'react';
+} from '../../../../features';
 
 function EditUserProfilePage() {
   const navigate = useNavigate();

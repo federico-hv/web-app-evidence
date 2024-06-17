@@ -1,6 +1,13 @@
 export const Paths = {
   root: '',
   all: 'all',
+  bio: 'bio',
+  musicAndLinks: 'music-and-links',
+  slug: ':slug',
+  create: 'create',
+  members: 'members',
+  edit: 'edit',
+  auction: 'auction',
   discover: 'discover',
   clubs: 'clubs',
   channels: 'channels',

@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from 'react-router-dom';
-import { makePath, usePreviousLocation } from '../../../../../shared';
+import { makePath, usePreviousLocation } from '../../../../shared';
 import {
   IProfile,
   SearchSpotifyArtist,
@@ -8,7 +8,7 @@ import {
   useRemoveFavoriteSong,
   useSaveFavoriteArtist,
   useSaveFavoriteSong,
-} from '../../../../../features';
+} from '../../../../features';
 import {
   Box,
   Button,
@@ -24,7 +24,7 @@ import {
   useGeneralContext,
   VStack,
 } from '@holdr-ui/react';
-import { FlatList } from '../../../../../tmp/flat-list';
+import { FlatList } from '../../../../tmp/flat-list';
 
 function EditUserAddFavoritesPage() {
   const { username } = useParams();
