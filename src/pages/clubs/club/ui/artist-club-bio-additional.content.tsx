@@ -168,7 +168,7 @@ function ArtistClubBioAdditionalContent() {
               borderColor='rgba(152, 152, 255, 0.10)'
             />
             <VStack>
-              <Heading as='h3' size={3} mb={4} weight={500}>
+              <Heading as='h3' size={3} mb={4} weight={400}>
                 Merchandise
               </Heading>
               <HStack gap={2}>
