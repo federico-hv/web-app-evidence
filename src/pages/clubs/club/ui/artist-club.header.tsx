@@ -57,13 +57,15 @@ function ArtistClubHeader() {
         ) : (
           <ArtistClubSocialButton username={club.artist.username} />
         )}
-        <Button
-          css={{ px: '50px' }}
-          colorTheme='purple100'
-          onClick={() => console.log('Open edit')}
-        >
-          Create Auction
-        </Button>
+        {currentUser.id === club.artist.accountId && (
+          <Button
+            css={{ px: '50px' }}
+            colorTheme='purple100'
+            onClick={() => console.log('Open edit')}
+          >
+            Create Auction
+          </Button>
+        )}
       </HStack>
     </HStack>
   );

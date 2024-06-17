@@ -65,9 +65,9 @@ function EditArtistClubDialog() {
                 className='setup-account'
                 w={881}
                 h={724}
+                overflowY='hidden'
                 maxHeight='90vh'
                 bgColor='#30304B'
-                overflow='auto'
                 css={{
                   userSelect: 'none',
                 }}

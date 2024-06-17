@@ -1,5 +1,4 @@
 import {
-  Box,
   hexToRGB,
   HStack,
   Icon,
@@ -31,7 +30,7 @@ function TextField({
     <VStack gap={1}>
       <VStack gap={2}>
         <HStack color='white700' gap={1} items='center'>
-          <Text size={1} as='label' htmlFor={name}>
+          <Text size={1} weight={500} as='label' htmlFor={name}>
             {label}
           </Text>
           {tooltip && (

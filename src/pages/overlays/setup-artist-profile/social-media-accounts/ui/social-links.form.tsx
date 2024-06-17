@@ -9,7 +9,7 @@ import {
   PatternErrorMessage,
   Patterns,
   SocialProvider,
-  TextField,
+  InputTextField,
   useGeneralContext,
 } from '../../../../../shared';
 import {
@@ -55,7 +55,7 @@ function SocialLinksForm() {
   return (
     <VStack gap={4}>
       <VStack gap={2}>
-        <TextField
+        <InputTextField
           name='Instagram'
           label='Instagram URL'
           value={state.links.Instagram}
@@ -68,7 +68,7 @@ function SocialLinksForm() {
             PatternErrorMessage.invalid('Instagram URL'),
           )}
         />
-        <TextField
+        <InputTextField
           name='TikTok'
           label='TikTok URL'
           value={state.links.TikTok}
@@ -81,7 +81,7 @@ function SocialLinksForm() {
             PatternErrorMessage.invalid('TikTok URL'),
           )}
         />
-        <TextField
+        <InputTextField
           name='X'
           label='X URL'
           value={state.links.X}

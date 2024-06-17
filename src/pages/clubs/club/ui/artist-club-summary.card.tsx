@@ -23,6 +23,7 @@ function ArtistClubSummaryCard() {
     <VStack bg='#30304B' radius={4} p={4} justify={'center'}>
       <HStack gap={4} maxHeight={'136px'}>
         <Avatar
+          key={club.artist.name}
           src={club.artist.avatar}
           name={club.artist.name}
           size={'136px'}

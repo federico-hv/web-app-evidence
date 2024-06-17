@@ -52,6 +52,7 @@ function ArtistClubBioPage() {
         gap={4}
       >
         <Box
+          h='100%'
           flex={1}
           radius={2}
           overflowY='auto'
