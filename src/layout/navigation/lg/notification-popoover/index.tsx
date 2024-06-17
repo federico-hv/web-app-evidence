@@ -8,6 +8,8 @@ import {
   Tabs,
   useKeyBind,
   VStack,
+  Center,
+  Avatar,
 } from '@holdr-ui/react';
 import {
   dummyFn,
@@ -21,7 +23,8 @@ import {
 } from '../../../../shared';
 import { useState } from 'react';
 import { Notification, useNotification } from '../../../../features';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { hexToRGB } from '../../../../shared';
 
 interface INotificationContext {
   isOpen: boolean;
@@ -135,10 +138,100 @@ function NotificationPopover() {
 }
 NotificationPopover.displayName = 'NotificationPopover';
 
+function FakeNotification({
+  onClick,
+  avatar,
+  title,
+  description,
+}: {
+  onClick: () => void;
+  avatar: string;
+  title: string;
+  description: string;
+}) {
+  return (
+    <HStack
+      justify='space-between'
+      cursor='pointer'
+      radius={3}
+      _hover={{
+        backgroundColor: hexToRGB('#0E0E1B', 0.5),
+      }}
+      p={4}
+      onClick={onClick}
+    >
+      <VStack>
+        <Avatar src={avatar} variant='squircle' size={'base'} />
+      </VStack>
+      <VStack gap={2} px={'10px'}>
+        <Box>
+          <Heading color='white500' size={'14px'}>
+            {title}
+          </Heading>
+        </Box>
+        <Box>
+          <Text noOfLines={1} color='white500' size={'14px'}>
+            {description}
+          </Text>
+        </Box>
+      </VStack>
+    </HStack>
+  );
+}
+
 function AllTab() {
   const { data } = useNotification('relationship');
 
   const { state } = useGeneralContext<INotificationContext>();
+
+  const navigate = useNavigate();
+
+  let dataWithFakeNotifications: any[] = data;
+
+  dataWithFakeNotifications = [
+    ...[
+      {
+        avatar: 'https://picsum.photos/100',
+        title: 'Update your Bid',
+        description:
+          'You are no longer on track for a chance to win a Boslen membership. Update your bid to continue or click cancel to stop participating in the live auction',
+      },
+      {
+        avatar: 'https://picsum.photos/200',
+        title: 'Congratulations!',
+        description: 'You are now an official member of Boslens club! ...',
+      },
+    ],
+    ...data,
+  ];
+
+  const renderNotification = (notification: any, idx: number) => {
+    if (idx == 0 || idx == 1) {
+      return (
+        <FakeNotification
+          onClick={() => {
+            const dialogMessage =
+              idx === 0 ? 'updatebid' : 'congratulations';
+            navigate('/clubs/federicoartist/live-bids', {
+              state: { dialogMessage },
+            });
+            state.onClose();
+          }}
+          avatar={notification.avatar}
+          title={notification.title}
+          description={notification.description}
+        />
+      );
+    }
+
+    return (
+      <Notification
+        key={idx}
+        data={notification}
+        onClick={state.onClose}
+      />
+    );
+  };
 
   return (
     <Loader loading={false}>
@@ -153,13 +246,7 @@ function AllTab() {
             </Box>
           </Link>
         </HStack>
-        {data.map((notification, idx) => (
-          <Notification
-            key={idx}
-            data={notification}
-            onClick={state.onClose}
-          />
-        ))}
+        {dataWithFakeNotifications.map(renderNotification)}
       </VStack>
     </Loader>
   );

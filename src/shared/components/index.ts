@@ -82,3 +82,5 @@ export { default as InputTextField } from './text-field';
 export { default as IconLink } from './icon-link';
 export { default as TextareaField } from './text-area-field';
 export { default as MusicReleasePreview } from './music-release-preview';
+export { default as PaymentMethodForm } from './payment-method-form';
+export { default as BillingForm } from './billing-form';

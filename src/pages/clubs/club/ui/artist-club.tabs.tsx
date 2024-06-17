@@ -14,16 +14,24 @@ import {
 } from '../../../../shared';
 import { useSuspenseGetClub } from '../../../../features';
 import ArtistClubHeader from './artist-club.header';
+import {
+  LiveBidsAlert,
+  livebidsAlerts,
+  AlertOrder,
+} from '../live-bids/ui/live-bids-alerts';
 
 function Content() {
   const { slug } = useParams();
 
   const { data, error } = useSuspenseGetClub({ slug: slug || '' });
 
+  const alertProps = livebidsAlerts[0];
+
   return (
     <GeneralContextProvider value={{ state: data.club, update: voidFn }}>
       <RadialSurface w='100%' radius={4} h='fit-content'>
         <VStack px={5} py={5} h='100%'>
+          {/* <LiveBidsAlert {...alertProps} /> */}
           <ArtistClubHeader />
           <RoutingTabs defaultValue='bio' flex={1}>
             <RoutingTabsHeader
