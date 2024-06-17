@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { IProfile, useUpdateAvatar } from '../../../../features';
+import { useUpdateAvatar } from '../../../../features';
 import { Avatar, AvatarBadge, Box, Icon } from '@holdr-ui/react';
 import { ImageUpload } from '../../../../shared';
 import { ImageUploadContext } from '../../../../shared/components/image-upload/context';
@@ -19,7 +19,7 @@ function ChangeAvatar({
 
   return (
     <Box w='100px' h='100px' ml={-10}>
-      {/* Sneaky way to stop cutting of content*/}
+      {/*Sneaky way to stop cutting of content*/}
       <ImageUpload
         onChange={async (item) => {
           setValue(URL.createObjectURL(item));

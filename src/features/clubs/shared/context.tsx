@@ -1,10 +1,8 @@
 import { createContext, Fragment, useContext } from 'react';
 import { IClub } from './interfaces';
-import { Center, CircularProgress, GenericProps } from '@holdr-ui/react';
-import { useQuery } from '@apollo/client';
-import { GET_CLUB } from '../queries';
+import { GenericProps } from '@holdr-ui/react';
 import { useCurrentUser } from '../../auth';
-import { useGetClub, useSuspenseGetClub } from './hooks';
+import { useSuspenseGetClub } from './hooks';
 import { GQLRenderer } from '../../../shared';
 
 const ClubContext = createContext<IClub>({
@@ -25,7 +23,8 @@ function useClubContext() {
   return useContext(ClubContext);
 }
 
-export const ClubContextProvider = ClubContext.Provider;
+const ClubContextProvider = ClubContext.Provider;
+const ClubContextConsumer = ClubContext.Consumer;
 
 function ClubProvider({ children }: GenericProps) {
   return (
@@ -51,4 +50,10 @@ function Content({ children }: GenericProps) {
   );
 }
 
-export { ClubProvider, useClubContext, ClubContext };
+export {
+  ClubProvider,
+  useClubContext,
+  ClubContext,
+  ClubContextProvider,
+  ClubContextConsumer,
+};
