@@ -23,8 +23,8 @@ import {
   LoadWithoutPreviousLocation,
   makePath,
 } from '../../../../../shared';
-import { ProfileProvider } from '../../../../user-profile/shared';
-import { SetupStep } from '../../../artist-profile/ui';
+import { ProfileProvider } from '../../../../user-profile';
+import { SetupStep } from '../../../setup-artist-profile/ui';
 import ChangeAvatar from './change-avatar';
 
 function EditUserProfileDialog() {

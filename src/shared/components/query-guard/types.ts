@@ -7,4 +7,5 @@ export interface QueryGuardProps<U> extends GenericProps {
   query: DocumentNode;
   args: U;
   fallback?: ReactElement;
+  loader?: ReactElement;
 }

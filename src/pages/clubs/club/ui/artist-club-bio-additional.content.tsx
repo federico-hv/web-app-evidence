@@ -114,7 +114,7 @@ function ArtistClubBioAdditionalContent() {
           borderColor='rgba(152, 152, 255, 0.10)'
         />
         <VStack>
-          <Heading as='h2' size={4} weight={400} mb={4}>
+          <Heading as='h2' size={4} weight={500} mb={4}>
             Announcements
           </Heading>
           <Box pt={'8px'} pb='12px' ml={2} color='white600'>

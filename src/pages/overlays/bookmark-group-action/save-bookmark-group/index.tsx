@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  Center,
   Heading,
   HStack,
   Icon,
@@ -22,20 +23,14 @@ import { FlatList } from '../../../../tmp/flat-list';
 import {
   useBasicGetBookmarkGroups,
   useCreateBookmark,
+  useRemoveBookmark,
 } from '../../../../features';
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment, useEffect } from 'react';
 
 function SaveBookmarkGroupPage() {
-  const [ids, setIds] = useState<string[]>([]);
-
   const { state } = useLocation();
   const navigate = useNavigate();
   const previousLocation = usePreviousLocation('/');
-
-  const addToIds = (id: string) => setIds((prev) => [...prev, id]);
-
-  const removeFromIds = (id: string) =>
-    setIds((prev) => prev.filter((_id) => _id !== id));
 
   if (!state.feedId) {
     console.error('Save bookmarks missing feed ID.');
@@ -73,37 +68,18 @@ function SaveBookmarkGroupPage() {
           />
         </HStack>
         <VStack px={4} pb={4} gap={5} h='100%'>
-          <List items={ids} add={addToIds} remove={removeFromIds} />
+          <List />
           <HStack gap={2} justify='flex-end' w='100%'>
             <Button
               type='submit'
               onClick={() => navigate(previousLocation)}
-              variant='ghost'
-              colorTheme='purple300'
-              radius={1}
-              css={{
-                px: '$7',
-              }}
-            >
-              Close
-            </Button>
-            <Button
-              type='submit'
-              disabled={ids.length === 0}
-              // isLoading={loading}
-              loadingText='Edit Group'
-              onClick={async () => {
-                // await saveToManyBookmarkGroups(state.feedId, ids).then(() =>
-                //   navigate(previousLocation),
-                // );
-              }}
               colorTheme='purple500'
               radius={1}
               css={{
                 px: '$7',
               }}
             >
-              Save
+              Close
             </Button>
           </HStack>
         </VStack>
@@ -113,34 +89,15 @@ function SaveBookmarkGroupPage() {
 }
 SaveBookmarkGroupPage.displayName = 'SaveBookmarkGroupPage';
 
-function List({
-  items,
-  add,
-  remove,
-}: {
-  items: string[];
-  add: (id: string) => void;
-  remove: (id: string) => void;
-}) {
+function List() {
   const { state } = useLocation();
+
+  const { createBookmark, loading: loadingCreate } = useCreateBookmark();
+  const { removeBookmark, loading: loadingRemove } = useRemoveBookmark();
 
   const { data, loading, error } = useBasicGetBookmarkGroups({
     feedId: state.feedId,
   });
-
-  useEffect(() => {
-    if (data) {
-      data.bookmarkGroups.edges.forEach((item) => {
-        if (item.node.saved) {
-          add(item.node.id);
-        }
-      });
-    }
-  }, [data]);
-
-  if (error) {
-    return <Fragment />;
-  }
 
   return (
     <Loader loading={loading}>
@@ -158,24 +115,23 @@ function List({
               paddingInlineEnd: '$3',
             }}
             renderItem={(item) => {
-              const exists =
-                items.findIndex((id) => id === item.node.id) >= 0;
-
               return (
                 <HStack
                   px={3}
                   py={1}
                   radius={1}
-                  border={exists ? 1 : 0}
+                  border={item.node.saved ? 1 : 0}
                   items='center'
                   borderColor='rgba(152, 152, 255, 0.10)'
                   bgColor={
-                    exists ? 'rgba(152, 152, 255, 0.15)' : undefined
+                    item.node.saved
+                      ? 'rgba(152, 152, 255, 0.15)'
+                      : undefined
                   }
                   onClick={
-                    exists
-                      ? () => remove(item.node.id)
-                      : () => add(item.node.id)
+                    item.node.saved && !(loadingCreate || loadingRemove)
+                      ? () => removeBookmark(state.feedId, item.node.id)
+                      : () => createBookmark(state.feedId, item.node.id)
                   }
                   css={{ userSelect: 'none' }}
                 >
@@ -191,10 +147,10 @@ function List({
                       {item.node.total} items
                     </TextGroupSubheading>
                   </TextGroup>
-                  {exists && (
-                    <Box fontSize={6}>
+                  {item.node.saved && (
+                    <Center fontSize={6}>
                       <Icon color='white500' name='circle-check-outline' />
-                    </Box>
+                    </Center>
                   )}
                 </HStack>
               );

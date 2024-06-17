@@ -9,13 +9,10 @@ import {
   SelectItem,
   SelectItemList,
   SelectTrigger,
-  StackDivider,
-  useDisclosure,
 } from '@holdr-ui/react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import {
   customBgColor,
-  DialogContextProvider,
   Head,
   makeButtonLarger,
   makePath,
@@ -24,21 +21,14 @@ import {
   MenuTrigger,
   Paths,
   useAlertDialog,
-  usePreviousLocation,
 } from '../../../shared';
 import { useSuspenseQuery } from '@apollo/client';
 import {
   GET_BOOKMARK_GROUP,
   IBookmarkGroup,
-  IUpdateBookmarkGroup,
-  RenameBookmarkGroupDialog,
-  UpdateBookmarkSchema,
   useRemoveBookmarkGroup,
-  useRenameBookmarkGroup,
 } from '../../../features';
 import { Fragment } from 'react';
-import { Formik } from 'formik';
-import { UpdateBookmarkGroupValues } from '../constants';
 
 function Header() {
   const { pathname } = useLocation();

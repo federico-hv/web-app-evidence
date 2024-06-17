@@ -17,7 +17,7 @@ function ArtistClubHeader() {
     <HStack py={3} gap={4} items='center' justify='space-between'>
       <HStack gap={4} items='center'>
         <Heading weight={400} size={6} css={{ lineHeight: '115%' }}>
-          {club.artist.name}'s Club Page
+          {`${club.artist.name}'s`} Club Page
         </Heading>
         <Center
           px={2}
@@ -31,18 +31,27 @@ function ArtistClubHeader() {
           LIVE
         </Center>
       </HStack>
-
-      {currentUser.id === club.artist.accountId ? (
+      <HStack gap={4}>
+        {currentUser.id === club.artist.accountId ? (
+          <Button
+            variant='outline'
+            css={{ px: '50px' }}
+            colorTheme='purple50'
+            onClick={() => console.log('Open edit')}
+          >
+            Edit
+          </Button>
+        ) : (
+          <ArtistClubSocialButton username={club.artist.username} />
+        )}
         <Button
           css={{ px: '50px' }}
           colorTheme='purple100'
           onClick={() => console.log('Open edit')}
         >
-          Edit
+          Create Auction
         </Button>
-      ) : (
-        <ArtistClubSocialButton username={club.artist.username} />
-      )}
+      </HStack>
     </HStack>
   );
 }

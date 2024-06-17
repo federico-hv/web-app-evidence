@@ -27,6 +27,8 @@ import {
 } from '../../../../features';
 import { dummyPerks } from '../../../clubs/shared';
 
+// TODO: fix - not snapping on scroll
+
 function UserMembershipsPage() {
   const currentUser = useCurrentUser();
   const { username } = useParams();

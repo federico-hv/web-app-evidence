@@ -89,6 +89,7 @@ function Router() {
           path={prefix(Paths.setupAccount, '/*')}
           element={<SetupAccountRoutes />}
         />
+
         <Route
           path={prefix(Paths.setupProfile, '/*')}
           element={<SetupProfileRoutes />}
