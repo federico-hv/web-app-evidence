@@ -1,6 +1,7 @@
 import { useNavigate, useParams } from 'react-router-dom';
+
+import { ChangeEvent } from 'react';
 import {
-  customInputStyles,
   isMatchingPattern,
   ISocialLink,
   makePath,
@@ -8,18 +9,18 @@ import {
   PatternErrorMessage,
   Patterns,
   SocialProvider,
-  textAreaClassName,
-  TextField,
+  InputTextField,
   usePreviousLocation,
-} from '../../../../../shared';
+  TextareaField,
+} from '../../../../shared';
 import {
   Box,
   Button,
   HStack,
   mergeStyles,
-  Text,
   Textarea,
   useGeneralContext,
+  Text,
   useRecordState,
   VStack,
 } from '@holdr-ui/react';
@@ -29,8 +30,7 @@ import {
   IUpdateSocialLink,
   retrieveSocialLink,
   useUpdateProfileAndLinks,
-} from '../../../../../features';
-import { ChangeEvent } from 'react';
+} from '../../../../features';
 
 function EditUserProfilePage() {
   const navigate = useNavigate();
@@ -108,7 +108,7 @@ function EditUserProfilePage() {
   return (
     <VStack h='calc(100%)'>
       <VStack overflow='auto' className='thin-scrollbar' gap={6} pr='10px'>
-        <TextField
+        <InputTextField
           maxLength={25}
           name='username'
           label='Username'
@@ -117,7 +117,7 @@ function EditUserProfilePage() {
           onChange={handleProfileChange}
           errorText={UsernameErrorText}
         />
-        <TextField
+        <InputTextField
           name='displayName'
           maxLength={75}
           label='Display Name'
@@ -125,38 +125,15 @@ function EditUserProfilePage() {
           value={newProfile.displayName}
           onChange={handleProfileChange}
         />
-        <VStack gap={2}>
-          <Text color='white700' size={1} as='label' htmlFor='bio'>
-            About
-          </Text>
-          <Box position='relative'>
-            <Textarea
-              id='bio'
-              name='bio'
-              className={mergeStyles([
-                textAreaClassName(),
-                customInputStyles(),
-              ])}
-              radius={1}
-              maxLines={6}
-              maxLength={MaxFieldLength.FanProfile.Bio}
-              colorTheme='white500'
-              placeholder='Let people know a little about yourself and your musical interests.'
-              value={newProfile.bio}
-              onChange={handleProfileChange}
-            />
-            <Box
-              position='absolute'
-              b='8px'
-              r='8px'
-              fontSize={1}
-              color='white800'
-            >
-              {newProfile.bio?.length}/{MaxFieldLength.FanProfile.Bio}
-            </Box>
-          </Box>
-        </VStack>
-        <TextField
+        <TextareaField
+          id='bio'
+          name='bio'
+          placeholder='Share your story with your fans.'
+          maxLength={MaxFieldLength.FanProfile.Bio}
+          value={newProfile.bio}
+          onChange={handleProfileChange}
+        />
+        <InputTextField
           name='location'
           maxLength={75}
           label='Based in'
@@ -164,7 +141,7 @@ function EditUserProfilePage() {
           value={newProfile.location}
           onChange={handleProfileChange}
         />
-        <TextField
+        <InputTextField
           name='Instagram'
           label='Instagram URL'
           tooltip='Enter your Instagram URL to allow other users to connect with you.'
@@ -173,7 +150,7 @@ function EditUserProfilePage() {
           onChange={handleSocialLinkChange}
           errorText={InstagramURLErrorText}
         />
-        <TextField
+        <InputTextField
           name='TikTok'
           label='TikTok URL'
           tooltip='Enter your Instagram URL to allow other users to connect with you.'
@@ -182,7 +159,7 @@ function EditUserProfilePage() {
           onChange={handleSocialLinkChange}
           errorText={TikTokURLErrorText}
         />
-        <TextField
+        <InputTextField
           name='X'
           label='X URL'
           tooltip='Enter your Instagram URL to allow other users to connect with you.'

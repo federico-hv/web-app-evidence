@@ -23,6 +23,7 @@ function ArtistClubSummaryCard() {
     <VStack bg='#30304B' radius={4} p={4} justify={'center'}>
       <HStack gap={4} maxHeight={'136px'}>
         <Avatar
+          key={club.artist.name}
           src={club.artist.avatar}
           name={club.artist.name}
           size={'136px'}
@@ -40,7 +41,7 @@ function ArtistClubSummaryCard() {
           />
         </Avatar>
         <VStack gap={2} flex={1} justify='center'>
-          <HStack gap={2}>
+          <HStack gap={2} items='center'>
             <Heading
               color='white500'
               size={'20px'}
@@ -49,7 +50,7 @@ function ArtistClubSummaryCard() {
             >
               {club.artist.name}
             </Heading>
-            <VStack pt={1}>
+            <VStack>
               <Icon size='xl' color='white500' name='verified-outline' />
             </VStack>
           </HStack>

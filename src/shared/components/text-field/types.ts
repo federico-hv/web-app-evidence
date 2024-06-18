@@ -1,8 +1,9 @@
 import { ChangeEvent } from 'react';
+import { CSSTheme } from '@holdr-ui/react';
 
-export interface TextFieldProps {
+export interface InputTextFieldProps {
   name: string;
-  label: string;
+  label?: string;
   value?: string;
   tooltip?: string;
   placeholder: string;
@@ -11,4 +12,5 @@ export interface TextFieldProps {
   minLength?: number;
   readOnly?: boolean;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
+  css?: CSSTheme;
 }

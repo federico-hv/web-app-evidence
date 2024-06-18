@@ -1,5 +1,10 @@
-import { makePath, Paths } from '../../../../shared';
-import { ClubProvider } from '../../../../features';
+import { GQLRenderer, makePath, Paths } from '../../../../shared';
+import {
+  ClubContextConsumer,
+  ClubContextProvider,
+  ClubProvider,
+  PerksProvider,
+} from '../../../../features';
 import {
   Box,
   Dialog,
@@ -85,8 +90,7 @@ function SetupArtistDialog() {
                 <VStack gap={6}>
                   <SetupStep
                     path={makePath([
-                      Paths.setupProfile,
-                      Paths.artist,
+                      Paths.setupArtists,
                       Paths.setupArtist.uploadPhoto,
                     ])}
                     active={
@@ -102,8 +106,7 @@ function SetupArtistDialog() {
                   />
                   <SetupStep
                     path={makePath([
-                      Paths.setupProfile,
-                      Paths.artist,
+                      Paths.setupArtists,
                       Paths.setupArtist.aboutMeAndPerks,
                     ])}
                     active={
@@ -118,8 +121,7 @@ function SetupArtistDialog() {
                   />
                   <SetupStep
                     path={makePath([
-                      Paths.setupProfile,
-                      Paths.artist,
+                      Paths.setupArtists,
                       Paths.setupArtist.socialMediaAccounts,
                     ])}
                     active={
@@ -133,8 +135,7 @@ function SetupArtistDialog() {
                   />
                   <SetupStep
                     path={makePath([
-                      Paths.setupProfile,
-                      Paths.artist,
+                      Paths.setupArtists,
                       Paths.setupArtist.customURL,
                     ])}
                     active={
@@ -146,8 +147,7 @@ function SetupArtistDialog() {
                   />
                   <SetupStep
                     path={makePath([
-                      Paths.setupProfile,
-                      Paths.artist,
+                      Paths.setupArtists,
                       Paths.setupArtist.connectOnboarding,
                     ])}
                     active={
@@ -168,9 +168,17 @@ function SetupArtistDialog() {
                       'rgba(152, 152, 255, 0.15) transparent',
                   }}
                 >
-                  <ClubProvider>
-                    <Outlet />
-                  </ClubProvider>
+                  <GQLRenderer>
+                    <ClubProvider>
+                      <ClubContextConsumer>
+                        {(club) => (
+                          <PerksProvider clubId={club.id}>
+                            <Outlet />
+                          </PerksProvider>
+                        )}
+                      </ClubContextConsumer>
+                    </ClubProvider>
+                  </GQLRenderer>
                 </VStack>
               </Box>
             </HStack>

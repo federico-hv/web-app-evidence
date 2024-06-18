@@ -3,7 +3,7 @@ import millify from 'millify';
 
 function FeedShareGroup() {
   return (
-    <HStack items='center' gap={2} zIndex={5}>
+    <HStack items='center' gap={1} zIndex={5}>
       <IconButton
         variant='ghost'
         colorTheme='white50'

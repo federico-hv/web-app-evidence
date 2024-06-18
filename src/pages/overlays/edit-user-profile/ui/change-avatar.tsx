@@ -1,25 +1,24 @@
 import { useState } from 'react';
-import { IProfile, useUpdateAvatar } from '../../../../../features';
-import {
-  Avatar,
-  AvatarBadge,
-  Box,
-  Icon,
-  useGeneralContext,
-} from '@holdr-ui/react';
-import { ImageUpload } from '../../../../../shared';
-import { ImageUploadContext } from '../../../../../shared/components/image-upload/context';
+import { useUpdateAvatar } from '../../../../features';
+import { Avatar, AvatarBadge, Box, Icon } from '@holdr-ui/react';
+import { ImageUpload } from '../../../../shared';
+import { ImageUploadContext } from '../../../../shared/components/image-upload/context';
 
-function ChangeAvatar() {
+function ChangeAvatar({
+  placeholder,
+  variant,
+  name,
+}: {
+  placeholder?: string;
+  name: string;
+  variant: 'circle' | 'squircle';
+}) {
   const [, setValue] = useState<string>();
-
   const { updateAvatar } = useUpdateAvatar();
-
-  const { state: profile } = useGeneralContext<IProfile>();
 
   return (
     <Box w='100px' h='100px' ml={-10}>
-      {/* Sneaky way to stop cutting of content*/}
+      {/*Sneaky way to stop cutting of content*/}
       <ImageUpload
         onChange={async (item) => {
           setValue(URL.createObjectURL(item));
@@ -27,17 +26,18 @@ function ChangeAvatar() {
         }}
         title='Update avatar'
         name='avatar'
-        placeholder={profile.avatar}
+        placeholder={placeholder}
       >
         <ImageUploadContext.Consumer>
-          {({ name, src }) => (
+          {({ src }) => (
             <Avatar
               src={src}
               key={src}
               size={75}
+              variant={variant}
               fallbackTextSize={6}
               fallbackBgColor='rgba(185, 185, 255, 0.30)'
-              name='Elena Gilbert'
+              name={name}
             >
               <AvatarBadge
                 t={-10}

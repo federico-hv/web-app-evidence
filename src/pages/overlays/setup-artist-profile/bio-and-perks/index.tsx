@@ -1,10 +1,12 @@
 import { useNavigate } from 'react-router-dom';
 import {
+  Box,
   Button,
   HStack,
   mergeStyles,
+  Text,
   Textarea,
-  useRecordState,
+  useOnValueChange,
   VStack,
 } from '@holdr-ui/react';
 import {
@@ -19,39 +21,45 @@ import {
 } from '../../../../shared';
 import {
   useClubContext,
-  useGetClubPerks,
+  usePerksContext,
   useUpdateBioAndPerks,
 } from '../../../../features';
-import { ChangeEvent, useEffect } from 'react';
-import { IAboutMeState } from './shared';
-import { PerkList, PerksListLoader } from './ui';
+import { ChangeEvent, useState } from 'react';
 import { difference, isEqual } from 'lodash';
+import { SelectPredefinedPerks } from './ui';
 
 function BioAndPerksView() {
   const previousLocation = usePreviousLocation('/');
   const club = useClubContext();
+  const { clubPerks } = usePerksContext();
+
+  const { value: bio, handleOnValueChange } = useOnValueChange(
+    club.artist.bio,
+  );
+
+  const [selectedPerks, setSelectedPerks] = useState<number[]>(
+    clubPerks.map(({ id }) => id),
+  );
 
   const { updateBioAndPerks, loading: loadingUpdate } =
     useUpdateBioAndPerks();
 
-  const {
-    loading: loadingPerks,
-    data,
-    error: errorPerks,
-  } = useGetClubPerks(club.id);
-
-  const [state, update] = useRecordState<IAboutMeState>({
-    bio: club.artist.bio,
-    perks: [],
-  });
-
   const navigate = useNavigate();
 
-  const nextStep = () => {
+  const previousStep = () =>
+    navigate(
+      makePath([Paths.setupArtists, Paths.setupArtist.uploadPhoto]),
+      {
+        state: {
+          previousLocation,
+        },
+      },
+    );
+
+  const nextStep = () =>
     navigate(
       makePath([
-        Paths.setupProfile,
-        Paths.artist,
+        Paths.setupArtists,
         Paths.setupArtist.socialMediaAccounts,
       ]),
       {
@@ -60,17 +68,29 @@ function BioAndPerksView() {
         },
       },
     );
-  };
 
-  useEffect(() => {
-    if (data) {
-      update({ perks: data.clubPerks.map((item) => item.id) });
+  const saveBioAndPerks = async () => {
+    const hasBioChanged = !isEqual(bio, club.artist.bio);
+
+    const havePerksChanged =
+      [
+        ...difference(
+          selectedPerks,
+          clubPerks.map(({ id }) => id),
+        ),
+        ...difference(
+          clubPerks.map(({ id }) => id),
+          selectedPerks,
+        ),
+      ].length > 0;
+
+    if (hasBioChanged || havePerksChanged) {
+      await updateBioAndPerks(club.id, {
+        perks: selectedPerks,
+        bio: bio,
+      });
     }
-  }, [data]);
-
-  if (errorPerks) {
-    // show error message
-  }
+  };
 
   return (
     <VStack gap={9} pl={2} h='100%' overflow='auto'>
@@ -83,9 +103,9 @@ function BioAndPerksView() {
           </TextGroupSubheading>
         </TextGroup>
         <Textarea
-          value={state.bio}
+          value={bio}
           onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
-            update({ bio: e.target.value })
+            handleOnValueChange(e.target.value)
           }
           className={mergeStyles([
             textAreaClassName(),
@@ -107,11 +127,18 @@ function BioAndPerksView() {
           </TextGroupSubheading>
         </TextGroup>
 
-        {loadingPerks ? (
-          <PerksListLoader />
-        ) : (
-          <PerkList selected={state.perks} onSelect={update} />
+        {selectedPerks.length < 3 && (
+          <Box>
+            <Text size={1} color='danger200' weight={300}>
+              Please select at least 3 perks
+            </Text>
+          </Box>
         )}
+
+        <SelectPredefinedPerks
+          values={selectedPerks}
+          onChange={(next: number[]) => setSelectedPerks(next)}
+        />
       </VStack>
       <HStack
         justify='flex-end'
@@ -127,20 +154,7 @@ function BioAndPerksView() {
         pt='14px'
       >
         <Button
-          onClick={() =>
-            navigate(
-              makePath([
-                Paths.setupProfile,
-                Paths.artist,
-                Paths.setupArtist.uploadPhoto,
-              ]),
-              {
-                state: {
-                  previousLocation,
-                },
-              },
-            )
-          }
+          onClick={() => previousStep()}
           variant='ghost'
           radius={1}
           colorTheme='purple200'
@@ -152,29 +166,7 @@ function BioAndPerksView() {
           isLoading={loadingUpdate}
           loadingText={loadingUpdate ? 'Continue' : 'Continue'}
           onClick={async () => {
-            if (!data) return;
-
-            const hasBioChanged = !isEqual(state.bio, club.artist.bio);
-
-            const havePerksChanged =
-              [
-                ...difference(
-                  state.perks,
-                  data.clubPerks.map(({ id }) => id),
-                ),
-                ...difference(
-                  data.clubPerks.map(({ id }) => id),
-                  state.perks,
-                ),
-              ].length > 0;
-
-            if (havePerksChanged || hasBioChanged) {
-              await updateBioAndPerks(club.id, state).then(() =>
-                nextStep(),
-              );
-            }
-
-            nextStep();
+            await saveBioAndPerks().then(() => nextStep());
           }}
           radius={1}
           colorTheme='purple500'

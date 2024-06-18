@@ -1,5 +1,10 @@
 import { useNavigate, useParams } from 'react-router-dom';
-import { makePath, usePreviousLocation } from '../../../../../shared';
+import {
+  InformationTooltip,
+  makePath,
+  MusicReleasePreview,
+  usePreviousLocation,
+} from '../../../../shared';
 import {
   IProfile,
   SearchSpotifyArtist,
@@ -8,23 +13,18 @@ import {
   useRemoveFavoriteSong,
   useSaveFavoriteArtist,
   useSaveFavoriteSong,
-} from '../../../../../features';
+} from '../../../../features';
 import {
   Box,
   Button,
   CloseButton,
-  hexToRGB,
   HStack,
-  Icon,
   Image,
   Text,
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
   useGeneralContext,
   VStack,
 } from '@holdr-ui/react';
-import { FlatList } from '../../../../../tmp/flat-list';
+import { FlatList } from '../../../../tmp/flat-list';
 
 function EditUserAddFavoritesPage() {
   const { username } = useParams();
@@ -65,85 +65,30 @@ function EditUserAddFavoritesPage() {
       >
         <VStack gap={2}>
           <HStack color='white700' gap={1} items='center'>
-            <Text size={1} as='label'>
+            <Text size={2} weight={500} as='label'>
               Favourite Track
             </Text>
-            <Tooltip>
-              <TooltipTrigger
-                display='flex'
-                css={{ alignItems: 'center' }}
-              >
-                <Icon name='information-outline' />
-              </TooltipTrigger>
-
-              <TooltipContent
-                arrowWidth={0}
-                arrowHeight={0}
-                maxWidth={250}
-                sideOffset={-16}
-                side='right'
-                align='start'
-                fontSize={1}
-                container={
-                  document.getElementById('page-dialog-container') ||
-                  document.body
-                }
-                bgColor='#202032'
-                border={1}
-                borderColor={hexToRGB('#9898FF', 0.25)}
-              >
-                Search for your favorite artists on Spotify and share it on
-                you Bio page for others to see.
-              </TooltipContent>
-            </Tooltip>
+            <InformationTooltip
+              side='right'
+              align='start'
+              container={
+                document.getElementById('page-dialog-container') ||
+                document.body
+              }
+              description='Search for your favorite song on Spotify and share it on
+                you Bio page for others to see.'
+            />
           </HStack>
           {profile.favoriteSong ? (
-            <HStack
-              p={2}
-              gap={4}
-              justify='space-between'
-              radius={1}
-              w='250px'
-              items='center'
-              bgColor='rgba(152, 152, 255, 0.15)'
-            >
-              <HStack items='center' gap={2}>
-                <Box shrink={0}>
-                  <Image
-                    radius={1}
-                    src={profile.favoriteSong.coverImage}
-                    css={{
-                      size: '40px',
-                    }}
-                  />
-                </Box>
-
-                <VStack>
-                  <Text weight={500} noOfLines={1}>
-                    {profile.favoriteSong.name}
-                  </Text>
-                  <Text
-                    size={1}
-                    weight={500}
-                    noOfLines={1}
-                    color='white700'
-                  >
-                    {profile.favoriteSong.artists}
-                  </Text>
-                </VStack>
-              </HStack>
-              <Box>
-                <CloseButton
-                  loadingText=''
-                  isLoading={loadingRFS}
-                  onClick={async () => {
-                    await removeFavoriteSong();
-                  }}
-                  size='sm'
-                  colorTheme='white500'
-                />
-              </Box>
-            </HStack>
+            <MusicReleasePreview
+              onClick={async () => {
+                await removeFavoriteSong();
+              }}
+              loading={loadingRFS}
+              image={profile.favoriteSong.coverImage}
+              name={profile.favoriteSong.name}
+              artists={profile.favoriteSong.artists}
+            />
           ) : (
             <SearchSpotifyTrack
               onSelect={async (item) => {
@@ -166,37 +111,19 @@ function EditUserAddFavoritesPage() {
 
         <VStack gap={2}>
           <HStack color='white700' gap={1} items='center'>
-            <Text size={1} as='label'>
+            <Text size={2} as='label'>
               Favourite Musicians
             </Text>
-            <Tooltip>
-              <TooltipTrigger
-                display='flex'
-                css={{ alignItems: 'center' }}
-              >
-                <Icon name='information-outline' />
-              </TooltipTrigger>
-
-              <TooltipContent
-                arrowWidth={0}
-                arrowHeight={0}
-                maxWidth={250}
-                sideOffset={-16}
-                side='right'
-                align='start'
-                fontSize={1}
-                container={
-                  document.getElementById('page-dialog-container') ||
-                  document.body
-                }
-                bgColor='#202032'
-                border={1}
-                borderColor={hexToRGB('#9898FF', 0.25)}
-              >
-                Search for your favorite artists on Spotify and share it on
-                you Bio page for others to see.
-              </TooltipContent>
-            </Tooltip>
+            <InformationTooltip
+              side='right'
+              align='start'
+              container={
+                document.getElementById('page-dialog-container') ||
+                document.body
+              }
+              description='Search for your favorite artists on Spotify and share it on
+            you Bio page for others to see.'
+            />
           </HStack>
           <VStack gap={3}>
             {profile.favoriteArtists.length < 5 && (

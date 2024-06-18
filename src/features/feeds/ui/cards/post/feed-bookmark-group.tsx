@@ -8,7 +8,7 @@ function FeedBookmarkGroup() {
   const { bookmarked, feedId } = useFeedContext();
   const { data } = useFeedStatistic(feedId, 'bookmarks');
   return (
-    <HStack items='center' gap={2} zIndex={5}>
+    <HStack items='center' gap={1} zIndex={5}>
       <BookmarkPopover position='right' sideOffset={0}>
         <IconButton
           variant='ghost'

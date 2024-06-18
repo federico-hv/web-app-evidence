@@ -7,9 +7,13 @@ import {
 } from '@holdr-ui/react';
 import { IClub, useCurrentUser } from '../../../../features';
 import ArtistClubSocialButton from './artist-club-social.button';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { makePath, Paths } from '../../../../shared';
 
 function ArtistClubHeader() {
   const currentUser = useCurrentUser();
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
 
   const { state: club } = useGeneralContext<IClub>();
 
@@ -37,20 +41,31 @@ function ArtistClubHeader() {
             variant='outline'
             css={{ px: '50px' }}
             colorTheme='purple50'
-            onClick={() => console.log('Open edit')}
+            onClick={() =>
+              navigate(
+                makePath([Paths.clubs, club.artist.username, Paths.edit]),
+                {
+                  state: {
+                    previousLocation: pathname,
+                  },
+                },
+              )
+            }
           >
             Edit
           </Button>
         ) : (
           <ArtistClubSocialButton username={club.artist.username} />
         )}
-        <Button
-          css={{ px: '50px' }}
-          colorTheme='purple100'
-          onClick={() => console.log('Open edit')}
-        >
-          Create Auction
-        </Button>
+        {currentUser.id === club.artist.accountId && (
+          <Button
+            css={{ px: '50px' }}
+            colorTheme='purple100'
+            onClick={() => console.log('Open edit')}
+          >
+            Create Auction
+          </Button>
+        )}
       </HStack>
     </HStack>
   );

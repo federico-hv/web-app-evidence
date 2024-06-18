@@ -62,7 +62,6 @@ export {
   MediaViewContent,
 } from './media-view';
 export { default as QueryGuard } from './query-guard';
-export { default as SearchBox } from './search-box';
 export { default as InfoItem } from './info-item';
 export { default as Slider } from './slider';
 // export { default as Form, FormInput } from './forms';
@@ -79,5 +78,7 @@ export {
 export { default as LoadWithoutPreviousLocation } from './load-without-previous-location';
 export { default as EmbeddedPlayer } from './embdded-player';
 export { default as InformationTooltip } from './information-tooltip';
-export { default as TextField } from './text-field';
+export { default as InputTextField } from './text-field';
 export { default as IconLink } from './icon-link';
+export { default as TextareaField } from './text-area-field';
+export { default as MusicReleasePreview } from './music-release-preview';

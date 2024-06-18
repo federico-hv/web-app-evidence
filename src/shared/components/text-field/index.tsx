@@ -1,5 +1,4 @@
 import {
-  Box,
   hexToRGB,
   HStack,
   Icon,
@@ -10,10 +9,10 @@ import {
   TooltipTrigger,
   VStack,
 } from '@holdr-ui/react';
-import { TextFieldProps } from './types';
+import { InputTextFieldProps } from './types';
 import { customInputStyles } from '../../styles';
 
-function TextField({
+function InputTextField({
   name,
   errorText,
   label,
@@ -22,18 +21,25 @@ function TextField({
   tooltip,
   placeholder,
   ...props
-}: TextFieldProps) {
+}: InputTextFieldProps) {
   // useful for rendering the tooltip in the right container - with correct z-index
   const node =
     document.getElementById('page-dialog-container') || document.body;
 
   return (
-    <VStack gap={1}>
-      <VStack gap={2}>
-        <HStack color='white700' gap={1} items='center'>
-          <Text size={1} as='label' htmlFor={name}>
-            {label}
-          </Text>
+    <VStack gap={1} flex={1}>
+      <VStack>
+        <HStack
+          color='white700'
+          gap={1}
+          items='center'
+          css={{ marginBottom: label ? '$2' : 0 }}
+        >
+          {label && (
+            <Text size={2} weight={500} as='label' htmlFor={name}>
+              {label}
+            </Text>
+          )}
           {tooltip && (
             <Tooltip>
               <TooltipTrigger
@@ -74,13 +80,18 @@ function TextField({
         />
       </VStack>
       {errorText && errorText.length && (
-        <Text weight={500} color='danger400' size={1}>
+        <Text
+          weight={500}
+          color='danger400'
+          size={1}
+          css={{ marginTop: '$2' }}
+        >
           {errorText}
         </Text>
       )}
     </VStack>
   );
 }
-TextField.displayName = 'TextField';
+InputTextField.displayName = 'TextField';
 
-export default TextField;
+export default InputTextField;

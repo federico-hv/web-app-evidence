@@ -9,13 +9,7 @@ import {
   IconButton,
   Image,
   Text,
-  useGeneralContext,
 } from '@holdr-ui/react';
-import {
-  IClub,
-  useClubContext,
-  useUpdateClub,
-} from '../../../../../features';
 import { Fragment, useState } from 'react';
 import {
   ImageUpload,
@@ -24,13 +18,11 @@ import {
   TextGroupSubheading,
 } from '../../../../../shared';
 import { ImageUploadContext } from '../../../../../shared/components/image-upload/context';
+import { useUpdateClub } from '../../../../../features';
 
-function ChangeClubImage() {
-  const club = useClubContext();
-
-  const { updateClub } = useUpdateClub();
-
+function ChangeClubImage({ placeholder }: { placeholder?: string }) {
   const [, setValue] = useState<string>();
+  const { updateClub } = useUpdateClub();
 
   return (
     <Card
@@ -69,7 +61,7 @@ function ChangeClubImage() {
           }}
           title='Edit auction image'
           name='coverImage'
-          placeholder={club.coverImage}
+          placeholder={placeholder}
         >
           <ImageUploadContext.Consumer>
             {({ src }) => (

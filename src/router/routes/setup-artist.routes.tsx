@@ -1,22 +1,17 @@
 import { Route, Routes } from 'react-router';
-import { NavigateWithPreviousLocation, Paths } from '../../shared';
 import {
   BioAndPerksView,
   ConnectOnboardingView,
   CustomURLView,
+  SetupArtistDialog,
   SocialMediaAccountsView,
   UploadPhotoView,
 } from '../../pages';
-import { Overlay } from '@holdr-ui/react';
+import { NavigateWithPreviousLocation, Paths } from '../../shared';
 
-const SetupArtistProfileRoutes = () => (
+const SetupArtistRoutes = () => (
   <Routes>
-    <Route path='' element={<Overlay />} />
-    <Route
-      path=''
-      // element={<SetupArtistDialog error={error} loading={loading} />}
-      element={<Overlay />}
-    >
+    <Route path='' element={<SetupArtistDialog />}>
       <Route
         path=''
         element={
@@ -50,5 +45,4 @@ const SetupArtistProfileRoutes = () => (
   </Routes>
 );
 
-SetupArtistProfileRoutes.displayName = 'SetupProfileRoutes';
-export default SetupArtistProfileRoutes;
+export default SetupArtistRoutes;

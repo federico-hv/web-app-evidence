@@ -1,6 +1,5 @@
 import { useNavigate } from 'react-router-dom';
 import {
-  Head,
   makePath,
   Paths,
   TextGroup,
@@ -8,22 +7,20 @@ import {
   TextGroupSubheading,
   usePreviousLocation,
 } from '../../../../shared';
-import {
-  Button,
-  HStack,
-  useGeneralContext,
-  VStack,
-} from '@holdr-ui/react';
+import { Button, HStack, VStack } from '@holdr-ui/react';
 import {
   ChangeClubBannerImage,
   ChangeClubImage,
   ChangeProfileAvatar,
 } from './ui';
+import { useClubContext } from '../../../../features';
 
 function UploadPhotoView() {
   const previousLocation = usePreviousLocation('/');
 
   const navigate = useNavigate();
+
+  const club = useClubContext();
 
   return (
     <VStack gap={9} pl={2} h='100%' overflowY='auto'>
@@ -44,7 +41,7 @@ function UploadPhotoView() {
             page
           </TextGroupSubheading>
         </TextGroup>
-        <ChangeClubImage />
+        <ChangeClubImage placeholder={club.coverImage} />
       </VStack>
       <VStack gap={4}>
         <TextGroup gap={0}>
@@ -73,8 +70,7 @@ function UploadPhotoView() {
           onClick={() =>
             navigate(
               makePath([
-                Paths.setupProfile,
-                Paths.artist,
+                Paths.setupArtists,
                 Paths.setupArtist.aboutMeAndPerks,
               ]),
               {

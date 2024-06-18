@@ -58,11 +58,17 @@ function CompleteArtistSetupBanner() {
           <AlertActions>
             <AlertAction
               onClick={() =>
-                navigate(makePath([Paths.setupProfile, Paths.artist]), {
-                  state: {
-                    previousLocation: pathname,
+                navigate(
+                  makePath([
+                    Paths.setupArtists,
+                    Paths.setupArtist.uploadPhoto,
+                  ]),
+                  {
+                    state: {
+                      previousLocation: pathname,
+                    },
                   },
-                })
+                )
               }
               colorTheme='warning100'
               css={{
