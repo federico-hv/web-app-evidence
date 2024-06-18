@@ -29,15 +29,14 @@ function InputTextField({
   return (
     <VStack gap={1} flex={1}>
       <VStack>
-        <HStack color='white700' gap={1} items='center'>
+        <HStack
+          color='white700'
+          gap={1}
+          items='center'
+          css={{ marginBottom: '$2' }}
+        >
           {label && (
-            <Text
-              size={2}
-              weight={500}
-              as='label'
-              htmlFor={name}
-              css={{ marginBottom: '$2' }}
-            >
+            <Text size={2} weight={500} as='label' htmlFor={name}>
               {label}
             </Text>
           )}

@@ -216,7 +216,7 @@ function EditArtistClubMusicAndLinksPage() {
         </TextGroup>
 
         <VStack gap={2}>
-          <HStack color='white700' gap={1} items='center'>
+          <HStack color='white700' gap={2} items='center'>
             <Text weight={500} size={2} as='label'>
               Artist Pick
             </Text>
