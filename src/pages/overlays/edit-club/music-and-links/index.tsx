@@ -21,10 +21,10 @@ import {
   TextGroupSubheading,
   voidFn,
 } from '../../../../shared';
-import { SearchSpotifyTrack } from '../../../../features';
+import { IMusicRelease, SearchSpotifyTrack } from '../../../../features';
 import { FlatList } from '../../../../tmp/flat-list';
 import InputTextField from '../../../../shared/components/text-field';
-import { useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 
 export enum ExternalLinkTypeEnum {
   Other = 'other',
@@ -149,14 +149,52 @@ function InputTextFieldWithClose() {
   );
 }
 
-function EditArtistClubMusicAndLinksPage() {
-  const [announcements, setAnnouncements] = useState<
-    { id?: number; description: string }[]
-  >([{ id: 1, description: '' }]);
+type ItemFn<T> = (item: T) => void;
 
-  const [externalLinks, setExternalLinks] = useState<
-    { id?: number; url: string; type: 'other' | 'event' | 'merch' }[]
-  >([{ id: 1, url: '', type: ExternalLinkTypeEnum.Other }]);
+function useArrayState<T>(
+  initialState = [] as T[],
+): [
+  T[],
+  ItemFn<T>,
+  (filter: ItemFn<T>) => void,
+  Dispatch<SetStateAction<T[]>>,
+] {
+  const [state, set] = useState<T[]>(initialState);
+
+  const push = (item: T) => set((prev) => [...prev, item]);
+  const remove = (filter: (item: T) => void) => console.log('');
+
+  return [state, push, remove, set];
+}
+
+interface IAnnouncement {
+  id?: number;
+  description: string;
+}
+
+interface IArtistExternalLink {
+  id?: number;
+  url: string;
+  type: 'other' | 'event' | 'merch';
+}
+
+interface IArtistExternalLink {
+  id?: number;
+  url: string;
+  type: 'other' | 'event' | 'merch';
+}
+
+function EditArtistClubMusicAndLinksPage() {
+  const [announcements, pushAnnouncement] = useArrayState<IAnnouncement>([
+    { id: 1, description: '' },
+  ]);
+
+  const [releases] = useArrayState<IMusicRelease>([]);
+
+  const [externalLinks, pushExternalLink] =
+    useArrayState<IArtistExternalLink>([
+      { id: 1, url: '', type: ExternalLinkTypeEnum.Other },
+    ]);
 
   return (
     <VStack
@@ -214,10 +252,7 @@ function EditArtistClubMusicAndLinksPage() {
         <Button
           type='button'
           onClick={() =>
-            setAnnouncements((prev) => [
-              ...prev,
-              { id: undefined, description: '' },
-            ])
+            pushAnnouncement({ id: undefined, description: '' })
           }
           variant='ghost'
           leftIcon='add'
@@ -251,10 +286,11 @@ function EditArtistClubMusicAndLinksPage() {
         <Button
           type='button'
           onClick={() =>
-            setExternalLinks((prev) => [
-              ...prev,
-              { id: undefined, url: '', type: ExternalLinkTypeEnum.Other },
-            ])
+            pushExternalLink({
+              id: 1,
+              url: '',
+              type: ExternalLinkTypeEnum.Other,
+            })
           }
           variant='ghost'
           leftIcon='add'
