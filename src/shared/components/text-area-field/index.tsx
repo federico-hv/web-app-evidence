@@ -22,7 +22,7 @@ function TextAreaField({
     <VStack gap={2}>
       <Text
         color='white700'
-        size={1}
+        size={2}
         weight={500}
         as='label'
         htmlFor='bio'

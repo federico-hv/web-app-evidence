@@ -38,6 +38,7 @@ function EditArtistClubBioPage() {
 
   return (
     <VStack
+      as='form'
       gap={8}
       h='100%'
       overflowY='auto'
