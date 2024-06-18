@@ -124,8 +124,7 @@ function CustomURLView() {
           onClick={() =>
             navigate(
               makePath([
-                Paths.setupProfile,
-                Paths.artist,
+                Paths.setupArtists,
                 Paths.setupArtist.socialMediaAccounts,
               ]),
               {
@@ -155,8 +154,7 @@ function CustomURLView() {
 
             navigate(
               makePath([
-                Paths.setupProfile,
-                Paths.artist,
+                Paths.setupArtists,
                 Paths.setupArtist.connectOnboarding,
               ]),
               {

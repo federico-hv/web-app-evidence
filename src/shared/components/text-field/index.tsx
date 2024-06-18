@@ -33,7 +33,7 @@ function InputTextField({
           color='white700'
           gap={1}
           items='center'
-          css={{ marginBottom: '$2' }}
+          css={{ marginBottom: label ? '$2' : 0 }}
         >
           {label && (
             <Text size={2} weight={500} as='label' htmlFor={name}>

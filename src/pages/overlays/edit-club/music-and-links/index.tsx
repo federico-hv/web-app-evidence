@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  Center,
   CloseButton,
   HStack,
   Input,
@@ -46,8 +47,8 @@ function TextAndOptionFieldWithClose() {
 
             borderTopRightRadius: '$0',
             borderBottomRightRadius: '$0',
-            borderTopLeftRadius: '$2',
-            borderBottomLeftRadius: '$2',
+            borderTopLeftRadius: '$1',
+            borderBottomLeftRadius: '$1',
           }}
         />
         <SelectContent zIndex={20} sticky='always'>
@@ -67,7 +68,6 @@ function TextAndOptionFieldWithClose() {
             }
             position='relative'
             css={{
-              marginLeft: '1px',
               boxShadow: '0px 4px 12px 0px rgba(14, 14, 27, 0.08)',
               background: 'rgba(152, 152, 255, 0.1)',
               backdropFilter: 'blur(40px)',
@@ -104,8 +104,8 @@ function TextAndOptionFieldWithClose() {
           className={customInputStyles()}
           css={{
             paddingInlineEnd: '$10',
-            borderTopRightRadius: '$2',
-            borderBottomRightRadius: '2',
+            borderTopRightRadius: '$1',
+            borderBottomRightRadius: '$1',
             borderTopLeftRadius: '$0',
             borderBottomLeftRadius: '$0',
           }}
@@ -128,23 +128,21 @@ function TextAndOptionFieldWithClose() {
 
 function InputTextFieldWithClose() {
   return (
-    <HStack position='relative' w='100%' gap={2} items='center'>
+    <HStack position='relative' w='100%' items='center'>
       <InputTextField
         name='dummy'
         placeholder='Add announcement'
         css={{ paddingInlineEnd: '$10' }}
       />
-      <CloseButton
-        type='button'
-        css={{
-          position: 'absolute',
-          right: '$3',
-          width: '1rem !important',
-        }}
-        size='sm'
-        className={makeButtonLarger('1rem')}
-        colorTheme='white700'
-      />
+      <Center position='absolute' t={0} b={0} r={0} pr={3}>
+        <CloseButton
+          type='button'
+          css={{ width: '1rem !important' }}
+          size='sm'
+          className={makeButtonLarger('1rem')}
+          colorTheme='white700'
+        />
+      </Center>
     </HStack>
   );
 }

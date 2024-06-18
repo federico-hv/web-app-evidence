@@ -11,7 +11,7 @@ import {
   ClubRoutes,
   UserRelationshipRoutes,
   SetupAccountRoutes,
-  SetupProfileRoutes,
+  SetupArtistRoutes,
   UserRoutes,
   EditGeneralUserProfileRoutes,
   ArtistProfileRoutes,
@@ -91,8 +91,8 @@ function Router() {
         />
 
         <Route
-          path={prefix(Paths.setupProfile, '/*')}
-          element={<SetupProfileRoutes />}
+          path={prefix(Paths.setupArtists, '/*')}
+          element={<SetupArtistRoutes />}
         />
         <Route
           path={makePath([Paths.clubs, '/*'])}

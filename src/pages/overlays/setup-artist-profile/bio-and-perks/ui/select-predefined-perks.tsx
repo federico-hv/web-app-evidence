@@ -1,17 +1,20 @@
 import { Fragment } from 'react';
 import { Box, HStack } from '@holdr-ui/react';
 import { usePresetPerks } from '../../../../../features';
-import { IAboutMeState } from '../shared';
 import PerksListLoader from './perk-list.loader';
 
-function PerkList({
-  selected,
-  onSelect,
-}: {
-  selected: number[];
-  onSelect: (next: Partial<IAboutMeState>) => void;
-}) {
+interface ISelectPredefinedPerksProps {
+  values: number[];
+  onChange: (values: number[]) => void;
+}
+
+function SelectPredefinedPerks({
+  values,
+  onChange,
+}: ISelectPredefinedPerksProps) {
   const { loading, data, error } = usePresetPerks();
+
+  // const [selectedPerks, setSelectedPerks] = useState<number[]>([]);
 
   if (error) {
     // should we show the error?
@@ -20,22 +23,18 @@ function PerkList({
   if (loading) {
     return <PerksListLoader />;
   }
-
   return (
     <Fragment>
       {data && (
         <HStack gap={2} wrap='wrap'>
           {data.presetPerks.map(({ id, label }) => {
             const isSelected =
-              selected.findIndex((item) => item === id) > -1;
+              values.findIndex((item) => item === id) > -1;
 
-            const insert = (value: number) =>
-              onSelect({ perks: [...selected, value] });
+            const insert = (value: number) => onChange([...values, value]);
 
             const remove = (value: number) =>
-              onSelect({
-                perks: selected.filter((item) => item !== value),
-              });
+              onChange(values.filter((item) => item !== value));
 
             return (
               <Box
@@ -64,4 +63,4 @@ function PerkList({
   );
 }
 
-export default PerkList;
+export default SelectPredefinedPerks;

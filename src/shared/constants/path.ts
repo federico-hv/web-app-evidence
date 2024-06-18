@@ -61,7 +61,7 @@ export const Paths = {
   support: 'support',
   setupFlow: 'setup/flow',
   setupAccount: 'setup/account',
-  setupProfile: 'setup/profile',
+  setupArtists: 'setup/artist',
   artist: 'artist',
   general: 'general',
   messages: 'messages',

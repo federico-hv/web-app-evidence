@@ -17,7 +17,7 @@ function Content() {
       overflowY='auto'
       h='calc(100% - 56px)'
       gap={4}
-      p={{ '@bp1': 2, '@bp3': 4 }}
+      p={2}
       css={{ paddingInlineEnd: '$3' }}
       data={data.bookmarks.edges}
       renderItem={(item) => (

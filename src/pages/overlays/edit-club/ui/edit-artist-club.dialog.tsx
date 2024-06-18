@@ -31,6 +31,7 @@ import {
   ClubContextConsumer,
   ClubProvider,
   IClub,
+  PerksProvider,
 } from '../../../../features';
 
 function EditArtistClubDialog() {
@@ -145,7 +146,13 @@ function EditArtistClubDialog() {
                     </Box>
 
                     <Box py={48} flex={1}>
-                      <Outlet />
+                      <ClubContextConsumer>
+                        {(club) => (
+                          <PerksProvider clubId={club.id}>
+                            <Outlet />
+                          </PerksProvider>
+                        )}
+                      </ClubContextConsumer>
                     </Box>
                   </HStack>
                 </DialogBody>

@@ -1,9 +1,9 @@
 import { createContext, Fragment, useContext } from 'react';
-import { IClub } from './interfaces';
+import { IClub } from '../interfaces';
 import { GenericProps } from '@holdr-ui/react';
-import { useCurrentUser } from '../../auth';
-import { useSuspenseGetClub } from './hooks';
-import { GQLRenderer } from '../../../shared';
+import { useCurrentUser } from '../../../auth';
+import { useSuspenseGetClub } from '../hooks';
+import { GQLRenderer } from '../../../../shared';
 
 const ClubContext = createContext<IClub>({
   artist: {

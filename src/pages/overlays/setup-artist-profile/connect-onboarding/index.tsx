@@ -115,8 +115,7 @@ function ConnectOnboardingView() {
             onClick={() =>
               navigate(
                 makePath([
-                  Paths.setupProfile,
-                  Paths.artist,
+                  Paths.setupArtists,
                   Paths.setupArtist.customURL,
                 ]),
                 {

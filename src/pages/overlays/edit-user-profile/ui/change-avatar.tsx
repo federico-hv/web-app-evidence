@@ -14,7 +14,6 @@ function ChangeAvatar({
   variant: 'circle' | 'squircle';
 }) {
   const [, setValue] = useState<string>();
-
   const { updateAvatar } = useUpdateAvatar();
 
   return (

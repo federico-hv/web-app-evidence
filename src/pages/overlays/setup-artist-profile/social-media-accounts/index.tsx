@@ -85,8 +85,7 @@ function SocialMediaAccountsView() {
             onClick={() =>
               navigate(
                 makePath([
-                  Paths.setupProfile,
-                  Paths.artist,
+                  Paths.setupArtists,
                   Paths.setupArtist.aboutMeAndPerks,
                 ]),
                 {
@@ -128,8 +127,7 @@ function SocialMediaAccountsView() {
               await updateSocialLink(artist?.id || '', links).then(() =>
                 navigate(
                   makePath([
-                    Paths.setupProfile,
-                    Paths.artist,
+                    Paths.setupArtists,
                     Paths.setupArtist.customURL,
                   ]),
                   {
