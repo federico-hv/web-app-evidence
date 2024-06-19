@@ -5,8 +5,6 @@ import {
 } from '../../../../shared';
 
 export function useSuspenseGetInactiveBidders(clubId: string) {
-  console.log(clubId);
-
   return {
     data: [
       {

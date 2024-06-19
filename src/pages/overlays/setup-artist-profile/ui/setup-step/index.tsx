@@ -2,12 +2,20 @@ import { Box, Circle, HStack, Text } from '@holdr-ui/react';
 import { LinkOverlay, usePreviousLocation } from '../../../../../shared';
 import { SetupStepProps } from './types';
 
-function SetupStep({ number, path, description, active }: SetupStepProps) {
+function SetupStep({
+  number,
+  path,
+  description,
+  active,
+  disabledLink,
+}: SetupStepProps) {
   const previousLocation = usePreviousLocation('/');
 
   return (
     <Box position='relative'>
-      <LinkOverlay state={{ previousLocation }} to={path} />
+      {!disabledLink && (
+        <LinkOverlay state={{ previousLocation }} to={path} />
+      )}
 
       <HStack items='center' gap={3}>
         <Circle

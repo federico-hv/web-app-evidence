@@ -12,5 +12,6 @@ export interface InputTextFieldProps {
   minLength?: number;
   readOnly?: boolean;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
+  onBlur?: (e: ChangeEvent<HTMLInputElement>) => void;
   css?: CSSTheme;
 }
