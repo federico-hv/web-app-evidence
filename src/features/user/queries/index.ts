@@ -67,3 +67,9 @@ export const CHECK_IS_PROFILE_BLOCKED_OR_PROTECTED = gql`
     checkIsProfileBlockedOrProtected(username: $username)
   }
 `;
+
+export const CHECK_IS_UNIQUE_FIELD = gql`
+  query isUniqueField($field: UniqueIdentityField!, $value: String!) {
+    isUniqueField(field: $field, value: $value)
+  }
+`;

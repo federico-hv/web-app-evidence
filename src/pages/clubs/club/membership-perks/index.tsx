@@ -83,7 +83,13 @@ function ArtistClubMembershipPerksPage() {
         title='Perks'
         description='A catalog of memberships that are being offered by artists.'
       />
-      <RadialSurface radius={2}>
+      <RadialSurface
+        radius={2}
+        h='100%'
+        className='thin-scrollbar'
+        maxHeight='calc(100vh - 250px)'
+        overflow='auto'
+      >
         <VStack
           divider={
             <StackDivider width={1} color='rgba(152, 152, 255, 0.10)' />

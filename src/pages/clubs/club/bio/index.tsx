@@ -18,7 +18,7 @@ import {
   useGeneralContext,
   VStack,
 } from '@holdr-ui/react';
-import { IClub } from '../../../../features';
+import { IClub, useSuspenseGetCollaborators } from '../../../../features';
 import { Fragment } from 'react';
 import { FlatList } from '../../../../tmp/flat-list';
 import ArtistClubBioAdditionalContent from '../ui/artist-club-bio-additional.content';
@@ -38,6 +38,10 @@ function ArtistClubBioPage() {
 
   const { state: club } = useGeneralContext<IClub>();
 
+  const { data: collaborationData } = useSuspenseGetCollaborators(
+    club.artist.id,
+  );
+
   return (
     <Fragment>
       <Head
@@ -46,66 +50,62 @@ function ArtistClubBioPage() {
         description='A catalog of memberships that are being offered by artists.'
       />
       <HStack
-        maxHeight='calc(100vh - 230px)'
+        maxHeight='calc(100vh - 250px)'
         overflow='hidden'
         justify='space-between'
         gap={4}
       >
-        <Box
-          h='100%'
+        <VStack
           flex={1}
           radius={2}
           overflowY='auto'
           className='thin-scrollbar'
-          position='relative'
+          bgColor='#30304B'
+          css={{ paddingInlineEnd: '$3' }}
         >
-          <VStack
-            h='fit-content'
-            bgColor='#30304B'
-            css={{ paddingInlineEnd: '$3' }}
-          >
-            <GQLRenderer>
-              <ArtistClubSummaryCard />
-            </GQLRenderer>
-            <VStack p={4}>
-              {club.artist.bio && (
-                <Fragment>
-                  <VStack gap={3}>
-                    <Heading weight={500} size={4}>
-                      About
-                    </Heading>
-                    <VStack flex={1}>
-                      <Text weight={300} color='white600'>
-                        {club.artist.bio}
-                      </Text>
-                    </VStack>
+          <GQLRenderer>
+            <ArtistClubSummaryCard />
+          </GQLRenderer>
+          <VStack p={4}>
+            {club.artist.bio && (
+              <Fragment>
+                <VStack gap={3}>
+                  <Heading weight={500} size={4}>
+                    About
+                  </Heading>
+                  <VStack flex={1}>
+                    <Text weight={300} color='white600'>
+                      {club.artist.bio}
+                    </Text>
                   </VStack>
-                  <Box
-                    my={4}
-                    borderBottom={1}
-                    borderColor='rgba(152, 152, 255, 0.1)'
-                  />
-                </Fragment>
-              )}
-              {club.artist.bio && (
-                <Fragment>
-                  <VStack gap={3}>
-                    <Heading weight={500} size={4}>
-                      Based In
-                    </Heading>
-                    <VStack flex={1}>
-                      <Text weight={300} color='white600'>
-                        Fairfax, Virginia, United States
-                      </Text>
-                    </VStack>
+                </VStack>
+                <Box
+                  my={4}
+                  borderBottom={1}
+                  borderColor='rgba(152, 152, 255, 0.1)'
+                />
+              </Fragment>
+            )}
+            {club.artist.location && (
+              <Fragment>
+                <VStack gap={3}>
+                  <Heading weight={500} size={4}>
+                    Based In
+                  </Heading>
+                  <VStack flex={1}>
+                    <Text weight={300} color='white600'>
+                      {club.artist.location}
+                    </Text>
                   </VStack>
-                  <Box
-                    my={4}
-                    borderBottom={1}
-                    borderColor='rgba(152, 152, 255, 0.1)'
-                  />
-                </Fragment>
-              )}
+                </VStack>
+                <Box
+                  my={4}
+                  borderBottom={1}
+                  borderColor='rgba(152, 152, 255, 0.1)'
+                />
+              </Fragment>
+            )}
+            {collaborationData.collaborators.length > 0 && (
               <VStack gap={3}>
                 <Heading weight={500} size={4}>
                   Collaborators
@@ -113,67 +113,63 @@ function ArtistClubBioPage() {
                 <FlatList
                   items='center'
                   divider={<Circle mx={4} bgColor='black300' size='5px' />}
-                  data={[
-                    'Silas Stone',
-                    'Sunny Raye',
-                    'Big Grit',
-                    'Michael Smith',
-                  ]}
-                  renderItem={(item) => <Text>{item}</Text>}
-                  keyExtractor={(item) => item}
+                  data={collaborationData.collaborators}
+                  renderItem={(item) => <Text>{item.name}</Text>}
+                  keyExtractor={(item) => item.id}
                 />
               </VStack>
-              <Box
-                my={4}
-                borderBottom={1}
-                borderColor='rgba(152, 152, 255, 0.1)'
-              />
-              <VStack>
-                <HStack justify={'space-between'}>
-                  <Box flex={1} h='21px'>
-                    <Heading weight={500} size={4}>
-                      Club Members
-                    </Heading>
-                  </Box>
-                  <Link
-                    to={makePath([Paths.clubs, slug || '', 'members'])}
-                    state={{ previousLocation }}
-                  >
-                    <Text size={4} weight={300} color='purple200'>
-                      View all
-                    </Text>
-                  </Link>
-                </HStack>
-                <Heading
-                  size={'16px'}
-                  weight={300}
-                  color='white700'
-                  css={{ marginTop: '$1' }}
+            )}
+            <Box
+              my={4}
+              borderBottom={1}
+              borderColor='rgba(152, 152, 255, 0.1)'
+            />
+            <VStack>
+              <HStack justify={'space-between'}>
+                <Box flex={1} h='21px'>
+                  <Heading weight={500} size={4}>
+                    Club Members
+                  </Heading>
+                </Box>
+                <Link
+                  to={makePath([Paths.clubs, slug || '', 'members'])}
+                  state={{ previousLocation }}
                 >
-                  50 Members
-                </Heading>
-                <VStack pt='20px' pb='8px'>
-                  <AvatarGroup max={7} borderColor='#292940' size={'56px'}>
-                    {imageSrcs.map((item) => (
-                      <Avatar key={item} src={item} name='Micky Weekes'>
-                        <AvatarBadge
-                          zIndex={1}
-                          borderColor='#292940'
-                          border={1}
-                          bgColor='#34C05A'
-                          r={10}
-                          b={5}
-                          size={'12px'}
-                          radius='full'
-                        />
-                      </Avatar>
-                    ))}
-                  </AvatarGroup>
-                </VStack>
+                  <Text size={4} weight={300} color='purple200'>
+                    View all
+                  </Text>
+                </Link>
+              </HStack>
+              <Heading
+                size={'16px'}
+                weight={300}
+                color='white700'
+                css={{ marginTop: '$1' }}
+              >
+                50 Members
+              </Heading>
+              <VStack pt='20px' pb='8px'>
+                <AvatarGroup max={7} borderColor='#292940' size={'56px'}>
+                  {imageSrcs.map((item) => (
+                    <Avatar key={item} src={item} name='Micky Weekes'>
+                      <AvatarBadge
+                        zIndex={1}
+                        borderColor='#292940'
+                        border={1}
+                        bgColor='#34C05A'
+                        r={10}
+                        b={5}
+                        size={'12px'}
+                        radius='full'
+                      />
+                    </Avatar>
+                  ))}
+                </AvatarGroup>
               </VStack>
             </VStack>
           </VStack>
-        </Box>
+        </VStack>
+
         <ArtistClubBioAdditionalContent />
       </HStack>
     </Fragment>

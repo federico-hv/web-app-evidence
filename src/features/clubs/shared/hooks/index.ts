@@ -4,3 +4,5 @@ export * from './use-get-club-perks';
 export * from './use-is-unique-club-url';
 export * from './use-get-active-bidders';
 export * from './use-get-inactive-bidders';
+export * from './use-get-artist-details';
+export * from './use-get-collaborators';

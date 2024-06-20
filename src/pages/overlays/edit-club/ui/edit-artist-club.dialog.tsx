@@ -149,7 +149,9 @@ function EditArtistClubDialog() {
                       <ClubContextConsumer>
                         {(club) => (
                           <PerksProvider clubId={club.id}>
-                            <Outlet />
+                            <GQLRenderer>
+                              <Outlet />
+                            </GQLRenderer>
                           </PerksProvider>
                         )}
                       </ClubContextConsumer>

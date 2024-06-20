@@ -35,6 +35,7 @@ function TextAreaField({
             textAreaClassName(),
             customInputStyles(),
           ])}
+          value={value}
           radius={radius}
           maxLines={maxLines}
           maxLength={maxLength}

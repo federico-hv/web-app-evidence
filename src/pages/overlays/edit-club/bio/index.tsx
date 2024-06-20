@@ -1,40 +1,83 @@
-import { VStack } from '@holdr-ui/react';
+import { useRecordState, VStack } from '@holdr-ui/react';
 import {
   InputTextField,
+  isMatchingPattern,
   MaxFieldLength,
+  PatternErrorMessage,
+  Patterns,
   TextareaField,
   TextGroup,
   TextGroupHeading,
   TextGroupSubheading,
+  voidFn,
 } from '../../../../shared';
+import {
+  IUpdateSocialLink,
+  retrieveSocialLink,
+  useClubContext,
+  useSuspenseSocialLinks,
+} from '../../../../features';
+import { ChangeEvent } from 'react';
+
+interface IArtistProfile {
+  username: string;
+  name: string;
+  bio: string;
+  location: string;
+}
 
 function EditArtistClubBioPage() {
-  // const InstagramURLErrorText = isMatchingPattern(
-  //   newSocialLinks.Instagram,
-  //   Patterns.InstagramURL,
-  //   PatternErrorMessage.invalid('Instagram URL'),
-  // );
-  //
-  // const TikTokURLErrorText = isMatchingPattern(
-  //   newSocialLinks.TikTok,
-  //   Patterns.TikTokURL,
-  //   PatternErrorMessage.invalid('TikTok URL'),
-  // );
-  //
-  // const XURLErrorText = isMatchingPattern(
-  //   newSocialLinks.X,
-  //   Patterns.XURL,
-  //   PatternErrorMessage.invalid('X URL'),
-  // );
-  //
-  // const UsernameErrorText = isMatchingPattern(
-  //   newProfile.username,
-  //   Patterns.Username,
-  //   PatternErrorMessage.invalidCharacters(
-  //     'username',
-  //     'alphanumeric characters',
-  //   ),
-  // );
+  const club = useClubContext();
+
+  const { data: linksData } = useSuspenseSocialLinks(
+    club.artist.accountId,
+  );
+  const [profile, updateProfile] = useRecordState<IArtistProfile>({
+    username: club.artist.username,
+    name: club.artist.name,
+    bio: club.artist.bio,
+    location: '',
+  });
+
+  const [newSocialLinks, updateNewSocialLinks] =
+    useRecordState<IUpdateSocialLink>({
+      X: retrieveSocialLink(linksData.socialLinks, 'X')?.url || '',
+      Instagram:
+        retrieveSocialLink(linksData.socialLinks, 'Instagram')?.url || '',
+      TikTok:
+        retrieveSocialLink(linksData.socialLinks, 'TikTok')?.url || '',
+    });
+
+  const InstagramURLErrorText = isMatchingPattern(
+    newSocialLinks.Instagram,
+    Patterns.InstagramURL,
+    PatternErrorMessage.invalid('Instagram URL'),
+  );
+
+  const TikTokURLErrorText = isMatchingPattern(
+    newSocialLinks.TikTok,
+    Patterns.TikTokURL,
+    PatternErrorMessage.invalid('TikTok URL'),
+  );
+
+  const XURLErrorText = isMatchingPattern(
+    newSocialLinks.X,
+    Patterns.XURL,
+    PatternErrorMessage.invalid('X URL'),
+  );
+
+  const UsernameErrorText = isMatchingPattern(
+    profile.username,
+    Patterns.Username,
+    PatternErrorMessage.invalidCharacters(
+      'username',
+      'alphanumeric characters',
+    ),
+  );
+
+  const handleSocialLinkChange = (e: ChangeEvent<HTMLInputElement>) => {
+    updateNewSocialLinks({ [e.target.name]: e.target.value });
+  };
 
   return (
     <VStack
@@ -55,24 +98,31 @@ function EditArtistClubBioPage() {
           </TextGroupSubheading>
         </TextGroup>
         <InputTextField
+          value={profile.username}
+          onChange={(e) => updateProfile({ username: e.target.value })}
           name='username'
           label='Username'
           placeholder='@username'
+          errorText={UsernameErrorText}
         />
         <InputTextField
-          name='fullname'
-          label='Full Name'
-          placeholder='Full Name'
+          value={profile.name}
+          onChange={(e) => updateProfile({ name: e.target.value })}
+          name='artistName'
+          label='Artist Name'
+          placeholder='Artist Name'
         />
         <TextareaField
+          value={profile.bio}
+          onChange={(e) => updateProfile({ bio: e.target.value })}
           id='bio'
           name='bio'
           placeholder='Let people know a little about yourself and your musical interests.'
           maxLength={MaxFieldLength.FanProfile.Bio}
-          // value={newProfile.bio}
-          // onChange={handleProfileChange}
         />
         <InputTextField
+          value={profile.location}
+          onChange={(e) => updateProfile({ location: e.target.value })}
           name='location'
           label='Based In'
           placeholder='Enter your location'
@@ -92,27 +142,27 @@ function EditArtistClubBioPage() {
           label='Instagram URL'
           tooltip='Enter your Instagram URL to allow other users to connect with you.'
           placeholder='Enter your Instgram link'
-          // value={newSocialLinks.Instagram}
-          // onChange={handleSocialLinkChange}
-          // errorText={InstagramURLErrorText}
+          value={newSocialLinks.Instagram}
+          onChange={handleSocialLinkChange}
+          errorText={InstagramURLErrorText}
         />
         <InputTextField
           name='TikTok'
           label='TikTok URL'
           tooltip='Enter your Instagram URL to allow other users to connect with you.'
           placeholder='Enter your TikTok link'
-          // value={newSocialLinks.TikTok}
-          // onChange={handleSocialLinkChange}
-          // errorText={TikTokURLErrorText}
+          value={newSocialLinks.TikTok}
+          onChange={handleSocialLinkChange}
+          errorText={TikTokURLErrorText}
         />
         <InputTextField
           name='X'
           label='X URL'
           tooltip='Enter your Instagram URL to allow other users to connect with you.'
           placeholder='Enter your X link'
-          // value={newSocialLinks.X}
-          // onChange={handleSocialLinkChange}
-          // errorText={XURLErrorText}
+          value={newSocialLinks.X}
+          onChange={handleSocialLinkChange}
+          errorText={XURLErrorText}
         />
       </VStack>
     </VStack>

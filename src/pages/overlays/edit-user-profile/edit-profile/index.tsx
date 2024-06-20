@@ -1,5 +1,4 @@
 import { useNavigate, useParams } from 'react-router-dom';
-
 import { ChangeEvent } from 'react';
 import {
   isMatchingPattern,
@@ -14,13 +13,9 @@ import {
   TextareaField,
 } from '../../../../shared';
 import {
-  Box,
   Button,
   HStack,
-  mergeStyles,
-  Textarea,
   useGeneralContext,
-  Text,
   useRecordState,
   VStack,
 } from '@holdr-ui/react';
@@ -146,8 +141,8 @@ function EditUserProfilePage() {
           label='Instagram URL'
           tooltip='Enter your Instagram URL to allow other users to connect with you.'
           placeholder='Enter your Instgram link'
-          value={newSocialLinks.Instagram}
           onChange={handleSocialLinkChange}
+          value={newSocialLinks.Instagram}
           errorText={InstagramURLErrorText}
         />
         <InputTextField

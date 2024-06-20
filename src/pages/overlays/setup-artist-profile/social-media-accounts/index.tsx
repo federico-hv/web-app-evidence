@@ -52,6 +52,7 @@ function SocialMediaAccountsView() {
             </TextGroupSubheading>
           </TextGroup>
 
+          {/** TODO: fix this by adding an external artist. */}
           <SearchSpotifyArtist />
         </VStack>
         <VStack gap={4}>

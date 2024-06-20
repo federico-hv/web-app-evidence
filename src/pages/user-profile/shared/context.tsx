@@ -7,6 +7,7 @@ function ProfileProvider({ children }: GenericProps) {
   const { username } = useParams();
 
   const { data } = useSuspenseGetProfile(username || '');
+
   if (!data.profile) {
     return <Navigate to='/' />;
   }

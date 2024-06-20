@@ -5,9 +5,22 @@ import {
   HStack,
   VStack,
   Text,
+  useGeneralContext,
 } from '@holdr-ui/react';
 import { FlatList } from '../../../../tmp/flat-list';
-import { EmbeddedPlayer } from '../../../../shared';
+import {
+  EmbeddedPlayer,
+  ExternalLinkTypeEnum,
+  IExternalLink,
+} from '../../../../shared';
+import {
+  IClub,
+  useClubContext,
+  useGetArtistDetails,
+  useSuspenseGetArtistDetails,
+} from '../../../../features';
+import { Fragment } from 'react';
+import { Link } from 'react-router-dom';
 
 function ReplaceWithLinkIcon() {
   return (
@@ -51,21 +64,42 @@ function ReplaceWithLinkIcon() {
   );
 }
 
-function ArtistClubBioAdditionalContent() {
+function ExternalLink({ data }: { data: IExternalLink }) {
   return (
-    <VStack
-      basis='320px'
-      grow={0}
-      radius={2}
-      bgColor='#30304B'
-      p={4}
-      ml={1}
-    >
-      <HStack pb='16px'>
-        <Heading size={5} weight={500}>
-          Artist Pick
-        </Heading>
-      </HStack>
+    <HStack gap={2} items='center'>
+      <Box fontSize={5} mt='0px'>
+        <ReplaceWithLinkIcon />
+      </Box>
+      <Box
+        flex={10}
+        _hover={{
+          '& a': {
+            textDecoration: 'underline',
+          },
+        }}
+      >
+        <Link
+          to={data.url}
+          target='_blank'
+          referrerPolicy='no-referrer'
+          style={{ cursor: 'pointer' }}
+        >
+          <Text size={3} weight={300}>
+            {data.url}
+          </Text>
+        </Link>
+      </Box>
+    </HStack>
+  );
+}
+
+function ArtistClubBioAdditionalContent() {
+  const { state: club } = useGeneralContext<IClub>();
+
+  const { data } = useSuspenseGetArtistDetails(club.artist.id);
+
+  return (
+    <Box basis='320px' grow={0} radius={2} bgColor='#30304B' p={4} ml={1}>
       <VStack
         className='thin-scrollbar'
         h='100%'
@@ -73,121 +107,153 @@ function ArtistClubBioAdditionalContent() {
         pb={1}
         pr={3}
       >
-        <VStack gap={2}>
-          <EmbeddedPlayer
-            provider='Spotify'
-            ids={[
-              {
-                externalId: '73M2Vb5MfZh8iGKudkMtlw',
-                provider: 'Spotify',
-                externalUrl: '',
-                id: 1,
-              },
-            ]}
-          />
-          <EmbeddedPlayer
-            provider='Spotify'
-            ids={[
-              {
-                externalId: '0sT4slW2xWai3EwVSiuL9Y',
-                provider: 'Spotify',
-                externalUrl: '',
-                id: 2,
-              },
-            ]}
-          />
-          <EmbeddedPlayer
-            provider='Spotify'
-            ids={[
-              {
-                externalId: '0grFc6klR3hxoHLcgCYsF4',
-                provider: 'Spotify',
-                externalUrl: '',
-                id: 2,
-              },
-            ]}
-          />
-        </VStack>
-        <Box
-          my={4}
-          borderBottom={1}
-          borderColor='rgba(152, 152, 255, 0.10)'
-        />
-        <VStack>
-          <Heading as='h2' size={4} weight={500} mb={4}>
-            Announcements
-          </Heading>
-          <Box pt={'8px'} pb='12px' ml={2} color='white600'>
+        {data.artistPicks.length > 0 && (
+          <Fragment>
+            <HStack pb='16px'>
+              <Heading size={5} weight={500}>
+                Artist Pick
+              </Heading>
+            </HStack>
+
             <FlatList
               direction='vertical'
-              gap={2}
-              data={[
-                'Infinite Solitude album, Out Now!!',
-                ' First show of the tour, this coming Friday',
-              ]}
+              gap={3}
+              data={data.artistPicks}
+              keyExtractor={(item) => item.id}
               renderItem={(item) => (
-                <HStack gap={2}>
-                  <Circle mt='6px' bgColor='white500' size='6px' />
-                  <Text>{item}</Text>
-                </HStack>
+                <EmbeddedPlayer
+                  provider='Spotify'
+                  ids={item.externalIds}
+                />
               )}
-              keyExtractor={(item) => item}
             />
-          </Box>
-        </VStack>
-        <Box
-          my={4}
-          borderBottom={1}
-          borderColor='rgba(152, 152, 255, 0.10)'
-        />
-        <VStack>
-          <Heading size='18px' weight={500}>
-            Links
-          </Heading>
-          <VStack>
+
+            <Box
+              my={4}
+              borderBottom={1}
+              borderColor='rgba(152, 152, 255, 0.10)'
+            />
+          </Fragment>
+        )}
+
+        {data.announcements.length > 0 && (
+          <Fragment>
             <VStack>
-              <Heading py={5} as='h3' size={3} weight={400}>
-                Upcoming Show
+              <Heading as='h2' size={4} weight={500} mb={4}>
+                Announcements
               </Heading>
-              <HStack gap={2}>
-                <Box fontSize={5} mt='0px'>
-                  <ReplaceWithLinkIcon />
-                </Box>
-                <Box flex={10}>
-                  <a href='' style={{ cursor: 'pointer' }}>
-                    <Text size={3} weight={300}>
-                      eventbrite.ca/e/infinites-solitude-tour-tickets
-                    </Text>
-                  </a>
-                </Box>
-              </HStack>
+              <Box pt={'8px'} pb='12px' ml={2} color='white600'>
+                <FlatList
+                  direction='vertical'
+                  gap={2}
+                  data={data.announcements}
+                  renderItem={(item) => (
+                    <HStack gap={2}>
+                      <Circle mt='6px' bgColor='white500' size='6px' />
+                      <Text>{item.description}</Text>
+                    </HStack>
+                  )}
+                  keyExtractor={(item) => item.description}
+                />
+              </Box>
             </VStack>
             <Box
               my={4}
               borderBottom={1}
               borderColor='rgba(152, 152, 255, 0.10)'
             />
+          </Fragment>
+        )}
+
+        {data.externalArtistLinks.length > 0 && (
+          <VStack>
+            <Heading size='18px' weight={500}>
+              Links
+            </Heading>
             <VStack>
-              <Heading as='h3' size={3} mb={4} weight={400}>
-                Merchandise
-              </Heading>
-              <HStack gap={2}>
-                <Box mt='0px'>
-                  <ReplaceWithLinkIcon />
-                </Box>
-                <Box flex={10}>
-                  <a href='' style={{ cursor: 'poiner' }}>
-                    <Text size={3} weight={300}>
-                      eventbrite.ca/e/infinites-solitude-tour-tickets
-                    </Text>
-                  </a>
-                </Box>
-              </HStack>
+              {data.externalArtistLinks.filter(
+                (item) => item.type === ExternalLinkTypeEnum.Event,
+              ).length > 0 && (
+                <Fragment>
+                  <VStack>
+                    <Heading py={5} as='h3' size={3} weight={400}>
+                      Upcoming Show
+                    </Heading>
+                    <FlatList
+                      direction='vertical'
+                      gap={1}
+                      pl={2}
+                      data={data.externalArtistLinks.filter(
+                        (item) => item.type === ExternalLinkTypeEnum.Event,
+                      )}
+                      renderItem={(item) => <ExternalLink data={item} />}
+                      keyExtractor={(item) => item.url}
+                    />
+                  </VStack>
+                  <Box
+                    my={4}
+                    borderBottom={1}
+                    borderColor='rgba(152, 152, 255, 0.10)'
+                  />
+                </Fragment>
+              )}
+              {data.externalArtistLinks.filter(
+                (item) => item.type === ExternalLinkTypeEnum.Merch,
+              ).length > 0 && (
+                <Fragment>
+                  <VStack>
+                    <Heading as='h3' size={3} weight={400}>
+                      Merchandise
+                    </Heading>
+                    <FlatList
+                      direction='vertical'
+                      gap={1}
+                      pl={2}
+                      data={data.externalArtistLinks.filter(
+                        (item) => item.type === ExternalLinkTypeEnum.Merch,
+                      )}
+                      renderItem={(item) => <ExternalLink data={item} />}
+                      keyExtractor={(item) => item.url}
+                    />
+                  </VStack>
+                  <Box
+                    my={4}
+                    borderBottom={1}
+                    borderColor='rgba(152, 152, 255, 0.10)'
+                  />
+                </Fragment>
+              )}
+              {data.externalArtistLinks.filter(
+                (item) => item.type === ExternalLinkTypeEnum.Other,
+              ).length > 0 && (
+                <Fragment>
+                  <VStack>
+                    <Heading as='h3' size={3} weight={400}>
+                      Other
+                    </Heading>
+                    <FlatList
+                      direction='vertical'
+                      gap={1}
+                      pl={2}
+                      data={data.externalArtistLinks.filter(
+                        (item) => item.type === ExternalLinkTypeEnum.Other,
+                      )}
+                      renderItem={(item) => <ExternalLink data={item} />}
+                      keyExtractor={(item) => item.url}
+                    />
+                  </VStack>
+                  <Box
+                    my={4}
+                    borderBottom={1}
+                    borderColor='rgba(152, 152, 255, 0.10)'
+                  />
+                </Fragment>
+              )}
             </VStack>
           </VStack>
-        </VStack>
+        )}
       </VStack>
-    </VStack>
+    </Box>
   );
 }
 ArtistClubBioAdditionalContent.displayName =

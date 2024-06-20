@@ -15,28 +15,57 @@ import {
 } from '@holdr-ui/react';
 import {
   customInputStyles,
+  ExternalLinkTypeEnum,
+  IAnnouncement,
+  IExternalLink,
   InformationTooltip,
   makeButtonLarger,
+  MusicReleasePreview,
   TextGroup,
   TextGroupHeading,
   TextGroupSubheading,
   voidFn,
 } from '../../../../shared';
-import { IMusicRelease, SearchSpotifyTrack } from '../../../../features';
+import {
+  IMusicRelease,
+  SearchSpotifyTrack,
+  useClubContext,
+  useSuspenseGetArtistDetails,
+} from '../../../../features';
 import { FlatList } from '../../../../tmp/flat-list';
 import InputTextField from '../../../../shared/components/text-field';
-import { Dispatch, SetStateAction, useState } from 'react';
+import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
 
-export enum ExternalLinkTypeEnum {
-  Other = 'other',
-  Event = 'event',
-  Merch = 'merch',
-}
+export const Maximum = {
+  NumberOfArtistPicks: 3,
+  NumberOfAnnouncements: 3,
+  NumberOfMerchLinks: 2,
+  NumberOfEventLinks: 2,
+  NumberOfOtherLinks: 2,
+  NumberOfCollaborators: 5,
+};
 
-function TextAndOptionFieldWithClose() {
+function TextAndOptionInputGroupWithClose({
+  textField,
+  selectField,
+  onRemove,
+}: {
+  onRemove?: VoidFunction;
+  textField: {
+    value?: string;
+    onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
+  };
+  selectField: {
+    value?: string;
+    onValueChange?: (e: string) => void;
+  };
+}) {
   return (
     <HStack>
-      <Select value={ExternalLinkTypeEnum.Other}>
+      <Select
+        value={selectField.value}
+        onValueChange={selectField.onValueChange}
+      >
         <SelectTrigger
           radius={0}
           placeholder='Type'
@@ -100,6 +129,8 @@ function TextAndOptionFieldWithClose() {
       </Select>
       <HStack position='relative' w='100%' gap={2} items='center'>
         <Input
+          value={textField.value}
+          onChange={textField.onChange}
           color='white500'
           className={customInputStyles()}
           css={{
@@ -111,6 +142,7 @@ function TextAndOptionFieldWithClose() {
           }}
         />
         <CloseButton
+          onClick={onRemove}
           type='button'
           css={{
             position: 'absolute',
@@ -126,16 +158,27 @@ function TextAndOptionFieldWithClose() {
   );
 }
 
-function InputTextFieldWithClose() {
+function InputTextFieldWithClose({
+  value,
+  onChange,
+  onRemove,
+}: {
+  value?: string;
+  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
+  onRemove?: VoidFunction;
+}) {
   return (
     <HStack position='relative' w='100%' items='center'>
       <InputTextField
-        name='dummy'
+        name=''
+        value={value}
+        onChange={onChange}
         placeholder='Add announcement'
         css={{ paddingInlineEnd: '$10' }}
       />
       <Center position='absolute' t={0} b={0} r={0} pr={3}>
         <CloseButton
+          onClick={onRemove}
           type='button'
           css={{ width: '1rem !important' }}
           size='sm'
@@ -147,52 +190,52 @@ function InputTextFieldWithClose() {
   );
 }
 
-type ItemFn<T> = (item: T) => void;
+type ItemFn<T> = (item: T, idx?: number) => void;
 
 function useArrayState<T>(
   initialState = [] as T[],
 ): [
   T[],
   ItemFn<T>,
+  (idx: number, item: T) => void,
   (filter: ItemFn<T>) => void,
   Dispatch<SetStateAction<T[]>>,
 ] {
   const [state, set] = useState<T[]>(initialState);
 
   const push = (item: T) => set((prev) => [...prev, item]);
-  const remove = (filter: (item: T) => void) => console.log('');
+  const remove = (filter: (item: T, idx: number) => void) =>
+    set((prev) => prev.filter(filter));
+  const replace = (idx: number, item: T) =>
+    set((prev) => [...prev.slice(0, idx), item, ...prev.slice(idx + 1)]);
 
-  return [state, push, remove, set];
-}
-
-interface IAnnouncement {
-  id?: number;
-  description: string;
-}
-
-interface IArtistExternalLink {
-  id?: number;
-  url: string;
-  type: 'other' | 'event' | 'merch';
-}
-
-interface IArtistExternalLink {
-  id?: number;
-  url: string;
-  type: 'other' | 'event' | 'merch';
+  return [state, push, replace, remove, set];
 }
 
 function EditArtistClubMusicAndLinksPage() {
-  const [announcements, pushAnnouncement] = useArrayState<IAnnouncement>([
-    { id: 1, description: '' },
-  ]);
+  const club = useClubContext();
 
-  const [releases] = useArrayState<IMusicRelease>([]);
+  const { data } = useSuspenseGetArtistDetails(club.artist.id);
 
-  const [externalLinks, pushExternalLink] =
-    useArrayState<IArtistExternalLink>([
-      { id: 1, url: '', type: ExternalLinkTypeEnum.Other },
-    ]);
+  const [
+    announcements,
+    pushAnnouncement,
+    replaceAnnouncement,
+    removeAnnouncement,
+  ] = useArrayState<IAnnouncement>(data.announcements);
+
+  const [releases, pushMusicRelease, , removeMusicRelease] =
+    useArrayState<IMusicRelease>(data.artistPicks);
+
+  const [
+    externalLinks,
+    pushExternalLink,
+    replaceExternalLink,
+    removeExternalLink,
+  ] = useArrayState<IExternalLink>(data.externalArtistLinks);
+
+  const filterLink = (type: ExternalLinkTypeEnum) =>
+    externalLinks.filter((item) => item.type === type);
 
   return (
     <VStack
@@ -228,7 +271,44 @@ function EditArtistClubMusicAndLinksPage() {
               description='Search for your songs on Spotify that you want to highlight.'
             />
           </HStack>
-          <SearchSpotifyTrack onSelect={voidFn} />
+          {releases.length < 3 && (
+            <SearchSpotifyTrack
+              onSelect={(item) =>
+                pushMusicRelease({
+                  id: -1,
+                  name: item.name,
+                  coverImage: item.images[0].url,
+                  artists: item.artists.join(', '),
+                  externalIds: [
+                    {
+                      id: -1,
+                      externalId: item.id,
+                      provider: 'Spotify',
+                      externalUrl: item.url,
+                    },
+                  ],
+                })
+              }
+            />
+          )}
+          <FlatList
+            gap={2}
+            wrap='wrap'
+            data={releases}
+            renderItem={(item, idx) => (
+              <MusicReleasePreview
+                onClick={() =>
+                  removeMusicRelease((_, _idx) => _idx !== idx)
+                }
+                loading={false}
+                image={item.coverImage}
+                name={item.name}
+                artists={item.artists}
+                w={240}
+              />
+            )}
+            keyExtractor={(item) => item.name}
+          />
         </VStack>
       </VStack>
       <VStack gap={4}>
@@ -240,29 +320,50 @@ function EditArtistClubMusicAndLinksPage() {
             Enter any announcements you want to make to your fans
           </TextGroupSubheading>
         </TextGroup>
-        <FlatList
-          gap={4}
-          direction='vertical'
-          data={announcements}
-          renderItem={(item, idx) => <InputTextFieldWithClose />}
-          keyExtractor={(item) => `announcement-id-${item}`}
-        />
-        <Button
-          type='button'
-          onClick={() =>
-            pushAnnouncement({ id: undefined, description: '' })
-          }
-          variant='ghost'
-          leftIcon='add'
-          size='sm'
-          colorTheme='white700'
-          radius={1}
-          css={{
-            fontSize: '$1 !important',
-          }}
-        >
-          Add announcement
-        </Button>
+        {announcements.length > 0 && (
+          <FlatList
+            gap={4}
+            direction='vertical'
+            data={announcements}
+            renderItem={(item, idx) => (
+              <InputTextFieldWithClose
+                value={item.description}
+                onRemove={() =>
+                  removeAnnouncement((_, _idx) => _idx !== idx)
+                }
+                onChange={(e) =>
+                  replaceAnnouncement(idx, {
+                    ...item,
+                    description: e.target.value,
+                  })
+                }
+              />
+            )}
+            keyExtractor={(item, idx) => `announcement-${idx}`}
+          />
+        )}
+        {announcements.length < 3 && (
+          <Button
+            type='button'
+            onClick={() =>
+              pushAnnouncement({
+                id: -1,
+                description: '',
+                createdAt: new Date(),
+              })
+            }
+            variant='ghost'
+            leftIcon='add'
+            size='sm'
+            colorTheme='white700'
+            radius={1}
+            css={{
+              fontSize: '$1 !important',
+            }}
+          >
+            Add announcement
+          </Button>
+        )}
       </VStack>
 
       <VStack gap={4}>
@@ -273,34 +374,87 @@ function EditArtistClubMusicAndLinksPage() {
           <TextGroupSubheading size={1} color='white700'>
             Enter any links you want to make your fans to have access to
           </TextGroupSubheading>
+          <HStack gap={2}>
+            {filterLink(ExternalLinkTypeEnum.Other).length >
+              Maximum.NumberOfOtherLinks && (
+              <TextGroupSubheading size={1} color='danger300'>
+                You cannot have more than {Maximum.NumberOfOtherLinks}{' '}
+                {ExternalLinkTypeEnum.Other.toLowerCase()} links.
+              </TextGroupSubheading>
+            )}
+            {filterLink(ExternalLinkTypeEnum.Merch).length >
+              Maximum.NumberOfOtherLinks && (
+              <TextGroupSubheading size={1} color='danger300'>
+                You cannot have more than {Maximum.NumberOfMerchLinks}{' '}
+                {ExternalLinkTypeEnum.Merch.toLowerCase()} links.
+              </TextGroupSubheading>
+            )}
+            {filterLink(ExternalLinkTypeEnum.Event).length >
+              Maximum.NumberOfEventLinks && (
+              <TextGroupSubheading size={1} color='danger300'>
+                You cannot have more than {Maximum.NumberOfEventLinks}{' '}
+                {ExternalLinkTypeEnum.Event.toLowerCase()} links.
+              </TextGroupSubheading>
+            )}
+          </HStack>
         </TextGroup>
+
         <FlatList
           gap={4}
           direction='vertical'
           data={externalLinks}
-          renderItem={(item, idx) => <TextAndOptionFieldWithClose />}
-          keyExtractor={(item) => `external-link-id-${item}`}
+          renderItem={(item, idx) => (
+            <TextAndOptionInputGroupWithClose
+              onRemove={() =>
+                removeExternalLink((_, _idx) => idx !== _idx)
+              }
+              textField={{
+                value: item.url,
+                onChange: (e) =>
+                  replaceExternalLink(idx, {
+                    ...item,
+                    url: e.target.value,
+                  }),
+              }}
+              selectField={{
+                value: item.type,
+                onValueChange: (value) =>
+                  replaceExternalLink(idx, {
+                    ...item,
+                    type: value as ExternalLinkTypeEnum,
+                  }),
+              }}
+            />
+          )}
+          keyExtractor={(item, idx) => `ext-link-${idx}`}
         />
-        <Button
-          type='button'
-          onClick={() =>
-            pushExternalLink({
-              id: 1,
-              url: '',
-              type: ExternalLinkTypeEnum.Other,
-            })
-          }
-          variant='ghost'
-          leftIcon='add'
-          size='sm'
-          colorTheme='white700'
-          radius={1}
-          css={{
-            fontSize: '$1 !important',
-          }}
-        >
-          Add link
-        </Button>
+        {filterLink(ExternalLinkTypeEnum.Event).length <=
+          Maximum.NumberOfEventLinks &&
+          filterLink(ExternalLinkTypeEnum.Merch).length <=
+            Maximum.NumberOfMerchLinks &&
+          filterLink(ExternalLinkTypeEnum.Other).length <=
+            Maximum.NumberOfOtherLinks && (
+            <Button
+              type='button'
+              onClick={() =>
+                pushExternalLink({
+                  id: 1,
+                  url: '',
+                  type: ExternalLinkTypeEnum.Other,
+                })
+              }
+              variant='ghost'
+              leftIcon='add'
+              size='sm'
+              colorTheme='white700'
+              radius={1}
+              css={{
+                fontSize: '$1 !important',
+              }}
+            >
+              Add link
+            </Button>
+          )}
       </VStack>
     </VStack>
   );
