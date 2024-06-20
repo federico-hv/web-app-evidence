@@ -34,7 +34,7 @@ function BioAndPerksView() {
   const { clubPerks } = usePerksContext();
 
   const { value: bio, handleOnValueChange } = useOnValueChange(
-    club.artist.bio,
+    club.artist.bio || '',
   );
 
   const [selectedPerks, setSelectedPerks] = useState<number[]>(

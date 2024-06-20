@@ -35,7 +35,7 @@ function EditArtistClubBioPage() {
   const [profile, updateProfile] = useRecordState<IArtistProfile>({
     username: club.artist.username,
     name: club.artist.name,
-    bio: club.artist.bio,
+    bio: club.artist.bio || '',
     location: '',
   });
 
