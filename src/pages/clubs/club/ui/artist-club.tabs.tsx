@@ -1,7 +1,9 @@
 import { Box, GeneralContextProvider, VStack } from '@holdr-ui/react';
-import { useParams } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 import {
   GQLRenderer,
+  makePath,
+  Paths,
   RadialSurface,
   RoutingTabs,
   RoutingTabsContent,
@@ -16,7 +18,7 @@ import ArtistClubHeader from './artist-club.header';
 function Content() {
   const { slug } = useParams();
 
-  const { data } = useSuspenseGetClub({ slug: slug || '' });
+  const { data, error } = useSuspenseGetClub({ slug: slug || '' });
 
   return (
     <GeneralContextProvider value={{ state: data.club, update: voidFn }}>
@@ -72,7 +74,11 @@ function Content() {
               </RoutingTabsList>
             </RoutingTabsHeader>
 
-            <RoutingTabsContent mt={4} flex={1} />
+            <RoutingTabsContent
+              Fallback={() => <Navigate to={makePath([Paths.clubs])} />}
+              mt={4}
+              flex={1}
+            />
           </RoutingTabs>
         </VStack>
       </RadialSurface>
@@ -82,7 +88,9 @@ function Content() {
 
 function ArtistClubTabs() {
   return (
-    <GQLRenderer>
+    <GQLRenderer
+      ErrorFallback={() => <Navigate to={makePath([Paths.clubs])} />}
+    >
       <Content />
     </GQLRenderer>
   );

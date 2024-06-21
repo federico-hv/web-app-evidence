@@ -7,16 +7,6 @@ export const GET_CLUB = gql`
       bannerImage
       coverImage
       url
-      artist {
-        id
-        name
-        location
-        bio
-        username
-        accountId
-        avatar
-        isVerified
-      }
     }
   }
 `;
@@ -32,9 +22,12 @@ export const GET_ARTIST_DETAILS = gql`
     artistPicks(id: $id) {
       id
       name
+      artists
       coverImage
       externalIds {
+        id
         externalId
+        externalUrl
         provider
       }
     }

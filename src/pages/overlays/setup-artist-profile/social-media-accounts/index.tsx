@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { Button, HStack, useRecordState, VStack } from '@holdr-ui/react';
+import { Fragment } from 'react';
 import {
   GeneralContextProvider,
   GQLRenderer,
@@ -10,7 +11,6 @@ import {
   TextGroupSubheading,
   usePreviousLocation,
 } from '../../../../shared';
-import { Fragment } from 'react';
 import {
   ISpotifySearchResult,
   useCurrentArtist,

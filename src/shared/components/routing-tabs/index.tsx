@@ -7,6 +7,8 @@ import {
 } from '@holdr-ui/react/dist/components/stack/src/stack.types';
 import { BoxProps } from '@holdr-ui/react/dist/components/box/src/box.types';
 import { GQLRenderer } from '../index';
+import { ComponentType, ReactElement } from 'react';
+import { FallbackProps } from 'react-error-boundary';
 
 function RoutingTabs({ children, ...props }: BoxProps) {
   const TabsHeader = getSubComponent(children, 'RoutingTabsHeader');
@@ -107,11 +109,15 @@ function RoutingTabsTrigger({
 }
 RoutingTabsTrigger.displayName = 'RoutingTabsTrigger';
 
-function RoutingTabsContent({ children, ...props }: BoxProps) {
+function RoutingTabsContent({
+  children,
+  Fallback,
+  ...props
+}: BoxProps & { Fallback?: ComponentType<FallbackProps> }) {
   return (
     <Box {...props}>
       {children}
-      <GQLRenderer>
+      <GQLRenderer ErrorFallback={Fallback}>
         <Outlet />
       </GQLRenderer>
     </Box>

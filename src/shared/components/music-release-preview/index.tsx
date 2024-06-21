@@ -60,6 +60,7 @@ function MusicReleasePreview({
           loadingText=''
           isLoading={loading}
           onClick={onClick}
+          type='button'
           size='sm'
           colorTheme='white500'
         />

@@ -1,13 +1,10 @@
+import { Button, Center, Heading, HStack } from '@holdr-ui/react';
 import {
-  Button,
-  Center,
-  Heading,
-  HStack,
-  useGeneralContext,
-} from '@holdr-ui/react';
-import { IClub, useCurrentUser } from '../../../../features';
+  useCurrentUser,
+  useSuspenseGetArtist,
+} from '../../../../features';
 import ArtistClubSocialButton from './artist-club-social.button';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { makePath, Paths } from '../../../../shared';
 
 function ArtistClubHeader() {
@@ -15,13 +12,17 @@ function ArtistClubHeader() {
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
-  const { state: club } = useGeneralContext<IClub>();
+  const { slug } = useParams();
+
+  const { data: artistData } = useSuspenseGetArtist({
+    slug,
+  });
 
   return (
     <HStack py={3} gap={4} items='center' justify='space-between'>
       <HStack gap={4} items='center'>
         <Heading weight={400} size={6} css={{ lineHeight: '115%' }}>
-          {`${club.artist.name}'s`} Club Page
+          {`${artistData.artist.name}'s`} Club Page
         </Heading>
         <Center
           px={2}
@@ -36,14 +37,19 @@ function ArtistClubHeader() {
         </Center>
       </HStack>
       <HStack gap={4}>
-        {currentUser.id === club.artist.accountId ? (
+        {currentUser.id === artistData.artist.accountId ? (
           <Button
             variant='outline'
             css={{ px: '50px' }}
             colorTheme='purple50'
             onClick={() =>
               navigate(
-                makePath([Paths.clubs, club.artist.username, Paths.edit]),
+                makePath([
+                  Paths.clubs,
+                  artistData.artist.username,
+                  Paths.edit,
+                  Paths.bio,
+                ]),
                 {
                   state: {
                     previousLocation: pathname,
@@ -55,9 +61,9 @@ function ArtistClubHeader() {
             Edit
           </Button>
         ) : (
-          <ArtistClubSocialButton username={club.artist.username} />
+          <ArtistClubSocialButton username={artistData.artist.username} />
         )}
-        {currentUser.id === club.artist.accountId && (
+        {currentUser.id === artistData.artist.accountId && (
           <Button
             css={{ px: '50px' }}
             colorTheme='purple100'

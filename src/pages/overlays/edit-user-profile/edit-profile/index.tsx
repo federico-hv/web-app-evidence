@@ -11,6 +11,7 @@ import {
   InputTextField,
   usePreviousLocation,
   TextareaField,
+  isLengthGreaterThanZero,
 } from '../../../../shared';
 import {
   Button,
@@ -64,13 +65,6 @@ function EditUserProfilePage() {
   };
   const handleSocialLinkChange = (e: ChangeEvent<HTMLInputElement>) => {
     updateNewSocialLinks({ [e.target.name]: e.target.value });
-  };
-
-  const isLengthGreaterThanZero = (arr: any | undefined): boolean => {
-    if (arr === undefined) {
-      return false;
-    }
-    return arr.length > 0;
   };
 
   const InstagramURLErrorText = isMatchingPattern(

@@ -5,16 +5,21 @@ import {
   ArtistClubSummaryCard,
 } from '../ui';
 import { Head } from '../../../../shared';
-import { IClub } from '../../../../features';
+import { IClub, useSuspenseGetArtist } from '../../../../features';
 import { ArtistFeedsList } from './ui';
+import { useParams } from 'react-router-dom';
 
 function ArtistClubFeedsPage() {
-  const { state: club } = useGeneralContext<IClub>();
+  const { slug } = useParams();
+
+  const { data: artistData } = useSuspenseGetArtist({
+    slug,
+  });
 
   return (
     <Fragment>
       <Head
-        prefix={`${club.artist.name}'s Club -`}
+        prefix={`${artistData.artist.name}'s Club -`}
         title='Feeds'
         description='A catalog of memberships that are being offered by artists.'
       />
@@ -32,7 +37,7 @@ function ArtistClubFeedsPage() {
           className='thin-scrollbar'
         >
           <ArtistClubSummaryCard />
-          <ArtistFeedsList forArtist={club.artist.username} />
+          <ArtistFeedsList forArtist={artistData.artist.username} />
         </VStack>
 
         <ArtistClubBioAdditionalContent />

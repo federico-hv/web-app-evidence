@@ -1,7 +1,6 @@
 import { GQLRenderer, makePath, Paths } from '../../../../shared';
 import {
   ClubContextConsumer,
-  ClubContextProvider,
   ClubProvider,
   PerksProvider,
 } from '../../../../features';

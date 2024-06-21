@@ -21,6 +21,7 @@ export function useSuspenseIsUniqueClubUrl(url: string) {
     { url: string; notClub?: string }
   >(IS_UNIQUE_CLUB_URL, { variables: { url } });
 }
+
 export function useDebounceIsUniqueClubUrl(): [
   DebouncedFunc<(url: string, id: string) => Promise<void>>,
   {

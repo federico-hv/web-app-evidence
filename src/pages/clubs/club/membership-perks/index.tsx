@@ -6,13 +6,18 @@ import {
   useGeneralContext,
 } from '@holdr-ui/react';
 import { Fragment } from 'react';
-import { IClub, IPerk } from '../../../../features';
+import { IClub, IPerk, useSuspenseGetArtist } from '../../../../features';
 import { ArtistClubPerkItem } from './ui';
 import { FlatList } from '../../../../tmp/flat-list';
 import { Head, RadialSurface } from '../../../../shared';
+import { useParams } from 'react-router-dom';
 
 function ArtistClubMembershipPerksPage() {
-  const { state: club } = useGeneralContext<IClub>();
+  const { slug } = useParams();
+
+  const { data: artistData } = useSuspenseGetArtist({
+    slug,
+  });
 
   const perksData: IPerk[] = [
     {
@@ -79,7 +84,7 @@ function ArtistClubMembershipPerksPage() {
   return (
     <Fragment>
       <Head
-        prefix={`${club.artist.name}'s Club -`}
+        prefix={`${artistData.artist.name}'s Club -`}
         title='Perks'
         description='A catalog of memberships that are being offered by artists.'
       />

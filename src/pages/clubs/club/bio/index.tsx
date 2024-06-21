@@ -18,7 +18,11 @@ import {
   useGeneralContext,
   VStack,
 } from '@holdr-ui/react';
-import { IClub, useSuspenseGetCollaborators } from '../../../../features';
+import {
+  IClub,
+  useSuspenseGetArtist,
+  useSuspenseGetCollaborators,
+} from '../../../../features';
 import { Fragment } from 'react';
 import { FlatList } from '../../../../tmp/flat-list';
 import ArtistClubBioAdditionalContent from '../ui/artist-club-bio-additional.content';
@@ -33,19 +37,21 @@ const imageSrcs = [
 
 function ArtistClubBioPage() {
   const { pathname } = useLocation();
-  const { slug } = useParams();
   const previousLocation = usePreviousLocation(pathname);
+  const { slug } = useParams();
 
-  const { state: club } = useGeneralContext<IClub>();
+  const { data: artistData } = useSuspenseGetArtist({
+    slug,
+  });
 
   const { data: collaborationData } = useSuspenseGetCollaborators(
-    club.artist.id,
+    artistData.artist.id,
   );
 
   return (
     <Fragment>
       <Head
-        prefix={`${club.artist.name}'s Club -`}
+        prefix={`${artistData.artist.name}'s Club -`}
         title='Bio'
         description='A catalog of memberships that are being offered by artists.'
       />
@@ -67,7 +73,7 @@ function ArtistClubBioPage() {
             <ArtistClubSummaryCard />
           </GQLRenderer>
           <VStack p={4}>
-            {club.artist.bio && (
+            {artistData.artist.bio && (
               <Fragment>
                 <VStack gap={3}>
                   <Heading weight={500} size={4}>
@@ -75,7 +81,7 @@ function ArtistClubBioPage() {
                   </Heading>
                   <VStack flex={1}>
                     <Text weight={300} color='white600'>
-                      {club.artist.bio}
+                      {artistData.artist.bio}
                     </Text>
                   </VStack>
                 </VStack>
@@ -86,7 +92,7 @@ function ArtistClubBioPage() {
                 />
               </Fragment>
             )}
-            {club.artist.location && (
+            {artistData.artist.location && (
               <Fragment>
                 <VStack gap={3}>
                   <Heading weight={500} size={4}>
@@ -94,7 +100,7 @@ function ArtistClubBioPage() {
                   </Heading>
                   <VStack flex={1}>
                     <Text weight={300} color='white600'>
-                      {club.artist.location}
+                      {artistData.artist.location}
                     </Text>
                   </VStack>
                 </VStack>
@@ -106,24 +112,28 @@ function ArtistClubBioPage() {
               </Fragment>
             )}
             {collaborationData.collaborators.length > 0 && (
-              <VStack gap={3}>
-                <Heading weight={500} size={4}>
-                  Collaborators
-                </Heading>
-                <FlatList
-                  items='center'
-                  divider={<Circle mx={4} bgColor='black300' size='5px' />}
-                  data={collaborationData.collaborators}
-                  renderItem={(item) => <Text>{item.name}</Text>}
-                  keyExtractor={(item) => item.id}
+              <Fragment>
+                <VStack gap={3}>
+                  <Heading weight={500} size={4}>
+                    Collaborators
+                  </Heading>
+                  <FlatList
+                    items='center'
+                    divider={
+                      <Circle mx={4} bgColor='black300' size='5px' />
+                    }
+                    data={collaborationData.collaborators}
+                    renderItem={(item) => <Text>{item.name}</Text>}
+                    keyExtractor={(item) => item.id}
+                  />
+                </VStack>
+                <Box
+                  my={4}
+                  borderBottom={1}
+                  borderColor='rgba(152, 152, 255, 0.1)'
                 />
-              </VStack>
+              </Fragment>
             )}
-            <Box
-              my={4}
-              borderBottom={1}
-              borderColor='rgba(152, 152, 255, 0.1)'
-            />
             <VStack>
               <HStack justify={'space-between'}>
                 <Box flex={1} h='21px'>

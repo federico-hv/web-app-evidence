@@ -13,7 +13,10 @@ import {
 function SearchSpotifyArtist({
   onSelect,
 }: {
-  onSelect: (item: ISpotifyTrackResponse) => void;
+  onSelect: (
+    item: ISpotifyTrackResponse,
+    clearValue?: VoidFunction,
+  ) => void;
 }) {
   const [value, setValue] = useState('');
 
@@ -74,11 +77,10 @@ function SearchSpotifyArtist({
           {value.length > 0 && !error && !loading && (
             <Spotlight.List
               data={result.data}
-              onClickItem={({ item }) => onSelect(item)}
-              renderItem={(
-                { item }: { item: ISpotifyTrackResponse },
-                isSelected,
-              ) => (
+              onClickItem={({ item }, clearValue) =>
+                onSelect(item, clearValue)
+              }
+              renderItem={({ item }, isSelected) => (
                 <HStack
                   items='center'
                   radius={isSelected ? 0 : 1}

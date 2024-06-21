@@ -5,7 +5,10 @@ import {
   HStack,
   VStack,
   Text,
-  useGeneralContext,
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+  hexToRGB,
 } from '@holdr-ui/react';
 import { FlatList } from '../../../../tmp/flat-list';
 import {
@@ -14,13 +17,11 @@ import {
   IExternalLink,
 } from '../../../../shared';
 import {
-  IClub,
-  useClubContext,
-  useGetArtistDetails,
+  useSuspenseGetArtist,
   useSuspenseGetArtistDetails,
 } from '../../../../features';
 import { Fragment } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 function ReplaceWithLinkIcon() {
   return (
@@ -66,12 +67,12 @@ function ReplaceWithLinkIcon() {
 
 function ExternalLink({ data }: { data: IExternalLink }) {
   return (
-    <HStack gap={2} items='center'>
-      <Box fontSize={5} mt='0px'>
+    <HStack gap={2} items='center' w='100%'>
+      <Box shrink={0} fontSize={5} mt='0px'>
         <ReplaceWithLinkIcon />
       </Box>
       <Box
-        flex={10}
+        w='100%'
         _hover={{
           '& a': {
             textDecoration: 'underline',
@@ -82,11 +83,36 @@ function ExternalLink({ data }: { data: IExternalLink }) {
           to={data.url}
           target='_blank'
           referrerPolicy='no-referrer'
-          style={{ cursor: 'pointer' }}
+          style={{ cursor: 'pointer', width: 'fit-content' }}
         >
-          <Text size={3} weight={300}>
-            {data.url}
-          </Text>
+          <Tooltip delayDuration={2500}>
+            <TooltipTrigger w='100%'>
+              <Text
+                size={2}
+                weight={300}
+                noOfLines={1}
+                css={{ width: '100%' }}
+              >
+                {data.url}
+              </Text>
+            </TooltipTrigger>
+            <TooltipContent
+              arrowWidth={0}
+              arrowHeight={0}
+              side='bottom'
+              align='center'
+              fontSize={1}
+              bgColor='#202032'
+              border={1}
+              w={300}
+              borderColor={hexToRGB('#9898FF', 0.25)}
+              css={{
+                overflowWrap: 'break-word',
+              }}
+            >
+              {data.url}
+            </TooltipContent>
+          </Tooltip>
         </Link>
       </Box>
     </HStack>
@@ -94,18 +120,30 @@ function ExternalLink({ data }: { data: IExternalLink }) {
 }
 
 function ArtistClubBioAdditionalContent() {
-  const { state: club } = useGeneralContext<IClub>();
+  const { slug } = useParams();
 
-  const { data } = useSuspenseGetArtistDetails(club.artist.id);
+  const { data: artistData } = useSuspenseGetArtist({ slug });
+
+  const { data } = useSuspenseGetArtistDetails(artistData.artist.id);
 
   return (
-    <Box basis='320px' grow={0} radius={2} bgColor='#30304B' p={4} ml={1}>
+    <Box
+      w={330}
+      basis='330px'
+      grow={0}
+      radius={2}
+      bgColor='#30304B'
+      p={4}
+      ml={1}
+    >
       <VStack
         className='thin-scrollbar'
         h='100%'
-        overflow='auto'
+        w='100%'
+        maxWidth={320}
+        overflowY='auto'
+        overflowX='hidden'
         pb={1}
-        pr={3}
       >
         {data.artistPicks.length > 0 && (
           <Fragment>
