@@ -13,3 +13,9 @@ export const MaxFieldLength = {
     Bio: 250,
   },
 };
+
+export enum ExternalLinkTypeEnum {
+  'Merch' = 'Merch',
+  'Event' = 'Event',
+  'Other' = 'Other',
+}

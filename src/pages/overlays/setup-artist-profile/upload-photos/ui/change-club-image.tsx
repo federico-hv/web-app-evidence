@@ -4,6 +4,7 @@ import {
   CardBody,
   CardFooter,
   Center,
+  Heading,
   HStack,
   Icon,
   IconButton,
@@ -20,7 +21,13 @@ import {
 import { ImageUploadContext } from '../../../../../shared/components/image-upload/context';
 import { useUpdateClub } from '../../../../../features';
 
-function ChangeClubImage({ placeholder }: { placeholder?: string }) {
+function ChangeClubImage({
+  placeholder,
+  artistName = 'Artist Name',
+}: {
+  placeholder?: string;
+  artistName?: string;
+}) {
   const [, setValue] = useState<string>();
   const { updateClub } = useUpdateClub();
 
@@ -101,7 +108,9 @@ function ChangeClubImage({ placeholder }: { placeholder?: string }) {
         </ImageUpload>
       </CardBody>
       <CardFooter p={3} gap={2}>
-        <Text>Artist name</Text>
+        <Heading as='h3' weight={500} size={4}>
+          {artistName}
+        </Heading>
         <TextGroup gap={0}>
           <TextGroupSubheading casing='uppercase' size={1}>
             Entry price

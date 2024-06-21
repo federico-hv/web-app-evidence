@@ -14,15 +14,26 @@ import {
   ArtistClubInactiveBiddersList,
   ArtistClubMembershipPerksSummaryList,
 } from './ui';
-import { IClub, MembershipCard } from '../../../../features';
+import {
+  IClub,
+  MembershipCard,
+  useSuspenseGetArtist,
+} from '../../../../features';
 import { getRandomNumberInRange, Head } from '../../../../shared';
 import { dummyPerks } from '../../shared';
+import { useParams } from 'react-router-dom';
 
 function ArtistClubLiveBidsPage() {
+  const { slug } = useParams();
+
+  const { data: artistData } = useSuspenseGetArtist({
+    slug,
+  });
+
   const { state: club } = useGeneralContext<IClub>();
 
   function addDays(_date: Date, days: number) {
-    let date = new Date(_date);
+    const date = new Date(_date);
     date.setDate(date.getDate() + days);
     return date;
   }
@@ -32,7 +43,7 @@ function ArtistClubLiveBidsPage() {
   return (
     <Fragment>
       <Head
-        prefix={`${club.artist.name}'s Club -`}
+        prefix={`${artistData.artist.name}'s Club -`}
         title='Live Bids'
         description='A catalog of memberships that are being offered by artists.'
       />

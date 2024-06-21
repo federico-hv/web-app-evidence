@@ -6,6 +6,7 @@ import {
   Text,
   VStack,
 } from '@holdr-ui/react';
+import { HStackProps } from '@holdr-ui/react/dist/components/stack/src/stack.types';
 
 interface MusicReleasePreviewProps {
   image: string;
@@ -21,7 +22,8 @@ function MusicReleasePreview({
   artists,
   onClick,
   loading,
-}: MusicReleasePreviewProps) {
+  ...props
+}: MusicReleasePreviewProps & HStackProps) {
   return (
     <HStack
       p={2}
@@ -31,6 +33,7 @@ function MusicReleasePreview({
       w='250px'
       items='center'
       bgColor='rgba(152, 152, 255, 0.15)'
+      {...props}
     >
       <HStack items='center' gap={2}>
         <Box shrink={0}>
@@ -57,6 +60,7 @@ function MusicReleasePreview({
           loadingText=''
           isLoading={loading}
           onClick={onClick}
+          type='button'
           size='sm'
           colorTheme='white500'
         />

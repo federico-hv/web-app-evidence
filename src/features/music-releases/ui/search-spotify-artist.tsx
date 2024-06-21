@@ -4,7 +4,6 @@ import {
 } from '../shared';
 import { useState } from 'react';
 import {
-  Avatar,
   Box,
   CircularProgress,
   hexToRGB,

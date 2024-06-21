@@ -1,5 +1,4 @@
 import { useNavigate, useParams } from 'react-router-dom';
-
 import { ChangeEvent } from 'react';
 import {
   isMatchingPattern,
@@ -12,15 +11,12 @@ import {
   InputTextField,
   usePreviousLocation,
   TextareaField,
+  isLengthGreaterThanZero,
 } from '../../../../shared';
 import {
-  Box,
   Button,
   HStack,
-  mergeStyles,
-  Textarea,
   useGeneralContext,
-  Text,
   useRecordState,
   VStack,
 } from '@holdr-ui/react';
@@ -69,13 +65,6 @@ function EditUserProfilePage() {
   };
   const handleSocialLinkChange = (e: ChangeEvent<HTMLInputElement>) => {
     updateNewSocialLinks({ [e.target.name]: e.target.value });
-  };
-
-  const isLengthGreaterThanZero = (arr: any | undefined): boolean => {
-    if (arr === undefined) {
-      return false;
-    }
-    return arr.length > 0;
   };
 
   const InstagramURLErrorText = isMatchingPattern(
@@ -146,8 +135,8 @@ function EditUserProfilePage() {
           label='Instagram URL'
           tooltip='Enter your Instagram URL to allow other users to connect with you.'
           placeholder='Enter your Instgram link'
-          value={newSocialLinks.Instagram}
           onChange={handleSocialLinkChange}
+          value={newSocialLinks.Instagram}
           errorText={InstagramURLErrorText}
         />
         <InputTextField

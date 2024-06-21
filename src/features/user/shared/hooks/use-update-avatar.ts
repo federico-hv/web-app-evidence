@@ -64,22 +64,18 @@ export function useUpdateAvatar() {
                 return newProfile;
               },
 
-              club(current = {}) {
-                let newClub: Reference = current;
+              artist(current = {}) {
+                let newArtist: Reference = current;
 
                 try {
-                  newClub = cache.writeFragment({
+                  newArtist = cache.writeFragment({
                     id: current.__ref,
                     data: {
-                      artist: {
-                        avatar: data?.updateProfile.avatar,
-                      },
+                      avatar: data?.updateProfile.avatar,
                     },
                     fragment: gql`
-                      fragment NewArtistAvatar on ClubModel {
-                        artist {
-                          avatar
-                        }
+                      fragment NewArtistAvatar on ArtistModel {
+                        avatar
                       }
                     `,
                   }) as Reference;
@@ -87,7 +83,7 @@ export function useUpdateAvatar() {
                   console.error(e);
                 }
 
-                return newClub;
+                return newArtist;
               },
             },
           });

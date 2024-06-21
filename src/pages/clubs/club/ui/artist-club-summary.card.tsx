@@ -1,8 +1,7 @@
 import {
   BioSocialLinks,
-  IClub,
   UserRelationshipCount,
-  useSuspenseSocialLinks,
+  useSuspenseGetArtist,
 } from '../../../../features';
 import {
   Avatar,
@@ -10,22 +9,24 @@ import {
   Heading,
   HStack,
   Icon,
-  useGeneralContext,
   VStack,
 } from '@holdr-ui/react';
+import { useParams } from 'react-router-dom';
 
 function ArtistClubSummaryCard() {
-  const { state: club } = useGeneralContext<IClub>();
+  const { slug } = useParams();
 
-  const { data } = useSuspenseSocialLinks(club.artist.accountId);
+  const { data: artistData } = useSuspenseGetArtist({
+    slug,
+  });
 
   return (
     <VStack bg='#30304B' radius={4} p={4} justify={'center'}>
       <HStack gap={4} maxHeight={'136px'}>
         <Avatar
-          key={club.artist.name}
-          src={club.artist.avatar}
-          name={club.artist.name}
+          key={artistData.artist.name}
+          src={artistData.artist.avatar}
+          name={artistData.artist.name}
           size={'136px'}
           variant='squircle'
         >
@@ -48,14 +49,14 @@ function ArtistClubSummaryCard() {
               weight={500}
               css={{ lineHeight: '115%' }}
             >
-              {club.artist.name}
+              {artistData.artist.name}
             </Heading>
             <VStack>
               <Icon size='xl' color='white500' name='verified-outline' />
             </VStack>
           </HStack>
-          <UserRelationshipCount username={club.artist.username} />
-          <BioSocialLinks links={data.socialLinks} />
+          <UserRelationshipCount username={artistData.artist.username} />
+          <BioSocialLinks links={artistData.artist.socialLinks || []} />
         </VStack>
       </HStack>
     </VStack>

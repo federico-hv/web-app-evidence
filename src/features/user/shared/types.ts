@@ -68,3 +68,5 @@ export interface IUpdateSocialLink {
   Instagram?: string;
   TikTok?: string;
 }
+
+export type UniqueIdentityField = 'email' | 'username';

@@ -5,7 +5,6 @@ import {
   DialogContent,
   DialogOverlay,
   DialogPortal,
-  GeneralContextConsumer,
   hexToRGB,
   HStack,
   StackDivider,
@@ -13,6 +12,7 @@ import {
   VStack,
 } from '@holdr-ui/react';
 import {
+  Navigate,
   Outlet,
   useLocation,
   useNavigate,
@@ -30,8 +30,8 @@ import { SetupStep } from '../../setup-artist-profile';
 import {
   ClubContextConsumer,
   ClubProvider,
-  IClub,
   PerksProvider,
+  useSuspenseGetArtist,
 } from '../../../../features';
 
 function EditArtistClubDialog() {
@@ -41,11 +41,13 @@ function EditArtistClubDialog() {
 
   const { slug } = useParams();
 
+  const { data: artistData } = useSuspenseGetArtist({ slug });
+
   const paths = location.pathname.split('/').filter((path) => path.length);
   const currentPath = paths[paths.length - 1];
 
   if (!slug) {
-    return <Fragment />;
+    return <Navigate to={makePath([Paths.clubs])} />;
   }
 
   return (
@@ -91,15 +93,11 @@ function EditArtistClubDialog() {
                     }
                   >
                     <Box py={48} basis={182}>
-                      <ClubContextConsumer>
-                        {({ artist }) => (
-                          <ChangeAvatar
-                            placeholder={artist.avatar}
-                            name={artist.name}
-                            variant='squircle'
-                          />
-                        )}
-                      </ClubContextConsumer>
+                      <ChangeAvatar
+                        placeholder={artistData.artist.avatar}
+                        name={artistData.artist.name}
+                        variant='squircle'
+                      />
 
                       <VStack gap={6} mt={9}>
                         <SetupStep
@@ -111,11 +109,7 @@ function EditArtistClubDialog() {
                             'bio',
                           ])}
                           description='Bio'
-                          active={
-                            currentPath === Paths.bio ||
-                            currentPath === Paths.musicAndLinks ||
-                            currentPath === Paths.auction
-                          }
+                          active={currentPath === Paths.bio}
                         />
                         <SetupStep
                           number={2}
@@ -126,10 +120,7 @@ function EditArtistClubDialog() {
                             'music-and-links',
                           ])}
                           description='Music and Links'
-                          active={
-                            currentPath === Paths.musicAndLinks ||
-                            currentPath === Paths.auction
-                          }
+                          active={currentPath === Paths.musicAndLinks}
                         />
                         <SetupStep
                           number={3}
@@ -149,7 +140,9 @@ function EditArtistClubDialog() {
                       <ClubContextConsumer>
                         {(club) => (
                           <PerksProvider clubId={club.id}>
-                            <Outlet />
+                            <GQLRenderer>
+                              <Outlet />
+                            </GQLRenderer>
                           </PerksProvider>
                         )}
                       </ClubContextConsumer>

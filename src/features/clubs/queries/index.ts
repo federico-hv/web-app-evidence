@@ -7,15 +7,44 @@ export const GET_CLUB = gql`
       bannerImage
       coverImage
       url
-      artist {
+    }
+  }
+`;
+
+export const GET_ARTIST_DETAILS = gql`
+  query artistDetails($id: String!) {
+    externalArtistLinks(id: $id) {
+      id
+      label
+      type
+      url
+    }
+    artistPicks(id: $id) {
+      id
+      name
+      artists
+      coverImage
+      externalIds {
         id
-        name
-        bio
-        username
-        accountId
-        avatar
-        isVerified
+        externalId
+        externalUrl
+        provider
       }
+    }
+    announcements(id: $id) {
+      id
+      description
+      createdAt
+    }
+  }
+`;
+
+export const GET_ARTIST_COLLABORATORS = gql`
+  query collaborator($id: String!) {
+    collaborators(id: $id) {
+      id
+      name
+      accountId
     }
   }
 `;

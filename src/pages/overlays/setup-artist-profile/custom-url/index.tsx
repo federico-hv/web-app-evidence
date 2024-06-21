@@ -7,7 +7,6 @@ import {
   HStack,
   Input,
   Text,
-  useGeneralContext,
   VStack,
 } from '@holdr-ui/react';
 import {
@@ -20,13 +19,15 @@ import {
   usePreviousLocation,
 } from '../../../../shared';
 import { ChangeEvent, useState } from 'react';
-import {
-  IClub,
-  useClubContext,
-  useUpdateClub,
-} from '../../../../features';
+import { useClubContext, useUpdateClub } from '../../../../features';
 import { useDebounceIsUniqueClubUrl } from '../../../../features';
 import { AnimatePresence } from 'framer-motion';
+import { InputTextFieldProps } from '../../../../shared/components/text-field/types';
+import {
+  InputGroup,
+  InputGroupLeftElement,
+  InputGroupRightElement,
+} from '../../../../tmp/input-group';
 
 function CustomURLView() {
   const previousLocation = usePreviousLocation('/');
@@ -60,46 +61,33 @@ function CustomURLView() {
           </TextGroupSubheading>
         </TextGroup>
         <VStack gap={1}>
-          <Box position='relative'>
-            <AnimatePresence>
-              {loading && (
-                <Center position='absolute' t={0} b={0} r='1rem'>
-                  <CircularProgress
-                    bgColor='base400'
-                    colorTheme='white500'
-                    thickness={2}
-                    isIndeterminate
-                    size={20}
-                  />
-                </Center>
-              )}
-            </AnimatePresence>
-
-            <Text
-              color='white900'
-              css={{
-                position: 'absolute',
-                top: 0,
-                left: '$4',
-                bottom: 0,
-                display: 'inline-flex',
-                alignItems: 'center',
-              }}
-            >
-              www.holdrclub.com/clubs/
-            </Text>
+          <InputGroup>
+            <InputGroupLeftElement>
+              <Text color='white900'>https://holdrclub.com/clubs/</Text>
+            </InputGroupLeftElement>
             <Input
+              variant='unstyled'
               maxLength={25}
               value={url}
               onChange={handleOnChange}
-              className={customInputStyles()}
               color='white500'
-              css={{
-                paddingInlineStart: '207px',
-                paddingInlineEnd: '42px',
-              }}
             />
-          </Box>
+            <InputGroupRightElement pl={4}>
+              <AnimatePresence>
+                {loading && (
+                  <Center position='absolute' t={0} b={0} r='1rem'>
+                    <CircularProgress
+                      bgColor='base400'
+                      colorTheme='white500'
+                      thickness={2}
+                      isIndeterminate
+                      size={20}
+                    />
+                  </Center>
+                )}
+              </AnimatePresence>
+            </InputGroupRightElement>
+          </InputGroup>
           {!result && (
             <Text size={1} weight={500} color='danger300'>
               That URL is already taken

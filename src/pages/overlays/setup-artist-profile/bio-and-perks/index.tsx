@@ -21,7 +21,9 @@ import {
 } from '../../../../shared';
 import {
   useClubContext,
+  useCurrentArtist,
   usePerksContext,
+  useSuspenseGetArtist,
   useUpdateBioAndPerks,
 } from '../../../../features';
 import { ChangeEvent, useState } from 'react';
@@ -29,12 +31,18 @@ import { difference, isEqual } from 'lodash';
 import { SelectPredefinedPerks } from './ui';
 
 function BioAndPerksView() {
+  const currentArtist = useCurrentArtist();
+
+  const { data: artistData } = useSuspenseGetArtist({
+    id: currentArtist?.id,
+  });
+
   const previousLocation = usePreviousLocation('/');
   const club = useClubContext();
   const { clubPerks } = usePerksContext();
 
   const { value: bio, handleOnValueChange } = useOnValueChange(
-    club.artist.bio,
+    artistData.artist.bio || '',
   );
 
   const [selectedPerks, setSelectedPerks] = useState<number[]>(
@@ -70,7 +78,7 @@ function BioAndPerksView() {
     );
 
   const saveBioAndPerks = async () => {
-    const hasBioChanged = !isEqual(bio, club.artist.bio);
+    const hasBioChanged = !isEqual(bio, artistData.artist.bio);
 
     const havePerksChanged =
       [
@@ -85,6 +93,7 @@ function BioAndPerksView() {
       ].length > 0;
 
     if (hasBioChanged || havePerksChanged) {
+      console.log(selectedPerks);
       await updateBioAndPerks(club.id, {
         perks: selectedPerks,
         bio: bio,
@@ -163,6 +172,7 @@ function BioAndPerksView() {
           Go back
         </Button>
         <Button
+          disabled={selectedPerks.length < 3}
           isLoading={loadingUpdate}
           loadingText={loadingUpdate ? 'Continue' : 'Continue'}
           onClick={async () => {

@@ -9,11 +9,9 @@ function GQLRenderer({
   ErrorFallback = () => <Fragment />,
 }: GQLRendererProps) {
   return (
-    <Fragment>
-      <ErrorBoundary FallbackComponent={ErrorFallback}>
-        <Suspense fallback={LoadingFallback}>{children}</Suspense>
-      </ErrorBoundary>
-    </Fragment>
+    <ErrorBoundary FallbackComponent={ErrorFallback}>
+      <Suspense fallback={LoadingFallback}>{children}</Suspense>
+    </ErrorBoundary>
   );
 }
 GQLRenderer.displayName = 'GQLRenderer';

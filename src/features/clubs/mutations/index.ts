@@ -16,3 +16,13 @@ export const UPDATE_CLUB = gql`
     }
   }
 `;
+
+export const UPDATE_PERKS = gql`
+  mutation updatePerks($perks: [Int!]!) {
+    updatePerks(perks: $perks) {
+      id
+      label
+      description
+    }
+  }
+`;
