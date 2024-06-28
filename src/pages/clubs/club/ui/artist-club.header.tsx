@@ -67,7 +67,22 @@ function ArtistClubHeader() {
           <Button
             css={{ px: '50px' }}
             colorTheme='purple100'
-            onClick={() => console.log('Open edit')}
+            onClick={() => {
+              navigate(
+                makePath([
+                  Paths.clubs,
+                  artistData.artist.username,
+                  Paths.auction,
+                  Paths.create,
+                  Paths.auctionDetails,
+                ]),
+                {
+                  state: {
+                    previousLocation: pathname,
+                  },
+                },
+              );
+            }}
           >
             Create Auction
           </Button>

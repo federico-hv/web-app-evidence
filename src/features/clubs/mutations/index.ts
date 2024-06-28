@@ -7,12 +7,6 @@ export const UPDATE_CLUB = gql`
       bannerImage
       coverImage
       url
-      artist {
-        id
-        name
-        avatar
-        isVerified
-      }
     }
   }
 `;

@@ -18,6 +18,7 @@ function InputTextField({
   label,
   value,
   onChange,
+  onBlur,
   tooltip,
   placeholder,
   ...props
@@ -76,6 +77,7 @@ function InputTextField({
           className={customInputStyles()}
           color='white500'
           placeholder={placeholder}
+          onBlur={onBlur}
           {...props}
         />
       </VStack>

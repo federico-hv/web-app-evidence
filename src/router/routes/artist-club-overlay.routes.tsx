@@ -9,6 +9,11 @@ import {
 import { Paths } from '../../shared';
 import { Box, Overlay } from '@holdr-ui/react';
 import { Navigate } from 'react-router-dom';
+import {
+  CreateLiveAuctionDialog,
+  ReviewAuctionInfo,
+  ConfirmAuction,
+} from '../../pages/overlays/create-live-auction';
 
 const ArtistClubOverlayRoutes = () => (
   <Routes>
@@ -26,8 +31,20 @@ const ArtistClubOverlayRoutes = () => (
         />
       </Route>
       <Route path={Paths.auction}>
-        {/* 📝 @Fed Replace with auction creation dialog -- see above*/}
-        <Route path={Paths.create} element={<Overlay zIndex={15} />} />
+        <Route path={Paths.create} element={<CreateLiveAuctionDialog />}>
+          <Route
+            path={Paths.auctionDetails}
+            element={<EditArtistClubAuctionDetailsPage />}
+          />
+          <Route
+            path={Paths.reviewAuctionInfo}
+            element={<ReviewAuctionInfo />}
+          />
+          <Route
+            path={Paths.confirmAuction}
+            element={<ConfirmAuction />}
+          />
+        </Route>
       </Route>
       <Route path={Paths.members} element={<ClubMembersPage />} />
     </Route>
