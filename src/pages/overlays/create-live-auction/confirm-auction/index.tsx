@@ -56,7 +56,7 @@ function ConfirmAuction() {
       <VStack gap={4}>
         <InputTextField
           name='entryPrice'
-          tooltip='Something useful'
+          tooltip='Entry price of the auction'
           label='Starting Price'
           placeholder='Enter the starting price of your membership'
           value={formik.values.entryPrice}
@@ -77,7 +77,7 @@ function ConfirmAuction() {
       <VStack gap={4}>
         <InputTextField
           name='numberOfMemberships'
-          tooltip='Something useful'
+          tooltip='Amount of club memberships'
           label='Number of Memberships'
           placeholder='Enter the number of memberships you are auctioning'
           value={formik.values.numberOfMemberships}
@@ -108,7 +108,7 @@ function ConfirmAuction() {
               document.getElementById('page-dialog-container') ||
               document.body
             }
-            description='Something useful.'
+            description='Auction duration (1 - 3 hours)'
           />
         </HStack>
         <DurationInHoursPicker
@@ -150,7 +150,7 @@ function ConfirmAuction() {
       </VStack> */}
       <VStack>
         <Box bgColor='rgba(152, 152, 255, 0.20)' h='1px' my={4} />
-        <Box bgColor='transparent' h='30px' my={4} />
+        <Box bgColor='transparent' h='30px' />
 
         {/** ⚠️ Disable when live auction is running*/}
         {/*<CustomMembershipPerks/>*/}
@@ -176,7 +176,6 @@ function ConfirmAuction() {
         gap={2}
         justify='flex-end'
         py={4}
-        pr='10px'
       >
         <NewAuctionButtonContainer
           onDialogClose={onDialogClose}
