@@ -5,3 +5,4 @@ export * from './relationship';
 export * from './edit-user-profile';
 export * from './memberships';
 export * from './edit-club';
+export * from './payment-method';

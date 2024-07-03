@@ -17,7 +17,7 @@ function Bidder({
 }: {
   isActive?: boolean;
   data: BidderModel;
-  position: number;
+  position?: number;
 }) {
   const times = 100000; // This can be a calculation using name and timeAgo?
   const dotsSpacer = '.'.repeat(times);
@@ -25,11 +25,9 @@ function Bidder({
   return (
     <HStack w='100%' pl='40px' pr='16px' py='8px'>
       <HStack gap={2} flex={4} items={'center'}>
-        <Text
-          size={4}
-          weight={400}
-          color='white500'
-        >{`${position}. ${data.displayName}`}</Text>
+        <Text size={4} weight={400} color='white500'>{`${
+          position ? position + '. ' : ''
+        }${data.displayName}`}</Text>
 
         <Text
           size='14px'

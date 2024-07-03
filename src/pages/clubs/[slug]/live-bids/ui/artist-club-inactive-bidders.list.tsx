@@ -1,10 +1,9 @@
-import { Box, Card, HStack, StackDivider, VStack } from '@holdr-ui/react';
+import { StackDivider } from '@holdr-ui/react';
 import { FlatList } from '../../../../../tmp/flat-list';
 import {
   RadialSurface,
   TextGroup,
   TextGroupHeading,
-  TextGroupSubheading,
 } from '../../../../../shared';
 import { useSuspenseGetInactiveBidders } from '../../../../../features';
 import Bidder from './bidder';
@@ -34,9 +33,7 @@ function ArtistClubInactiveBiddersList({ clubId }: { clubId: string }) {
       <FlatList
         data={data}
         keyExtractor={(item) => `inactive-bid-${item.id}`}
-        renderItem={(item, idx) => (
-          <Bidder position={idx + 1} data={item} />
-        )}
+        renderItem={(item, idx) => <Bidder data={item} />}
         direction={'vertical'}
       />
     </RadialSurface>

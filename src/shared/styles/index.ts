@@ -66,6 +66,17 @@ export const customInputStyles = css({
   },
 });
 
+export const darkInputStyles = css({
+  border: '1px solid $purpleTint400 !important',
+  borderRadius: '$2',
+  backgroundColor: '#1A1A29 !important',
+  height: '2.75rem !important',
+  '&:focus': {
+    border: '1px solid rgba(152, 152, 255, 1) !important',
+    backgroundColor: 'transparent',
+  },
+});
+
 export const textAreaClassName = css({
   height: '464px !important',
 });

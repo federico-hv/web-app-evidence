@@ -1,10 +1,9 @@
-import { Box, Card, HStack, StackDivider, VStack } from '@holdr-ui/react';
+import { StackDivider } from '@holdr-ui/react';
 import { FlatList } from '../../../../../tmp/flat-list';
 import {
   RadialSurface,
   TextGroup,
   TextGroupHeading,
-  TextGroupSubheading,
 } from '../../../../../shared';
 import { useSuspenseGetActiveBidders } from '../../../../../features';
 import Bidder from './bidder';

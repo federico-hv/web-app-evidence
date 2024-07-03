@@ -15,12 +15,14 @@ import { customInputStyles } from '../../styles';
 function InputTextField({
   name,
   errorText,
+  className = customInputStyles(),
   label,
   value,
   onChange,
   onBlur,
   tooltip,
   placeholder,
+  labelProps,
   ...props
 }: InputTextFieldProps) {
   // useful for rendering the tooltip in the right container - with correct z-index
@@ -37,7 +39,13 @@ function InputTextField({
           css={{ marginBottom: label ? '$2' : 0 }}
         >
           {label && (
-            <Text size={2} weight={500} as='label' htmlFor={name}>
+            <Text
+              size={2}
+              weight={500}
+              {...labelProps}
+              as='label'
+              htmlFor={name}
+            >
               {label}
             </Text>
           )}
@@ -74,7 +82,7 @@ function InputTextField({
           value={value}
           onChange={onChange}
           radius={1}
-          className={customInputStyles()}
+          className={className}
           color='white500'
           placeholder={placeholder}
           onBlur={onBlur}

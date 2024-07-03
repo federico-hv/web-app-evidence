@@ -112,7 +112,7 @@ function ArtistClubMembershipPerksPage() {
             direction='vertical'
             data={perksData}
             renderItem={(item) => <ArtistClubPerkItem data={item} />}
-            keyExtractor={(item) => item.id}
+            keyExtractor={(item) => `MembershipDetails-${item.id}`}
           />
         </VStack>
       </RadialSurface>
