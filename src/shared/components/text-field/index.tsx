@@ -31,7 +31,7 @@ function InputTextField({
 
   return (
     <VStack gap={1} flex={1}>
-      <VStack>
+      <VStack as='fieldset'>
         <HStack
           color='white700'
           gap={1}
@@ -86,6 +86,9 @@ function InputTextField({
           color='white500'
           placeholder={placeholder}
           onBlur={onBlur}
+          css={{
+            fontFamily: 'inherit',
+          }}
           {...props}
         />
       </VStack>

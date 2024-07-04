@@ -18,6 +18,12 @@ export const makeButtonLarger = (size: string, py = '10px', px = '0px') =>
     minWidth: `${size} !important`,
   })();
 
+export const addPadding = ({ px, py }: { px?: string; py?: string }) =>
+  css({
+    py,
+    px,
+  })();
+
 export const changeDimensions = ({
   width,
   height,

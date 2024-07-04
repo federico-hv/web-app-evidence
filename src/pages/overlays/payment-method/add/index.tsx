@@ -16,17 +16,51 @@ import {
   DialogOverlay,
   DialogPortal,
   Heading,
+  hexToRGB,
   HStack,
   Text,
+  THEME_COLOR,
   useDisclosure,
   VStack,
 } from '@holdr-ui/react';
+import {
+  CardCvcElement,
+  CardExpiryElement,
+  CardNumberElement,
+  useElements,
+  // useStripe,
+} from '@stripe/react-stripe-js';
 import { useNavigate } from 'react-router-dom';
 
+const StripeCardElementStyles = {
+  style: {
+    base: {
+      fontSmoothing: 'antialiased',
+      fontFamily: 'inherit',
+      '::placeholder': {
+        color: hexToRGB(THEME_COLOR.base400, 1),
+      },
+      color: '#FCFDF7',
+    },
+  },
+};
+
 function AddPaymentMethodPage() {
+  // const [state, update] = useState({
+  //   email: '',
+  //   name: '',
+  //   country: '',
+  //   address: '',
+  //   city: '',
+  //   state: '',
+  //   postal_zip: '',
+  // });
+
   const disclosure = useDisclosure(true);
   const navigate = useNavigate();
   const previousLocation = usePreviousLocation('/');
+
+  const elements = useElements();
 
   return (
     <Fragment>
@@ -89,49 +123,55 @@ function AddPaymentMethodPage() {
                       >
                         Card information
                       </Text>
-                      <VStack>
-                        <InputTextField
-                          name='card-number'
-                          placeholder='1234 1234 1234 1234'
-                          className={darkInputStyles()}
-                          labelProps={{
-                            color: 'white50',
-                            weight: 500,
-                          }}
+                      <VStack css={{ gap: '2px' }}>
+                        <Box
+                          bgColor='#1A1A29'
+                          py={3}
+                          px={4}
                           css={{
-                            borderBottomLeftRadius: '$0 !important',
-                            borderBottomRightRadius: '$0 !important',
+                            borderTopLeftRadius: '$2',
+                            borderTopRightRadius: '$2',
                           }}
-                        />
-                        <HStack>
-                          <InputTextField
-                            name='card-number'
-                            placeholder='MM/YY'
-                            className={darkInputStyles()}
-                            labelProps={{
-                              color: 'white50',
-                              weight: 500,
-                            }}
-                            css={{
-                              borderTopLeftRadius: '$0 !important',
-                              borderTopRightRadius: '$0 !important',
-                              borderBottomRightRadius: '$0 !important',
+                        >
+                          <CardNumberElement
+                            options={{
+                              showIcon: true,
+                              iconStyle: 'solid',
+                              ...StripeCardElementStyles,
                             }}
                           />
-                          <InputTextField
-                            name='card-number'
-                            placeholder='CVV'
-                            className={darkInputStyles()}
-                            labelProps={{
-                              color: 'white50',
-                              weight: 500,
-                            }}
+                        </Box>
+                        <HStack css={{ gap: '2px' }}>
+                          <Box
+                            bgColor='#1A1A29'
+                            py={3}
+                            px={4}
+                            flex={1}
                             css={{
-                              borderBottomLeftRadius: '$0 !important',
-                              borderTopLeftRadius: '$0 !important',
-                              borderTopRightRadius: '$0 !important',
+                              borderBottomLeftRadius: '$2',
                             }}
-                          />
+                          >
+                            <CardExpiryElement
+                              options={{
+                                ...StripeCardElementStyles,
+                              }}
+                            />
+                          </Box>
+                          <Box
+                            bgColor='#1A1A29'
+                            py={3}
+                            px={4}
+                            flex={1}
+                            css={{
+                              borderBottomRightRadius: '$2',
+                            }}
+                          >
+                            <CardCvcElement
+                              options={{
+                                ...StripeCardElementStyles,
+                              }}
+                            />
+                          </Box>
                         </HStack>
                       </VStack>
                     </VStack>
@@ -145,7 +185,7 @@ function AddPaymentMethodPage() {
                         weight: 500,
                       }}
                     />
-                    <VStack gap={2}>
+                    <VStack gap={2} as='fieldset'>
                       <Text
                         size={2}
                         weight={500}
@@ -202,6 +242,10 @@ function AddPaymentMethodPage() {
                             color: 'white50',
                             weight: 500,
                           }}
+                          css={{
+                            borderTopRightRadius: '0',
+                            borderBottomRightRadius: '0',
+                          }}
                         />
                       </VStack>
                       <Box flex={1} css={{ alignSelf: 'flex-end' }}>
@@ -213,6 +257,10 @@ function AddPaymentMethodPage() {
                             color: 'white50',
                             weight: 500,
                           }}
+                          css={{
+                            borderTopLeftRadius: '0',
+                            borderBottomLeftRadius: '0',
+                          }}
                         />
                       </Box>
                     </HStack>
@@ -221,6 +269,7 @@ function AddPaymentMethodPage() {
               </VStack>
               <Box py={3} position='sticky' b={0} bgColor='#30304B'>
                 <Button
+                  disabled
                   fullWidth
                   radius={2}
                   className={extraBtnPadding()}
