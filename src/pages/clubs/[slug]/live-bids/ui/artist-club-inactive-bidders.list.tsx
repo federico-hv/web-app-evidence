@@ -1,4 +1,4 @@
-import { StackDivider } from '@holdr-ui/react';
+import { StackDivider, VStack, Text } from '@holdr-ui/react';
 import { FlatList } from '../../../../../tmp/flat-list';
 import {
   RadialSurface,
@@ -7,9 +7,22 @@ import {
 } from '../../../../../shared';
 import { useSuspenseGetInactiveBidders } from '../../../../../features';
 import Bidder from './bidder';
+import { IBidder } from '..';
 
-function ArtistClubInactiveBiddersList({ clubId }: { clubId: string }) {
-  const { data } = useSuspenseGetInactiveBidders(clubId);
+function ArtistClubInactiveBiddersList({
+  confirmWithdraw,
+  currentUserId,
+  bidders,
+  clubId,
+}: {
+  confirmWithdraw: (bidId: number) => void;
+  currentUserId: string;
+  clubId: string;
+  bidders: IBidder[];
+}) {
+  const isCurrentUser = (item: any) => item.id === currentUserId;
+
+  const auctionWithBidders = bidders.length > 0;
 
   return (
     <RadialSurface
@@ -30,12 +43,27 @@ function ArtistClubInactiveBiddersList({ clubId }: { clubId: string }) {
         </TextGroupHeading>
       </TextGroup>
 
-      <FlatList
-        data={data}
-        keyExtractor={(item) => `inactive-bid-${item.id}`}
-        renderItem={(item, idx) => <Bidder data={item} />}
-        direction={'vertical'}
-      />
+      {auctionWithBidders && (
+        <FlatList
+          data={bidders}
+          keyExtractor={(item) => `inactive-bid-${item.id}`}
+          renderItem={(item, idx) => (
+            <Bidder
+              confirmWithdraw={confirmWithdraw}
+              isActive={isCurrentUser(item)}
+              position={idx + 1}
+              data={item}
+            />
+          )}
+          direction={'vertical'}
+        />
+      )}
+
+      {!auctionWithBidders && (
+        <VStack items='center' py={'10px'}>
+          <Text>No out of contention bidders yet</Text>
+        </VStack>
+      )}
     </RadialSurface>
   );
 }

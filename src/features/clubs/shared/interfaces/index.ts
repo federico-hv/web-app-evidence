@@ -34,4 +34,5 @@ export interface BidderModel {
   displayName: string;
   createdAt: Date;
   amount: number;
+  bidId?: number;
 }

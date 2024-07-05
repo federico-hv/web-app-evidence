@@ -10,21 +10,38 @@ export interface LiveAuction {
   numberOfMemberships: number;
 }
 
+interface ICreateAuction {
+  id: number;
+  entryPrice: number;
+  endsAt: Date;
+}
+
+interface CreateAuctionPayload {
+  clubId: string;
+  duration: number;
+  entryPrice: number;
+  numberOfMemberships: number;
+}
+
+interface CreateAuctionVars {
+  payload: CreateAuctionPayload;
+}
+
 export function useCreateLiveAuction() {
   const { openWith } = useToast();
   const [auctionCreated, setAuctionCreated] = useState(false);
-  const [createLiveAuction, { data, loading, error }] = useMutation<any>(
-    CREATE_LIVE_AUCTION,
-    {
-      onError: (error) => {
-        alert(error.message);
-      },
-      onCompleted: (data) => {
-        alert('Auction created succesfully!');
-        setAuctionCreated(true);
-      },
+  const [createLiveAuction, { data, loading, error }] = useMutation<
+    ICreateAuction,
+    CreateAuctionVars
+  >(CREATE_LIVE_AUCTION, {
+    onError: (error) => {
+      alert(error.message);
     },
-  );
+    onCompleted: (data) => {
+      alert('Auction created succesfully!');
+      setAuctionCreated(true);
+    },
+  });
 
   const onSubmit = async (liveAuctionPayload: LiveAuction) => {
     await createLiveAuction({
