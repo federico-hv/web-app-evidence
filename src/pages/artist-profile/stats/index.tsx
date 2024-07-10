@@ -220,7 +220,7 @@ const months = [
   '12 months',
 ];
 
-function ArtistProfileDashboardPage() {
+function ArtistProfileStatsPage() {
   return (
     <VStack gap={4}>
       <HStack gap={4}>
@@ -539,6 +539,6 @@ function ArtistProfileDashboardPage() {
     </VStack>
   );
 }
-ArtistProfileDashboardPage.displayName = 'ArtistProfileDashboardPage';
+ArtistProfileStatsPage.displayName = 'ArtistProfileStatsPage';
 
-export default ArtistProfileDashboardPage;
+export default ArtistProfileStatsPage;
