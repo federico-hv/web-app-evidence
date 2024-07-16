@@ -1,6 +1,6 @@
 import { useMutation } from '@apollo/client';
 import { DELETE_PHONE_NUMBER } from '../../mutations';
-import { GET_ACCOUNT_INFO } from '../../queries';
+import { GET_ACCOUNT_INFO } from '../../../user';
 
 export function useDeletePhoneNumber() {
   const [deletePhoneNumber, { loading, error }] = useMutation(

@@ -1,5 +1,5 @@
 import { useQuery, useSuspenseQuery } from '@apollo/client';
-import { CHECK_IS_UNIQUE_FIELD } from '../../queries';
+import { CHECK_IS_UNIQUE_FIELD } from '../../queries/schema';
 import { UniqueIdentityField } from '../types';
 
 export function useCheckIsUniqueField() {

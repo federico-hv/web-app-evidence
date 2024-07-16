@@ -17,6 +17,7 @@ export { default as AuthGuard } from './auth-guard';
 export { default as Head } from './head';
 export { default as ImageUpload } from './image-upload';
 export { default as FormInput } from './form-input';
+export { default as SelectInputField } from './select-input-field';
 export { default as DatePicker } from './date-picker';
 export { default as PhoneInput } from './phone-input';
 export { default as ContentBox } from './content-box';

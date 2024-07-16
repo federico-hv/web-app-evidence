@@ -10,8 +10,6 @@ interface ArtistClubSocialButtonProps {
 function ArtistClubSocialButton({
   username,
 }: ArtistClubSocialButtonProps) {
-  console.log(username);
-
   const { data } = useRelationshipStatusInfo(username);
 
   return (

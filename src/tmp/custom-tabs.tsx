@@ -10,7 +10,7 @@ import {
   HStackProps,
   StackProps,
 } from '@holdr-ui/react/dist/components/stack/src/stack.types';
-import { useEffect } from 'react';
+import { Fragment, useEffect } from 'react';
 
 interface CustomTabsState {
   currentValue: string;
@@ -142,10 +142,14 @@ function CustomTabsContent({
 }: BoxProps & { value: string }) {
   const { state } = useGeneralContext<CustomTabsState>();
   return (
-    <Box
-      display={state.currentValue !== value ? 'none' : undefined}
-      {...props}
-    />
+    <Fragment>
+      {value === state.currentValue && (
+        <Box
+          display={state.currentValue !== value ? 'none' : undefined}
+          {...props}
+        />
+      )}
+    </Fragment>
   );
 }
 CustomTabsContent.displayName = 'CustomTabsContent';
