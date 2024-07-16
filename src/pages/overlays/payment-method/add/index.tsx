@@ -7,6 +7,7 @@ import {
   LoadWithoutPreviousLocation,
   SelectInputField,
   usePreviousLocation,
+  voidFn,
 } from '../../../../shared';
 import {
   Box,
@@ -40,6 +41,7 @@ import {
   useAccountInfoQuery,
   useCountries,
   useCountryStates,
+  useCreateSetupIntentMutation,
 } from '../../../../features';
 import { StripeCardNumberElementChangeEvent } from '@stripe/stripe-js/dist/stripe-js/elements/card-number';
 import {
@@ -96,8 +98,11 @@ function useSaveCard() {
 
   const elements = useElements();
 
+  const { createSetupIntent, loading: loadingSI } =
+    useCreateSetupIntentMutation();
+
   if (!stripe || !elements) {
-    return;
+    return { saveCard: null, loading: false };
   }
 
   /**
@@ -106,12 +111,20 @@ function useSaveCard() {
    *
    * @param billingInfo The customer billing information
    */
-  return async (billingInfo: SaveCardDataType) => {
+  const saveCard = async (billingInfo: SaveCardDataType) => {
     // create a stripe intent
-    console.log('creating a stripe intent');
+    const result = await createSetupIntent();
+
+    if (!result || !result.data) {
+      throw new Error('Failed to retrieve setup intent token.');
+    }
+
+    console.log(result.data.createSetupIntent);
     // link card to the customer account
     console.log('linking card to customer account');
   };
+
+  return { saveCard, loading: loadingSI };
 }
 
 /**
@@ -271,7 +284,7 @@ function AddPaymentMethodPage() {
   const [billingInfo, updateBillingInfo] =
     useRecordState<SaveCardDataType>(DefaultSaveCardData);
 
-  const { data, loading, error } = useAccountInfoQuery();
+  const { data, loading } = useAccountInfoQuery();
   const { data: countriesData } = useCountries();
 
   const countryItem = countriesData?.data.find(
@@ -286,9 +299,7 @@ function AddPaymentMethodPage() {
 
   const previousLocation = usePreviousLocation('/');
 
-  // const checkElements = useCheckElements();
-
-  const saveCard = useSaveCard();
+  const { saveCard, loading: loadingSaveCard } = useSaveCard();
 
   const handleOnChange = (e: ChangeEvent<HTMLInputElement>) =>
     updateBillingInfo({ [e.target.name]: e.target.value });
@@ -350,7 +361,10 @@ function AddPaymentMethodPage() {
               as='form'
               onSubmit={async (e) => {
                 e.preventDefault();
-                if (saveCard) await saveCard(billingInfo).then(goBack);
+                if (saveCard)
+                  await saveCard(billingInfo).then(() => {
+                    // goBack();
+                  });
               }}
             >
               {loading ? (
@@ -592,11 +606,15 @@ function AddPaymentMethodPage() {
                   </VStack>
                   <Box py={3} position='sticky' b={0} bgColor='#30304B'>
                     <Button
+                      isLoading={loadingSaveCard}
+                      loadingText={'Continue'}
                       type='submit'
                       disabled={
+                        loadingSaveCard ||
                         missingField<SaveCardDataType>(billingInfo, [
                           'province',
-                        ]) || !StripeCardUtility.validate(stripeCardInfo)
+                        ]) ||
+                        !StripeCardUtility.validate(stripeCardInfo)
                       }
                       fullWidth
                       radius={2}

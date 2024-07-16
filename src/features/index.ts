@@ -15,3 +15,4 @@ export * from './app';
 export * from './tracking';
 export * from './music-releases';
 export * from './countries';
+export * from './payment-methods';
