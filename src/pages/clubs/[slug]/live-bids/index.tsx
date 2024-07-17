@@ -18,6 +18,8 @@ import {
 import {
   IClub,
   MembershipCard,
+  useHasPaymentMethodSuspenseQuery,
+  useCurrentUser,
   useSuspenseGetArtist,
 } from '../../../../features';
 import {
@@ -25,6 +27,7 @@ import {
   Head,
   makePath,
   useAlertDialog,
+  voidFn,
 } from '../../../../shared';
 import { dummyPerks } from '../../shared';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
@@ -53,20 +56,12 @@ function useAddPaymentMethod() {
     });
 }
 
-function PaymentMethodAlertDialog() {
-  const addPaymentMethod = useAddPaymentMethod();
-
-  const { openWith } = useAlertDialog();
-
-  useEffect(() => {
-    openWith({ ...DialogState.addPayment, onAction: addPaymentMethod });
-  }, []);
-
-  return <Fragment />;
-}
-
 function ArtistClubLiveBidsPage() {
   const { slug } = useParams();
+
+  const currentUser = useCurrentUser();
+
+  const { openWith } = useAlertDialog();
 
   const { value, handleOnChange } = useInputChange('');
 
@@ -74,11 +69,18 @@ function ArtistClubLiveBidsPage() {
     slug,
   });
 
+  const { data: hasPMData } = useHasPaymentMethodSuspenseQuery();
+
   const { state: club } = useGeneralContext<IClub>();
 
   const addPaymentMethod = useAddPaymentMethod();
 
   const targetDate = dayjs().add(3, 'd').toDate();
+
+  useEffect(() => {
+    if (!hasPMData.hasPaymentMethod)
+      openWith({ ...DialogState.addPayment, onAction: addPaymentMethod });
+  }, []);
 
   return (
     <Fragment>
@@ -87,8 +89,6 @@ function ArtistClubLiveBidsPage() {
         title='Live Bids'
         description='A catalog of memberships that are being offered by artists.'
       />
-
-      {/*<PaymentMethodAlertDialog />*/}
 
       <VStack gap={6}>
         <HStack gap={4} h={500}>
@@ -113,31 +113,47 @@ function ArtistClubLiveBidsPage() {
                   targetDate={targetDate}
                 />
               </HStack>
-              <Input
-                value={value}
-                onChange={handleOnChange}
-                placeholder='Enter Amount'
-                _placeholder={{
-                  color: '$base600',
-                }}
-                color='white500'
-                css={{
-                  backgroundColor: '$purple1000',
-                  height: '48px',
-                  fontSize: '18px',
-                }}
-              />
-              <Button
-                onClick={addPaymentMethod}
-                radius={2}
-                colorTheme='purple500'
-                fullWidth
-                style={{
-                  height: '48px',
-                }}
-              >
-                Place Bid
-              </Button>
+              {currentUser.id !== artistData.artist.accountId && (
+                <VStack
+                  gap={3}
+                  as='form'
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                  }}
+                >
+                  <Input
+                    value={value}
+                    onChange={handleOnChange}
+                    placeholder='Enter Amount'
+                    _placeholder={{
+                      color: '$base600',
+                    }}
+                    color='white500'
+                    css={{
+                      backgroundColor: '$purple1000',
+                      height: '48px',
+                      fontSize: '18px',
+                    }}
+                  />
+
+                  <Button
+                    type='submit'
+                    onClick={
+                      hasPMData.hasPaymentMethod
+                        ? voidFn
+                        : addPaymentMethod
+                    }
+                    radius={2}
+                    colorTheme='purple500'
+                    fullWidth
+                    style={{
+                      height: '48px',
+                    }}
+                  >
+                    Place Bid
+                  </Button>
+                </VStack>
+              )}
             </VStack>
           </VStack>
         </HStack>

@@ -7,8 +7,8 @@ export const CREATE_SETUP_INTENT = gql`
 `;
 
 export const LINK_PAYMENT_METHOD = gql`
-  mutation linkPaymentMethod($paymentMethod: String!) {
-    linkPaymentMethod(paymentMethod: $paymentMethod) {
+  mutation linkPaymentMethod($paymentMethodId: String!) {
+    linkPaymentMethod(paymentMethodId: $paymentMethodId) {
       isSuccess
       message
       status

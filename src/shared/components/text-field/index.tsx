@@ -23,6 +23,7 @@ function InputTextField({
   tooltip,
   placeholder,
   labelProps,
+  autoComplete,
   ...props
 }: InputTextFieldProps) {
   // useful for rendering the tooltip in the right container - with correct z-index
@@ -77,6 +78,7 @@ function InputTextField({
           )}
         </HStack>
         <Input
+          autoComplete={autoComplete}
           name={name}
           id={name}
           value={value}

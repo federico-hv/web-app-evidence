@@ -36,6 +36,32 @@ export function isInputDisabled<U>(
 }
 
 /**
+ * Check whether fields are missing from a form's data.
+ *
+ * @param data The form data to check.
+ * @param omit The fields to omit from being checked.
+ *
+ * @returns true if the data has any field that is empty.
+ */
+export function missingField<T extends Record<string, string>>(
+  data: T,
+  omit: string[],
+) {
+  const keys = Object.keys(data);
+
+  for (const key of keys) {
+    if (omit.includes(key)) {
+      continue;
+    }
+    if (data[key].length === 0) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+/**
  * Construct a message when an invalid pattern is encountered
  */
 export const PatternErrorMessage = {

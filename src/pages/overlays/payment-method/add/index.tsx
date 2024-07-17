@@ -1,13 +1,14 @@
 import { ChangeEvent, Fragment, useEffect } from 'react';
 import {
   darkInputStyles,
+  darkInputStylesNoFocus,
   darkSelectCSS,
   extraBtnPadding,
   InputTextField,
   LoadWithoutPreviousLocation,
+  missingField,
   SelectInputField,
   usePreviousLocation,
-  voidFn,
 } from '../../../../shared';
 import {
   Box,
@@ -21,10 +22,9 @@ import {
   DialogOverlay,
   DialogPortal,
   Heading,
-  hexToRGB,
   HStack,
+  mergeStyles,
   Text,
-  THEME_COLOR,
   useDisclosure,
   useRecordState,
   VStack,
@@ -33,21 +33,23 @@ import {
   CardCvcElement,
   CardExpiryElement,
   CardNumberElement,
-  useElements,
-  useStripe,
 } from '@stripe/react-stripe-js';
 import { useNavigate } from 'react-router-dom';
 import {
   useAccountInfoQuery,
   useCountries,
   useCountryStates,
-  useCreateSetupIntentMutation,
 } from '../../../../features';
-import { StripeCardNumberElementChangeEvent } from '@stripe/stripe-js/dist/stripe-js/elements/card-number';
+
 import {
-  StripeCardCvcElementChangeEvent,
-  StripeCardExpiryElementChangeEvent,
-} from '@stripe/stripe-js';
+  DefaultSaveCardData,
+  SaveCardDataType,
+  StripeCardElementStyles,
+  StripeCardUtility,
+  useStripeCardInfo,
+  useStripeElementFocused,
+  useSaveCard,
+} from './shared';
 
 /**
  * Notes: [For future state]
@@ -55,230 +57,6 @@ import {
  * - Use TomTom for autocompleted addresses: https://developer.tomtom.com/search-api/documentation/search-service/fuzzy-search
  * - Use RecaptchaV3 to decrease the fraud incident count: https://developers.google.com/recaptcha/docs/v3
  */
-
-const DefaultSaveCardData = {
-  email: '',
-  name: '',
-  address: '',
-  city: '',
-  postal: '', // also zip
-  country: '',
-  province: '', // also state
-};
-
-type SaveCardDataType = {
-  email: string;
-  name: string;
-  address: string;
-  city: string;
-  postal: string; // also zip
-  country: string;
-  province: string; // also state
-};
-
-const StripeCardElementStyles = {
-  style: {
-    base: {
-      fontSmoothing: 'antialiased',
-      fontFamily: 'Matter, sans-serif',
-      '::placeholder': {
-        color: hexToRGB(THEME_COLOR.base400, 1),
-      },
-      color: '#FCFDF7',
-    },
-  },
-};
-
-/**
- * Returns a method that sets up a setup intent on Stripe
- * and links a user's customer account to a card on Stripe.
- */
-function useSaveCard() {
-  const stripe = useStripe();
-
-  const elements = useElements();
-
-  const { createSetupIntent, loading: loadingSI } =
-    useCreateSetupIntentMutation();
-
-  if (!stripe || !elements) {
-    return { saveCard: null, loading: false };
-  }
-
-  /**
-   * A method that sets up a setup intent and links a customer account
-   * to a card on Stripe.
-   *
-   * @param billingInfo The customer billing information
-   */
-  const saveCard = async (billingInfo: SaveCardDataType) => {
-    // create a stripe intent
-    const result = await createSetupIntent();
-
-    if (!result || !result.data) {
-      throw new Error('Failed to retrieve setup intent token.');
-    }
-
-    console.log(result.data.createSetupIntent);
-    // link card to the customer account
-    console.log('linking card to customer account');
-  };
-
-  return { saveCard, loading: loadingSI };
-}
-
-/**
- * Check whether fields are missing from a form's data.
- *
- * @param data The form data to check.
- * @param omit The fields to omit from being checked.
- *
- * @returns true if the data has any field that is empty.
- */
-function missingField<T extends Record<string, string>>(
-  data: T,
-  omit: string[],
-) {
-  const keys = Object.keys(data);
-
-  for (const key of keys) {
-    if (omit.includes(key)) {
-      continue;
-    }
-    if (data[key].length === 0) {
-      return true;
-    }
-  }
-
-  return false;
-}
-
-interface StripeCardElementInfo {
-  cardNumber: StripeCardNumberElementChangeEvent | null;
-  cardExpiry: StripeCardExpiryElementChangeEvent | null;
-  cardCvc: StripeCardCvcElementChangeEvent | null;
-}
-
-class StripeCardUtility {
-  /**
-   * Check whether a card element item (Expiry/Number) has an error.
-   *
-   * @param cardInfo
-   */
-  static validate(cardInfo: StripeCardElementInfo): boolean {
-    if (
-      !cardInfo.cardExpiry ||
-      !cardInfo.cardNumber ||
-      !cardInfo.cardCvc
-    ) {
-      return false;
-    }
-
-    return (
-      !(cardInfo.cardExpiry.error || cardInfo.cardNumber.error) &&
-      !(
-        cardInfo.cardExpiry.empty ||
-        cardInfo.cardNumber.empty ||
-        cardInfo.cardCvc.empty
-      )
-    );
-  }
-
-  /**
-   * Get the error message when a card element item (Expiry/Number) has an error.
-   *
-   * @param cardInfo
-   */
-  static retrieveErrorMessage(cardInfo: StripeCardElementInfo): string {
-    if (cardInfo.cardExpiry && cardInfo.cardExpiry.error) {
-      return cardInfo.cardExpiry.error.message;
-    }
-
-    if (cardInfo.cardNumber && cardInfo.cardNumber.error) {
-      return cardInfo.cardNumber.error.message;
-    }
-
-    return '';
-  }
-}
-
-/**
- * A hook that returns an object containing the focus
- * states of the Stripe card elements, namely, CardNumberElement,
- * CardCvcElement and CardExpiryElement.
- *
- */
-function useStripeElementFocused() {
-  const [state, update] = useRecordState({
-    cardNumber: false,
-    cardExpiry: false,
-    cardCvc: false,
-  });
-
-  const elements = useElements();
-
-  useEffect(() => {
-    if (!elements) return;
-
-    const cardNumberElement = elements.getElement(CardNumberElement);
-    const cardExpiryElement = elements.getElement(CardExpiryElement);
-    const cardCvcElement = elements.getElement(CardCvcElement);
-
-    if (!cardNumberElement || !cardExpiryElement || !cardCvcElement)
-      return;
-
-    cardNumberElement.on('focus', () => update({ cardNumber: true }));
-    cardNumberElement.on('blur', () => update({ cardNumber: false }));
-    cardExpiryElement.on('focus', () => update({ cardExpiry: true }));
-    cardExpiryElement.on('blur', () => update({ cardExpiry: false }));
-    cardCvcElement.on('focus', () => update({ cardCvc: true }));
-    cardCvcElement.on('blur', () => update({ cardCvc: false }));
-
-    return () => {
-      cardNumberElement.on('focus', () => null);
-      cardNumberElement.on('blur', () => null);
-      cardExpiryElement.on('focus', () => null);
-      cardExpiryElement.on('blur', () => null);
-      cardCvcElement.on('focus', () => null);
-      cardCvcElement.on('blur', () => null);
-    };
-  }, [elements, update]);
-
-  return state;
-}
-
-function useStripeCardInfo() {
-  const [state, update] = useRecordState<StripeCardElementInfo>({
-    cardNumber: null,
-    cardExpiry: null,
-    cardCvc: null,
-  });
-
-  const elements = useElements();
-
-  useEffect(() => {
-    if (!elements) return;
-
-    const cardNumberElement = elements.getElement(CardNumberElement);
-    const cardExpiryElement = elements.getElement(CardExpiryElement);
-    const cardCvcElement = elements.getElement(CardCvcElement);
-
-    if (!cardNumberElement || !cardExpiryElement || !cardCvcElement)
-      return;
-
-    cardNumberElement.on('change', (e) => update({ cardNumber: e }));
-    cardExpiryElement.on('change', (e) => update({ cardExpiry: e }));
-    cardCvcElement.on('change', (e) => update({ cardCvc: e }));
-
-    return () => {
-      cardNumberElement.on('change', () => null);
-      cardExpiryElement.on('change', () => null);
-      cardCvcElement.on('change', () => null);
-    };
-  }, [elements, update]);
-
-  return state;
-}
 
 function AddPaymentMethodPage() {
   const [billingInfo, updateBillingInfo] =
@@ -385,7 +163,11 @@ function AddPaymentMethodPage() {
                           name='email'
                           label='Email'
                           placeholder='Your emal address'
-                          className={darkInputStyles()}
+                          className={darkInputStylesNoFocus()}
+                          css={{
+                            opacity: 0.5,
+                            cursor: 'not-allowed',
+                          }}
                           labelProps={{
                             color: 'white50',
                             weight: 500,
@@ -480,6 +262,7 @@ function AddPaymentMethodPage() {
                           value={billingInfo.name}
                           onChange={handleOnChange}
                           name='name'
+                          autoComplete='given-name'
                           label="Cardholder's name"
                           placeholder='Full name on card'
                           className={darkInputStyles()}
@@ -514,9 +297,10 @@ function AddPaymentMethodPage() {
                           )}
                         </VStack>
                         <InputTextField
-                          value={billingInfo.address}
+                          autoComplete='address-line1'
+                          value={billingInfo.line1}
                           onChange={handleOnChange}
-                          name='address'
+                          name='line1'
                           label='Address'
                           placeholder='Street address'
                           className={darkInputStyles()}

@@ -28,7 +28,7 @@ export interface ITinyArtist<T = string> {
   >;
 }
 
-export interface ISuccessResponse<T> {
+export interface ISuccessResponse<T = any> {
   data?: T;
   isSuccess: boolean;
   status: number;

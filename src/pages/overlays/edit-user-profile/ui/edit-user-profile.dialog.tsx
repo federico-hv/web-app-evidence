@@ -103,20 +103,13 @@ function EditUserProfileDialog() {
                           number={1}
                           path={makePath([username, 'edit', 'profile'])}
                           description='My Profile'
-                          active={
-                            currentPath === 'profile' ||
-                            currentPath === 'favourites' ||
-                            currentPath === 'credit-card'
-                          }
+                          active={currentPath === 'profile'}
                         />
                         <SetupStep
                           number={2}
                           path={makePath([username, 'edit', 'favourites'])}
                           description='Add Favourites'
-                          active={
-                            currentPath === 'favourites' ||
-                            currentPath === 'credit-card'
-                          }
+                          active={currentPath === 'favourites'}
                         />
                       </VStack>
                     </Box>

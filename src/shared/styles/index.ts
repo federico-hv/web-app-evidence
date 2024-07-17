@@ -72,6 +72,13 @@ export const customInputStyles = css({
   },
 });
 
+export const darkInputStylesNoFocus = css({
+  border: '1px solid $purpleTint400 !important',
+  borderRadius: '$2',
+  backgroundColor: '#1A1A29 !important',
+  height: '2.75rem !important',
+});
+
 export const darkInputStyles = css({
   border: '1px solid $purpleTint400 !important',
   borderRadius: '$2',

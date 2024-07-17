@@ -13,6 +13,7 @@ export interface InputTextFieldProps {
   maxLength?: number;
   minLength?: number;
   readOnly?: boolean;
+  autoComplete?: string;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
   onBlur?: (e: ChangeEvent<HTMLInputElement>) => void;
   css?: CSSTheme;
