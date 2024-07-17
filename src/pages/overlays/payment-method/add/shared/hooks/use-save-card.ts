@@ -21,10 +21,8 @@ export function useSaveCard() {
 
   const elements = useElements();
 
-  const { createSetupIntent, loading: loadingSI } =
-    useCreateSetupIntentMutation();
-  const { linkPaymentMethod, loading: loadingLC } =
-    useLinkPaymentMethodMutation();
+  const { createSetupIntent } = useCreateSetupIntentMutation();
+  const { linkPaymentMethod } = useLinkPaymentMethodMutation();
 
   if (!stripe || !elements) {
     return { saveCard: null, loading: false };
