@@ -11,6 +11,10 @@ import {
   usePreviousLocation,
 } from '../../../../shared';
 import {
+  Alert,
+  AlertContent,
+  AlertDescription,
+  AlertTitle,
   Box,
   Button,
   Center,
@@ -155,6 +159,20 @@ function AddPaymentMethodPage() {
                       <Heading mb={8} size={6} weight={500}>
                         Payment Method
                       </Heading>
+                      {import.meta.env.VITE_ENVIRONMENT ===
+                        'development' && (
+                        <Box mb={5}>
+                          <Alert status='info'>
+                            <AlertContent>
+                              <AlertTitle>Testing notice</AlertTitle>
+                              <AlertDescription color='black500'>
+                                Use <strong>4242 4242 4242 4242</strong>{' '}
+                                for the card number. Any CVC number works.
+                              </AlertDescription>
+                            </AlertContent>
+                          </Alert>
+                        </Box>
+                      )}
                       <VStack gap={4}>
                         <InputTextField
                           readOnly
