@@ -8,12 +8,15 @@ import {
   useCreateSetupIntentMutation,
   useLinkPaymentMethodMutation,
 } from '../../../../../../features';
+import { useState } from 'react';
 
 /**
  * Returns a method that sets up a setup intent on Stripe
  * and links a user's customer account to a card on Stripe.
  */
 export function useSaveCard() {
+  const [loading, setLoading] = useState(false);
+
   const stripe = useStripe();
 
   const elements = useElements();
@@ -34,6 +37,8 @@ export function useSaveCard() {
    * @param billingInfo The customer billing information
    */
   const saveCard = async (billingInfo: SaveCardDataType) => {
+    setLoading(true);
+
     const cardNumberElement = elements.getElement(CardNumberElement);
 
     if (!cardNumberElement) {
@@ -90,7 +95,8 @@ export function useSaveCard() {
     if (!linkCardResult.data.linkPaymentMethod.isSuccess) {
       throw new Error(linkCardResult.data.linkPaymentMethod.message);
     }
+    setLoading(false);
   };
 
-  return { saveCard, loading: loadingSI || loadingLC };
+  return { saveCard, loading };
 }

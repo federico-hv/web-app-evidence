@@ -140,7 +140,7 @@ function AddPaymentMethodPage() {
                 e.preventDefault();
                 if (saveCard)
                   await saveCard(billingInfo).then(() => {
-                    // goBack();
+                    goBack();
                   });
               }}
             >
