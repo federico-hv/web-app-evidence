@@ -9,3 +9,4 @@ export { default as EditGeneralUserProfileRoutes } from './edit-general-user-pro
 export { default as ArtistProfileRoutes } from './artist-profile.routes';
 export { default as BookmarkGroupActionRoutes } from './bookmark-group-action.routes';
 export { default as ArtistClubOverlayRoutes } from './artist-club-overlay.routes';
+export { default as PaymentMethodRoutes } from './payment-method.routes';

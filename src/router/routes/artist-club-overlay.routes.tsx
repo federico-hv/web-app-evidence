@@ -7,7 +7,6 @@ import {
   EditArtistClubMusicAndLinksPage,
 } from '../../pages';
 import { Paths } from '../../shared';
-import { Box, Overlay } from '@holdr-ui/react';
 import { Navigate } from 'react-router-dom';
 import {
   CreateLiveAuctionDialog,
@@ -34,7 +33,12 @@ const ArtistClubOverlayRoutes = () => (
         <Route path={Paths.create} element={<CreateLiveAuctionDialog />}>
           <Route
             path={Paths.auctionDetails}
-            element={<EditArtistClubAuctionDetailsPage />}
+            element={
+              <div>
+                Add your page here - Do not use the
+                EditArtistClubAuctionDetailsPage component
+              </div>
+            }
           />
           <Route
             path={Paths.reviewAuctionInfo}

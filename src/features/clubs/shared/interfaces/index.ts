@@ -1,5 +1,4 @@
 import { UserModel } from '../../../../shared';
-import { IArtist } from '../../../artist';
 
 export interface OnSaleMembershipModel {
   endDate?: Date;

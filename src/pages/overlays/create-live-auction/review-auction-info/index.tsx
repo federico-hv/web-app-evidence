@@ -15,7 +15,7 @@ import {
 import { SelectPredefinedPerks } from '../../setup-artist-profile/bio-and-perks/ui';
 import { useState } from 'react';
 import { FlatList } from '../../../../tmp/flat-list';
-import { perksData } from '../../../../pages/clubs/club/membership-perks';
+import { perksData } from '../../../clubs/[slug]/membership-perks';
 import {
   NewAuctionButtonContainer,
   OutletContext,

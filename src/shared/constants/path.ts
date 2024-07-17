@@ -1,6 +1,7 @@
 export const Paths = {
   root: '',
   all: 'all',
+  add: 'add',
   bio: 'bio',
   musicAndLinks: 'music-and-links',
   slug: ':slug',
@@ -23,6 +24,9 @@ export const Paths = {
   settings: 'settings',
   username: ':username',
   feed: 'feeds/:id',
+  paymentMethod: 'payment-method',
+  cardDetails: 'card-details',
+  billingInformation: 'billing-information',
   club: {
     watchlist: 'watchlist',
     memberships: 'memberships',

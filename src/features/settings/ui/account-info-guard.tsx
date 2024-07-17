@@ -9,8 +9,8 @@ import {
   RootSettingsPath,
 } from '../../../shared';
 import { AccountInfoContextProvider, IAccountInfo } from '../shared';
-import { GET_ACCOUNT_INFO } from '../queries';
 import PasswordConfirmation from './password-confimation';
+import { GET_ACCOUNT_INFO } from '../../user';
 
 /**
  * This react is responsible for protecting the account info router.

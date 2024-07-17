@@ -1,8 +1,8 @@
 import { useMutation } from '@apollo/client';
-import { GET_ME } from '../../../auth/queries';
-import { GET_ACCOUNT_INFO } from '../../queries';
+import { GET_ME } from '../../../auth';
 import { IAccountInfo } from '../types';
 import { UPDATE_ACCOUNT_INFO } from '../../mutations';
+import { GET_ACCOUNT_INFO } from '../../../user';
 
 export function useUpdateAccountInfo() {
   const [updateAccountInfo, { loading, error }] = useMutation<

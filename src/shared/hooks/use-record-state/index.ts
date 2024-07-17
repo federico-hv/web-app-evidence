@@ -1,5 +1,18 @@
 import { Dispatch, SetStateAction, useState } from 'react';
 
+/**
+ * A hook that stores state in an
+ * object of specified shape.
+ *
+ * Usage example:
+ *
+ * ```
+ * const [state, update, set] = useRecordState<{name: string}>({name: ''});
+ * ```
+ *
+ * @param initial the initial state.
+ *
+ */
 export function useRecordState<T>(
   initial: T,
 ): [

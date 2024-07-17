@@ -27,3 +27,4 @@ export * from './use-set-cookie';
 export * from './use-scroll-to-window-top';
 export * from './use-tab-pathname';
 export * from './use-array-state';
+export * from './use-query';

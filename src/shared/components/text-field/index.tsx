@@ -15,12 +15,15 @@ import { customInputStyles } from '../../styles';
 function InputTextField({
   name,
   errorText,
+  className = customInputStyles(),
   label,
   value,
   onChange,
   onBlur,
   tooltip,
   placeholder,
+  labelProps,
+  autoComplete,
   ...props
 }: InputTextFieldProps) {
   // useful for rendering the tooltip in the right container - with correct z-index
@@ -29,7 +32,7 @@ function InputTextField({
 
   return (
     <VStack gap={1} flex={1}>
-      <VStack>
+      <VStack as='fieldset'>
         <HStack
           color='white700'
           gap={1}
@@ -37,7 +40,13 @@ function InputTextField({
           css={{ marginBottom: label ? '$2' : 0 }}
         >
           {label && (
-            <Text size={2} weight={500} as='label' htmlFor={name}>
+            <Text
+              size={2}
+              weight={500}
+              {...labelProps}
+              as='label'
+              htmlFor={name}
+            >
               {label}
             </Text>
           )}
@@ -69,15 +78,19 @@ function InputTextField({
           )}
         </HStack>
         <Input
+          autoComplete={autoComplete}
           name={name}
           id={name}
           value={value}
           onChange={onChange}
           radius={1}
-          className={customInputStyles()}
+          className={className}
           color='white500'
           placeholder={placeholder}
           onBlur={onBlur}
+          css={{
+            fontFamily: 'inherit',
+          }}
           {...props}
         />
       </VStack>

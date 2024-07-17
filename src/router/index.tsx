@@ -19,6 +19,7 @@ import {
   SettingsRoutes,
   BookmarkGroupActionRoutes,
   ArtistClubOverlayRoutes,
+  PaymentMethodRoutes,
 } from './routes';
 import { MainLayout } from '../layout';
 import { Fragment } from 'react';
@@ -89,7 +90,10 @@ function Router() {
           path={prefix(Paths.setupAccount, '/*')}
           element={<SetupAccountRoutes />}
         />
-
+        <Route
+          path={prefix(Paths.paymentMethod, '/*')}
+          element={<PaymentMethodRoutes />}
+        />
         <Route
           path={prefix(Paths.setupArtists, '/*')}
           element={<SetupArtistRoutes />}

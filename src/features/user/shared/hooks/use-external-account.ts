@@ -1,5 +1,5 @@
 import { useMutation, useSuspenseQuery } from '@apollo/client';
-import { GET_EXTERNAL_ACCOUNT } from '../../queries';
+import { GET_EXTERNAL_ACCOUNT } from '../../queries/schema';
 import { IExternalAccountModel } from '../interface';
 
 export function useExternalAccount(provider: string) {

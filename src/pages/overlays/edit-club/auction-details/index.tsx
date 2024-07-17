@@ -1,7 +1,5 @@
 import { Box, Button, HStack, Text, VStack } from '@holdr-ui/react';
 import {
-  InformationTooltip,
-  InputTextField,
   makePath,
   Paths,
   TextGroup,
@@ -17,37 +15,15 @@ import {
   useUpdatePerks,
 } from '../../../../features';
 import { SelectPredefinedPerks } from '../../setup-artist-profile/bio-and-perks/ui';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useLocation, useOutletContext } from 'react-router-dom';
-import {
-  NewAuctionButtonContainer,
-  OutletContext,
-} from '../../../../pages/overlays/create-live-auction/ui/create-live-auction-dialog';
 
 function EditArtistClubAuctionDetailsPage() {
-  const {
-    missingItems,
-    setMissingItems,
-    onDialogClose,
-    onNextStep,
-    acceptButtonText,
-  } = useOutletContext<OutletContext>();
-  const club = useClubContext();
   const { slug } = useParams();
 
-  const { clubPerks } = usePerksContext();
-  const location = useLocation();
-  const isCreateAuctionDetails =
-    location.pathname.includes('auction-details');
+  const club = useClubContext();
 
-  const [additionalPerks, setAdditionalPerks] = useState([
-    {
-      name: '',
-      claimLimit: '',
-      description: '',
-    },
-  ]);
+  const { clubPerks } = usePerksContext();
 
   const { data: artistData } = useSuspenseGetArtist({ slug });
 
@@ -64,29 +40,6 @@ function EditArtistClubAuctionDetailsPage() {
   const [selectedPerks, setSelectedPerks] = useState<number[]>(
     clubPerks.map(({ id }) => id),
   );
-
-  const addPerk = () => {
-    const newPerk = {
-      name: '',
-      claimLimit: '',
-      description: '',
-    };
-
-    setAdditionalPerks([...additionalPerks, newPerk]);
-  };
-
-  useEffect(() => {
-    if (
-      club.coverImage !== null &&
-      club.coverImage !== '' &&
-      selectedPerks.length >= 3
-    ) {
-      // console.log('CLUB_COVERIMAGE: ', club.coverImage);
-      setMissingItems(false);
-    } else {
-      setMissingItems(true);
-    }
-  }, [club.coverImage, selectedPerks]);
 
   return (
     <VStack
@@ -143,16 +96,6 @@ function EditArtistClubAuctionDetailsPage() {
           </VStack>
         </VStack>
         <VStack>
-          {!isCreateAuctionDetails && (
-            <InputTextField
-              name='url'
-              tooltip='Something useful'
-              label='Custom URL'
-              placeholder='Enter custom URL'
-            />
-          )}
-        </VStack>
-        <VStack>
           <TextGroup gap={0} mb={4}>
             <TextGroupHeading as='h2' size={3} weight={500}>
               Membership Perks
@@ -177,75 +120,6 @@ function EditArtistClubAuctionDetailsPage() {
           />
 
           <Box bgColor='rgba(152, 152, 255, 0.20)' h='1px' my={4} />
-          <Box bgColor='transparent' h='30px' my={4} />
-
-          {/* Uncomment this section when additional perks is ready on the backend
-          
-          {isCreateAuctionDetails && (
-            <VStack minHeight={'200px'}>
-              <HStack color='white700' gap={1} items='center'>
-                <Text weight={500} size={2} as='label'>
-                  Additional Perks
-                </Text>
-                <InformationTooltip
-                  side='right'
-                  align='start'
-                  container={
-                    document.getElementById('page-dialog-container') ||
-                    document.body
-                  }
-                  description='Something useful.'
-                />
-              </HStack>
-
-              {additionalPerks.map((perk, index) => (
-                <VStack pt={2}>
-                  <HStack>
-                    <VStack flex={3}>
-                      <InputTextField
-                        name='url'
-                        placeholder={`${index + 1}. Perk`}
-                        css={{
-                          borderTopRightRadius: 0,
-                          borderBottomLeftRadius: 0,
-                          borderBottomRightRadius: 0,
-                        }}
-                      />
-                    </VStack>
-                    <VStack flex={1}>
-                      <InputTextField
-                        name='url'
-                        placeholder='(claim limit)'
-                        css={{
-                          borderTopLeftRadius: 0,
-                          borderBottomLeftRadius: 0,
-                          borderBottomRightRadius: 0,
-                        }}
-                      />
-                    </VStack>
-                  </HStack>
-                  <InputTextField
-                    name='url'
-                    placeholder='Add description'
-                    css={{
-                      borderTopLeftRadius: 0,
-                      borderTopRightRadius: 0,
-                    }}
-                  />
-                </VStack>
-              ))}
-              <VStack py='14px'>
-                <Text
-                  color='white700'
-                  size='14px'
-                  weight={500}
-                  onClick={addPerk}
-                >
-                  + Add Perk
-                </Text>
-              </VStack>
-            </VStack>
-          )} */}
 
           {/** ⚠️ Disable when live auction is running*/}
           {/*<CustomMembershipPerks/>*/}
@@ -263,58 +137,40 @@ function EditArtistClubAuctionDetailsPage() {
           {/*    description='Info.'*/}
           {/*  />*/}
           {/*</HStack>*/}
-          {isCreateAuctionDetails && (
-            <HStack
-              bgColor='#30304b'
-              position='sticky'
-              b='50px'
-              gap={2}
-              justify='flex-end'
-              py={4}
-              pr='10px'
-            >
-              <NewAuctionButtonContainer
-                onDialogClose={onDialogClose}
-                onNextStep={onNextStep}
-                acceptButtonDisabled={missingItems}
-                acceptButtonText={acceptButtonText}
-              />
-            </HStack>
-          )}
         </VStack>
-        {/* <HStack
-          bgColor='#30304b'
-          position='sticky'
-          b={0}
-          gap={2}
-          justify='flex-end'
-          py={4}
-          pr='10px'
-        >
-          <Button
-            disabled={loading}
-            type='button'
-            variant='ghost'
-            radius={1}
-            colorTheme='purple200'
-            css={{ px: '28px' }}
-            onClick={goBack}
-          >
-            Cancel
-          </Button>
-          <Button
-            isLoading={loading}
-            disabled={selectedPerks.length < 3}
-            type='submit'
-            loadingText='Save & exit'
-            radius={1}
-            colorTheme='purple500'
-            css={{ px: '28px' }}
-          >
-            Save & exit
-          </Button>
-        </HStack> */}
       </VStack>
+      <HStack
+        bgColor='#30304b'
+        position='sticky'
+        b={0}
+        gap={2}
+        justify='flex-end'
+        py={4}
+        pr='10px'
+      >
+        <Button
+          disabled={loading}
+          type='button'
+          variant='ghost'
+          radius={1}
+          colorTheme='purple200'
+          css={{ px: '28px' }}
+          onClick={goBack}
+        >
+          Cancel
+        </Button>
+        <Button
+          isLoading={loading}
+          disabled={selectedPerks.length < 3}
+          type='submit'
+          loadingText='Save & exit'
+          radius={1}
+          colorTheme='purple500'
+          css={{ px: '28px' }}
+        >
+          Save & exit
+        </Button>
+      </HStack>
     </VStack>
   );
 }
