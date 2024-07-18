@@ -46,6 +46,8 @@
     "@storybook/theming": "^7.6.15",
     "@stripe/connect-js": "^3.3.5",
     "@stripe/react-connect-js": "^3.3.7",
+    "@stripe/react-stripe-js": "^2.7.3",
+    "@stripe/stripe-js": "^4.1.0",
     "@types/country-list": "^2.1.1",
     "@types/react-input-mask": "^3.0.5",
     "apollo-upload-client": "^17.0.0",

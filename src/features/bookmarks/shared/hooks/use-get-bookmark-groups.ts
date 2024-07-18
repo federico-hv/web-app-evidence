@@ -1,4 +1,4 @@
-import { useSuspenseQuery } from '@apollo/client';
+import { useQuery, useSuspenseQuery } from '@apollo/client';
 import { IConnection, IPaginationParams } from '../../../../shared';
 import { IBookmarkGroup } from '../interface';
 import { GET_BOOKMARK_GROUPS } from '../../queries';
@@ -24,5 +24,16 @@ export function useGetBookmarkGroups(data?: GetBookmarkGroupsArgs) {
   >(GET_BOOKMARK_GROUPS, {
     variables: { payload: omit(data, 'fetchPolicy') },
     fetchPolicy: data?.fetchPolicy,
+  });
+}
+
+export function useBasicGetBookmarkGroups(data?: GetBookmarkGroupsArgs) {
+  return useQuery<
+    { bookmarkGroups: IConnection<IBookmarkGroup, string> },
+    {
+      payload: GetBookmarkGroupsInput;
+    }
+  >(GET_BOOKMARK_GROUPS, {
+    variables: { payload: omit(data, 'fetchPolicy') },
   });
 }

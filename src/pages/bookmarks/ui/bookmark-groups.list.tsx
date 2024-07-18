@@ -3,7 +3,7 @@ import {
   GET_ALL_BOOKMARKS_TOTAL,
   useGetBookmarkGroups,
 } from '../../../features';
-import { Box, VStack } from '@holdr-ui/react';
+import { VStack } from '@holdr-ui/react';
 import { AllBookmarkGroups } from '../constants';
 import BookmarkGroupItem from './bookmark-group-item';
 
@@ -33,7 +33,7 @@ function BookmarkGroupsList() {
   const { data } = useGetBookmarkGroups();
 
   return (
-    <VStack>
+    <VStack p={2} gap={2}>
       <AllBookmarkGroupsItem />
       {data.bookmarkGroups.edges.map(({ node }) => (
         <BookmarkGroupItem key={node.id} data={node} />

@@ -7,12 +7,16 @@ export const UPDATE_CLUB = gql`
       bannerImage
       coverImage
       url
-      artist {
-        id
-        name
-        avatar
-        isVerified
-      }
+    }
+  }
+`;
+
+export const UPDATE_PERKS = gql`
+  mutation updatePerks($perks: [Int!]!) {
+    updatePerks(perks: $perks) {
+      id
+      label
+      description
     }
   }
 `;

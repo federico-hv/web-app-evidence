@@ -1,5 +1,4 @@
 import { UserModel } from '../../../../shared';
-import { IArtist } from '../../../artist';
 
 export interface OnSaleMembershipModel {
   endDate?: Date;
@@ -29,7 +28,6 @@ export interface IClub {
   bannerImage?: string;
   url?: string;
   createdAt: Date;
-  artist: IArtist;
 }
 
 export interface BidderModel {

@@ -1,7 +1,7 @@
 import { VStack } from '@holdr-ui/react';
 import { SettingItem, useAccountInfo } from '../../../../features';
 import { Head, Paths, prefix, RootSettingsPath } from '../../../../shared';
-import { capitalize } from 'lodash';
+import { capitalize, upperCase } from 'lodash';
 import dayjs from 'dayjs';
 import SettingsHeaderLayout from '../../../../layout/settings-header';
 
@@ -18,7 +18,7 @@ function AccountInfoPage() {
         title='Account information'
         backLink={prefix(RootSettingsPath, Paths.setting.account)}
       >
-        <VStack borderBottom={2} borderColor='base100'>
+        <VStack borderBottom={1} borderColor='rgba(152, 152, 255, 0.10)'>
           <SettingItem
             path={prefix(RootSettingsPath, Paths.setting.username)}
             heading='Username'
@@ -36,7 +36,7 @@ function AccountInfoPage() {
           />
         </VStack>
 
-        <VStack borderBottom={2} borderColor='base100'>
+        <VStack borderBottom={1} borderColor='rgba(152, 152, 255, 0.10)'>
           <SettingItem
             path={prefix(
               RootSettingsPath,
@@ -47,11 +47,11 @@ function AccountInfoPage() {
           />
         </VStack>
 
-        <VStack borderBottom={2} borderColor='base100'>
+        <VStack borderBottom={1} borderColor='rgba(152, 152, 255, 0.10)'>
           <SettingItem
             path={prefix(RootSettingsPath, Paths.setting.country)}
             heading='Country'
-            subheading={capitalize(data.country)}
+            subheading={upperCase(data.country)}
             capitalize={{ subheading: true }}
           />
           <SettingItem

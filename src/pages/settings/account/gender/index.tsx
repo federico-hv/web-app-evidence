@@ -18,6 +18,7 @@ import {
   Error,
   Head,
   isInputDisabled,
+  makeButtonLarger,
   Paths,
   prefix,
   RadioWrapper,
@@ -67,17 +68,15 @@ function GenderSettingPage() {
               as='form'
               gap={5}
               p={4}
-              borderBottom={2}
-              borderTop={2}
-              borderColor='base100'
               onSubmit={(e) =>
                 handleSubmit(e as FormEvent<HTMLFormElement>)
               }
             >
-              <VStack as='fieldset' gap={5}>
+              <VStack as='fieldset' pl={4} gap={5}>
                 <RadioWrapper>
                   <Text id='gender:male'>Male</Text>
                   <Radio
+                    colorTheme='purple500'
                     onChange={handleChange}
                     checked={values.gender === 'Male'}
                     labelledBy='gender:male'
@@ -88,6 +87,7 @@ function GenderSettingPage() {
                 <RadioWrapper>
                   <Text id='gender:female'>Female</Text>
                   <Radio
+                    colorTheme='purple500'
                     onChange={handleChange}
                     checked={values.gender === 'Female'}
                     labelledBy='gender:female'
@@ -98,6 +98,7 @@ function GenderSettingPage() {
                 <RadioWrapper>
                   <Text id='gender:specify'>Specify</Text>
                   <Radio
+                    colorTheme='purple500'
                     onChange={handleChange}
                     checked={
                       !!values.gender &&
@@ -123,8 +124,12 @@ function GenderSettingPage() {
                     onChange={handleChange}
                   />
                 )}
-              <HStack justify='flex-end'>
+              <HStack justify='flex-end' mt={6}>
                 <Button
+                  colorTheme='purple500'
+                  radius={2}
+                  className={makeButtonLarger('2.5rem')}
+                  css={{ px: '20px' }}
                   type='submit'
                   loadingText={loadingMutation ? '' : 'Saving'}
                   isLoading={loadingMutation}

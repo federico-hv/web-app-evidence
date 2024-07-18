@@ -14,12 +14,10 @@ function ShelfLayout({ children, css, ...props }: StackProps) {
     <Stack
       borderColor='base100'
       position='relative'
-      t={{ '@bp1': 0, '@bp3': 65 }}
-      h={{ '@bp1': '100%', '@bp3': 'calc(100vh - 65px)' }}
+      h='100%'
       css={{
         '@bp1': { flexDirection: 'column' },
         '@bp3': {
-          borderLeftWidth: 2,
           flexDirection: 'row',
         },
         ...css,

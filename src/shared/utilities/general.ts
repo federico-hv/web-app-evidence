@@ -84,6 +84,13 @@ export function groupArray<T>(arr: T[], groupsOf: number): T[][] {
   return newArr;
 }
 
+export function isLengthGreaterThanZero(arr: any | undefined): boolean {
+  if (arr === undefined || !arr) {
+    return false;
+  }
+  return arr.length > 0;
+}
+
 /**
  * Returns an url path.
  *

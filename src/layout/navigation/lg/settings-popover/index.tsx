@@ -4,6 +4,7 @@ import {
   customBgColor,
   useLogout,
   Paths,
+  makePath,
 } from '../../../../shared';
 import { Box, IconButton, Popover, VStack } from '@holdr-ui/react';
 import { useNavigate } from 'react-router-dom';
@@ -82,7 +83,15 @@ function SettingsPopover() {
                   close();
                 }}
               />
-              <SettingsItem label='Safety & Privacy' onClick={close} />
+              <SettingsItem
+                label='Privacy & Safety'
+                onClick={() => {
+                  navigate(
+                    makePath([Paths.settings, Paths.setting.privacy]),
+                  );
+                  close();
+                }}
+              />
               <SettingsItem label='Personalize' onClick={close} />
             </VStack>
             <SettingsItem

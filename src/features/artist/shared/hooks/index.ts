@@ -6,3 +6,5 @@ export * from './use-social-links';
 export * from './use-artist-genres';
 export * from './use-update-artist-genres';
 export * from './use-is-artist-profile-complete';
+export * from './use-save-artist-details';
+export * from './use-update-artist-profile';

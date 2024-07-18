@@ -6,6 +6,7 @@ import { Box, Heading } from '@holdr-ui/react';
 
 function BookmarkPage() {
   const params = useParams();
+
   return (
     <GQLRenderer>
       {params.id ? (
@@ -16,9 +17,9 @@ function BookmarkPage() {
           <Box
             borderBottom={1}
             borderColor='rgba(152, 152, 255, 0.10)'
-            p={3}
+            p={4}
           >
-            <Heading color='white600' size={4} weight={500}>
+            <Heading size={5} weight={400}>
               All Bookmarks
             </Heading>
           </Box>

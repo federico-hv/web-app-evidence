@@ -27,3 +27,10 @@ export interface ITinyArtist<T = string> {
     IExternalId<number, MusicReleaseProvider> & { externalUrl: string }
   >;
 }
+
+export interface ISuccessResponse<T = any> {
+  data?: T;
+  isSuccess: boolean;
+  status: number;
+  message: string;
+}

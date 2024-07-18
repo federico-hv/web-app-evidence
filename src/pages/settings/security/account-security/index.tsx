@@ -16,19 +16,34 @@ function AccountSecuritySettingsPage() {
         title='Security'
         backLink={prefix(RootSettingsPath, Paths.setting.security)}
       >
-        <VStack borderBottom={2} borderColor='base100'>
+        <VStack
+          py={4}
+          borderBottom={1}
+          borderColor='rgba(152, 152, 255, 0.10)'
+        >
           <Box px={4}>
-            <Heading as='h2' size={3} color='base600'>
+            <Heading
+              as='h2'
+              size={3}
+              weight={400}
+              color='white500'
+              css={{ marginBottom: '$3' }}
+            >
               Two-factor authentication
             </Heading>
-            <Text size={1} as='sm' color='base400'>
+            <Text
+              size={1}
+              as='sm'
+              color='base300'
+              css={{ marginBottom: '$2' }}
+            >
               Help protect your account from unauthorized access by
               requiring a second authentication method in addition to your
               Twitter password. You can choose a text message,
               authentication app, or security key.
             </Text>
             <a href=''>
-              <Text size={1} as='sm' color='purple500'>
+              <Text size={1} weight={300} as='sm' color='purple500'>
                 Learn more
               </Text>
             </a>

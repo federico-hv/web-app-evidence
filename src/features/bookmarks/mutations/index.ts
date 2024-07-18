@@ -33,6 +33,20 @@ export const CREATE_BOOKMARK_GROUP = gql`
   }
 `;
 
+export const CHANGE_BOOKMARK_GROUP_VISIBILITY = gql`
+  mutation changeBookmarkGroupVisibility(
+    $id: String!
+    $isPrivate: Boolean!
+  ) {
+    changeBookmarkGroupVisibility(id: $id, isPrivate: $isPrivate) {
+      id
+      name
+      total
+      private
+    }
+  }
+`;
+
 export const REMOVE_BOOKMARK = gql`
   mutation removeBookmark($feedId: String!, $bookmarkGroupId: String) {
     removeBookmark(feedId: $feedId, bookmarkGroupId: $bookmarkGroupId) {

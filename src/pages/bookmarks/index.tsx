@@ -4,36 +4,11 @@ import {
   HStack,
   IconButton,
   StackDivider,
-  useWindowSize,
   VStack,
 } from '@holdr-ui/react';
-import {
-  ErrorFallback,
-  GQLRenderer,
-  makePath,
-  Paths,
-  RadialSurface,
-  SearchBox,
-} from '../../shared';
-import {
-  Outlet,
-  useLocation,
-  useNavigate,
-  useParams,
-} from 'react-router-dom';
-import { useEffect } from 'react';
+import { GQLRenderer, makePath, Paths, RadialSurface } from '../../shared';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { BookmarkGroupsList } from './ui';
-import {
-  PageLayout,
-  PageLayoutContent,
-  PageLayoutHeader,
-  ShelfLayout,
-  ShelfLayoutShelf,
-} from '../../layout';
-import {
-  CreateBookmarkGroup,
-  CreateBookmarkGroupTrigger,
-} from '../../features';
 
 function BookmarksPage() {
   const { pathname } = useLocation();
@@ -89,9 +64,8 @@ function BookmarksPage() {
             zIndex={1}
             borderBottom={1}
             borderColor='rgba(152, 152, 255, 0.10)'
-            pb={3}
           >
-            <Heading color='white600' px={3} pt={3} size={4} weight={500}>
+            <Heading size={5} weight={400} px={3} py={4}>
               My Groups
             </Heading>
           </Box>
@@ -105,7 +79,6 @@ function BookmarksPage() {
           borderColor='rgba(152, 152, 255, 0.10)'
           radius={2}
           bgColor='rgba(48, 48, 75, 0.60)'
-          // h='calc(100% - 16px)'
           flex={1}
         >
           <Outlet />

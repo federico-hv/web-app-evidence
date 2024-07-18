@@ -5,4 +5,5 @@ export interface LoaderProps {
   loading: boolean;
   as?: JSX.Element;
   h?: any;
+  w?: any;
 }

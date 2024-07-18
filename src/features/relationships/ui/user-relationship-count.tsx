@@ -1,10 +1,15 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Fragment } from 'react';
 import { Circle, HStack } from '@holdr-ui/react';
-import { useGetProfile } from '../../user';
+import {
+  CHECK_IS_PROFILE_BLOCKED_OR_PROTECTED,
+  useGetProfile,
+} from '../../user';
 import { useRelationshipCount } from '../shared';
 import FollowCountItem from './follow-count-item';
 import { makePath } from '../../../shared';
+import { useQuery } from '@apollo/client';
+import { bool } from 'yup';
 
 export function UserRelationshipCount({ username }: { username: string }) {
   const navigate = useNavigate();
@@ -20,14 +25,26 @@ export function UserRelationshipCount({ username }: { username: string }) {
     data: relationshipCountData,
     error: error1,
   } = useRelationshipCount(username);
+  const {
+    loading: loading2,
+    data: checkData,
+    error: error2,
+  } = useQuery<{ checkIsProfileBlockedOrProtected: boolean }>(
+    CHECK_IS_PROFILE_BLOCKED_OR_PROTECTED,
+    {
+      variables: {
+        username,
+      },
+    },
+  );
 
-  if (error1 || error0 || loading0 || loading1) {
+  if (error1 || error0 || error2 || loading2 || loading0 || loading1) {
     return <Fragment />;
   }
 
   return (
     <Fragment>
-      {profileData && relationshipCountData && (
+      {profileData && relationshipCountData && checkData && (
         <HStack
           items='center'
           gap={3}
@@ -35,7 +52,7 @@ export function UserRelationshipCount({ username }: { username: string }) {
         >
           <FollowCountItem
             onClick={
-              profileData.profile.protected
+              checkData.checkIsProfileBlockedOrProtected
                 ? undefined
                 : () =>
                     navigate(makePath([username, 'followers']), {
@@ -49,7 +66,7 @@ export function UserRelationshipCount({ username }: { username: string }) {
           />
           <FollowCountItem
             onClick={
-              profileData.profile.protected
+              checkData.checkIsProfileBlockedOrProtected
                 ? undefined
                 : () =>
                     navigate(makePath([username, 'following']), {

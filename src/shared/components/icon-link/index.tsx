@@ -2,7 +2,7 @@ import {
   IconName,
   ResponsiveValue,
 } from '@holdr-ui/react/dist/shared/types';
-import { Box, FontSize, Icon, StringNumeric } from '@holdr-ui/react';
+import { Center, FontSize, Icon, StringNumeric } from '@holdr-ui/react';
 import { LinkOverlay } from '../../styles';
 
 interface IconLinkProps {
@@ -19,10 +19,14 @@ function IconLink({
   isExternal = true,
 }: IconLinkProps) {
   return (
-    <Box fontSize={fontSize} position='relative'>
+    <Center
+      fontSize={fontSize}
+      position='relative'
+      css={{ '& span': { height: 'fit-content' } }}
+    >
       <LinkOverlay to={to} target={isExternal ? '_blank' : '_self'} />
       <Icon color='white600' name={iconName} />
-    </Box>
+    </Center>
   );
 }
 IconLink.displayName = 'IconLink';

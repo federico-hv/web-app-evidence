@@ -12,6 +12,7 @@ import {
   ForgotPasswordLink,
   FormInput,
   isInputDisabled,
+  makeButtonLarger,
   useToast,
 } from '../../../shared';
 
@@ -24,7 +25,13 @@ function InnerForm() {
       as='form'
       onSubmit={(e) => handleSubmit(e as FormEvent<HTMLFormElement>)}
     >
-      <VStack gap={3} px={4} pb={5} borderBottom={2} borderColor='base100'>
+      <VStack
+        gap={3}
+        p={4}
+        pb={5}
+        borderBottom={1}
+        borderColor='rgba(152, 152, 255, 0.10)'
+      >
         <VStack gap={2}>
           <FormInput
             type='password'
@@ -40,7 +47,7 @@ function InnerForm() {
         </VStack>
         <ForgotPasswordLink />
       </VStack>
-      <VStack px={4} py={5} gap={5} borderBottom={2} borderColor='base100'>
+      <VStack px={4} py={5} gap={5}>
         <FormInput
           type='password'
           name='newPassword'
@@ -54,6 +61,10 @@ function InnerForm() {
       </VStack>
       <HStack p={4} justify='flex-end'>
         <Button
+          colorTheme='purple500'
+          radius={2}
+          className={makeButtonLarger('2.5rem')}
+          css={{ px: '20px' }}
           type='submit'
           loadingText={loading ? '' : 'Saving'}
           isLoading={loading}

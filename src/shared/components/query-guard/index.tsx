@@ -1,11 +1,12 @@
-import {
-  DocumentNode,
-  OperationVariables,
-  useQuery,
-} from '@apollo/client';
-import { Fragment, ReactElement } from 'react';
-import { GenericProps } from '@holdr-ui/react';
+import { OperationVariables, useQuery } from '@apollo/client';
+import { Fragment } from 'react';
 import { QueryGuardProps } from './types';
+import { Loader } from '../index';
+import { CircularProgress } from '@holdr-ui/react';
+
+/**
+ *
+ */
 
 function QueryGuard<
   T extends { [key: string]: boolean },
@@ -15,18 +16,22 @@ function QueryGuard<
   args,
   name,
   children,
+  loader = <CircularProgress size={30} isIndeterminate />,
   fallback = <Fragment />,
 }: QueryGuardProps<U>) {
-  const { data, error } = useQuery<T, U>(query, {
+  const { data, error, loading } = useQuery<T, U>(query, {
     variables: args,
   });
 
   if (error) {
-    console.error(error);
     return fallback;
   }
 
-  return <Fragment>{data && !data[name] && <>{children}</>}</Fragment>;
+  return (
+    <Loader as={loader} h='100%' loading={loading}>
+      {data && !data[name] ? children : fallback}
+    </Loader>
+  );
 }
 QueryGuard.displayName = 'QueryGuard';
 

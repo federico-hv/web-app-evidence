@@ -4,7 +4,6 @@ import { Fragment } from 'react';
 import { RootSettingsPath } from '../root';
 
 import SettingsHeaderLayout from '../../../../layout/settings-header';
-import TwoFASmsCheckbox from './ui/two-fa-sms.checkbox';
 import TwoFAAuthAppCheckbox from './ui/two-fa-auth-app.checkbox';
 import GqlRenderer from '../../../../shared/components/gql-renderer';
 
@@ -23,7 +22,7 @@ function TwoFactorAuthSettingsPage() {
         backLink={prefix(RootSettingsPath, Paths.setting.account_security)}
       >
         <VStack pt={3} gap={4}>
-          <TwoFASmsCheckbox />
+          {/*<TwoFASmsCheckbox />*/}
           <GqlRenderer ErrorFallback={ErrorFallback}>
             <TwoFAAuthAppCheckbox />
           </GqlRenderer>

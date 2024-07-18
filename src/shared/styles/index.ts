@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Box, Circle, css, styled } from '@holdr-ui/react';
+import { Box, Circle, css, CSSTheme, styled } from '@holdr-ui/react';
 import { keyframes } from '@stitches/react';
 
 export const noShrink = css({
@@ -16,6 +16,12 @@ export const makeButtonLarger = (size: string, py = '10px', px = '0px') =>
     px,
     height: `${size} !important`,
     minWidth: `${size} !important`,
+  })();
+
+export const addPadding = ({ px, py }: { px?: string; py?: string }) =>
+  css({
+    py,
+    px,
   })();
 
 export const changeDimensions = ({
@@ -65,6 +71,30 @@ export const customInputStyles = css({
     backgroundColor: 'transparent',
   },
 });
+
+export const darkInputStylesNoFocus = css({
+  border: '1px solid $purpleTint400 !important',
+  borderRadius: '$2',
+  backgroundColor: '#1A1A29 !important',
+  height: '2.75rem !important',
+});
+
+export const darkInputStyles = css({
+  border: '1px solid $purpleTint400 !important',
+  borderRadius: '$2',
+  backgroundColor: '#1A1A29 !important',
+  height: '2.75rem !important',
+  '&:focus': {
+    border: '1px solid rgba(152, 152, 255, 1) !important',
+    backgroundColor: 'transparent',
+  },
+});
+
+export const darkSelectCSS: CSSTheme = {
+  border: '1px solid $purpleTint400 !important',
+  borderRadius: '$2',
+  backgroundColor: '#1A1A29 !important',
+};
 
 export const textAreaClassName = css({
   height: '464px !important',

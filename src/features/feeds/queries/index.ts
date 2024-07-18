@@ -209,23 +209,6 @@ export const GET_FEED_STATISTIC = gql`
   }
 `;
 
-export const GET_FEED_REACTION_USERS = gql`
-  query feedReactionUsers($id: String!, $type: FeedReactionFetchType!) {
-    feedReactionUsers(id: $id, type: $type) {
-      count # Number of reactions
-      data {
-        name # Reaction name
-        user {
-          id
-          displayName
-          username
-          avatar
-        }
-      }
-    }
-  }
-`;
-
 export const GET_FEED_AUDIENCE = gql`
   query feedAudience($id: String!) {
     feedAudience(id: $id) # FeedAudience

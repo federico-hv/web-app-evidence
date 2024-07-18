@@ -1,26 +1,17 @@
 import { useCurrentUser } from '../../../../auth';
 import { Fragment } from 'react';
-import {
-  Box,
-  Button,
-  Heading,
-  HStack,
-  Icon,
-  Text,
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-  VStack,
-} from '@holdr-ui/react';
-import { Link } from 'react-router-dom';
+import { Box, Button, Heading, HStack, VStack } from '@holdr-ui/react';
 import {
   InformationTooltip,
   makeButtonLarger,
+  makePath,
   Paths,
-  prefix,
 } from '../../../../../shared';
+import { useNavigate } from 'react-router-dom';
 
 function MyMembers() {
+  const navigate = useNavigate();
+
   const currentUser = useCurrentUser();
 
   if (!currentUser || (currentUser && currentUser.role === 'general')) {
@@ -53,15 +44,16 @@ function MyMembers() {
           backgroundColor: 'rgba(152, 152, 255, 0.10)',
         }}
       />
-      <Link to={prefix('/', Paths.clubs)}>
-        <Button
-          fullWidth
-          className={makeButtonLarger('2.5rem')}
-          colorTheme='purple500'
-        >
-          Browse Club
-        </Button>
-      </Link>
+      <Button
+        onClick={() =>
+          navigate(makePath([Paths.clubs, currentUser.username]))
+        }
+        fullWidth
+        className={makeButtonLarger('2.5rem')}
+        colorTheme='purple500'
+      >
+        View Club
+      </Button>
       {/*<VStack>*/}
       {/*  <MyMemberItem data={dummyMember} isOnline={true} />*/}
       {/*  <MyMemberItem data={dummyMember} isOnline={true} />*/}

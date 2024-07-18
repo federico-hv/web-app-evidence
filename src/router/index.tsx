@@ -11,7 +11,7 @@ import {
   ClubRoutes,
   UserRelationshipRoutes,
   SetupAccountRoutes,
-  SetupProfileRoutes,
+  SetupArtistRoutes,
   UserRoutes,
   EditGeneralUserProfileRoutes,
   ArtistProfileRoutes,
@@ -19,6 +19,7 @@ import {
   SettingsRoutes,
   BookmarkGroupActionRoutes,
   ArtistClubOverlayRoutes,
+  PaymentMethodRoutes,
 } from './routes';
 import { MainLayout } from '../layout';
 import { Fragment } from 'react';
@@ -90,8 +91,12 @@ function Router() {
           element={<SetupAccountRoutes />}
         />
         <Route
-          path={prefix(Paths.setupProfile, '/*')}
-          element={<SetupProfileRoutes />}
+          path={prefix(Paths.paymentMethod, '/*')}
+          element={<PaymentMethodRoutes />}
+        />
+        <Route
+          path={prefix(Paths.setupArtists, '/*')}
+          element={<SetupArtistRoutes />}
         />
         <Route
           path={makePath([Paths.clubs, '/*'])}

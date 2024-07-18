@@ -2,6 +2,7 @@ import { gql, Reference, useMutation } from '@apollo/client';
 import { UPDATE_BIO_AND_PERKS } from '../../mutations';
 import { useToast } from '../../../../shared';
 import { IProfile } from '../../../user';
+import { IPerk } from '../../../clubs';
 
 export function useUpdateBioAndPerks() {
   const { openWith } = useToast();
@@ -9,7 +10,7 @@ export function useUpdateBioAndPerks() {
   const [mutate, { loading, error, data }] = useMutation<
     {
       updateProfile: IProfile;
-      updatePerks: number[];
+      updatePerks: IPerk[];
     },
     { payload: { bio: string }; perks: number[] }
   >(UPDATE_BIO_AND_PERKS);
@@ -34,17 +35,17 @@ export function useUpdateBioAndPerks() {
                 let newPerksList: Reference[] = current;
 
                 try {
-                  newPerksList = data?.updatePerks.map((id) => {
+                  newPerksList = data?.updatePerks.map((data) => {
                     return cache.writeFragment({
-                      id: `ClubModel:${clubId}`,
+                      id: clubId,
                       fragment: gql`
                         fragment NewPerks on PerkModel {
                           id
+                          label
+                          description
                         }
                       `,
-                      data: {
-                        id,
-                      },
+                      data: data,
                     }) as Reference;
                   }) as Reference[];
                 } catch (e) {
@@ -53,30 +54,26 @@ export function useUpdateBioAndPerks() {
 
                 return [...newPerksList];
               },
-              club(current = {}) {
-                let newClub: Reference = current;
+              artist(current = {}) {
+                let newArtist: Reference = current;
 
                 try {
-                  newClub = cache.writeFragment({
+                  newArtist = cache.writeFragment({
                     id: `ClubModel:${clubId}`,
                     fragment: gql`
-                      fragment NewClub on ClubModel {
-                        artist {
-                          bio
-                        }
+                      fragment NewArtist on ArtistModel {
+                        bio
                       }
                     `,
                     data: {
-                      artist: {
-                        bio: data?.updateProfile.bio,
-                      },
+                      bio: data?.updateProfile.bio,
                     },
                   }) as Reference;
                 } catch (e) {
                   console.error(e);
                 }
 
-                return newClub;
+                return newArtist;
               },
             },
           });

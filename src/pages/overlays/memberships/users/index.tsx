@@ -27,6 +27,8 @@ import {
 } from '../../../../features';
 import { dummyPerks } from '../../../clubs/shared';
 
+// TODO: fix - not snapping on scroll
+
 function UserMembershipsPage() {
   const currentUser = useCurrentUser();
   const { username } = useParams();
@@ -99,24 +101,25 @@ function UserMembershipsPage() {
                   overflowY='auto'
                   h='557px'
                   css={{
-                    scrollSnapPointsY: '557px',
+                    paddingInlineEnd: '$3',
+                    scrollSnapPointsY: '500px',
                     scrollSnapType: 'y mandatory',
                   }}
                   data={[
                     {
                       id: '4',
-                      name: 'Polony',
+                      name: 'James Dean',
                     },
                     {
                       id: '41',
-                      name: 'Bread',
+                      name: 'Altman',
                     },
                   ]}
                   renderItem={(data) => (
-                    <Box h={500}>
+                    <Box h='500px'>
                       <MembershipCard
                         data={{
-                          name: 'Thomas Selas Club',
+                          name: `${data.name}'s Club`,
                           coverImage: Asset.Image.DummyMembershipCover,
                           slug: '',
                           perks: dummyPerks,

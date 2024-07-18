@@ -18,7 +18,7 @@ import {
   RootSetting,
 } from '../../shared';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { Fragment, useEffect } from 'react';
 import {
   PageLayout,
   PageLayoutContent,
@@ -26,7 +26,6 @@ import {
   ShelfLayout,
   ShelfLayoutShelf,
 } from '../../layout';
-import { BookmarkGroupsList } from '../bookmarks/ui';
 
 /**
  * TODO: Deprecate, use a component that wraps a page with settings-header and body SCs
@@ -43,8 +42,8 @@ export function PageHeader({
       justify='center'
       px={4}
       py={4}
-      borderBottom={2}
-      borderColor='base100'
+      borderBottom={1}
+      borderColor='rgba(152, 152, 255, 0.10)'
       maxHeight={58}
     >
       <HStack items='center' gap={4}>
@@ -53,11 +52,7 @@ export function PageHeader({
             <BackButton fallbackPath={prefix('/', Paths.settings)} />
           </Box>
         )}
-        <Heading
-          casing='uppercase'
-          size={{ '@bp1': 3, '@bp3': 4 }}
-          weight={500}
-        >
+        <Heading size={{ '@bp1': 3, '@bp3': 5 }} weight={400}>
           {title}
         </Heading>
       </HStack>
@@ -77,13 +72,13 @@ function SettingNavigationLink({
   return (
     <Link to={to}>
       <HStack
+        items='center'
+        radius={1}
         fontSize={{ '@bp1': 2, '@bp3': 3 }}
         justify='space-between'
         p={4}
-        bgColor={active ? 'base100' : 'transparent'}
-        _hover={{ backgroundColor: '$base100' }}
-        borderLeft={active ? 2 : 0}
-        borderColor='base600'
+        bgColor={active ? 'rgba(152, 152, 255, 0.15)' : 'transparent'}
+        _hover={{ backgroundColor: 'rgba(152, 152, 255, 0.15)' }}
       >
         {label}
         <Icon name='caret-right-outline' />
@@ -212,23 +207,35 @@ export function SettingsLg() {
   // </RadialSurface>
 
   return (
-    <Box display={{ '@bp1': 'none', '@bp4': 'block' }}>
-      <ShelfLayout>
+    <RadialSurface
+      radius={3}
+      h='100%'
+      w='100%'
+      display={{ '@bp1': 'none', '@bp4': 'block' }}
+    >
+      <Box px={4}>
+        <Heading size={5} weight={400} px={3} py={4}>
+          Settings
+        </Heading>
+      </Box>
+      <ShelfLayout p={4} gap={4}>
         <ShelfLayoutShelf
           as='aside'
           h='100%'
-          w={{
-            '@bp4': 300,
-            '@bp5': 350,
-          }}
-          borderRight={2}
-          borderColor='base100'
+          border={1}
+          borderColor='rgba(152, 152, 255, 0.10)'
+          radius={2}
+          p={2}
+          bgColor='rgba(48, 48, 75, 0.60)'
+          overflowY='auto'
+          className='hide-scrollbar'
+          basis={325}
         >
           <PageLayout>
-            <PageLayoutHeader fallbackPath={'/'}>
-              Settings
-            </PageLayoutHeader>
-            <PageLayoutContent>
+            <PageLayoutContent
+              display='flex'
+              css={{ flexDirection: 'column', gap: '$2' }}
+            >
               <SettingNavigationLink
                 to={Paths.setting.account}
                 label='Your account'
@@ -263,18 +270,16 @@ export function SettingsLg() {
         </ShelfLayoutShelf>
         <ShelfLayoutShelf
           role='contentinfo'
-          w={{
-            '@bp4': 'calc(100% - 250px)',
-            '@bp5': 'calc(100% - 500px)',
-            // '@bp5': 'calc(100% - 525px)',
-          }}
-          borderRight={2}
-          borderColor='base100'
+          flex={1}
+          border={1}
+          borderColor='rgba(152, 152, 255, 0.10)'
+          radius={2}
+          bgColor='rgba(48, 48, 75, 0.60)'
         >
           <Outlet />
         </ShelfLayoutShelf>
       </ShelfLayout>
-    </Box>
+    </RadialSurface>
   );
 }
 
@@ -284,7 +289,7 @@ function SettingsPage() {
   // TODO: Remove SettingsSm and SettingsLg components. Refer to pages/bookmarks/edit-profile.button.tsx for pattern.
 
   return (
-    <Box>
+    <Fragment>
       <Head
         title='Settings'
         description='Configure your notifications, update your privacy settings, security settings and more.'
@@ -295,7 +300,7 @@ function SettingsPage() {
       {windowSize && windowSize.width && windowSize.width > 768 && (
         <SettingsLg />
       )}
-    </Box>
+    </Fragment>
   );
 }
 SettingsPage.displayName = 'SettingsPage';

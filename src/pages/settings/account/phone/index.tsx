@@ -13,6 +13,7 @@ import {
 import {
   DialogHeading,
   Head,
+  makeButtonLarger,
   Paths,
   prefix,
   RootSettingsPath,
@@ -75,7 +76,7 @@ function PhoneSettingPage() {
         backLink={prefix(RootSettingsPath, Paths.setting.account_info)}
       >
         <VStack>
-          <Box px={4} pb={5} borderBottom={2} borderColor='base100'>
+          <Box px={4} py={4} pb={5}>
             <Box css={{ opacity: 0.5 }}>
               <FormControl disabled>
                 <FormControl.Label>Phone</FormControl.Label>
@@ -103,7 +104,14 @@ function PhoneSettingPage() {
                 ariaDescribedBy='phone-dialog__title'
               >
                 <Dialog.Trigger>
-                  <Button>Update</Button>
+                  <Button
+                    colorTheme='purple500'
+                    radius={2}
+                    className={makeButtonLarger('2.5rem')}
+                    css={{ px: '20px' }}
+                  >
+                    Update
+                  </Button>
                 </Dialog.Trigger>
                 <Dialog.Portal>
                   <Dialog.Overlay />

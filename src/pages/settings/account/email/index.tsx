@@ -2,6 +2,7 @@ import { useState } from 'react';
 import {
   DialogHeading,
   Head,
+  makeButtonLarger,
   Paths,
   prefix,
   RootSettingsPath,
@@ -51,7 +52,7 @@ function EmailSettingPage() {
         backLink={prefix(RootSettingsPath, Paths.setting.account_info)}
       >
         <VStack>
-          <Box px={4} pb={5} borderBottom={2} borderColor='base100'>
+          <Box px={4} py={4}>
             <Box css={{ opacity: 0.5 }}>
               <FormControl disabled>
                 <FormControl.Label>Email</FormControl.Label>
@@ -78,7 +79,14 @@ function EmailSettingPage() {
                 ariaDescribedBy='email-dialog__title'
               >
                 <Dialog.Trigger>
-                  <Button>Update</Button>
+                  <Button
+                    colorTheme='purple500'
+                    radius={2}
+                    className={makeButtonLarger('2.5rem')}
+                    css={{ px: '20px' }}
+                  >
+                    Update
+                  </Button>
                 </Dialog.Trigger>
                 <Dialog.Portal>
                   <Dialog.Overlay />
@@ -89,7 +97,10 @@ function EmailSettingPage() {
                     radius={{ '@bp1': 0, '@bp3': 3 }}
                     w={{ '@bp1': '100vw', '@bp3': '90vw' }}
                   >
-                    <Dialog.Header borderBottom={2} borderColor='base100'>
+                    <Dialog.Header
+                      borderBottom={1}
+                      borderColor='rgba(152, 152, 255, 0.10)'
+                    >
                       <DialogHeading
                         title={getHeading('email', data.email)}
                         id='email-dialog__title'

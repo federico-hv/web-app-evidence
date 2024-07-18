@@ -17,28 +17,32 @@ function MutedNotificationsSettingsPage() {
           Paths.setting.notifications_filters,
         )}
       >
-        <VStack px={4} gap={5}>
-          <Heading as='h2' size={4} weight={500}>
+        <VStack p={4} gap={5}>
+          <Heading as='h2' size={4} weight={400}>
             Mute notifications from people
           </Heading>
-          <VStack gap={5}>
-            <HStack justify='space-between'>
-              <Text as='label' id='follow-checkbox'>
-                {`Who don't follow you`}
-              </Text>
-              <Checkbox labelledBy='follow' />
+          <VStack pl={4} gap={6}>
+            <HStack cursor='pointer' as='label' justify='space-between'>
+              <Text id='follow-checkbox'>{`Who don't follow you`}</Text>
+              <Checkbox colorTheme='white500' labelledBy='follow' />
             </HStack>
-            <HStack justify='space-between'>
-              <Text as='label' id='email-checkbox'>
+            <HStack cursor='pointer' as='label' justify='space-between'>
+              <Text id='email-checkbox'>
                 {"Who haven't confirmed their email"}
               </Text>
-              <Checkbox labelledBy='email-checkbox' />
+              <Checkbox
+                colorTheme='white500'
+                labelledBy='email-checkbox'
+              />
             </HStack>
-            <HStack justify='space-between'>
-              <Text as='label' id='phone-checkbox'>
+            <HStack cursor='pointer' as='label' justify='space-between'>
+              <Text id='phone-checkbox'>
                 {"Who haven't confirmed their phone number"}
               </Text>
-              <Checkbox labelledBy='phone-checkbox' />
+              <Checkbox
+                colorTheme='white500'
+                labelledBy='phone-checkbox'
+              />
             </HStack>
           </VStack>
         </VStack>

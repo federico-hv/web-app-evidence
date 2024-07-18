@@ -1,11 +1,10 @@
 import { RadialSurface } from '../../../../shared';
 import { Box, Heading, VStack } from '@holdr-ui/react';
 import AnalyticsStatistic from './analytics-statistic';
-import { dummyAnalyticsSummaryData } from '../../shared/constants';
+import { dummyAnalyticsSummaryData } from '../../shared';
 import { getFormattedTime } from '../../../../shared/utilities/time.utility';
 
 function AnalyticsSummary() {
-
   return (
     <RadialSurface radius={4} h='auto' w='100%' css={{ flexShrink: 0 }}>
       <VStack as='nav' p={4}>
@@ -28,21 +27,12 @@ function AnalyticsSummary() {
             percent={dummyAnalyticsSummaryData.clubViews.changePercentage}
           />
           <AnalyticsStatistic
-            label='resales'
-            description='A description'
-            value={dummyAnalyticsSummaryData.totalResales.value}
-            percent={
-              dummyAnalyticsSummaryData.totalResales.changePercentage
-            }
-          />
-          <AnalyticsStatistic
             label='average bidders'
             description='A description'
             value={dummyAnalyticsSummaryData.averageBidders.value}
             percent={
               dummyAnalyticsSummaryData.averageBidders.changePercentage
             }
-            suffix='%'
           />
           <AnalyticsStatistic
             label='social interactions'

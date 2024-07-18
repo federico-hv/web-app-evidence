@@ -31,7 +31,7 @@ function BirthdaySettingPage() {
         title='Birthday'
         backLink={prefix(RootSettingsPath, Paths.setting.account_info)}
       >
-        <Box px={4}>
+        <Box p={4}>
           <Heading as='h2' size={4}>
             Birthday
           </Heading>

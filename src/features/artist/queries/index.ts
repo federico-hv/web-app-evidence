@@ -1,13 +1,23 @@
 import { gql } from '@apollo/client';
 
 export const GET_ARTIST = gql`
-  query artist($id: String!) {
-    artist(id: $id) {
+  query artist($id: String, $slug: String) {
+    artist(id: $id, slug: $slug) {
       id
+      username
+      collaborators {
+        name
+      }
       bio
+      location
       avatar
+      accountId
       name
       isVerified
+      socialLinks {
+        url
+        provider
+      }
     }
   }
 `;

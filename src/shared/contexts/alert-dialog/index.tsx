@@ -1,17 +1,15 @@
 import { createContext, useState } from 'react';
 import {
   Text,
-  Box,
   Button,
   Dialog,
   Heading,
   useDisclosure,
-  VStack,
+  CloseButton,
 } from '@holdr-ui/react';
-
 import { AlertDialogContextState, IAlertDialogContext } from './types';
 import { GenericProps } from '../../interfaces';
-import { extraBtnPadding } from '../../styles';
+import { makeButtonLarger } from '../../styles';
 import { dummyFn } from '../../utilities';
 
 const AlertDialogContext = createContext<IAlertDialogContext>({
@@ -60,61 +58,67 @@ function AlertDialogProvider({ children }: GenericProps) {
           <Dialog.Portal>
             <Dialog.Overlay zIndex={10} bgColor='darkTint500' />
             <Dialog.Content
+              position='relative'
+              radius={2}
               zIndex={10}
-              h={{ '@bp1': 275, '@bp3': 225 }}
-              w={{ '@bp1': '90vw', '@bp3': 400 }}
-              css={{
-                backgroundColor: '#1A1A29',
-              }}
+              bgColor='rgb(48, 48, 75)'
+              minWidth={500}
+              p='48px'
             >
               <Dialog.Header
-                css={{
-                  backgroundColor: '#1A1A29',
-                }}
+                position='absolute'
+                t={12}
+                r={0}
+                px='12px'
+                py={0}
+                justify='flex-end'
               >
+                <CloseButton
+                  onClick={close}
+                  variant='ghost'
+                  colorTheme='white500'
+                />
+              </Dialog.Header>
+              <Dialog.Body gap={6} color='white500' px={0} py={0}>
                 <Heading
                   id='alert-dialog__heading'
                   as='h2'
-                  weight={600}
-                  size={{ '@bp1': 2, '@bp3': 3 }}
-                  casing='uppercase'
+                  weight={500}
+                  size={6}
                 >
                   {current.title}
                 </Heading>
-              </Dialog.Header>
-              <Dialog.Body pt={5} px={0} color='white500'>
-                <VStack
-                  gap={4}
-                  px={4}
-                  divider={<Box borderBottom={1} borderColor='base700' />}
-                >
-                  <Text size={{ '@bp1': 2, '@bp3': 3 }}>
-                    {current.description}
-                  </Text>
-                </VStack>
+                <Text size={{ '@bp1': 2, '@bp3': 3 }}>
+                  {current.description}
+                </Text>
               </Dialog.Body>
               <Dialog.Footer
-                gap={4}
+                gap={2}
+                mt={8}
                 direction={{ '@bp1': 'vertical', '@bp3': 'horizontal' }}
+                px={0}
+                py={0}
               >
                 <Button
-                  colorTheme='base100'
-                  onClick={close}
-                  variant='ghost'
-                  fullWidth
-                  size={{ '@bp1': 'sm', '@bp3': 'base' }}
-                  className={extraBtnPadding()}
-                >
-                  {current.cancelText || 'Close'}
-                </Button>
-                <Button
-                  colorTheme='white500'
+                  css={{ px: '28px' }}
+                  radius={1}
+                  colorTheme='purple500'
                   onClick={action}
-                  fullWidth
                   size={{ '@bp1': 'sm', '@bp3': 'base' }}
-                  className={extraBtnPadding()}
+                  className={makeButtonLarger('2.75rem')}
                 >
                   {current.actionText}
+                </Button>
+                <Button
+                  css={{ px: '28px' }}
+                  radius={1}
+                  colorTheme='white700'
+                  onClick={close}
+                  variant='ghost'
+                  size={{ '@bp1': 'sm', '@bp3': 'base' }}
+                  className={makeButtonLarger('2.75rem')}
+                >
+                  {current.cancelText || 'Close'}
                 </Button>
               </Dialog.Footer>
             </Dialog.Content>
