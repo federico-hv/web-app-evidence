@@ -1,7 +1,7 @@
 import { Route, Routes } from 'react-router';
 import { Navigate } from 'react-router-dom';
 import {
-  ArtistProfileDashboardPage,
+  ArtistProfileStatsPage,
   ArtistProfileMembersPage,
   ArtistProfileTabs,
   ArtistProfileWatchlistPage,
@@ -10,8 +10,8 @@ import {
 const ArtistProfileRoutes = () => (
   <Routes>
     <Route element={<ArtistProfileTabs />}>
-      <Route path='' element={<Navigate to='dashboard' replace />} />
-      <Route path='dashboard' element={<ArtistProfileDashboardPage />} />
+      <Route path='' element={<Navigate to='stats' replace />} />
+      <Route path='stats' element={<ArtistProfileStatsPage />} />
       <Route path='members' element={<ArtistProfileMembersPage />} />
       <Route path='watchlist' element={<ArtistProfileWatchlistPage />} />
     </Route>

@@ -1,5 +1,5 @@
 export { default as ArtistProfileWatchlistPage } from './watchlist';
 export { default as ArtistProfileMembersPage } from './members';
-export { default as ArtistProfileDashboardPage } from './dashboard';
+export { default as ArtistProfileStatsPage } from './stats';
 
 export * from './ui';

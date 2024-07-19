@@ -38,9 +38,9 @@ function ArtistProfileTabs() {
                       px={6}
                       fontSize={2}
                       _hover={{ background: '#9898FF26' }}
-                      to='dashboard'
+                      to='stats'
                     >
-                      Dashboard
+                      Stats
                     </RoutingTabsTrigger>
                     <RoutingTabsTrigger
                       w='fit-content'
