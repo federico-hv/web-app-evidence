@@ -268,8 +268,8 @@ function CreateLiveAuctionDialog() {
                     />
                   }
                 >
-                  <Box py={48} basis={182}>
-                    <VStack gap={6} mt={9}>
+                  <Box basis={182}>
+                    <VStack gap={6} mt={1}>
                       <SetupStep
                         number={1}
                         path={auctionDetailsPath}
