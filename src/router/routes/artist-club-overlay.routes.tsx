@@ -13,6 +13,7 @@ import {
   ReviewAuctionInfo,
   ConfirmAuction,
 } from '../../pages/overlays/create-live-auction';
+import EditLiveAuction from '../../pages/overlays/create-live-auction/ui/edit-live-auction';
 
 const ArtistClubOverlayRoutes = () => (
   <Routes>
@@ -33,12 +34,7 @@ const ArtistClubOverlayRoutes = () => (
         <Route path={Paths.create} element={<CreateLiveAuctionDialog />}>
           <Route
             path={Paths.auctionDetails}
-            element={
-              <div>
-                Add your page here - Do not use the
-                EditArtistClubAuctionDetailsPage component
-              </div>
-            }
+            element={<EditLiveAuction />}
           />
           <Route
             path={Paths.reviewAuctionInfo}
