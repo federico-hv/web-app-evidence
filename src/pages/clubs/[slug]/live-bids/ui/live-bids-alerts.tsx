@@ -19,33 +19,45 @@ enum AlertType {
   warning = 'warning',
 }
 
-export const livebidsAlerts = [
-  {
-    title: 'Your bid has been successfully placed',
-    description:
-      'A confirmation of your bid has been sent to email@gmail.com',
-    type: AlertType.success,
-  },
-  {
-    title: 'Update your bid!',
-    description:
-      'You are no longer on track for a chance to win a Boslen membership. Update your bid to continue or click cancel to stop participating in the live auction',
-    type: AlertType.warning,
-  },
-  {
-    title: 'Your updated bid has been successfully placed',
-    description:
-      'A confirmation of your bid has been sent to email@gmail.com',
-    type: AlertType.success,
-  },
-  {
-    title:
-      'Your have been successfully withdrawn from this membership auction',
-    description:
-      'A confirmation of your bid has been sent to email@gmail.com',
-    type: AlertType.success,
-  },
-];
+export function getLiveBidAlert(index: number, userEmail: string) {
+  switch (index) {
+    case 0:
+      return {
+        title: 'Your bid has been successfully placed',
+        description: `A confirmation of your bid has been sent to ${userEmail}`,
+        type: AlertType.success,
+      };
+
+    case 1:
+      return {
+        title: 'Update your bid!',
+        description:
+          'You are no longer on track for a chance to win a Boslen membership. Update your bid to continue or click cancel to stop participating in the live auction',
+        type: AlertType.warning,
+      };
+
+    case 2:
+      return {
+        title: 'Your updated bid has been successfully placed',
+        description: `A confirmation of your bid has been sent to ${userEmail}`,
+        type: AlertType.success,
+      };
+
+    case 3:
+      return {
+        title:
+          'Your have been successfully withdrawn from this membership auction',
+        description: `A confirmation of your bid has been sent to ${userEmail}`,
+        type: AlertType.success,
+      };
+    default:
+      return {
+        title: '',
+        description: ``,
+        type: AlertType.success,
+      };
+  }
+}
 
 interface LiveBidAlertProps {
   title: string;
