@@ -52,55 +52,6 @@ import {
 import { useFormik } from 'formik';
 import { number, object } from 'yup';
 
-interface NewAuctionButtonContainerProps {
-  onDialogClose: () => void;
-  onNextStep: () => void;
-  acceptButtonDisabled: boolean;
-  acceptButtonText: string;
-  buttonType?: 'button' | 'submit' | 'reset';
-}
-
-export function NewAuctionButtonContainer({
-  onDialogClose,
-  onNextStep,
-  acceptButtonDisabled,
-  acceptButtonText,
-  buttonType = 'submit',
-}: NewAuctionButtonContainerProps) {
-  return (
-    <Box h={'80px'}>
-      <HStack items={'center'} justify={'flex-end'}>
-        <VStack justify='center' items='center' py='14px' px='28px'>
-          <Text
-            color='white700'
-            size='14px'
-            weight={500}
-            css={{ textDecoration: 'underline' }}
-            onClick={onDialogClose}
-          >
-            Cancel
-          </Text>
-        </VStack>
-        <Button
-          disabled={acceptButtonDisabled}
-          type={buttonType}
-          radius={1}
-          colorTheme='purple500'
-          css={{
-            padding: '14px 28px',
-            // width: '123px',
-          }}
-          onClick={onNextStep}
-        >
-          <Text size='14px' weight={500}>
-            {acceptButtonText}
-          </Text>
-        </Button>
-      </HStack>
-    </Box>
-  );
-}
-
 export interface OutletContext {
   formik: any;
   acceptButtonText: string;

@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   HStack,
   Input,
   InputGroup,
@@ -19,10 +20,7 @@ import { SelectPredefinedPerks } from '../../setup-artist-profile/bio-and-perks/
 import { ChangeEvent, useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import DurationInHoursPicker from './duration-in-hours-picker';
-import {
-  NewAuctionButtonContainer,
-  OutletContext,
-} from '../ui/create-live-auction-dialog';
+import { OutletContext } from '../ui/create-live-auction-dialog';
 
 function ConfirmAuction() {
   const { formik, onDialogClose, onNextStep, acceptButtonText } =
@@ -177,13 +175,34 @@ function ConfirmAuction() {
         justify='flex-end'
         py={4}
       >
-        <NewAuctionButtonContainer
-          onDialogClose={onDialogClose}
-          onNextStep={onNextStep}
-          acceptButtonDisabled={false}
-          acceptButtonText={acceptButtonText}
-          buttonType='submit'
-        />
+        <Box h={'80px'}>
+          <HStack items={'center'} justify={'flex-end'}>
+            <VStack justify='center' items='center' py='14px' px='28px'>
+              <Text
+                color='white700'
+                size='14px'
+                weight={500}
+                css={{ textDecoration: 'underline' }}
+                onClick={onDialogClose}
+              >
+                Cancel
+              </Text>
+            </VStack>
+            <Button
+              type={'submit'}
+              radius={1}
+              colorTheme='purple500'
+              css={{
+                padding: '14px 28px',
+              }}
+              onClick={onNextStep}
+            >
+              <Text size='14px' weight={500}>
+                {acceptButtonText}
+              </Text>
+            </Button>
+          </HStack>
+        </Box>
       </HStack>
     </VStack>
   );
