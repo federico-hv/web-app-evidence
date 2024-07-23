@@ -243,7 +243,10 @@ function ArtistClubLiveBidsPage() {
   }
 
   useEffect(() => {
-    if (!hasPMData.hasPaymentMethod)
+    if (
+      !hasPMData.hasPaymentMethod &&
+      currentUser.id !== artistData.artist.accountId
+    )
       openWith({ ...DialogState.addPayment, onAction: addPaymentMethod });
   }, []);
 
