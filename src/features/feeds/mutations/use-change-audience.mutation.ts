@@ -4,7 +4,7 @@ import { FeedAudienceName } from '../shared';
 import { CHANGE_AUDIENCE } from './schema';
 import { GET_FEED_AUDIENCE } from '../queries';
 
-export function useChangeAudience() {
+export function useChangeAudienceMutation() {
   const { openWith } = useToast();
 
   const [mutation, { loading, error }] = useMutation<

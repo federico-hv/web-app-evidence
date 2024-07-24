@@ -40,7 +40,7 @@ function BookmarkPopover({
 
   const closeAfter = async (
     id: string,
-    cb: (...args: any[]) => Promise<boolean>,
+    cb: (...args: any[]) => Promise<any>,
   ) => {
     await cb(id);
     set(false);
