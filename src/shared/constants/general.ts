@@ -19,3 +19,7 @@ export enum ExternalLinkTypeEnum {
   'Event' = 'Event',
   'Other' = 'Other',
 }
+
+export const ErrorMessage = {
+  Any: 'Oops, something went wrong. Try again later.',
+};

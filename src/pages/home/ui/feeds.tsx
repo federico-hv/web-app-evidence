@@ -1,41 +1,44 @@
-import { useQuery } from '@apollo/client';
-import { FeedCard, FeedsReturnModel, GET_FEEDS } from '../../../features';
+import {
+  FeedCard,
+  FeedFilterTypeEnum,
+  useFeedsQuery,
+} from '../../../features';
 import { Error, Loader } from '../../../shared';
-import { Alert, VStack } from '@holdr-ui/react';
-import { FeedFilterValue, FeedViewType } from '../shared';
+import { Alert, AlertContent, AlertDescription } from '@holdr-ui/react';
+import { FeedViewType } from '../shared';
+import { FlatList } from '../../../tmp/flat-list';
 
 function Feeds({
   filter,
   type,
 }: {
-  filter: FeedFilterValue;
+  filter: FeedFilterTypeEnum;
   type: FeedViewType;
 }) {
-  const { loading, data, error } = useQuery<
-    { feeds: FeedsReturnModel },
-    { type: string }
-  >(GET_FEEDS, {
-    variables: {
-      type: filter,
-    },
-  });
+  const { loading, error, data } = useFeedsQuery({ filter });
 
   return (
     <Error
       hasError={!!error}
       errorEl={
         <Alert>
-          <Alert.Description>{error?.message}</Alert.Description>
+          <AlertContent>
+            <AlertDescription>{error?.message}</AlertDescription>
+          </AlertContent>
         </Alert>
       }
     >
       <Loader loading={loading}>
-        {data && (
-          <VStack w='100%' gap={5} pb={6}>
-            {data.feeds.data.map((item) => (
-              <FeedCard key={item.id} data={item} />
-            ))}
-          </VStack>
+        {data && data.feeds.edges.length > 0 && (
+          <FlatList
+            gap={6}
+            direction='vertical'
+            data={data.feeds.edges}
+            renderItem={({ node }) => (
+              <FeedCard key={node.id} data={node} />
+            )}
+            keyExtractor={({ node }) => node.id}
+          />
         )}
       </Loader>
     </Error>

@@ -1,7 +1,7 @@
 import { FeedReactionAction, FeedReactionName } from './types';
 import { IconName } from '@holdr-ui/react/dist/shared/types';
 
-const IMAGE_GRID = {
+export const IMAGE_GRID = {
   [1]: [{ rowSpan: 2, colSpan: 2 }],
   [2]: [
     { rowSpan: 2, colSpan: 1 },
@@ -20,18 +20,12 @@ const IMAGE_GRID = {
   ],
 };
 
-type ImageSizes = 1 | 2 | 3 | 4;
-
-const DIALOG_CONTENT_HEIGHT = {
-  media: 725,
-  poll: 750,
+export const FeedMessage = {
+  Created: 'Successfully created a new feed.',
+  Deleted: 'Successfully deleted the feed.',
 };
 
-export { DIALOG_CONTENT_HEIGHT, IMAGE_GRID };
-
-export type { ImageSizes };
-
-export const FeedReactionArr = ['love', 'indifferent', 'excited', 'sad'];
+export type ImageSizes = 1 | 2 | 3 | 4;
 
 export const feedReaction = [
   'love',
@@ -39,16 +33,6 @@ export const feedReaction = [
   'excited',
   'sad',
 ] as const;
-
-export const Reaction: Record<
-  FeedReactionName,
-  { icon: IconName; name: string }
-> = {
-  love: { icon: 'heart-fill', name: 'Like' },
-  indifferent: { icon: 'emotion-normal-fill', name: 'Indifferent' },
-  sad: { icon: 'emotion-sad-fill', name: 'Sad' },
-  excited: { icon: 'emotion-happy-fill', name: 'Excited' },
-};
 
 export const feedStatistic = ['views', 'bookmarks', 'love'] as const;
 

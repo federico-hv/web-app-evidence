@@ -1,15 +1,15 @@
 import { Fragment } from 'react';
-import { VStack } from '@holdr-ui/react';
 import { EmptyMessage, Loader } from '../../../../../shared';
-import { FeedCard, useUserFeeds } from '../../../../../features';
+import { FeedCard, useFeedsQuery } from '../../../../../features';
+import { FlatList } from '../../../../../tmp/flat-list';
 
 interface ArtistFeedsListProps {
   /** The artist's username*/
-  forArtist: string;
+  slug: string;
 }
 
-function ArtistFeedsList({ forArtist }: ArtistFeedsListProps) {
-  const { loading, data, error } = useUserFeeds(forArtist, 'all');
+function ArtistFeedsList({ slug }: ArtistFeedsListProps) {
+  const { loading, data, error } = useFeedsQuery({ slug });
 
   if (error) {
     return <Fragment />;
@@ -17,12 +17,14 @@ function ArtistFeedsList({ forArtist }: ArtistFeedsListProps) {
 
   return (
     <Loader loading={loading}>
-      {data && data.userFeeds.count > 0 ? (
-        <VStack gap={6} w='full' pb={6}>
-          {data.userFeeds.data.map((item) => (
-            <FeedCard key={item.id} data={item} />
-          ))}
-        </VStack>
+      {data && data.feeds.edges.length > 0 ? (
+        <FlatList
+          gap={6}
+          direction='vertical'
+          data={data.feeds.edges}
+          renderItem={({ node }) => <FeedCard key={node.id} data={node} />}
+          keyExtractor={({ node }) => node.id}
+        />
       ) : (
         <EmptyMessage subtitle='No posts yet.' />
       )}

@@ -1,6 +1,6 @@
-import { FeedFilterValue } from '../../shared';
+import { FeedFilterTypeEnum } from '../../../../features';
 
 export interface FeedFilterProps {
-  current: FeedFilterValue;
-  onClick: (value: FeedFilterValue) => void;
+  current: FeedFilterTypeEnum;
+  onClick: (value: FeedFilterTypeEnum) => void;
 }

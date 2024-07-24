@@ -5,7 +5,7 @@ import { useFeedStatistic } from '../../../shared';
 import millify from 'millify';
 
 function FeedBookmarkGroup() {
-  const { bookmarked, feedId } = useFeedContext();
+  const { isBookmarked, feedId } = useFeedContext();
   const { data } = useFeedStatistic(feedId, 'bookmarks');
   return (
     <HStack items='center' gap={1} zIndex={5}>
@@ -13,8 +13,8 @@ function FeedBookmarkGroup() {
         <IconButton
           variant='ghost'
           colorTheme='white50'
-          ariaLabel={!bookmarked ? 'create bookmark' : 'remove bookmark'}
-          icon={!bookmarked ? 'bookmark-outline' : 'bookmark-fill'}
+          ariaLabel={!isBookmarked ? 'create bookmark' : 'remove bookmark'}
+          icon={!isBookmarked ? 'bookmark-outline' : 'bookmark-fill'}
         />
       </BookmarkPopover>
       {data && (

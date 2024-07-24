@@ -1,4 +1,4 @@
-import { CreatePost } from '../../../features';
+import { CreatePost, FeedFilterTypeEnum } from '../../../features';
 import { Box, HStack, VStack } from '@holdr-ui/react';
 import CustomTabs, {
   CustomTabsContent,
@@ -7,14 +7,15 @@ import CustomTabs, {
   CustomTabsTrigger,
 } from '../../../tmp/custom-tabs';
 import { useState } from 'react';
-import { FeedFilterValue } from '../shared';
 import FeedFilter from './feed-filter';
 import Feeds from './feeds';
 
 function FeedTabs() {
-  const [filter, setFilter] = useState<FeedFilterValue>('all');
+  const [filter, setFilter] = useState<FeedFilterTypeEnum>(
+    FeedFilterTypeEnum.All,
+  );
 
-  const updateFilter = (value: FeedFilterValue) => setFilter(value);
+  const updateFilter = (value: FeedFilterTypeEnum) => setFilter(value);
 
   return (
     <CustomTabs

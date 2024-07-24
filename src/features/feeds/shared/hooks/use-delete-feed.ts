@@ -1,7 +1,7 @@
 import { useMutation } from '@apollo/client';
 import { DELETE_FEED } from '../../mutations';
 import { useToast } from '../../../../shared';
-import { GET_FEEDS, GET_USER_FEEDS } from '../../queries';
+import { GET_FEEDS } from '../../queries';
 import { FeedsReturnModel } from '../interface';
 
 export function useDeleteFeed() {
@@ -50,7 +50,7 @@ export function useDeleteFeed() {
                 /**/
                 const result: { feeds: FeedsReturnModel } | null =
                   cache.readQuery({
-                    query: GET_USER_FEEDS,
+                    query: GET_FEEDS,
                     variables: { type: 'post' },
                   });
 
@@ -60,7 +60,7 @@ export function useDeleteFeed() {
                   );
 
                   cache.writeQuery({
-                    query: GET_USER_FEEDS,
+                    query: GET_FEEDS,
                     variables: { type: 'post' },
                     data: {
                       feeds: {

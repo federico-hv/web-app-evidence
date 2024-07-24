@@ -7,7 +7,6 @@ import {
   Button,
   HStack,
   Icon,
-  hexToRGB,
 } from '@holdr-ui/react';
 import { FileUtility, MediaItem, useToast } from '../../../../../shared';
 import { Fragment, useState } from 'react';

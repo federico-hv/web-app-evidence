@@ -37,7 +37,7 @@ function ArtistClubFeedsPage() {
           className='thin-scrollbar'
         >
           <ArtistClubSummaryCard />
-          <ArtistFeedsList forArtist={artistData.artist.username} />
+          <ArtistFeedsList slug={artistData.artist.username} />
         </VStack>
 
         <ArtistClubBioAdditionalContent />

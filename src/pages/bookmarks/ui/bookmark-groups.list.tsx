@@ -1,7 +1,7 @@
 import { useSuspenseQuery } from '@apollo/client';
 import {
   GET_ALL_BOOKMARKS_TOTAL,
-  useGetBookmarkGroups,
+  useBookmarkGroupsSuspenseQuery,
 } from '../../../features';
 import { VStack } from '@holdr-ui/react';
 import { AllBookmarkGroups } from '../constants';
@@ -24,13 +24,7 @@ function AllBookmarkGroupsItem() {
 }
 
 function BookmarkGroupsList() {
-  /**
-   * TODO:
-   * 1. make this a lazy query.
-   * 2. add debouncing.
-   * 3. load data when page loads.
-   */
-  const { data } = useGetBookmarkGroups();
+  const { data } = useBookmarkGroupsSuspenseQuery();
 
   return (
     <VStack p={2} gap={2}>
