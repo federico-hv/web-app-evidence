@@ -98,7 +98,7 @@ function AddPaymentMethodPage() {
         email: data.accountInfo.email,
       });
     }
-  }, [data, updateBillingInfo]);
+  }, [data]);
 
   return (
     <Fragment>
