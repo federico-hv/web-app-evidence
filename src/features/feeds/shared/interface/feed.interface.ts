@@ -1,13 +1,12 @@
-import { FeedReactionName } from '../types';
 import { GenericItem, UserModel } from '../../../../shared';
 import { ArticleModel, PostModel } from './post.interface';
 
 export interface FeedModel extends GenericItem {
   type: 'article' | 'post';
+  isLiked: boolean;
+  isBookmarked: boolean;
   isPinned: boolean;
-  node: PostModel | ArticleModel;
-  reaction: FeedReactionName | null;
-  bookmarked: boolean;
+  item: PostModel | ArticleModel;
   owner: UserModel;
   createdAt: string;
 }

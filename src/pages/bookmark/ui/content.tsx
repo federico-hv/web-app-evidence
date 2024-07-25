@@ -1,13 +1,11 @@
-import { useParams } from 'react-router-dom';
-import { FeedCard, useGetBookmarks } from '../../../features';
+import { FeedCard, useBookmarksQuery } from '../../../features';
 import { FlatList } from '../../../tmp/flat-list';
+import { useParams } from 'react-router-dom';
 
 function Content() {
-  const params = useParams();
-  const { data } = useGetBookmarks({
-    id: params.id,
-    fetchPolicy: 'network-only',
-  });
+  const { id } = useParams();
+
+  const { data } = useBookmarksQuery({ id: id ?? 'all' });
 
   return (
     <FlatList

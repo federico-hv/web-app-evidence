@@ -1,5 +1,4 @@
 import {
-  DialogContextProvider,
   GenericProps,
   makePath,
   Paths,
@@ -7,10 +6,13 @@ import {
 } from '../../../../shared';
 import { useCallback, useState } from 'react';
 import { Box, HStack, Popover, useKeyBind } from '@holdr-ui/react';
-import { useCreateBookmark, useRemoveBookmark } from '../../shared';
 import { useFeedContext } from '../../../feeds';
 import { PopoverButton } from '../buttons';
 import { useLocation, useNavigate } from 'react-router-dom';
+import {
+  useCreateBookmarkMutation,
+  useRemoveBookmarkMutation,
+} from '../../mutations';
 
 function BookmarkPopover({
   children,
@@ -28,9 +30,9 @@ function BookmarkPopover({
 
   const { feedId } = useFeedContext();
 
-  const { removeBookmark } = useRemoveBookmark();
+  const { removeBookmark } = useRemoveBookmarkMutation();
 
-  const { createBookmark } = useCreateBookmark();
+  const { createBookmark } = useCreateBookmarkMutation();
 
   const [popoverOpen, set] = useState(false);
 
@@ -38,7 +40,7 @@ function BookmarkPopover({
 
   const closeAfter = async (
     id: string,
-    cb: (...args: any[]) => Promise<boolean>,
+    cb: (...args: any[]) => Promise<any>,
   ) => {
     await cb(id);
     set(false);

@@ -7,7 +7,7 @@ import {
   PostModel,
 } from '../interface';
 import { StringNumeric, useToast } from '../../../../shared';
-import { GET_FEEDS, GET_USER_FEEDS } from '../../queries';
+import { GET_FEEDS } from '../../queries';
 import { useParams } from 'react-router-dom';
 
 function getNewData(
@@ -20,7 +20,7 @@ function getNewData(
   );
 
   // new poll
-  const node = data[idx].node as PostModel;
+  const node = data[idx].item as PostModel;
   const newNode = {
     ...node,
     polls: newPolls,
@@ -88,7 +88,7 @@ export function useVotePoll() {
               userFeeds() {
                 const result: { userFeeds: FeedsReturnModel } | null =
                   cache.readQuery({
-                    query: GET_USER_FEEDS,
+                    query: GET_FEEDS,
                     variables: { username, type: 'post' },
                   });
 

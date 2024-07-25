@@ -2,7 +2,7 @@ import { useToast } from '../../../../shared';
 import { useMutation } from '@apollo/client';
 import { HIDE_FEED } from '../../mutations';
 import { FeedsReturnModel } from '../interface';
-import { GET_FEEDS, GET_USER_FEEDS } from '../../queries';
+import { GET_FEEDS } from '../../queries';
 
 export function useHideFeed() {
   const { openWith } = useToast();
@@ -48,7 +48,7 @@ export function useHideFeed() {
                 /**/
                 const result: { feeds: FeedsReturnModel } | null =
                   cache.readQuery({
-                    query: GET_USER_FEEDS,
+                    query: GET_FEEDS,
                     variables: { type: 'post' },
                   });
 
@@ -58,7 +58,7 @@ export function useHideFeed() {
                   );
 
                   cache.writeQuery({
-                    query: GET_USER_FEEDS,
+                    query: GET_FEEDS,
                     variables: { type: 'post' },
                     data: {
                       feeds: {

@@ -8,9 +8,7 @@ import {
   Box,
   useGeneralContext,
   useInputChange,
-  Heading,
   Text,
-  Dialog,
   DateUtility,
 } from '@holdr-ui/react';
 import { ChangeEvent, Fragment, useEffect, useRef, useState } from 'react';

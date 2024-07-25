@@ -1,4 +1,3 @@
-import { FeedFilterValue } from '../../shared';
 import {
   Box,
   IconButton,
@@ -10,12 +9,13 @@ import {
 } from '@holdr-ui/react';
 import { FeedFilterProps } from './types';
 import { customBgColor } from '../../../../shared';
+import { FeedFilterTypeEnum } from '../../../../features';
 
 function FeedFilter({ current, onClick }: FeedFilterProps) {
   return (
     <Select
       value={current}
-      onValueChange={(value) => onClick(value as FeedFilterValue)}
+      onValueChange={(value) => onClick(value as FeedFilterTypeEnum)}
     >
       <SelectTrigger asChild>
         <IconButton
@@ -62,7 +62,7 @@ function FeedFilter({ current, onClick }: FeedFilterProps) {
             radius={2}
             _hover={{ background: 'rgba(14, 14, 27, 0.50)' }}
             css={{ fontSize: '$2' }}
-            value='all'
+            value={FeedFilterTypeEnum.All}
             label='All'
           />
           <SelectItem
@@ -70,7 +70,7 @@ function FeedFilter({ current, onClick }: FeedFilterProps) {
             radius={2}
             _hover={{ background: 'rgba(14, 14, 27, 0.50)' }}
             css={{ fontSize: '$2' }}
-            value='article'
+            value={FeedFilterTypeEnum.Articles}
             label='News'
           />
           <SelectItem
@@ -78,16 +78,8 @@ function FeedFilter({ current, onClick }: FeedFilterProps) {
             radius={2}
             _hover={{ background: 'rgba(14, 14, 27, 0.50)' }}
             css={{ fontSize: '$2' }}
-            value='post'
+            value={FeedFilterTypeEnum.Posts}
             label='Posts'
-          />
-          <SelectItem
-            py={3}
-            radius={2}
-            css={{ fontSize: '$2' }}
-            _hover={{ background: 'rgba(14, 14, 27, 0.50)' }}
-            value='music'
-            label='Music'
           />
         </SelectItemList>
       </SelectContent>

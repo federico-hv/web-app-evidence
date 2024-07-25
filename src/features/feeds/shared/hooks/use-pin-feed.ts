@@ -6,7 +6,7 @@ import { FeedModel } from '../interface';
 
 export function usePinFeed() {
   const { openWith } = useToast();
-  const [mutation, { loading, error }] = useMutation<
+  const [mutation, { loading, data, error }] = useMutation<
     string,
     { id: string }
   >(PIN_FEED);
@@ -58,5 +58,5 @@ export function usePinFeed() {
     }
   };
 
-  return { pin, loading, error };
+  return { pin, data, loading, error };
 }

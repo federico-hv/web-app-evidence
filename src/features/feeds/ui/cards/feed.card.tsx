@@ -7,11 +7,8 @@ import {
 } from '../../shared';
 import ArticleCard from './article';
 import PostCard from './post';
-import { useLocation } from 'react-router-dom';
 
 function FeedCard({ data }: { data: FeedModel }) {
-  const location = useLocation();
-
   return (
     <Box
       position='relative'
@@ -28,17 +25,17 @@ function FeedCard({ data }: { data: FeedModel }) {
         value={{
           owner: data.owner,
           feedId: data.id as string,
-          bookmarked: data.bookmarked,
-          reaction: data.reaction,
+          isBookmarked: data.isBookmarked,
+          isLiked: data.isLiked,
           isPinned: data.isPinned,
           createdAt: data.createdAt,
         }}
       >
         {data.type === 'post' && (
-          <PostCard data={data.node as PostModel} />
+          <PostCard data={data.item as PostModel} />
         )}
         {data.type === 'article' && (
-          <ArticleCard data={data.node as ArticleModel} />
+          <ArticleCard data={data.item as ArticleModel} />
         )}
       </FeedContextProvider>
     </Box>
