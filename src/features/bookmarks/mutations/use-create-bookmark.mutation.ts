@@ -36,6 +36,9 @@ export function useCreateBookmarkMutation() {
               feedStatistic(current) {
                 voidFn();
               },
+              feeds(current) {
+                voidFn();
+              },
             },
           });
         },

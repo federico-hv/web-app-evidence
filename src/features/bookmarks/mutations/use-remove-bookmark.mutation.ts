@@ -34,6 +34,9 @@ export function useRemoveBookmarkMutation() {
               allBookmarkTotal(current) {
                 voidFn();
               },
+              feeds(current) {
+                voidFn();
+              },
             },
           });
         },
