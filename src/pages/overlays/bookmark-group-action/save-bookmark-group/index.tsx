@@ -25,7 +25,7 @@ import {
   useCreateBookmark,
   useRemoveBookmark,
 } from '../../../../features';
-import { Fragment, useEffect } from 'react';
+import { Fragment } from 'react';
 
 function SaveBookmarkGroupPage() {
   const { state } = useLocation();
@@ -60,6 +60,7 @@ function SaveBookmarkGroupPage() {
             onClick={() =>
               navigate(makePath([Paths.bookmarks, 'create']), {
                 state: {
+                  feedId: state.feedId,
                   previousLocation: previousLocation,
                   overlayPreviousLocation: '/bookmarks/save',
                 },
@@ -68,7 +69,7 @@ function SaveBookmarkGroupPage() {
           />
         </HStack>
         <VStack px={4} pb={4} gap={5} h='100%'>
-          <List />
+          <CreatedBookmarkGroupsList />
           <HStack gap={2} justify='flex-end' w='100%'>
             <Button
               type='submit'
@@ -89,7 +90,7 @@ function SaveBookmarkGroupPage() {
 }
 SaveBookmarkGroupPage.displayName = 'SaveBookmarkGroupPage';
 
-function List() {
+function CreatedBookmarkGroupsList() {
   const { state } = useLocation();
 
   const { createBookmark, loading: loadingCreate } = useCreateBookmark();
