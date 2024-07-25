@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   HStack,
   Input,
   InputGroup,
@@ -19,10 +20,7 @@ import { SelectPredefinedPerks } from '../../setup-artist-profile/bio-and-perks/
 import { ChangeEvent, useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import DurationInHoursPicker from './duration-in-hours-picker';
-import {
-  NewAuctionButtonContainer,
-  OutletContext,
-} from '../ui/create-live-auction-dialog';
+import { OutletContext } from '../ui/create-live-auction-dialog';
 
 function ConfirmAuction() {
   const { formik, onDialogClose, onNextStep, acceptButtonText } =
@@ -56,7 +54,7 @@ function ConfirmAuction() {
       <VStack gap={4}>
         <InputTextField
           name='entryPrice'
-          tooltip='Something useful'
+          tooltip='Entry price of the auction'
           label='Starting Price'
           placeholder='Enter the starting price of your membership'
           value={formik.values.entryPrice}
@@ -77,7 +75,7 @@ function ConfirmAuction() {
       <VStack gap={4}>
         <InputTextField
           name='numberOfMemberships'
-          tooltip='Something useful'
+          tooltip='Amount of club memberships'
           label='Number of Memberships'
           placeholder='Enter the number of memberships you are auctioning'
           value={formik.values.numberOfMemberships}
@@ -108,7 +106,7 @@ function ConfirmAuction() {
               document.getElementById('page-dialog-container') ||
               document.body
             }
-            description='Something useful.'
+            description='Auction duration (1 - 3 hours)'
           />
         </HStack>
         <DurationInHoursPicker
@@ -150,7 +148,7 @@ function ConfirmAuction() {
       </VStack> */}
       <VStack>
         <Box bgColor='rgba(152, 152, 255, 0.20)' h='1px' my={4} />
-        <Box bgColor='transparent' h='30px' my={4} />
+        <Box bgColor='transparent' h='30px' />
 
         {/** ⚠️ Disable when live auction is running*/}
         {/*<CustomMembershipPerks/>*/}
@@ -176,15 +174,35 @@ function ConfirmAuction() {
         gap={2}
         justify='flex-end'
         py={4}
-        pr='10px'
       >
-        <NewAuctionButtonContainer
-          onDialogClose={onDialogClose}
-          onNextStep={onNextStep}
-          acceptButtonDisabled={false}
-          acceptButtonText={acceptButtonText}
-          buttonType='submit'
-        />
+        <Box h={'80px'}>
+          <HStack items={'center'} justify={'flex-end'}>
+            <VStack justify='center' items='center' py='14px' px='28px'>
+              <Text
+                color='white700'
+                size='14px'
+                weight={500}
+                css={{ textDecoration: 'underline' }}
+                onClick={onDialogClose}
+              >
+                Cancel
+              </Text>
+            </VStack>
+            <Button
+              type={'submit'}
+              radius={1}
+              colorTheme='purple500'
+              css={{
+                padding: '14px 28px',
+              }}
+              onClick={onNextStep}
+            >
+              <Text size='14px' weight={500}>
+                {acceptButtonText}
+              </Text>
+            </Button>
+          </HStack>
+        </Box>
       </HStack>
     </VStack>
   );

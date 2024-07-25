@@ -1,4 +1,11 @@
-import { Box, HStack, Text, VStack, hexToRGB } from '@holdr-ui/react';
+import {
+  Box,
+  Button,
+  HStack,
+  Text,
+  VStack,
+  hexToRGB,
+} from '@holdr-ui/react';
 import {
   InformationTooltip,
   InputTextField,
@@ -16,10 +23,7 @@ import { SelectPredefinedPerks } from '../../setup-artist-profile/bio-and-perks/
 import { useState } from 'react';
 import { FlatList } from '../../../../tmp/flat-list';
 import { perksData } from '../../../clubs/[slug]/membership-perks';
-import {
-  NewAuctionButtonContainer,
-  OutletContext,
-} from '../ui/create-live-auction-dialog';
+import { OutletContext } from '../ui/create-live-auction-dialog';
 import { useOutletContext } from 'react-router-dom';
 
 function AuctionPerkItem({
@@ -185,12 +189,33 @@ function ReviewAuctionInfo() {
         py={4}
         pr='10px'
       >
-        <NewAuctionButtonContainer
-          onDialogClose={onDialogClose}
-          onNextStep={onNextStep}
-          acceptButtonDisabled={false}
-          acceptButtonText={acceptButtonText}
-        />
+        <Box h={'80px'}>
+          <HStack items={'center'} justify={'flex-end'}>
+            <VStack justify='center' items='center' py='14px' px='28px'>
+              <Text
+                color='white700'
+                size='14px'
+                weight={500}
+                css={{ textDecoration: 'underline' }}
+                onClick={onDialogClose}
+              >
+                Cancel
+              </Text>
+            </VStack>
+            <Button
+              radius={1}
+              colorTheme='purple500'
+              css={{
+                padding: '14px 28px',
+              }}
+              onClick={onNextStep}
+            >
+              <Text size='14px' weight={500}>
+                {acceptButtonText}
+              </Text>
+            </Button>
+          </HStack>
+        </Box>
       </HStack>
     </VStack>
   );

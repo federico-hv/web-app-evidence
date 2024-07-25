@@ -33,7 +33,7 @@ function DurationInHoursPicker({ onChange, name, value }: any) {
   const [color, setColor] = useState('$white900');
 
   return (
-    <Box radius={2} overflow='hidden'>
+    <Box overflow='hidden'>
       <Select
         name={name}
         onValueChange={(value) => {
@@ -49,13 +49,14 @@ function DurationInHoursPicker({ onChange, name, value }: any) {
       >
         <SelectTrigger
           css={{
-            border: '2px solid rgba(152, 152, 255, 0.35)',
+            border: '1px solid rgba(152, 152, 255, 0.35)',
             background: 'rgba(152, 152, 255, 0.15)',
             height: '2.25rem',
             fontWeight: 400,
             color,
+            borderRadius: '4px',
           }}
-          _open={{ borderRadius: '8px' }}
+          _open={{ borderRadius: '4px' }}
           placeholder='Select the duration'
         />
         <SelectContent position='item-aligned' zIndex={20}>
@@ -64,6 +65,7 @@ function DurationInHoursPicker({ onChange, name, value }: any) {
             css={{
               background: 'rgba(152, 152, 255, 0.15)',
               blur: '50px',
+              borderRadius: '4px',
             }}
           >
             {defaultDurations.map((duration: Duration) => (

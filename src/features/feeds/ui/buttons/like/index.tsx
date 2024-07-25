@@ -1,28 +1,24 @@
-import {
-  useFeedContext,
-  useLikeFeed,
-  useUnlikeFeed,
-} from '../../../shared';
 import { IconButton } from '@holdr-ui/react';
+import { useFeedContext } from '../../../shared';
 import { LikeButtonProps } from './types';
+import {
+  useLikeFeedMutation,
+  useUnlikeFeedMutation,
+} from '../../../mutations';
 
 function LikeButton({ size }: LikeButtonProps) {
-  const { feedId, reaction } = useFeedContext();
-  const { likeFeed } = useLikeFeed();
-  const { unlikeFeed } = useUnlikeFeed();
+  const { feedId, isLiked } = useFeedContext();
+  const { likeFeed } = useLikeFeedMutation();
+  const { unlikeFeed } = useUnlikeFeedMutation();
 
   return (
     <IconButton
       size={size}
-      onClick={
-        reaction === 'love'
-          ? () => unlikeFeed(feedId)
-          : () => likeFeed(feedId)
-      }
-      ariaLabel={reaction === 'love' ? 'like feed' : 'unlike feed'}
+      onClick={isLiked ? () => unlikeFeed(feedId) : () => likeFeed(feedId)}
+      ariaLabel={isLiked ? 'like feed' : 'unlike feed'}
       variant='ghost'
       colorTheme='white50'
-      icon={reaction === 'love' ? 'heart-fill' : 'heart-outline'}
+      icon={isLiked ? 'heart-fill' : 'heart-outline'}
     />
   );
 }

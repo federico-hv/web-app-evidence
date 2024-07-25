@@ -98,7 +98,7 @@ function AddPaymentMethodPage() {
         email: data.accountInfo.email,
       });
     }
-  }, [data, updateBillingInfo]);
+  }, [data]);
 
   return (
     <Fragment>
@@ -113,7 +113,7 @@ function AddPaymentMethodPage() {
             minWidth={540}
             maxHeight='90vh'
             bgColor='#30304B'
-            overflow='auto'
+            overflow='hidden'
             css={{
               backdropFilter: 'blur(12px)',
             }}

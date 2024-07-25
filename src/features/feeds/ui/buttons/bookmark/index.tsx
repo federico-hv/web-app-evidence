@@ -3,14 +3,14 @@ import { IconButton } from '@holdr-ui/react';
 import { BookmarkButtonProps } from './types';
 
 function BookmarkButton({ size }: BookmarkButtonProps) {
-  const { bookmarked } = useFeedContext();
+  const { isBookmarked } = useFeedContext();
 
   return (
     <IconButton
       variant='ghost'
       colorTheme='white50'
-      ariaLabel={!bookmarked ? 'create bookmark' : 'remove bookmark'}
-      icon={!bookmarked ? 'bookmark-outline' : 'bookmark-fill'}
+      ariaLabel={!isBookmarked ? 'create bookmark' : 'remove bookmark'}
+      icon={!isBookmarked ? 'bookmark-outline' : 'bookmark-fill'}
       size={size}
     />
   );

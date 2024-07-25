@@ -20,9 +20,11 @@ function ReactionPopover({
   alignOffset?: number;
   sideOffset?: number;
 }) {
-  const { reaction, feedId } = useFeedContext();
+  const { isLiked, feedId } = useFeedContext();
   const { addReaction } = useAddReactionAction();
   const { removeReaction } = useRemoveReactionAction();
+
+  const reaction = isLiked ? 'love' : null;
 
   const [isOpen, set] = useState(false);
   const onClose = () => set(false);

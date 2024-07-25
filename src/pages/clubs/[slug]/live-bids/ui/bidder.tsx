@@ -11,10 +11,12 @@ import dayjs from 'dayjs';
 import { Menu } from '../../../../../shared';
 
 function Bidder({
+  confirmWithdraw,
   isActive,
   data,
   position,
 }: {
+  confirmWithdraw: (bidId: number) => void;
   isActive?: boolean;
   data: BidderModel;
   position?: number;
@@ -51,7 +53,7 @@ function Bidder({
         </Center>
       </HStack>
       <HStack items='center' pt={'2px'}>
-        <VStack w='64px'>
+        <VStack>
           <Text size={'16px'}>${data.amount.toFixed(2)}</Text>
         </VStack>
         <Box w='32px' />
@@ -70,7 +72,14 @@ function Bidder({
               />
             </Menu.Trigger>
             <Menu.Content>
-              <Menu.Item dangerous>Withdraw Bid</Menu.Item>
+              <Menu.Item
+                dangerous
+                action={() => {
+                  confirmWithdraw(data.bidId as number);
+                }}
+              >
+                Withdraw Bid
+              </Menu.Item>
               <Menu.Item>My bidding history</Menu.Item>
             </Menu.Content>
           </Menu>

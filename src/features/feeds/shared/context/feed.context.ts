@@ -1,14 +1,13 @@
 import { createContext, useContext } from 'react';
 import { UserModel } from '../../../../shared';
-import { FeedReactionName } from '../types';
 
 interface IFeedContext {
   owner: UserModel;
   feedId: string;
-  reaction: FeedReactionName | null;
   createdAt: string;
   isPinned: boolean;
-  bookmarked: boolean;
+  isLiked: boolean;
+  isBookmarked: boolean;
 }
 
 const FeedContext = createContext<IFeedContext>({
@@ -20,8 +19,8 @@ const FeedContext = createContext<IFeedContext>({
     role: 'general',
   },
   feedId: '',
-  reaction: null,
-  bookmarked: false,
+  isLiked: false,
+  isBookmarked: false,
   createdAt: '',
   isPinned: false,
 });

@@ -20,7 +20,10 @@ function LoadWithoutPreviousLocation({
 
   if (!location.state?.previousLocation) {
     return (
-      <Navigate to={location.pathname} state={{ previousLocation }} />
+      <Navigate
+        to={location.pathname}
+        state={{ previousLocation, ...location.state }}
+      />
     );
   }
 

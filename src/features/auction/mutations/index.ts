@@ -9,3 +9,54 @@ export const CREATE_LIVE_AUCTION = gql`
     }
   }
 `;
+
+export const CREATE_BID = gql`
+  mutation createBid($id: Int!, $amount: Float!) {
+    createBid(id: $id, amount: $amount) {
+      bid {
+        id
+        createdAt
+        amount
+      }
+      user {
+        id
+        username
+        displayName
+      }
+    }
+  }
+`;
+
+export const UPDATE_BID = gql`
+  mutation updateBid($id: Int!, $amount: Float!) {
+    updateBid(id: $id, amount: $amount) {
+      bid {
+        id
+        createdAt
+        amount
+      }
+      user {
+        id
+        username
+        displayName
+      }
+    }
+  }
+`;
+
+export const DELETE_BID = gql`
+  mutation deleteBid($id: Int!) {
+    deleteBid(id: $id) {
+      bid {
+        id
+        createdAt
+        amount
+      }
+      user {
+        id
+        username
+        displayName
+      }
+    }
+  }
+`;

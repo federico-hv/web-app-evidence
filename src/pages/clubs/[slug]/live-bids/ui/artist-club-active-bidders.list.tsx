@@ -1,4 +1,4 @@
-import { StackDivider } from '@holdr-ui/react';
+import { StackDivider, VStack, Text } from '@holdr-ui/react';
 import { FlatList } from '../../../../../tmp/flat-list';
 import {
   RadialSurface,
@@ -7,9 +7,25 @@ import {
 } from '../../../../../shared';
 import { useSuspenseGetActiveBidders } from '../../../../../features';
 import Bidder from './bidder';
+import { IBidder } from '..';
 
-function ArtistClubActiveBiddersList({ clubId }: { clubId: string }) {
-  const { data } = useSuspenseGetActiveBidders(clubId);
+function ArtistClubActiveBiddersList({
+  confirmWithdraw,
+  currentUserId,
+  bidders,
+  numberOfMemberships,
+  clubId,
+}: {
+  confirmWithdraw: (bidId: number) => void;
+  currentUserId: string;
+  clubId: string;
+  numberOfMemberships: number;
+  bidders: IBidder[];
+}) {
+  const isCurrentUser = (item: any) => item.id === currentUserId;
+
+  const auctionWithBidders = bidders.length > 0;
+  const membershipsLeft = numberOfMemberships - bidders.length;
 
   return (
     <RadialSurface
@@ -29,19 +45,31 @@ function ArtistClubActiveBiddersList({ clubId }: { clubId: string }) {
           Eligible
         </TextGroupHeading>
         <TextGroupHeading size={3} color='white700' as='h3'>
-          {data.length} memberships available
+          {membershipsLeft} memberships available
         </TextGroupHeading>
       </TextGroup>
 
-      <FlatList
-        py={4}
-        data={data}
-        keyExtractor={(item) => `inactive-bid-${item.id}`}
-        renderItem={(item, idx) => (
-          <Bidder isActive data={item} position={idx + 1} />
-        )}
-        direction='vertical'
-      />
+      {auctionWithBidders && (
+        <FlatList
+          py={4}
+          data={bidders}
+          keyExtractor={(item) => `inactive-bid-${item.id}`}
+          renderItem={(item, idx) => (
+            <Bidder
+              confirmWithdraw={confirmWithdraw}
+              isActive={isCurrentUser(item)}
+              data={item}
+              position={idx + 1}
+            />
+          )}
+          direction='vertical'
+        />
+      )}
+      {!auctionWithBidders && (
+        <VStack items='center' py={'10px'}>
+          <Text>No eligible bidders yet</Text>
+        </VStack>
+      )}
     </RadialSurface>
   );
 }

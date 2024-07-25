@@ -3,11 +3,7 @@ import { ADD_REACTION } from '../../mutations';
 import { FeedReactionName } from '../types';
 import { FeedModel, FeedsReturnModel } from '../interface';
 import { useToast } from '../../../../shared';
-import {
-  GET_FEED_STATISTIC,
-  GET_FEEDS,
-  GET_USER_FEEDS,
-} from '../../queries';
+import { GET_FEED_STATISTIC, GET_FEEDS } from '../../queries';
 import { useParams } from 'react-router-dom';
 
 /*
@@ -87,7 +83,7 @@ export function useAddReactionAction(): {
               userFeeds() {
                 const result: { userFeeds: FeedsReturnModel } | null =
                   cache.readQuery({
-                    query: GET_USER_FEEDS,
+                    query: GET_FEEDS,
                     variables: { username, type: 'post' },
                   });
 
