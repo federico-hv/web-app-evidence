@@ -1,8 +1,6 @@
 import {
   customInputStyles,
   InformationTooltip,
-  LoadWithoutPreviousLocation,
-  makeButtonLarger,
   TextGroup,
   TextGroupHeading,
   TextGroupSubheading,
@@ -50,7 +48,15 @@ function CreateBookmarkGroup() {
           Create Bookmark Group
         </Heading>
       </Box>
-      <VStack as='form' mt={4} px={4} pb={4} gap={5} h='100%'>
+      <VStack
+        as='form'
+        mt={4}
+        px={4}
+        pb={4}
+        gap={5}
+        h='100%'
+        onSubmit={(e) => e.preventDefault()}
+      >
         <Box>
           <HStack mb={3} items='center' gap={2}>
             <Text as='label'>Title</Text>
@@ -142,13 +148,17 @@ function CreateBookmarkGroup() {
             isLoading={loading}
             loadingText='Create Group'
             onClick={async () => {
-              console.log(pathState);
               await createBookmarkGroup(state.name, state.isPrivate).then(
                 () =>
                   navigate(
                     pathState.overlayPreviousLocation
                       ? pathState.overlayPreviousLocation
                       : previousLocation,
+                    {
+                      state: {
+                        feedId: pathState.feedId,
+                      },
+                    },
                   ),
               );
             }}
