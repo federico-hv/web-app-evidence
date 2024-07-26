@@ -10,6 +10,16 @@ export const CREATE_LIVE_AUCTION = gql`
   }
 `;
 
+export const DELETE_LIVE_AUCTION = gql`
+  mutation deleteAuction($id: Int!) {
+    deleteAuction(id: $id) {
+      id
+      endsAt
+      entryPrice
+    }
+  }
+`;
+
 export const CREATE_BID = gql`
   mutation createBid($id: Int!, $amount: Float!) {
     createBid(id: $id, amount: $amount) {
