@@ -1,14 +1,11 @@
-import {
-  PollSchema,
-  PostSchema,
-  useCreatePost,
-} from '../../../../../shared';
+import { PollSchema, PostSchema } from '../../../../../shared';
 import { Button } from '@holdr-ui/react';
 import { makeButtonLarger } from '../../../../../../../shared';
 import { useCreateFeedContext } from '../../shared';
+import { useCreatePostMutation } from '../../../../../mutations';
 
 function CreatePostButton() {
-  const { createPost, loading } = useCreatePost();
+  const { createPost, loading } = useCreatePostMutation();
   const { postState, close } = useCreateFeedContext();
 
   const checkIsDisabled = () => {

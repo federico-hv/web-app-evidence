@@ -5,9 +5,19 @@ import {
 } from '../../../../features';
 import ArtistClubSocialButton from './artist-club-social.button';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { makePath, Paths } from '../../../../shared';
+import { makePath, Paths, useAlertDialog } from '../../../../shared';
+import { FetchResult } from '@apollo/client';
+import { IDeleteAuction } from 'features/auction/shared/hooks/use-delete-live-auction';
 
-function ArtistClubHeader() {
+function ArtistClubHeader({
+  activeAuction,
+  onDeleteAuction,
+}: {
+  activeAuction: boolean;
+  onDeleteAuction: () => Promise<FetchResult<IDeleteAuction> | undefined>;
+}) {
+  const { openWith } = useAlertDialog();
+
   const currentUser = useCurrentUser();
   const navigate = useNavigate();
   const { pathname } = useLocation();
@@ -17,6 +27,9 @@ function ArtistClubHeader() {
   const { data: artistData } = useSuspenseGetArtist({
     slug,
   });
+
+  const isCurrentArtistAccount =
+    currentUser.id === artistData.artist.accountId;
 
   return (
     <HStack py={3} gap={4} items='center' justify='space-between'>
@@ -63,7 +76,7 @@ function ArtistClubHeader() {
         ) : (
           <ArtistClubSocialButton username={artistData.artist.username} />
         )}
-        {currentUser.id === artistData.artist.accountId && (
+        {isCurrentArtistAccount && !activeAuction && (
           <Button
             css={{ px: '50px' }}
             colorTheme='purple100'
@@ -85,6 +98,27 @@ function ArtistClubHeader() {
             }}
           >
             Create Auction
+          </Button>
+        )}
+        {isCurrentArtistAccount && activeAuction && (
+          <Button
+            css={{
+              border: '1px solid $danger200',
+              color: '$danger200',
+              px: '21px',
+              fontSize: '18px',
+            }}
+            onClick={() => {
+              openWith({
+                title: 'Are you sure you want to Cancel?',
+                description: `Are you sure you want to cancel your auction? This action cannot be undone.`,
+                cancelText: 'Do not cancel',
+                actionText: 'Yes, Cancel Auction',
+                onAction: onDeleteAuction,
+              });
+            }}
+          >
+            Delete Auction
           </Button>
         )}
       </HStack>

@@ -31,6 +31,7 @@ import {
   useGetAuction,
 } from '../../../../features/auction/shared/hooks/use-get-auction';
 import { useQuery } from '@apollo/client';
+import { useDeleteLiveAuction } from '../../../../features/auction/shared/hooks/use-delete-live-auction';
 
 export interface OutletContext {
   auctionData: AuctionData;
@@ -51,12 +52,17 @@ function Content() {
     data?.club.id,
   );
 
+  const { deleteLiveAuction } = useDeleteLiveAuction();
+
   const email = accountData?.accountInfo.email || '';
 
   const alertProps = getLiveBidAlert(alert, email);
 
   const activeAuction =
     auctionData?.auction?.id != null && auctionError == null;
+
+  const onDeleteAuction = () =>
+    deleteLiveAuction(auctionData?.auction?.id as number);
 
   const toggleAlert = (alert: number) => {
     setAlert(alert);
@@ -87,7 +93,10 @@ function Content() {
             </Box>
           )}
           <VStack px={5} py={5} h='100%'>
-            <ArtistClubHeader />
+            <ArtistClubHeader
+              activeAuction={activeAuction}
+              onDeleteAuction={onDeleteAuction}
+            />
             <RoutingTabs defaultValue='bio' flex={1}>
               <RoutingTabsHeader
                 borderBottom={1}

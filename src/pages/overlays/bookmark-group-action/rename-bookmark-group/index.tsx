@@ -45,7 +45,7 @@ function RenameBookmarkGroup() {
           Rename Bookmark Group
         </Heading>
       </Box>
-      <VStack as='form' px={4} pb={4} gap={5} h='100%'>
+      <VStack as='form' px={4} py={4} gap={5} h='100%'>
         <Box>
           <HStack mb={3} items='center' gap={2}>
             <Text as='label'>Title</Text>

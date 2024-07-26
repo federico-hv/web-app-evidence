@@ -161,7 +161,7 @@ function CreateLiveAuctionDialog() {
   const confirmAuctionPath = getPath(Paths.confirmAuction);
 
   const onDialogClose = () =>
-    navigate(location.state?.previousLocation || '/');
+    navigate(makePath([Paths.clubs, slug]) || '/');
 
   const onNextStep = () => {
     if (isConfirmAuction) {
@@ -277,11 +277,6 @@ function CreateLiveAuctionDialog() {
                   </Box>
                 </HStack>
               </DialogBody>
-              {/* <DialogFooter px={'48px'} py={'36px'}>
-                <Heading size={'36px'} weight={600}>
-                  THIS IS THE FOOTER
-                </Heading>
-              </DialogFooter> */}
             </DialogContent>
           </DialogPortal>
         </Dialog>

@@ -23,7 +23,7 @@ export const CREATE_POST = gql`
     createPost(payload: $payload) {
       id
       type
-      node {
+      item {
         __typename
         ... on PostModel {
           id
@@ -50,7 +50,7 @@ export const CREATE_ARTICLE = gql`
     createArticle(payload: $payload) {
       id
       type
-      node {
+      item {
         __typename
         ... on ArticleModel {
           id
@@ -200,7 +200,48 @@ export const UNPIN_FEED = gql`
 
 export const DELETE_FEED = gql`
   mutation deleteFeed($id: String!) {
-    deleteFeed(id: $id) # feed id, [nullable, string]
+    deleteFeed(id: $id) {
+      id
+      type
+      isPinned
+      isLiked
+      isBookmarked
+      createdAt
+      owner {
+        id
+        displayName
+        username
+        avatar
+      }
+      item {
+        ... on PostModel {
+          id
+          endDate
+          description
+          media {
+            id
+            url
+            type
+          }
+          polls {
+            id
+            text
+            count
+            voted
+          }
+        }
+        ... on ArticleModel {
+          id
+          title
+          description
+          imageUrl
+          source {
+            name
+            logo
+          }
+        }
+      }
+    }
   }
 `;
 

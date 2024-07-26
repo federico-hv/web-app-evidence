@@ -1,12 +1,13 @@
 import { ErrorMessage, useToast } from '../../../shared';
 import { useMutation } from '@apollo/client';
 import { DELETE_FEED } from './schema';
+import { FeedModel } from '../shared';
 
 export function useDeleteFeedMutation() {
   const { openWith } = useToast();
 
   const [mutation, { loading, error }] = useMutation<
-    { deleteFeed: string },
+    { deleteFeed: FeedModel },
     { id: string }
   >(DELETE_FEED);
 
@@ -14,11 +15,13 @@ export function useDeleteFeedMutation() {
     try {
       return await mutation({
         variables: { id },
-        update: (cache, { data }) => {
+        update: (cache) => {
           cache.modify({
             fields: {
-              feeds() {
-                console.log('');
+              feeds(current = {}) {
+                cache.evict({ id: current.__ref });
+
+                return;
               },
             },
           });

@@ -1,6 +1,4 @@
-import { useEffect } from 'react';
 import { useCreateRelationship } from '../use-create-relationship';
-import { useToast } from '../../../../../shared';
 import { RelationshipStatusCodeEnum } from '../../constants';
 
 export function useCreateRelationshipAction() {
