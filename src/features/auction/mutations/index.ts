@@ -28,7 +28,7 @@ export const CREATE_BID = gql`
         createdAt
         amount
       }
-      user {
+      owner {
         id
         username
         displayName
@@ -45,7 +45,7 @@ export const UPDATE_BID = gql`
         createdAt
         amount
       }
-      user {
+      owner {
         id
         username
         displayName
@@ -62,7 +62,7 @@ export const DELETE_BID = gql`
         createdAt
         amount
       }
-      user {
+      owner {
         id
         username
         displayName

@@ -25,7 +25,7 @@ export const GET_CONTENDERS = gql`
     contenders(id: $id, filter: $filter, params: $params) {
       edges {
         node {
-          user {
+          owner {
             id
             displayName
             username
