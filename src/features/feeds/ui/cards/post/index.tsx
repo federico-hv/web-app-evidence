@@ -19,8 +19,6 @@ function PostCard({ data }: { data: PostModel }) {
   const currentUser = useCurrentUser();
   const { owner, createdAt } = useFeedContext();
 
-  console.log(owner);
-
   return (
     <Card boxShadow='none' gap={3}>
       <Card.Header
