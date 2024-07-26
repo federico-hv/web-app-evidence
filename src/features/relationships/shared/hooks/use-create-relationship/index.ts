@@ -9,7 +9,7 @@ import {
   CreateRelationshipModel,
 } from '../../interfaces';
 import { omit } from 'lodash';
-import { GET_FEEDS } from '../../../../feeds';
+import { FeedFilterTypeEnum, GET_FEEDS } from '../../../../feeds';
 import { useToast } from '../../../../../shared';
 
 export function useCreateRelationship() {
@@ -27,7 +27,10 @@ export function useCreateRelationship() {
           payload,
         },
         refetchQueries: [
-          { query: GET_FEEDS, variables: { type: 'all' } },
+          {
+            query: GET_FEEDS,
+            variables: { filter: FeedFilterTypeEnum.All },
+          },
           {
             query: GET_RELATIONSHIP_COUNT,
             variables: { username: payload.username },
