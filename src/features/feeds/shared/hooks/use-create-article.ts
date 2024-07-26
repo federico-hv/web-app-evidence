@@ -4,6 +4,7 @@ import { FeedModel } from '../interface';
 import { CreateArticleInput } from '../interface';
 import { GET_FEEDS } from '../../queries';
 import { useToast } from '../../../../shared';
+import { FeedFilterTypeEnum } from '../enum';
 
 export function useCreateArticle() {
   const { openWith } = useToast();
@@ -17,8 +18,14 @@ export function useCreateArticle() {
     return mutation({
       variables: { payload },
       refetchQueries: [
-        { query: GET_FEEDS, variables: { type: 'all' } },
-        { query: GET_FEEDS, variables: { type: 'article' } },
+        {
+          query: GET_FEEDS,
+          variables: { filter: FeedFilterTypeEnum.All },
+        },
+        {
+          query: GET_FEEDS,
+          variables: { filter: FeedFilterTypeEnum.Posts },
+        },
       ],
     });
   };

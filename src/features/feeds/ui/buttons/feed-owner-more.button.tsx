@@ -1,9 +1,4 @@
-import {
-  useDeleteFeed,
-  useFeedContext,
-  usePinFeed,
-  useUnpinFeed,
-} from '../../shared';
+import { useFeedContext } from '../../shared';
 import { useRelationshipStatusInfo } from '../../../relationships';
 import {
   DialogContextProvider,
@@ -17,6 +12,11 @@ import { AudienceDialog } from '../dialogs';
 import stats from '../../../../assets/images/stats.png';
 import pinOutlined from '../../../../assets/images/pin-outlined.png';
 import pinFilled from '../../../../assets/images/pin-filled.png';
+import {
+  useDeleteFeedMutation,
+  usePinFeedMutation,
+  useUnpinFeedMutation,
+} from '../../mutations';
 
 function FeedOwnerMoreButton({ ghost }: { ghost?: boolean }) {
   const { openWith } = useAlertDialog();
@@ -25,9 +25,9 @@ function FeedOwnerMoreButton({ ghost }: { ghost?: boolean }) {
 
   const { data } = useRelationshipStatusInfo(owner.username);
 
-  const { pin } = usePinFeed();
-  const { unpin } = useUnpinFeed();
-  const { deleteFeed } = useDeleteFeed();
+  const { pin } = usePinFeedMutation();
+  const { unpin } = useUnpinFeedMutation();
+  const { deleteFeed } = useDeleteFeedMutation();
 
   return (
     <Fragment>
@@ -81,7 +81,9 @@ function FeedOwnerMoreButton({ ghost }: { ghost?: boolean }) {
                 action={() =>
                   openWith({
                     actionText: 'Yes, delete',
-                    onAction: async () => await deleteFeed(feedId),
+                    onAction: async () => {
+                      await deleteFeed(feedId);
+                    },
                     title: 'Delete feed',
                     description:
                       'If you delete this feed, you will you will lose all the data associated with this feed.' +
