@@ -3,7 +3,7 @@ import { GET_CONTENDERS } from '../../../../features/auction/queries';
 
 export interface ContenderEdge {
   node: {
-    user: {
+    owner: {
       id: string;
       displayName: string;
       username: string;

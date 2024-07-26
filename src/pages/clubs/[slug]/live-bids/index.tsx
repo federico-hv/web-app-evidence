@@ -43,6 +43,7 @@ import { useCreateBid } from '../../../../features/auction/shared/hooks';
 import { useGetAuction } from '../../../../features/auction/shared/hooks/use-get-auction';
 import {
   ContenderEdge,
+  ContendersData,
   useGetContenders,
 } from '../../../../features/auction/shared/hooks/use-get-contenders';
 import {
@@ -148,27 +149,32 @@ function ArtistClubLiveBidsPage() {
 
   const auctionEndDate = auctionData?.auction?.endsAt;
 
-  const activeBidders: IBidder[] =
-    contendersData && activeAuction
-      ? [...contendersData.contenders.edges].map((edge) => ({
-          id: edge.node.user.id,
-          displayName: edge.node.user.displayName,
-          bidId: edge.node.bid.id,
-          createdAt: dayjs(edge.node.bid.createdAt).toDate(),
-          amount: edge.node.bid.amount,
-        }))
-      : [];
+  const getBiddersList = (
+    biddersData: ContendersData | undefined,
+    activeAuction: boolean,
+  ) => {
+    if (biddersData == null || !activeAuction) {
+      return [];
+    }
 
-  const inactiveBidders: IBidder[] =
-    outOfContentionData && activeAuction
-      ? [...outOfContentionData.contenders.edges].map((edge) => ({
-          id: edge.node.user.id,
-          displayName: edge.node.user.displayName,
-          bidId: edge.node.bid.id,
-          createdAt: dayjs(edge.node.bid.createdAt).toDate(),
-          amount: edge.node.bid.amount,
-        }))
-      : [];
+    return [...biddersData!.contenders.edges].map((edge) => ({
+      id: edge.node.owner.id,
+      displayName: edge.node.owner.displayName,
+      bidId: edge.node.bid.id,
+      createdAt: dayjs(edge.node.bid.createdAt).toDate(),
+      amount: edge.node.bid.amount,
+    }));
+  };
+
+  const activeBidders: IBidder[] = getBiddersList(
+    contendersData,
+    activeAuction,
+  );
+
+  const inactiveBidders: IBidder[] = getBiddersList(
+    outOfContentionData,
+    activeAuction,
+  );
 
   useEffect(() => {
     checkIfUserIsOutbid();
@@ -288,7 +294,9 @@ function ArtistClubLiveBidsPage() {
     currentUserId: string,
   ) =>
     fullContendersData
-      .filter((edge: ContenderEdge) => edge.node.user.id === currentUserId)
+      .filter(
+        (edge: ContenderEdge) => edge.node.owner.id === currentUserId,
+      )
       .reduce<number | null>(
         (acc, edge: ContenderEdge) => edge.node.bid.id,
         null,
