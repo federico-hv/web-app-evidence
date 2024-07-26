@@ -100,6 +100,8 @@ function AlertDialogProvider({ children }: GenericProps) {
                 py={0}
               >
                 <Button
+                  autoFocus
+                  tabIndex={0}
                   css={{ px: '28px' }}
                   radius={1}
                   colorTheme='purple500'

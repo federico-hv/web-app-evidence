@@ -36,7 +36,7 @@ function CreateBookmarkGroup() {
 
   const [state, update] = useRecordState<ICreateBookmarkGroup>({
     name: '',
-    isPrivate: false,
+    isPrivate: true,
   });
 
   const { loading, createBookmarkGroup } = useCreateBookmarkGroup();
@@ -116,22 +116,19 @@ function CreateBookmarkGroup() {
                 size={{ '@bp1': 'sm', '@bp3': 'base' }}
                 name='isPrivate'
                 onChange={(e) => {
-                  console.log(e.target.value);
-
                   update({
-                    isPrivate: !(e.target.value === 'true'),
+                    isPrivate: e.target.value === 'true',
                   });
                 }}
-                defaultChecked={false}
-                value={`${state.isPrivate}`}
-                checked={state.isPrivate}
+                value={`${!state.isPrivate}`}
+                checked={!state.isPrivate}
               />
             </HStack>
           </TextGroup>
         </HStack>
         <HStack gap={2} justify='flex-end'>
           <Button
-            type='submit'
+            type='button'
             onClick={() => navigate(previousLocation)}
             variant='ghost'
             colorTheme='purple300'
