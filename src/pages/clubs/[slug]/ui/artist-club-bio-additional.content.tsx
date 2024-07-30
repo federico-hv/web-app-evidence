@@ -91,7 +91,7 @@ function ExternalLink({ data }: { data: IExternalLink }) {
                 size={2}
                 weight={300}
                 noOfLines={1}
-                css={{ width: '100%' }}
+                css={{ width: '100%', lineHeight: 1.5 }}
               >
                 {data.url}
               </Text>
@@ -188,7 +188,9 @@ function ArtistClubBioAdditionalContent() {
                   renderItem={(item) => (
                     <HStack gap={2}>
                       <Circle mt='6px' bgColor='white500' size='6px' />
-                      <Text>{item.description}</Text>
+                      <Text css={{ lineHeight: 1.5 }}>
+                        {item.description}
+                      </Text>
                     </HStack>
                   )}
                   keyExtractor={(item) => item.description}

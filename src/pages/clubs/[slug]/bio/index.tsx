@@ -78,7 +78,11 @@ function ArtistClubBioPage() {
                     About
                   </Heading>
                   <VStack flex={1}>
-                    <Text weight={300} color='white600'>
+                    <Text
+                      css={{ lineHeight: 1.5 }}
+                      weight={300}
+                      color='white600'
+                    >
                       {artistData.artist.bio}
                     </Text>
                   </VStack>
@@ -97,7 +101,11 @@ function ArtistClubBioPage() {
                     Based In
                   </Heading>
                   <VStack flex={1}>
-                    <Text weight={300} color='white600'>
+                    <Text
+                      css={{ lineHeight: 1.5 }}
+                      weight={300}
+                      color='white600'
+                    >
                       {artistData.artist.location}
                     </Text>
                   </VStack>
@@ -121,7 +129,15 @@ function ArtistClubBioPage() {
                       <Circle mx={4} bgColor='black300' size='5px' />
                     }
                     data={collaborationData.collaborators}
-                    renderItem={(item) => <Text>{item.name}</Text>}
+                    renderItem={(item) => (
+                      <Text
+                        color='white600'
+                        weight={300}
+                        css={{ lineHeight: 1.5 }}
+                      >
+                        {item.name}
+                      </Text>
+                    )}
                     keyExtractor={(item) => item.id}
                   />
                 </VStack>
@@ -152,7 +168,7 @@ function ArtistClubBioPage() {
                 size={'16px'}
                 weight={300}
                 color='white700'
-                css={{ marginTop: '$1' }}
+                css={{ marginTop: '$1', lineHeight: 1.5 }}
               >
                 50 Members
               </Heading>
