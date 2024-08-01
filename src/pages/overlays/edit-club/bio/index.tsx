@@ -10,8 +10,6 @@ import {
   VStack,
 } from '@holdr-ui/react';
 import {
-  IAnnouncement,
-  ICollaborator,
   InformationTooltip,
   InputTextField,
   isLengthGreaterThanZero,

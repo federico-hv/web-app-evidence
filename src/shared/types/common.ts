@@ -34,3 +34,40 @@ export interface ISuccessResponse<T = any> {
   status: number;
   message: string;
 }
+
+export interface ILengthErrorExists {
+  length: number;
+  message?: string;
+}
+
+export type ICompareErrorExists =
+  | {
+      fn: boolean; // must be true to trigger fn
+      message?: {
+        gt?: string;
+        lt?: string;
+        fn?: string;
+      };
+      value?: never;
+      gt?: never;
+      lt?: never;
+    }
+  | {
+      fn?: never;
+      value: StringNumeric;
+      gt?: StringNumeric;
+      lt?: StringNumeric;
+      message?: {
+        gt?: string;
+        lt?: string;
+        fn?: string;
+      };
+    };
+
+export interface PasswordErrors {
+  capital?: boolean;
+  lowercase?: boolean;
+  special?: boolean;
+  number?: boolean;
+  length?: boolean;
+}

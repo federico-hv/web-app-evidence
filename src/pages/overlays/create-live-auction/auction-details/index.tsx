@@ -5,6 +5,7 @@ import {
   TextGroup,
   TextGroupHeading,
   TextGroupSubheading,
+  useNavigateWithPreviousLocation,
   usePreviousLocation,
 } from '../../../../shared';
 import { ChangeClubImage } from '../../setup-artist-profile/upload-photos/ui';
@@ -16,9 +17,9 @@ import {
 } from '../../../../features';
 import { SelectPredefinedPerks } from '../../setup-artist-profile/bio-and-perks/ui';
 import { useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
-function EditArtistClubAuctionDetailsPage() {
+function AuctionDetailsPage() {
   const { slug } = useParams();
 
   const club = useClubContext();
@@ -27,13 +28,13 @@ function EditArtistClubAuctionDetailsPage() {
 
   const { data: artistData } = useSuspenseGetArtist({ slug });
 
-  const navigate = useNavigate();
-
   const { updatePerks, loading } = useUpdatePerks();
 
   const previousLocation = usePreviousLocation(
     makePath([Paths.clubs, slug || '']),
   );
+
+  const navigate = useNavigateWithPreviousLocation(previousLocation);
 
   const goBack = () => navigate(previousLocation);
 
@@ -49,7 +50,15 @@ function EditArtistClubAuctionDetailsPage() {
         e.preventDefault();
 
         await updatePerks(club.id, { perks: selectedPerks }).then(() =>
-          goBack(),
+          navigate(
+            makePath([
+              Paths.clubs,
+              slug || '',
+              Paths.auction,
+              Paths.create,
+              Paths.reviewAuctionInfo,
+            ]),
+          ),
         );
       }}
     >
@@ -76,17 +85,7 @@ function EditArtistClubAuctionDetailsPage() {
               <Text weight={500} size={2} as='label'>
                 Auction Card
               </Text>
-              {/*<InformationTooltip*/}
-              {/*  side='right'*/}
-              {/*  align='start'*/}
-              {/*  container={*/}
-              {/*    document.getElementById('page-dialog-container') ||*/}
-              {/*    document.body*/}
-              {/*  }*/}
-              {/*  description='Something useful.'*/}
-              {/*/>*/}
             </HStack>
-            {/** ⚠️ Disable when live auction is running*/}
             <ChangeClubImage
               artistName={artistData.artist.name}
               placeholder={club.coverImage}
@@ -116,8 +115,6 @@ function EditArtistClubAuctionDetailsPage() {
             values={selectedPerks}
             onChange={(next: number[]) => setSelectedPerks(next)}
           />
-
-          <Box bgColor='rgba(152, 152, 255, 0.20)' h='1px' my={4} />
 
           {/** ⚠️ Disable when live auction is running*/}
           {/*<CustomMembershipPerks/>*/}
@@ -159,20 +156,19 @@ function EditArtistClubAuctionDetailsPage() {
         </Button>
         <Button
           isLoading={loading}
-          disabled={selectedPerks.length < 3}
+          disabled={selectedPerks.length < 3 || !club.coverImage}
           type='submit'
-          loadingText='Save & exit'
+          loadingText='Continue'
           radius={1}
           colorTheme='purple500'
           css={{ px: '28px' }}
         >
-          Save & exit
+          Continue
         </Button>
       </HStack>
     </VStack>
   );
 }
-EditArtistClubAuctionDetailsPage.displayName =
-  'EditArtistClubAuctionDetailsPage';
+AuctionDetailsPage.displayName = 'AuctionDetailsPage';
 
-export default EditArtistClubAuctionDetailsPage;
+export default AuctionDetailsPage;

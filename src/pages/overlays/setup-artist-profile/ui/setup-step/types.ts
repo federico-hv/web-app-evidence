@@ -2,6 +2,6 @@ export interface SetupStepProps {
   active?: boolean;
   disabledLink?: boolean;
   number: number;
-  path: string;
+  path?: string;
   description: string;
 }

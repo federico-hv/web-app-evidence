@@ -1,4 +1,4 @@
-import { ITinyArtist } from '../../../shared';
+import { ITinyArtist, UserModel } from '../../../shared';
 import { ITinyClub } from '../../clubs';
 
 export interface IAuction {
@@ -16,4 +16,27 @@ export interface CreateAuctionPayload {
   duration: number;
   entryPrice: number;
   numberOfMemberships: number;
+}
+
+export interface IUserBid {
+  id: number;
+  amount: number;
+  createdAt: Date;
+}
+
+export interface IAuctionBid {
+  owner: UserModel;
+  artist: UserModel;
+  bid: IUserBid;
+  club: ITinyClub;
+}
+
+export interface ICreateBidArgs {
+  id: string;
+  amount: string;
+}
+
+export interface IUpdateBidArgs {
+  id: number;
+  amount: string;
 }

@@ -7,24 +7,24 @@ import {
   hexToRGB,
 } from '@holdr-ui/react';
 import {
-  InformationTooltip,
-  InputTextField,
+  makePath,
+  Paths,
   TextGroup,
   TextGroupHeading,
   TextGroupSubheading,
+  useNavigateWithPreviousLocation,
+  usePreviousLocation,
 } from '../../../../shared';
 import { ChangeClubImage } from '../../setup-artist-profile/upload-photos/ui';
 import {
   IPerk,
   useClubContext,
-  usePerksContext,
+  useGetAuctionSuspenseQuery,
+  useSuspenseGetArtist,
 } from '../../../../features';
-import { SelectPredefinedPerks } from '../../setup-artist-profile/bio-and-perks/ui';
-import { useState } from 'react';
 import { FlatList } from '../../../../tmp/flat-list';
-import { perksData } from '../../../clubs/[slug]/membership-perks';
-import { OutletContext } from '../ui/create-live-auction-dialog';
-import { useOutletContext } from 'react-router-dom';
+import { dummyPerksData } from '../../../clubs';
+import { Navigate, useParams } from 'react-router-dom';
 
 function AuctionPerkItem({
   order,
@@ -40,19 +40,19 @@ function AuctionPerkItem({
       border={1}
       borderColor={hexToRGB('#9898FF', 0.35)}
     >
-      <HStack p={'8px'} gap={2} items={'center'}>
+      <HStack p={1} gap={2} items={'center'}>
         <Text size={'14px'} weight={500} color='white600'>
           {`${order}.`}
         </Text>
-        <Text size={'14px'} weight={500} color='white50'>
+        <Text size={2} weight={500} color='white50'>
           {data.label}
         </Text>
-        <Text size={'12px'} weight={300} color='white600'>
+        <Text size={2} weight={300} color='white600'>
           {data.additionalInfo}
         </Text>
       </HStack>
       <Box bg='purpleTint400' h='1px' />
-      <VStack p='12px' minHeight={'76px'}>
+      <VStack p={2}>
         <Text
           size={'14px'}
           weight={400}
@@ -66,160 +66,148 @@ function AuctionPerkItem({
   );
 }
 
-function ReviewAuctionInfo() {
-  const { onDialogClose, onNextStep, acceptButtonText } =
-    useOutletContext<OutletContext>();
-  const club = useClubContext();
-  const { clubPerks } = usePerksContext();
+function CreateAuctionReviewAuctionInfoPage() {
+  const { slug } = useParams();
 
-  const [selectedPerks, setSelectedPerks] = useState<number[]>(
-    clubPerks.map(({ id }) => id),
+  const club = useClubContext();
+
+  const previousLocation = usePreviousLocation(
+    makePath([Paths.clubs, slug || '']),
   );
+
+  const navigate = useNavigateWithPreviousLocation(previousLocation);
+
+  const { data: artistData } = useSuspenseGetArtist({ slug });
+
+  const { data: auctionData } = useGetAuctionSuspenseQuery(club.id);
+
+  if (auctionData && auctionData.auction) {
+    return (
+      <Navigate
+        to={makePath([
+          Paths.clubs,
+          slug || '',
+          Paths.auction,
+          Paths.create,
+          Paths.auctionDetails,
+        ])}
+        replace
+      />
+    );
+  }
 
   return (
     <VStack
       as='form'
-      gap={8}
       h='100%'
-      overflowY='auto'
-      pr={4}
-      className='thin-scrollbar'
-      position='relative'
-    >
-      <VStack gap={4}>
-        <VStack gap={4}>
-          <HStack color='white700' gap={1} items='center'>
-            <Text weight={500} size={2} as='label'>
-              Auction Card
-            </Text>
-            <InformationTooltip
-              side='right'
-              align='start'
-              container={
-                document.getElementById('page-dialog-container') ||
-                document.body
-              }
-              description='Something useful.'
-            />
-          </HStack>
-          {/** ⚠️ Disable when live auction is running*/}
-          <ChangeClubImage placeholder={club.coverImage} />
-        </VStack>
-      </VStack>
-      {/* <VStack>
-        <HStack color='white700' gap={1} items='center'>
-          <Text weight={500} size={2} as='label'>
-            Custom URL
-          </Text>
-          <InformationTooltip
-            side='right'
-            align='start'
-            container={
-              document.getElementById('page-dialog-container') ||
-              document.body
-            }
-            description='Something useful.'
-          />
-        </HStack>
-        <VStack py={2}>
-          <Text>holdrsclub.com/clubs/jadelightning</Text>
-        </VStack>
-      </VStack> */}
-      <VStack>
-        <TextGroup gap={0} mb={4}>
-          <TextGroupHeading as='h2' size={3} weight={500}>
-            Membership Perks
-          </TextGroupHeading>
-          {/* <TextGroupSubheading size={1} color='white700'>
-            Select the perks that you will be offered to your fans
-          </TextGroupSubheading> */}
-        </TextGroup>
+      onSubmit={async (e) => {
+        e.preventDefault();
 
+        navigate(
+          makePath([
+            Paths.clubs,
+            slug || '',
+            Paths.auction,
+            Paths.create,
+            Paths.confirmAuction,
+          ]),
+        );
+      }}
+    >
+      <VStack
+        overflowY='auto'
+        pr={4}
+        className='thin-scrollbar'
+        gap={4}
+        flex={1}
+      >
+        <VStack gap={4}>
+          <TextGroup gap={0}>
+            <TextGroupHeading as='h2' size={3} weight={500}>
+              Review information
+            </TextGroupHeading>
+            <TextGroupSubheading size={1} color='white700'>
+              Review your auction details before initiating it
+            </TextGroupSubheading>
+          </TextGroup>
+
+          <VStack gap={4}>
+            <HStack color='white700' gap={1} items='center'>
+              <Text weight={500} size={2} as='label'>
+                Auction Card
+              </Text>
+            </HStack>
+            <ChangeClubImage
+              disabled
+              artistName={artistData.artist.name}
+              placeholder={club.coverImage}
+            />
+          </VStack>
+        </VStack>
         <VStack>
+          <TextGroup gap={0} mb={4}>
+            <TextGroupHeading as='h2' size={3} weight={500}>
+              Membership Perks
+            </TextGroupHeading>
+            <TextGroupSubheading size={1} color='white700'>
+              Select the perks that you will be offered to your fans
+            </TextGroupSubheading>
+          </TextGroup>
+
           <FlatList
             gap={2}
             direction='vertical'
-            data={perksData}
+            data={dummyPerksData}
             renderItem={(item, index) => (
               <AuctionPerkItem order={index + 1} data={item} />
             )}
             keyExtractor={(item) => item.id}
           />
         </VStack>
-
-        {/** ⚠️ Disable when live auction is running*/}
-        {/* {selectedPerks.length < 3 && (
-          <Box mb={4}>
-            <Text size={1} color='danger200' weight={300}>
-              Please select at least 3 perks
-            </Text>
-          </Box>
-        )} */}
-
-        {/* <SelectPredefinedPerks
-          values={selectedPerks}
-          onChange={(next: number[]) => setSelectedPerks(next)}
-        /> */}
-
-        <Box bgColor='rgba(152, 152, 255, 0.20)' h='1px' my={4} />
-
-        {/** ⚠️ Disable when live auction is running*/}
-        {/*<CustomMembershipPerks/>*/}
-        {/*<HStack color='white700' gap={2} items='center'>*/}
-        {/*  <Text weight={500} size={2} as='label'>*/}
-        {/*    Custom Perks*/}
-        {/*  </Text>*/}
-        {/*  <InformationTooltip*/}
-        {/*    side='right'*/}
-        {/*    align='start'*/}
-        {/*    container={*/}
-        {/*      document.getElementById('page-dialog-container') ||*/}
-        {/*      document.body*/}
-        {/*    }*/}
-        {/*    description='Info.'*/}
-        {/*  />*/}
-        {/*</HStack>*/}
       </VStack>
       <HStack
         bgColor='#30304b'
         position='sticky'
-        b='50px'
+        b={0}
         gap={2}
         justify='flex-end'
         py={4}
         pr='10px'
       >
-        <Box h={'80px'}>
-          <HStack items={'center'} justify={'flex-end'}>
-            <VStack justify='center' items='center' py='14px' px='28px'>
-              <Text
-                color='white700'
-                size='14px'
-                weight={500}
-                css={{ textDecoration: 'underline' }}
-                onClick={onDialogClose}
-              >
-                Cancel
-              </Text>
-            </VStack>
-            <Button
-              radius={1}
-              colorTheme='purple500'
-              css={{
-                padding: '14px 28px',
-              }}
-              onClick={onNextStep}
-            >
-              <Text size='14px' weight={500}>
-                {acceptButtonText}
-              </Text>
-            </Button>
-          </HStack>
-        </Box>
+        <Button
+          onClick={() => {
+            navigate(
+              makePath([
+                Paths.clubs,
+                slug || '',
+                Paths.auction,
+                Paths.create,
+                Paths.auctionDetails,
+              ]),
+            );
+          }}
+          type='button'
+          variant='ghost'
+          radius={1}
+          colorTheme='purple200'
+          css={{ px: '28px' }}
+        >
+          Back
+        </Button>
+        <Button
+          type='submit'
+          loadingText='Continue'
+          radius={1}
+          colorTheme='purple500'
+          css={{ px: '28px' }}
+        >
+          Continue
+        </Button>
       </HStack>
     </VStack>
   );
 }
-ReviewAuctionInfo.displayName = 'ReviewAuctionInfo';
+CreateAuctionReviewAuctionInfoPage.displayName =
+  'CreateAuctionReviewAuctionInfoPage';
 
-export default ReviewAuctionInfo;
+export default CreateAuctionReviewAuctionInfoPage;

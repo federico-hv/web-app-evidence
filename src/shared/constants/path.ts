@@ -3,6 +3,7 @@ export const Paths = {
   all: 'all',
   add: 'add',
   bio: 'bio',
+  bids: 'live-bids',
   musicAndLinks: 'music-and-links',
   slug: ':slug',
   create: 'create',

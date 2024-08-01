@@ -9,20 +9,8 @@ import { useSuspenseGetInactiveBidders } from '../../../../../features';
 import Bidder from './bidder';
 import { IBidder } from '..';
 
-function ArtistClubInactiveBiddersList({
-  confirmWithdraw,
-  currentUserId,
-  bidders,
-  clubId,
-}: {
-  confirmWithdraw: (bidId: number) => void;
-  currentUserId: string;
-  clubId: string;
-  bidders: IBidder[];
-}) {
-  const isCurrentUser = (item: any) => item.id === currentUserId;
-
-  const auctionWithBidders = bidders.length > 0;
+function ArtistClubInactiveBiddersList() {
+  //const isCurrentUser = (item: any) => item.id === currentUserId;
 
   return (
     <RadialSurface
@@ -43,27 +31,27 @@ function ArtistClubInactiveBiddersList({
         </TextGroupHeading>
       </TextGroup>
 
-      {auctionWithBidders && (
-        <FlatList
-          data={bidders}
-          keyExtractor={(item) => `inactive-bid-${item.id}`}
-          renderItem={(item, idx) => (
-            <Bidder
-              confirmWithdraw={confirmWithdraw}
-              isActive={isCurrentUser(item)}
-              position={idx + 1}
-              data={item}
-            />
-          )}
-          direction={'vertical'}
-        />
-      )}
+      {/*{auctionWithBidders && (*/}
+      {/*  <FlatList*/}
+      {/*    data={bidders}*/}
+      {/*    keyExtractor={(item) => `inactive-bid-${item.id}`}*/}
+      {/*    renderItem={(item, idx) => (*/}
+      {/*      <Bidder*/}
+      {/*        confirmWithdraw={confirmWithdraw}*/}
+      {/*        isActive={isCurrentUser(item)}*/}
+      {/*        position={idx + 1}*/}
+      {/*        data={item}*/}
+      {/*      />*/}
+      {/*    )}*/}
+      {/*    direction={'vertical'}*/}
+      {/*  />*/}
+      {/*)}*/}
 
-      {!auctionWithBidders && (
-        <VStack items='center' py={'10px'}>
-          <Text>No out of contention bidders yet</Text>
-        </VStack>
-      )}
+      {/*{!auctionWithBidders && (*/}
+      {/*  <VStack items='center' py={'10px'}>*/}
+      {/*    <Text>No out of contention bidders yet</Text>*/}
+      {/*  </VStack>*/}
+      {/*)}*/}
     </RadialSurface>
   );
 }

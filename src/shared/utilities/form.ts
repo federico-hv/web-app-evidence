@@ -1,5 +1,13 @@
 import { FormikErrors } from 'formik';
 import { matchesPattern } from './string';
+import { StringNumeric } from '@holdr-ui/react';
+import {
+  ICompareErrorExists,
+  ILengthErrorExists,
+  PasswordErrors,
+} from '../types';
+import { FieldLengths } from '../constants';
+import { isUndefined } from 'lodash';
 
 export const minimumLengthMsg = (min: number) =>
   `Requires ${min} characters or more`;
@@ -35,6 +43,14 @@ export function isInputDisabled<U>(
   return false;
 }
 
+function enumerable(item: any) {
+  try {
+    return !!item.length;
+  } catch (e) {
+    return false;
+  }
+}
+
 /**
  * Check whether fields are missing from a form's data.
  *
@@ -43,13 +59,21 @@ export function isInputDisabled<U>(
  *
  * @returns true if the data has any field that is empty.
  */
-export function missingField<T extends Record<string, string>>(
+export function missingField<T extends Record<string, any>>(
   data: T,
-  omit: string[],
+  omit: string[] = [],
 ) {
   const keys = Object.keys(data);
 
   for (const key of keys) {
+    if (!data[key] || data[key] === undefined) {
+      return true;
+    }
+
+    if (!enumerable(data[key])) {
+      return true;
+    }
+
     if (omit.includes(key)) {
       continue;
     }
@@ -59,6 +83,24 @@ export function missingField<T extends Record<string, string>>(
   }
 
   return false;
+}
+
+/**
+ * Check if an object has key values that
+ * are all undefined
+ *
+ * @param data the object to check.
+ */
+export function hasAllUndefinedKeyValues(data: any) {
+  const keys = Object.keys(data);
+
+  for (const key of keys) {
+    if (!isUndefined(data[key])) {
+      return false;
+    }
+  }
+
+  return true;
 }
 
 /**
@@ -87,4 +129,143 @@ export function isMatchingPattern(
   if (value === undefined || value.length === 0) return undefined;
 
   return matchesPattern(value, pattern) ? undefined : message;
+}
+
+/**
+ * Useful for checking input field errors
+ *
+ * @param value
+ * @param options
+ */
+export function handleFieldError(
+  value: string | undefined,
+  options: {
+    keyName: string;
+    pattern?: { value: RegExp; message?: string };
+    min?: ILengthErrorExists;
+    max?: ILengthErrorExists;
+    compare?: ICompareErrorExists;
+    same?: { value: string; refName: string; message?: string };
+  },
+) {
+  if (!value) {
+    return;
+  }
+
+  const errorMessageGenerator = {
+    min: (value: number) => `must be at least ${value} characters long.`,
+    max: (value: number) => `must be at most ${value} characters long.`,
+    pattern: (pattern: RegExp) => `must match the pattern ${pattern}`,
+    same: (refName: string) => `must match ${refName}`,
+    gt: (value: StringNumeric) => `must be greater than ${value}.`,
+    lt: (value: StringNumeric) => `must be less than ${value}.`,
+  };
+
+  const constructError = (message: string) =>
+    `${options.keyName} ${message}`;
+
+  if (options.pattern && value.length > 0) {
+    const errorMessage = matchesPattern(value, options.pattern.value)
+      ? undefined
+      : options.pattern.message ||
+        constructError(
+          errorMessageGenerator.pattern(options.pattern.value),
+        );
+
+    if (errorMessage) return errorMessage;
+  }
+  if (options.min && value.length > 0) {
+    const errorMessage =
+      value.length >= options.min.length
+        ? undefined
+        : options.min.message ||
+          constructError(errorMessageGenerator.min(options.min.length));
+
+    if (errorMessage) return errorMessage;
+  }
+  if (options.max && value.length > 0) {
+    const errorMessage =
+      value.length <= options.max.length
+        ? undefined
+        : options.max.message ||
+          constructError(errorMessageGenerator.max(options.max.length));
+
+    if (errorMessage) return errorMessage;
+  }
+  if (options.same && value.length > 0) {
+    const errorMessage =
+      value === options.same.value
+        ? undefined
+        : options.same.message ||
+          constructError(errorMessageGenerator.same(options.same.refName));
+
+    if (errorMessage) return errorMessage;
+  }
+  if (options.compare && value) {
+    if (options.compare.fn !== undefined) {
+      const errorMessage = options.compare.fn
+        ? options.compare.message?.fn
+        : undefined;
+
+      if (errorMessage) return errorMessage;
+    }
+    if (options.compare.gt !== undefined) {
+      const errorMessage =
+        options.compare.value > options.compare.gt
+          ? undefined
+          : options.compare.message?.gt ||
+            constructError(errorMessageGenerator.gt(options.compare.gt));
+
+      if (errorMessage) return errorMessage;
+    }
+    if (options.compare.lt !== undefined) {
+      const errorMessage =
+        options.compare.value < options.compare.lt
+          ? undefined
+          : options.compare.message?.lt ||
+            constructError(errorMessageGenerator.lt(options.compare.lt));
+
+      if (errorMessage) return errorMessage;
+    }
+  }
+
+  return undefined;
+}
+
+export function passwordValidation(password: string) {
+  let errors: PasswordErrors = {
+    capital: undefined,
+    lowercase: undefined,
+    special: undefined,
+    number: undefined,
+    length: undefined,
+  };
+
+  if (matchesPattern(password, /[A-Z]/)) {
+    errors = { ...errors, capital: false };
+  } else {
+    errors = { ...errors, capital: true };
+  }
+  if (matchesPattern(password, /[a-z]/)) {
+    errors = { ...errors, lowercase: false };
+  } else {
+    errors = { ...errors, lowercase: true };
+  }
+  if (matchesPattern(password, /[0-9]/)) {
+    errors = { ...errors, number: false };
+  } else {
+    errors = { ...errors, number: true };
+  }
+  if (matchesPattern(password, /[\W]/)) {
+    errors = { ...errors, special: false };
+  } else {
+    errors = { ...errors, special: true };
+  }
+  if (password.length >= FieldLengths.password.min) {
+    errors = { ...errors, length: false };
+  } else {
+    errors = { ...errors, length: true };
+  }
+
+  return errors;
 }

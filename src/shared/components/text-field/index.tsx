@@ -1,112 +1,95 @@
-import {
-  hexToRGB,
-  HStack,
-  Icon,
-  Input,
-  Text,
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-  VStack,
-} from '@holdr-ui/react';
+import { Text, VStack } from '@holdr-ui/react';
 import { InputTextFieldProps } from './types';
-import { customInputStyles } from '../../styles';
+import Label from '../label';
+import { AnimatePresence } from 'framer-motion';
+import { lightInputStyles } from '../../styles';
+import {
+  Input,
+  InputGroup,
+  InputGroupLeftElement,
+  InputGroupRightElement,
+} from '../../../tmp/input-group';
+import AppearingContent from '../appearing-content';
 
-function InputTextField({
+function TextInputField({
+  type,
   name,
   errorText,
-  className = customInputStyles(),
+  tooltip,
+  className = lightInputStyles(),
   label,
   value,
   onChange,
-  onBlur,
-  tooltip,
+  onFocus,
   placeholder,
   labelProps,
   autoComplete,
+  leftElement,
+  rightElement,
+  css,
   ...props
 }: InputTextFieldProps) {
-  // useful for rendering the tooltip in the right container - with correct z-index
-  const node =
-    document.getElementById('page-dialog-container') || document.body;
-
   return (
     <VStack gap={1} flex={1}>
       <VStack as='fieldset'>
-        <HStack
-          color='white700'
-          gap={1}
-          items='center'
-          css={{ marginBottom: label ? '$2' : 0 }}
-        >
-          {label && (
-            <Text
-              size={2}
-              weight={500}
-              {...labelProps}
-              as='label'
-              htmlFor={name}
-            >
-              {label}
-            </Text>
-          )}
-          {tooltip && (
-            <Tooltip>
-              <TooltipTrigger
-                display='flex'
-                css={{ alignItems: 'center' }}
-              >
-                <Icon name='information-outline' />
-              </TooltipTrigger>
+        {label && (
+          <Label
+            name={name}
+            tooltip={tooltip}
+            text={label}
+            {...labelProps}
+          />
+        )}
 
-              <TooltipContent
-                arrowWidth={0}
-                arrowHeight={0}
-                maxWidth={250}
-                sideOffset={-16}
-                side='right'
-                align='start'
-                fontSize={1}
-                container={node}
-                bgColor='#202032'
-                border={1}
-                borderColor={hexToRGB('#9898FF', 0.25)}
-              >
-                {tooltip}
-              </TooltipContent>
-            </Tooltip>
+        <InputGroup>
+          {leftElement && (
+            <InputGroupLeftElement>{leftElement}</InputGroupLeftElement>
           )}
-        </HStack>
-        <Input
-          autoComplete={autoComplete}
-          name={name}
-          id={name}
-          value={value}
-          onChange={onChange}
-          radius={1}
-          className={className}
-          color='white500'
-          placeholder={placeholder}
-          onBlur={onBlur}
-          css={{
-            fontFamily: 'inherit',
-          }}
-          {...props}
-        />
+          <Input
+            type={type}
+            autoComplete={autoComplete}
+            name={name}
+            id={name}
+            value={value}
+            onChange={onChange}
+            radius={1}
+            className={className}
+            color='white500'
+            placeholder={placeholder}
+            onFocus={onFocus}
+            css={{
+              '&': errorText
+                ? {
+                    border: '1px solid $danger300 !important',
+                    backgroundColor: 'transparent',
+                  }
+                : undefined,
+              ...css,
+            }}
+            {...props}
+          />
+          {rightElement && (
+            <InputGroupRightElement>{rightElement}</InputGroupRightElement>
+          )}
+        </InputGroup>
       </VStack>
-      {errorText && errorText.length && (
-        <Text
-          weight={500}
-          color='danger400'
-          size={1}
-          css={{ marginTop: '$2' }}
-        >
-          {errorText}
-        </Text>
-      )}
+      <AnimatePresence>
+        {errorText && errorText.length && (
+          <AppearingContent>
+            <Text
+              weight={500}
+              color='danger200'
+              size={1}
+              css={{ marginTop: '$2' }}
+            >
+              {errorText}
+            </Text>
+          </AppearingContent>
+        )}
+      </AnimatePresence>
     </VStack>
   );
 }
-InputTextField.displayName = 'TextField';
+TextInputField.displayName = 'TextInputField';
 
-export default InputTextField;
+export default TextInputField;

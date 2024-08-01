@@ -23,3 +23,22 @@ export enum ExternalLinkTypeEnum {
 export const ErrorMessage = {
   Any: 'Oops, something went wrong. Try again later.',
 };
+
+export const FieldLengths = {
+  username: {
+    min: 3,
+    max: 25,
+  },
+  password: {
+    min: 10,
+    max: 25,
+  },
+  name: {
+    min: 3,
+    max: null,
+  },
+  displayName: {
+    min: 3,
+    max: 50,
+  },
+};

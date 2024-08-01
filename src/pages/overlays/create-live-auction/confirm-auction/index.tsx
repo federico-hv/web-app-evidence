@@ -1,171 +1,160 @@
+import { Button, HStack, useRecordState, VStack } from '@holdr-ui/react';
 import {
-  Box,
-  Button,
-  HStack,
-  Input,
-  InputGroup,
-  Text,
-  VStack,
-} from '@holdr-ui/react';
-import {
-  InformationTooltip,
+  arrayFrom,
+  handleFieldError,
+  hasAllUndefinedKeyValues,
   InputTextField,
+  lightSelectCSS,
+  makePath,
+  missingField,
+  Paths,
+  SelectInputField,
   TextGroup,
   TextGroupHeading,
   TextGroupSubheading,
+  useNavigateWithPreviousLocation,
+  usePreviousLocation,
 } from '../../../../shared';
-import { ChangeClubImage } from '../../setup-artist-profile/upload-photos/ui';
-import { useClubContext, usePerksContext } from '../../../../features';
-import { SelectPredefinedPerks } from '../../setup-artist-profile/bio-and-perks/ui';
-import { ChangeEvent, useState } from 'react';
-import { useOutletContext } from 'react-router-dom';
-import DurationInHoursPicker from './duration-in-hours-picker';
-import { OutletContext } from '../ui/create-live-auction-dialog';
+import { useParams } from 'react-router-dom';
+import { ChangeEvent } from 'react';
+import {
+  useCreateAuction,
+  useSuspenseGetClub,
+} from '../../../../features';
 
 function ConfirmAuction() {
-  const { formik, onDialogClose, onNextStep, acceptButtonText } =
-    useOutletContext<OutletContext>();
+  const { slug } = useParams();
 
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    e.target.value = e.target.value.replace(/[^\d]/g, '');
-    formik.handleChange(e);
-  };
+  const { data } = useSuspenseGetClub({ slug });
+
+  const { createAuction, loading } = useCreateAuction();
+
+  const [state, update] = useRecordState({
+    entryPrice: undefined,
+    duration: '2',
+    numberOfMemberships: undefined,
+  });
+
+  const previousLocation = usePreviousLocation(
+    makePath([Paths.clubs, slug || '']),
+  );
+
+  const navigate = useNavigateWithPreviousLocation(previousLocation);
+
+  const handleOnChange = (
+    e: ChangeEvent<HTMLInputElement>,
+    replaceNotMatching?: {
+      [Symbol.replace](string: string, replaceValue: string): string;
+    },
+  ) =>
+    update({
+      [e.target.name]: replaceNotMatching
+        ? e.target.value.replace(replaceNotMatching, '')
+        : e.target.value,
+    });
+
+  const entryPriceError = handleFieldError(state?.entryPrice, {
+    keyName: 'Entry price',
+    compare: {
+      value: parseInt(state?.entryPrice ?? '0'),
+      gt: 9,
+      message: {
+        gt: 'Your auction must at least have a starting price of USD 10',
+      },
+    },
+  });
+
+  const membershipsError = handleFieldError(state?.numberOfMemberships, {
+    keyName: 'Number of memberships',
+    compare: {
+      value: parseInt(state?.numberOfMemberships ?? '0'),
+      gt: 0,
+      lt: 16,
+      message: {
+        lt: 'You can only create a maximum number of 15 memberships.',
+        gt: 'You must create at least 1 membership.',
+      },
+    },
+  });
 
   return (
     <VStack
       as='form'
-      gap={8}
       h='100%'
-      overflowY='auto'
-      pr={4}
-      className='thin-scrollbar'
-      onSubmit={formik.handleSubmit}
+      onSubmit={async (e) => {
+        e.preventDefault();
+
+        if (!state.entryPrice || !state.numberOfMemberships) {
+          return;
+        }
+
+        await createAuction({
+          clubId: data.club.id,
+          entryPrice: parseInt(state.entryPrice),
+          numberOfMemberships: parseInt(state.numberOfMemberships),
+          duration: parseInt(state.duration),
+        });
+      }}
     >
-      <VStack gap={4}>
+      <VStack
+        overflowY='auto'
+        pr={4}
+        className='thin-scrollbar'
+        gap={4}
+        flex={1}
+      >
         <TextGroup gap={0}>
           <TextGroupHeading as='h2' size={3} weight={500}>
-            Initialize Auction
+            Start Auction
           </TextGroupHeading>
           <TextGroupSubheading size={1} color='white700'>
             Enter the following information in complete your auction
           </TextGroupSubheading>
         </TextGroup>
-      </VStack>
-      <VStack gap={4}>
-        <InputTextField
-          name='entryPrice'
-          tooltip='Entry price of the auction'
-          label='Starting Price'
-          placeholder='Enter the starting price of your membership'
-          value={formik.values.entryPrice}
-          onChange={handleInputChange}
-          onBlur={formik.handleBlur}
-        />
-        {formik.touched.entryPrice && formik.errors.entryPrice && (
-          <Text
-            size={1}
-            css={{
-              color: '$danger200',
-            }}
-          >
-            {formik.errors.entryPrice}
-          </Text>
-        )}
-      </VStack>
-      <VStack gap={4}>
-        <InputTextField
-          name='numberOfMemberships'
-          tooltip='Amount of club memberships'
-          label='Number of Memberships'
-          placeholder='Enter the number of memberships you are auctioning'
-          value={formik.values.numberOfMemberships}
-          onChange={handleInputChange}
-          onBlur={formik.handleBlur}
-        />
-        {formik.touched.numberOfMemberships &&
-          formik.errors.numberOfMemberships && (
-            <Text
-              size={1}
-              css={{
-                color: '$danger200',
-              }}
-            >
-              {formik.errors.numberOfMemberships}
-            </Text>
-          )}
-      </VStack>
-      <VStack gap={4}>
-        <HStack color='white700' gap={1} items='center'>
-          <Text weight={500} size={2} as='label'>
-            Duration
-          </Text>
-          <InformationTooltip
-            side='right'
-            align='start'
-            container={
-              document.getElementById('page-dialog-container') ||
-              document.body
-            }
-            description='Auction duration (1 - 3 hours)'
-          />
-        </HStack>
-        <DurationInHoursPicker
-          name='duration'
-          onChange={handleInputChange}
-          value={formik.values.duration}
-        />
-        {formik.touched.duration && formik.errors.duration && (
-          <Text
-            size={1}
-            css={{
-              color: '$danger200',
-            }}
-          >
-            {formik.errors.duration}
-          </Text>
-        )}
-      </VStack>
-      {/* This is not for MVP
-      <VStack gap={2}>
-        <HStack color='white700' gap={1} items='center'>
-          <Text weight={500} size={2} as='label'>
-            Schedule Auction
-          </Text>
-          <InformationTooltip
-            side='right'
-            align='start'
-            container={
-              document.getElementById('page-dialog-container') ||
-              document.body
-            }
-            description='Something useful.'
-          />
-        </HStack>
-        <HStack gap={4}>
-          <InputTextField name='url' placeholder='Date' />
-          <InputTextField name='url' placeholder='Time' />
-        </HStack>
-      </VStack> */}
-      <VStack>
-        <Box bgColor='rgba(152, 152, 255, 0.20)' h='1px' my={4} />
-        <Box bgColor='transparent' h='30px' />
 
-        {/** ⚠️ Disable when live auction is running*/}
-        {/*<CustomMembershipPerks/>*/}
-        {/*<HStack color='white700' gap={2} items='center'>*/}
-        {/*  <Text weight={500} size={2} as='label'>*/}
-        {/*    Custom Perks*/}
-        {/*  </Text>*/}
-        {/*  <InformationTooltip*/}
-        {/*    side='right'*/}
-        {/*    align='start'*/}
-        {/*    container={*/}
-        {/*      document.getElementById('page-dialog-container') ||*/}
-        {/*      document.body*/}
-        {/*    }*/}
-        {/*    description='Info.'*/}
-        {/*  />*/}
-        {/*</HStack>*/}
+        <VStack gap={4}>
+          <InputTextField
+            name='entryPrice'
+            label='Starting Price'
+            value={state.entryPrice}
+            onChange={(e) => handleOnChange(e, /[^0-9]+/gm)}
+            onFocus={(e) => e.target.select()}
+            tooltip='You can only auction off a maximum of 15 memberships at a time.'
+            placeholder='Enter the starting price of your membership'
+            // placeholder='0'
+            // leftElement={<Box pr={3}>USD</Box>}
+            errorText={entryPriceError}
+          />
+
+          <InputTextField
+            label='Number of Memberships'
+            name='numberOfMemberships'
+            value={state.numberOfMemberships}
+            onChange={(e) => handleOnChange(e, /[^0-9]+/gm)}
+            onFocus={(e) => e.target.select()}
+            tooltip='The number of memberships that you want to sell.'
+            placeholder='Enter the number of memberships you are auctioning'
+            // placeholder='0'
+            errorText={membershipsError}
+          />
+
+          <SelectInputField
+            label='Duration'
+            name='duration'
+            value={state.duration}
+            onValueChange={(duration) => update({ duration })}
+            tooltip='The amount of time that the auction will run.'
+            triggerCSS={lightSelectCSS}
+            position='popper'
+            options={arrayFrom(3).map((value) => ({
+              label: `${value + 1} hour`,
+              value: value + 1,
+            }))}
+            keySelector={(item) => item.label}
+            labelSelector={(item) => item.label}
+            valueSelector={(item) => item.value.toString()}
+          />
+        </VStack>
       </VStack>
       <HStack
         bgColor='#30304b'
@@ -174,35 +163,46 @@ function ConfirmAuction() {
         gap={2}
         justify='flex-end'
         py={4}
+        pr='10px'
       >
-        <Box h={'80px'}>
-          <HStack items={'center'} justify={'flex-end'}>
-            <VStack justify='center' items='center' py='14px' px='28px'>
-              <Text
-                color='white700'
-                size='14px'
-                weight={500}
-                css={{ textDecoration: 'underline' }}
-                onClick={onDialogClose}
-              >
-                Cancel
-              </Text>
-            </VStack>
-            <Button
-              type={'submit'}
-              radius={1}
-              colorTheme='purple500'
-              css={{
-                padding: '14px 28px',
-              }}
-              onClick={onNextStep}
-            >
-              <Text size='14px' weight={500}>
-                {acceptButtonText}
-              </Text>
-            </Button>
-          </HStack>
-        </Box>
+        <Button
+          onClick={() => {
+            navigate(
+              makePath([
+                Paths.clubs,
+                slug || '',
+                Paths.auction,
+                Paths.create,
+                Paths.reviewAuctionInfo,
+              ]),
+            );
+          }}
+          type='button'
+          variant='ghost'
+          radius={1}
+          colorTheme='purple200'
+          css={{ px: '28px' }}
+        >
+          Back
+        </Button>
+        <Button
+          disabled={
+            loading ||
+            missingField(state) ||
+            !hasAllUndefinedKeyValues({
+              membershipsError,
+              entryPriceError,
+            })
+          }
+          isLoading={loading}
+          type='submit'
+          loadingText='Continue'
+          radius={1}
+          colorTheme='purple500'
+          css={{ px: '28px' }}
+        >
+          Start Auction
+        </Button>
       </HStack>
     </VStack>
   );

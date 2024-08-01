@@ -10,10 +10,10 @@ import { Paths } from '../../shared';
 import { Navigate } from 'react-router-dom';
 import {
   CreateLiveAuctionDialog,
-  ReviewAuctionInfo,
-  ConfirmAuction,
+  ReviewAuctionInfoPage,
+  ConfirmAuctionPage,
+  AuctionDetailsPage,
 } from '../../pages/overlays/create-live-auction';
-import EditLiveAuction from '../../pages/overlays/create-live-auction/ui/edit-live-auction';
 
 const ArtistClubOverlayRoutes = () => (
   <Routes>
@@ -33,16 +33,21 @@ const ArtistClubOverlayRoutes = () => (
       <Route path={Paths.auction}>
         <Route path={Paths.create} element={<CreateLiveAuctionDialog />}>
           <Route
+            path=''
+            element={<Navigate replace to={Paths.auctionDetails} />}
+          />
+
+          <Route
             path={Paths.auctionDetails}
-            element={<EditLiveAuction />}
+            element={<AuctionDetailsPage />}
           />
           <Route
             path={Paths.reviewAuctionInfo}
-            element={<ReviewAuctionInfo />}
+            element={<ReviewAuctionInfoPage />}
           />
           <Route
             path={Paths.confirmAuction}
-            element={<ConfirmAuction />}
+            element={<ConfirmAuctionPage />}
           />
         </Route>
       </Route>

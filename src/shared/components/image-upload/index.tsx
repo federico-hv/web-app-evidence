@@ -10,10 +10,10 @@ import { ImageUploadProps } from './types/image-upload.types';
 import { CropperBody, CropperFooter, CropperHeader } from './ui';
 import { ImageUploadContextProvider } from './context';
 import { useCroppedImage, useImageUpload } from './hooks';
-import { getCroppedImage, imageFileToUrl } from './utilities';
+import { getCroppedImage } from './utilities';
 
 function ImageUpload({
-  value,
+  disabled,
   onChange,
   aspect,
   name,
@@ -83,11 +83,15 @@ function ImageUpload({
       <Box position='relative' overflow='hidden' h='100%' w='100%'>
         <Center h='100%' w='100%' as='label'>
           <Input
+            disabled={disabled}
             id={name}
             name={name}
             hidden
             type='file'
-            css={{ display: 'none' }}
+            css={{
+              display: 'none',
+              cursor: disabled ? undefined : 'pointer',
+            }}
             accept='image/jpeg,image/png,image/webp'
             onChange={(event: ChangeEvent<HTMLInputElement>) => {
               imageUploadOnChange(event);

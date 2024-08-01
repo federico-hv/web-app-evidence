@@ -1,31 +1,26 @@
 import { useMutation } from '@apollo/client';
 import { CREATE_LIVE_AUCTION } from '../../mutations';
-import { useToast } from '../../../../shared';
-import {
-  ErrorMessage,
-  Paths,
-  prefix,
-  usePreviousLocation,
-} from '../../../../shared';
-import { useNavigate } from 'react-router-dom';
+import { makePath, useToast } from '../../../../shared';
+import { ErrorMessage, Paths } from '../../../../shared';
+import { useNavigate, useParams } from 'react-router-dom';
 import { GET_AUCTION } from '../../queries';
 import { CreateAuctionPayload, IAuction } from '../types';
 
 export function useCreateAuction() {
+  const { slug } = useParams();
+
   const { openWith } = useToast();
 
   const navigate = useNavigate();
 
-  const previousLocation = usePreviousLocation(prefix('/', Paths.clubs));
-
-  const [mutation, results] = useMutation<
+  const [mutate, results] = useMutation<
     { createAuction: IAuction },
     { payload: CreateAuctionPayload }
   >(CREATE_LIVE_AUCTION);
 
   const createAuction = async (payload: CreateAuctionPayload) => {
     try {
-      return await mutation({
+      return await mutate({
         variables: { payload: payload },
         refetchQueries: [
           { query: GET_AUCTION, variables: { clubId: payload.clubId } },
@@ -37,7 +32,7 @@ export function useCreateAuction() {
             description: 'We have successfully initiated your auction!',
           });
 
-          navigate(previousLocation);
+          navigate(makePath([Paths.clubs, slug || '', Paths.bids]));
         }
 
         return r;

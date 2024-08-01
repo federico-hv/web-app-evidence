@@ -1,10 +1,20 @@
 import { useMutation } from '@apollo/client';
 import { DELETE_LIVE_AUCTION } from '../../mutations';
-import { ErrorMessage, useToast } from '../../../../shared';
+import {
+  ErrorMessage,
+  makePath,
+  Paths,
+  useToast,
+} from '../../../../shared';
 import { IAuction } from '../types';
 import { GET_AUCTION } from '../../queries';
+import { useNavigate, useParams } from 'react-router-dom';
 
 export function useDeleteAuction() {
+  const navigate = useNavigate();
+
+  const { slug } = useParams();
+
   const { openWith } = useToast();
 
   const [mutation, results] = useMutation<
@@ -23,6 +33,8 @@ export function useDeleteAuction() {
             status: 'success',
             description: 'We have successfully deleted the live auction',
           });
+
+          navigate(makePath([Paths.clubs, slug || '']));
         }
 
         return r;

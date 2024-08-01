@@ -1,4 +1,4 @@
-export * from './general';
+export * from './common';
 export * from './path';
 export * from './messages';
 export * from './user';

@@ -3,3 +3,4 @@ export * from './use-create-bid';
 export * from './use-delete-auction';
 export * from './use-get-auction-query';
 export * from './use-get-contenders';
+export * from './use-update-bid';

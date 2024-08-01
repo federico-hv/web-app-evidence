@@ -102,12 +102,12 @@ function ArtistClubHeader() {
                 );
               }}
             >
-              Create Auction
+              Start Auction
             </Button>
           ))}
         {isCurrentArtistAccount && auctionData && auctionData.auction && (
           <Button
-            colorTheme='danger500'
+            colorTheme='danger200'
             variant='outline'
             css={{
               px: '20px',
@@ -126,7 +126,7 @@ function ArtistClubHeader() {
               });
             }}
           >
-            Delete Auction
+            Cancel Auction
           </Button>
         )}
       </HStack>

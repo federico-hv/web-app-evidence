@@ -2,6 +2,7 @@ import { Dispatch, ReactElement, SetStateAction } from 'react';
 
 export interface ImageUploadProps {
   value?: string;
+  disabled?: boolean;
   onChange?: (image: File) => void;
   aspect?: number;
   name: string;
