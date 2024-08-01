@@ -8,7 +8,7 @@ import {
   useInputChange,
   Countdown,
 } from '@holdr-ui/react';
-import { Fragment, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import {
   ArtistClubActiveBiddersList,
   ArtistClubInactiveBiddersList,
@@ -131,6 +131,8 @@ function AuctionCountdown() {
 }
 
 function AuctionPlaceBid() {
+  const { openWith } = useAlertDialog();
+
   const { slug } = useParams();
 
   const location = useLocation();
@@ -162,6 +164,11 @@ function AuctionPlaceBid() {
     },
   });
 
+  useEffect(() => {
+    if (!hasPaymentMethodData.hasPaymentMethod)
+      openWith({ ...DialogState.addPayment, onAction: addPaymentMethod });
+  }, []);
+
   return (
     <Fragment>
       {currentUser.id !== artistData.artist.accountId && (
@@ -172,10 +179,7 @@ function AuctionPlaceBid() {
             e.preventDefault();
 
             if (!hasPaymentMethodData.hasPaymentMethod) {
-              navigate(makePath([]), {
-                state: { previousLocation: location.pathname },
-              });
-
+              addPaymentMethod();
               return;
             }
           }}
@@ -219,9 +223,6 @@ function ArtistClubLiveBidsPage() {
   });
 
   const { state: club } = useGeneralContext<IClub>();
-
-  const { data: auctionData, loading: loadingAuction } =
-    useGetAuctionQuery(club.id);
 
   return (
     <Fragment>
