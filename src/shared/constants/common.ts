@@ -29,9 +29,20 @@ export const FieldLengths = {
     min: 3,
     max: 25,
   },
+  url: {
+    max: 15,
+  },
   password: {
     min: 10,
     max: 25,
+  },
+  location: {
+    min: null,
+    max: 50,
+  },
+  collaborator: {
+    min: 3,
+    max: 75,
   },
   name: {
     min: 3,
@@ -40,5 +51,8 @@ export const FieldLengths = {
   displayName: {
     min: 3,
     max: 50,
+  },
+  bio: {
+    max: 250,
   },
 };

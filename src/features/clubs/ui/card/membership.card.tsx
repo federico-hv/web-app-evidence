@@ -116,7 +116,7 @@ function MembershipCard({
         <Image
           w='100%'
           // src={data.coverImage}
-          src={Asset.Image.DummyMembershipCover}
+          src={data.coverImage}
           fallbackSrc={Asset.Image.LightPlaceholder}
           alt={`${data.name}'s club cover image.`}
         />

@@ -7,7 +7,6 @@ export function useGetAuctionQuery(clubId: string) {
   //Update typescript types
   return useQuery<{ auction: IAuction }, { clubId: string }>(GET_AUCTION, {
     variables: { clubId },
-    // pollInterval: 1,
   });
 }
 

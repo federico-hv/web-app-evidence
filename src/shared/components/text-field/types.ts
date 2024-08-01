@@ -5,10 +5,10 @@ import { TextProps } from '@holdr-ui/react/dist/components/text/src/text.types';
 export interface InputTextFieldProps {
   type?: 'number' | 'email' | 'text' | 'search' | 'password';
   name: string;
+  tooltip?: string;
   label?: string;
   className?: string;
   value?: string;
-  tooltip?: string;
   placeholder?: string;
   errorText?: string;
   maxLength?: number;

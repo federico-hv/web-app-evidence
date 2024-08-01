@@ -9,7 +9,6 @@ import {
   VStack,
   hexToRGB,
 } from '@holdr-ui/react';
-import { Fragment } from 'react';
 import { SelectInputFieldProps } from './types';
 import Label from '../label';
 
@@ -27,6 +26,19 @@ function SelectInputField<T>({
   labelProps,
   options,
   triggerCSS,
+  listCSS = {
+    boxShadow: '0px 4px 12px 0px rgba(14, 14, 27, 0.08)',
+    background: 'rgba(152, 152, 255, 0.1)',
+    backdropFilter: 'blur(40px)',
+    borderRightWidth: '1px',
+    borderLeftWidth: '1px',
+    borderBottomWidth: '1px',
+    borderStyle: 'solid',
+    borderColor: 'rgba(152, 152, 255, 0.35) !important',
+    borderTop: 'none',
+    borderTopRightRadius: 0,
+    borderTopLeftRadius: 0,
+  },
   _active = { color: '$purple200' },
   _hover = { background: 'rgba(14, 14, 27, 0.50)' },
   _highlighted = { background: 'rgba(14, 14, 27, 0.50)' },
@@ -62,12 +74,11 @@ function SelectInputField<T>({
               radius={1}
               bgColor='rgb(56, 53, 89)'
               borderColor={hexToRGB('#9898FF', 0.1)}
-              css={{
-                border: '1px solid rgba(152, 152, 255, 0.35) !important',
-              }}
+              css={listCSS}
               _active={_active}
               _hover={_hover}
               _highlighted={_highlighted}
+              position='relative'
               divider={
                 <Box
                   h='1px'
@@ -78,15 +89,13 @@ function SelectInputField<T>({
                 />
               }
             >
-              <Fragment>
-                {options.map((item) => (
-                  <SelectItem
-                    key={keySelector(item)}
-                    value={valueSelector(item)}
-                    label={labelSelector(item)}
-                  />
-                ))}
-              </Fragment>
+              {options.map((item) => (
+                <SelectItem
+                  key={keySelector(item)}
+                  value={valueSelector(item)}
+                  label={labelSelector(item)}
+                />
+              ))}
             </SelectItemList>
           </SelectContent>
         </Select>

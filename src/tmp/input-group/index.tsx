@@ -9,13 +9,7 @@ import {
   useRecordState,
 } from '@holdr-ui/react';
 import { BoxProps } from '@holdr-ui/react/dist/components/box/src/box.types';
-import React, {
-  memo,
-  RefObject,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-} from 'react';
+import React, { memo, RefObject, useEffect, useRef } from 'react';
 
 // use this as the basis for an input group
 interface IInputGroupContext {
@@ -31,42 +25,68 @@ function InputGroup({ children }: BoxProps) {
     rightElRef: null,
   });
 
+  const [initialPadding, updateInitialPadding] = useRecordState({
+    start: 0,
+    end: 0,
+  });
+
   const LeftElement = getSubComponent(children, 'InputGroupLeftElement');
   const InputElement = getSubComponent(children, 'Input');
   const RightElement = getSubComponent(children, 'InputGroupRightElement');
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (!state.inputRef || !state.inputRef.current) {
       return;
     }
+
+    updateInitialPadding({
+      start: parseInt(
+        window.getComputedStyle(state.inputRef.current).paddingInlineStart,
+      ),
+      end: parseInt(
+        window.getComputedStyle(state.inputRef.current).paddingInlineEnd,
+      ),
+    });
 
     if (state.rightElRef && state.rightElRef.current) {
       const elementWidth =
         state.rightElRef.current.getBoundingClientRect().width;
 
-      const previousPaddingInlineEnd = parseInt(
-        window.getComputedStyle(state.inputRef.current).paddingInlineEnd,
-      );
+      const offsetWidth = state.rightElRef.current.offsetWidth;
 
-      state.inputRef.current.style.paddingInlineEnd = `${
-        previousPaddingInlineEnd + elementWidth
-      }px`;
+      if (offsetWidth)
+        state.inputRef.current.style.paddingInlineEnd = `${
+          initialPadding.end + offsetWidth
+        }px`;
+      else
+        state.inputRef.current.style.paddingInlineEnd = `${
+          initialPadding.end + elementWidth
+        }px`;
     }
 
     if (state.leftElRef && state.leftElRef.current) {
       const elementWidth =
         state.leftElRef.current.getBoundingClientRect().width;
 
-      const previousPaddingInlineStart = parseInt(
-        window.getComputedStyle(state.inputRef.current).paddingInlineStart,
-      );
+      const offsetWidth = state.leftElRef.current.offsetWidth;
 
-      state.inputRef.current.style.paddingInlineStart = `${
-        previousPaddingInlineStart + elementWidth
-      }px`;
+      if (offsetWidth)
+        state.inputRef.current.style.paddingInlineStart = `${
+          initialPadding.start + offsetWidth
+        }px`;
+      else
+        state.inputRef.current.style.paddingInlineStart = `${
+          initialPadding.start + elementWidth
+        }px`;
     }
-  }, [state]);
 
+    return () => {
+      if (state.inputRef && state.inputRef.current) {
+        state.inputRef.current.style.paddingInlineStart = `${initialPadding.start}px`;
+        state.inputRef.current.style.paddingInlineEnd = `${initialPadding.end}px`;
+      }
+    };
+  }, [state]);
   return (
     <GeneralContextProvider value={{ state, update }}>
       <Box position='relative' w='100%'>
@@ -102,7 +122,7 @@ const InputGroupLeftElement = memo(function ({ css, ...props }: BoxProps) {
     if (leftElRef && leftElRef.current) {
       update({ leftElRef });
     }
-  }, []);
+  }, [leftElRef.current]);
 
   return (
     <Center

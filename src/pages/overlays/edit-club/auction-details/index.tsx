@@ -155,13 +155,13 @@ function EditArtistClubAuctionDetailsPage() {
           css={{ px: '28px' }}
           onClick={goBack}
         >
-          Cancel
+          Close
         </Button>
         <Button
           isLoading={loading}
           disabled={selectedPerks.length < 3}
           type='submit'
-          loadingText='Save & exit'
+          loadingText='Saving'
           radius={1}
           colorTheme='purple500'
           css={{ px: '28px' }}

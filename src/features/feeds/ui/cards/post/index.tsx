@@ -83,7 +83,7 @@ function PostCard({ data }: { data: PostModel }) {
         />
         <Text size={{ '@bp1': 2, '@bp3': 3 }}>{data.description}</Text>
         {data.media && <PostMedia items={data.media} />}
-        {data.polls && (
+        {data.polls && data.polls.length > 0 && (
           <Polls id={data.id} endDate={data.endDate} items={data.polls} />
         )}
         <Box

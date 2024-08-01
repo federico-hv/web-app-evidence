@@ -12,6 +12,7 @@ import { makePath, Paths, useAlertDialog } from '../../../../shared';
 
 function ArtistClubHeader() {
   const currentUser = useCurrentUser();
+
   const navigate = useNavigate();
 
   const { deleteAuction } = useDeleteAuction();

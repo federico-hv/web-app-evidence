@@ -21,5 +21,6 @@ export interface SelectInputFieldProps<T> {
   tooltip?: string;
   label?: string;
   labelProps?: TextProps;
+  listCSS?: CSSTheme;
   position?: 'item-aligned' | 'popper';
 }

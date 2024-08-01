@@ -1,15 +1,7 @@
 import {
-  Box,
   Button,
-  Center,
   CloseButton,
   HStack,
-  Input,
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectItemList,
-  SelectTrigger,
   Text,
   VStack,
 } from '@holdr-ui/react';
@@ -18,6 +10,7 @@ import {
   IAnnouncement,
   IExternalLink,
   InformationTooltip,
+  InputTextField,
   isMatchingPattern,
   makeButtonLarger,
   makePath,
@@ -26,6 +19,7 @@ import {
   Paths,
   PatternErrorMessage,
   Patterns,
+  SelectInputField,
   TextGroup,
   TextGroupHeading,
   TextGroupSubheading,
@@ -41,10 +35,6 @@ import {
 } from '../../../../features';
 import { FlatList } from '../../../../tmp/flat-list';
 import { useRef } from 'react';
-import {
-  InputGroup,
-  InputGroupRightElement,
-} from '../../../../tmp/input-group';
 import { useNavigate, useParams } from 'react-router-dom';
 import { omit } from 'lodash';
 
@@ -224,35 +214,30 @@ function EditArtistClubMusicAndLinksPage() {
               direction='vertical'
               data={announcements}
               renderItem={(item, idx) => (
-                <InputGroup>
-                  <Input
-                    placeholder='Add announcement'
-                    variant='unstyled'
-                    maxLength={75}
-                    value={item.description}
-                    onChange={(e) =>
-                      replaceAnnouncement(idx, {
-                        ...item,
-                        description: e.target.value,
-                      })
-                    }
-                    color='white500'
-                  />
-                  <InputGroupRightElement pl={4}>
-                    <Center position='absolute' t={0} b={0} r={0} pr={3}>
-                      <CloseButton
-                        onClick={() =>
-                          removeAnnouncement((_, _idx) => _idx !== idx)
-                        }
-                        type='button'
-                        css={{ width: '1rem !important' }}
-                        size='sm'
-                        className={makeButtonLarger('1rem')}
-                        colorTheme='white700'
-                      />
-                    </Center>
-                  </InputGroupRightElement>
-                </InputGroup>
+                <InputTextField
+                  value={item.description}
+                  onChange={(e) =>
+                    replaceAnnouncement(idx, {
+                      ...item,
+                      description: e.target.value,
+                    })
+                  }
+                  rightElement={
+                    <CloseButton
+                      onClick={() =>
+                        removeAnnouncement((_, _idx) => _idx !== idx)
+                      }
+                      type='button'
+                      css={{ width: '1rem !important' }}
+                      size='sm'
+                      className={makeButtonLarger('1rem')}
+                      colorTheme='white700'
+                    />
+                  }
+                  name='announcement'
+                  placeholder='Add announcement'
+                  maxLength={75}
+                />
               )}
               keyExtractor={(item, idx) => `announcement-${idx}`}
             />
@@ -330,7 +315,9 @@ function EditArtistClubMusicAndLinksPage() {
                 return (
                   <VStack>
                     <VStack>
-                      <Select
+                      <SelectInputField
+                        name='link'
+                        placeholder='Type'
                         value={item.type}
                         onValueChange={(value) =>
                           replaceExternalLink(idx, {
@@ -338,78 +325,62 @@ function EditArtistClubMusicAndLinksPage() {
                             type: value as ExternalLinkTypeEnum,
                           })
                         }
-                      >
-                        <SelectTrigger
-                          radius={0}
-                          placeholder='Type'
-                          css={{
-                            whiteSpace: 'nowrap',
-                            borderLeftWidth: '1px',
-                            borderRightWidth: '1px',
-                            borderTopWidth: '1px',
-                            borderColor: 'rgba(152, 152, 255, 0.10)',
-                            background: 'rgba(152, 152, 255, 0.15)',
+                        tooltip='The amount of time that the auction will run.'
+                        triggerCSS={{
+                          whiteSpace: 'nowrap',
+                          borderLeftWidth: '1px',
+                          borderRightWidth: '1px',
+                          borderTopWidth: '1px',
+                          borderColor: 'rgba(152, 152, 255, 0.15)',
+                          background: 'rgba(152, 152, 255, 0.15)',
 
-                            borderTopRightRadius: '$1',
-                            borderBottomRightRadius: '$0',
-                            borderTopLeftRadius: '$1',
-                            borderBottomLeftRadius: '$0',
-                          }}
-                        />
-                        <SelectContent zIndex={20} sticky='always'>
-                          <SelectItemList
-                            _active={{ color: '$purple200' }}
-                            _hover={{
-                              background: 'rgba(14, 14, 27, 0.50)',
-                            }}
-                            _highlighted={{
-                              background: 'rgba(14, 14, 27, 0.50)',
-                            }}
-                            // w={180}
-                            divider={
-                              <Box
-                                h='1px'
-                                w='100%'
-                                css={{
-                                  background: 'rgba(152, 152, 255, 0.1)',
-                                }}
-                              />
+                          borderTopRightRadius: '$1',
+                          borderBottomRightRadius: '$0',
+                          borderTopLeftRadius: '$1',
+                          borderBottomLeftRadius: '$0',
+                        }}
+                        position='popper'
+                        options={[
+                          {
+                            value: ExternalLinkTypeEnum.Event,
+                            label: 'Upcoming shows',
+                          },
+                          {
+                            value: ExternalLinkTypeEnum.Merch,
+                            label: 'Merchandise',
+                          },
+                          {
+                            value: ExternalLinkTypeEnum.Other,
+                            label: 'Other',
+                          },
+                        ]}
+                        keySelector={(item) => item.label}
+                        labelSelector={(item) => item.label}
+                        valueSelector={(item) => item.value.toString()}
+                      />
+                      <InputTextField
+                        name='link'
+                        value={item.url}
+                        onChange={(e) =>
+                          replaceExternalLink(idx, {
+                            ...item,
+                            url: e.target.value,
+                          })
+                        }
+                        placeholder='Paste link'
+                        rightElement={
+                          <CloseButton
+                            onClick={() =>
+                              removeExternalLink((_, _idx) => _idx !== idx)
                             }
-                            position='relative'
-                            css={{
-                              boxShadow:
-                                '0px 4px 12px 0px rgba(14, 14, 27, 0.08)',
-                              background: 'rgba(152, 152, 255, 0.1)',
-                              backdropFilter: 'blur(40px)',
-                              border: '1px solid rgba(152, 152, 255, 0.1)',
-                              borderTop: 'none',
-                            }}
-                          >
-                            <SelectItem
-                              py={2}
-                              radius={1}
-                              value={ExternalLinkTypeEnum.Event}
-                              label='Upcoming shows'
-                            />
-                            <SelectItem
-                              py={2}
-                              radius={1}
-                              value={ExternalLinkTypeEnum.Merch}
-                              label='Merchandise'
-                            />
-                            <SelectItem
-                              py={2}
-                              radius={1}
-                              value={ExternalLinkTypeEnum.Other}
-                              label='Other'
-                            />
-                          </SelectItemList>
-                        </SelectContent>
-                      </Select>
-                      <InputGroup
-                        px={4}
-                        borderColor='transparent'
-                        bgColor='transparent'
+                            type='button'
+                            css={{ width: '1rem !important' }}
+                            size='sm'
+                            className={makeButtonLarger('1rem')}
+                            colorTheme='white700'
+                          />
+                        }
+                        errorText={errorText}
                         css={{
                           borderLeftWidth: '1px',
                           borderRightWidth: '1px',
@@ -427,46 +398,8 @@ function EditArtistClubMusicAndLinksPage() {
                           borderTopLeftRadius: '$0',
                           borderBottomLeftRadius: '$1',
                         }}
-                      >
-                        <Input
-                          variant='unstyled'
-                          placeholder='Paste link'
-                          value={item.url}
-                          onChange={(e) =>
-                            replaceExternalLink(idx, {
-                              ...item,
-                              url: e.target.value,
-                            })
-                          }
-                          color='white500'
-                        />
-                        <InputGroupRightElement pl={4}>
-                          <Center>
-                            <CloseButton
-                              onClick={() =>
-                                removeExternalLink(
-                                  (_, _idx) => _idx !== idx,
-                                )
-                              }
-                              type='button'
-                              css={{ width: '1rem !important' }}
-                              size='sm'
-                              className={makeButtonLarger('1rem')}
-                              colorTheme='white700'
-                            />
-                          </Center>
-                        </InputGroupRightElement>
-                      </InputGroup>
+                      />
                     </VStack>
-                    {errorText && errorText.length > 0 && (
-                      <Text
-                        size={1}
-                        color='danger300'
-                        css={{ marginTop: '$1' }}
-                      >
-                        {errorText}
-                      </Text>
-                    )}
                   </VStack>
                 );
               }}
@@ -521,7 +454,7 @@ function EditArtistClubMusicAndLinksPage() {
           css={{ px: '28px' }}
           onClick={() => navigate(previousLocation)}
         >
-          Cancel
+          Close
         </Button>
         <Button
           isLoading={loading}

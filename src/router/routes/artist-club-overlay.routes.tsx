@@ -13,7 +13,7 @@ import {
   ReviewAuctionInfoPage,
   ConfirmAuctionPage,
   AuctionDetailsPage,
-} from '../../pages/overlays/create-live-auction';
+} from '../../pages/overlays/create-auction';
 
 const ArtistClubOverlayRoutes = () => (
   <Routes>

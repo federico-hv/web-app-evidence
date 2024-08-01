@@ -1,40 +1,50 @@
-import { Box, mergeStyles, Text, Textarea, VStack } from '@holdr-ui/react';
+import { Box, mergeStyles, Textarea, VStack } from '@holdr-ui/react';
 import { customInputStyles, textAreaClassName } from '../../styles';
 import { TextareaProps } from '@holdr-ui/react/dist/components/text-area/src/text-area.types';
 import { useState } from 'react';
+import Label from '../label';
+import { TextProps } from '@holdr-ui/react/dist/components/text/src/text.types';
 
 function TextAreaField({
+  name,
+  label,
   maxLength,
   placeholder,
   radius = 1,
   maxLines = 6,
   colorTheme = 'white500',
   onChange,
+  tooltip,
   value,
+  labelProps,
   ...props
 }: TextareaProps & {
-  placeholder?: string;
+  name: string;
   maxLength?: number;
+  label?: string;
+  tooltip?: string;
+  labelProps?: TextProps;
 }) {
   const [internalValue, set] = useState<string>(value as string);
 
   return (
     <VStack gap={2}>
-      <Text
-        color='white700'
-        size={2}
-        weight={500}
-        as='label'
-        htmlFor='bio'
-      >
-        About
-      </Text>
+      {label && (
+        <Label
+          name={name}
+          tooltip={tooltip}
+          text={label}
+          {...labelProps}
+        />
+      )}
+
       <Box position='relative'>
         <Textarea
           className={mergeStyles([
             textAreaClassName(),
             customInputStyles(),
           ])}
+          name={name}
           value={value}
           radius={radius}
           maxLines={maxLines}
