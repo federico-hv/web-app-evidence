@@ -1,6 +1,6 @@
 import { useQuery, useSuspenseQuery } from '@apollo/client';
 import { GET_CLUB } from '../../queries';
-import { IClub } from '../interfaces';
+import { IClub } from '../types';
 
 export interface IGetProfileSetupInfoOptions {
   artistId?: string;

@@ -1,7 +1,7 @@
 import { useToast } from '../../../../shared';
 import { gql, Reference, useMutation } from '@apollo/client';
 import { IProfile } from '../../../user';
-import { IPerk } from '../interfaces';
+import { IPerk } from '../types';
 import { UPDATE_PERKS } from '../../mutations';
 
 export function useUpdatePerks() {

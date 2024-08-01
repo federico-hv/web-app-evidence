@@ -1,5 +1,5 @@
 import { createContext, Fragment, useContext } from 'react';
-import { IClub } from '../interfaces';
+import { IClub } from '../types';
 import { GenericProps } from '@holdr-ui/react';
 import { useCurrentUser } from '../../../auth';
 import { useSuspenseGetClub } from '../hooks';

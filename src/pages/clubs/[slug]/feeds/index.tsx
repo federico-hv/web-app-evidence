@@ -1,11 +1,11 @@
-import { HStack, VStack, useGeneralContext } from '@holdr-ui/react';
+import { HStack, VStack } from '@holdr-ui/react';
 import { Fragment } from 'react';
 import {
   ArtistClubBioAdditionalContent,
   ArtistClubSummaryCard,
 } from '../ui';
 import { Head } from '../../../../shared';
-import { IClub, useSuspenseGetArtist } from '../../../../features';
+import { useSuspenseGetArtist } from '../../../../features';
 import { ArtistFeedsList } from './ui';
 import { useParams } from 'react-router-dom';
 
@@ -37,7 +37,7 @@ function ArtistClubFeedsPage() {
           className='thin-scrollbar'
         >
           <ArtistClubSummaryCard />
-          <ArtistFeedsList slug={artistData.artist.username} />
+          <ArtistFeedsList />
         </VStack>
 
         <ArtistClubBioAdditionalContent />

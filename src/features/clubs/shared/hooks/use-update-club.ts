@@ -1,6 +1,6 @@
 import { gql, Reference, useMutation } from '@apollo/client';
 import { UPDATE_CLUB } from '../../mutations';
-import { IClub } from '../interfaces';
+import { IClub } from '../types';
 
 interface IUpdateClubPayload {
   coverImage?: File;

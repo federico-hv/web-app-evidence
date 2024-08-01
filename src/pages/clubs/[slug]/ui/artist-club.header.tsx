@@ -1,32 +1,36 @@
 import { Button, Center, Heading, HStack } from '@holdr-ui/react';
 import {
   useCurrentUser,
+  useDeleteAuction,
+  useGetAuctionSuspenseQuery,
   useSuspenseGetArtist,
+  useSuspenseGetClub,
 } from '../../../../features';
 import ArtistClubSocialButton from './artist-club-social.button';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { makePath, Paths, useAlertDialog } from '../../../../shared';
-import { FetchResult } from '@apollo/client';
-import { IDeleteAuction } from 'features/auction/shared/hooks/use-delete-live-auction';
 
-function ArtistClubHeader({
-  activeAuction,
-  onDeleteAuction,
-}: {
-  activeAuction: boolean;
-  onDeleteAuction: () => Promise<FetchResult<IDeleteAuction> | undefined>;
-}) {
-  const { openWith } = useAlertDialog();
-
+function ArtistClubHeader() {
   const currentUser = useCurrentUser();
   const navigate = useNavigate();
+
+  const { deleteAuction } = useDeleteAuction();
+
+  const { openWith } = useAlertDialog();
+
   const { pathname } = useLocation();
 
   const { slug } = useParams();
 
+  const { data: clubData } = useSuspenseGetClub({ slug: slug || '' });
+
   const { data: artistData } = useSuspenseGetArtist({
     slug,
   });
+
+  const { data: auctionData } = useGetAuctionSuspenseQuery(
+    clubData.club.id,
+  );
 
   const isCurrentArtistAccount =
     currentUser.id === artistData.artist.accountId;
@@ -76,37 +80,37 @@ function ArtistClubHeader({
         ) : (
           <ArtistClubSocialButton username={artistData.artist.username} />
         )}
-        {isCurrentArtistAccount && !activeAuction && (
-          <Button
-            css={{ px: '50px' }}
-            colorTheme='purple100'
-            onClick={() => {
-              navigate(
-                makePath([
-                  Paths.clubs,
-                  artistData.artist.username,
-                  Paths.auction,
-                  Paths.create,
-                  Paths.auctionDetails,
-                ]),
-                {
-                  state: {
-                    previousLocation: pathname,
+        {(isCurrentArtistAccount && !auctionData) ||
+          (auctionData && !auctionData.auction && (
+            <Button
+              css={{ px: '50px' }}
+              colorTheme='purple100'
+              onClick={() => {
+                navigate(
+                  makePath([
+                    Paths.clubs,
+                    artistData.artist.username,
+                    Paths.auction,
+                    Paths.create,
+                    Paths.auctionDetails,
+                  ]),
+                  {
+                    state: {
+                      previousLocation: pathname,
+                    },
                   },
-                },
-              );
-            }}
-          >
-            Create Auction
-          </Button>
-        )}
-        {isCurrentArtistAccount && activeAuction && (
+                );
+              }}
+            >
+              Create Auction
+            </Button>
+          ))}
+        {isCurrentArtistAccount && auctionData && auctionData.auction && (
           <Button
+            colorTheme='danger500'
+            variant='outline'
             css={{
-              border: '1px solid $danger200',
-              color: '$danger200',
-              px: '21px',
-              fontSize: '18px',
+              px: '20px',
             }}
             onClick={() => {
               openWith({
@@ -114,7 +118,11 @@ function ArtistClubHeader({
                 description: `Are you sure you want to cancel your auction? This action cannot be undone.`,
                 cancelText: 'Do not cancel',
                 actionText: 'Yes, Cancel Auction',
-                onAction: onDeleteAuction,
+                onAction: async () =>
+                  await deleteAuction(
+                    auctionData.auction.id,
+                    clubData.club.id,
+                  ),
               });
             }}
           >

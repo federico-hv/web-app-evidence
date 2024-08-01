@@ -40,7 +40,7 @@ import {
 } from 'react-router-dom';
 import dayjs from 'dayjs';
 import { useCreateBid } from '../../../../features/auction/shared/hooks';
-import { useGetAuction } from '../../../../features/auction/shared/hooks/use-get-auction';
+import { useGetAuctionQuery } from '../../../../features/auction/shared/hooks/use-get-auction-query';
 import {
   ContenderEdge,
   ContendersData,
@@ -121,7 +121,7 @@ function ArtistClubLiveBidsPage() {
 
   const { state: club } = useGeneralContext<IClub>();
 
-  const { data: auctionData, error: auctionError } = useGetAuction(
+  const { data: auctionData, error: auctionError } = useGetAuctionQuery(
     club.id,
   );
 

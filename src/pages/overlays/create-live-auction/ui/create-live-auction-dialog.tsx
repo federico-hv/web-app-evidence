@@ -1,39 +1,23 @@
 import {
   Box,
-  Button,
   Dialog,
   DialogBody,
   DialogContent,
-  DialogFooter,
   DialogHeader,
   DialogOverlay,
   DialogPortal,
   HStack,
   Heading,
-  Overlay,
   StackDivider,
   VStack,
   hexToRGB,
   useDisclosure,
-  Text,
 } from '@holdr-ui/react';
-import {
-  GQLRenderer,
-  InputTextField,
-  MaxFieldLength,
-  Paths,
-  TextGroup,
-  TextGroupHeading,
-  TextGroupSubheading,
-  TextareaField,
-  makePath,
-} from '../../../../shared';
+import { GQLRenderer, Paths, makePath } from '../../../../shared';
 import {
   ClubContextConsumer,
   ClubProvider,
-  IClub,
   PerksProvider,
-  useClubContext,
   useCurrentUser,
   useSuspenseGetClub,
 } from '../../../../features';
@@ -45,12 +29,14 @@ import {
 } from 'react-router-dom';
 import { SetupStep } from '../../setup-artist-profile';
 import { Fragment, useEffect, useState } from 'react';
-import {
-  LiveAuction,
-  useCreateLiveAuction,
-} from '../../../../features/auction/shared/hooks/use-create-live-auction';
+import { useCreateAuction } from '../../../../features';
 import { useFormik } from 'formik';
 import { number, object } from 'yup';
+
+// TODO:
+//  Remove formik := do no need it.
+//  Remove the stepper context := complicates the code.
+//  Use form validation utility instead, much simpler.
 
 export interface OutletContext {
   formik: any;
@@ -84,9 +70,7 @@ function CreateLiveAuctionDialog() {
     accountId: currentUser.id,
   });
 
-  // const { data, error } = useSuspenseGetClub({ slug: '' });
-  const { auctionCreated, onSubmit: createLiveAuction } =
-    useCreateLiveAuction();
+  const { createAuction, loading } = useCreateAuction();
 
   const [missingItems, setMissingItems] = useState(true);
 
@@ -97,14 +81,13 @@ function CreateLiveAuctionDialog() {
       numberOfMemberships: '',
     },
     validationSchema: validationSchema,
-    onSubmit: (values) => {
-      const liveAuctionValues: LiveAuction = {
+    onSubmit: async (values) => {
+      await createAuction({
         clubId: club.id,
         duration: Number(values.duration),
         entryPrice: Number(values.entryPrice),
         numberOfMemberships: Number(values.numberOfMemberships),
-      };
-      createLiveAuction(liveAuctionValues);
+      });
     },
   });
 
@@ -125,9 +108,7 @@ function CreateLiveAuctionDialog() {
   const paths = location.pathname.split('/').filter((path) => path.length);
   const currentPath = paths[paths.length - 1];
 
-  if (!slug) {
-    return <Fragment />;
-  }
+  // TODO: Get rid of these -> You really do not need them
 
   useEffect(() => {
     if (isAuctionDetails && step != 0) {
@@ -139,11 +120,7 @@ function CreateLiveAuctionDialog() {
     }
   }, [isAuctionDetails, isReviewInformation, isConfirmAuction]);
 
-  useEffect(() => {
-    if (auctionCreated) {
-      onDialogClose();
-    }
-  }, [auctionCreated]);
+  // TODO: Get rid of these -> You really do not need them
 
   const steps = [
     Paths.auctionDetails,
@@ -152,7 +129,13 @@ function CreateLiveAuctionDialog() {
   ];
 
   const getPath = (newPath: string) =>
-    makePath([Paths.clubs, slug, Paths.auction, Paths.create, newPath]);
+    makePath([
+      Paths.clubs,
+      slug ?? '',
+      Paths.auction,
+      Paths.create,
+      newPath,
+    ]);
 
   const auctionDetailsPath = getPath(Paths.auctionDetails);
 
@@ -161,7 +144,7 @@ function CreateLiveAuctionDialog() {
   const confirmAuctionPath = getPath(Paths.confirmAuction);
 
   const onDialogClose = () =>
-    navigate(makePath([Paths.clubs, slug]) || '/');
+    navigate(makePath([Paths.clubs, slug ?? '']) || '/');
 
   const onNextStep = () => {
     if (isConfirmAuction) {
@@ -174,6 +157,10 @@ function CreateLiveAuctionDialog() {
       navigate(path);
     }
   };
+
+  if (!slug) {
+    return <Fragment />;
+  }
 
   return (
     <GQLRenderer>

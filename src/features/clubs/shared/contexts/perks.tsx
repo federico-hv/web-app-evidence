@@ -1,5 +1,5 @@
 import { createContext, useContext } from 'react';
-import { IPerk } from '../interfaces';
+import { IPerk } from '../types';
 import { GQLRenderer } from '../../../../shared';
 import { GenericProps } from '@holdr-ui/react';
 import { useSuspenseGetClubPerks } from '../hooks';

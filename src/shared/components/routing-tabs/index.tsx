@@ -7,9 +7,8 @@ import {
 } from '@holdr-ui/react/dist/components/stack/src/stack.types';
 import { BoxProps } from '@holdr-ui/react/dist/components/box/src/box.types';
 import { GQLRenderer } from '../index';
-import { ComponentType, ReactElement } from 'react';
+import { ComponentType } from 'react';
 import { FallbackProps } from 'react-error-boundary';
-import { IAuction } from '../../../features/auction/shared/hooks/use-get-auction';
 
 function RoutingTabs({ children, ...props }: BoxProps) {
   const TabsHeader = getSubComponent(children, 'RoutingTabsHeader');
@@ -113,18 +112,14 @@ RoutingTabsTrigger.displayName = 'RoutingTabsTrigger';
 function RoutingTabsContent({
   children,
   Fallback,
-  context,
   ...props
-}: BoxProps & { Fallback?: ComponentType<FallbackProps> } & {
-  auctionData?: { auction: IAuction };
-  onToggleAlert?: () => void;
-} & any) {
+}: BoxProps & { Fallback?: ComponentType<FallbackProps> }) {
   //REMOVE THIS any, should be the context
   return (
     <Box {...props}>
       {children}
       <GQLRenderer ErrorFallback={Fallback}>
-        <Outlet context={context} />
+        <Outlet />
       </GQLRenderer>
     </Box>
   );

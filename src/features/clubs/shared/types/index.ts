@@ -36,3 +36,9 @@ export interface BidderModel {
   amount: number;
   bidId?: number;
 }
+
+export interface ITinyClub {
+  id: string;
+  url: string;
+  coverImage: string;
+}
