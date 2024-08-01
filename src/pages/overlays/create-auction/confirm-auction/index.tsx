@@ -1,7 +1,7 @@
 import {
+  Box,
   Button,
   HStack,
-  Text,
   useRecordState,
   VStack,
 } from '@holdr-ui/react';
@@ -150,9 +150,9 @@ function ConfirmAuction() {
             tooltip='You can only auction off a maximum of 15 memberships at a time.'
             placeholder='0'
             leftElement={
-              <Text weight={600} color='white700' pr={3}>
+              <Box w={40} fontWeight={600} color='white700'>
                 USD
-              </Text>
+              </Box>
             }
             errorText={entryPriceError}
           />

@@ -1,6 +1,7 @@
 import { useMutation } from '@apollo/client';
 import { LINK_PAYMENT_METHOD } from './schema';
 import { ISuccessResponse } from '../../../shared';
+import { CHECK_HAS_PAYMENT_METHOD } from '../queries';
 
 /**
  * A hook that returns a function that can be used to
@@ -27,6 +28,7 @@ export function useLinkPaymentMethodMutation() {
         variables: {
           paymentMethodId,
         },
+        refetchQueries: [{ query: CHECK_HAS_PAYMENT_METHOD }],
       });
     } catch (e) {
       // show a toast

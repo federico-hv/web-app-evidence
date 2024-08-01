@@ -11,6 +11,12 @@ export function useCreateBid() {
     ICreateBidArgs
   >(CREATE_BID);
 
+  /**
+   *
+   * @param data
+   *  - `id`: club ID
+   *  - `amount`: bid amount
+   */
   const createBid = async (data: ICreateBidArgs) => {
     try {
       return await mutate({

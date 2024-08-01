@@ -26,6 +26,7 @@ function TextInputField({
   autoComplete,
   leftElement,
   rightElement,
+  size,
   css,
   ...props
 }: InputTextFieldProps) {
@@ -46,6 +47,7 @@ function TextInputField({
             <InputGroupLeftElement>{leftElement}</InputGroupLeftElement>
           )}
           <Input
+            size={size}
             type={type}
             autoComplete={autoComplete}
             name={name}

@@ -1,9 +1,11 @@
 import { ChangeEvent, ReactNode } from 'react';
 import { CSSTheme } from '@holdr-ui/react';
 import { TextProps } from '@holdr-ui/react/dist/components/text/src/text.types';
+import { ResponsiveValue, Size } from '@holdr-ui/react/dist/shared';
 
 export interface InputTextFieldProps {
   type?: 'number' | 'email' | 'text' | 'search' | 'password';
+  size?: ResponsiveValue<Size>;
   name: string;
   tooltip?: string;
   label?: string;

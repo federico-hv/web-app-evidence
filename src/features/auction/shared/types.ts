@@ -32,8 +32,8 @@ export interface IAuctionBid {
 }
 
 export interface ICreateBidArgs {
-  id: string;
-  amount: string;
+  id: number;
+  amount: number;
 }
 
 export interface IUpdateBidArgs {

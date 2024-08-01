@@ -7,6 +7,8 @@ import {
   useGeneralContext,
   useInputChange,
   Countdown,
+  Center,
+  Text,
 } from '@holdr-ui/react';
 import { Fragment, useEffect, useState } from 'react';
 import {
@@ -22,8 +24,10 @@ import {
   useSuspenseGetArtist,
   useSuspenseGetClub,
   useGetAuctionSuspenseQuery,
-  useGetClubPerks,
   useSuspenseGetClubPerks,
+  useCreateBid,
+  useUpdateBid,
+  useGetArtist,
 } from '../../../../features';
 import {
   darkInputStyles,
@@ -31,13 +35,22 @@ import {
   handleFieldError,
   Head,
   InputTextField,
+  Loader,
   makePath,
   useAlertDialog,
 } from '../../../../shared';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { useGetAuctionQuery } from '../../../../features';
 import { keyframes } from '@stitches/react';
-import { navigate } from '@storybook/addon-links';
+
+const DialogState = {
+  addPayment: {
+    title: 'Add a payment method',
+    description:
+      'To participate in a live auction, please add a payment method. This allows you to bid and win memberships in real-time auctions',
+    actionText: 'Add payment',
+    cancelText: 'Add later',
+  },
+};
 
 function useAddPaymentMethod() {
   const navigate = useNavigate();
@@ -131,13 +144,13 @@ function AuctionCountdown() {
 }
 
 function AuctionPlaceBid() {
+  const { loading: loadingCreateBid, createBid } = useCreateBid();
+
+  const { loading: loadingUpdateBid, updateBid } = useUpdateBid();
+
   const { openWith } = useAlertDialog();
 
   const { slug } = useParams();
-
-  const location = useLocation();
-
-  const navigate = useNavigate();
 
   const addPaymentMethod = useAddPaymentMethod();
 
@@ -160,12 +173,15 @@ function AuctionPlaceBid() {
     keyName: 'Bid amount',
     compare: {
       value: parseInt(value || '0'),
-      gt: auctionData.auction.entryPrice - 1,
+      gt: auctionData.auction.entryPrice,
     },
   });
 
   useEffect(() => {
-    if (!hasPaymentMethodData.hasPaymentMethod)
+    if (
+      !hasPaymentMethodData.hasPaymentMethod &&
+      currentUser.id !== artistData.artist.accountId
+    )
       openWith({ ...DialogState.addPayment, onAction: addPaymentMethod });
   }, []);
 
@@ -175,16 +191,36 @@ function AuctionPlaceBid() {
         <VStack
           as='form'
           gap={2}
-          onSubmit={(e) => {
+          onSubmit={async (e) => {
             e.preventDefault();
+
+            if (!value) {
+              return;
+            }
 
             if (!hasPaymentMethodData.hasPaymentMethod) {
               addPaymentMethod();
               return;
             }
+
+            const res = await createBid({
+              id: auctionData.auction.id,
+              amount: parseInt(value),
+            });
+
+            if (res && res.data) {
+              console.log('resetting');
+              setValue('');
+            }
           }}
         >
           <InputTextField
+            leftElement={
+              <Center color='white700' fontSize={6} w={55} css={{ pt: 3 }}>
+                USD
+              </Center>
+            }
+            size='lg'
             className={darkInputStyles()}
             name='bidAmount'
             errorText={bidError}
@@ -202,6 +238,7 @@ function AuctionPlaceBid() {
               height: '48px',
             }}
             disabled={
+              loadingCreateBid ||
               value === undefined ||
               value.length === 0 ||
               (bidError !== undefined && bidError.length > 0)
@@ -218,36 +255,40 @@ function AuctionPlaceBid() {
 function ArtistClubLiveBidsPage() {
   const { slug } = useParams();
 
-  const { data: artistData } = useSuspenseGetArtist({
+  const { data: artistData, loading } = useGetArtist({
     slug,
   });
 
   const { state: club } = useGeneralContext<IClub>();
 
   return (
-    <Fragment>
-      <Head
-        prefix={`${artistData.artist.name}'s Club -`}
-        title='Live Bids'
-        description='A catalog of memberships that are being offered by artists.'
-      />
-      <GQLRenderer>
-        <VStack gap={6}>
-          <HStack gap={4} h={500}>
-            <GQLRenderer LoadingFallback={<CardLoading />}>
-              <AuctionCard />
-            </GQLRenderer>
-            <VStack flex={1} gap={5}>
-              <AuctionCountdown />
-              <ArtistClubMembershipPerksSummaryList clubId={club.id} />
-              <AuctionPlaceBid />
+    <Loader loading={loading}>
+      {artistData && (
+        <Fragment>
+          <Head
+            prefix={`${artistData.artist.name}'s Club -`}
+            title='Live Bids'
+            description='A catalog of memberships that are being offered by artists.'
+          />
+          <GQLRenderer>
+            <VStack gap={6}>
+              <HStack gap={4} h={500}>
+                <GQLRenderer LoadingFallback={<CardLoading />}>
+                  <AuctionCard />
+                </GQLRenderer>
+                <VStack flex={1} gap={5}>
+                  <AuctionCountdown />
+                  <ArtistClubMembershipPerksSummaryList clubId={club.id} />
+                  <AuctionPlaceBid />
+                </VStack>
+              </HStack>
+              <ArtistClubActiveBiddersList />
+              <ArtistClubInactiveBiddersList />
             </VStack>
-          </HStack>
-          <ArtistClubActiveBiddersList />
-          <ArtistClubInactiveBiddersList />
-        </VStack>
-      </GQLRenderer>
-    </Fragment>
+          </GQLRenderer>
+        </Fragment>
+      )}
+    </Loader>
   );
 }
 
