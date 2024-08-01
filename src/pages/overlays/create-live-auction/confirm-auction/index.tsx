@@ -1,4 +1,10 @@
-import { Button, HStack, useRecordState, VStack } from '@holdr-ui/react';
+import {
+  Button,
+  HStack,
+  Text,
+  useRecordState,
+  VStack,
+} from '@holdr-ui/react';
 import {
   arrayFrom,
   handleFieldError,
@@ -7,6 +13,7 @@ import {
   lightSelectCSS,
   makePath,
   missingField,
+  NavigateWithPreviousLocation,
   Paths,
   SelectInputField,
   TextGroup,
@@ -19,6 +26,7 @@ import { useParams } from 'react-router-dom';
 import { ChangeEvent } from 'react';
 import {
   useCreateAuction,
+  usePerksContext,
   useSuspenseGetClub,
 } from '../../../../features';
 
@@ -26,6 +34,8 @@ function ConfirmAuction() {
   const { slug } = useParams();
 
   const { data } = useSuspenseGetClub({ slug });
+
+  const { clubPerks } = usePerksContext();
 
   const { createAuction, loading } = useCreateAuction();
 
@@ -77,6 +87,24 @@ function ConfirmAuction() {
     },
   });
 
+  if (
+    clubPerks.length < 3 ||
+    !data.club.coverImage ||
+    data.club.coverImage.length === 0
+  ) {
+    return (
+      <NavigateWithPreviousLocation
+        fallback={previousLocation}
+        to={makePath([
+          Paths.clubs,
+          slug || '',
+          Paths.auction,
+          Paths.create,
+        ])}
+      />
+    );
+  }
+
   return (
     <VStack
       as='form'
@@ -120,9 +148,12 @@ function ConfirmAuction() {
             onChange={(e) => handleOnChange(e, /[^0-9]+/gm)}
             onFocus={(e) => e.target.select()}
             tooltip='You can only auction off a maximum of 15 memberships at a time.'
-            placeholder='Enter the starting price of your membership'
-            // placeholder='0'
-            // leftElement={<Box pr={3}>USD</Box>}
+            placeholder='0'
+            leftElement={
+              <Text weight={600} color='white700' pr={3}>
+                USD
+              </Text>
+            }
             errorText={entryPriceError}
           />
 
@@ -133,8 +164,7 @@ function ConfirmAuction() {
             onChange={(e) => handleOnChange(e, /[^0-9]+/gm)}
             onFocus={(e) => e.target.select()}
             tooltip='The number of memberships that you want to sell.'
-            placeholder='Enter the number of memberships you are auctioning'
-            // placeholder='0'
+            placeholder='0'
             errorText={membershipsError}
           />
 

@@ -11,6 +11,7 @@ function NavigateWithPreviousLocation({
 
   return (
     <Navigate
+      replace
       to={to}
       state={{
         previousLocation,
