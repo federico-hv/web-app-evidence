@@ -4,7 +4,6 @@ import {
   UserProfileBidHistoryPage,
   UserProfileBioPage,
   UserProfileTabs,
-  UserProfileWatchlistPage,
 } from '../../pages';
 import { Navigate } from 'react-router-dom';
 
@@ -14,7 +13,6 @@ const UserRoutes = () => (
       <Route path='' element={<Navigate to='bio' replace />} />
       <Route path='bio' element={<UserProfileBioPage />} />
       <Route path='bid-history' element={<UserProfileBidHistoryPage />} />
-      <Route path='watchlist' element={<UserProfileWatchlistPage />} />
     </Route>
   </Routes>
 );

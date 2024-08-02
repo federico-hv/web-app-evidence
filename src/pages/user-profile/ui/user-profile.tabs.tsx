@@ -131,16 +131,6 @@ function UserProfileTabs() {
                       >
                         Bid History
                       </RoutingTabsTrigger>
-                      <RoutingTabsTrigger
-                        to='watchlist'
-                        w='fit-content'
-                        py={2}
-                        px={6}
-                        fontSize={2}
-                        _hover={{ background: '#9898FF26' }}
-                      >
-                        Watchlist
-                      </RoutingTabsTrigger>
                     </RoutingTabsList>
                   </RoutingTabsHeader>
                   <RoutingTabsContent h='full' />
