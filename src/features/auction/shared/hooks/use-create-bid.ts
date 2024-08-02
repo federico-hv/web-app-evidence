@@ -2,7 +2,11 @@ import { useMutation } from '@apollo/client';
 import { ErrorMessage, useToast } from '../../../../shared';
 import { CREATE_BID } from '../../mutations';
 import { IAuctionBid, ICreateBidArgs } from '../types';
-import { GET_BID, GET_REMAINING_MEMBERSHIP_COUNT } from '../../queries';
+import {
+  GET_BID,
+  GET_BID_STATUS,
+  GET_REMAINING_MEMBERSHIP_COUNT,
+} from '../../queries';
 
 export function useCreateBid() {
   const { openWith } = useToast();

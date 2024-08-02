@@ -2,7 +2,11 @@ import { useMutation } from '@apollo/client';
 import { ErrorMessage, useToast } from '../../../../shared';
 import { UPDATE_BID } from '../../mutations';
 import { IAuctionBid, IUpdateBidArgs } from '../types';
-import { GET_BID, GET_REMAINING_MEMBERSHIP_COUNT } from '../../queries';
+import {
+  GET_BID,
+  GET_BID_STATUS,
+  GET_REMAINING_MEMBERSHIP_COUNT,
+} from '../../queries';
 
 export function useUpdateBid() {
   const { openWith } = useToast();
@@ -21,6 +25,10 @@ export function useUpdateBid() {
           {
             query: GET_REMAINING_MEMBERSHIP_COUNT,
             variables: { auctionId: auctionId },
+          },
+          {
+            query: GET_BID_STATUS,
+            variables: { bidId: data.id },
           },
         ],
         update: (cache, { data }) => {

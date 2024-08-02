@@ -1,41 +1,32 @@
 import {
   Box,
   Button,
-  Center,
   CircularProgress,
   CloseButton,
   HStack,
-  Input,
-  Text,
   useRecordState,
   VStack,
 } from '@holdr-ui/react';
 import {
   FieldLengths,
   handleFieldError,
-  InformationTooltip,
+  InputLoadingIndicator,
   InputTextField,
-  isLengthGreaterThanZero,
-  isMatchingPattern,
-  ISocialLink,
-  makeButtonLarger,
   makePath,
-  MaxFieldLength,
   missingField,
+  parseSocialLinks,
   Paths,
-  PatternErrorMessage,
   Patterns,
-  SocialProvider,
+  removeFromArray,
+  replaceInArray,
   TextareaField,
   TextGroup,
   TextGroupHeading,
   TextGroupSubheading,
-  useArrayState,
   useNavigateWithPreviousLocation,
   usePreviousLocation,
 } from '../../../../shared';
 import {
-  IUpdateSocialLink,
   retrieveSocialLink,
   useClubContext,
   useDebounceIsUniqueClubUrl,
@@ -43,83 +34,8 @@ import {
   useUpdateArtistProfile,
 } from '../../../../features';
 import { ChangeEvent } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { AnimatePresence } from 'framer-motion';
+import { useParams } from 'react-router-dom';
 import { FlatList } from '../../../../tmp/flat-list';
-import { Field } from 'formik';
-
-enum SocialProviderNameEnum {
-  Instagram = 'Instagram',
-  TikTok = 'TikTok',
-  X = 'X',
-}
-
-function pushToArray<T>(prev: T[], item: T) {
-  return [...prev, item];
-}
-
-function removeFromArray<T>(
-  prev: T[],
-  filter: (item: T, idx: number) => void,
-) {
-  return prev.filter(filter);
-}
-
-function replaceInArray<T>(prev: T[], item: T, idx: number) {
-  return [...prev.slice(0, idx), item, ...prev.slice(idx + 1)];
-}
-
-function InputLoadingIndicator({ loading }: { loading: boolean }) {
-  return (
-    <AnimatePresence>
-      {loading && (
-        <CircularProgress
-          bgColor='base400'
-          colorTheme='white500'
-          thickness={2}
-          isIndeterminate
-          size={20}
-        />
-      )}
-    </AnimatePresence>
-  );
-}
-
-interface ICreateSocialLink {
-  provider: SocialProviderNameEnum;
-  url: string;
-}
-
-function parseSocialLinks(state: {
-  instagramUrl: string;
-  tiktokUrl: string;
-  xUrl: string;
-}): ICreateSocialLink[] {
-  return Object.keys(state)
-    .map((key): ICreateSocialLink | undefined => {
-      if (key === 'instagramUrl') {
-        return {
-          provider: SocialProviderNameEnum.Instagram,
-          url: state[key],
-        };
-      } else if (key === 'tiktokUrl') {
-        return {
-          provider: SocialProviderNameEnum.TikTok,
-          url: state[key],
-        };
-      } else if (key === 'xUrl') {
-        return {
-          provider: SocialProviderNameEnum.X,
-          url: state[key],
-        };
-      }
-    })
-    .filter((item: ICreateSocialLink | undefined) => {
-      if (item === undefined) return false;
-
-      return item.url.length !== 0;
-    }) as Array<ICreateSocialLink>;
-}
 
 function EditArtistClubBioPage() {
   const { updateArtistProfile, loading } = useUpdateArtistProfile();
@@ -169,16 +85,6 @@ function EditArtistClubBioPage() {
     tiktokUrl:
       retrieveSocialLink(artistData.artist.socialLinks || [], 'TikTok')
         ?.url || '',
-  });
-
-  const usernameError = handleFieldError(state.username, {
-    keyName: 'Username',
-    min: {
-      length: FieldLengths.username.min,
-    },
-    max: {
-      length: FieldLengths.username.max,
-    },
   });
 
   const socialURLErrors = {

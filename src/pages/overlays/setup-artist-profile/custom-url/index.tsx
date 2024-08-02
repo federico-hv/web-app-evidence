@@ -1,16 +1,10 @@
 import { useNavigate } from 'react-router-dom';
+import { Box, Button, HStack, VStack } from '@holdr-ui/react';
 import {
-  Box,
-  Button,
-  Center,
-  CircularProgress,
-  HStack,
-  Input,
-  Text,
-  VStack,
-} from '@holdr-ui/react';
-import {
-  customInputStyles,
+  FieldLengths,
+  handleFieldError,
+  InputLoadingIndicator,
+  InputTextField,
   makePath,
   Paths,
   TextGroup,
@@ -21,13 +15,6 @@ import {
 import { ChangeEvent, useState } from 'react';
 import { useClubContext, useUpdateClub } from '../../../../features';
 import { useDebounceIsUniqueClubUrl } from '../../../../features';
-import { AnimatePresence } from 'framer-motion';
-import { InputTextFieldProps } from '../../../../shared/components/text-field/types';
-import {
-  InputGroup,
-  InputGroupLeftElement,
-  InputGroupRightElement,
-} from '../../../../tmp/input-group';
 
 function CustomURLView() {
   const previousLocation = usePreviousLocation('/');
@@ -51,6 +38,13 @@ function CustomURLView() {
     checkIsUnique(value, club.id);
   };
 
+  const clubUrlError =
+    !result && club.url !== url
+      ? 'The club URL you have entered is already taken'
+      : handleFieldError(url, {
+          keyName: 'Club URL',
+        });
+
   return (
     <VStack gap={9} pl={2} h='100%' overflow='auto'>
       <VStack gap={4}>
@@ -60,40 +54,21 @@ function CustomURLView() {
             Create your own custom URL to easily share with your fans
           </TextGroupSubheading>
         </TextGroup>
-        <VStack gap={1}>
-          <InputGroup>
-            <InputGroupLeftElement>
-              <Text color='white900'>https://holdrclub.com/clubs/</Text>
-            </InputGroupLeftElement>
-            <Input
-              variant='unstyled'
-              maxLength={25}
-              value={url}
-              onChange={handleOnChange}
-              color='white500'
-            />
-            <InputGroupRightElement pl={4}>
-              <AnimatePresence>
-                {loading && (
-                  <Center position='absolute' t={0} b={0} r='1rem'>
-                    <CircularProgress
-                      bgColor='base400'
-                      colorTheme='white500'
-                      thickness={2}
-                      isIndeterminate
-                      size={20}
-                    />
-                  </Center>
-                )}
-              </AnimatePresence>
-            </InputGroupRightElement>
-          </InputGroup>
-          {!result && (
-            <Text size={1} weight={500} color='danger300'>
-              That URL is already taken
-            </Text>
-          )}
-        </VStack>
+        <InputTextField
+          name='url'
+          label='Custom URL'
+          onChange={handleOnChange}
+          maxLength={FieldLengths.url.max}
+          tooltip='A custom URL to share with your fans.'
+          value={url}
+          leftElement={
+            <Box w={204} color='white700'>
+              https://holdrclub.com/clubs/
+            </Box>
+          }
+          rightElement={<InputLoadingIndicator loading={loading} />}
+          errorText={clubUrlError}
+        />
       </VStack>
       <HStack
         justify='flex-end'

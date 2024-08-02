@@ -40,7 +40,6 @@ function BidderList() {
         <Bidder
           isHighlighted={node.owner.id === currentUser.id}
           data={node}
-          position={idx + 1}
         />
       )}
       direction='vertical'
@@ -66,7 +65,7 @@ function ArtistClubInactiveBiddersList() {
         justify='space-between'
       >
         <TextGroupHeading weight={400} size={5} color='white500'>
-          Out of Contention
+          Ineligible
         </TextGroupHeading>
       </TextGroup>
 

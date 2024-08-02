@@ -13,8 +13,9 @@ import {
   useDeleteBid,
 } from '../../../../../features';
 import dayjs from 'dayjs';
-import { Menu, prefix } from '../../../../../shared';
+import { Menu, prefix, useAlertDialog } from '../../../../../shared';
 import { useNavigate } from 'react-router-dom';
+import { useAuctionAlertContext } from '../../shared/contexts';
 
 function Bidder({
   data,
@@ -25,6 +26,10 @@ function Bidder({
   data: IAuctionBid;
   position?: number;
 }) {
+  const { openWith } = useAlertDialog();
+
+  const { update } = useAuctionAlertContext();
+
   const dotsSpacer = '.'.repeat(100);
 
   const navigate = useNavigate();
@@ -93,9 +98,20 @@ function Bidder({
               <Menu.Item
                 dangerous
                 disabled={loading}
-                action={async () => {
-                  await deleteBid(data.bid.id, auctionData.auction.id);
-                }}
+                action={() =>
+                  openWith({
+                    title: 'Are you sure you want to withdraw?',
+                    description:
+                      'Are you sure you want to withdraw your bid from the auction? This action cannot be undone.',
+                    actionText: 'Yes, Withdraw Bid',
+                    cancelText: 'Do not withdraw',
+                    onAction: async () => {
+                      await deleteBid(data.bid.id, auctionData.auction.id);
+
+                      update({ status: undefined, eventName: undefined });
+                    },
+                  })
+                }
               >
                 Withdraw Bid
               </Menu.Item>

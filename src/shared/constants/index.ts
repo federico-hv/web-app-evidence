@@ -5,3 +5,4 @@ export * from './user';
 export * from './assets';
 export * from './form';
 export * from './message';
+export * from './enums';

@@ -48,6 +48,12 @@ export const GET_REMAINING_MEMBERSHIP_COUNT = gql`
   }
 `;
 
+export const GET_BID_STATUS = gql`
+  query bidStatus($bidId: Int!) {
+    bidStatus(bidId: $bidId)
+  }
+`;
+
 export const GET_CONTENDERS = gql`
   query getContenders(
     $id: Int!

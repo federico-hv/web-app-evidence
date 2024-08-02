@@ -27,7 +27,6 @@ function MainLayout() {
                 '@bp5': 'calc(100% - (308px + $4))',
               }}
               flex={1}
-              mb={4}
               position='relative'
               css={{ flexShrink: 0 }}
             >

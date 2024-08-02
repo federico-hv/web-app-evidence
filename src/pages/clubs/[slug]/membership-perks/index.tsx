@@ -24,9 +24,9 @@ function ArtistClubMembershipPerksPage() {
       <RadialSurface
         radius={2}
         h='100%'
-        className='thin-scrollbar'
-        maxHeight='calc(100vh - 250px)'
-        overflow='auto'
+        // className='thin-scrollbar'
+        // maxHeight='calc(100vh - 250px)'
+        // overflow='auto'
       >
         <VStack
           divider={

@@ -1,12 +1,12 @@
 import {
-  HStack,
-  VStack,
-  Button,
-  Icon,
   Box,
-  useGeneralContext,
-  Countdown,
+  Button,
   Center,
+  Countdown,
+  HStack,
+  Icon,
+  useGeneralContext,
+  VStack,
 } from '@holdr-ui/react';
 import { Fragment, useEffect, useState } from 'react';
 import {
@@ -15,17 +15,18 @@ import {
   ArtistClubMembershipPerksSummaryList,
 } from './ui';
 import {
-  IClub,
   AuctionCard,
-  useHasPaymentMethodSuspenseQuery,
+  IClub,
+  useBidSuspenseQuery,
+  useCreateBid,
   useCurrentUser,
+  useGetArtist,
+  useGetAuctionSuspenseQuery,
+  useHasPaymentMethodSuspenseQuery,
   useSuspenseGetArtist,
   useSuspenseGetClub,
-  useGetAuctionSuspenseQuery,
   useSuspenseGetClubPerks,
-  useCreateBid,
   useUpdateBid,
-  useGetArtist,
 } from '../../../../features';
 import {
   darkInputStyles,
@@ -39,7 +40,10 @@ import {
 } from '../../../../shared';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { keyframes } from '@stitches/react';
-import { useBidSuspenseQuery } from '../../../../features/auction/shared/hooks/use-bid.query';
+import {
+  AuctionEventNameEnum,
+  useAuctionAlertContext,
+} from '../shared/contexts';
 
 const DialogState = {
   addPayment: {
@@ -150,6 +154,8 @@ function AuctionPlaceBid() {
 
   const { openWith } = useAlertDialog();
 
+  const { update } = useAuctionAlertContext();
+
   const { slug } = useParams();
 
   const addPaymentMethod = useAddPaymentMethod();
@@ -175,7 +181,10 @@ function AuctionPlaceBid() {
     keyName: 'Bid amount',
     compare: {
       value: parseInt(value || '0'),
-      gt: auctionData.auction.entryPrice,
+      gt: auctionData.auction.entryPrice - 1,
+      message: {
+        gt: `Bid amount must at least be equal to the entry price of $${auctionData.auction.entryPrice} USD`,
+      },
     },
   });
 
@@ -217,6 +226,10 @@ function AuctionPlaceBid() {
               if (res && res.data && res.data.updateBid) {
                 setValue('');
               }
+              update({
+                status: 'success',
+                eventName: AuctionEventNameEnum.updated,
+              });
             } else {
               const res = await createBid(
                 {
@@ -228,13 +241,17 @@ function AuctionPlaceBid() {
 
               if (res && res.data && res.data.createBid) {
                 setValue('');
+                update({
+                  status: 'success',
+                  eventName: AuctionEventNameEnum.success,
+                });
               }
             }
           }}
         >
           <InputTextField
             leftElement={
-              <Center color='white700' fontSize={6} w={55} css={{ pt: 3 }}>
+              <Center color='white700' fontSize={6} w={55}>
                 USD
               </Center>
             }

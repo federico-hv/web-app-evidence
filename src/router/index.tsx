@@ -6,6 +6,7 @@ import {
   NotFoundError,
   Paths,
   prefix,
+  RouteChangeListener,
 } from '../shared';
 import {
   ClubRoutes,
@@ -33,7 +34,7 @@ function Router() {
 
   return (
     <Fragment>
-      {/*Main page routes*/}
+      {/*Main page routes*/}{' '}
       <Routes location={previousLocation || location}>
         <Route path={Paths.authRedirect} element={<AuthRedirectPage />} />
         {import.meta.env.VITE_ENVIRONMENT === 'development' && (
