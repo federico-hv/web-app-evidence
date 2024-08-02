@@ -28,7 +28,9 @@ function CheckBidStatus() {
     clubData.club.id,
   );
 
-  const { data: bidData } = useBidSuspenseQuery(auctionData.auction.id);
+  const { data: bidData } = useBidSuspenseQuery(
+    auctionData && auctionData.auction ? auctionData.auction.id : -1,
+  );
 
   const { data: bidStatusData } = useBidStatusSuspenseQuery(
     bidData && bidData.bid && bidData.bid.bid ? bidData.bid.bid.id : -1,
