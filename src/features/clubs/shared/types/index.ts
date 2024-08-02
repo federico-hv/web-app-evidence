@@ -30,11 +30,11 @@ export interface IClub {
   createdAt: Date;
 }
 
-export interface BidderModel {
+export interface BidData {
   displayName: string;
   createdAt: Date;
   amount: number;
-  bidId?: number;
+  bidId: number;
 }
 
 export interface ITinyClub {

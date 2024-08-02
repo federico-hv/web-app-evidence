@@ -1,1 +1,1 @@
-export { default as MembershipCard } from './membership.card';
+export { default as AuctionCard } from './auction.card';

@@ -9,5 +9,8 @@ export const GQLCache = new InMemoryCache({
       // use the provider name as the ID for a SocialLinkModel
       keyFields: ['provider'],
     },
+    // AuctionBidModel: {
+    //   keyFields: ['bid.id'],
+    // },
   },
 });

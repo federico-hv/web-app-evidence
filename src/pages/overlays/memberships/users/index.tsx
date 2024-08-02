@@ -22,7 +22,7 @@ import { ProfileProvider } from '../../../user-profile';
 import { FlatList } from '../../../../tmp/flat-list';
 import {
   IProfile,
-  MembershipCard,
+  AuctionCard,
   useCurrentUser,
 } from '../../../../features';
 import { dummyPerks } from '../../../clubs/shared';
@@ -117,7 +117,7 @@ function UserMembershipsPage() {
                   ]}
                   renderItem={(data) => (
                     <Box h='500px'>
-                      <MembershipCard
+                      <AuctionCard
                         data={{
                           name: `${data.name}'s Club`,
                           coverImage: Asset.Image.DummyMembershipCover,

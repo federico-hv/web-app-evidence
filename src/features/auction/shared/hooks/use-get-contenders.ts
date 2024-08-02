@@ -1,31 +1,34 @@
-import { useQuery } from '@apollo/client';
-import { GET_CONTENDERS } from '../../../../features/auction/queries';
+import { useQuery, useSuspenseQuery } from '@apollo/client';
+import { GET_CONTENDERS } from '../../queries';
+import { IAuctionBid } from '../types';
+import { IConnection, IPaginationParams } from '../../../../shared';
 
-export interface ContenderEdge {
-  node: {
-    owner: {
-      id: string;
-      displayName: string;
-      username: string;
-      role: string;
-    };
-    bid: {
-      id: number;
-      amount: number;
-      createdAt: Date;
-    };
-  };
-}
-export interface ContendersData {
-  contenders: {
-    edges: ContenderEdge[];
-  };
+export enum ContenderFilterEnum {
+  'Active' = 'Active',
+  'Inactive' = 'Inactive',
 }
 
-export function useGetContenders(id: number = -1, filter: string) {
-  //Upddate typescript types
-  return useQuery<ContendersData, any>(GET_CONTENDERS, {
-    variables: { id, filter },
+export interface IContendersArgs {
+  id: number;
+  filter?: ContenderFilterEnum;
+  params?: IPaginationParams<number>;
+}
+
+export function useGetContendersQuery(args: IContendersArgs) {
+  return useQuery<
+    { contenders: IConnection<IAuctionBid, string> },
+    IContendersArgs
+  >(GET_CONTENDERS, {
+    variables: args,
     pollInterval: 1,
+  });
+}
+
+export function useGetContendersSuspenseQuery(args: IContendersArgs) {
+  return useSuspenseQuery<
+    { contenders: IConnection<IAuctionBid, string> },
+    IContendersArgs
+  >(GET_CONTENDERS, {
+    variables: args,
   });
 }

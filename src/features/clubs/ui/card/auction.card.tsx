@@ -22,12 +22,14 @@ import {
 import { FlatList } from '../../../../tmp/flat-list';
 import { useEffect, useState } from 'react';
 
-function MembershipCard({
+function AuctionCard({
   data,
   showPerksOnHover = true,
+  disableWatchlist = false,
 }: {
   /** Show the perks when hovered. Set to true by default */
   showPerksOnHover?: boolean;
+  disableWatchlist?: boolean;
   data: {
     /** The date that an auction ends */
     coverImage?: string;
@@ -101,7 +103,9 @@ function MembershipCard({
         p={4}
       >
         {data.endDate ? <LiveTag /> : <Box />}
-        <IconButton ariaLabel='add to watchlist' icon='eye-show' />
+        {!disableWatchlist && (
+          <IconButton ariaLabel='add to watchlist' icon='eye-show' />
+        )}
       </CardHeader>
       <CardBody
         h='100%'
@@ -226,4 +230,4 @@ function MembershipCard({
   );
 }
 
-export default MembershipCard;
+export default AuctionCard;

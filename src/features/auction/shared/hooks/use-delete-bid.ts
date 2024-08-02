@@ -2,6 +2,7 @@ import { useMutation } from '@apollo/client';
 import { DELETE_BID } from '../../mutations';
 import { ErrorMessage, useToast } from '../../../../shared';
 import { IAuctionBid } from '../types';
+import { GET_BID, GET_REMAINING_MEMBERSHIP_COUNT } from '../../queries';
 
 export function useDeleteBid() {
   const { openWith } = useToast();
@@ -13,13 +14,32 @@ export function useDeleteBid() {
 
   /**
    *
-   * @param id the bid ID
+   * @param bidId the bid ID
+   * @param auctionId
    */
-  const deleteBid = async (id: number) => {
+  const deleteBid = async (bidId: number, auctionId: number) => {
     try {
       return await mutate({
         variables: {
-          id,
+          id: bidId,
+        },
+        refetchQueries: [
+          { query: GET_BID, variables: { auctionId } },
+          {
+            query: GET_REMAINING_MEMBERSHIP_COUNT,
+            variables: { auctionId: auctionId },
+          },
+        ],
+        update: (cache, { data }) => {
+          cache.modify({
+            fields: {
+              contenders(current = {}) {
+                cache.evict({ id: current.__ref });
+
+                return;
+              },
+            },
+          });
         },
       });
     } catch (e) {

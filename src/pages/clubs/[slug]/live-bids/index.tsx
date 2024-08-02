@@ -5,10 +5,8 @@ import {
   Icon,
   Box,
   useGeneralContext,
-  useInputChange,
   Countdown,
   Center,
-  Text,
 } from '@holdr-ui/react';
 import { Fragment, useEffect, useState } from 'react';
 import {
@@ -18,7 +16,7 @@ import {
 } from './ui';
 import {
   IClub,
-  MembershipCard,
+  AuctionCard,
   useHasPaymentMethodSuspenseQuery,
   useCurrentUser,
   useSuspenseGetArtist,
@@ -41,6 +39,7 @@ import {
 } from '../../../../shared';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { keyframes } from '@stitches/react';
+import { useBidSuspenseQuery } from '../../../../features/auction/shared/hooks/use-bid.query';
 
 const DialogState = {
   addPayment: {
@@ -95,7 +94,7 @@ export const createShimmer = (startColor: string, endColor: string) =>
     },
   });
 
-function AuctionCard() {
+function AuctionBannerCard() {
   const { slug } = useParams();
 
   const { data: clubData } = useSuspenseGetClub({ slug });
@@ -108,7 +107,8 @@ function AuctionCard() {
 
   return (
     <Box flex={1} h='100%'>
-      <MembershipCard
+      <AuctionCard
+        disableWatchlist
         showPerksOnHover={false}
         data={{
           coverImage: clubData.club.coverImage,
@@ -167,6 +167,8 @@ function AuctionPlaceBid() {
     clubData.club.id,
   );
 
+  const { data: bidData } = useBidSuspenseQuery(auctionData.auction.id);
+
   const [value, setValue] = useState<string>();
 
   const bidError = handleFieldError(value, {
@@ -203,14 +205,30 @@ function AuctionPlaceBid() {
               return;
             }
 
-            const res = await createBid({
-              id: auctionData.auction.id,
-              amount: parseInt(value),
-            });
+            if (bidData.bid) {
+              const res = await updateBid(
+                {
+                  id: bidData.bid.bid.id,
+                  amount: parseInt(value),
+                },
+                auctionData.auction.id,
+              );
 
-            if (res && res.data) {
-              console.log('resetting');
-              setValue('');
+              if (res && res.data && res.data.updateBid) {
+                setValue('');
+              }
+            } else {
+              const res = await createBid(
+                {
+                  id: auctionData.auction.id,
+                  amount: parseInt(value),
+                },
+                auctionData.auction.id,
+              );
+
+              if (res && res.data && res.data.createBid) {
+                setValue('');
+              }
             }
           }}
         >
@@ -237,14 +255,17 @@ function AuctionPlaceBid() {
             style={{
               height: '48px',
             }}
+            isLoading={loadingUpdateBid || loadingCreateBid}
+            loadingText={bidData.bid ? 'Updating Bid' : 'Placing Bid'}
             disabled={
               loadingCreateBid ||
+              loadingUpdateBid ||
               value === undefined ||
               value.length === 0 ||
               (bidError !== undefined && bidError.length > 0)
             }
           >
-            Place Bid
+            {bidData.bid ? 'Update' : 'Place'} Bid
           </Button>
         </VStack>
       )}
@@ -274,7 +295,7 @@ function ArtistClubLiveBidsPage() {
             <VStack gap={6}>
               <HStack gap={4} h={500}>
                 <GQLRenderer LoadingFallback={<CardLoading />}>
-                  <AuctionCard />
+                  <AuctionBannerCard />
                 </GQLRenderer>
                 <VStack flex={1} gap={5}>
                   <AuctionCountdown />

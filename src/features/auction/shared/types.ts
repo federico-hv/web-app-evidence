@@ -38,5 +38,5 @@ export interface ICreateBidArgs {
 
 export interface IUpdateBidArgs {
   id: number;
-  amount: string;
+  amount: number;
 }

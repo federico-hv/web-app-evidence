@@ -5,9 +5,48 @@ import {
   TextGroup,
   TextGroupHeading,
 } from '../../../../../shared';
-import { useSuspenseGetInactiveBidders } from '../../../../../features';
+import {
+  ContenderFilterEnum,
+  useCurrentUser,
+  useGetAuctionSuspenseQuery,
+  useGetContendersSuspenseQuery,
+  useSuspenseGetClub,
+} from '../../../../../features';
 import Bidder from './bidder';
-import { IBidder } from '..';
+import { useParams } from 'react-router-dom';
+
+function BidderList() {
+  const currentUser = useCurrentUser();
+
+  const { slug } = useParams();
+
+  const { data: clubData } = useSuspenseGetClub({ slug });
+
+  const { data: auctionData } = useGetAuctionSuspenseQuery(
+    clubData.club.id,
+  );
+
+  const { data } = useGetContendersSuspenseQuery({
+    id: auctionData.auction.id,
+    filter: ContenderFilterEnum.Inactive,
+  });
+
+  return (
+    <FlatList
+      py={4}
+      data={data.contenders.edges}
+      keyExtractor={({ cursor }) => `inactive-bid-${cursor}`}
+      renderItem={({ node }, idx) => (
+        <Bidder
+          isHighlighted={node.owner.id === currentUser.id}
+          data={node}
+          position={idx + 1}
+        />
+      )}
+      direction='vertical'
+    />
+  );
+}
 
 function ArtistClubInactiveBiddersList() {
   //const isCurrentUser = (item: any) => item.id === currentUserId;
@@ -31,27 +70,7 @@ function ArtistClubInactiveBiddersList() {
         </TextGroupHeading>
       </TextGroup>
 
-      {/*{auctionWithBidders && (*/}
-      {/*  <FlatList*/}
-      {/*    data={bidders}*/}
-      {/*    keyExtractor={(item) => `inactive-bid-${item.id}`}*/}
-      {/*    renderItem={(item, idx) => (*/}
-      {/*      <Bidder*/}
-      {/*        confirmWithdraw={confirmWithdraw}*/}
-      {/*        isActive={isCurrentUser(item)}*/}
-      {/*        position={idx + 1}*/}
-      {/*        data={item}*/}
-      {/*      />*/}
-      {/*    )}*/}
-      {/*    direction={'vertical'}*/}
-      {/*  />*/}
-      {/*)}*/}
-
-      {/*{!auctionWithBidders && (*/}
-      {/*  <VStack items='center' py={'10px'}>*/}
-      {/*    <Text>No out of contention bidders yet</Text>*/}
-      {/*  </VStack>*/}
-      {/*)}*/}
+      <BidderList />
     </RadialSurface>
   );
 }

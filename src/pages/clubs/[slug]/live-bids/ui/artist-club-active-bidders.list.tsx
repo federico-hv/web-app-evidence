@@ -1,15 +1,67 @@
-import { StackDivider, VStack, Text } from '@holdr-ui/react';
+import { StackDivider } from '@holdr-ui/react';
 import { FlatList } from '../../../../../tmp/flat-list';
 import {
   RadialSurface,
   TextGroup,
   TextGroupHeading,
 } from '../../../../../shared';
-import { useSuspenseGetActiveBidders } from '../../../../../features';
+import {
+  ContenderFilterEnum,
+  useGetAuctionSuspenseQuery,
+  useGetContendersSuspenseQuery,
+  useSuspenseGetClub,
+  useCurrentUser,
+  useRemainingMembershipCountSuspenseQuery,
+} from '../../../../../features';
+import { useParams } from 'react-router-dom';
 import Bidder from './bidder';
-import { IBidder } from '..';
+
+function BidderList() {
+  const currentUser = useCurrentUser();
+
+  const { slug } = useParams();
+
+  const { data: clubData } = useSuspenseGetClub({ slug });
+
+  const { data: auctionData } = useGetAuctionSuspenseQuery(
+    clubData.club.id,
+  );
+
+  const { data } = useGetContendersSuspenseQuery({
+    id: auctionData.auction.id,
+    filter: ContenderFilterEnum.Active,
+  });
+
+  return (
+    <FlatList
+      py={4}
+      data={data.contenders.edges}
+      keyExtractor={({ cursor }) => `inactive-bid-${cursor}`}
+      renderItem={({ node }, idx) => (
+        <Bidder
+          isHighlighted={node.owner.id === currentUser.id}
+          data={node}
+          position={idx + 1}
+        />
+      )}
+      direction='vertical'
+    />
+  );
+}
 
 function ArtistClubActiveBiddersList() {
+  const { slug } = useParams();
+
+  const { data: clubData } = useSuspenseGetClub({ slug });
+
+  const { data: auctionData } = useGetAuctionSuspenseQuery(
+    clubData.club.id,
+  );
+
+  const { data } = useRemainingMembershipCountSuspenseQuery(
+    auctionData.auction.id,
+  );
+
   return (
     <RadialSurface
       radius={2}
@@ -28,31 +80,11 @@ function ArtistClubActiveBiddersList() {
           Eligible
         </TextGroupHeading>
         <TextGroupHeading size={3} color='white700' as='h3'>
-          {/*{membershipsLeft} memberships available*/}
+          {data.remainingMembershipsCount} memberships available
         </TextGroupHeading>
       </TextGroup>
 
-      {/*{auctionWithBidders && (*/}
-      {/*  <FlatList*/}
-      {/*    py={4}*/}
-      {/*    data={bidders}*/}
-      {/*    keyExtractor={(item) => `inactive-bid-${item.id}`}*/}
-      {/*    renderItem={(item, idx) => (*/}
-      {/*      <Bidder*/}
-      {/*        confirmWithdraw={confirmWithdraw}*/}
-      {/*        isActive={isCurrentUser(item)}*/}
-      {/*        data={item}*/}
-      {/*        position={idx + 1}*/}
-      {/*      />*/}
-      {/*    )}*/}
-      {/*    direction='vertical'*/}
-      {/*  />*/}
-      {/*)}*/}
-      {/*{!auctionWithBidders && (*/}
-      {/*  <VStack items='center' py={'10px'}>*/}
-      {/*    <Text>No eligible bidders yet</Text>*/}
-      {/*  </VStack>*/}
-      {/*)}*/}
+      <BidderList />
     </RadialSurface>
   );
 }
