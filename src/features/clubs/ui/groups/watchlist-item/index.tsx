@@ -14,8 +14,14 @@ import {
   TextGroup,
   TextGroupSubheading,
 } from '../../../../../shared';
+import FollowCountItem from '../../../../../features/relationships/ui/follow-count-item';
+import millify from 'millify';
 
-function WatchlistItem({ data }: WatchlistItemProps) {
+function WatchlistItem({
+  data,
+}:
+  | WatchlistItemProps
+  | { data: any; followers?: number; following?: number }) {
   return (
     <HStack
       w='100%'
@@ -72,13 +78,15 @@ function WatchlistItem({ data }: WatchlistItemProps) {
               color='white700'
               aria-label='watchlist-item price title'
             >
-              {data.endDate ? 'Entry Price' : 'Buy Now'}
+              {data.endDate ? 'Entry Price' : 'Followers'}
             </TextGroupSubheading>
             <TextGroupSubheading
               weight={400}
               aria-label='watchlist-item price'
             >
-              {`$${data.price.toFixed(2)} USD`}
+              {data.endDate
+                ? `$${data.price.toFixed(2)} USD`
+                : millify(data.followers, { precision: 2 })}
             </TextGroupSubheading>
           </TextGroup>
           {data.endDate && (

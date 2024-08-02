@@ -7,6 +7,8 @@ interface FollowCountItemProps {
   onClick?: VoidFunction;
   count: number;
   label: string;
+  labelOneSize?: string;
+  labelTwoSize?: string;
 }
 
 function FollowCountItem({

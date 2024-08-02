@@ -88,6 +88,16 @@ function ClubsTabs() {
                     px={6}
                     fontSize={2}
                     _hover={{ background: '#9898FF26' }}
+                    to='clubs'
+                  >
+                    Clubs
+                  </RoutingTabsTrigger>
+                  <RoutingTabsTrigger
+                    w='fit-content'
+                    py={2}
+                    px={6}
+                    fontSize={2}
+                    _hover={{ background: '#9898FF26' }}
                     to='watchlist'
                   >
                     Watchlist

@@ -21,18 +21,15 @@ import {
 } from '../../../../shared';
 import { FlatList } from '../../../../tmp/flat-list';
 import { useEffect, useState } from 'react';
+import FollowCountItem from '../../../../features/relationships/ui/follow-count-item';
 
-const CARD_ANIMATION_TRANSITION = 'all 500ms ease-in-out';
-
-function AuctionCard({
+function ClubCard({
   data,
   showPerksOnHover = true,
-  disableWatchlist = false,
   onWatchClick,
 }: {
   /** Show the perks when hovered. Set to true by default */
   showPerksOnHover?: boolean;
-  disableWatchlist?: boolean;
   data: {
     /** The date that an auction ends */
     coverImage?: string;
@@ -46,6 +43,9 @@ function AuctionCard({
     price?: number;
     /** A list of the club perks */
     perks?: string[];
+
+    followers: number;
+    following: number;
   };
   onWatchClick: () => void;
 }) {
@@ -79,18 +79,18 @@ function AuctionCard({
               },
               '&:hover .membership-card-footer__overlay': {
                 height: '100%',
-                transition: CARD_ANIMATION_TRANSITION,
+                transition: 'all 0.25s ease-out',
               },
               '&:hover .membership-card-footer__overlay > *': {
                 display: 'block',
               },
               '&:hover .membership-card__body': {
                 height: '100%',
-                transition: CARD_ANIMATION_TRANSITION,
+                transition: 'all 0.25s ease-out',
               },
               '&:hover .membership-card__footer': {
                 height: '0%',
-                transition: CARD_ANIMATION_TRANSITION,
+                transition: 'all 0.25s ease-out',
               },
             }
           : undefined
@@ -106,14 +106,12 @@ function AuctionCard({
         r={0}
         p={4}
       >
-        {data.endDate ? <LiveTag /> : <Box />}
-        {!disableWatchlist && (
-          <IconButton
-            onClick={onWatchClick}
-            ariaLabel='add to watchlist'
-            icon='eye-show'
-          />
-        )}
+        <Box />
+        <IconButton
+          onClick={onWatchClick}
+          ariaLabel='add to watchlist'
+          icon='eye-show'
+        />
       </CardHeader>
       <CardBody
         h='100%'
@@ -127,7 +125,6 @@ function AuctionCard({
       >
         <Image
           w='100%'
-          // src={data.coverImage}
           src={data.coverImage}
           fallbackSrc={Asset.Image.LightPlaceholder}
           alt={`${data.name}'s club cover image.`}
@@ -147,20 +144,31 @@ function AuctionCard({
         <Box className='membership-card-footer__content' w='100%'>
           <VStack gap={3} id='membership_footer' p={4} h='fit-content'>
             {data.name && (
-              <Heading size={5} weight={400} color='white100'>
+              <Heading size={'20px'} weight={400} color='white100'>
                 {data.name}
               </Heading>
             )}
-            {data.price && (
-              <TextGroup gap={0}>
-                <TextGroupHeading size={1} weight={400} casing='uppercase'>
-                  Entry Price
-                </TextGroupHeading>
-                <TextGroupSubheading size={5} weight={500}>
-                  ${data.price.toFixed(2)} USD
-                </TextGroupSubheading>
-              </TextGroup>
-            )}
+            <Box bgColor='rgba(152, 152, 255, 0.10)' h='1px' w='100%' />
+            <HStack
+              items='center'
+              gap={3}
+              divider={<Circle bgColor='black300' size='5px' />}
+            >
+              <FollowCountItem
+                onClick={() => {}}
+                count={data.followers}
+                label='Followers'
+                labelOneSize='14px'
+                labelTwoSize='12px'
+              />
+              <FollowCountItem
+                onClick={() => {}}
+                count={data.following}
+                label='Following'
+                labelOneSize='14px'
+                labelTwoSize='12px'
+              />
+            </HStack>
           </VStack>
         </Box>
         {/* Overlay */}
@@ -183,53 +191,32 @@ function AuctionCard({
               p={4}
               h='87.5%'
             >
-              <VStack gap={3}>
-                <Heading noOfLines={1} size={5} weight={400} as='h5'>
-                  {data.name}
-                </Heading>
-                {data.price && (
-                  <TextGroup gap={0}>
-                    <TextGroupHeading
-                      size={1}
-                      weight={400}
-                      casing='uppercase'
-                    >
-                      Entry Price
-                    </TextGroupHeading>
-                    <TextGroupSubheading size={5} weight={500}>
-                      ${data.price} USD
-                    </TextGroupSubheading>
-                  </TextGroup>
-                )}
-              </VStack>
               <Box
                 my={4}
                 bgColor='rgba(152, 152, 255, 0.10)'
                 h='1px'
                 w='100%'
               />
-              {data.perks && (
-                <VStack flex={1} overflow='hidden'>
-                  <Heading color='purple50' size={3} as='h3' weight={500}>
-                    Membership Perks
-                  </Heading>
-                  <FlatList
-                    mt={3}
-                    gap={2}
-                    direction='vertical'
-                    data={data.perks.slice(0, 3)}
-                    renderItem={(item) => (
-                      <HStack gap={2} items='center'>
-                        <Circle size='4px' bgColor='purple50' />
-                        <Text noOfLines={1} size={2}>
-                          {item}
-                        </Text>
-                      </HStack>
-                    )}
-                    keyExtractor={(item) => item}
-                  />
-                </VStack>
-              )}
+              <HStack
+                items='center'
+                gap={3}
+                divider={<Circle bgColor='black300' size='5px' />}
+              >
+                <FollowCountItem
+                  onClick={() => {}}
+                  count={data.followers}
+                  label='Followers'
+                  labelOneSize='14px'
+                  labelTwoSize='12px'
+                />
+                <FollowCountItem
+                  onClick={() => {}}
+                  count={data.following}
+                  label='Following'
+                  labelOneSize='14px'
+                  labelTwoSize='12px'
+                />
+              </HStack>
             </VStack>
           </Box>
         </Box>
@@ -238,4 +225,4 @@ function AuctionCard({
   );
 }
 
-export default AuctionCard;
+export default ClubCard;

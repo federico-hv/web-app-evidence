@@ -31,7 +31,9 @@ const ClubsTabs = React.lazy(
 const LiveAuctionsClubPage = React.lazy(
   () => import('../../pages/clubs/live-auctions'),
 );
-const WatchlistClubPage = React.lazy(
+const ClubsPage = React.lazy(() => import('../../pages/clubs/clubs'));
+
+const WatchlistPage = React.lazy(
   () => import('../../pages/clubs/watchlist'),
 );
 
@@ -68,7 +70,8 @@ const ClubRoutes = () => (
           <Route path='' element={<Navigate to='all' replace />} />
           <Route path='all' element={<AllClubsPage />} />
           <Route path='auction' element={<LiveAuctionsClubPage />} />
-          <Route path='watchlist' element={<WatchlistClubPage />} />
+          <Route path='clubs' element={<ClubsPage />} />
+          <Route path='watchlist' element={<WatchlistPage />} />
           <Route path='bids' element={<ActiveBidsClubsPage />} />
         </Route>
       </Routes>
