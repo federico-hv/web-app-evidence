@@ -23,7 +23,10 @@ export function useCreateAuction() {
       return await mutate({
         variables: { payload: payload },
         refetchQueries: [
-          { query: GET_AUCTION, variables: { clubId: payload.clubId } },
+          {
+            query: GET_AUCTION,
+            variables: { clubId: payload.clubId },
+          },
         ],
       }).then((r) => {
         if (r.data?.createAuction) {

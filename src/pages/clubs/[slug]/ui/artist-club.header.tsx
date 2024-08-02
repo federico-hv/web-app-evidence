@@ -31,6 +31,9 @@ function ArtistClubHeader() {
 
   const { data: auctionData } = useGetAuctionSuspenseQuery(
     clubData.club.id,
+    {
+      fetchPolicy: 'network-only',
+    },
   );
 
   const isCurrentArtistAccount =
@@ -81,31 +84,30 @@ function ArtistClubHeader() {
         ) : (
           <ArtistClubSocialButton username={artistData.artist.username} />
         )}
-        {(isCurrentArtistAccount && !auctionData) ||
-          (auctionData && !auctionData.auction && (
-            <Button
-              css={{ px: '50px' }}
-              colorTheme='purple100'
-              onClick={() => {
-                navigate(
-                  makePath([
-                    Paths.clubs,
-                    artistData.artist.username,
-                    Paths.auction,
-                    Paths.create,
-                    Paths.auctionDetails,
-                  ]),
-                  {
-                    state: {
-                      previousLocation: pathname,
-                    },
+        {!auctionData.auction && isCurrentArtistAccount && (
+          <Button
+            css={{ px: '50px' }}
+            colorTheme='purple100'
+            onClick={() => {
+              navigate(
+                makePath([
+                  Paths.clubs,
+                  artistData.artist.username,
+                  Paths.auction,
+                  Paths.create,
+                  Paths.auctionDetails,
+                ]),
+                {
+                  state: {
+                    previousLocation: pathname,
                   },
-                );
-              }}
-            >
-              Start Auction
-            </Button>
-          ))}
+                },
+              );
+            }}
+          >
+            Start Auction
+          </Button>
+        )}
         {isCurrentArtistAccount && auctionData && auctionData.auction && (
           <Button
             colorTheme='danger200'

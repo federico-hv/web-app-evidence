@@ -36,9 +36,15 @@ import {
   InputTextField,
   Loader,
   makePath,
+  Paths,
   useAlertDialog,
 } from '../../../../shared';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import {
+  Navigate,
+  useLocation,
+  useNavigate,
+  useParams,
+} from 'react-router-dom';
 import { keyframes } from '@stitches/react';
 import {
   AuctionEventNameEnum,
@@ -101,13 +107,23 @@ export const createShimmer = (startColor: string, endColor: string) =>
 function AuctionBannerCard() {
   const { slug } = useParams();
 
+  const navigate = useNavigate();
+
   const { data: clubData } = useSuspenseGetClub({ slug });
 
-  const { data: auctionData } = useGetAuctionSuspenseQuery(
+  const { data: auctionData, refetch } = useGetAuctionSuspenseQuery(
     clubData.club.id,
   );
 
   const { data: perksData } = useSuspenseGetClubPerks(clubData.club.id);
+
+  if (!auctionData.auction) {
+    refetch().catch(() => (
+      <Navigate to={makePath([Paths.clubs, slug || ''])} replace />
+    ));
+
+    return <Fragment />;
+  }
 
   return (
     <Box flex={1} h='100%'>
