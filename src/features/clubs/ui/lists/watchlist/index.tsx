@@ -11,9 +11,9 @@ import {
   dummySecondarySaleMembershipData,
 } from '../../groups/watchlist-item/__tests__/dummyData';
 
-function Watchlist() {
-  const items: any = [];
+const items: any = [];
 
+function Watchlist() {
   return (
     <VStack minHeight={292} p={4}>
       <Heading size={3} weight={500} css={{ userSelect: 'none' }}>

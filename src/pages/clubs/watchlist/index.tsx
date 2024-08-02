@@ -9,16 +9,18 @@ import { arrayFrom } from '../../../shared';
 import { ClubCard, AuctionCard } from '../../../features';
 import { useEffect, useState } from 'react';
 
-function WatchlistPage() {
-  const items: any = [];
+const items: any = [];
 
-  if (true) {
-    return <VStack h={'70vh'}></VStack>;
+function WatchlistPage() {
+  const removeFromWatchlist = async (data: any) => {};
+
+  if (items.length == 0) {
+    return <VStack h={'100vh'}></VStack>;
   }
 
   return (
     <Grid gap={2} templateColumns='repeat(3, 1fr)'>
-      {items.map((data, idx) => (
+      {items.map((data: any, idx: number) => (
         <Grid.Item key={`watchlist-item-${idx}`} h='100%'>
           {data.type == 'club' && (
             <ClubCard
@@ -28,7 +30,7 @@ function WatchlistPage() {
                 followers: data.followers,
                 following: data.following,
               }}
-              onWatchClick={() => {}}
+              onWatchClick={() => removeFromWatchlist(data)}
             />
           )}
           {data.type == 'auction' && (

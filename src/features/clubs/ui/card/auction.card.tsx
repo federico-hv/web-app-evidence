@@ -47,7 +47,7 @@ function AuctionCard({
     /** A list of the club perks */
     perks?: string[];
   };
-  onWatchClick: () => void;
+  onWatchClick?: () => void;
 }) {
   const [h, setH] = useState<number>();
 
