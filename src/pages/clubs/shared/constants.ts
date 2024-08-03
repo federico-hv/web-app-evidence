@@ -37,7 +37,7 @@ export const dummyAuctionMembershipData: OnSaleMembershipModel = {
   price: 100.11,
   name: 'Name',
   artist: dummyArtist,
-  coverImage: Asset.Image.DummyMembershipCover,
+  coverImage: Asset.Image.LightPlaceholder,
 };
 
 export const dummyPerks = [

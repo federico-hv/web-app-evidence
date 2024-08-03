@@ -23,6 +23,18 @@ import { FlatList } from '../../../../tmp/flat-list';
 import { useEffect, useState } from 'react';
 import FollowCountItem from '../../../../features/relationships/ui/follow-count-item';
 
+export interface ClubCardData {
+  clubId: string;
+  /** The date that an auction ends */
+  coverImage?: string;
+  /** The artist name */
+  name?: string;
+
+  followers: number;
+  following: number;
+  watchlist?: boolean;
+}
+
 function ClubCard({
   data,
   showPerksOnHover = true,
@@ -30,23 +42,7 @@ function ClubCard({
 }: {
   /** Show the perks when hovered. Set to true by default */
   showPerksOnHover?: boolean;
-  data: {
-    /** The date that an auction ends */
-    coverImage?: string;
-    /** The slug (username/url) of the club */
-    slug?: string;
-    /** The artist name */
-    name?: string;
-    /** The date that an auction ends */
-    endDate?: Date;
-    /** The price of the sale */
-    price?: number;
-    /** A list of the club perks */
-    perks?: string[];
-
-    followers: number;
-    following: number;
-  };
+  data: ClubCardData;
   onWatchClick: () => void;
 }) {
   const [h, setH] = useState<number>();
@@ -62,7 +58,7 @@ function ClubCard({
   return (
     <Card
       h='inherit'
-      cursor={data.slug ? 'pointer' : undefined}
+      cursor={'pointer'}
       radius={3}
       border={2}
       overflow='hidden'
@@ -126,6 +122,7 @@ function ClubCard({
         <Image
           w='100%'
           src={data.coverImage}
+          srcSet={data.coverImage}
           fallbackSrc={Asset.Image.LightPlaceholder}
           alt={`${data.name}'s club cover image.`}
         />

@@ -37,6 +37,7 @@ function WatchlistItem({
       <Avatar
         name={data.name}
         src={data.coverImage}
+        srcSet={data.coverImage}
         css={{ size: '60px' }}
         variant='squircle'
       />

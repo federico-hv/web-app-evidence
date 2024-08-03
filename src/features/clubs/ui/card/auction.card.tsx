@@ -24,6 +24,22 @@ import { useEffect, useState } from 'react';
 
 const CARD_ANIMATION_TRANSITION = 'all 500ms ease-in-out';
 
+export interface AuctionCardData {
+  clubId?: string;
+  /** The date that an auction ends */
+  coverImage?: string;
+  /** The slug (username/url) of the club */
+  slug?: string;
+  /** The artist name */
+  name?: string;
+  /** The date that an auction ends */
+  endDate?: Date;
+  /** The price of the sale */
+  price?: number;
+  /** A list of the club perks */
+  perks?: string[];
+}
+
 function AuctionCard({
   data,
   showPerksOnHover = true,
@@ -33,20 +49,7 @@ function AuctionCard({
   /** Show the perks when hovered. Set to true by default */
   showPerksOnHover?: boolean;
   disableWatchlist?: boolean;
-  data: {
-    /** The date that an auction ends */
-    coverImage?: string;
-    /** The slug (username/url) of the club */
-    slug?: string;
-    /** The artist name */
-    name?: string;
-    /** The date that an auction ends */
-    endDate?: Date;
-    /** The price of the sale */
-    price?: number;
-    /** A list of the club perks */
-    perks?: string[];
-  };
+  data: AuctionCardData;
   onWatchClick?: () => void;
 }) {
   const [h, setH] = useState<number>();
@@ -127,8 +130,8 @@ function AuctionCard({
       >
         <Image
           w='100%'
-          // src={data.coverImage}
           src={data.coverImage}
+          srcSet={data.coverImage}
           fallbackSrc={Asset.Image.LightPlaceholder}
           alt={`${data.name}'s club cover image.`}
         />
