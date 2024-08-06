@@ -4,7 +4,7 @@ import { App } from './app';
 import './styles/index.css';
 import LogRocket from 'logrocket';
 
-LogRocket.init('weponz/holdr-staging');
+LogRocket.init(import.meta.env.VITE_LOG_ROCKET_ID);
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>

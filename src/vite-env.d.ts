@@ -11,6 +11,7 @@ interface ImportMetaEnv {
   readonly VITE_SPOTIFY_REDIRECT_URI: string;
   readonly VITE_STRIPE_PUBLISHABLE_KEY: string;
   readonly VITE_PENDO_API_KEY: string;
+  readonly VITE_LOG_ROCKET_ID: string;
   readonly VITE_ENVIRONMENT: 'staging' | 'development' | 'production';
 }
 

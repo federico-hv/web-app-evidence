@@ -9,6 +9,7 @@ import {
 import { GET_ME } from './queries';
 import AuthRedirect from '../../pages/auth-redirect';
 import { useWindowSize } from '@holdr-ui/react';
+import LogRocket from 'logrocket';
 
 function AuthProvider({ children }: AuthProviderProps) {
   const [currentUser, setCurrentUser] = useState<IMe>({
@@ -40,6 +41,11 @@ function Content({
   }, [data, setCurrentUser]);
 
   useEffect(() => {
+    // Initialize log rocket
+    LogRocket.identify(data.me.id, {
+      name: data.me.username,
+      role: data.me.role,
+    });
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     if (window['pendo'])
