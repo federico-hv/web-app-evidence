@@ -133,7 +133,7 @@ function AuctionBannerCard() {
         data={{
           coverImage: clubData.club.coverImage,
           price: auctionData.auction.entryPrice,
-          perks: perksData.clubPerks.map(
+          perks: perksData.clubPerks.perks.map(
             ({ description }) => description || '',
           ),
         }}

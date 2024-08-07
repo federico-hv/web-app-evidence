@@ -41,7 +41,9 @@ function Content({
   }, [data, setCurrentUser]);
 
   useEffect(() => {
-    // Initialize log rocket
+    // Initialize user session in log rocket
+    if (import.meta.env.VITE_ENVIRONMENT !== 'staging') return;
+
     LogRocket.identify(data.me.id, {
       name: data.me.username,
       role: data.me.role,

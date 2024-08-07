@@ -15,11 +15,9 @@ import {
   Heading,
   HStack,
   Text,
-  useGeneralContext,
   VStack,
 } from '@holdr-ui/react';
 import {
-  IClub,
   useSuspenseGetArtist,
   useSuspenseGetCollaborators,
 } from '../../../../features';

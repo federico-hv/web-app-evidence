@@ -62,7 +62,7 @@ function CustomURLView() {
           tooltip='A custom URL to share with your fans.'
           value={url}
           leftElement={
-            <Box w={204} color='white700'>
+            <Box color='white700' css={{ whiteSpace: 'nowrap' }}>
               https://holdrclub.com/clubs/
             </Box>
           }

@@ -23,7 +23,6 @@ import {
   ClubContextConsumer,
   ClubProvider,
   PerksProvider,
-  useSuspenseGetClub,
 } from '../../../../features';
 import {
   Outlet,

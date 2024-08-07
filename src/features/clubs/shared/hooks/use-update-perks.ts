@@ -1,8 +1,9 @@
 import { useToast } from '../../../../shared';
-import { gql, Reference, useMutation } from '@apollo/client';
+import { gql, useMutation } from '@apollo/client';
 import { IProfile } from '../../../user';
 import { IPerk } from '../types';
 import { UPDATE_PERKS } from '../../mutations';
+import { GET_CLUB_PERKS } from '../../queries';
 
 export function useUpdatePerks() {
   const { openWith } = useToast();
@@ -17,43 +18,16 @@ export function useUpdatePerks() {
 
   const updatePerks = async (
     clubId: string,
-    data: {
-      perks: number[];
-    },
+    data: { perks: number[] },
   ) => {
     try {
       return await mutate({
         variables: {
           perks: data.perks,
         },
-        update(cache, { data }) {
-          cache.modify({
-            fields: {
-              clubPerks(current = []) {
-                // let newPerksList: Reference[] = current;
-                //
-                // try {
-                //   console.log();
-                //   newPerksList = cache.writeFragment({
-                //     id: clubId,
-                //     fragment: gql`
-                //       fragment NewPerks on PerkModel {
-                //         id
-                //         label
-                //         description
-                //       }
-                //     `,
-                //     data: data,
-                //   }) as Reference;
-                // } catch (e) {
-                //   console.error(e);
-                // }
-                //
-                // return [...newPerksList];
-              },
-            },
-          });
-        },
+        refetchQueries: [
+          { query: GET_CLUB_PERKS, variables: { id: clubId } },
+        ],
       });
     } catch (e) {
       console.error(e);

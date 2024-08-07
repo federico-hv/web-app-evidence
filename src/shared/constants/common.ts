@@ -53,6 +53,6 @@ export const FieldLengths = {
     max: 50,
   },
   bio: {
-    max: 250,
+    max: 500,
   },
 };

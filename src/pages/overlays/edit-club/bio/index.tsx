@@ -204,7 +204,7 @@ function EditArtistClubBioPage() {
             tooltip='A custom URL to share with your fans.'
             value={state.clubUrl}
             leftElement={
-              <Box w={204} color='white700'>
+              <Box color='white700' css={{ whiteSpace: 'nowrap' }}>
                 https://holdrclub.com/clubs/
               </Box>
             }

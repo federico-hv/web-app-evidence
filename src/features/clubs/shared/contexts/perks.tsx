@@ -30,7 +30,7 @@ function Content({ id, children }: GenericProps & { id: string }) {
   const { data } = useSuspenseGetClubPerks(id);
 
   return (
-    <PerksContextProvider value={{ clubPerks: data.clubPerks }}>
+    <PerksContextProvider value={{ clubPerks: data.clubPerks.perks }}>
       {children}
     </PerksContextProvider>
   );

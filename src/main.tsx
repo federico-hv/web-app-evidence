@@ -2,9 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { App } from './app';
 import './styles/index.css';
-import LogRocket from 'logrocket';
+import { initializeLogRocket } from './lib';
 
-LogRocket.init(import.meta.env.VITE_LOG_ROCKET_ID);
+initializeLogRocket();
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
