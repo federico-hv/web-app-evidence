@@ -1,13 +1,21 @@
 import { useState } from 'react';
-import { Box, FormControl, HStack, Text } from '@holdr-ui/react';
+import { Box, HStack, Text, VStack } from '@holdr-ui/react';
 import dayjs from 'dayjs';
 import localeData from 'dayjs/plugin/localeData';
 import { DatePickerProps } from './types';
-import { arrayFrom, DateUtility, IDate } from '../../../shared';
+import Label from '../label';
+import { arrayFrom, DateUtility } from '../../utilities';
+import { IDate } from '../../interfaces';
+import { SelectInputField } from '../index';
+import { lightSelectCSS } from '../../styles';
 
 dayjs.extend(localeData);
 
 function DatePicker({
+  label,
+  name,
+  errorText,
+  tooltip,
   date,
   onChange,
   max = dayjs().toString(),
@@ -43,7 +51,7 @@ function DatePicker({
   let days = arrayFrom(daysInMonth);
 
   if (state.month === Maximum.month && state.year === Maximum.year) {
-    days = days.slice(1, parseInt(Maximum.day));
+    days = days.slice(0, parseInt(Maximum.day) - 1);
   } else if (
     state.month === Minimum.month &&
     state.year === Minimum.year
@@ -60,64 +68,80 @@ function DatePicker({
   };
 
   return (
-    <HStack gap={{ '@bp1': 3, '@bp3': 4 }}>
-      <Box flex={2} minWidth={100}>
-        <FormControl>
-          <FormControl.Label color='base400'>
-            <Text size={2}>Month</Text>
-          </FormControl.Label>
-          {/*<Select*/}
-          {/*  size={{ '@bp1': 'sm', '@bp3': 'base' }}*/}
-          {/*  value={state.month}*/}
-          {/*  onChange={(e) => update({ month: e.target.value })}*/}
-          {/*>*/}
-          {/*  {monthNames.map((monthName) => (*/}
-          {/*    <option value={monthName} key={monthName}>*/}
-          {/*      {monthName}*/}
-          {/*    </option>*/}
-          {/*  ))}*/}
-          {/*</Select>*/}
-        </FormControl>
-      </Box>
+    <VStack>
+      {label && <Label name={name} tooltip={tooltip} text={label} />}
+      <HStack gap={2} data-cy='date-picker'>
+        <Box flex={2}>
+          <SelectInputField
+            listCSS={{
+              borderTopWidth: '1px',
+              borderTopRightRadius: '$2',
+              borderTopLeftRadius: '$2',
+            }}
+            value={state.month}
+            onValueChange={(value) => update({ month: value })}
+            name='month'
+            triggerCSS={lightSelectCSS}
+            options={monthNames}
+            keySelector={(name) => name}
+            labelSelector={(name) => name}
+            valueSelector={(name) => name}
+          />
+        </Box>
 
-      <Box flex={1} minWidth={80}>
-        <FormControl>
-          <FormControl.Label color='base400'>
-            <Text size={2}>Day</Text>
-          </FormControl.Label>
-          {/*<Select*/}
-          {/*  size={{ '@bp1': 'sm', '@bp3': 'base' }}*/}
-          {/*  value={state.day}*/}
-          {/*  onChange={(e) => update({ day: e.target.value })}*/}
-          {/*>*/}
-          {/*  {days.map((day) => (*/}
-          {/*    <option value={day + 1} key={day}>*/}
-          {/*      {day + 1}*/}
-          {/*    </option>*/}
-          {/*  ))}*/}
-          {/*</Select>*/}
-        </FormControl>
-      </Box>
+        <Box flex={1}>
+          <SelectInputField
+            listCSS={{
+              borderTopWidth: '1px',
+              borderTopRightRadius: '$2',
+              borderTopLeftRadius: '$2',
+            }}
+            value={state.day}
+            onValueChange={(value) => update({ day: value })}
+            name='day'
+            triggerCSS={lightSelectCSS}
+            options={days}
+            keySelector={(day) => (day + 1).toString()}
+            labelSelector={(day) => (day + 1).toString()}
+            valueSelector={(day) => (day + 1).toString()}
+          />
+        </Box>
 
-      <Box flex={1} minWidth={80}>
-        <FormControl>
-          <FormControl.Label color='base400'>
-            <Text size={2}>Year</Text>
-          </FormControl.Label>
-          {/*<Select*/}
-          {/*  size={{ '@bp1': 'sm', '@bp3': 'base' }}*/}
-          {/*  value={state.year}*/}
-          {/*  onChange={(e) => update({ year: e.target.value })}*/}
-          {/*>*/}
-          {/*  {years.map((year, idx) => (*/}
-          {/*    <option value={parseInt(Maximum.year) - idx} key={year}>*/}
-          {/*      {parseInt(Maximum.year) - idx}*/}
-          {/*    </option>*/}
-          {/*  ))}*/}
-          {/*</Select>*/}
-        </FormControl>
-      </Box>
-    </HStack>
+        <Box flex={1.5}>
+          <SelectInputField
+            listCSS={{
+              borderTopWidth: '1px',
+              borderTopRightRadius: '$2',
+              borderTopLeftRadius: '$2',
+            }}
+            value={state.year}
+            onValueChange={(value) => update({ year: value })}
+            name='year'
+            triggerCSS={lightSelectCSS}
+            options={years}
+            keySelector={(idx) =>
+              (parseInt(Maximum.year) - idx).toString()
+            }
+            labelSelector={(idx) =>
+              (parseInt(Maximum.year) - idx).toString()
+            }
+            valueSelector={(idx) =>
+              (parseInt(Maximum.year) - idx).toString()
+            }
+          />
+        </Box>
+      </HStack>
+      {errorText && errorText.length && (
+        <Text
+          weight={500}
+          color='danger200'
+          size={1}
+          css={{ marginTop: '$2' }}
+        >
+          {errorText}
+        </Text>
+      )}
+    </VStack>
   );
 }
 

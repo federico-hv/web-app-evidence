@@ -1,8 +1,10 @@
-import { ChangeEvent } from 'react';
-
 interface DatePickerProps {
+  label?: string;
+  name: string;
+  errorText?: string;
+  tooltip?: string;
   date: string;
-  onChange: (e: string | ChangeEvent<any>) => void;
+  onChange: (date: string) => void;
   min?: string;
   max?: string;
 }

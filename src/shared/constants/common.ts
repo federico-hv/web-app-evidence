@@ -56,3 +56,5 @@ export const FieldLengths = {
     max: 500,
   },
 };
+
+export const MinAge = 16;

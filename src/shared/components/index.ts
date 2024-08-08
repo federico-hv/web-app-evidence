@@ -21,6 +21,7 @@ export { default as SelectInputField } from './select-input-field';
 export { default as DatePicker } from './date-picker';
 export { default as PhoneInput } from './phone-input';
 export { default as ContentBox } from './content-box';
+export { default as CountryPicker } from './country-picker';
 export { default as Squircle } from './squircle';
 export {
   default as StepperIndicator,

@@ -10,6 +10,7 @@ export interface InputTextFieldProps {
   tooltip?: string;
   label?: string;
   className?: string;
+  disabled?: boolean;
   value?: string;
   placeholder?: string;
   errorText?: string;

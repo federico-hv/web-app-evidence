@@ -1,4 +1,4 @@
-import dayjs from 'dayjs';
+import dayjs, { Dayjs, UnitType } from 'dayjs';
 import { IDate } from '../../interfaces';
 import { StringNumeric } from '../../types';
 
@@ -142,14 +142,19 @@ export class DateUtility {
    *
    * Implicitly assumes Sunday is the first day of the week.
    *
-   * @param date0 a date to compare
-   * @param date1 a date to compare
+   * @param day1 a date to compare
+   * @param day2 a date to compare
    * @param unit the time unit to use e.g. days/months
    */
-  static difference(date0: Date, date1: Date, unit?: TimeUnit): number {
-    const _date0 = dayjs(date0);
-    const _date1 = dayjs(date1);
-    return Math.abs(_date0.diff(_date1, unit));
+  static difference(
+    day1: Dayjs,
+    day2: Dayjs,
+    unit: UnitType = 'day',
+  ): number {
+    const _day1 = dayjs(day1);
+    const _day2 = dayjs(day2);
+
+    return _day1.diff(_day2, unit);
   }
 
   /**
