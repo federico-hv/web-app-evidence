@@ -9,10 +9,15 @@ import {
   BlockedAccountsPage,
   MutedAccountsPage,
 } from '../../pages';
+import { Navigate } from 'react-router-dom';
 
 const SettingsOverlayRoutes = () => (
   <Routes>
     <Route path={Paths.root} element={<SettingsDialog />}>
+      <Route
+        path={Paths.root}
+        element={<Navigate replace to={Paths.setting.account} />}
+      />
       <Route
         path={makePath([
           Paths.setting.account,
