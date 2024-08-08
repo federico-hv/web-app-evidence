@@ -28,6 +28,7 @@ export const Paths = {
   paymentMethod: 'payment-method',
   cardDetails: 'card-details',
   billingInformation: 'billing-information',
+  resetPassword: 'reset-password/request',
   club: {
     watchlist: 'watchlist',
     memberships: 'memberships',
@@ -40,8 +41,11 @@ export const Paths = {
     customURL: 'custom-url',
   },
   setting: {
+    setup_2fa: 'setup_2fa',
     account: 'account',
     username: 'username',
+    change_phone_number: 'change_phone_number',
+    change_email: 'change_email',
     email: 'email',
     phone: 'phone',
     country: 'country',

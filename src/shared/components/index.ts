@@ -21,6 +21,7 @@ export { default as SelectInputField } from './select-input-field';
 export { default as DatePicker } from './date-picker';
 export { default as PhoneInput } from './phone-input';
 export { default as ContentBox } from './content-box';
+export { default as CountryPicker } from './country-picker';
 export { default as Squircle } from './squircle';
 export {
   default as StepperIndicator,
@@ -32,7 +33,6 @@ export { default as UserNamesGroup } from './user-names-group';
 export { default as ActionItemWrapper } from './action-item-wrapper';
 export { default as OgMetadataCard } from './og-metadata-card';
 export { default as MediaItem } from './media-item';
-export { default as Calendar } from './calendar';
 export { default as LiveTag } from './live-tag';
 export { default as InputLoadingIndicator } from './input-loading-indicator';
 export { default as Editor } from './editor';

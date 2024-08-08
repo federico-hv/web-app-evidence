@@ -45,12 +45,13 @@ function FormField({
       )}
       {/*{type === 'select' && <Select id={name} {...field} {...others} />}*/}
       {type === 'date' && (
-        <DatePicker
-          date={field.value}
-          onChange={field.onChange(name)}
-          min={others.min as string}
-          max={others.max as string}
-        />
+        // <DatePicker
+        //   date={field.value}
+        //   onChange={field.onChange(name)}
+        //   min={others.min as string}
+        //   max={others.max as string}
+        // />
+        <div>Placeholder</div>
       )}
     </>
   );

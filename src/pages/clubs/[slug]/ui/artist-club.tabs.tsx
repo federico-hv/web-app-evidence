@@ -1,8 +1,4 @@
-import {
-  GeneralContextProvider,
-  useGeneralContext,
-  VStack,
-} from '@holdr-ui/react';
+import { GeneralContextProvider, VStack } from '@holdr-ui/react';
 import { Navigate, useParams } from 'react-router-dom';
 import {
   GQLRenderer,

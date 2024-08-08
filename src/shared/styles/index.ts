@@ -72,6 +72,17 @@ export const customInputStyles = css({
   },
 });
 
+export const checkboxFix = css({
+  '&': {
+    display: 'none',
+  },
+  '& + span': {
+    flexShrink: 0,
+    borderRadius: '2px !important',
+    borderWidth: '1px !important',
+  },
+});
+
 export const lightInputStyles = css({
   border: '1px solid rgba(152, 152, 255, 0.35) !important',
   backgroundColor: 'rgba(152, 152, 255, 0.15) !important',
