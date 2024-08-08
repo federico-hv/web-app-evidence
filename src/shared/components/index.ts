@@ -33,7 +33,6 @@ export { default as UserNamesGroup } from './user-names-group';
 export { default as ActionItemWrapper } from './action-item-wrapper';
 export { default as OgMetadataCard } from './og-metadata-card';
 export { default as MediaItem } from './media-item';
-export { default as Calendar } from './calendar';
 export { default as LiveTag } from './live-tag';
 export { default as InputLoadingIndicator } from './input-loading-indicator';
 export { default as Editor } from './editor';
