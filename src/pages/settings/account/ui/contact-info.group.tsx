@@ -1,81 +1,81 @@
+import { Box, VStack } from '@holdr-ui/react';
 import {
-  Box,
-  Button,
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogOverlay,
-  DialogPortal,
-  DialogTrigger,
-  HStack,
-  useDisclosure,
-  VStack,
-} from '@holdr-ui/react';
-import {
-  CountryPicker,
-  InputTextField,
+  Label,
+  makePath,
+  Paths,
   TextGroup,
   TextGroupHeading,
   TextGroupSubheading,
+  useNavigateWithPreviousLocation,
 } from '../../../../shared';
+import { useLocation } from 'react-router-dom';
 
 function ChangeEmailAddress() {
-  const disclosure = useDisclosure();
+  const location = useLocation();
+
+  const navigate = useNavigateWithPreviousLocation(location.pathname);
+
+  const goto = () =>
+    navigate(
+      makePath([
+        Paths.settings,
+        Paths.setting.account,
+        Paths.setting.change_email,
+      ]),
+    );
+
   return (
-    <Dialog {...disclosure}>
-      <DialogTrigger>
-        <Box position='relative'>
-          <Box
-            zIndex={2}
-            onClick={disclosure.onOpen}
-            position='absolute'
-            t={0}
-            l={0}
-            b={0}
-            w='100%'
-          />
-          <InputTextField disabled label='Email' name='email' />
-        </Box>
-      </DialogTrigger>
-      <DialogPortal>
-        <DialogOverlay />
-        <DialogContent w='400px'>
-          <DialogHeader>Change Email</DialogHeader>
-        </DialogContent>
-      </DialogPortal>
-    </Dialog>
+    <VStack>
+      <Label
+        onClick={goto}
+        name='email'
+        text='Email address'
+        css={{ cursor: 'pointer' }}
+      />
+      <Box
+        onClick={goto}
+        bgColor='rgba(152, 152, 255, 0.15)'
+        border={1}
+        h={45}
+        radius={1}
+        borderColor='rgba(152, 152, 255, 0.35)'
+      />
+    </VStack>
   );
 }
 
 function ChangePhoneNumber() {
-  const disclosure = useDisclosure();
+  const location = useLocation();
+
+  const navigate = useNavigateWithPreviousLocation(location.pathname);
+
+  const goto = () =>
+    navigate(
+      makePath([
+        Paths.settings,
+        Paths.setting.account,
+        Paths.setting.change_phone_number,
+      ]),
+    );
+
   return (
-    <Dialog {...disclosure}>
-      <DialogTrigger>
-        <Box position='relative'>
-          <Box
-            zIndex={2}
-            onClick={disclosure.onOpen}
-            position='absolute'
-            t={0}
-            l={0}
-            b={0}
-            w='100%'
-          />
-          <InputTextField
-            disabled
-            label='Phone number'
-            name='phoneNumber'
-          />
-        </Box>
-      </DialogTrigger>
-      <DialogPortal>
-        <DialogOverlay />
-        <DialogContent w='400px'>
-          <DialogHeader>Change Phone Number</DialogHeader>
-        </DialogContent>
-      </DialogPortal>
-    </Dialog>
+    <VStack>
+      <Label
+        onClick={goto}
+        tooltip='We will not share your phone number publicly. It is used to verify you are a real person.'
+        name='phone'
+        text='Phone number'
+        css={{ cursor: 'pointer' }}
+      />
+      <Box
+        onClick={goto}
+        bgColor='rgba(152, 152, 255, 0.15)'
+        border={1}
+        h={45}
+        radius={1}
+        borderColor='rgba(152, 152, 255, 0.35)'
+      />
+    </VStack>
   );
 }
 
@@ -108,8 +108,8 @@ function ContactInfoGroup() {
           />
         }
       >
-        <ChangePhoneNumber />
         <ChangeEmailAddress />
+        <ChangePhoneNumber />
       </VStack>
     </Box>
   );

@@ -3,13 +3,16 @@ import { useCounter } from '../../hooks';
 import { StepperProps } from './types';
 import { StepperContext, StepperContextProvider } from '../../contexts';
 
-// TODO: Update this.
-
 function Stepper({ defaultStep = 0, children }: StepperProps) {
   const [step, increment, decrement, reset] = useCounter(defaultStep);
   return (
     <StepperContextProvider
-      value={{ currentStep: step, increment, decrement, reset }}
+      value={{
+        currentStep: step,
+        increment: () => increment(),
+        decrement: () => decrement(),
+        reset: () => reset(),
+      }}
     >
       {children}
     </StepperContextProvider>

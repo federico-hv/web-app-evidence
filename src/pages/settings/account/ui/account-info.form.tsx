@@ -13,17 +13,10 @@ import {
 import {
   Box,
   Button,
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogOverlay,
-  DialogPortal,
-  DialogTrigger,
   HStack,
   Radio,
   RadioGroup,
   Text,
-  useDisclosure,
   useRecordState,
   VStack,
 } from '@holdr-ui/react';

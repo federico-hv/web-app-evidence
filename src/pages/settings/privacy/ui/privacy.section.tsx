@@ -8,12 +8,45 @@ import {
 } from '@holdr-ui/react';
 import {
   checkboxFix,
+  makePath,
+  Paths,
   TextGroup,
   TextGroupHeading,
   TextGroupSubheading,
 } from '../../../../shared';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 function PrivacySection() {
+  const location = useLocation();
+
+  const navigate = useNavigate();
+
+  const gotoBlockedAccounts = () =>
+    navigate(
+      makePath([
+        Paths.settings,
+        Paths.setting.privacy,
+        Paths.setting.blocked_accounts,
+      ]),
+      {
+        state: {
+          previousLocation: location.pathname,
+        },
+      },
+    );
+  const gotoMutedAccounts = () =>
+    navigate(
+      makePath([
+        Paths.settings,
+        Paths.setting.privacy,
+        Paths.setting.muted_accounts,
+      ]),
+      {
+        state: {
+          previousLocation: location.pathname,
+        },
+      },
+    );
   return (
     <Box>
       <TextGroup>
@@ -65,13 +98,25 @@ function PrivacySection() {
         </HStack>
 
         <VStack>
-          <HStack py={2} pl={3} items='center' justify='space-between'>
+          <HStack
+            onClick={gotoBlockedAccounts}
+            py={2}
+            pl={3}
+            items='center'
+            justify='space-between'
+          >
             <Text py={2} weight={500}>
               Blocked accounts
             </Text>
             <Icon name='caret-right-outline' />
           </HStack>
-          <HStack py={2} pl={3} items='center' justify='space-between'>
+          <HStack
+            onClick={gotoMutedAccounts}
+            py={2}
+            pl={3}
+            items='center'
+            justify='space-between'
+          >
             <Text py={2} weight={500}>
               Muted accounts
             </Text>

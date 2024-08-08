@@ -1,23 +1,29 @@
-import {
-  Box,
-  Checkbox,
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogOverlay,
-  DialogPortal,
-  DialogTrigger,
-  HStack,
-  VStack,
-} from '@holdr-ui/react';
+import { Box, Checkbox, HStack, VStack } from '@holdr-ui/react';
 import {
   checkboxFix,
+  makePath,
+  Paths,
   TextGroup,
   TextGroupHeading,
   TextGroupSubheading,
+  useNavigateWithPreviousLocation,
 } from '../../../../shared';
+import { useLocation } from 'react-router-dom';
 
 function SecuritySection() {
+  const location = useLocation();
+
+  const navigate = useNavigateWithPreviousLocation(location.pathname);
+
+  const goto = () =>
+    navigate(
+      makePath([
+        Paths.settings,
+        Paths.setting.privacy,
+        Paths.setting.setup_2fa,
+      ]),
+    );
+
   return (
     <Box>
       <TextGroup>
@@ -60,42 +66,28 @@ function SecuritySection() {
             Learn more
           </TextGroupSubheading>
         </TextGroup>
-        <Dialog>
-          <DialogTrigger>
-            <HStack as='label' justify='space-between'>
-              <VStack justify='space-between'>
-                <TextGroupHeading
-                  id='2fa-connection'
-                  as='h5'
-                  size={3}
-                  weight={500}
-                >
-                  Connect authenticator app
-                </TextGroupHeading>
-                <TextGroupSubheading
-                  size={2}
-                  weight={300}
-                  color='white700'
-                >
-                  Use a 2FA app to authenticate yourself on login and other
-                  secure actions.
-                </TextGroupSubheading>
-              </VStack>
-              <Checkbox
-                size='sm'
-                colorTheme='white500'
-                labelledBy='2fa-connection'
-                className={checkboxFix()}
-              />
-            </HStack>
-          </DialogTrigger>
-          <DialogPortal>
-            <DialogOverlay />
-            <DialogContent>
-              <DialogHeader>Header</DialogHeader>
-            </DialogContent>
-          </DialogPortal>
-        </Dialog>
+        <HStack onClick={goto} justify='space-between'>
+          <VStack justify='space-between'>
+            <TextGroupHeading
+              id='2fa-connection'
+              as='h5'
+              size={3}
+              weight={500}
+            >
+              Connect authenticator app
+            </TextGroupHeading>
+            <TextGroupSubheading size={2} weight={300} color='white700'>
+              Use a 2FA app to authenticate yourself on login and other
+              secure actions.
+            </TextGroupSubheading>
+          </VStack>
+          <Checkbox
+            size='sm'
+            colorTheme='white500'
+            labelledBy='2fa-connection'
+            className={checkboxFix()}
+          />
+        </HStack>
       </VStack>
     </Box>
   );

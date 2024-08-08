@@ -17,7 +17,13 @@ function SettingsTabs() {
       <ContentLayout>
         <ContentLayoutMain>
           <Box h='full'>
-            <RadialSurface w='100%' minHeight='full' p={4} radius={4}>
+            <RadialSurface
+              w='100%'
+              minHeight='full'
+              px={7}
+              py={9}
+              radius={4}
+            >
               <Heading mb={40} color='white100' weight={400} size={6}>
                 Settings
               </Heading>

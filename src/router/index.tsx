@@ -6,7 +6,6 @@ import {
   NotFoundError,
   Paths,
   prefix,
-  RouteChangeListener,
 } from '../shared';
 import {
   ClubRoutes,
@@ -21,6 +20,7 @@ import {
   BookmarkGroupActionRoutes,
   ArtistClubOverlayRoutes,
   PaymentMethodRoutes,
+  SettingsOverlayRoutes,
 } from './routes';
 import { MainLayout } from '../layout';
 import { Fragment } from 'react';
@@ -110,6 +110,10 @@ function Router() {
         <Route
           path={prefix(':username', '/*')}
           element={<UserRelationshipRoutes />}
+        />
+        <Route
+          path={prefix(Paths.settings, '/*')}
+          element={<SettingsOverlayRoutes />}
         />
         <Route
           element={

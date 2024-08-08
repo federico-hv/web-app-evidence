@@ -1,23 +1,28 @@
+import { Box, HStack, Icon, Text, VStack } from '@holdr-ui/react';
 import {
-  Box,
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogOverlay,
-  DialogPortal,
-  DialogTrigger,
-  HStack,
-  Icon,
-  Text,
-  VStack,
-} from '@holdr-ui/react';
-import {
+  makePath,
+  Paths,
   TextGroup,
   TextGroupHeading,
   TextGroupSubheading,
+  useNavigateWithPreviousLocation,
 } from '../../../../shared';
+import { useLocation } from 'react-router-dom';
 
 function ChangePassword() {
+  const location = useLocation();
+
+  const navigate = useNavigateWithPreviousLocation(location.pathname);
+
+  const goto = () =>
+    navigate(
+      makePath([
+        Paths.settings,
+        Paths.setting.account,
+        Paths.setting.change_password,
+      ]),
+    );
+
   return (
     <Box>
       <TextGroup>
@@ -38,20 +43,15 @@ function ChangePassword() {
         mt={4}
         gap={5}
       >
-        <Dialog>
-          <DialogTrigger>
-            <HStack items='center' justify='space-between'>
-              <Text>Change password</Text>
-              <Icon name='caret-right-outline' />
-            </HStack>
-          </DialogTrigger>
-          <DialogPortal>
-            <DialogOverlay />
-            <DialogContent>
-              <DialogHeader>Header</DialogHeader>
-            </DialogContent>
-          </DialogPortal>
-        </Dialog>
+        <HStack
+          onClick={goto}
+          items='center'
+          justify='space-between'
+          css={{ userSelect: 'none' }}
+        >
+          <Text>Change password</Text>
+          <Icon name='caret-right-outline' />
+        </HStack>
       </VStack>
     </Box>
   );
