@@ -41,7 +41,7 @@ function AddPrivatePlaylist() {
             <DialogOverlay zIndex={15} />
             <DialogContent
               zIndex={20}
-              w={625}
+              w={500}
               p={8}
               minHeight={200}
               overflowY='hidden'

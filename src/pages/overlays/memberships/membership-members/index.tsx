@@ -20,14 +20,11 @@ import { Fragment } from 'react';
 import {
   Asset,
   GQLRenderer,
-  InputTextField,
   LoadWithoutPreviousLocation,
   makeButtonLarger,
   makePath,
-  TextareaField,
 } from '../../../../shared';
 import { FlatList } from '../../../../tmp/flat-list';
-import { FollowItem } from '../../../../features';
 
 function AddPublicPlaylist() {
   const { slug } = useParams();
@@ -77,6 +74,7 @@ function AddPublicPlaylist() {
                       Club Members
                     </Heading>
                     <CloseButton
+                      onClick={close}
                       variant='outline'
                       css={{
                         width: '1.5rem',

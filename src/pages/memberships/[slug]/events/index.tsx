@@ -48,6 +48,7 @@ function MembershipEventPage() {
             type='search'
           />
         </Box>
+
         <Box mt={8}>
           <CreateMembershipItem
             text='Add a new event perk'

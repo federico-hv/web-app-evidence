@@ -181,7 +181,7 @@ function MembershipCreateEventPerkPage() {
                     mt='56px'
                     overflowY='auto'
                     flex={1}
-                    css={{ gap: '56px' }}
+                    css={{ gap: '56px', paddingBottom: '$5' }}
                   >
                     <VStack gap={4}>
                       <InputTextField
