@@ -29,6 +29,7 @@ function TextInputField({
   size,
   css,
   disabled,
+  required,
   ...props
 }: InputTextFieldProps) {
   return (
@@ -36,6 +37,7 @@ function TextInputField({
       <VStack as='fieldset'>
         {label && (
           <Label
+            required={required}
             name={name}
             tooltip={tooltip}
             text={label}
@@ -50,6 +52,7 @@ function TextInputField({
           <Input
             disabled={disabled}
             size={size}
+            required={required}
             type={type}
             autoComplete={autoComplete}
             name={name}

@@ -1,4 +1,5 @@
 import {
+  Box,
   hexToRGB,
   HStack,
   Icon,
@@ -14,9 +15,16 @@ interface LabelProps {
   name: string;
   text: string;
   tooltip?: ReactNode;
+  required?: boolean;
 }
 
-function Label({ name, text, tooltip, ...props }: LabelProps & TextProps) {
+function Label({
+  name,
+  text,
+  tooltip,
+  required,
+  ...props
+}: LabelProps & TextProps) {
   // useful for rendering the tooltip in the right container - with correct z-index
   const node =
     document.getElementById('page-dialog-container') || document.body;
@@ -24,13 +32,16 @@ function Label({ name, text, tooltip, ...props }: LabelProps & TextProps) {
   return (
     <HStack
       color='white700'
-      gap={1}
+      gap={required ? 2 : 1}
       items='center'
       css={{ marginBottom: text ? '$2' : 0 }}
     >
-      <Text size={2} weight={500} {...props} as='label' htmlFor={name}>
-        {text}
-      </Text>
+      <HStack css={{ gap: required ? '4px' : 0 }}>
+        <Text size={2} weight={500} {...props} as='label' htmlFor={name}>
+          {text}
+        </Text>
+        {required && <Box color='danger400'>*</Box>}
+      </HStack>
       {tooltip && (
         <Tooltip>
           <TooltipTrigger display='flex' css={{ alignItems: 'center' }}>
@@ -46,9 +57,10 @@ function Label({ name, text, tooltip, ...props }: LabelProps & TextProps) {
             align='start'
             fontSize={1}
             container={node}
-            bgColor='#202032'
-            border={1}
-            borderColor={hexToRGB('#9898FF', 0.25)}
+            // bgColor='#202032'
+            // border={1}
+            // borderColor={hexToRGB('#9898FF', 0.25)}
+            css={{ padding: 0 }}
           >
             {tooltip}
           </TooltipContent>

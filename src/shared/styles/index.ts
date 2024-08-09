@@ -124,6 +124,13 @@ export const lightSelectCSS: CSSTheme = {
   borderRadius: '$1',
 };
 
+export const whiteSelectCSS: CSSTheme = {
+  border: '1px solid rgba(0,0,0,0.1) !important',
+  backgroundColor: 'transparent !important',
+  borderRadius: '$1',
+  color: '$black500',
+};
+
 export const darkSelectCSS: CSSTheme = {
   border: '1px solid $purpleTint400 !important',
   borderRadius: '$2',

@@ -1,9 +1,18 @@
 import { CompleteArtistSetupBanner } from '../../features';
 import { Box, Container, HStack, VStack } from '@holdr-ui/react';
-import { LgNavigation } from '../navigation';
 import { Header } from '../header';
 import { Outlet } from 'react-router-dom';
 import Banners from '../banners';
+import {
+  Navigation,
+  NavigationActions,
+  NavigationContent,
+  NavigationLogo,
+  NavigationNotificationsPopover,
+  NavigationSearch,
+  NavigationSettingsPopover,
+  NavigationSpacer,
+} from '../navigation';
 
 function MainLayout() {
   return (
@@ -11,7 +20,17 @@ function MainLayout() {
       <Banners>
         <CompleteArtistSetupBanner />
       </Banners>
-      <LgNavigation />
+      <Navigation bgColor='transparent'>
+        <NavigationContent>
+          <NavigationLogo />
+          <NavigationSearch />
+          <NavigationActions>
+            <NavigationNotificationsPopover />
+            <NavigationSettingsPopover />
+          </NavigationActions>
+        </NavigationContent>
+        <NavigationSpacer />
+      </Navigation>
       <Container maxWidth={1280} mt={80} position='relative'>
         <Box w='100%'>
           <HStack w='100%' h='100%' gap={4}>

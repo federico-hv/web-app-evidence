@@ -27,6 +27,7 @@ function SelectInputField<T>({
   options,
   triggerCSS,
   listCSS,
+  required,
   _active = { color: '$purple200' },
   _hover = { background: 'rgba(14, 14, 27, 0.50)' },
   _highlighted = { background: 'rgba(14, 14, 27, 0.50)' },
@@ -37,6 +38,7 @@ function SelectInputField<T>({
       <VStack as='fieldset'>
         {label && (
           <Label
+            required={required}
             text={label}
             name={name}
             tooltip={tooltip}
