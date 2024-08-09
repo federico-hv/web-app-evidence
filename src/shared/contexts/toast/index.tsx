@@ -38,6 +38,7 @@ function ToastProvider({ children }: GenericProps) {
       >
         <Toast.Provider>
           <Toast.Item
+            duration={current?.duration}
             position={
               ['danger', 'info', 'success'].includes(
                 current?.status || 'info',
@@ -49,6 +50,7 @@ function ToastProvider({ children }: GenericProps) {
             onOpenChange={setOpen}
           >
             <Toast.Message
+              variant={current?.variant}
               color={
                 current && current.status
                   ? StatusColor[current.status]
@@ -60,6 +62,7 @@ function ToastProvider({ children }: GenericProps) {
                     ? StatusColor[current.status]
                     : 'inherit',
               }}
+              title={current?.title}
               status={current?.status}
               description={current?.description}
               onCloseClick={onClose}

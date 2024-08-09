@@ -6,16 +6,17 @@ import { SpotifyEmbeddedPlayer } from './support';
 interface EmbeddedPlayerProps {
   ids: IExternalId<number, MusicReleaseProvider>[];
   provider: MusicReleaseProvider;
+  variant?: 'normal' | 'compact';
 }
 
-function EmbeddedPlayer({ ids, provider }: EmbeddedPlayerProps) {
+function EmbeddedPlayer({ ids, provider, variant }: EmbeddedPlayerProps) {
   const item = ids.find((item) => item.provider === provider);
 
   return (
     <Fragment>
       {provider === 'Spotify' && item && (
-        <Box w={288}>
-          <SpotifyEmbeddedPlayer id={item.externalId} />
+        <Box w='full'>
+          <SpotifyEmbeddedPlayer variant={variant} id={item.externalId} />
         </Box>
       )}
     </Fragment>

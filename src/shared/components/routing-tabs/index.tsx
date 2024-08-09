@@ -70,6 +70,10 @@ function RoutingTabsTrigger({
   _inactive?: CSSTheme;
   _active?: CSSTheme;
 }) {
+  const handleClick = () => {
+    window.scrollTo(0, 0); // Scroll to the top of the page
+  };
+
   const { pathname } = useLocation();
 
   const paths = pathname.split('/');
@@ -79,7 +83,7 @@ function RoutingTabsTrigger({
   const active = to === currentPath;
 
   return (
-    <Link to={to} state={state}>
+    <Link to={to} state={state} onClick={handleClick}>
       <Stack
         onClick={(e) => {
           if (onClick) onClick(e);

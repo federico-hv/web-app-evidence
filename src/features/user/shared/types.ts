@@ -14,7 +14,7 @@ export interface IExternalId<T = string, U = string> {
   externalUrl?: string;
 }
 
-export type MusicReleaseProvider = 'Spotify';
+export type MusicReleaseProvider = 'Spotify' | 'Soundcloud';
 
 export interface IMusicRelease {
   id: number;

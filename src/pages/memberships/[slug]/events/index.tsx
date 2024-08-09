@@ -20,7 +20,6 @@ function MembershipEventPage() {
   const { slug } = useParams();
 
   const location = useLocation();
-
   const navigate = useNavigateWithPreviousLocation(location.pathname);
 
   const goto = () =>
@@ -49,7 +48,12 @@ function MembershipEventPage() {
             type='search'
           />
         </Box>
-        <CreateMembershipItem text='Add a new event perk' onClick={goto} />
+        <Box mt={8}>
+          <CreateMembershipItem
+            text='Add a new event perk'
+            onClick={goto}
+          />
+        </Box>
         <VStack mt={8} css={{ gap: '48px' }}>
           <MembershipEventSection
             data={{ month: 'September', events: dummyMembershipEvents }}
