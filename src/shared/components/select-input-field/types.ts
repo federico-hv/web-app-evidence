@@ -6,6 +6,7 @@ type ItemFn<T> = (item: T) => string;
 export interface SelectInputFieldProps<T> {
   placeholder?: string;
   triggerCSS?: CSSTheme;
+  required?: boolean;
   _active?: CSSTheme;
   _hover?: CSSTheme;
   _highlighted?: CSSTheme;

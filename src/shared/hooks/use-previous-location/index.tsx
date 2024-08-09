@@ -1,5 +1,4 @@
-import { useLocation, useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
 /**
  * Reloads the page and sets a previous location
@@ -9,8 +8,6 @@ import { useEffect } from 'react';
  */
 export function usePreviousLocation(fallback: string) {
   const location = useLocation();
-  const navigate = useNavigate();
-  const pathName = location.pathname;
 
   // 👇🏾 This is supposed to help when a user goes to a dialog page by
   //    copy-pasting the link into the browser. There won't be a previous

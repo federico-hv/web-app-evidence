@@ -1,13 +1,13 @@
 import { ChangeEvent, ReactNode } from 'react';
-import { CSSTheme } from '@holdr-ui/react';
+import { CSSTheme, InputProps } from '@holdr-ui/react';
 import { TextProps } from '@holdr-ui/react/dist/components/text/src/text.types';
 import { ResponsiveValue, Size } from '@holdr-ui/react/dist/shared';
 
-export interface InputTextFieldProps {
+export interface InputTextFieldProps extends InputProps {
   type?: 'number' | 'email' | 'text' | 'search' | 'password';
   size?: ResponsiveValue<Size>;
   name: string;
-  tooltip?: string;
+  tooltip?: ReactNode;
   label?: string;
   className?: string;
   disabled?: boolean;
