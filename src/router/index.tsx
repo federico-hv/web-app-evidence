@@ -21,6 +21,7 @@ import {
   ArtistClubOverlayRoutes,
   PaymentMethodRoutes,
   SettingsOverlayRoutes,
+  MembershipRoutes,
 } from './routes';
 import { MainLayout } from '../layout';
 import { Fragment } from 'react';
@@ -40,6 +41,11 @@ function Router() {
         {import.meta.env.VITE_ENVIRONMENT === 'development' && (
           <Route path='__dev__/*' element={<DevRoutes />} />
         )}
+        <Route
+          path={makePath(['memberships', '/*'])}
+          element={<MembershipRoutes />}
+        />
+
         <Route element={<MainLayout />}>
           <Route
             path='/'

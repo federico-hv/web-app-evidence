@@ -23,6 +23,7 @@ export { default as PhoneInput } from './phone-input';
 export { default as ContentBox } from './content-box';
 export { default as CountryPicker } from './country-picker';
 export { default as Squircle } from './squircle';
+export { default as EmbeddedPlaylist } from './embedded-playlist';
 export {
   default as StepperIndicator,
   StepperIndicatorStep,

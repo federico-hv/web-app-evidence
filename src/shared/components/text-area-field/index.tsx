@@ -1,12 +1,13 @@
 import { Box, mergeStyles, Textarea, VStack } from '@holdr-ui/react';
 import { customInputStyles, textAreaClassName } from '../../styles';
 import { TextareaProps } from '@holdr-ui/react/dist/components/text-area/src/text-area.types';
-import { useState } from 'react';
+import { ReactNode, useState } from 'react';
 import Label from '../label';
 import { TextProps } from '@holdr-ui/react/dist/components/text/src/text.types';
 
 function TextAreaField({
   name,
+  required,
   label,
   maxLength,
   placeholder,
@@ -22,15 +23,16 @@ function TextAreaField({
   name: string;
   maxLength?: number;
   label?: string;
-  tooltip?: string;
+  tooltip?: ReactNode;
   labelProps?: TextProps;
 }) {
   const [internalValue, set] = useState<string>(value as string);
 
   return (
-    <VStack gap={2}>
+    <VStack>
       {label && (
         <Label
+          required={required}
           name={name}
           tooltip={tooltip}
           text={label}

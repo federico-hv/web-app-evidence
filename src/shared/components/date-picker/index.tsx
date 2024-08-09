@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Box, HStack, Text, VStack } from '@holdr-ui/react';
+import { Box, CSSTheme, HStack, Text, VStack } from '@holdr-ui/react';
 import dayjs from 'dayjs';
 import localeData from 'dayjs/plugin/localeData';
 import { DatePickerProps } from './types';
@@ -8,6 +8,7 @@ import { arrayFrom, DateUtility } from '../../utilities';
 import { IDate } from '../../interfaces';
 import { SelectInputField } from '../index';
 import { lightSelectCSS } from '../../styles';
+import { TextProps } from '@holdr-ui/react/dist/components/text/src/text.types';
 
 dayjs.extend(localeData);
 
@@ -18,9 +19,18 @@ function DatePicker({
   tooltip,
   date,
   onChange,
+  labelProps,
+  required,
+  triggerCSS = lightSelectCSS,
+  listCSS,
   max = dayjs().toString(),
   min = dayjs().subtract(100, 'years').toString(),
-}: DatePickerProps) {
+}: DatePickerProps & {
+  required?: boolean;
+  triggerCSS?: CSSTheme;
+  listCSS?: CSSTheme;
+  labelProps?: TextProps;
+}) {
   const [state, set] = useState(DateUtility.breakdown(date));
 
   // range for months
@@ -69,19 +79,28 @@ function DatePicker({
 
   return (
     <VStack>
-      {label && <Label name={name} tooltip={tooltip} text={label} />}
+      {label && (
+        <Label
+          name={name}
+          tooltip={tooltip}
+          text={label}
+          required={required}
+          {...labelProps}
+        />
+      )}
       <HStack gap={2} data-cy='date-picker'>
-        <Box flex={2}>
+        <Box w='135px' flex={2}>
           <SelectInputField
             listCSS={{
               borderTopWidth: '1px',
               borderTopRightRadius: '$2',
               borderTopLeftRadius: '$2',
+              ...listCSS,
             }}
             value={state.month}
             onValueChange={(value) => update({ month: value })}
             name='month'
-            triggerCSS={lightSelectCSS}
+            triggerCSS={triggerCSS}
             options={monthNames}
             keySelector={(name) => name}
             labelSelector={(name) => name}
@@ -89,17 +108,18 @@ function DatePicker({
           />
         </Box>
 
-        <Box flex={1}>
+        <Box w='78px' flex={1}>
           <SelectInputField
             listCSS={{
               borderTopWidth: '1px',
               borderTopRightRadius: '$2',
               borderTopLeftRadius: '$2',
+              ...listCSS,
             }}
             value={state.day}
             onValueChange={(value) => update({ day: value })}
             name='day'
-            triggerCSS={lightSelectCSS}
+            triggerCSS={triggerCSS}
             options={days}
             keySelector={(day) => (day + 1).toString()}
             labelSelector={(day) => (day + 1).toString()}
@@ -107,17 +127,18 @@ function DatePicker({
           />
         </Box>
 
-        <Box flex={1.5}>
+        <Box w='102px' flex={1.5}>
           <SelectInputField
             listCSS={{
               borderTopWidth: '1px',
               borderTopRightRadius: '$2',
               borderTopLeftRadius: '$2',
+              ...listCSS,
             }}
             value={state.year}
             onValueChange={(value) => update({ year: value })}
             name='year'
-            triggerCSS={lightSelectCSS}
+            triggerCSS={triggerCSS}
             options={years}
             keySelector={(idx) =>
               (parseInt(Maximum.year) - idx).toString()
