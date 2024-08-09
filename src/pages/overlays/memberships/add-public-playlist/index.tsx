@@ -19,7 +19,6 @@ import {
   LoadWithoutPreviousLocation,
   makeButtonLarger,
   makePath,
-  TextareaField,
 } from '../../../../shared';
 
 function AddPublicPlaylist() {
@@ -41,8 +40,8 @@ function AddPublicPlaylist() {
             <DialogOverlay zIndex={15} />
             <DialogContent
               zIndex={20}
-              w={625}
-              h={625}
+              w={500}
+              h={550}
               p={8}
               minHeight={200}
               overflowY='hidden'

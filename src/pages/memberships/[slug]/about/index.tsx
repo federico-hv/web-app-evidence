@@ -4,26 +4,22 @@ import {
   AvatarGroup,
   Box,
   Button,
-  Center,
   Container,
   Heading,
   HStack,
-  IconButton,
   Separator,
   Text,
   VStack,
 } from '@holdr-ui/react';
-import { CreateMembershipItem } from '../ui';
+import { ArtistEditItemButton, CreateMembershipItem } from '../ui';
 import {
   IAnnouncement,
   makeButtonLarger,
   makePath,
   useNavigateWithPreviousLocation,
-  voidFn,
 } from '../../../../shared';
 import { FlatList } from '../../../../tmp/flat-list';
 import dayjs from 'dayjs';
-import { dummyPerks } from '../../../clubs/shared';
 import { dummyPerksData } from '../../../clubs';
 import { useLocation, useParams } from 'react-router-dom';
 
@@ -51,6 +47,9 @@ const dummyAnnouncements: IAnnouncement[] = [
   },
 ];
 
+const hasRules = false;
+const hasWelcomeMessage = true;
+
 function MembershipAboutPage() {
   const { slug } = useParams();
 
@@ -69,56 +68,55 @@ function MembershipAboutPage() {
               <Heading size={6} weight={500} mb={0}>
                 Welcome
               </Heading>
-              <IconButton
+              <ArtistEditItemButton
                 onClick={() => goto(['add', 'welcome-message'])}
-                size='sm'
-                colorTheme='white100'
-                icon='edit-fill'
-                ariaLabel='edit '
               />
             </HStack>
-            {/*<Text>*/}
-            {/*  Get access to exclusive tracks and early releases before*/}
-            {/*  anyone else. Be the first to hear new songs, dive into*/}
-            {/*  behind-the-scenes content, and enjoy special surprises just*/}
-            {/*  for you!*/}
-            {/*</Text>*/}
+            {hasWelcomeMessage && (
+              <Text>
+                Get access to exclusive tracks and early releases before
+                anyone else. Be the first to hear new songs, dive into
+                behind-the-scenes content, and enjoy special surprises just
+                for you!
+              </Text>
+            )}
           </VStack>
         </VStack>
         <Box h='1px' w='100%' bgColor='base200' my='64px' />
-        <VStack gap={4}>
-          <HStack items='center' gap={4}>
-            <Heading size={6} weight={500} mb={0}>
-              Rules & Guidelines
-            </Heading>
-            <IconButton
-              onClick={() => goto(['add', 'rules-and-guidelines'])}
-              size='sm'
-              colorTheme='white100'
-              icon='edit-fill'
-              ariaLabel='edit '
-            />
-          </HStack>
+
+        {!hasRules ? (
           <CreateMembershipItem
             text='Add Rules & Guidelines'
             onClick={() => goto(['add', 'rules-and-guidelines'])}
           />
-          <Box
-            p={8}
-            radius={3}
-            css={{
-              boxShadow: '0px 0px 15px 0px #00000026',
-            }}
-          >
-            Please remember that any exclusive songs, links, or codes
-            provided to you are for your personal enjoyment only. Sharing
-            or leaking this exclusive content outside of the members-only
-            community is strictly prohibited. Respecting these guidelines
-            helps maintain the integrity and special nature of our
-            community, ensuring that all members continue to receive unique
-            and privileged access.
-          </Box>
-        </VStack>
+        ) : (
+          <VStack gap={4}>
+            <HStack items='center' gap={4}>
+              <Heading size={6} weight={500} mb={0}>
+                Rules & Guidelines
+              </Heading>
+              <ArtistEditItemButton
+                onClick={() => goto(['add', 'rules-and-guidelines'])}
+              />
+            </HStack>
+            <Box
+              p={8}
+              radius={3}
+              css={{
+                boxShadow: '0px 0px 15px 0px #00000026',
+              }}
+            >
+              Please remember that any exclusive songs, links, or codes
+              provided to you are for your personal enjoyment only. Sharing
+              or leaking this exclusive content outside of the members-only
+              community is strictly prohibited. Respecting these guidelines
+              helps maintain the integrity and special nature of our
+              community, ensuring that all members continue to receive
+              unique and privileged access.
+            </Box>
+          </VStack>
+        )}
+
         <VStack mt={8} gap={4}>
           <Heading size={6} weight={500}>
             Announcements

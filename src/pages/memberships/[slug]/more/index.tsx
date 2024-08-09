@@ -4,7 +4,6 @@ import {
   Container,
   Heading,
   HStack,
-  IconButton,
   Separator,
   Text,
   VStack,
@@ -15,7 +14,7 @@ import {
   makePath,
   useNavigateWithPreviousLocation,
 } from '../../../../shared';
-import { CreateMembershipItem } from '../ui';
+import { ArtistEditItemButton, CreateMembershipItem } from '../ui';
 import { FlatList } from '../../../../tmp/flat-list';
 import { dummyCustomPerks } from './shared';
 
@@ -68,12 +67,8 @@ function MembershipMorePage() {
               <Heading size={6} weight={400} mb={0}>
                 More Perks
               </Heading>
-              <IconButton
+              <ArtistEditItemButton
                 onClick={gotoAddCustomMoreDescription}
-                size='sm'
-                colorTheme='white100'
-                icon='edit-fill'
-                ariaLabel='edit '
               />
             </HStack>
             {/*<Text>*/}
