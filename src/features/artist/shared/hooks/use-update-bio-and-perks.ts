@@ -52,7 +52,10 @@ export function useUpdateBioAndPerks() {
                   console.error(e);
                 }
 
-                return [...newPerksList];
+                return {
+                  clubId,
+                  perks: newPerksList,
+                };
               },
               artist(current = {}) {
                 let newArtist: Reference = current;
