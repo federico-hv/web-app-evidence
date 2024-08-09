@@ -30,11 +30,41 @@ import {
 import dayjs from 'dayjs';
 import { TextProps } from '@holdr-ui/react/dist/components/text/src/text.types';
 
+const TicketProviders = [
+  {
+    value: 'axs',
+    label: 'AXS',
+  },
+  {
+    value: 'dice',
+    label: 'Dice',
+  },
+  {
+    value: 'eventbrite',
+    label: 'Eventbrite',
+  },
+  {
+    value: 'stubhub',
+    label: 'Stubhub',
+  },
+  {
+    value: 'ticketmaster',
+    label: 'Ticketmaster',
+  },
+  {
+    value: 'other',
+    label: 'Other',
+  },
+];
+
 function convertToHour(num: number): string {
   if (num < 12) {
-    return `${num}:00 AM`;
+    return `${num} AM`;
+  }
+  if (num === 12) {
+    return num + ' PM';
   } else {
-    return `${num}:00 PM`;
+    return `${num - 12} PM`;
   }
 }
 
@@ -98,7 +128,7 @@ function TimePicker({
   );
 }
 
-function CreateMembershipEventPerkPage() {
+function MembershipCreateEventPerkPage() {
   const { slug } = useParams();
 
   const disclosure = useDisclosure(true);
@@ -218,27 +248,20 @@ function CreateMembershipEventPerkPage() {
                         </Box>
                         <SelectInputField
                           required
+                          position='popper'
                           label='Ticketing Provider'
                           labelProps={{
                             color: 'base800',
                           }}
                           listCSS={{
-                            borderTopWidth: '1px',
-                            borderTopRightRadius: '$2',
-                            borderTopLeftRadius: '$2',
                             background: '$white100',
                             color: '$black500',
                           }}
                           // value={time}
                           // onValueChange={(value) => setTime(value)}
-                          name='month'
+                          name='ticketProvider'
                           triggerCSS={whiteSelectCSS}
-                          options={[
-                            {
-                              value: 'ticketmaster',
-                              label: 'Ticketmaster',
-                            },
-                          ]}
+                          options={TicketProviders}
                           keySelector={({ value }) => value}
                           labelSelector={({ label }) => label}
                           valueSelector={({ value }) => value}
@@ -338,4 +361,4 @@ function CreateMembershipEventPerkPage() {
   );
 }
 
-export default CreateMembershipEventPerkPage;
+export default MembershipCreateEventPerkPage;

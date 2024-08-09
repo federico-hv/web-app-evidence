@@ -1,3 +1,10 @@
 export { default as UserMembershipsPage } from './users';
-export { default as CreateMembershipEventPerkPage } from './create-event-perk';
+export { default as MembershipCreateEventPerkPage } from './create-event-perk';
 export { default as MembershipEventPerkPage } from './event-perk';
+export { default as MembershipAddPublicPlaylistPage } from './add-public-playlist';
+export { default as MembershipAddPrivatePlaylistPage } from './add-private-playlist';
+export { default as MembershipCreateCustomPerkPage } from './create-custom-perk';
+export { default as MembershipAddCustomMoreDescriptionPage } from './add-custom-more-description';
+export { default as MembershipMembersPage } from './membership-members';
+export { default as MembershipAddWelcomeMessagePage } from './add-welcome-message';
+export { default as MembershipAddRulesPage } from './add-rules';

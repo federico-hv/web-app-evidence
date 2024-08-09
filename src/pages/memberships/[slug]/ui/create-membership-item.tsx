@@ -10,7 +10,6 @@ function CreateMembershipItem({
 }) {
   return (
     <VStack
-      mt={8}
       border={2}
       radius={3}
       borderColor='black500'

@@ -29,7 +29,7 @@ function TextAreaField({
   const [internalValue, set] = useState<string>(value as string);
 
   return (
-    <VStack gap={2}>
+    <VStack>
       {label && (
         <Label
           required={required}
