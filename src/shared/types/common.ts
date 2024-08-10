@@ -35,6 +35,13 @@ export interface ISuccessResponse<T = any> {
   message: string;
 }
 
+export interface IDataSuccessResponse<T = any> {
+  data: T;
+  isSuccess: boolean;
+  status: number;
+  message: string;
+}
+
 export interface ILengthErrorExists {
   length: number;
   message?: string;

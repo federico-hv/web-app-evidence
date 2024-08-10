@@ -6,3 +6,4 @@ export * from './use-update-contact-info';
 export * from './use-send-verification-otp';
 export * from './use-refresh-2fa-recovery-key';
 export * from './use-two-fa';
+export * from './use-update-account-info.mutation';

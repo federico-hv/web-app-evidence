@@ -4,6 +4,10 @@ import { IAccountInfo } from '../types';
 import { UPDATE_ACCOUNT_INFO } from '../../mutations';
 import { GET_ACCOUNT_INFO } from '../../../user';
 
+/**
+ * DEPRECATED: Uses old API pattern.
+ */
+
 export function useUpdateAccountInfo() {
   const [updateAccountInfo, { loading, error }] = useMutation<
     { updateAccountInfo: IAccountInfo },

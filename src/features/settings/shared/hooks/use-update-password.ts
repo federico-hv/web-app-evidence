@@ -1,11 +1,11 @@
 import { useMutation } from '@apollo/client';
-import { UPDATE_PASSWORD } from '../../mutations';
 import {
   UpdatePasswordData,
   UpdatePasswordFormData,
   UpdatePasswordPayload,
 } from '../types';
 import { useToast } from '../../../../shared';
+import { UPDATE_PASSWORD } from '../../../auth';
 
 export const useUpdatePassword = () => {
   const { openWith } = useToast();

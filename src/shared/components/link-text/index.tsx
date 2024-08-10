@@ -12,7 +12,7 @@ function LinkText({
   ...props
 }: LinkTextProps) {
   return (
-    <Box position='relative'>
+    <Box position='relative' w='fit-content'>
       <LinkOverlay
         to={to}
         reloadDocument={reloadDocument}

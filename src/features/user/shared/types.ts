@@ -56,7 +56,7 @@ export interface IProfile {
 }
 
 export interface ITinyProfile {
-  username: string;
+  // username: string;
   displayName: string;
   avatar?: string;
   bio?: string;

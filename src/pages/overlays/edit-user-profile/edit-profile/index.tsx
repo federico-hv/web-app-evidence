@@ -37,7 +37,7 @@ function EditUserProfilePage() {
   const { loading, updateProfileAndLinks } = useUpdateProfileAndLinks();
 
   const [newProfile, updateNewProfile] = useRecordState<ITinyProfile>({
-    username: profile.username || '',
+    // username: profile.username || '',
     displayName: profile.displayName || '',
     location: profile.location || '',
     bio: profile.bio || '',
@@ -85,27 +85,27 @@ function EditUserProfilePage() {
     PatternErrorMessage.invalid('X URL'),
   );
 
-  const UsernameErrorText = isMatchingPattern(
-    newProfile.username,
-    Patterns.Username,
-    PatternErrorMessage.invalidCharacters(
-      'username',
-      'alphanumeric characters',
-    ),
-  );
+  // const UsernameErrorText = isMatchingPattern(
+  //   newProfile.username,
+  //   Patterns.Username,
+  //   PatternErrorMessage.invalidCharacters(
+  //     'username',
+  //     'alphanumeric characters',
+  //   ),
+  // );
 
   return (
     <VStack h='calc(100%)'>
       <VStack overflow='auto' className='thin-scrollbar' gap={6} pr='10px'>
-        <InputTextField
-          maxLength={25}
-          name='username'
-          label='Username'
-          placeholder='username'
-          value={newProfile.username}
-          onChange={handleProfileChange}
-          errorText={UsernameErrorText}
-        />
+        {/*<InputTextField*/}
+        {/*  maxLength={25}*/}
+        {/*  name='username'*/}
+        {/*  label='Username'*/}
+        {/*  placeholder='username'*/}
+        {/*  value={newProfile.username}*/}
+        {/*  onChange={handleProfileChange}*/}
+        {/*  errorText={UsernameErrorText}*/}
+        {/*/>*/}
         <InputTextField
           name='displayName'
           maxLength={75}
@@ -197,7 +197,7 @@ function EditUserProfilePage() {
 
             if (
               profile.bio !== newProfile.bio ||
-              profile.username !== newProfile.username ||
+              // profile.username !== newProfile.username ||
               profile.location !== newProfile.location ||
               profile.displayName !== newProfile.displayName ||
               currentXURL !== (newSocialLinks.X || '') ||

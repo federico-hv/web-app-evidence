@@ -128,3 +128,21 @@ export const REMOVE_FAVOURITE_ARTIST = gql`
     }
   }
 `;
+
+export const UPDATE_CONTACT_INFORMATION = gql`
+  mutation updateContactInfo(
+    $contact: String!
+    $channel: ContactTypeEnum!
+    $code: String!
+  ) {
+    updateContactInfo(contact: $contact, channel: $channel, code: $code) {
+      data {
+        email
+        phone
+      }
+      status
+      isSuccess
+      message
+    }
+  }
+`;

@@ -1,4 +1,5 @@
 import { Role } from '../types';
+import { UserRoleEnum } from '../../features';
 
 export interface UserModel {
   username: string;
@@ -13,7 +14,7 @@ export interface IMe {
   username: string;
   displayName: string;
   avatar: string;
-  role: Role;
+  role: UserRoleEnum;
 }
 
 export interface IFetchUsersResponse {
