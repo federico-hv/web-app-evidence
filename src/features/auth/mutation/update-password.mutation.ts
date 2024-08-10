@@ -3,7 +3,7 @@ import { useMutation } from '@apollo/client';
 
 import { UPDATE_PASSWORD } from './schema';
 
-export interface UpdatePasswordPayload {
+interface UpdatePasswordPayload {
   currentPassword: string;
   newPassword: string;
   newPasswordVerification: string;
