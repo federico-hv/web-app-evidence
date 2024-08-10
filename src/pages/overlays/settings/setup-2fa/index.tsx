@@ -1,10 +1,17 @@
 import {
   Box,
   Button,
+  CenterVariantProps,
+  GeneralContextProvider,
   Heading,
   HStack,
   Image,
+  Square,
+  Text,
+  useGeneralContext,
   useInputChange,
+  useRecordState,
+  useSwitch,
   VStack,
 } from '@holdr-ui/react';
 import {
@@ -17,9 +24,18 @@ import {
   TextGroup,
   TextGroupHeading,
   TextGroupSubheading,
+  useCopyToClipboard,
   useStepperContext,
 } from '../../../../shared';
 import { useLocation, useNavigate } from 'react-router-dom';
+import {
+  ITwoFAAppRegistrationResponse,
+  TwoFAChannelEnum,
+  useEnableTwoFAMutation,
+  useTwoFaRegistrationMutation,
+} from '../../../../features';
+import { Fragment, useState } from 'react';
+import CopyIcon from '../../../../tmp/copy-icon';
 
 enum Setup2FAStep {
   Overview,
@@ -28,10 +44,14 @@ enum Setup2FAStep {
 }
 
 function Setup2FAPageOverviewStep() {
+  const { update } = useGeneralContext<ITwoFAAppRegistrationResponse>();
+
   const location = useLocation();
   const navigate = useNavigate();
 
   const { increment } = useStepperContext();
+
+  const { twoFARegistration, loading } = useTwoFaRegistrationMutation();
 
   return (
     <VStack flex={1} px={5} pb={5}>
@@ -116,7 +136,18 @@ function Setup2FAPageOverviewStep() {
             Cancel
           </Button>
           <Button
-            onClick={increment}
+            isLoading={loading}
+            loadingText='Setup 2FA'
+            onClick={async () => {
+              const res = await twoFARegistration();
+
+              if (!res || !res.data || !res.data.twoFAAppRegistration)
+                return;
+
+              update(res.data.twoFAAppRegistration);
+
+              increment();
+            }}
             colorTheme='purple500'
             className={makeButtonLarger('2.75rem')}
             css={{ px: '$8', py: '$4' }}
@@ -131,8 +162,12 @@ function Setup2FAPageOverviewStep() {
 }
 
 function Setup2FAVerificationStep() {
+  const [errorText, setErrorText] = useState('');
+
   const location = useLocation();
   const navigate = useNavigate();
+
+  const { enableTwoFA, loading } = useEnableTwoFAMutation();
 
   const { value, handleOnChange } = useInputChange('');
 
@@ -142,11 +177,12 @@ function Setup2FAVerificationStep() {
     <VStack flex={1} px={5} pb={5}>
       <TextGroup gap={0}>
         <TextGroupHeading as='h2' weight={500} size={3}>
-          Verify Code
+          Enter confirmation code
         </TextGroupHeading>
         <TextGroupSubheading size={2} color='white700'>
-          Enter the code that has been sent to the phone number that you
-          provided and we will confirm your identity.
+          Two-factor authentication will be enabled once the code generated
+          by the authenticator app is entered and confirmed. It can be
+          turned off at any time.
         </TextGroupSubheading>
       </TextGroup>
       <VStack
@@ -154,6 +190,18 @@ function Setup2FAVerificationStep() {
         mt={8}
         onSubmit={async (e) => {
           e.preventDefault();
+
+          const res = await enableTwoFA({
+            code: value,
+            channel: TwoFAChannelEnum.App,
+          });
+
+          if (!res || !res.data || !res.data.enableTwoFA) return;
+
+          if (!res.data.enableTwoFA.isSuccess) {
+            setErrorText(res.data.enableTwoFA.message);
+            return;
+          }
 
           navigate(
             location.state.previousLocation ??
@@ -164,10 +212,12 @@ function Setup2FAVerificationStep() {
         justify='space-between'
       >
         <InputTextField
+          autoFocus
           value={value}
           onChange={handleOnChange}
           name='code'
           label='Enter verification code'
+          errorText={errorText}
         />
         <HStack
           justify='flex-end'
@@ -187,12 +237,9 @@ function Setup2FAVerificationStep() {
             Back
           </Button>
           <Button
-            onClick={() =>
-              navigate(
-                location.state.previousLocation ??
-                  makePath([Paths.settings, Paths.setting.account]),
-              )
-            }
+            isLoading={loading}
+            loadingText='Verify'
+            disabled={value.length === 0}
             colorTheme='purple500'
             className={makeButtonLarger('2.75rem')}
             css={{ px: '$8', py: '$4' }}
@@ -207,7 +254,15 @@ function Setup2FAVerificationStep() {
 }
 
 function Setup2FAScanStep() {
-  const { value, handleOnChange } = useInputChange('');
+  const { state } = useGeneralContext<ITwoFAAppRegistrationResponse>();
+
+  const copyToClipboard = useCopyToClipboard();
+
+  const {
+    switchState: showingQRCode,
+    turnOn: showQRCode,
+    turnOff: showCode,
+  } = useSwitch(true);
 
   const { increment, decrement } = useStepperContext();
 
@@ -215,14 +270,16 @@ function Setup2FAScanStep() {
     <VStack flex={1} px={5} pb={5}>
       <TextGroup gap={0}>
         <TextGroupHeading as='h2' weight={500} size={3}>
-          Update your phone number
+          Use authentication app
         </TextGroupHeading>
         <TextGroupSubheading size={2} color='white700'>
-          Enter the code that has been sent to the phone number that you
-          provided and we will confirm your identity.
+          Scan the QR Code that we generate for you using a secure
+          authenticator (Google or any other).
         </TextGroupSubheading>
       </TextGroup>
+
       <VStack
+        h='100%'
         as='form'
         mt={8}
         onSubmit={async (e) => {
@@ -232,6 +289,53 @@ function Setup2FAScanStep() {
         flex={1}
         justify='space-between'
       >
+        <VStack gap={4} items='center' justify='center' h='100%'>
+          {showingQRCode ? (
+            <Fragment>
+              <Image src={state.qrCodeUrl} radius={1} size={175} />
+              <Button
+                onClick={showCode}
+                type='button'
+                variant='ghost'
+                size='sm'
+                colorTheme='white500'
+                radius={1}
+                className={makeButtonLarger('2rem')}
+              >
+                {"Can't scan code?"}
+              </Button>
+            </Fragment>
+          ) : (
+            <Fragment>
+              <HStack
+                onClick={() => copyToClipboard(state.code)}
+                px={4}
+                py={3}
+                radius={1}
+                bgColor='rgba(152, 152, 255, 0.25)'
+                items='center'
+                gap={2}
+              >
+                <Text as='code' spacing='wider' size={5} weight={300}>
+                  {state.code}
+                </Text>
+                <CopyIcon color='white700' size={16} />
+              </HStack>
+              <Button
+                onClick={showQRCode}
+                type='button'
+                variant='ghost'
+                size='sm'
+                colorTheme='white500'
+                radius={1}
+                className={makeButtonLarger('2rem')}
+              >
+                Scan QR Code
+              </Button>
+            </Fragment>
+          )}
+        </VStack>
+
         <HStack
           justify='flex-end'
           borderTop={1}
@@ -265,29 +369,38 @@ function Setup2FAScanStep() {
 }
 
 function Setup2FAPage() {
+  const [state, update] = useRecordState<ITwoFAAppRegistrationResponse>({
+    code: '',
+    qrCodeUrl: '',
+  });
+
   return (
-    <VStack
-      h={600}
-      gap={4}
-      divider={<Box h='1px' w='full' bgColor='rgba(152, 152, 255, 0.1)' />}
-    >
-      <Box px={5} pt={5}>
-        <Heading size={6} weight={500}>
-          Authentication App
-        </Heading>
-      </Box>
-      <Stepper>
-        <StepperStep step={Setup2FAStep.Overview}>
-          <Setup2FAPageOverviewStep />
-        </StepperStep>
-        <StepperStep step={Setup2FAStep.Update}>
-          <Setup2FAScanStep />
-        </StepperStep>
-        <StepperStep step={Setup2FAStep.Verification}>
-          <Setup2FAVerificationStep />
-        </StepperStep>
-      </Stepper>
-    </VStack>
+    <GeneralContextProvider value={{ state, update }}>
+      <VStack
+        h={600}
+        gap={4}
+        divider={
+          <Box h='1px' w='full' bgColor='rgba(152, 152, 255, 0.1)' />
+        }
+      >
+        <Box px={5} pt={5}>
+          <Heading size={6} weight={500}>
+            Authentication App
+          </Heading>
+        </Box>
+        <Stepper>
+          <StepperStep step={Setup2FAStep.Overview}>
+            <Setup2FAPageOverviewStep />
+          </StepperStep>
+          <StepperStep step={Setup2FAStep.Update}>
+            <Setup2FAScanStep />
+          </StepperStep>
+          <StepperStep step={Setup2FAStep.Verification}>
+            <Setup2FAVerificationStep />
+          </StepperStep>
+        </Stepper>
+      </VStack>
+    </GeneralContextProvider>
   );
 }
 

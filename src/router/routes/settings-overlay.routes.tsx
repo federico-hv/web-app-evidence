@@ -5,65 +5,51 @@ import {
   ChangePasswordPage,
   ChangePhoneNumberPage,
   Setup2FAPage,
-  SettingsDialog,
   BlockedAccountsPage,
   MutedAccountsPage,
+  SettingsDialog,
+  TwFARecoveryCodePage,
 } from '../../pages';
-import { Navigate } from 'react-router-dom';
 
 const SettingsOverlayRoutes = () => (
   <Routes>
-    <Route path={Paths.root} element={<SettingsDialog />}>
+    <Route
+      path={makePath([Paths.setting.account])}
+      element={<SettingsDialog />}
+    >
       <Route
-        path={Paths.root}
-        element={<Navigate replace to={Paths.setting.account} />}
+        path={Paths.setting.change_email}
+        element={<ChangeEmailPage />}
       />
       <Route
-        path={makePath([
-          Paths.setting.account,
-          Paths.setting.change_email,
-        ])}
-      >
-        <Route path={Paths.root} element={<ChangeEmailPage />} />
-      </Route>
+        path={Paths.setting.change_phone_number}
+        element={<ChangePhoneNumberPage />}
+      />
       <Route
-        path={makePath([
-          Paths.setting.account,
-          Paths.setting.change_phone_number,
-        ])}
-      >
-        <Route path={Paths.root} element={<ChangePhoneNumberPage />} />
-      </Route>
-      <Route
-        path={makePath([
-          Paths.setting.account,
-          Paths.setting.change_password,
-        ])}
-      >
-        <Route path={Paths.root} element={<ChangePasswordPage />} />
-      </Route>
-      <Route
-        path={makePath([Paths.setting.privacy, Paths.setting.setup_2fa])}
-      >
-        <Route path={Paths.root} element={<Setup2FAPage />} />
-      </Route>
-      <Route
-        path={makePath([
-          Paths.setting.privacy,
-          Paths.setting.blocked_accounts,
-        ])}
-      >
-        <Route path={Paths.root} element={<BlockedAccountsPage />} />
-      </Route>
-      <Route
-        path={makePath([
-          Paths.setting.privacy,
-          Paths.setting.muted_accounts,
-        ])}
-      >
-        <Route path={Paths.root} element={<MutedAccountsPage />} />
-      </Route>
+        path={Paths.setting.change_password}
+        element={<ChangePasswordPage />}
+      />
     </Route>
+
+    <Route
+      path={makePath([Paths.setting.privacy])}
+      element={<SettingsDialog />}
+    >
+      <Route path={Paths.setting.setup_2fa} element={<Setup2FAPage />} />
+      <Route
+        path={Paths.setting.two_fa_recovery_code}
+        element={<TwFARecoveryCodePage />}
+      />
+      <Route
+        path={Paths.setting.blocked_accounts}
+        element={<BlockedAccountsPage />}
+      />
+      <Route
+        path={Paths.setting.muted_accounts}
+        element={<MutedAccountsPage />}
+      />
+    </Route>
+    <Route path={Paths.all} />
   </Routes>
 );
 

@@ -16,10 +16,33 @@ import {
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { Fragment } from 'react';
 
+export function useCurrentPath() {
+  const location = useLocation();
+
+  const paths = location.pathname.split('/');
+
+  return paths[paths.length - 1];
+}
+
 function SettingsDialog() {
   const disclosure = useDisclosure(true);
+
   const navigate = useNavigate();
   const location = useLocation();
+
+  const currentPath = useCurrentPath();
+
+  if (
+    [
+      Paths.setting.account,
+      Paths.setting.privacy,
+      Paths.setting.notifications,
+    ].includes(currentPath)
+  ) {
+    // hide dialog if the dialog routes /* are not shown
+    return <Fragment />;
+  }
+
   return (
     <Fragment>
       <LoadWithoutPreviousLocation

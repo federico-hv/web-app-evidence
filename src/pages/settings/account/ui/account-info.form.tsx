@@ -28,9 +28,9 @@ import {
   useAccountInfoSuspenseQuery,
   useDebouncedCheckIsUniqueField,
   UserRoleEnum,
-  useUpdateAccountInfoMutation,
 } from '../../../../features';
 import { Fragment } from 'react';
+import { useUpdateAccountInfoMutation } from '../../../../features/user/mutations/use-update-account-info.mutation';
 
 interface IAccountInfo {
   username: string;

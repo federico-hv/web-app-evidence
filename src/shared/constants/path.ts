@@ -46,6 +46,7 @@ export const Paths = {
     customURL: 'custom-url',
   },
   setting: {
+    two_fa_recovery_code: 'two_fa_recovery_code',
     setup_2fa: 'setup_2fa',
     account: 'account',
     username: 'username',
