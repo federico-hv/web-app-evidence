@@ -20,6 +20,7 @@ import {
   Box,
   Button,
   HStack,
+  Icon,
   useRecordState,
   VStack,
 } from '@holdr-ui/react';
@@ -125,6 +126,7 @@ function AccountInfoForm() {
           rightElement={
             <InputLoadingIndicator loading={loadingCheckResult} />
           }
+          leftElement={<Icon name='at' color='white700' />}
           minLength={FieldLengths.username.min}
           maxLength={FieldLengths.username.max}
           value={state.username}

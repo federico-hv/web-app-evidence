@@ -58,7 +58,7 @@ function EmailNotificationsList() {
               want to receive
             </TextGroupSubheading>
           </VStack>
-          <Switch colorTheme='success400' />
+          <Switch checked={true} readOnly colorTheme='success400' />
         </HStack>
       </VStack>
     </Box>
