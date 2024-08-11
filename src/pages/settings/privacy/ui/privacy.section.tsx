@@ -13,10 +13,23 @@ import {
   TextGroup,
   TextGroupHeading,
   TextGroupSubheading,
+  voidFn,
 } from '../../../../shared';
 import { useLocation, useNavigate } from 'react-router-dom';
+import {
+  useAccountInfoSuspenseQuery,
+  useCurrentUser,
+  UserRoleEnum,
+} from '../../../../features';
+import { useUpdateAccountInfoMutation } from '../../../../features/user/mutations/use-update-account-info.mutation';
 
 function PrivacySection() {
+  const { data } = useAccountInfoSuspenseQuery();
+
+  const { update, loading } = useUpdateAccountInfoMutation();
+
+  const currentUser = useCurrentUser();
+
   const location = useLocation();
 
   const navigate = useNavigate();
@@ -75,7 +88,25 @@ function PrivacySection() {
           />
         }
       >
-        <HStack cursor='pointer' as='label' justify='space-between'>
+        <HStack
+          onClick={
+            currentUser.role === UserRoleEnum.Artist || loading
+              ? voidFn
+              : () => update({ protected: !data.accountInfo.protected })
+          }
+          as='label'
+          justify='space-between'
+          css={{
+            opacity:
+              currentUser.role === UserRoleEnum.Artist || loading
+                ? 0.5
+                : 1,
+            cursor:
+              currentUser.role === UserRoleEnum.Artist || loading
+                ? 'not-allowed'
+                : 'pointer',
+          }}
+        >
           <VStack justify='space-between'>
             <TextGroupHeading
               id='2fa-connection'
@@ -90,6 +121,9 @@ function PrivacySection() {
             </TextGroupSubheading>
           </VStack>
           <Checkbox
+            readOnly
+            checked={data.accountInfo.protected}
+            disabled={currentUser.role === UserRoleEnum.Artist}
             size='sm'
             colorTheme='white500'
             labelledBy='2fa-connection'

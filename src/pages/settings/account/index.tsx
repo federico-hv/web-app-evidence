@@ -5,15 +5,18 @@ import {
   ConnectedAccountsList,
   ContactInfoGroup,
 } from './ui';
+import { GQLRenderer } from '../../../shared';
 
 function SettingsAccountPage() {
   return (
-    <VStack gap={8}>
-      <AccountInfoForm />
-      <ContactInfoGroup />
-      <ChangePassword />
-      <ConnectedAccountsList />
-    </VStack>
+    <GQLRenderer>
+      <VStack gap={8}>
+        <AccountInfoForm />
+        <ContactInfoGroup />
+        <ChangePassword />
+        <ConnectedAccountsList />
+      </VStack>
+    </GQLRenderer>
   );
 }
 SettingsAccountPage.displayName = 'SettingsAccountPage';

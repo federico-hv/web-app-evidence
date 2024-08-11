@@ -4,5 +4,6 @@ export { default as ChangePasswordPage } from './change-password';
 export { default as Setup2FAPage } from './setup-2fa';
 export { default as MutedAccountsPage } from './muted-accounts';
 export { default as BlockedAccountsPage } from './blocked-accounts';
+export { default as TwFARecoveryCodePage } from './2fa-recovery-code';
 
 export * from './ui';

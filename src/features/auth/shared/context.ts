@@ -1,5 +1,6 @@
 import { createContext } from 'react';
 import { IAuthContext } from './types';
+import { UserRoleEnum } from '../../user';
 
 const AuthContext = createContext<IAuthContext>({
   currentUser: {
@@ -7,7 +8,7 @@ const AuthContext = createContext<IAuthContext>({
     username: '',
     displayName: '',
     avatar: '',
-    role: 'general',
+    role: UserRoleEnum.GeneralUser,
   },
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   setCurrentUser: () => {},

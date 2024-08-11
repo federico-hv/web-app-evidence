@@ -14,7 +14,13 @@ export {
 export { default as BackButton } from './back-button';
 export { default as NotFoundError } from './not-found-error';
 export { default as AuthGuard } from './auth-guard';
+export { default as RoleGuard } from './role-guard';
 export { default as Head } from './head';
+export { default as PrimaryTooltip } from './primary-tooltip';
+export { default as PasswordErrorChecker } from './password-error-checker';
+export { default as ShowPasswordButton } from './show-password-button';
+export { default as ErrorItem } from './error-item';
+export { default as AppearingContent } from './appearing-content';
 export { default as ImageUpload } from './image-upload';
 export { default as FormInput } from './form-input';
 export { default as SelectInputField } from './select-input-field';

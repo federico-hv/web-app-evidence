@@ -269,3 +269,22 @@ export function passwordValidation(password: string) {
 
   return errors;
 }
+
+export function hasAllBooleanKeys(data: any, mustEqual: boolean) {
+  if (data === undefined) {
+    return true;
+  }
+
+  const keys = Object.keys(data);
+
+  let value = false;
+
+  for (const key of keys) {
+    if (isUndefined(data[key])) {
+      value = value || true;
+    }
+    value = value || data[key];
+  }
+
+  return value === mustEqual;
+}

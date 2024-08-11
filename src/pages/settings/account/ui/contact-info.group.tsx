@@ -1,16 +1,25 @@
-import { Box, VStack } from '@holdr-ui/react';
+import {
+  Box,
+  hexToRGB,
+  HStack,
+  Text,
+  useRecordState,
+  VStack,
+} from '@holdr-ui/react';
 import {
   Label,
   makePath,
   Paths,
+  PrimaryTooltip,
   TextGroup,
   TextGroupHeading,
   TextGroupSubheading,
   useNavigateWithPreviousLocation,
 } from '../../../../shared';
 import { useLocation } from 'react-router-dom';
+import { useAccountInfoSuspenseQuery } from '../../../../features';
 
-function ChangeEmailAddress() {
+function ChangeEmailAddress({ email }: { email: string }) {
   const location = useLocation();
 
   const navigate = useNavigateWithPreviousLocation(location.pathname);
@@ -25,26 +34,30 @@ function ChangeEmailAddress() {
     );
 
   return (
-    <VStack>
-      <Label
-        onClick={goto}
-        name='email'
-        text='Email address'
-        css={{ cursor: 'pointer' }}
-      />
-      <Box
-        onClick={goto}
+    <VStack
+      onClick={goto}
+      role='link'
+      css={{
+        cursor: 'text',
+      }}
+    >
+      <Label name='email' text='Email address' />
+      <HStack
+        items='center'
         bgColor='rgba(152, 152, 255, 0.15)'
         border={1}
         h={45}
         radius={1}
         borderColor='rgba(152, 152, 255, 0.35)'
-      />
+        px={4}
+      >
+        <Text>{email}</Text>
+      </HStack>
     </VStack>
   );
 }
 
-function ChangePhoneNumber() {
+function ChangePhoneNumber({ phone }: { phone: string }) {
   const location = useLocation();
 
   const navigate = useNavigateWithPreviousLocation(location.pathname);
@@ -59,27 +72,42 @@ function ChangePhoneNumber() {
     );
 
   return (
-    <VStack>
+    <VStack
+      onClick={goto}
+      role='link'
+      css={{
+        cursor: 'text',
+      }}
+    >
       <Label
-        onClick={goto}
-        tooltip='We will not share your phone number publicly. It is used to verify you are a real person.'
+        node={document.body}
+        tooltip={
+          <PrimaryTooltip
+            w={300}
+            text='Your phone number is not shared publicly. It is used to send access codes and for identity verification.'
+          />
+        }
         name='phone'
         text='Phone number'
-        css={{ cursor: 'pointer' }}
       />
-      <Box
-        onClick={goto}
+      <HStack
+        items='center'
         bgColor='rgba(152, 152, 255, 0.15)'
         border={1}
         h={45}
         radius={1}
         borderColor='rgba(152, 152, 255, 0.35)'
-      />
+        px={4}
+      >
+        <Text>{phone}</Text>
+      </HStack>
     </VStack>
   );
 }
 
 function ContactInfoGroup() {
+  const { data } = useAccountInfoSuspenseQuery();
+
   return (
     <Box>
       <TextGroup>
@@ -108,8 +136,8 @@ function ContactInfoGroup() {
           />
         }
       >
-        <ChangeEmailAddress />
-        <ChangePhoneNumber />
+        <ChangeEmailAddress email={data.accountInfo.email} />
+        <ChangePhoneNumber phone={data.accountInfo.phone} />
       </VStack>
     </Box>
   );

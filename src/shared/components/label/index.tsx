@@ -1,6 +1,5 @@
 import {
   Box,
-  hexToRGB,
   HStack,
   Icon,
   Text,
@@ -16,6 +15,7 @@ interface LabelProps {
   text: string;
   tooltip?: ReactNode;
   required?: boolean;
+  node?: HTMLElement;
 }
 
 function Label({
@@ -23,11 +23,10 @@ function Label({
   text,
   tooltip,
   required,
+  node = document.getElementById('page-dialog-container') || document.body,
   ...props
 }: LabelProps & TextProps) {
   // useful for rendering the tooltip in the right container - with correct z-index
-  const node =
-    document.getElementById('page-dialog-container') || document.body;
 
   return (
     <HStack
@@ -57,9 +56,7 @@ function Label({
             align='start'
             fontSize={1}
             container={node}
-            // bgColor='#202032'
-            // border={1}
-            // borderColor={hexToRGB('#9898FF', 0.25)}
+            bgColor='transparent'
             css={{ padding: 0 }}
           >
             {tooltip}

@@ -1,12 +1,6 @@
 import { useRef, useState } from 'react';
 import { Spotlight, Box } from '@holdr-ui/react';
-import {
-  prefix,
-  UserModel,
-  Loader,
-  Paths,
-  makePath,
-} from '../../../shared';
+import { prefix, UserModel, Loader, Paths } from '../../../shared';
 import { Item } from './type';
 import {
   useSaveSearchHistory,

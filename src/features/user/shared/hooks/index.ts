@@ -10,3 +10,4 @@ export * from './use-save-favorite-artist';
 export * from './use-remove-favorite-artist';
 export * from './use-get-profile';
 export * from './use-check-is-unique-field';
+export * from './use-update-contact-info.mutation';

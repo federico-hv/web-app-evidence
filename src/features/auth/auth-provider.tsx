@@ -10,6 +10,7 @@ import { GET_ME } from './queries';
 import AuthRedirect from '../../pages/auth-redirect';
 import { useWindowSize } from '@holdr-ui/react';
 import LogRocket from 'logrocket';
+import { UserRoleEnum } from '../user';
 
 function AuthProvider({ children }: AuthProviderProps) {
   const [currentUser, setCurrentUser] = useState<IMe>({
@@ -17,7 +18,7 @@ function AuthProvider({ children }: AuthProviderProps) {
     username: '',
     displayName: '',
     avatar: '',
-    role: 'general',
+    role: UserRoleEnum.GeneralUser,
   });
 
   return (

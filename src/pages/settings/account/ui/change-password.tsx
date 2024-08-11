@@ -33,7 +33,8 @@ function ChangePassword() {
           Update your password at any time
         </TextGroupSubheading>
       </TextGroup>
-      <VStack
+      <Box
+        onClick={goto}
         border={1}
         borderColor='rgba(152, 152, 255, 0.1)'
         bgColor='rgba(48, 48, 75, 0.6)'
@@ -41,10 +42,8 @@ function ChangePassword() {
         px={4}
         radius={3}
         mt={4}
-        gap={5}
       >
         <HStack
-          onClick={goto}
           items='center'
           justify='space-between'
           css={{ userSelect: 'none' }}
@@ -52,7 +51,7 @@ function ChangePassword() {
           <Text>Change password</Text>
           <Icon name='caret-right-outline' />
         </HStack>
-      </VStack>
+      </Box>
     </Box>
   );
 }

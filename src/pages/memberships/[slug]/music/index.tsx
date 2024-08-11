@@ -63,7 +63,7 @@ function MembershipMusicPage() {
             <VStack mb={6}>
               <HStack items='center' gap={4} mb={2}>
                 <Heading size={6} weight={400}>
-                  Public Playlist
+                  Private Playlist
                 </Heading>
                 <ArtistEditItemButton
                   onClick={gotoPrivatePlaylistCreation}

@@ -82,15 +82,6 @@ function SelectInputField<T>({
               _hover={_hover}
               _highlighted={_highlighted}
               position='relative'
-              divider={
-                <Box
-                  h='1px'
-                  w='100%'
-                  css={{
-                    background: 'rgba(152, 152, 255, 0.1)',
-                  }}
-                />
-              }
             >
               {options.map((item) => (
                 <SelectItem

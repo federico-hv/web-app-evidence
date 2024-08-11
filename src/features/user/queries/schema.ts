@@ -12,6 +12,7 @@ export const GET_USER_GENRES = gql`
 export const GET_ACCOUNT_INFO = gql`
   query accountInfo {
     accountInfo {
+      id
       email
       username
       phone
