@@ -11,10 +11,10 @@ export function useUpdateAccountInfoMutation() {
     { payload: Partial<IAccountInfo> }
   >(UPDATE_ACCOUNT_INFO);
 
-  const update = async (formData: Partial<IAccountInfo>) => {
+  const update = async (payload: Partial<IAccountInfo>) => {
     try {
       return await mutate({
-        variables: { payload: formData },
+        variables: { payload },
         update: (cache, { data }) => {
           cache.modify({
             fields: {
@@ -30,6 +30,8 @@ export function useUpdateAccountInfoMutation() {
                         username
                         birthday
                         country
+                        protected
+                        avatar
                       }
                     `,
                     data: data.updateAccountInfo,
