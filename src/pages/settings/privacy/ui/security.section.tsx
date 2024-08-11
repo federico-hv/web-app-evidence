@@ -87,7 +87,7 @@ function SecuritySection() {
                   openWith({
                     title: 'Disable 2FA',
                     description:
-                      'Are you sure you want to disable the 2FA protection on your account? You will have to set the 2FA protection again once disabled.',
+                      'Are you sure you want to disable the 2FA protection on your account? You will have to set the 2FA protection again once it is disabled.',
                     actionText: 'Disable 2FA',
                     onAction: async () => {
                       await disableTwoFA(TwoFAChannelEnum.App);
@@ -116,6 +116,7 @@ function SecuritySection() {
             </TextGroupSubheading>
           </VStack>
           <Checkbox
+            readOnly
             checked={twoFAIsEnabled}
             size='sm'
             colorTheme='white500'

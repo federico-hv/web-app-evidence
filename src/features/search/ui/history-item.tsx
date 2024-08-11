@@ -1,4 +1,9 @@
-import { UserModel, UserNamesGroup } from '../../../shared';
+import {
+  LinkOverlay,
+  prefix,
+  UserModel,
+  UserNamesGroup,
+} from '../../../shared';
 import { useRemoveSearchHistoryItem } from '../shared';
 import {
   Avatar,
@@ -30,6 +35,12 @@ function HistoryItem({
       py={3}
       px={2}
     >
+      <LinkOverlay
+        to={prefix(
+          data.role === 'artist' ? '/clubs/' : '/',
+          `${data.username}/bio`,
+        )}
+      />
       <HStack gap={3} items='center'>
         {data.avatar ? (
           <Avatar src={data.avatar} name={data.displayName} />

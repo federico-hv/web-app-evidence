@@ -5,8 +5,8 @@ import {
 } from '../../interfaces';
 import { REMOVE_RELATIONSHIP } from '../../../mutations';
 import {
-  GET_BLOCKED_ACCOUNTS,
-  GET_MUTED_ACCOUNTS,
+  GET_BLOCKED_USERS,
+  GET_MUTED_USERS,
   GET_RELATIONSHIP_COUNT,
   GET_RELATIONSHIP_STATUS_INFO,
 } from '../../../queries';
@@ -58,7 +58,7 @@ export function useRemoveRelationship() {
             },
             blockedUsers(current) {
               cache.writeQuery({
-                query: GET_BLOCKED_ACCOUNTS,
+                query: GET_BLOCKED_USERS,
                 data: {
                   blockedUsers: {
                     ...current,
@@ -68,7 +68,7 @@ export function useRemoveRelationship() {
             },
             mutedUsers(current) {
               cache.writeQuery({
-                query: GET_MUTED_ACCOUNTS,
+                query: GET_MUTED_USERS,
                 data: {
                   mutedUsers: {
                     ...current,
