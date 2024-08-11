@@ -3,6 +3,7 @@ export enum UserRoleEnum {
   GeneralUser = 'general',
 }
 
+
 export enum ContactChannelEnum {
   Email = 'email',
   Phone = 'phone',
