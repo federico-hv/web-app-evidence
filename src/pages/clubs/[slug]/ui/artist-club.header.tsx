@@ -45,17 +45,19 @@ function ArtistClubHeader() {
         <Heading weight={400} size={6} css={{ lineHeight: '115%' }}>
           {`${artistData.artist.name}'s`} Club Page
         </Heading>
-        <Center
-          px={2}
-          border={1}
-          fontWeight={500}
-          fontSize={2}
-          borderColor='success500'
-          color='success500'
-          radius={1}
-        >
-          LIVE
-        </Center>
+        {auctionData && auctionData.auction && (
+          <Center
+            px={2}
+            border={1}
+            fontWeight={500}
+            fontSize={2}
+            borderColor='success500'
+            color='success500'
+            radius={1}
+          >
+            LIVE
+          </Center>
+        )}
       </HStack>
       <HStack gap={4}>
         {currentUser.id === artistData.artist.accountId ? (

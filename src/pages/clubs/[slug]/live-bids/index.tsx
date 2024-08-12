@@ -331,8 +331,8 @@ function ArtistClubLiveBidsPage() {
                   <AuctionBannerCard />
                 </GQLRenderer>
                 <VStack flex={1} gap={5}>
-                  <AuctionCountdown />
                   <ArtistClubMembershipPerksSummaryList clubId={club.id} />
+                  <AuctionCountdown />
                   <AuctionPlaceBid />
                 </VStack>
               </HStack>
