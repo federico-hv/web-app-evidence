@@ -9,19 +9,25 @@ import {
   TooltipContent,
   TooltipTrigger,
   hexToRGB,
+  Button,
 } from '@holdr-ui/react';
 import { FlatList } from '../../../../tmp/flat-list';
 import {
   EmbeddedPlayer,
   ExternalLinkTypeEnum,
   IExternalLink,
+  makeButtonLarger,
+  makePath,
+  Paths,
+  useNavigateWithPreviousLocation,
 } from '../../../../shared';
 import {
+  ArtistOwnerGuard,
   useSuspenseGetArtist,
   useSuspenseGetArtistDetails,
 } from '../../../../features';
 import { Fragment } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 
 function ReplaceWithLinkIcon() {
   return (
@@ -125,6 +131,75 @@ function ArtistClubBioAdditionalContent() {
   const { data: artistData } = useSuspenseGetArtist({ slug });
 
   const { data } = useSuspenseGetArtistDetails(artistData.artist.id);
+
+  const location = useLocation();
+
+  const navigate = useNavigateWithPreviousLocation(location.pathname);
+
+  if (
+    data.artistPicks.length === 0 &&
+    data.announcements.length === 0 &&
+    data.externalArtistLinks.length === 0
+  ) {
+    return (
+      <ArtistOwnerGuard
+        Fallback={
+          <Box
+            w={330}
+            basis='330px'
+            grow={0}
+            radius={2}
+            bgColor='#30304B'
+            p={4}
+            ml={1}
+          >
+            <Heading as='h2' weight={500} size={5}>
+              Trending clubs
+            </Heading>
+            <Box
+              my={4}
+              borderBottom={1}
+              borderColor='rgba(152, 152, 255, 0.10)'
+            />
+            <Box as='em' color='white700'>
+              Trending will appear here when there is no additional content
+            </Box>
+          </Box>
+        }
+      >
+        <Box
+          w={330}
+          basis='330px'
+          grow={0}
+          radius={2}
+          bgColor='#30304B'
+          p={4}
+          ml={1}
+        >
+          <Button
+            variant='outline'
+            onClick={() =>
+              navigate(
+                makePath([
+                  Paths.clubs,
+                  artistData.artist.username,
+                  Paths.edit,
+                  Paths.musicAndLinks,
+                ]),
+              )
+            }
+            leftIcon='add'
+            fullWidth
+            radius={1}
+            colorTheme='purple100'
+            className={makeButtonLarger('3rem')}
+          >
+            Music and Links
+          </Button>
+        </Box>
+      </ArtistOwnerGuard>
+    );
+  }
 
   return (
     <Box

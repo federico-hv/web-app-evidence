@@ -21,7 +21,7 @@ import {
   useSuspenseGetArtist,
   useSuspenseGetCollaborators,
 } from '../../../../features';
-import { Fragment } from 'react';
+import { Fragment, useState } from 'react';
 import { FlatList } from '../../../../tmp/flat-list';
 import ArtistClubBioAdditionalContent from '../ui/artist-club-bio-additional.content';
 import { ArtistClubSummaryCard } from '../ui';
@@ -32,6 +32,38 @@ const imageSrcs = [
   'https://avatar.iran.liara.run/public/boy?username=Ash',
   'https://api.dicebear.com/7.x/adventurer-neutral/svg?seed=mail@ashallendesign.co.uk',
 ];
+
+function SeeMoreText({ text }: { text: string }) {
+  const NumberOfLines = 3;
+
+  const [numOfLines, set] = useState<number | undefined>(NumberOfLines);
+
+  return (
+    <Box position='relative'>
+      <Text
+        noOfLines={numOfLines}
+        css={{ lineHeight: 1.5 }}
+        weight={300}
+        color='white600'
+      >
+        {text}
+      </Text>
+      {text.length > 190 && (
+        <HStack
+          onClick={() =>
+            set(numOfLines === NumberOfLines ? undefined : NumberOfLines)
+          }
+          mt={1}
+          w='fit-content'
+        >
+          <Text size={2} weight={500} color='purple100'>
+            {numOfLines === 3 ? 'See more' : 'Hide'}
+          </Text>
+        </HStack>
+      )}
+    </Box>
+  );
+}
 
 function ArtistClubBioPage() {
   const { pathname } = useLocation();
@@ -55,6 +87,7 @@ function ArtistClubBioPage() {
       />
       <HStack
         maxHeight='calc(100vh - 250px)'
+        minHeight='100%'
         overflow='hidden'
         justify='space-between'
         gap={4}
@@ -78,13 +111,7 @@ function ArtistClubBioPage() {
                     About
                   </Heading>
                   <VStack flex={1}>
-                    <Text
-                      css={{ lineHeight: 1.5 }}
-                      weight={300}
-                      color='white600'
-                    >
-                      {artistData.artist.bio}
-                    </Text>
+                    <SeeMoreText text={artistData.artist.bio} />
                   </VStack>
                 </VStack>
                 <Box

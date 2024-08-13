@@ -4,7 +4,7 @@ import TrendingClub from './trending-club';
 
 function TrendingClubs() {
   return (
-    <RadialSurface radius={4} h={391} w='100%' css={{ flexShrink: 0 }}>
+    <RadialSurface radius={4} w='100%' css={{ flexShrink: 0 }}>
       <VStack p={4}>
         <Heading
           casing='capitalize'
@@ -15,8 +15,8 @@ function TrendingClubs() {
           Trending clubs
         </Heading>
         <Box
-          mt={2}
-          mb={3}
+          mt={4}
+          mb={2}
           h='1px'
           w='100%'
           css={{

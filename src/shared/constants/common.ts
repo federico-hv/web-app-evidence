@@ -52,6 +52,11 @@ export const FieldLengths = {
     min: 3,
     max: 50,
   },
+  artist: {
+    bio: {
+      max: 1000,
+    },
+  },
   bio: {
     max: 500,
   },

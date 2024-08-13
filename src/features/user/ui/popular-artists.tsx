@@ -16,7 +16,7 @@ import {
   VStack,
 } from '@holdr-ui/react';
 
-function RecommendedArtist({
+function ArtistItem({
   username,
   displayName,
 }: {
@@ -40,30 +40,26 @@ function RecommendedArtist({
           css={{ size: '40px' }}
         />
         <VStack w='calc(100% - 40px)' overflow='hidden'>
-          <Text casing='capitalize' size='14px' weight={500}>
+          <Text casing='capitalize' size={2} weight={500}>
             {displayName}
           </Text>
-          <HStack color='base300' fontSize='14px' items='center'>
+          <HStack color='base300' fontSize={2} items='center'>
             <Icon name='at' css={{ ml: '$4' }} />
             <Text>{username}</Text>
           </HStack>
         </VStack>
       </HStack>
 
-      <Button
-        className={changeDimensions({ height: '40px' })}
-        colorTheme='white50'
-        variant='outline'
-      >
+      <Button colorTheme='purple100' css={{ px: '$5' }}>
         Follow
       </Button>
     </HStack>
   );
 }
 
-function RecommendedArtists() {
+function PopularArtists() {
   return (
-    <RadialSurface radius={4} h={391} w='100%' css={{ flexShrink: 0 }}>
+    <RadialSurface radius={4} w='100%' css={{ flexShrink: 0 }}>
       <VStack p={4}>
         <Heading
           casing='capitalize'
@@ -71,11 +67,11 @@ function RecommendedArtists() {
           weight={500}
           css={{ userSelect: 'none' }}
         >
-          Recommended artists
+          Popular artists
         </Heading>
         <Box
-          mt={{ '@bp1': '8px', '@bp3': '8px' }}
-          mb={{ '@bp1': '16px', '@bp3': '16px' }}
+          mt={4}
+          mb={2}
           h='1px'
           w='100%'
           css={{
@@ -83,19 +79,19 @@ function RecommendedArtists() {
           }}
         />
         <VStack gap={2}>
-          <RecommendedArtist
+          <ArtistItem
             username='usernameissuperlongaf'
             displayName='name'
           />
-          <RecommendedArtist username='username' displayName='name' />
-          <RecommendedArtist username='username' displayName='name' />
-          <RecommendedArtist username='username' displayName='name' />
-          <RecommendedArtist username='username' displayName='name' />
+          <ArtistItem username='username' displayName='name' />
+          <ArtistItem username='username' displayName='name' />
+          <ArtistItem username='username' displayName='name' />
+          <ArtistItem username='username' displayName='name' />
         </VStack>
       </VStack>
     </RadialSurface>
   );
 }
-RecommendedArtists.displayName = 'RecommendedArtists';
+PopularArtists.displayName = 'RecommendedArtists';
 
-export default RecommendedArtists;
+export default PopularArtists;

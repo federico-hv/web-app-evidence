@@ -3,18 +3,14 @@ import {
   Box,
   Button,
   HStack,
-  mergeStyles,
   Text,
-  Textarea,
   useOnValueChange,
   VStack,
 } from '@holdr-ui/react';
 import {
-  customInputStyles,
   FieldLengths,
   makePath,
   Paths,
-  textAreaClassName,
   TextareaField,
   TextGroup,
   TextGroupHeading,
@@ -28,7 +24,7 @@ import {
   useSuspenseGetClubPerks,
   useUpdateBioAndPerks,
 } from '../../../../features';
-import { ChangeEvent, useState } from 'react';
+import { useState } from 'react';
 import { SelectPredefinedPerks } from './ui';
 
 function BioAndPerksView() {
@@ -104,7 +100,7 @@ function BioAndPerksView() {
           value={bio}
           onChange={(e) => handleOnValueChange(e.target.value)}
           placeholder='Let people know a little about yourself and your musical interests.'
-          maxLength={FieldLengths.bio.max}
+          maxLength={FieldLengths.artist.bio.max}
         />
       </VStack>
       <VStack gap={4}>
