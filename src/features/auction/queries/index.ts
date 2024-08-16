@@ -131,3 +131,53 @@ export const GET_ALL_AUCTIONS = gql`
     }
   }
 `;
+
+export const GET_BIDS = gql`
+  query bids(
+    $sortBy: AuctionBidSortByEnum
+    $sortOrder: OrderByEnum
+    $filter: AuctionBidFilterEnum
+    $params: NumberPaginationParamsInput
+  ) {
+    bids(
+      sortBy: $sortBy
+      sortOrder: $sortOrder
+      params: $params
+      filter: $filter
+    ) {
+      edges {
+        node {
+          club {
+            id
+            coverImage
+            url
+          }
+          artist {
+            id
+            displayName
+            username
+          }
+          owner {
+            id
+            username
+          }
+          bid {
+            id
+            amount
+            createdAt
+          }
+          auction {
+            endsAt
+          }
+        }
+        cursor
+      }
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+    }
+  }
+`;
