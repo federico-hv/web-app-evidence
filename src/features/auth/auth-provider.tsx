@@ -53,7 +53,6 @@ function Content({
     // @ts-ignore
     if (window['pendo']) {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      console.log('INITIALIZING PENDO');
       // @ts-ignore
       window['pendo'].initialize({
         visitor: {
