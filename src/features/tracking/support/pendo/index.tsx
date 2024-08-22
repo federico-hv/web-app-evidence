@@ -47,6 +47,11 @@ function Pendo({ children }: GenericProps) {
         z.parentNode.insertBefore(y, z);
       })(window, document, 'script', 'pendo');
     })(import.meta.env.VITE_PENDO_API_KEY);
+
+    // This is just a test. Remove once checked
+    console.log('API_KEY: ', import.meta.env.VITE_PENDO_API_KEY);
+    console.log('----------------------------------------------');
+    console.log('ALL KEYS: ', import.meta.env);
   }, []);
 
   return <Fragment>{children}</Fragment>;
