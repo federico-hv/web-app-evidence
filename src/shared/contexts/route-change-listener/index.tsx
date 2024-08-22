@@ -46,13 +46,9 @@ function RouteChangeListener({ children }: GenericProps) {
     // @ts-ignore
     if (window.pendo) {
       // @ts-ignore
-      console.log('PENDO PAGE LOAD: ', location.pathname, window.pendo);
+      console.log('PAGE LOAD EVENT: ', location.pathname, window.pendo);
       // @ts-ignore
-      window.pendo.pageLoad({
-        page: {
-          url: location.pathname,
-        },
-      });
+      window.pendo.pageLoad(location.pathname);
     }
   }, [location]);
 
