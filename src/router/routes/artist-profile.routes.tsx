@@ -12,7 +12,7 @@ const ArtistProfileRoutes = () => (
     <Route element={<ArtistProfileTabs />}>
       <Route path='' element={<Navigate to='stats' replace />} />
       <Route path='stats' element={<ArtistProfileStatsPage />} />
-      <Route path='members' element={<ArtistProfileMembersPage />} />
+      <Route path='my-members' element={<ArtistProfileMembersPage />} />
       <Route path='watchlist' element={<ArtistProfileWatchlistPage />} />
     </Route>
   </Routes>

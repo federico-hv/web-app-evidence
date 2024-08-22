@@ -1,0 +1,17 @@
+# Dockerfile.dev
+
+# Use the official Node.js image
+FROM node:18
+
+# Set the working directory
+WORKDIR /app
+
+# Install dependencies
+COPY package.json yarn.lock ./
+RUN yarn install
+
+# Copy the rest of the application code
+COPY . .
+
+# Expose the port Vite runs on
+EXPOSE 5174

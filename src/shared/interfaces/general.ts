@@ -1,6 +1,9 @@
 import { ReactNode, Ref } from 'react';
 import { IconName } from '@holdr-ui/react/dist/shared/types';
-import { ExternalLinkTypeEnum } from '../constants';
+import {
+  ExternalLinkTypeEnum,
+  SocialProviderNameEnum,
+} from '../constants';
 
 export interface GenericProps {
   innerRef?: Ref<any>;
@@ -12,6 +15,11 @@ export interface IDate {
   month: string;
   day: string;
   year: string;
+}
+
+export interface ICreateSocialLink {
+  provider: SocialProviderNameEnum;
+  url: string;
 }
 
 export interface IReturnMany<T> {

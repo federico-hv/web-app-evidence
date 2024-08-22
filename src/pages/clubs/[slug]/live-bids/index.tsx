@@ -1,62 +1,55 @@
 import {
-  HStack,
-  VStack,
-  Button,
-  Icon,
-  Input,
-  Countdown,
   Box,
+  Button,
+  Center,
+  Countdown,
+  HStack,
+  Icon,
   useGeneralContext,
-  useInputChange,
-  Text,
-  DateUtility,
+  VStack,
 } from '@holdr-ui/react';
-import { ChangeEvent, Fragment, useEffect, useRef, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import {
   ArtistClubActiveBiddersList,
   ArtistClubInactiveBiddersList,
   ArtistClubMembershipPerksSummaryList,
 } from './ui';
 import {
+  AuctionCard,
   IClub,
-  MembershipCard,
-  useHasPaymentMethodSuspenseQuery,
+  useBidSuspenseQuery,
+  useCreateBid,
   useCurrentUser,
+  useGetArtist,
+  useGetAuctionSuspenseQuery,
+  useHasPaymentMethodSuspenseQuery,
   useSuspenseGetArtist,
+  useSuspenseGetClub,
+  useSuspenseGetClubPerks,
+  useUpdateBid,
 } from '../../../../features';
 import {
-  getRandomNumberInRange,
+  darkInputStyles,
+  GQLRenderer,
+  handleFieldError,
   Head,
+  InputTextField,
+  Loader,
   makePath,
+  Paths,
   useAlertDialog,
-  voidFn,
 } from '../../../../shared';
-import { dummyPerks } from '../../shared';
 import {
+  Navigate,
   useLocation,
   useNavigate,
   useParams,
-  useOutletContext,
 } from 'react-router-dom';
-import dayjs from 'dayjs';
-import { useCreateBid } from '../../../../features/auction/shared/hooks';
-import { useGetAuction } from '../../../../features/auction/shared/hooks/use-get-auction';
+import { keyframes } from '@stitches/react';
 import {
-  ContenderEdge,
-  ContendersData,
-  useGetContenders,
-} from '../../../../features/auction/shared/hooks/use-get-contenders';
-import {
-  Field,
-  Form,
-  Formik,
-  FormikHandlers,
-  FormikHelpers,
-} from 'formik';
-import { object, string } from 'yup';
-import { FieldProps } from 'formik-stepper/dist/types';
-import { useDeleteBid } from '../../../../features/auction/shared/hooks/use-delete-bid';
-import { OutletContext } from '../ui/artist-club.tabs';
+  AuctionEventNameEnum,
+  useAuctionAlertContext,
+} from '../shared/contexts';
 
 const DialogState = {
   addPayment: {
@@ -81,397 +74,275 @@ function useAddPaymentMethod() {
     });
 }
 
-export interface IBidder {
-  id: string;
-  displayName: string;
-  bidId: number;
-  createdAt: Date;
-  amount: number;
+function CardLoading() {
+  const animationName = createShimmer(
+    'rgba(152, 152, 255, 0.05)',
+    'rgba(152, 152, 255, 0.15)',
+  );
+
+  return (
+    <Box flex={1} h='100%'>
+      <Box
+        radius={3}
+        css={{
+          animation: `${animationName} 500ms linear infinite alternate`,
+        }}
+        h='100%'
+        w='100%'
+      />
+    </Box>
+  );
 }
 
-interface FormValues {
-  amount: string;
-}
+export const createShimmer = (startColor: string, endColor: string) =>
+  keyframes({
+    '0%': {
+      backgroundColor: startColor,
+    },
+    '100%': {
+      backgroundColor: endColor,
+    },
+  });
 
-function ArtistClubLiveBidsPage() {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const { onToggleAlert } = useOutletContext<OutletContext>();
-
+function AuctionBannerCard() {
   const { slug } = useParams();
 
-  const currentUser = useCurrentUser();
+  const navigate = useNavigate();
+
+  const { data: clubData } = useSuspenseGetClub({ slug });
+
+  const { data: auctionData, refetch } = useGetAuctionSuspenseQuery(
+    clubData.club.id,
+  );
+
+  const { data: perksData } = useSuspenseGetClubPerks(clubData.club.id);
+
+  if (!auctionData.auction) {
+    refetch().catch(() => (
+      <Navigate to={makePath([Paths.clubs, slug || ''])} replace />
+    ));
+
+    return <Fragment />;
+  }
+
+  return (
+    <Box flex={1} h='100%'>
+      <AuctionCard
+        disableWatchlist
+        showPerksOnHover={false}
+        data={{
+          coverImage: clubData.club.coverImage,
+          price: auctionData.auction.entryPrice,
+          perks: perksData.clubPerks.perks.map(
+            ({ description }) => description || '',
+          ),
+        }}
+      />
+    </Box>
+  );
+}
+
+function AuctionCountdown() {
+  const { slug } = useParams();
+
+  const { data: clubData } = useSuspenseGetClub({ slug });
+
+  const { data: auctionData } = useGetAuctionSuspenseQuery(
+    clubData.club.id,
+  );
+
+  return (
+    <HStack gap={2} items='center'>
+      <Icon name='time-outline' size='xl' />
+      <Countdown
+        size='xl'
+        color='white500'
+        targetDate={auctionData.auction.endsAt}
+      />
+    </HStack>
+  );
+}
+
+function AuctionPlaceBid() {
+  const { loading: loadingCreateBid, createBid } = useCreateBid();
+
+  const { loading: loadingUpdateBid, updateBid } = useUpdateBid();
 
   const { openWith } = useAlertDialog();
 
-  const { value, handleOnChange } = useInputChange('');
+  const { update } = useAuctionAlertContext();
 
-  const { id: currentUserId } = useCurrentUser();
-
-  const { bidCreated, onSubmit: submitBid } = useCreateBid();
-  const { bidDeleted, onSubmit: deleteBid } = useDeleteBid();
-
-  const { data: artistData } = useSuspenseGetArtist({
-    slug,
-  });
-
-  const { data: hasPMData } = useHasPaymentMethodSuspenseQuery();
+  const { slug } = useParams();
 
   const addPaymentMethod = useAddPaymentMethod();
 
-  const { state: club } = useGeneralContext<IClub>();
+  const currentUser = useCurrentUser();
 
-  const { data: auctionData, error: auctionError } = useGetAuction(
-    club.id,
+  const { data: artistData } = useSuspenseGetArtist({ slug });
+
+  const { data: hasPaymentMethodData } =
+    useHasPaymentMethodSuspenseQuery();
+
+  const { data: clubData } = useSuspenseGetClub({ slug });
+
+  const { data: auctionData } = useGetAuctionSuspenseQuery(
+    clubData.club.id,
   );
 
-  const {
-    data: contendersData,
-    refetch: refetchContenders,
-    error: activeContendersError,
-  } = useGetContenders(auctionData?.auction?.id, 'Active');
-  const {
-    data: outOfContentionData,
-    refetch: refetchOutOfContention,
-    error: inactiveContendersError,
-  } = useGetContenders(auctionData?.auction?.id, 'Inactive');
+  const { data: bidData } = useBidSuspenseQuery(auctionData.auction.id);
 
-  const [bidId, setBidId] = useState<number | null>(null);
-  const [dialog, setDialog] = useState(0);
-  const [congrats, setCongrats] = useState(true);
+  const [value, setValue] = useState<string>();
 
-  const { dialogMessage } = location.state || {};
-
-  const previousInactiveBiddersRef = useRef<IBidder[]>([]);
-
-  const activeAuction =
-    auctionData?.auction?.id != null && auctionError == null;
-
-  const auctionEndDate = auctionData?.auction?.endsAt;
-
-  const getBiddersList = (
-    biddersData: ContendersData | undefined,
-    activeAuction: boolean,
-  ) => {
-    if (biddersData == null || !activeAuction) {
-      return [];
-    }
-
-    return [...biddersData!.contenders.edges].map((edge) => ({
-      id: edge.node.owner.id,
-      displayName: edge.node.owner.displayName,
-      bidId: edge.node.bid.id,
-      createdAt: dayjs(edge.node.bid.createdAt).toDate(),
-      amount: edge.node.bid.amount,
-    }));
-  };
-
-  const activeBidders: IBidder[] = getBiddersList(
-    contendersData,
-    activeAuction,
-  );
-
-  const inactiveBidders: IBidder[] = getBiddersList(
-    outOfContentionData,
-    activeAuction,
-  );
-
-  useEffect(() => {
-    checkIfUserIsOutbid();
-  }, [auctionData, inactiveBidders, currentUserId, onToggleAlert]);
-
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      showCongratsOnWinOrNavigateToBio();
-    }, 1000);
-
-    return () => clearInterval(intervalId);
-  }, [congrats, auctionData, activeBidders]);
-
-  function showCongratsOnWinOrNavigateToBio() {
-    const auctionEndDate = auctionData?.auction?.endsAt;
-
-    if (auctionEndDate) {
-      const auctionIsExpired = getAuctionIsExpired(auctionEndDate);
-
-      if (auctionIsExpired) {
-        if (congrats) {
-          const bidderIsEligible = activeBidders.some(
-            (bidder) => bidder.id === currentUserId,
-          );
-
-          if (bidderIsEligible) {
-            setCongrats(false);
-            openWith({
-              title: 'Congratulations!',
-              description: `You are now an exclusive member of ${artistData.artist.name}’s club. Get ready to explore exclusive benefits and exciting opportunities!`,
-              cancelText: 'Later',
-              actionText: 'View membership',
-              onAction: () => {},
-            });
-          } else {
-            goToBio();
-          }
-        }
-      }
-    }
-  }
-
-  const goToBio = () => {
-    navigate(location.pathname.replace('live-bids', 'bio'), {
-      replace: true,
-    });
-  };
-
-  function checkIfUserIsOutbid() {
-    const auctionEndDate = auctionData?.auction?.endsAt;
-
-    if (auctionEndDate) {
-      const auctionIsExpired = getAuctionIsExpired(auctionEndDate);
-
-      if (!auctionIsExpired) {
-        const previousInactiveBidders = previousInactiveBiddersRef.current;
-
-        inactiveBidders.forEach((bidder) => {
-          const wasOutbidPreviously = previousInactiveBidders.some(
-            (prevBidder: IBidder) => prevBidder.id === bidder.id,
-          );
-          if (bidder.id === currentUserId && !wasOutbidPreviously) {
-            onToggleAlert(1);
-          }
-        });
-
-        previousInactiveBiddersRef.current = inactiveBidders;
-      }
-    }
-  }
+  const bidError = handleFieldError(value, {
+    keyName: 'Bid amount',
+    compare: {
+      value: parseInt(value || '0'),
+      gt: auctionData.auction.entryPrice - 1,
+      message: {
+        gt: `Bid amount must at least be equal to the entry price of $${auctionData.auction.entryPrice} USD`,
+      },
+    },
+  });
 
   useEffect(() => {
     if (
-      !hasPMData.hasPaymentMethod &&
+      !hasPaymentMethodData.hasPaymentMethod &&
       currentUser.id !== artistData.artist.accountId
     )
       openWith({ ...DialogState.addPayment, onAction: addPaymentMethod });
   }, []);
 
-  function addDays(_date: Date, days: number) {
-    const date = new Date(_date);
-    date.setDate(date.getDate() + days);
-    return date;
-  }
-
-  const confirmWithdraw = (bidId: number) => {
-    setBidId(bidId);
-    openWith({
-      title: 'Are you sure you want to withdraw?',
-      description: `Are you sure you want to withdraw your bid from the auction? This action cannot be undone.`,
-      cancelText: 'Do not withdraw',
-      actionText: 'Yes, Withdraw Bid',
-      onAction: () => {
-        deleteBid(bidId);
-      },
-    });
-  };
-
-  const handleInputChange = (
-    e: ChangeEvent<HTMLInputElement>,
-    handleChange: (e: ChangeEvent<HTMLInputElement>) => void,
-  ) => {
-    e.target.value = e.target.value.replace(/[^\d]/g, '');
-    handleChange(e);
-  };
-
-  const getAuctionIsExpired = (currentAuctionEndsAt: Date) =>
-    DateUtility.getTimeToExpiry(currentAuctionEndsAt, new Date()) <= 0;
-
-  /*
-   * Checks the contenders list to see if the current user
-   * placed a bid already and returns the bidId if there
-   * is one
-   */
-  const getPreviousBidId = (
-    fullContendersData: ContenderEdge[],
-    currentUserId: string,
-  ) =>
-    fullContendersData
-      .filter(
-        (edge: ContenderEdge) => edge.node.owner.id === currentUserId,
-      )
-      .reduce<number | null>(
-        (acc, edge: ContenderEdge) => edge.node.bid.id,
-        null,
-      );
-
-  const onPlaceBid = async (
-    values: FormValues,
-    { resetForm }: FormikHelpers<FormValues>,
-  ) => {
-    if (
-      !auctionError &&
-      !activeContendersError &&
-      !inactiveContendersError
-    ) {
-      try {
-        const auctionId = auctionData!.auction.id;
-
-        const fullContendersData = [
-          ...contendersData!.contenders.edges,
-          ...outOfContentionData!.contenders.edges,
-        ];
-
-        const previousBid: number | null = getPreviousBidId(
-          fullContendersData,
-          currentUserId,
-        );
-
-        const bidExists = previousBid != null;
-        const id = bidExists ? previousBid : auctionId;
-
-        await submitBid(
-          {
-            id,
-            amount: Number(values.amount),
-          },
-          bidExists,
-        );
-        resetForm();
-        await refetchContenders({ id: auctionId, filter: 'Active' });
-        await refetchOutOfContention({
-          id: auctionId,
-          filter: 'Inactive',
-        });
-      } catch (e) {
-        alert(e);
-      }
-    }
-  };
-
-  const auctionPrice = auctionData?.auction?.entryPrice || 0;
-  const auctionMemberships =
-    auctionData?.auction?.numberOfMemberships || 0;
-
-  const initialValues = {
-    amount: '',
-  };
-
-  const validationSchema = object({
-    amount: string().required('Amount is required'),
-  });
-
   return (
     <Fragment>
-      <Head
-        prefix={`${artistData.artist.name}'s Club -`}
-        title='Live Bids'
-        description='A catalog of memberships that are being offered by artists.'
-      />
-      <VStack gap={6}>
-        <HStack gap={4} h={500}>
-          <Box flex={1} h='100%'>
-            <MembershipCard
-              showPerksOnHover={false}
-              data={{
-                coverImage: club.coverImage,
-                price: auctionPrice,
-                perks: dummyPerks,
-              }}
-            />
-          </Box>
-          <VStack flex={1} radius={4}>
-            <ArtistClubMembershipPerksSummaryList clubId={club.id} />
-            <VStack gap={2} flex={1} justify={'flex-end'}>
-              <HStack gap={2} h={'24px'} items={'center'}>
-                <Icon name='time-outline' />
-                {auctionEndDate && (
-                  <Countdown
-                    size='base'
-                    color='white500'
-                    targetDate={auctionEndDate}
-                  />
-                )}
-              </HStack>
-              {currentUser.id !== artistData.artist.accountId && (
-                <Formik
-                  initialValues={initialValues}
-                  validationSchema={validationSchema}
-                  onSubmit={
-                    hasPMData.hasPaymentMethod
-                      ? onPlaceBid
-                      : addPaymentMethod
-                  }
-                >
-                  {({ handleChange, isSubmitting, values }) => (
-                    <Form>
-                      <Field name='amount'>
-                        {({ field, form }: any) => (
-                          <>
-                            <Input
-                              {...field}
-                              type='string'
-                              placeholder='Enter Amount'
-                              _placeholder={{
-                                color: '$base600',
-                              }}
-                              color='white500'
-                              css={{
-                                backgroundColor: '$purple1000',
-                                height: '48px',
-                                fontSize: '18px',
-                              }}
-                              onChange={(e) =>
-                                handleInputChange(e, handleChange)
-                              }
-                            />
-                            <Box py={1}>
-                              {form.errors.amount &&
-                                form.touched.amount && (
-                                  <Text
-                                    size={1}
-                                    css={{
-                                      color: '$danger200',
-                                    }}
-                                  >
-                                    {form.errors.amount}
-                                  </Text>
-                                )}
-                            </Box>
-                          </>
-                        )}
-                      </Field>
-                      <Button
-                        type='submit'
-                        radius={2}
-                        colorTheme='purple500'
-                        fullWidth
-                        style={{
-                          height: '48px',
-                        }}
-                        disabled={isSubmitting}
-                      >
-                        Place Bid
-                      </Button>
-                    </Form>
-                  )}
-                </Formik>
-              )}
-            </VStack>
-          </VStack>
-        </HStack>
-        <ArtistClubActiveBiddersList
-          confirmWithdraw={confirmWithdraw}
-          currentUserId={currentUserId}
-          bidders={activeBidders}
-          numberOfMemberships={auctionMemberships}
-          clubId={club.id}
-        />
-        <ArtistClubInactiveBiddersList
-          confirmWithdraw={confirmWithdraw}
-          currentUserId={currentUserId}
-          bidders={inactiveBidders}
-          clubId={club.id}
-        />
-      </VStack>
+      {currentUser.id !== artistData.artist.accountId && (
+        <VStack
+          as='form'
+          gap={2}
+          onSubmit={async (e) => {
+            e.preventDefault();
+
+            if (!value) {
+              return;
+            }
+
+            if (!hasPaymentMethodData.hasPaymentMethod) {
+              addPaymentMethod();
+              return;
+            }
+
+            if (bidData.bid) {
+              const res = await updateBid(
+                {
+                  id: bidData.bid.bid.id,
+                  amount: parseInt(value),
+                },
+                auctionData.auction.id,
+              );
+
+              if (res && res.data && res.data.updateBid) {
+                setValue('');
+              }
+              update({
+                status: 'success',
+                eventName: AuctionEventNameEnum.updated,
+              });
+            } else {
+              const res = await createBid(
+                {
+                  id: auctionData.auction.id,
+                  amount: parseInt(value),
+                },
+                auctionData.auction.id,
+              );
+
+              if (res && res.data && res.data.createBid) {
+                setValue('');
+                update({
+                  status: 'success',
+                  eventName: AuctionEventNameEnum.success,
+                });
+              }
+            }
+          }}
+        >
+          <InputTextField
+            leftElement={
+              <Center color='white700' fontSize={6} w={55}>
+                USD
+              </Center>
+            }
+            size='lg'
+            className={darkInputStyles()}
+            name='bidAmount'
+            errorText={bidError}
+            value={value}
+            onChange={(e) =>
+              setValue(e.target.value.replace(/[^0-9]+/gm, ''))
+            }
+          />
+          <Button
+            type='submit'
+            radius={2}
+            colorTheme='purple500'
+            fullWidth
+            style={{
+              height: '48px',
+            }}
+            isLoading={loadingUpdateBid || loadingCreateBid}
+            loadingText={bidData.bid ? 'Updating Bid' : 'Placing Bid'}
+            disabled={
+              loadingCreateBid ||
+              loadingUpdateBid ||
+              value === undefined ||
+              value.length === 0 ||
+              (bidError !== undefined && bidError.length > 0)
+            }
+          >
+            {bidData.bid ? 'Update' : 'Place'} Bid
+          </Button>
+        </VStack>
+      )}
     </Fragment>
+  );
+}
+
+function ArtistClubLiveBidsPage() {
+  const { slug } = useParams();
+
+  const { data: artistData, loading } = useGetArtist({
+    slug,
+  });
+
+  const { state: club } = useGeneralContext<IClub>();
+
+  return (
+    <Loader loading={loading}>
+      {artistData && (
+        <Fragment>
+          <Head
+            prefix={`${artistData.artist.name}'s Club -`}
+            title='Live Bids'
+            description='A catalog of memberships that are being offered by artists.'
+          />
+          <GQLRenderer>
+            <VStack gap={6}>
+              <HStack gap={4} h={500}>
+                <GQLRenderer LoadingFallback={<CardLoading />}>
+                  <AuctionBannerCard />
+                </GQLRenderer>
+                <VStack flex={1} gap={5}>
+                  <ArtistClubMembershipPerksSummaryList clubId={club.id} />
+                  <AuctionCountdown />
+                  <AuctionPlaceBid />
+                </VStack>
+              </HStack>
+              <ArtistClubActiveBiddersList />
+              <ArtistClubInactiveBiddersList />
+            </VStack>
+          </GQLRenderer>
+        </Fragment>
+      )}
+    </Loader>
   );
 }
 

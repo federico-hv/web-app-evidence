@@ -300,9 +300,15 @@ function AddPaymentMethodPage() {
 
                           {countriesData && !countriesData.error && (
                             <SelectInputField
+                              name='country'
                               triggerCSS={darkSelectCSS}
                               placeholder='Country'
                               value={billingInfo.country}
+                              listCSS={{
+                                borderTopWidth: '1px',
+                                borderTopRightRadius: '$2',
+                                borderTopLeftRadius: '$2',
+                              }}
                               onValueChange={(country) =>
                                 updateBillingInfo({ country })
                               }
@@ -352,11 +358,17 @@ function AddPaymentMethodPage() {
                             !statesData.error &&
                             statesData.data.states.length > 0 ? (
                               <SelectInputField
+                                name='state'
                                 placeholder='State'
                                 value={billingInfo.province}
                                 onValueChange={(province) =>
                                   updateBillingInfo({ province })
                                 }
+                                listCSS={{
+                                  borderTopWidth: '1px',
+                                  borderTopRightRadius: '$2',
+                                  borderTopLeftRadius: '$2',
+                                }}
                                 triggerCSS={{
                                   ...darkSelectCSS,
                                   borderTopRightRadius: '0',

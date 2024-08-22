@@ -72,6 +72,34 @@ export const customInputStyles = css({
   },
 });
 
+export const checkboxFix = css({
+  '&': {
+    display: 'none',
+  },
+  '& + span': {
+    flexShrink: 0,
+    borderRadius: '2px !important',
+    borderWidth: '1px !important',
+  },
+});
+
+export const lightInputStyles = css({
+  border: '1px solid rgba(152, 152, 255, 0.35) !important',
+  backgroundColor: 'rgba(152, 152, 255, 0.15) !important',
+  height: '2.75rem !important',
+  '&:autofill, &:-webkit-autofill, &:-webkit-autofill:hover, &:-webkit-autofill:focus, &:-webkit-autofill:active':
+    {
+      '-webkit-background-clip': 'text',
+      '-webkit-text-fill-color': '#FFFFFF',
+      transition: 'background-color 5000s ease-in-out 0s',
+      boxShadow: 'inset 0 0 20px 20px rgba(152, 152, 255, 0.15)',
+    },
+  '&:focus': {
+    border: '1px solid rgba(152, 152, 255, 1) !important',
+    backgroundColor: 'transparent',
+  },
+});
+
 export const darkInputStylesNoFocus = css({
   border: '1px solid $purpleTint400 !important',
   borderRadius: '$2',
@@ -81,7 +109,7 @@ export const darkInputStylesNoFocus = css({
 
 export const darkInputStyles = css({
   border: '1px solid $purpleTint400 !important',
-  borderRadius: '$2',
+  borderRadius: '$1',
   backgroundColor: '#1A1A29 !important',
   height: '2.75rem !important',
   '&:focus': {
@@ -89,6 +117,19 @@ export const darkInputStyles = css({
     backgroundColor: 'transparent',
   },
 });
+
+export const lightSelectCSS: CSSTheme = {
+  border: '1px solid rgba(152, 152, 255, 0.35) !important',
+  backgroundColor: 'rgba(152, 152, 255, 0.15) !important',
+  borderRadius: '$1',
+};
+
+export const whiteSelectCSS: CSSTheme = {
+  border: '1px solid rgba(0,0,0,0.1) !important',
+  backgroundColor: 'transparent !important',
+  borderRadius: '$1',
+  color: '$black500',
+};
 
 export const darkSelectCSS: CSSTheme = {
   border: '1px solid $purpleTint400 !important',

@@ -1,68 +1,46 @@
 import {
+  Box,
   Button,
-  Center,
   CircularProgress,
   CloseButton,
   HStack,
-  Input,
-  Text,
   useRecordState,
   VStack,
 } from '@holdr-ui/react';
 import {
-  IAnnouncement,
-  ICollaborator,
-  InformationTooltip,
+  FieldLengths,
+  handleFieldError,
+  InputLoadingIndicator,
   InputTextField,
-  isLengthGreaterThanZero,
-  isMatchingPattern,
-  ISocialLink,
-  makeButtonLarger,
   makePath,
-  MaxFieldLength,
+  missingField,
+  parseSocialLinks,
   Paths,
-  PatternErrorMessage,
   Patterns,
-  SocialProvider,
+  removeFromArray,
+  replaceInArray,
   TextareaField,
   TextGroup,
   TextGroupHeading,
   TextGroupSubheading,
-  useArrayState,
+  useNavigateWithPreviousLocation,
   usePreviousLocation,
 } from '../../../../shared';
 import {
-  IUpdateSocialLink,
   retrieveSocialLink,
   useClubContext,
   useDebounceIsUniqueClubUrl,
   useSuspenseGetArtist,
   useUpdateArtistProfile,
 } from '../../../../features';
-import { ChangeEvent, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import {
-  InputGroup,
-  InputGroupLeftElement,
-  InputGroupRightElement,
-} from '../../../../tmp/input-group';
-import { AnimatePresence } from 'framer-motion';
+import { ChangeEvent } from 'react';
+import { useParams } from 'react-router-dom';
 import { FlatList } from '../../../../tmp/flat-list';
-import { Maximum } from '../music-and-links';
-
-interface IArtistProfile {
-  username: string;
-  name: string;
-  bio?: string;
-  location?: string;
-}
 
 function EditArtistClubBioPage() {
   const { updateArtistProfile, loading } = useUpdateArtistProfile();
 
   const { slug } = useParams();
-
-  const navigate = useNavigate();
 
   const previousLocation = usePreviousLocation(
     makePath([Paths.clubs, slug || '']),
@@ -77,88 +55,70 @@ function EditArtistClubBioPage() {
   const [isClubURLUnique, { loading: loadingCUU, result: resultCUU }] =
     useDebounceIsUniqueClubUrl();
 
-  const [clubUrl, setClubURL] = useState<string | undefined>(club.url);
-
-  const handleClubUrlChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.replace(/[^\w]/gm, '');
-
-    setClubURL(value);
-
-    isClubURLUnique(value, club.id);
+  const handleOnChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    replaceNotMatching?: {
+      [Symbol.replace](string: string, replaceValue: string): string;
+    },
+  ) => {
+    update({
+      [e.target.name]: replaceNotMatching
+        ? e.target.value.replace(replaceNotMatching, '')
+        : e.target.value,
+    });
   };
 
-  const [profile, updateProfile] = useRecordState<IArtistProfile>({
+  const [state, update] = useRecordState({
     username: artistData.artist.username,
     name: artistData.artist.name,
     bio: artistData.artist.bio || '',
     location: artistData.artist.location || '',
+    clubUrl: club.url,
+    collaborators:
+      artistData.artist.collaborators?.map(({ name }) => name) || [],
+    xUrl:
+      retrieveSocialLink(artistData.artist.socialLinks || [], 'X')?.url ||
+      '',
+    instagramUrl:
+      retrieveSocialLink(artistData.artist.socialLinks || [], 'Instagram')
+        ?.url || '',
+    tiktokUrl:
+      retrieveSocialLink(artistData.artist.socialLinks || [], 'TikTok')
+        ?.url || '',
   });
 
-  const [newSocialLinks, updateNewSocialLinks] =
-    useRecordState<IUpdateSocialLink>({
-      X:
-        retrieveSocialLink(artistData.artist.socialLinks || [], 'X')
-          ?.url || '',
-      Instagram:
-        retrieveSocialLink(
-          artistData.artist.socialLinks || [],
-          'Instagram',
-        )?.url || '',
-      TikTok:
-        retrieveSocialLink(artistData.artist.socialLinks || [], 'TikTok')
-          ?.url || '',
-    });
-
-  const InstagramURLErrorText = isMatchingPattern(
-    newSocialLinks.Instagram,
-    Patterns.InstagramURL,
-    PatternErrorMessage.invalid('Instagram URL'),
-  );
-
-  const TikTokURLErrorText = isMatchingPattern(
-    newSocialLinks.TikTok,
-    Patterns.TikTokURL,
-    PatternErrorMessage.invalid('TikTok URL'),
-  );
-
-  const XURLErrorText = isMatchingPattern(
-    newSocialLinks.X,
-    Patterns.XURL,
-    PatternErrorMessage.invalid('X URL'),
-  );
-
-  const UsernameErrorText = isMatchingPattern(
-    profile.username,
-    Patterns.Username,
-    PatternErrorMessage.invalidCharacters(
-      'username',
-      'alphanumeric characters',
-    ),
-  );
-
-  const [
-    collaborators,
-    pushCollaborators,
-    replaceCollaborators,
-    removeCollaborators,
-  ] = useArrayState<string>(
-    artistData.artist.collaborators?.map(({ name }) => name) || [],
-  );
-
-  const nextStep = () => {
-    navigate(
-      makePath([Paths.clubs, slug || '', 'edit', Paths.musicAndLinks]),
-      {
-        state: {
-          previousLocation,
-        },
+  const socialURLErrors = {
+    instagram: handleFieldError(state.instagramUrl, {
+      keyName: 'Instagram URL',
+      pattern: {
+        value: Patterns.InstagramURL,
+        message: 'Enter a valid Instagram URL',
       },
-    );
+    }),
+    x: handleFieldError(state.xUrl, {
+      keyName: 'X URL',
+      pattern: {
+        value: Patterns.XURL,
+        message: 'Enter a valid X URL',
+      },
+    }),
+    tiktok: handleFieldError(state.tiktokUrl, {
+      keyName: 'TikTok URL',
+      pattern: {
+        value: Patterns.TikTokURL,
+        message: 'Enter a valid TikTok URL',
+      },
+    }),
   };
 
-  const handleSocialLinkChange = (e: ChangeEvent<HTMLInputElement>) => {
-    updateNewSocialLinks({ [e.target.name]: e.target.value });
-  };
+  const clubUrlError =
+    !resultCUU && club.url !== state.clubUrl
+      ? 'The club URL you have entered is already taken'
+      : handleFieldError(state.clubUrl, {
+          keyName: 'Club URL',
+        });
+
+  const navigate = useNavigateWithPreviousLocation(previousLocation);
 
   return (
     <VStack
@@ -167,32 +127,30 @@ function EditArtistClubBioPage() {
       onSubmit={async (e) => {
         e.preventDefault();
 
-        const formattedLinks: ISocialLink[] = (
-          Object.keys(newSocialLinks) as SocialProvider[]
-        )
-          // .filter((name) => newSocialLinks[name]?.length)
-          .map((name: SocialProvider) => ({
-            provider: name,
-            url: newSocialLinks[name] as string,
-          }));
+        const socialLinks = parseSocialLinks(state);
 
-        // const currentXURL =
-        //   retrieveSocialLink(artistData.artist.socialLinks || [], 'X')
-        //     ?.url || '';
-        // const currentTikTokURL =
-        //   retrieveSocialLink(artistData.artist.socialLinks || [], 'TikTok')
-        //     ?.url || '';
-        // const currentInstagramURL =
-        //   retrieveSocialLink(
-        //     artistData.artist.socialLinks || [],
-        //     'Instagram',
-        //   )?.url || '';
+        const collaborators = state.collaborators.filter(
+          (item) => item.length !== 0,
+        );
 
         await updateArtistProfile({
-          ...profile,
-          socialLinks: formattedLinks,
+          name: state.name,
+          username: state.username,
+          bio: state.bio || '',
+          location: state.location || '',
+          url: state.clubUrl,
+          socialLinks: socialLinks,
           collaborators: collaborators,
-        }).then(() => nextStep());
+        }).then(() => {
+          navigate(
+            makePath([
+              Paths.clubs,
+              slug || '',
+              'edit',
+              Paths.musicAndLinks,
+            ]),
+          );
+        });
       }}
     >
       <VStack
@@ -211,88 +169,64 @@ function EditArtistClubBioPage() {
               Enter the information that will be displayed on your bio page
             </TextGroupSubheading>
           </TextGroup>
-          <InputTextField
-            value={profile.name}
-            onChange={(e) => updateProfile({ name: e.target.value })}
-            name='artistName'
-            label='Display Name'
-            placeholder='Display Name'
-          />
-          <InputTextField
-            value={profile.username}
-            onChange={(e) => updateProfile({ username: e.target.value })}
-            name='username'
-            label='Username'
-            placeholder='@username'
-            errorText={UsernameErrorText}
-          />
-          <VStack gap={4}>
-            <HStack color='white700' gap={1} items='center'>
-              <Text weight={500} size={2} as='label'>
-                Custom URL
-              </Text>
-              <InformationTooltip
-                side='right'
-                align='start'
-                container={
-                  document.getElementById('page-dialog-container') ||
-                  document.body
-                }
-                description='Something useful.'
-              />
-            </HStack>
 
-            <VStack gap={1}>
-              <InputGroup>
-                <InputGroupLeftElement>
-                  <Text color='white900'>
-                    https://holdrclub.com/clubs/
-                  </Text>
-                </InputGroupLeftElement>
-                <Input
-                  variant='unstyled'
-                  maxLength={25}
-                  value={clubUrl}
-                  onChange={handleClubUrlChange}
-                  color='white500'
-                />
-                <InputGroupRightElement pl={4}>
-                  <AnimatePresence>
-                    {loadingCUU && (
-                      <Center position='absolute' t={0} b={0} r='1rem'>
-                        <CircularProgress
-                          bgColor='base400'
-                          colorTheme='white500'
-                          thickness={2}
-                          isIndeterminate
-                          size={20}
-                        />
-                      </Center>
-                    )}
-                  </AnimatePresence>
-                </InputGroupRightElement>
-              </InputGroup>
-              {!resultCUU && (
-                <Text size={1} weight={500} color='danger300'>
-                  That URL is already taken
-                </Text>
-              )}
-            </VStack>
-          </VStack>
+          <InputTextField
+            value={state.name}
+            onChange={handleOnChange}
+            name='name'
+            label='Artist Name'
+            placeholder='name'
+            minLength={FieldLengths.displayName.min}
+            maxLength={FieldLengths.displayName.max}
+          />
+          {/*<InputTextField*/}
+          {/*  value={state.username}*/}
+          {/*  onChange={(e) => handleOnChange(e, /[^\w]/gm)}*/}
+          {/*  name='username'*/}
+          {/*  label='Username'*/}
+          {/*  placeholder='username'*/}
+          {/*  errorText={usernameError}*/}
+          {/*  leftElement={*/}
+          {/*    <Box color='white700' pr='4px'>*/}
+          {/*      @*/}
+          {/*    </Box>*/}
+          {/*  }*/}
+          {/*  rightElement={<InputLoadingIndicator loading={loadingCUU} />}*/}
+          {/*/>*/}
+          <InputTextField
+            name='clubUrl'
+            label='Custom URL'
+            onChange={async (e) => {
+              handleOnChange(e, /[^[a-zA-Z]+/gm);
+              await isClubURLUnique(e.target.value, club.id);
+            }}
+            maxLength={FieldLengths.url.max}
+            tooltip='A custom URL to share with your fans.'
+            value={state.clubUrl}
+            leftElement={
+              <Box color='white700' css={{ whiteSpace: 'nowrap' }}>
+                https://holdrclub.com/clubs/
+              </Box>
+            }
+            rightElement={<InputLoadingIndicator loading={loadingCUU} />}
+            errorText={clubUrlError}
+          />
           <TextareaField
-            value={profile.bio}
-            onChange={(e) => updateProfile({ bio: e.target.value })}
             id='bio'
             name='bio'
+            label='About'
+            value={state.bio}
+            onChange={handleOnChange}
             placeholder='Let people know a little about yourself and your musical interests.'
-            maxLength={MaxFieldLength.FanProfile.Bio}
+            maxLength={FieldLengths.bio.max}
           />
           <InputTextField
-            value={profile.location}
-            onChange={(e) => updateProfile({ location: e.target.value })}
+            value={state.location}
+            onChange={handleOnChange}
             name='location'
             label='Based In'
             placeholder='Enter your location'
+            maxLength={FieldLengths.location.max}
           />
         </VStack>
         <VStack gap={4}>
@@ -304,48 +238,69 @@ function EditArtistClubBioPage() {
               Enter any announcements you want to make to your fans
             </TextGroupSubheading>
           </TextGroup>
-          {collaborators.length > 0 && (
+          {state.collaborators.length > 0 && (
             <FlatList
               gap={4}
               direction='vertical'
-              data={collaborators}
-              renderItem={(name, idx) => (
-                <InputGroup>
-                  <Input
-                    placeholder='Add collaborator'
-                    variant='unstyled'
-                    maxLength={75}
-                    value={name}
+              data={state.collaborators}
+              renderItem={(value, idx) => {
+                const textError = handleFieldError(
+                  state.collaborators[idx],
+                  {
+                    keyName: 'Collaborator',
+                    min: {
+                      length: FieldLengths.collaborator.min,
+                      message: "Enter the collaborator's name",
+                    },
+                  },
+                );
+                return (
+                  <InputTextField
+                    name='collaborator'
+                    value={value}
+                    minLength={FieldLengths.collaborator.min}
+                    maxLength={FieldLengths.collaborator.max}
                     onChange={(e) =>
-                      replaceCollaborators(idx, e.target.value)
+                      update({
+                        collaborators: replaceInArray(
+                          state.collaborators,
+                          e.target.value,
+                          idx,
+                        ),
+                      })
                     }
-                    color='white500'
-                  />
-                  <InputGroupRightElement pl={4}>
-                    <Center position='absolute' t={0} b={0} r={0} pr={3}>
+                    errorText={textError}
+                    rightElement={
                       <CloseButton
                         onClick={() =>
-                          removeCollaborators((_, _idx) => _idx !== idx)
+                          update({
+                            collaborators: removeFromArray(
+                              state.collaborators,
+                              (_, _idx) => _idx !== idx,
+                            ),
+                          })
                         }
                         type='button'
-                        css={{ width: '1rem !important' }}
+                        css={{
+                          width: '1rem !important',
+                          height: '1rem !important',
+                        }}
                         size='sm'
-                        className={makeButtonLarger('1rem')}
                         colorTheme='white700'
                       />
-                    </Center>
-                  </InputGroupRightElement>
-                </InputGroup>
-              )}
+                    }
+                  />
+                );
+              }}
               keyExtractor={(_, idx) => `announcement-${idx}`}
             />
           )}
-          {collaborators.length <= 5 && (
+          {state.collaborators.length <= 5 && (
             <Button
               type='button'
-              onClick={() => {
-                pushCollaborators('');
-              }}
+              onClick={() =>
+                update({ collaborators: [...state.collaborators, ''] })
+              }
               variant='ghost'
               leftIcon='add'
               size='sm'
@@ -369,31 +324,31 @@ function EditArtistClubBioPage() {
             </TextGroupSubheading>
           </TextGroup>
           <InputTextField
-            name='Instagram'
+            name='instagramUrl'
             label='Instagram URL'
             tooltip='Enter your Instagram URL to allow other users to connect with you.'
             placeholder='Enter your Instgram link'
-            value={newSocialLinks.Instagram}
-            onChange={handleSocialLinkChange}
-            errorText={InstagramURLErrorText}
+            value={state.instagramUrl}
+            onChange={handleOnChange}
+            errorText={socialURLErrors.instagram}
           />
           <InputTextField
-            name='TikTok'
+            name='tiktokUrl'
             label='TikTok URL'
-            tooltip='Enter your Instagram URL to allow other users to connect with you.'
+            tooltip='Enter your TikTok URL to allow other users to connect with you.'
             placeholder='Enter your TikTok link'
-            value={newSocialLinks.TikTok}
-            onChange={handleSocialLinkChange}
-            errorText={TikTokURLErrorText}
+            value={state.tiktokUrl}
+            onChange={handleOnChange}
+            errorText={socialURLErrors.tiktok}
           />
           <InputTextField
-            name='X'
+            name='xUrl'
             label='X URL'
-            tooltip='Enter your Instagram URL to allow other users to connect with you.'
+            tooltip='Enter your X URL to allow other users to connect with you.'
             placeholder='Enter your X link'
-            value={newSocialLinks.X}
-            onChange={handleSocialLinkChange}
-            errorText={XURLErrorText}
+            value={state.xUrl}
+            onChange={handleOnChange}
+            errorText={socialURLErrors.x}
           />
         </VStack>
       </VStack>
@@ -416,15 +371,15 @@ function EditArtistClubBioPage() {
           css={{ px: '28px' }}
           onClick={() => navigate(previousLocation)}
         >
-          Cancel
+          Close
         </Button>
         <Button
           disabled={
-            !isLengthGreaterThanZero(profile.username) ||
-            !isLengthGreaterThanZero(profile.name) ||
-            isLengthGreaterThanZero(TikTokURLErrorText) ||
-            isLengthGreaterThanZero(InstagramURLErrorText) ||
-            isLengthGreaterThanZero(XURLErrorText)
+            missingField({ username: state.username }) ||
+            state.collaborators.reduce(
+              (acc, item) => item.length < 3 || acc,
+              false,
+            )
           }
           isLoading={loading}
           type='submit'

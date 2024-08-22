@@ -12,7 +12,7 @@ function LinkText({
   ...props
 }: LinkTextProps) {
   return (
-    <Box position='relative'>
+    <Box position='relative' w='fit-content'>
       <LinkOverlay
         to={to}
         reloadDocument={reloadDocument}
@@ -24,11 +24,11 @@ function LinkText({
       <Text
         {...props}
         css={{
+          textDecoration: 'underline',
           '&:hover': {
             transitionProperty: theme.transitions['property-common'],
             transitionDuration: theme.transitions['duration-faster'],
             transitionTimingFunction: 'ease',
-            textDecoration: 'underline',
           },
         }}
       />

@@ -14,7 +14,8 @@ export interface IArtist {
 }
 
 export interface IUpdateArtistProfile {
-  name: string;
+  name?: string;
+  url?: string;
   bio?: string;
   avatar?: string;
   location?: string;

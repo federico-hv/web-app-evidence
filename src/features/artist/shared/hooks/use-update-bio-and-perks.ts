@@ -9,7 +9,7 @@ export function useUpdateBioAndPerks() {
 
   const [mutate, { loading, error, data }] = useMutation<
     {
-      updateProfile: IProfile;
+      updateArtistProfile: IProfile;
       updatePerks: IPerk[];
     },
     { payload: { bio: string }; perks: number[] }
@@ -32,27 +32,30 @@ export function useUpdateBioAndPerks() {
           cache.modify({
             fields: {
               clubPerks(current = []) {
-                let newPerksList: Reference[] = current;
-
-                try {
-                  newPerksList = data?.updatePerks.map((data) => {
-                    return cache.writeFragment({
-                      id: clubId,
-                      fragment: gql`
-                        fragment NewPerks on PerkModel {
-                          id
-                          label
-                          description
-                        }
-                      `,
-                      data: data,
-                    }) as Reference;
-                  }) as Reference[];
-                } catch (e) {
-                  console.error(e);
-                }
-
-                return [...newPerksList];
+                // let newPerksList: Reference[] = current;
+                //
+                // try {
+                //   newPerksList = data?.updatePerks.map((data) => {
+                //     return cache.writeFragment({
+                //       id: clubId,
+                //       fragment: gql`
+                //         fragment NewPerks on PerkModel {
+                //           id
+                //           label
+                //           description
+                //         }
+                //       `,
+                //       data: data,
+                //     }) as Reference;
+                //   }) as Reference[];
+                // } catch (e) {
+                //   console.error(e);
+                // }
+                //
+                // return {
+                //   clubId,
+                //   perks: newPerksList,
+                // };
               },
               artist(current = {}) {
                 let newArtist: Reference = current;
@@ -66,7 +69,7 @@ export function useUpdateBioAndPerks() {
                       }
                     `,
                     data: {
-                      bio: data?.updateProfile.bio,
+                      bio: data?.updateArtistProfile.bio,
                     },
                   }) as Reference;
                 } catch (e) {

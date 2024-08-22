@@ -4,6 +4,9 @@ import { AlertStatus } from '@holdr-ui/react/dist/compositions/alert/src/alert.t
 export interface ToastContextState {
   description: string;
   status?: AlertStatus;
+  title?: string;
+  variant?: 'solid' | 'subtle';
+  duration?: number;
 }
 
 export interface IToastContext {

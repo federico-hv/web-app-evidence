@@ -7,3 +7,5 @@ export * from './user-profile';
 export * from './clubs';
 export * from './overlays';
 export * from './artist-profile';
+export * from './settings';
+export * from './memberships';

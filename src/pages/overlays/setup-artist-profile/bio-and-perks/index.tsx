@@ -3,17 +3,15 @@ import {
   Box,
   Button,
   HStack,
-  mergeStyles,
   Text,
-  Textarea,
   useOnValueChange,
   VStack,
 } from '@holdr-ui/react';
 import {
-  customInputStyles,
+  FieldLengths,
   makePath,
   Paths,
-  textAreaClassName,
+  TextareaField,
   TextGroup,
   TextGroupHeading,
   TextGroupSubheading,
@@ -22,12 +20,11 @@ import {
 import {
   useClubContext,
   useCurrentArtist,
-  usePerksContext,
   useSuspenseGetArtist,
+  useSuspenseGetClubPerks,
   useUpdateBioAndPerks,
 } from '../../../../features';
-import { ChangeEvent, useState } from 'react';
-import { difference, isEqual } from 'lodash';
+import { useState } from 'react';
 import { SelectPredefinedPerks } from './ui';
 
 function BioAndPerksView() {
@@ -39,14 +36,15 @@ function BioAndPerksView() {
 
   const previousLocation = usePreviousLocation('/');
   const club = useClubContext();
-  const { clubPerks } = usePerksContext();
+
+  const { data: clubPerksData } = useSuspenseGetClubPerks(club.id);
 
   const { value: bio, handleOnValueChange } = useOnValueChange(
     artistData.artist.bio || '',
   );
 
   const [selectedPerks, setSelectedPerks] = useState<number[]>(
-    clubPerks.map(({ id }) => id),
+    clubPerksData.clubPerks.perks.map(({ id }) => id),
   );
 
   const { updateBioAndPerks, loading: loadingUpdate } =
@@ -78,27 +76,10 @@ function BioAndPerksView() {
     );
 
   const saveBioAndPerks = async () => {
-    const hasBioChanged = !isEqual(bio, artistData.artist.bio);
-
-    const havePerksChanged =
-      [
-        ...difference(
-          selectedPerks,
-          clubPerks.map(({ id }) => id),
-        ),
-        ...difference(
-          clubPerks.map(({ id }) => id),
-          selectedPerks,
-        ),
-      ].length > 0;
-
-    if (hasBioChanged || havePerksChanged) {
-      console.log(selectedPerks);
-      await updateBioAndPerks(club.id, {
-        perks: selectedPerks,
-        bio: bio,
-      });
-    }
+    await updateBioAndPerks(club.id, {
+      perks: selectedPerks,
+      bio: bio,
+    });
   };
 
   return (
@@ -111,21 +92,15 @@ function BioAndPerksView() {
             and what inspires your artistry
           </TextGroupSubheading>
         </TextGroup>
-        <Textarea
+
+        <TextareaField
+          id='bio'
+          name='bio'
+          label='About'
           value={bio}
-          onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
-            handleOnValueChange(e.target.value)
-          }
-          className={mergeStyles([
-            textAreaClassName(),
-            customInputStyles(),
-          ])}
-          radius={2}
-          maxLines={5}
-          colorTheme='white500'
-          placeholder='Share your story with your fans'
-          /*_placeholder={{}}*/
-          /*css={{}}*/
+          onChange={(e) => handleOnValueChange(e.target.value)}
+          placeholder='Let people know a little about yourself and your musical interests.'
+          maxLength={FieldLengths.artist.bio.max}
         />
       </VStack>
       <VStack gap={4}>
@@ -136,8 +111,9 @@ function BioAndPerksView() {
           </TextGroupSubheading>
         </TextGroup>
 
+        {/** ⚠️ Disable when live auction is running*/}
         {selectedPerks.length < 3 && (
-          <Box>
+          <Box mb={4}>
             <Text size={1} color='danger200' weight={300}>
               Please select at least 3 perks
             </Text>

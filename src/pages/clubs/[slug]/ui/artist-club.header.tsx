@@ -1,32 +1,40 @@
 import { Button, Center, Heading, HStack } from '@holdr-ui/react';
 import {
   useCurrentUser,
+  useDeleteAuction,
+  useGetAuctionSuspenseQuery,
   useSuspenseGetArtist,
+  useSuspenseGetClub,
 } from '../../../../features';
 import ArtistClubSocialButton from './artist-club-social.button';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { makePath, Paths, useAlertDialog } from '../../../../shared';
-import { FetchResult } from '@apollo/client';
-import { IDeleteAuction } from 'features/auction/shared/hooks/use-delete-live-auction';
 
-function ArtistClubHeader({
-  activeAuction,
-  onDeleteAuction,
-}: {
-  activeAuction: boolean;
-  onDeleteAuction: () => Promise<FetchResult<IDeleteAuction> | undefined>;
-}) {
+function ArtistClubHeader() {
+  const currentUser = useCurrentUser();
+
+  const navigate = useNavigate();
+
+  const { deleteAuction } = useDeleteAuction();
+
   const { openWith } = useAlertDialog();
 
-  const currentUser = useCurrentUser();
-  const navigate = useNavigate();
   const { pathname } = useLocation();
 
   const { slug } = useParams();
 
+  const { data: clubData } = useSuspenseGetClub({ slug: slug || '' });
+
   const { data: artistData } = useSuspenseGetArtist({
     slug,
   });
+
+  const { data: auctionData } = useGetAuctionSuspenseQuery(
+    clubData.club.id,
+    {
+      fetchPolicy: 'network-only',
+    },
+  );
 
   const isCurrentArtistAccount =
     currentUser.id === artistData.artist.accountId;
@@ -37,17 +45,19 @@ function ArtistClubHeader({
         <Heading weight={400} size={6} css={{ lineHeight: '115%' }}>
           {`${artistData.artist.name}'s`} Club Page
         </Heading>
-        <Center
-          px={2}
-          border={1}
-          fontWeight={500}
-          fontSize={2}
-          borderColor='success500'
-          color='success500'
-          radius={1}
-        >
-          LIVE
-        </Center>
+        {auctionData && auctionData.auction && (
+          <Center
+            px={2}
+            border={1}
+            fontWeight={500}
+            fontSize={2}
+            borderColor='success500'
+            color='success500'
+            radius={1}
+          >
+            LIVE
+          </Center>
+        )}
       </HStack>
       <HStack gap={4}>
         {currentUser.id === artistData.artist.accountId ? (
@@ -76,7 +86,7 @@ function ArtistClubHeader({
         ) : (
           <ArtistClubSocialButton username={artistData.artist.username} />
         )}
-        {isCurrentArtistAccount && !activeAuction && (
+        {!auctionData.auction && isCurrentArtistAccount && (
           <Button
             css={{ px: '50px' }}
             colorTheme='purple100'
@@ -97,16 +107,15 @@ function ArtistClubHeader({
               );
             }}
           >
-            Create Auction
+            Start Auction
           </Button>
         )}
-        {isCurrentArtistAccount && activeAuction && (
+        {isCurrentArtistAccount && auctionData && auctionData.auction && (
           <Button
+            colorTheme='danger200'
+            variant='outline'
             css={{
-              border: '1px solid $danger200',
-              color: '$danger200',
-              px: '21px',
-              fontSize: '18px',
+              px: '20px',
             }}
             onClick={() => {
               openWith({
@@ -114,11 +123,15 @@ function ArtistClubHeader({
                 description: `Are you sure you want to cancel your auction? This action cannot be undone.`,
                 cancelText: 'Do not cancel',
                 actionText: 'Yes, Cancel Auction',
-                onAction: onDeleteAuction,
+                onAction: async () =>
+                  await deleteAuction(
+                    auctionData.auction.id,
+                    clubData.club.id,
+                  ),
               });
             }}
           >
-            Delete Auction
+            Cancel Auction
           </Button>
         )}
       </HStack>

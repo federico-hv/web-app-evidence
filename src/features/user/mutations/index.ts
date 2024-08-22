@@ -19,6 +19,18 @@ export const ADD_EXTERNAL_ACCOUNT = gql`
   }
 `;
 
+export const UPDATE_ACCOUNT_INFO = gql`
+  mutation updateAccountInfo($payload: UpdateAccountInfoInput!) {
+    updateAccountInfo(payload: $payload) {
+      username
+      country
+      gender
+      birthday
+      protected
+    }
+  }
+`;
+
 export const UPDATE_USER_GENRES = gql`
   mutation updateUserGenres($genres: [Int!]!) {
     updateUserGenres(genres: $genres) {
@@ -125,6 +137,24 @@ export const REMOVE_FAVOURITE_ARTIST = gql`
         externalId
         provider
       }
+    }
+  }
+`;
+
+export const UPDATE_CONTACT_INFORMATION = gql`
+  mutation updateContactInfo(
+    $contact: String!
+    $channel: ContactTypeEnum!
+    $code: String!
+  ) {
+    updateContactInfo(contact: $contact, channel: $channel, code: $code) {
+      data {
+        email
+        phone
+      }
+      status
+      isSuccess
+      message
     }
   }
 `;

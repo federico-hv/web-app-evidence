@@ -2,13 +2,11 @@ import { Fragment } from 'react';
 import { EmptyMessage, Loader } from '../../../../../shared';
 import { FeedCard, useFeedsQuery } from '../../../../../features';
 import { FlatList } from '../../../../../tmp/flat-list';
+import { useParams } from 'react-router-dom';
 
-interface ArtistFeedsListProps {
-  /** The artist's username*/
-  slug: string;
-}
+function ArtistFeedsList() {
+  const { slug } = useParams();
 
-function ArtistFeedsList({ slug }: ArtistFeedsListProps) {
   const { loading, data, error } = useFeedsQuery({ slug });
 
   if (error) {
@@ -26,7 +24,7 @@ function ArtistFeedsList({ slug }: ArtistFeedsListProps) {
           keyExtractor={({ node }) => node.id}
         />
       ) : (
-        <EmptyMessage subtitle='No posts yet.' />
+        <Fragment />
       )}
     </Loader>
   );

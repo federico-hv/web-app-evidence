@@ -14,8 +14,20 @@ export const DELETE_LIVE_AUCTION = gql`
   mutation deleteAuction($id: Int!) {
     deleteAuction(id: $id) {
       id
+      startsAt
       endsAt
       entryPrice
+      numberOfMemberships
+      artist {
+        id
+        name
+        username
+      }
+      club {
+        id
+        url
+        coverImage
+      }
     }
   }
 `;

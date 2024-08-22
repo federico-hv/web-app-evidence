@@ -15,11 +15,11 @@ function PollResponse({ data, total }: PollResponseProps) {
       css={{ userSelect: 'none' }}
     >
       {data.voted ? (
-        <Circle zIndex={10} size={20} bgColor='purple500'>
-          <Icon size='sm' color='white50' name='check' />
+        <Circle zIndex={10} size={20} border={2} borderColor='purple100'>
+          <Circle size='8px' bgColor='purple100' />
         </Circle>
       ) : (
-        <Circle zIndex={10} border={1} borderColor='white500' size={20} />
+        <Circle zIndex={10} size={20} border={2} borderColor='purple100' />
       )}
       <Box
         position='absolute'
@@ -31,13 +31,13 @@ function PollResponse({ data, total }: PollResponseProps) {
         l={0}
         h='100%'
         w={`${percentage.toFixed(0)}%`}
-        css={{ backgroundColor: '#ECECFF' }}
+        css={{ backgroundColor: 'rgba(152, 152, 255, 0.15)' }}
       />
       <VStack w='100%' gap={2} zIndex={10}>
         <HStack justify='space-between'>
           <Text
             size={{ '@bp1': 2, '@bp3': 3 }}
-            color={data.voted ? 'purple500' : 'white500'}
+            color={data.voted ? 'purple200' : 'white500'}
             weight={data.voted ? 500 : 400}
           >
             {data.text}
@@ -45,7 +45,7 @@ function PollResponse({ data, total }: PollResponseProps) {
           <Text
             size={{ '@bp1': 2, '@bp3': 3 }}
             weight={500}
-            color={data.voted ? 'base800' : 'base100'}
+            color={data.voted ? 'white700' : 'white700'}
           >
             {percentage.toFixed(0)}%
           </Text>

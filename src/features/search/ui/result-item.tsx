@@ -1,4 +1,9 @@
-import { UserModel, UserNamesGroup } from '../../../shared';
+import {
+  LinkOverlay,
+  prefix,
+  UserModel,
+  UserNamesGroup,
+} from '../../../shared';
 import { Avatar, Circle, HStack, Icon } from '@holdr-ui/react';
 
 function ResultItem({
@@ -19,6 +24,12 @@ function ResultItem({
       py={3}
       px={2}
     >
+      <LinkOverlay
+        to={prefix(
+          data.role === 'artist' ? '/clubs/' : '/',
+          `${data.username}/bio`,
+        )}
+      />
       {data.avatar ? (
         <Avatar src={data.avatar} name={data.displayName} />
       ) : (

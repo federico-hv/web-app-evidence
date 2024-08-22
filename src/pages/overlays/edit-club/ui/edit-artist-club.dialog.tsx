@@ -92,7 +92,7 @@ function EditArtistClubDialog() {
                       />
                     }
                   >
-                    <Box py={48} basis={182}>
+                    <Box py={48}>
                       <ChangeAvatar
                         placeholder={artistData.artist.avatar}
                         name={artistData.artist.name}

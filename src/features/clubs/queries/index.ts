@@ -52,9 +52,11 @@ export const GET_ARTIST_COLLABORATORS = gql`
 export const GET_CLUB_PERKS = gql`
   query clubPerks($id: String!) {
     clubPerks(id: $id) {
-      id
-      label
-      description
+      clubId
+      perks {
+        id
+        label
+      }
     }
   }
 `;

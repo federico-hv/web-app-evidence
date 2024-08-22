@@ -5,24 +5,50 @@ import {
   TextGroup,
   TextGroupHeading,
 } from '../../../../../shared';
-import { useSuspenseGetInactiveBidders } from '../../../../../features';
+import {
+  ContenderFilterEnum,
+  useCurrentUser,
+  useGetAuctionSuspenseQuery,
+  useGetContendersSuspenseQuery,
+  useSuspenseGetClub,
+} from '../../../../../features';
 import Bidder from './bidder';
-import { IBidder } from '..';
+import { useParams } from 'react-router-dom';
 
-function ArtistClubInactiveBiddersList({
-  confirmWithdraw,
-  currentUserId,
-  bidders,
-  clubId,
-}: {
-  confirmWithdraw: (bidId: number) => void;
-  currentUserId: string;
-  clubId: string;
-  bidders: IBidder[];
-}) {
-  const isCurrentUser = (item: any) => item.id === currentUserId;
+function BidderList() {
+  const currentUser = useCurrentUser();
 
-  const auctionWithBidders = bidders.length > 0;
+  const { slug } = useParams();
+
+  const { data: clubData } = useSuspenseGetClub({ slug });
+
+  const { data: auctionData } = useGetAuctionSuspenseQuery(
+    clubData.club.id,
+  );
+
+  const { data } = useGetContendersSuspenseQuery({
+    id: auctionData.auction.id,
+    filter: ContenderFilterEnum.Inactive,
+  });
+
+  return (
+    <FlatList
+      py={4}
+      data={data.contenders.edges}
+      keyExtractor={({ cursor }) => `inactive-bid-${cursor}`}
+      renderItem={({ node }, idx) => (
+        <Bidder
+          isHighlighted={node.owner.id === currentUser.id}
+          data={node}
+        />
+      )}
+      direction='vertical'
+    />
+  );
+}
+
+function ArtistClubInactiveBiddersList() {
+  //const isCurrentUser = (item: any) => item.id === currentUserId;
 
   return (
     <RadialSurface
@@ -39,31 +65,11 @@ function ArtistClubInactiveBiddersList({
         justify='space-between'
       >
         <TextGroupHeading weight={400} size={5} color='white500'>
-          Out of Contention
+          Ineligible
         </TextGroupHeading>
       </TextGroup>
 
-      {auctionWithBidders && (
-        <FlatList
-          data={bidders}
-          keyExtractor={(item) => `inactive-bid-${item.id}`}
-          renderItem={(item, idx) => (
-            <Bidder
-              confirmWithdraw={confirmWithdraw}
-              isActive={isCurrentUser(item)}
-              position={idx + 1}
-              data={item}
-            />
-          )}
-          direction={'vertical'}
-        />
-      )}
-
-      {!auctionWithBidders && (
-        <VStack items='center' py={'10px'}>
-          <Text>No out of contention bidders yet</Text>
-        </VStack>
-      )}
+      <BidderList />
     </RadialSurface>
   );
 }

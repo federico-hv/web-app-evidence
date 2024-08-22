@@ -1,10 +1,12 @@
 import { CSSTheme } from '@holdr-ui/react';
+import { TextProps } from '@holdr-ui/react/dist/components/text/src/text.types';
 
 type ItemFn<T> = (item: T) => string;
 
 export interface SelectInputFieldProps<T> {
   placeholder?: string;
   triggerCSS?: CSSTheme;
+  required?: boolean;
   _active?: CSSTheme;
   _hover?: CSSTheme;
   _highlighted?: CSSTheme;
@@ -15,4 +17,11 @@ export interface SelectInputFieldProps<T> {
   labelSelector: ItemFn<T>;
   valueSelector: ItemFn<T>;
   className?: string;
+  name: string;
+  errorText?: string;
+  tooltip?: string;
+  label?: string;
+  labelProps?: TextProps;
+  listCSS?: CSSTheme;
+  position?: 'item-aligned' | 'popper';
 }

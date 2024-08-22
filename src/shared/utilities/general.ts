@@ -1,5 +1,7 @@
 import { prefix } from './string';
 import { join } from 'lodash';
+import { SocialProviderNameEnum } from '../constants';
+import { ICreateSocialLink } from '../interfaces';
 
 //TODO: Rename this file to common
 
@@ -181,4 +183,35 @@ export function getRandomNumber(n: number) {
  */
 export function getRandomNumberInRange(n: number, m: number) {
   return Math.floor(Math.random() * (m - n + 1)) + n;
+}
+
+export function parseSocialLinks(state: {
+  instagramUrl: string;
+  tiktokUrl: string;
+  xUrl: string;
+}): ICreateSocialLink[] {
+  return Object.keys(state)
+    .map((key): ICreateSocialLink | undefined => {
+      if (key === 'instagramUrl') {
+        return {
+          provider: SocialProviderNameEnum.Instagram,
+          url: state[key],
+        };
+      } else if (key === 'tiktokUrl') {
+        return {
+          provider: SocialProviderNameEnum.TikTok,
+          url: state[key],
+        };
+      } else if (key === 'xUrl') {
+        return {
+          provider: SocialProviderNameEnum.X,
+          url: state[key],
+        };
+      }
+    })
+    .filter((item: ICreateSocialLink | undefined) => {
+      if (item === undefined) return false;
+
+      return item.url.length !== 0;
+    }) as Array<ICreateSocialLink>;
 }

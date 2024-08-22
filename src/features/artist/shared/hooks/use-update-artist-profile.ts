@@ -18,6 +18,30 @@ export function useUpdateArtistProfile() {
         update(cache, { data }) {
           cache.modify({
             fields: {
+              collaborators(current = []) {
+                if (
+                  !data ||
+                  !data.updateArtistProfile ||
+                  !data.updateArtistProfile.collaborators
+                )
+                  return current;
+
+                const newCollaborators =
+                  data.updateArtistProfile.collaborators.map((item) =>
+                    cache.writeFragment({
+                      id: `CollaboratorModel:${item.id}`,
+                      data: data?.updateArtistProfile,
+                      fragment: gql`
+                        fragment NewArtist on ArtistModel {
+                          id
+                          collaborator
+                        }
+                      `,
+                    }),
+                  );
+
+                return newCollaborators;
+              },
               artist(current = {}) {
                 let newArtist: Reference = current;
 

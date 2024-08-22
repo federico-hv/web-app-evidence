@@ -48,7 +48,7 @@ function ArtistProfileTabs() {
                       px={6}
                       fontSize={2}
                       _hover={{ background: '#9898FF26' }}
-                      to='members'
+                      to='my-members'
                     >
                       My Members
                     </RoutingTabsTrigger>

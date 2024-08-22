@@ -41,7 +41,7 @@ function UserProfileTabs() {
       <ProfileProvider>
         <ContentLayout>
           <ContentLayoutMain>
-            <RadialSurface w='100%' p={4} radius={4}>
+            <RadialSurface w='100%' minHeight='100%' p={4} radius={4}>
               <UserProfileHeader />
               <QueryGuard
                 query={CHECK_IS_PROFILE_BLOCKED_OR_PROTECTED}
@@ -130,16 +130,6 @@ function UserProfileTabs() {
                         _hover={{ background: '#9898FF26' }}
                       >
                         Bid History
-                      </RoutingTabsTrigger>
-                      <RoutingTabsTrigger
-                        to='watchlist'
-                        w='fit-content'
-                        py={2}
-                        px={6}
-                        fontSize={2}
-                        _hover={{ background: '#9898FF26' }}
-                      >
-                        Watchlist
                       </RoutingTabsTrigger>
                     </RoutingTabsList>
                   </RoutingTabsHeader>

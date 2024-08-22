@@ -1,25 +1,14 @@
 import { Fragment } from 'react';
 import { useFeedContext, useVotePoll } from '../../../shared';
-import {
-  Box,
-  Countdown,
-  HStack,
-  Icon,
-  Skeleton,
-  Text,
-  VStack,
-  useDisclosure,
-} from '@holdr-ui/react';
+import { Box, Skeleton, VStack, useDisclosure } from '@holdr-ui/react';
 import dayjs from 'dayjs';
 import { DialogContextProvider, Loader } from '../../../../../shared';
 import { PollResponse } from '../index';
 import { AnswerPollButton } from '../../buttons';
 import { PollsProps } from './types';
 import { PollVotesDialog } from '../../dialogs';
-import { useCurrentUser } from '../../../../auth';
 
 function Polls({ id, items, endDate }: PollsProps) {
-  const user = useCurrentUser();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { feedId, owner } = useFeedContext();
 
@@ -52,7 +41,7 @@ function Polls({ id, items, endDate }: PollsProps) {
         }
       >
         <VStack position='relative' zIndex={5} gap={5}>
-          <VStack gap={3} mt={5}>
+          <VStack gap={3} mt={5} pl='6px'>
             {items.map((data) => (
               <Fragment key={`poll-${data.id}`}>
                 {!voted && !expired ? (
@@ -68,44 +57,6 @@ function Polls({ id, items, endDate }: PollsProps) {
               </Fragment>
             ))}
           </VStack>
-
-          {(voted || expired || user?.id === owner.id) && (
-            <HStack
-              fontSize={2}
-              gap={2}
-              items='center'
-              w='fit-content'
-              css={{ userSelect: 'none' }}
-              {...(user?.id === owner.id && {
-                _hover: {
-                  cursor: 'pointer',
-                  textDecoration: 'underline',
-                },
-                onClick: onOpen,
-              })}
-            >
-              <Icon name='poll-fill' color='base400' />
-              <Text size={{ '@bp1': 1, '@bp3': 2 }} color='base400'>
-                {total} {total > 1 ? 'votes' : 'vote'}
-              </Text>
-            </HStack>
-          )}
-
-          {!expired && !!endDate && (
-            <Fragment>
-              <HStack fontSize={2} gap={2} items='center'>
-                <Icon name='time-outline' size='base' />
-                <Text size={2} color='base400'>
-                  Ends in
-                </Text>
-                <Countdown
-                  color='white500'
-                  size='sm'
-                  targetDate={dayjs(endDate, 'x').toDate()}
-                />
-              </HStack>
-            </Fragment>
-          )}
         </VStack>
       </Loader>
       <PollVotesDialog items={items} />

@@ -7,6 +7,16 @@ export interface ProfileFormData {
   coverImage?: File;
 }
 
+export interface IAccountInfo {
+  email: string;
+  username: string;
+  phone: string;
+  country: string;
+  gender: string;
+  birthday: string;
+  protected: boolean;
+}
+
 export interface IExternalId<T = string, U = string> {
   id: T;
   provider: U;
@@ -14,7 +24,7 @@ export interface IExternalId<T = string, U = string> {
   externalUrl?: string;
 }
 
-export type MusicReleaseProvider = 'Spotify';
+export type MusicReleaseProvider = 'Spotify' | 'Soundcloud';
 
 export interface IMusicRelease {
   id: number;
@@ -56,7 +66,7 @@ export interface IProfile {
 }
 
 export interface ITinyProfile {
-  username: string;
+  // username: string;
   displayName: string;
   avatar?: string;
   bio?: string;

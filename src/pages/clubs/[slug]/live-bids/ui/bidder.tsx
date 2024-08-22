@@ -6,30 +6,54 @@ import {
   Text,
   VStack,
 } from '@holdr-ui/react';
-import { BidderModel } from '../../../../../features';
+import {
+  IAuctionBid,
+  useCurrentUser,
+  useGetAuctionSuspenseQuery,
+  useDeleteBid,
+} from '../../../../../features';
 import dayjs from 'dayjs';
-import { Menu } from '../../../../../shared';
+import { Menu, prefix, useAlertDialog } from '../../../../../shared';
+import { useNavigate } from 'react-router-dom';
+import { useAuctionAlertContext } from '../../shared/contexts';
 
 function Bidder({
-  confirmWithdraw,
-  isActive,
   data,
   position,
+  isHighlighted,
 }: {
-  confirmWithdraw: (bidId: number) => void;
-  isActive?: boolean;
-  data: BidderModel;
+  isHighlighted?: boolean;
+  data: IAuctionBid;
   position?: number;
 }) {
-  const times = 100000; // This can be a calculation using name and timeAgo?
-  const dotsSpacer = '.'.repeat(times);
+  const { openWith } = useAlertDialog();
+
+  const { update } = useAuctionAlertContext();
+
+  const dotsSpacer = '.'.repeat(100);
+
+  const navigate = useNavigate();
+
+  const currentUser = useCurrentUser();
+
+  const { data: auctionData } = useGetAuctionSuspenseQuery(data.club.id);
+
+  const { deleteBid, loading } = useDeleteBid();
 
   return (
-    <HStack w='100%' pl='40px' pr='16px' py='8px'>
+    <HStack
+      w='100%'
+      pl='40px'
+      pr='16px'
+      py='8px'
+      bgColor={isHighlighted ? 'rgba(152, 152, 255, 0.2)' : undefined}
+      border={isHighlighted ? 2 : undefined}
+      borderColor={isHighlighted ? 'rgba(152, 152, 255, 0.5)' : undefined}
+    >
       <HStack gap={2} flex={4} items={'center'}>
         <Text size={4} weight={400} color='white500'>{`${
           position ? position + '. ' : ''
-        }${data.displayName}`}</Text>
+        }${data.owner.displayName}`}</Text>
 
         <Text
           size='14px'
@@ -37,7 +61,7 @@ function Bidder({
           color='white700'
           css={{ lineHeight: '115%' }}
         >
-          {dayjs(data.createdAt).fromNow()}
+          {dayjs(data.bid.createdAt).fromNow()}
         </Text>
 
         <Center
@@ -54,13 +78,12 @@ function Bidder({
       </HStack>
       <HStack items='center' pt={'2px'}>
         <VStack>
-          <Text size={'16px'}>${data.amount.toFixed(2)}</Text>
+          <Text size={'16px'}>${data.bid.amount.toFixed(2)}</Text>
         </VStack>
         <Box w='32px' />
-        {isActive ? (
+        {data.owner.id === currentUser.id ? (
           <Menu minWidth={200}>
             <Menu.Trigger>
-              {/* <IconButton variant="ghost" icon="more-fill" ariaLabel='menu button' /> */}
               <IconButton
                 variant='ghost'
                 icon='more-fill'
@@ -74,9 +97,21 @@ function Bidder({
             <Menu.Content>
               <Menu.Item
                 dangerous
-                action={() => {
-                  confirmWithdraw(data.bidId as number);
-                }}
+                disabled={loading}
+                action={() =>
+                  openWith({
+                    title: 'Are you sure you want to withdraw?',
+                    description:
+                      'Are you sure you want to withdraw your bid from the auction? This action cannot be undone.',
+                    actionText: 'Yes, Withdraw Bid',
+                    cancelText: 'Do not withdraw',
+                    onAction: async () => {
+                      await deleteBid(data.bid.id, auctionData.auction.id);
+
+                      update({ status: undefined, eventName: undefined });
+                    },
+                  })
+                }
               >
                 Withdraw Bid
               </Menu.Item>
@@ -98,7 +133,18 @@ function Bidder({
               />
             </Menu.Trigger>
             <Menu.Content>
-              <Menu.Item>View Profile</Menu.Item>
+              <Menu.Item
+                action={() =>
+                  navigate(
+                    prefix(
+                      data.owner.role === 'artist' ? '/clubs/' : '/',
+                      `${data.owner.username}/bio`,
+                    ),
+                  )
+                }
+              >
+                View Profile
+              </Menu.Item>
             </Menu.Content>
           </Menu>
         )}

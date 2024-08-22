@@ -1,89 +1,63 @@
 import { useMutation } from '@apollo/client';
+import { ErrorMessage, useToast } from '../../../../shared';
+import { CREATE_BID } from '../../mutations';
+import { IAuctionBid, ICreateBidArgs } from '../types';
 import {
-  CREATE_BID,
-  UPDATE_BID,
-} from '../../../../features/auction/mutations';
-import { useToast } from '../../../../shared/hooks/use-toast';
-import { useEffect, useState } from 'react';
-import { useOutletContext } from 'react-router-dom';
-import { OutletContext } from 'pages/clubs/[slug]/ui/artist-club.tabs';
-
-export interface BidData {
-  bid: {
-    id: number;
-    amount: number;
-    createdAt: Date;
-  };
-  user: {
-    id: string;
-    displayName: string;
-    username: string;
-  };
-}
-
-export interface Bid {
-  id: string | number;
-  amount: number;
-}
+  GET_BID,
+  GET_BID_STATUS,
+  GET_REMAINING_MEMBERSHIP_COUNT,
+} from '../../queries';
 
 export function useCreateBid() {
-  const { onToggleAlert } = useOutletContext<OutletContext>();
   const { openWith } = useToast();
-  const [bidCreated, setBidCreated] = useState(false);
 
-  const [createBid, { data, loading, error }] = useMutation<BidData, Bid>(
-    CREATE_BID,
-    {
-      onError: (error) => {
-        if (
-          error.message ===
-          'You currently have a bid. You must either update or cancel your bid.'
-        ) {
-          alert('ALREADY CREATED BID');
-          return setBidCreated(true);
-        }
+  const [mutate, results] = useMutation<
+    { createBid: IAuctionBid },
+    ICreateBidArgs
+  >(CREATE_BID);
 
-        alert(error.message);
-      },
-      onCompleted: (data) => {
-        onToggleAlert(0);
-        // alert('Bid created succesfully!');
-        // setBidCreated(true);
-      },
-    },
-  );
-
-  const [
-    updateBid,
-    { data: updateBidData, loading: loadingBidData, error: updateError },
-  ] = useMutation<BidData, Bid>(UPDATE_BID, {
-    onError: (error) => {
-      alert(error.message);
-    },
-    onCompleted: (data) => {
-      onToggleAlert(2);
-      //   setBidCreated(true);
-    },
-  });
-
-  const onSubmit = async (bid: Bid, update: boolean = false) => {
-    if (update) {
-      await updateBid({
-        variables: { ...bid },
+  /**
+   *
+   * @param data
+   *  - `id`: club ID
+   *  - `amount`: bid amount
+   * @param auctionId
+   */
+  const createBid = async (data: ICreateBidArgs, auctionId: number) => {
+    try {
+      return await mutate({
+        variables: data,
+        refetchQueries: [
+          { query: GET_BID, variables: { auctionId: auctionId } },
+          {
+            query: GET_REMAINING_MEMBERSHIP_COUNT,
+            variables: { auctionId: auctionId },
+          },
+        ],
+        update: (cache, { data }) => {
+          cache.modify({
+            fields: {
+              contenders(current = {}) {
+                // need to add cache updates
+              },
+            },
+          });
+        },
       });
-    } else {
-      await createBid({
-        variables: { ...bid },
+    } catch (e) {
+      if (import.meta.env.DEV) {
+        console.error(e);
+      }
+
+      openWith({
+        status: 'danger',
+        description: ErrorMessage.Any,
       });
     }
   };
 
   return {
-    bidCreated,
-    data,
-    loading,
-    error,
-    onSubmit,
-    onFinish: null,
+    createBid,
+    ...results,
   };
 }

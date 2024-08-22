@@ -20,6 +20,8 @@ import {
   BookmarkGroupActionRoutes,
   ArtistClubOverlayRoutes,
   PaymentMethodRoutes,
+  SettingsOverlayRoutes,
+  MembershipRoutes,
 } from './routes';
 import { MainLayout } from '../layout';
 import { Fragment } from 'react';
@@ -33,12 +35,17 @@ function Router() {
 
   return (
     <Fragment>
-      {/*Main page routes*/}
+      {/*Main page routes*/}{' '}
       <Routes location={previousLocation || location}>
         <Route path={Paths.authRedirect} element={<AuthRedirectPage />} />
         {import.meta.env.VITE_ENVIRONMENT === 'development' && (
           <Route path='__dev__/*' element={<DevRoutes />} />
         )}
+        <Route
+          path={makePath(['memberships', '/*'])}
+          element={<MembershipRoutes />}
+        />
+
         <Route element={<MainLayout />}>
           <Route
             path='/'
@@ -109,6 +116,10 @@ function Router() {
         <Route
           path={prefix(':username', '/*')}
           element={<UserRelationshipRoutes />}
+        />
+        <Route
+          path={prefix(Paths.settings, '/*')}
+          element={<SettingsOverlayRoutes />}
         />
         <Route
           element={

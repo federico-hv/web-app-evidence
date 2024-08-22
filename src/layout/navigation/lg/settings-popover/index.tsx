@@ -79,7 +79,9 @@ function SettingsPopover() {
               <SettingsItem
                 label='Account Settings'
                 onClick={() => {
-                  navigate(Paths.settings);
+                  navigate(
+                    makePath([Paths.settings, Paths.setting.account]),
+                  );
                   close();
                 }}
               />

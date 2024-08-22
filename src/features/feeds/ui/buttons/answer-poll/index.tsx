@@ -1,32 +1,33 @@
-import { Center, Text, theme } from '@holdr-ui/react';
+import { Circle, HStack, Text } from '@holdr-ui/react';
 import { AnswerPollButtonProps } from './types';
 
 function AnswerPollButton({ label, onClick }: AnswerPollButtonProps) {
   return (
-    <Center
+    <HStack
       as='button'
       onClick={onClick}
       cursor='pointer'
       role='button'
       p={2}
-      border={1}
-      radius='full'
-      borderColor='base200'
       position='relative'
       overflow='hidden'
-      _hover={{
-        backgroundColor: '$base100',
-        color: '$black500',
-      }}
+      items='center'
+      gap={2}
+      // _hover={{
+      //   backgroundColor: '$base100',
+      //   color: '$black500',
+      // }}
       css={{
         userSelect: 'none',
-        '&:active': {
-          scale: 0.95,
-          transition: `all ${theme.transitions['duration-normal']} linear`,
-        },
       }}
     >
       {/** 👇🏾 Label */}
+      <Circle
+        bgColor='rbg(60,60,75)'
+        size={16}
+        border={2}
+        borderColor='white500'
+      />
       <Text
         size={{ '@bp1': 2, '@bp3': 3 }}
         weight={500}
@@ -35,7 +36,7 @@ function AnswerPollButton({ label, onClick }: AnswerPollButtonProps) {
       >
         {label}
       </Text>
-    </Center>
+    </HStack>
   );
 }
 AnswerPollButton.displayName = 'AnswerPollButton';

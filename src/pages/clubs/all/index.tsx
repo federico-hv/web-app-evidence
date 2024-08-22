@@ -1,7 +1,7 @@
 import { VStack } from '@holdr-ui/react';
 import { FlatList } from '../../../tmp/flat-list';
 import { SectionTitle } from '../root/ui';
-import { MembershipCard, OnSaleMembershipModel } from '../../../features';
+import { AuctionCard, OnSaleMembershipModel } from '../../../features';
 import { shuffle } from 'lodash';
 import { arrayFrom } from '../../../shared';
 import {
@@ -23,7 +23,7 @@ function AllClubsPage() {
             arrayFrom(6).map(() => dummyAuctionMembershipData),
           )}
           renderItem={(data) => (
-            <MembershipCard
+            <AuctionCard
               data={{
                 coverImage: data.coverImage,
                 name: data.name,
@@ -48,7 +48,7 @@ function AllClubsPage() {
             ...arrayFrom(3).map(() => dummyAuctionMembershipData),
           ])}
           renderItem={(data) => (
-            <MembershipCard
+            <AuctionCard
               data={{
                 coverImage: data.coverImage,
                 name: data.name,

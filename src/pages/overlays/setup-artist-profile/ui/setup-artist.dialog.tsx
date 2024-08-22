@@ -162,10 +162,7 @@ function SetupArtistDialog() {
                   flex={1}
                   h='calc(100% - 56px)'
                   overflow='auto'
-                  css={{
-                    scrollbarColor:
-                      'rgba(152, 152, 255, 0.15) transparent',
-                  }}
+                  className='thin-scrollbar'
                 >
                   <GQLRenderer>
                     <ClubProvider>

@@ -1,5 +1,5 @@
 import { createContext, useContext } from 'react';
-import { IPerk } from '../interfaces';
+import { IPerk } from '../types';
 import { GQLRenderer } from '../../../../shared';
 import { GenericProps } from '@holdr-ui/react';
 import { useSuspenseGetClubPerks } from '../hooks';
@@ -30,7 +30,7 @@ function Content({ id, children }: GenericProps & { id: string }) {
   const { data } = useSuspenseGetClubPerks(id);
 
   return (
-    <PerksContextProvider value={{ clubPerks: data.clubPerks }}>
+    <PerksContextProvider value={{ clubPerks: data.clubPerks.perks }}>
       {children}
     </PerksContextProvider>
   );

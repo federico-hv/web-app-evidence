@@ -1,13 +1,6 @@
 import { Fragment } from 'react';
-import {
-  Circle,
-  Heading,
-  HStack,
-  Stack,
-  Text,
-  VStack,
-} from '@holdr-ui/react';
-import { IPerk, useGetClubPerks } from '../../../../../features';
+import { Circle, Heading, HStack, Text, VStack } from '@holdr-ui/react';
+import { useGetClubPerks } from '../../../../../features';
 import { InformationTooltip, Loader } from '../../../../../shared';
 import { FlatList } from '../../../../../tmp/flat-list';
 
@@ -27,7 +20,7 @@ function ArtistClubMembershipPerksSummaryList({
   return (
     <Loader loading={loading}>
       {data && (
-        <VStack radius={1} gap={4} p={4} bgColor='#30304B'>
+        <VStack h='100%' radius={1} gap={4} p={4} bgColor='#30304B'>
           <HStack items='center' justify='space-between'>
             <Heading size={4} weight={500} color='white500'>
               Membership Perks
@@ -46,7 +39,7 @@ function ArtistClubMembershipPerksSummaryList({
             <FlatList
               direction='vertical'
               gap={3}
-              data={data.clubPerks.slice(0, 6)}
+              data={data.clubPerks.perks.slice(0, 6)}
               renderItem={({ label }) => (
                 <HStack items='center' gap={2}>
                   <Circle size='4px' bgColor='white500' />
@@ -57,7 +50,7 @@ function ArtistClubMembershipPerksSummaryList({
               )}
               keyExtractor={({ id }, idx) => `perk-${id}-${idx}`}
             />
-            {data.clubPerks.length > 6 && (
+            {data.clubPerks.perks.length > 6 && (
               <Text color='white800' size={5}>
                 ...
               </Text>

@@ -22,9 +22,11 @@ import { ImageUploadContext } from '../../../../../shared/components/image-uploa
 import { useUpdateClub } from '../../../../../features';
 
 function ChangeClubImage({
+  disabled,
   placeholder,
   artistName = 'Artist Name',
 }: {
+  disabled?: boolean;
   placeholder?: string;
   artistName?: string;
 }) {
@@ -61,6 +63,7 @@ function ChangeClubImage({
           />
         </HStack>
         <ImageUpload
+          disabled={disabled}
           aspect={1.12}
           onChange={async (item) => {
             setValue(URL.createObjectURL(item));

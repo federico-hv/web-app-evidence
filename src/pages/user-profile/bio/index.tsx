@@ -8,7 +8,7 @@ import {
 } from '@holdr-ui/react';
 import { Link, useLocation } from 'react-router-dom';
 import { Fragment } from 'react';
-import { IProfile, MembershipCard } from '../../../features';
+import { IProfile, AuctionCard } from '../../../features';
 import {
   Asset,
   EmbeddedPlayer,
@@ -145,7 +145,7 @@ export function UserBioPage() {
             </Link>
           </HStack>
           <HStack>
-            <MembershipCard
+            <AuctionCard
               data={{
                 slug: '',
                 name: 'Thomas Selas Club',

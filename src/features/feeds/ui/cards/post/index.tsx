@@ -1,5 +1,14 @@
 import { PostModel, useFeedContext } from '../../../shared';
-import { Avatar, Box, Card, HStack, Text, VStack } from '@holdr-ui/react';
+import {
+  Avatar,
+  Box,
+  Card,
+  Countdown,
+  HStack,
+  Icon,
+  Text,
+  VStack,
+} from '@holdr-ui/react';
 import {
   DateUtility,
   LinkOverlay,
@@ -11,9 +20,74 @@ import { useCurrentUser } from '../../../../auth';
 import { FeedOwnerMoreButton, GeneralPostMoreButton } from '../../buttons';
 import { PostMedia, Polls } from '../../groups';
 import FeedLikeGroup from './feed-like-group';
-import FeedShareGroup from './feed-share-group';
 import FeedBookmarkGroup from './feed-bookmark-group';
 import FeedCommentGroup from './feed-comment-group';
+import { Fragment } from 'react';
+import dayjs from 'dayjs';
+import { PollsProps } from '../../groups/polls/types';
+
+function PollTimer({ endDate }: { endDate?: Date | null }) {
+  const expired = dayjs(dayjs()).isAfter(endDate);
+
+  return (
+    <Fragment>
+      {!expired && !!endDate && (
+        <Fragment>
+          <HStack fontSize={2} gap={2} color='white700' items='center'>
+            <Icon name='time-outline' size='sm' />
+            {/*<Text size={2} color='base400'>*/}
+            {/*  Ends in*/}
+            {/*</Text>*/}
+            <Countdown
+              color='white700'
+              size='sm'
+              targetDate={dayjs(endDate, 'x').toDate()}
+            />
+          </HStack>
+        </Fragment>
+      )}
+    </Fragment>
+  );
+}
+
+function PollVotesCount({ id, items, endDate }: PollsProps) {
+  const user = useCurrentUser();
+
+  const { owner } = useFeedContext();
+
+  const voted = items.reduce((prev, curr) => prev || curr.voted, false);
+
+  const total = items.reduce((prev, curr) => prev + curr.count, 0);
+
+  const expired = dayjs(dayjs()).isAfter(endDate);
+
+  return (
+    <Fragment>
+      {(voted || expired || user?.id === owner.id) && (
+        <HStack
+          fontSize={2}
+          gap={2}
+          items='center'
+          w='fit-content'
+          css={{ userSelect: 'none' }}
+          {...(user?.id === owner.id && {
+            _hover: {
+              cursor: 'pointer',
+              textDecoration: 'underline',
+            },
+            // onClick: onOpen,
+          })}
+        >
+          {/*<Icon name='poll-fill' color='base400' />*/}
+          <HStack color='white700' items='center' gap={1}>
+            <Text weight={500}>{total}</Text>
+            <Text weight={300}>{total > 1 ? 'votes' : 'vote'}</Text>
+          </HStack>
+        </HStack>
+      )}
+    </Fragment>
+  );
+}
 
 function PostCard({ data }: { data: PostModel }) {
   const currentUser = useCurrentUser();
@@ -83,7 +157,7 @@ function PostCard({ data }: { data: PostModel }) {
         />
         <Text size={{ '@bp1': 2, '@bp3': 3 }}>{data.description}</Text>
         {data.media && <PostMedia items={data.media} />}
-        {data.polls && (
+        {data.polls && data.polls.length > 0 && (
           <Polls id={data.id} endDate={data.endDate} items={data.polls} />
         )}
         <Box
@@ -100,13 +174,24 @@ function PostCard({ data }: { data: PostModel }) {
         pb={{ '@bp1': 3, '@bp3': 4 }}
         direction='horizontal'
         items='center'
+        justify='space-between'
         w='100%'
-        gap={6}
       >
-        <FeedLikeGroup />
-        <FeedCommentGroup />
-        <FeedShareGroup />
-        <FeedBookmarkGroup />
+        <HStack gap={6} items='center'>
+          <FeedLikeGroup />
+          <FeedCommentGroup />
+          {/*<FeedShareGroup />*/}
+          <FeedBookmarkGroup />
+        </HStack>
+        {data.polls?.find((item) => item.voted) ? (
+          <PollVotesCount
+            id={data.id}
+            endDate={data.endDate}
+            items={data.polls}
+          />
+        ) : (
+          <PollTimer endDate={data.endDate} />
+        )}
       </Card.Footer>
     </Card>
   );

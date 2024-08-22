@@ -1,18 +1,40 @@
 import { useQuery, useSuspenseQuery } from '@apollo/client';
 import { GET_CLUB_PERKS } from '../../queries';
-import { IPerk } from '../interfaces';
+import { IPerk } from '../types';
+import { SuspenseQueryHookFetchPolicy } from '@apollo/client/react/types/types';
 
-export function useGetClubPerks(id: string) {
-  return useQuery<{ clubPerks: IPerk[] }, { id: string }>(GET_CLUB_PERKS, {
-    variables: { id },
-  });
+interface IGetClubPerkResponse {
+  clubId: string;
+  perks: IPerk[];
 }
 
-export function useSuspenseGetClubPerks(id: string) {
-  return useSuspenseQuery<{ clubPerks: IPerk[] }, { id: string }>(
+/**
+ *
+ * @param clubId
+ */
+export function useGetClubPerks(clubId: string) {
+  return useQuery<{ clubPerks: IGetClubPerkResponse }, { id: string }>(
     GET_CLUB_PERKS,
     {
-      variables: { id },
+      variables: { id: clubId },
     },
   );
+}
+
+/**
+ *
+ * @param clubId
+ * @param fetchPolicy
+ */
+export function useSuspenseGetClubPerks(
+  clubId: string,
+  fetchPolicy?: SuspenseQueryHookFetchPolicy,
+) {
+  return useSuspenseQuery<
+    { clubPerks: IGetClubPerkResponse },
+    { id: string }
+  >(GET_CLUB_PERKS, {
+    variables: { id: clubId },
+    fetchPolicy,
+  });
 }

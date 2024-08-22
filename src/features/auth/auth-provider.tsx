@@ -9,6 +9,8 @@ import {
 import { GET_ME } from './queries';
 import AuthRedirect from '../../pages/auth-redirect';
 import { useWindowSize } from '@holdr-ui/react';
+import LogRocket from 'logrocket';
+import { UserRoleEnum } from '../user';
 
 function AuthProvider({ children }: AuthProviderProps) {
   const [currentUser, setCurrentUser] = useState<IMe>({
@@ -16,7 +18,7 @@ function AuthProvider({ children }: AuthProviderProps) {
     username: '',
     displayName: '',
     avatar: '',
-    role: 'general',
+    role: UserRoleEnum.GeneralUser,
   });
 
   return (
@@ -40,6 +42,13 @@ function Content({
   }, [data, setCurrentUser]);
 
   useEffect(() => {
+    // Initialize user session in log rocket
+    if (import.meta.env.VITE_ENVIRONMENT !== 'staging') return;
+
+    LogRocket.identify(data.me.id, {
+      name: data.me.username,
+      role: data.me.role,
+    });
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     if (window['pendo'])

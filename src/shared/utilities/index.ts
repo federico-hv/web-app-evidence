@@ -5,3 +5,5 @@ export * from './date';
 export * from './form';
 export * from './file';
 export * from './auth';
+export * from './array';
+export * from './dsp';

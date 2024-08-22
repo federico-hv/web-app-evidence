@@ -16,6 +16,44 @@ export const GET_AUCTION = gql`
   }
 `;
 
+export const GET_BID = gql`
+  query bid($auctionId: Int!) {
+    bid(auctionId: $auctionId) {
+      club {
+        id
+        coverImage
+        url
+      }
+      artist {
+        id
+        displayName
+        username
+      }
+      owner {
+        id
+        username
+      }
+      bid {
+        id
+        amount
+        createdAt
+      }
+    }
+  }
+`;
+
+export const GET_REMAINING_MEMBERSHIP_COUNT = gql`
+  query remainingMembershipsCount($auctionId: Int!) {
+    remainingMembershipsCount(auctionId: $auctionId)
+  }
+`;
+
+export const GET_BID_STATUS = gql`
+  query bidStatus($bidId: Int!) {
+    bidStatus(bidId: $bidId)
+  }
+`;
+
 export const GET_CONTENDERS = gql`
   query getContenders(
     $id: Int!
@@ -25,6 +63,16 @@ export const GET_CONTENDERS = gql`
     contenders(id: $id, filter: $filter, params: $params) {
       edges {
         node {
+          club {
+            id
+            coverImage
+            url
+          }
+          artist {
+            id
+            displayName
+            username
+          }
           owner {
             id
             displayName

@@ -6,7 +6,7 @@ import {
 import { Grid } from '@holdr-ui/react';
 import { shuffle } from 'lodash';
 import { arrayFrom } from '../../../shared';
-import { MembershipCard } from '../../../features';
+import { AuctionCard } from '../../../features';
 
 function WatchlistClubPage() {
   return (
@@ -16,7 +16,7 @@ function WatchlistClubPage() {
         ...arrayFrom(10).map(() => dummyAuctionMembershipData),
       ]).map((data, idx) => (
         <Grid.Item key={`watchlist-item-${idx}`} h='100%'>
-          <MembershipCard
+          <AuctionCard
             data={{
               coverImage: data.coverImage,
               name: data.name,

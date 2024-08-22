@@ -1,6 +1,7 @@
 import { gql, Reference, useMutation } from '@apollo/client';
 import { UPDATE_PROFILE_AVATAR } from '../../mutations';
 import { useCurrentUser } from '../../../auth';
+import { GET_PROFILE } from '../../queries';
 
 export function useUpdateAvatar() {
   const currentUser = useCurrentUser();
@@ -16,6 +17,12 @@ export function useUpdateAvatar() {
     try {
       return await mutate({
         variables: { payload: { avatar } },
+        refetchQueries: [
+          {
+            query: GET_PROFILE,
+            variables: { username: currentUser.username },
+          },
+        ],
         update(cache, { data }) {
           cache.modify({
             fields: {
