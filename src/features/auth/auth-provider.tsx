@@ -51,8 +51,9 @@ function Content({
     });
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    if (window['pendo'])
+    if (window['pendo']) {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      console.log('INITIALIZING PENDO');
       // @ts-ignore
       window['pendo'].initialize({
         visitor: {
@@ -64,6 +65,7 @@ function Content({
           id: `holdr:account::${data.me.id}`,
         },
       });
+    }
   }, [data]);
 
   return (
