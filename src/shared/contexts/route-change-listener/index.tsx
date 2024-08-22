@@ -42,6 +42,16 @@ function RouteChangeListener({ children }: GenericProps) {
 
       previousLocationRef.current = location;
     }
+
+    // @ts-ignore
+    if (window.pendo) {
+      // @ts-ignore
+      window.pendo.pageLoad({
+        page: {
+          url: location.pathname,
+        },
+      });
+    }
   }, [location]);
 
   return (
