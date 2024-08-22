@@ -21,9 +21,9 @@ import {
   useClubContext,
   useGetAuctionSuspenseQuery,
   useSuspenseGetArtist,
+  useSuspenseGetClubPerks,
 } from '../../../../features';
 import { FlatList } from '../../../../tmp/flat-list';
-import { dummyPerksData } from '../../../clubs';
 import { Navigate, useParams } from 'react-router-dom';
 
 function AuctionPerkItem({
@@ -80,6 +80,8 @@ function CreateAuctionReviewAuctionInfoPage() {
   const { data: artistData } = useSuspenseGetArtist({ slug });
 
   const { data: auctionData } = useGetAuctionSuspenseQuery(club.id);
+
+  const { data: perksData } = useSuspenseGetClubPerks(club.id);
 
   if (auctionData && auctionData.auction) {
     return (
@@ -157,7 +159,7 @@ function CreateAuctionReviewAuctionInfoPage() {
           <FlatList
             gap={2}
             direction='vertical'
-            data={dummyPerksData}
+            data={perksData.clubPerks.perks}
             renderItem={(item, index) => (
               <AuctionPerkItem order={index + 1} data={item} />
             )}

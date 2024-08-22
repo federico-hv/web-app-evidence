@@ -2,6 +2,7 @@ import { Route, Routes } from 'react-router';
 import {
   SettingsAccountPage,
   SettingsNotificationsPage,
+  SettingsPaymentsPage,
   SettingsPrivacyAndSafetyPage,
   SettingsTabs,
 } from '../../pages';
@@ -26,6 +27,10 @@ const SettingsRoutes = () => (
       <Route
         path={Paths.setting.notifications}
         element={<SettingsNotificationsPage />}
+      />
+      <Route
+        path={Paths.setting.payments}
+        element={<SettingsPaymentsPage />}
       />
     </Route>
   </Routes>

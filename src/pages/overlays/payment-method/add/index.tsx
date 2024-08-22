@@ -12,6 +12,8 @@ import {
 } from '../../../../shared';
 import {
   Alert,
+  AlertAction,
+  AlertActions,
   AlertContent,
   AlertDescription,
   AlertTitle,
@@ -52,6 +54,7 @@ import {
   useStripeCardInfo,
   useStripeElementFocused,
   useSaveCard,
+  dummyBillingInfo,
 } from './shared';
 
 /**
@@ -110,7 +113,7 @@ function AddPaymentMethodPage() {
             zIndex={20}
             radius={2}
             className='setup-account'
-            minWidth={540}
+            minWidth={600}
             maxHeight='90vh'
             bgColor='#30304B'
             overflow='hidden'
@@ -170,6 +173,20 @@ function AddPaymentMethodPage() {
                                 for the card number. Any CVC number works.
                               </AlertDescription>
                             </AlertContent>
+                            <AlertActions>
+                              <AlertAction
+                                type='button'
+                                onClick={() =>
+                                  updateBillingInfo({
+                                    ...billingInfo,
+                                    ...dummyBillingInfo,
+                                  })
+                                }
+                                css={{ fontSize: '12px !important' }}
+                              >
+                                Autocomplete
+                              </AlertAction>
+                            </AlertActions>
                           </Alert>
                         </Box>
                       )}

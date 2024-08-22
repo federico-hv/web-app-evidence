@@ -5,6 +5,7 @@ export const Paths = {
   home: 'home',
   events: 'events',
   about: 'about',
+  payouts: 'payouts',
   more: 'more',
   music: 'music',
   bio: 'bio',
@@ -46,6 +47,7 @@ export const Paths = {
     customURL: 'custom-url',
   },
   setting: {
+    payments: 'payments',
     two_fa_recovery_code: 'two_fa_recovery_code',
     setup_2fa: 'setup_2fa',
     account: 'account',

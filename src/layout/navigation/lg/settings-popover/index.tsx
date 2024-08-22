@@ -94,7 +94,15 @@ function SettingsPopover() {
                   close();
                 }}
               />
-              <SettingsItem label='Personalize' onClick={close} />
+              <SettingsItem
+                label='Payments'
+                onClick={() => {
+                  navigate(
+                    makePath([Paths.settings, Paths.setting.payments]),
+                  );
+                  close();
+                }}
+              />
             </VStack>
             <SettingsItem
               label='Logout'

@@ -79,12 +79,7 @@ function ConnectedAccountsList() {
             renderItem={({ node }) => <ConnectedAccountItem data={node} />}
             gap={5}
             divider={
-              <Box
-                h='1px'
-                w='full'
-                bgColor='rgba(152, 152, 255, 0.05)
-'
-              />
+              <Box h='1px' w='full' bgColor='rgba(152, 152, 255, 0.05)' />
             }
           />
         )}

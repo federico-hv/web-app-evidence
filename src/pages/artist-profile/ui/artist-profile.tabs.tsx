@@ -1,4 +1,4 @@
-import { Box, Heading } from '@holdr-ui/react';
+import { Box, Button, Heading, HStack } from '@holdr-ui/react';
 import {
   GQLRenderer,
   RadialSurface,
@@ -17,21 +17,36 @@ function ArtistProfileTabs() {
         <ContentLayoutMain>
           <Box h='full'>
             <RadialSurface w='100%' p={4} radius={4}>
-              <Heading
-                pl={6}
-                mb={40}
-                color='white100'
-                weight={400}
-                size={6}
-              >
-                My Profile
-              </Heading>
+              <HStack justify='space-between'>
+                <Heading
+                  pl={6}
+                  mb={40}
+                  color='white100'
+                  weight={400}
+                  size={6}
+                >
+                  My Profile
+                </Heading>
+                <Button leftIcon='edit-box-outline' colorTheme='purple200'>
+                  Edit membership page
+                </Button>
+              </HStack>
               <RoutingTabs flex={1}>
                 <RoutingTabsHeader
                   borderBottom={1}
                   borderColor='rgba(152, 152, 255, 0.10)'
                 >
                   <RoutingTabsList gap={1}>
+                    <RoutingTabsTrigger
+                      w='fit-content'
+                      py={2}
+                      px={6}
+                      fontSize={2}
+                      _hover={{ background: '#9898FF26' }}
+                      to='bio'
+                    >
+                      Bio
+                    </RoutingTabsTrigger>
                     <RoutingTabsTrigger
                       w='fit-content'
                       py={2}
@@ -52,18 +67,19 @@ function ArtistProfileTabs() {
                     >
                       My Members
                     </RoutingTabsTrigger>
-                    <RoutingTabsTrigger
-                      w='fit-content'
-                      py={2}
-                      px={6}
-                      fontSize={2}
-                      _hover={{ background: '#9898FF26' }}
-                      to='watchlist'
-                    >
-                      Watchlist
-                    </RoutingTabsTrigger>
+                    {/*<RoutingTabsTrigger*/}
+                    {/*  w='fit-content'*/}
+                    {/*  py={2}*/}
+                    {/*  px={6}*/}
+                    {/*  fontSize={2}*/}
+                    {/*  _hover={{ background: '#9898FF26' }}*/}
+                    {/*  to='watchlist'*/}
+                    {/*>*/}
+                    {/*  Watchlist*/}
+                    {/*</RoutingTabsTrigger>*/}
                   </RoutingTabsList>
                 </RoutingTabsHeader>
+
                 <RoutingTabsContent pt='40px' h='full' />
               </RoutingTabs>
             </RadialSurface>

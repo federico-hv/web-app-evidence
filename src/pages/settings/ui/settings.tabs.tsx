@@ -63,6 +63,16 @@ function SettingsTabs() {
                     >
                       Notifications
                     </RoutingTabsTrigger>
+                    <RoutingTabsTrigger
+                      w='fit-content'
+                      py={2}
+                      px={6}
+                      fontSize={2}
+                      _hover={{ background: '#9898FF26' }}
+                      to={Paths.setting.payments}
+                    >
+                      Payments
+                    </RoutingTabsTrigger>
                   </RoutingTabsList>
                 </RoutingTabsHeader>
                 <RoutingTabsContent pt='40px' h='full' />

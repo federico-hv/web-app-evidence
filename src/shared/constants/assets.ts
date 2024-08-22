@@ -17,6 +17,9 @@ import keyboard from '../../assets/icons/keyboard.svg';
 import saveToLibrary from '../../assets/icons/save-to-library.svg';
 import notification from '../../assets/icons/notification.svg';
 import userAdd from '../../assets/icons/user-add.svg';
+import amex from '../../assets/icons/amex.svg';
+import mastercard from '../../assets/icons/mastercard.svg';
+import visa from '../../assets/icons/visa.png';
 
 export const Asset = {
   Image: {
@@ -41,5 +44,8 @@ export const Asset = {
     Notification: notification,
     Keyboard: keyboard,
     QRCode: qrCode,
+    Amex: amex,
+    Mastercard: mastercard,
+    Visa: visa,
   },
 };

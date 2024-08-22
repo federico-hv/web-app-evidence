@@ -18,12 +18,12 @@ export interface OwnedMembershipModel {
 export interface IPerk {
   id: number;
   label: string;
-  description?: string;
-  additionalInfo?: string;
+  description: string;
 }
 
 export interface IClub {
   id: string;
+  name: string;
   coverImage?: string;
   bannerImage?: string;
   url?: string;
@@ -39,6 +39,7 @@ export interface BidData {
 
 export interface ITinyClub {
   id: string;
-  url: string;
+  url?: string;
+  name: string;
   coverImage: string;
 }

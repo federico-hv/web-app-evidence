@@ -1,4 +1,7 @@
 import {
+  Alert,
+  AlertContent,
+  AlertDescription,
   Box,
   Circle,
   HStack,
@@ -8,9 +11,13 @@ import {
 } from '@holdr-ui/react';
 import { Link, useLocation } from 'react-router-dom';
 import { Fragment } from 'react';
-import { IProfile, AuctionCard } from '../../../features';
 import {
-  Asset,
+  IProfile,
+  useMyMembershipsQuery,
+  MembershipCard,
+} from '../../../features';
+import {
+  CustomSkeleton,
   EmbeddedPlayer,
   Head,
   TextGroup,
@@ -19,13 +26,115 @@ import {
 } from '../../../shared';
 import { FlatList } from '../../../tmp/flat-list';
 import FavoriteArtist from './ui/favorite-artist';
-import { dummyPerks } from '../../clubs/shared';
 
-export function UserBioPage() {
+function UserMemberships() {
   const { state: profile } = useGeneralContext<IProfile>();
 
   const { pathname } = useLocation();
   const previousLocation = usePreviousLocation(pathname);
+
+  const CustomLoadingCard = () => (
+    <Box w={288} h={350}>
+      <CustomSkeleton radius={3} />
+    </Box>
+  );
+
+  const { data, loading, error } = useMyMembershipsQuery({ take: 3 });
+
+  if (!loading && data && data.myMemberships.total === 0) {
+    return <Fragment />;
+  }
+
+  if (error) {
+    return (
+      <Box
+        mt={5}
+        py={4}
+        borderTop={1}
+        borderColor='rgba(152, 152, 255, 0.1)'
+      >
+        <Alert variant='solid' status='danger'>
+          <AlertContent>
+            <AlertDescription>
+              Failed to load your memberships
+            </AlertDescription>
+          </AlertContent>
+        </Alert>
+      </Box>
+    );
+  }
+
+  return (
+    <Fragment>
+      {data && (
+        <Fragment>
+          <Box
+            my={4}
+            borderBottom={1}
+            borderColor='rgba(152, 152, 255, 0.1)'
+          />
+          <VStack gap={5}>
+            <HStack justify='space-between'>
+              <TextGroup w='fit-content'>
+                <Text casing='capitalize' weight={500} size={4}>
+                  My memberships
+                </Text>
+                {!loading ? (
+                  <Text
+                    casing='capitalize'
+                    color='white700'
+                    weight={300}
+                    size={3}
+                  >
+                    {data.myMemberships.total} memberships
+                  </Text>
+                ) : (
+                  <CustomSkeleton h='28px' w='300px' />
+                )}
+              </TextGroup>
+              {data.myMemberships.total > 3 && (
+                <Link
+                  to={`/${profile.username}/memberships`}
+                  state={{ previousLocation }}
+                >
+                  <Text size={4} weight={300} color='purple200'>
+                    View all
+                  </Text>
+                </Link>
+              )}
+            </HStack>
+            {loading ? (
+              <HStack gap={4}>
+                <CustomLoadingCard />
+                <CustomLoadingCard />
+                <CustomLoadingCard />
+              </HStack>
+            ) : (
+              <FlatList
+                gap={4}
+                data={data.myMemberships.edges.slice(0, 3)}
+                keyExtractor={(item) => item.node.id}
+                renderItem={(item) => (
+                  <MembershipCard
+                    data={{
+                      id: item.node.club.id,
+                      name: `${item.node.club.name}'s club`,
+                      coverImage: item.node.club.coverImage,
+                      perks: item.node.perks.map(({ label }) => label),
+                    }}
+                  />
+                )}
+              />
+            )}
+          </VStack>
+        </Fragment>
+      )}
+    </Fragment>
+  );
+}
+
+export function UserBioPage() {
+  const { state: profile } = useGeneralContext<IProfile>();
 
   return (
     <Fragment>
@@ -79,10 +188,12 @@ export function UserBioPage() {
               <Text casing='capitalize' weight={500} size={4}>
                 Favorite Song
               </Text>
-              <EmbeddedPlayer
-                provider='Spotify'
-                ids={profile.favoriteSong.externalIds}
-              />
+              <Box w={288}>
+                <EmbeddedPlayer
+                  provider='Spotify'
+                  ids={profile.favoriteSong.externalIds}
+                />
+              </Box>
             </VStack>
             <Box
               my={4}
@@ -112,49 +223,10 @@ export function UserBioPage() {
                 )}
               />
             </VStack>
-            <Box
-              my={4}
-              borderBottom={1}
-              borderColor='rgba(152, 152, 255, 0.1)'
-            />
           </Fragment>
         )}
 
-        <VStack gap={5}>
-          <HStack justify='space-between'>
-            <TextGroup w='fit-content'>
-              <Text casing='capitalize' weight={500} size={4}>
-                My memberships
-              </Text>
-              <Text
-                casing='capitalize'
-                color='white700'
-                weight={300}
-                size={3}
-              >
-                7 memberships
-              </Text>
-            </TextGroup>
-            <Link
-              to={`/${profile.username}/memberships`}
-              state={{ previousLocation }}
-            >
-              <Text size={4} weight={300} color='purple200'>
-                View all
-              </Text>
-            </Link>
-          </HStack>
-          <HStack>
-            <AuctionCard
-              data={{
-                slug: '',
-                name: 'Thomas Selas Club',
-                coverImage: Asset.Image.DummyMembershipCover,
-                perks: dummyPerks,
-              }}
-            />
-          </HStack>
-        </VStack>
+        <UserMemberships />
       </VStack>
     </Fragment>
   );

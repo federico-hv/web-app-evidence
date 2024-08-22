@@ -1,8 +1,16 @@
 import { useCurrentUser } from '../../../../auth';
 import { Fragment } from 'react';
 import { Box, Button, Heading, VStack } from '@holdr-ui/react';
-import { makeButtonLarger, Paths, prefix } from '../../../../../shared';
+import {
+  GQLRenderer,
+  makeButtonLarger,
+  Paths,
+  prefix,
+} from '../../../../../shared';
 import { Link } from 'react-router-dom';
+import { useMyMembershipsSuspenseQuery } from '../../../../memberships';
+import { FlatList } from '../../../../../tmp/flat-list';
+import { MembershipItem } from '../../groups/membership-item';
 
 function MyMemberships() {
   const currentUser = useCurrentUser();
@@ -12,7 +20,22 @@ function MyMemberships() {
   }
 
   return (
-    <VStack minHeight={292} as='nav' p={4}>
+    <GQLRenderer>
+      <Content />
+    </GQLRenderer>
+  );
+}
+MyMemberships.displayName = 'MyMemberships';
+
+function Content() {
+  const { data } = useMyMembershipsSuspenseQuery({ take: 3 });
+
+  return (
+    <VStack
+      minHeight={data.myMemberships.total > 0 ? 330 : 292}
+      as='nav'
+      p={4}
+    >
       <Heading size={3} weight={500} css={{ userSelect: 'none' }}>
         My Memberships
       </Heading>
@@ -25,23 +48,26 @@ function MyMemberships() {
           backgroundColor: 'rgba(152, 152, 255, 0.10)',
         }}
       />
-      <Link to={prefix('/', Paths.clubs)}>
-        <Button
-          fullWidth
-          className={makeButtonLarger('2.5rem')}
-          colorTheme='purple500'
-        >
-          Browse Clubs
-        </Button>
-        {/*<VStack gap={3}>*/}
-        {/*  <MembershipItem data={dummyOwnedMembershipData}/>*/}
-        {/*  <MembershipItem data={dummyOwnedMembershipData}/>*/}
-        {/*  <MembershipItem data={dummyOwnedMembershipData2}/>*/}
-        {/*</VStack>*/}
-      </Link>
+      {data.myMemberships.total === 0 ? (
+        <Link to={prefix('/', Paths.clubs)}>
+          <Button
+            fullWidth
+            className={makeButtonLarger('2.5rem')}
+            colorTheme='purple500'
+          >
+            Browse Clubs
+          </Button>
+        </Link>
+      ) : (
+        <FlatList
+          direction='vertical'
+          data={data.myMemberships.edges}
+          renderItem={(item) => <MembershipItem data={item.node} />}
+          keyExtractor={(item) => item.node.id}
+        />
+      )}
     </VStack>
   );
 }
-MyMemberships.displayName = 'MyMemberships';
 
 export default MyMemberships;

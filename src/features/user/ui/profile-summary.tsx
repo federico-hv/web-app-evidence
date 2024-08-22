@@ -4,12 +4,14 @@ import {
   RadialSurface,
   TextGroup,
   TextGroupSubheading,
+  usePreviousLocation,
 } from '../../../shared';
 import { useCurrentUser } from '../../auth';
 import { Fragment } from 'react';
 import millify from 'millify';
 import { useSuspenseRelationshipCount } from '../../relationships';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useMyMembershipsSuspenseQuery } from '../../memberships';
 
 function Members() {
   return (
@@ -25,15 +27,27 @@ function Members() {
 }
 
 function Memberships() {
+  const currentUser = useCurrentUser();
+
+  const { pathname } = useLocation();
+  const previousLocation = usePreviousLocation(pathname);
+
+  const { data } = useMyMembershipsSuspenseQuery();
+
   return (
-    <TextGroup w='fit-content' direction='horizontal' gap={1}>
-      <TextGroupSubheading size={1}>
-        {millify(0, { precision: 2 })}
-      </TextGroupSubheading>
-      <TextGroupSubheading size={1} color='base300'>
-        Memberships
-      </TextGroupSubheading>
-    </TextGroup>
+    <Link
+      to={`/${currentUser.username}/memberships`}
+      state={{ previousLocation }}
+    >
+      <TextGroup w='fit-content' direction='horizontal' gap={1}>
+        <TextGroupSubheading size={1}>
+          {millify(data.myMemberships.total, { precision: 2 })}
+        </TextGroupSubheading>
+        <TextGroupSubheading size={1} color='base300'>
+          Memberships
+        </TextGroupSubheading>
+      </TextGroup>
+    </Link>
   );
 }
 

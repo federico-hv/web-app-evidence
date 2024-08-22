@@ -22,7 +22,13 @@ function Header() {
         t={80}
         pb={4}
       >
-        <VStack gap={4} w={{ '@bp4': 90, '@bp7': 308 }} h='100%'>
+        <VStack
+          gap={4}
+          w={{ '@bp4': 90, '@bp7': 308 }}
+          h='100%'
+          overflowY='auto'
+          className='hide-scrollbar'
+        >
           <RadialSurface
             w='100%'
             // h={248}

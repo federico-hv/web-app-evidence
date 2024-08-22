@@ -64,7 +64,7 @@ function Router() {
               element={<SettingsRoutes />}
             />
             <Route
-              path={prefix('artist/:username', '/*')}
+              path={prefix('artist/:slug', '/*')}
               element={<ArtistProfileRoutes />}
             />
             <Route

@@ -17,3 +17,4 @@ export * from './countries';
 export * from './payment-methods';
 export * from './auction';
 export * from './security';
+export * from './memberships';

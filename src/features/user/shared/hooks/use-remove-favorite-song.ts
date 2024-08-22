@@ -19,7 +19,9 @@ export function useRemoveFavoriteSong() {
                 try {
                   newProfile = cache.writeFragment({
                     id: current.__ref,
-                    data: null,
+                    data: {
+                      favoriteSong: null,
+                    },
                     fragment: gql`
                       fragment RemoveFavoriteSong on ProfileModel {
                         favoriteSong

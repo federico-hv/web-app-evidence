@@ -17,6 +17,7 @@ import {
 import {
   AuctionCard,
   IClub,
+  useAddPaymentMethod,
   useBidSuspenseQuery,
   useCreateBid,
   useCurrentUser,
@@ -29,6 +30,7 @@ import {
   useUpdateBid,
 } from '../../../../features';
 import {
+  CustomSkeleton,
   darkInputStyles,
   GQLRenderer,
   handleFieldError,
@@ -39,13 +41,7 @@ import {
   Paths,
   useAlertDialog,
 } from '../../../../shared';
-import {
-  Navigate,
-  useLocation,
-  useNavigate,
-  useParams,
-} from 'react-router-dom';
-import { keyframes } from '@stitches/react';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import {
   AuctionEventNameEnum,
   useAuctionAlertContext,
@@ -60,49 +56,6 @@ const DialogState = {
     cancelText: 'Add later',
   },
 };
-
-function useAddPaymentMethod() {
-  const navigate = useNavigate();
-
-  const { pathname } = useLocation();
-
-  return () =>
-    navigate(makePath(['payment-method', 'add']), {
-      state: {
-        previousLocation: pathname,
-      },
-    });
-}
-
-function CardLoading() {
-  const animationName = createShimmer(
-    'rgba(152, 152, 255, 0.05)',
-    'rgba(152, 152, 255, 0.15)',
-  );
-
-  return (
-    <Box flex={1} h='100%'>
-      <Box
-        radius={3}
-        css={{
-          animation: `${animationName} 500ms linear infinite alternate`,
-        }}
-        h='100%'
-        w='100%'
-      />
-    </Box>
-  );
-}
-
-export const createShimmer = (startColor: string, endColor: string) =>
-  keyframes({
-    '0%': {
-      backgroundColor: startColor,
-    },
-    '100%': {
-      backgroundColor: endColor,
-    },
-  });
 
 function AuctionBannerCard() {
   const { slug } = useParams();
@@ -327,7 +280,9 @@ function ArtistClubLiveBidsPage() {
           <GQLRenderer>
             <VStack gap={6}>
               <HStack gap={4} h={500}>
-                <GQLRenderer LoadingFallback={<CardLoading />}>
+                <GQLRenderer
+                  LoadingFallback={<CustomSkeleton radius={3} />}
+                >
                   <AuctionBannerCard />
                 </GQLRenderer>
                 <VStack flex={1} gap={5}>

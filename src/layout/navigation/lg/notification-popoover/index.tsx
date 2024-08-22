@@ -91,6 +91,14 @@ function NotificationPopover() {
               <Text color='white700' as='em'>
                 All new notifications will appear here
               </Text>
+              <VStack>
+                {/*<FollowNotification />*/}
+                {/*<FollowRequestNotification />*/}
+                {/*<FeedLikeNotification />*/}
+                {/*<FeedBookmakNotification />*/}
+                {/*<PollVoteNotifcation />*/}
+                {/*<FollowRequestAcceptedNotication />*/}
+              </VStack>
             </VStack>
           </GeneralContextProvider>
         </Popover.Content>
