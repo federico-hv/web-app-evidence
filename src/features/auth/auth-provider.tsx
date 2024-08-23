@@ -32,6 +32,7 @@ AuthProvider.displayName = 'AuthProvider';
 function waitForPendo() {
   return new Promise((resolve) => {
     const checkInterval = setInterval(() => {
+      console.log('CHECKING PENDO');
       // @ts-ignore
       if (window.pendo) {
         clearInterval(checkInterval);
