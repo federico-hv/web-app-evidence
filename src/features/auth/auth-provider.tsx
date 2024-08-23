@@ -56,39 +56,29 @@ function Content({
 
   useEffect(() => {
     // Initialize user session in log rocket
-    // if (import.meta.env.VITE_ENVIRONMENT !== 'staging') return;
+    if (import.meta.env.VITE_ENVIRONMENT !== 'staging') return;
 
-    const loadScripts = async () => {
-      await waitForPendo();
+    console.log('INITIALIZING PENDO...');
 
-      console.log('AWAITED FOR PENDO SCRIPT TO BE LOADED');
-
-      LogRocket.identify(data.me.id, {
-        name: data.me.username,
-        role: data.me.role,
-      });
+    LogRocket.identify(data.me.id, {
+      name: data.me.username,
+      role: data.me.role,
+    });
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    if (window['pendo'])
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      if (window['pendo']) {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        console.log('ME ID: ', data.me.id);
-        console.log('USERNAME: ', data.me.username);
-        console.log('ROLE: ', data.me.role);
-        // @ts-ignore
-        window['pendo'].initialize({
-          visitor: {
-            id: data.me.id,
-            username: data.me.username,
-            role: data.me.role,
-          },
-          account: {
-            id: `holdr:account::${data.me.id}`,
-          },
-        });
-      }
-    };
-
-    loadScripts();
+      window['pendo'].initialize({
+        visitor: {
+          id: data.me.id,
+          username: data.me.username,
+          role: data.me.role,
+        },
+        account: {
+          id: `holdr:account::${data.me.id}`,
+        },
+      });
   }, [data]);
 
   return (
