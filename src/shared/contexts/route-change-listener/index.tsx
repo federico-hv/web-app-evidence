@@ -46,7 +46,9 @@ function RouteChangeListener({ children }: GenericProps) {
     // @ts-ignore
     if (window.pendo) {
       // @ts-ignore
-      console.log('PAGE LOAD EVENT: ', location.pathname, window.pendo);
+      console.log(
+        `FULL URL: ${window.location.origin}${location.pathname}`,
+      );
       // @ts-ignore
       window.pendo.pageLoad(
         // 'https://staging.holdrsclub.com/federicoteststaging/new-route',
