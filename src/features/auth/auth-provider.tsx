@@ -43,7 +43,7 @@ function Content({
 
   useEffect(() => {
     // Initialize user session in log rocket
-    if (import.meta.env.VITE_ENVIRONMENT !== 'staging') return;
+    // if (import.meta.env.VITE_ENVIRONMENT !== 'staging') return;
 
     LogRocket.identify(data.me.id, {
       name: data.me.username,
