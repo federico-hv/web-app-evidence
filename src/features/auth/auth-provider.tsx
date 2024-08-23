@@ -29,6 +29,18 @@ function AuthProvider({ children }: AuthProviderProps) {
 }
 AuthProvider.displayName = 'AuthProvider';
 
+function waitForPendo() {
+  return new Promise((resolve) => {
+    const checkInterval = setInterval(() => {
+      // @ts-ignore
+      if (window.pendo) {
+        clearInterval(checkInterval);
+        resolve(true);
+      }
+    }, 100); // Check every 100ms
+  });
+}
+
 function Content({
   currentUser,
   setCurrentUser,
@@ -45,26 +57,37 @@ function Content({
     // Initialize user session in log rocket
     // if (import.meta.env.VITE_ENVIRONMENT !== 'staging') return;
 
-    LogRocket.identify(data.me.id, {
-      name: data.me.username,
-      role: data.me.role,
-    });
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    if (window['pendo']) {
+    const loadScripts = async () => {
+      await waitForPendo();
+
+      console.log('AWAITED FOR PENDO SCRIPT TO BE LOADED');
+
+      LogRocket.identify(data.me.id, {
+        name: data.me.username,
+        role: data.me.role,
+      });
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      window['pendo'].initialize({
-        visitor: {
-          id: data.me.id,
-          username: data.me.username,
-          role: data.me.role,
-        },
-        account: {
-          id: `holdr:account::${data.me.id}`,
-        },
-      });
-    }
+      if (window['pendo']) {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        console.log('ME ID: ', data.me.id);
+        console.log('USERNAME: ', data.me.username);
+        console.log('ROLE: ', data.me.role);
+        // @ts-ignore
+        window['pendo'].initialize({
+          visitor: {
+            id: data.me.id,
+            username: data.me.username,
+            role: data.me.role,
+          },
+          account: {
+            id: `holdr:account::${data.me.id}`,
+          },
+        });
+      }
+    };
+
+    loadScripts();
   }, [data]);
 
   return (
