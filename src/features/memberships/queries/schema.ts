@@ -17,10 +17,10 @@ export const GET_USER_MEMBERSHIPS = gql`
             name
             url
             coverImage
-          }
-          perks {
-            description
-            label
+            perks {
+              description
+              label
+            }
           }
         }
       }

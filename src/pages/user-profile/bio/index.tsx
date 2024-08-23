@@ -120,7 +120,9 @@ function UserMemberships() {
                       id: item.node.club.id,
                       name: `${item.node.club.name}'s club`,
                       coverImage: item.node.club.coverImage,
-                      perks: item.node.perks.map(({ label }) => label),
+                      perks: item.node.club.perks.map(
+                        ({ label }) => label,
+                      ),
                     }}
                   />
                 )}

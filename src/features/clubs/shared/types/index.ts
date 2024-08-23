@@ -42,4 +42,5 @@ export interface ITinyClub {
   url?: string;
   name: string;
   coverImage: string;
+  perks: IPerk[];
 }

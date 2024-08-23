@@ -168,7 +168,7 @@ function PostCard({ data }: { data: PostModel }) {
         justify='space-between'
         w='100%'
       >
-        <HStack gap={6} items='center'>
+        <HStack gap={2} items='center'>
           <FeedLikeGroup />
           <FeedCommentGroup />
           {/*<FeedShareGroup />*/}

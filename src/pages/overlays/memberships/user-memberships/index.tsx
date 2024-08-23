@@ -146,7 +146,7 @@ function UserMembershipsPage() {
                                 id: item.node.club.id,
                                 name: `${item.node.club.name}'s club`,
                                 coverImage: item.node.club.coverImage,
-                                perks: item.node.perks.map(
+                                perks: item.node.club.perks.map(
                                   ({ label }) => label,
                                 ),
                               }}

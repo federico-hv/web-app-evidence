@@ -10,7 +10,7 @@ function FeedBookmarkGroup() {
   const { isBookmarked, feedId, owner } = useFeedContext();
   const { data } = useFeedStatistic(feedId, 'bookmarks');
   return (
-    <HStack items='center' gap={1} zIndex={5}>
+    <HStack w={70} items='center' gap={1} zIndex={5}>
       <BookmarkPopover position='right' sideOffset={0}>
         <IconButton
           variant='ghost'
@@ -20,7 +20,7 @@ function FeedBookmarkGroup() {
         />
       </BookmarkPopover>
       {data && currentUser.username === owner.username && (
-        <Box cursor='pointer'>
+        <Box fontSize={2} cursor='pointer'>
           {millify(data.feedStatistic, { precision: 2 })}
         </Box>
       )}
