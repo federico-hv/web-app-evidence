@@ -49,7 +49,8 @@ function RouteChangeListener({ children }: GenericProps) {
       console.log('PAGE LOAD EVENT: ', location.pathname, window.pendo);
       // @ts-ignore
       window.pendo.pageLoad(
-        'https://staging.holdrsclub.com/federicoteststaging/new-route',
+        // 'https://staging.holdrsclub.com/federicoteststaging/new-route',
+        `${window.location.origin}${location.pathname}`,
       );
     }
   }, [location]);
