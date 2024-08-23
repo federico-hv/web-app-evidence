@@ -47,7 +47,7 @@ function RouteChangeListener({ children }: GenericProps) {
     if (window.pendo) {
       // @ts-ignore
       console.log(
-        `FULL URL: ${window.location.origin}${location.pathname}`,
+        `PATH FULL URL: ${window.location.origin}${location.pathname}`,
       );
       // @ts-ignore
       window.pendo.pageLoad(

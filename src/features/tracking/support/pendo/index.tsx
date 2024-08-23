@@ -49,9 +49,9 @@ function Pendo({ children }: GenericProps) {
     })(import.meta.env.VITE_PENDO_API_KEY);
 
     // This is just a test. Remove once checked
-    console.log('API_KEY_CHECK: ', import.meta.env.VITE_PENDO_API_KEY);
+    console.log('STAGING API_KEY: ', import.meta.env.VITE_PENDO_API_KEY);
     console.log('----------------------------------------------');
-    console.log('ALL KEYS CHECK: ', import.meta.env);
+    console.log('STAGING ALL KEYS CHECK: ', import.meta.env);
   }, []);
 
   return <Fragment>{children}</Fragment>;
