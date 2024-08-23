@@ -1,6 +1,7 @@
 import { Box } from '@holdr-ui/react';
 import millify from 'millify';
 import { TextGroup, TextGroupSubheading } from '../../../shared';
+import { TextProps } from '@holdr-ui/react/dist/components/text/src/text.types';
 
 interface FollowCountItemProps {
   onClick?: VoidFunction;
@@ -8,14 +9,23 @@ interface FollowCountItemProps {
   label: string;
 }
 
-function FollowCountItem({ count, label, onClick }: FollowCountItemProps) {
+function FollowCountItem({
+  count,
+  label,
+  onClick,
+  countProps,
+  labelProps,
+}: FollowCountItemProps & {
+  labelProps?: TextProps;
+  countProps?: TextProps;
+}) {
   return (
     <Box onClick={onClick}>
       <TextGroup direction='horizontal' fontSize={4} gap={1}>
-        <TextGroupSubheading weight={500}>
+        <TextGroupSubheading weight={500} {...countProps}>
           {millify(count, { precision: 2 })}
         </TextGroupSubheading>
-        <TextGroupSubheading weight={300} color='white700'>
+        <TextGroupSubheading weight={300} color='white700' {...labelProps}>
           {label}
         </TextGroupSubheading>
       </TextGroup>

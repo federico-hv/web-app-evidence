@@ -9,11 +9,11 @@ import {
   useGeneralContext,
   VStack,
 } from '@holdr-ui/react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import { Fragment } from 'react';
 import {
   IProfile,
-  useMyMembershipsQuery,
+  useUserMembershipsQuery,
   MembershipCard,
 } from '../../../features';
 import {
@@ -28,6 +28,8 @@ import { FlatList } from '../../../tmp/flat-list';
 import FavoriteArtist from './ui/favorite-artist';
 
 function UserMemberships() {
+  const { username } = useParams();
+
   const { state: profile } = useGeneralContext<IProfile>();
 
   const { pathname } = useLocation();
@@ -39,9 +41,12 @@ function UserMemberships() {
     </Box>
   );
 
-  const { data, loading, error } = useMyMembershipsQuery({ take: 3 });
+  const { data, loading, error } = useUserMembershipsQuery(
+    username || '',
+    { take: 3 },
+  );
 
-  if (!loading && data && data.myMemberships.total === 0) {
+  if (!loading && data && data.userMemberships.total === 0) {
     return <Fragment />;
   }
 
@@ -68,11 +73,6 @@ function UserMemberships() {
     <Fragment>
       {data && (
         <Fragment>
-          <Box
-            my={4}
-            borderBottom={1}
-            borderColor='rgba(152, 152, 255, 0.1)'
-          />
           <VStack gap={5}>
             <HStack justify='space-between'>
               <TextGroup w='fit-content'>
@@ -86,13 +86,13 @@ function UserMemberships() {
                     weight={300}
                     size={3}
                   >
-                    {data.myMemberships.total} memberships
+                    {data.userMemberships.total} memberships
                   </Text>
                 ) : (
                   <CustomSkeleton h='28px' w='300px' />
                 )}
               </TextGroup>
-              {data.myMemberships.total > 3 && (
+              {data.userMemberships.total > 3 && (
                 <Link
                   to={`/${profile.username}/memberships`}
                   state={{ previousLocation }}
@@ -112,7 +112,7 @@ function UserMemberships() {
             ) : (
               <FlatList
                 gap={4}
-                data={data.myMemberships.edges.slice(0, 3)}
+                data={data.userMemberships.edges.slice(0, 3)}
                 keyExtractor={(item) => item.node.id}
                 renderItem={(item) => (
                   <MembershipCard
@@ -223,6 +223,11 @@ export function UserBioPage() {
                 )}
               />
             </VStack>
+            <Box
+              my={4}
+              borderBottom={1}
+              borderColor='rgba(152, 152, 255, 0.1)'
+            />
           </Fragment>
         )}
 

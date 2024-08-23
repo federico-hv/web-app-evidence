@@ -102,8 +102,8 @@ function MembershipCard({
         className='membership-card__footer'
         overflow='hidden'
         css={{
-          borderBottomLeftRadius: '$2',
-          borderBottomRightRadius: '$2',
+          borderBottomLeftRadius: '$3',
+          borderBottomRightRadius: '$3',
         }}
       >
         {/* Content */}

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import { useSuspenseQuery } from '@apollo/client';
 import { GenericProps, GQLRenderer, IMe, Loader } from '../../shared';
 import {
@@ -37,7 +37,7 @@ function Content({
   const { height } = useWindowSize();
   const { data } = useSuspenseQuery<{ me: IMe }>(GET_ME);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setCurrentUser(data.me);
   }, [data, setCurrentUser]);
 

@@ -10,6 +10,7 @@ import {
 } from '@holdr-ui/react';
 import { AnalyticsStatisticProps } from './types';
 import GainLossIndicator from '../../../../shared/components/gain-loss-indicator';
+import { InformationTooltip } from '../../../../shared';
 
 function AnalyticsStatistic({
   label,
@@ -32,16 +33,7 @@ function AnalyticsStatistic({
           </Text>
         </Box>
         {description && (
-          <Box mt='1px'>
-            <Tooltip>
-              <TooltipTrigger>
-                <Box fontSize='12px'>
-                  <Icon color='base400' name='information-outline' />
-                </Box>
-              </TooltipTrigger>
-              <TooltipContent>{description}</TooltipContent>
-            </Tooltip>
-          </Box>
+          <InformationTooltip size='xs' description={description} />
         )}
       </HStack>
       <HStack items='flex-end' justify='space-between'>

@@ -4,10 +4,13 @@ import { RadialSurface } from '../../shared';
 import {
   MyMembershipList,
   MyMembersList,
+  useCurrentUser,
+  UserRoleEnum,
   WatchlistList,
 } from '../../features';
 
 function Header() {
+  const currentUser = useCurrentUser();
   return (
     <Box
       as='header'
@@ -40,8 +43,11 @@ function Header() {
             <NavigationList />
           </RadialSurface>
           <RadialSurface w='100%' radius={4}>
-            <MyMembershipList />
-            <MyMembersList />
+            {currentUser.role === UserRoleEnum.GeneralUser ? (
+              <MyMembershipList />
+            ) : (
+              <MyMembersList />
+            )}
           </RadialSurface>
           <RadialSurface w='100%' radius={4}>
             <WatchlistList />

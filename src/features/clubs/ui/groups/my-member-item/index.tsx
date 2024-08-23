@@ -1,5 +1,7 @@
 import { Avatar, HStack, AvatarBadge, Circle } from '@holdr-ui/react';
 import {
+  LinkOverlay,
+  prefix,
   TextGroup,
   TextGroupHeading,
   TextGroupSubheading,
@@ -13,8 +15,15 @@ function MyMemberItem({ data, isOnline }: MyMemberItemProps) {
       gap={4}
       radius={2}
       items='center'
+      position='relative'
       _hover={{ backgroundColor: '#9898FF26', cursor: 'pointer' }}
     >
+      <LinkOverlay
+        to={prefix(
+          data.role === 'artist' ? '/clubs/' : '/',
+          `${data.username}/bio`,
+        )}
+      />
       <Avatar size='base' src={data.avatar} name={data.displayName}>
         {isOnline && (
           <AvatarBadge

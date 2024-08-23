@@ -7,19 +7,25 @@ import { getFormattedTime } from '../../../../shared/utilities/time.utility';
 function AnalyticsSummary() {
   return (
     <RadialSurface radius={4} h='auto' w='100%' css={{ flexShrink: 0 }}>
-      <VStack as='nav' p={4}>
+      <VStack
+        as='nav'
+        p={4}
+        gap={5}
+        divider={
+          <Box
+            h='1px'
+            w='100%'
+            css={{
+              backgroundColor: 'rgba(152, 152, 255, 0.10)',
+            }}
+          />
+        }
+      >
         <Heading size={3} weight={500} css={{ userSelect: 'none' }}>
           Analytics
         </Heading>
-        <Box
-          mt={{ '@bp1': '8px', '@bp3': '8px' }}
-          h='1px'
-          w='100%'
-          css={{
-            backgroundColor: 'rgba(152, 152, 255, 0.10)',
-          }}
-        />
-        <VStack gap={2} pt={2}>
+
+        <VStack gap={6}>
           <AnalyticsStatistic
             label='club views'
             description='A description'

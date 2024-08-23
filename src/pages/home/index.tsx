@@ -1,11 +1,12 @@
 import { ErrorFallback, GQLRenderer, Head } from '../../shared';
 import {
   AnalyticsSummary,
-  MembershipValueSummary,
+  ClubOverview,
   ProfileSummary,
   RecommendedArtists,
   TrendingClubs,
   useCurrentUser,
+  UserRoleEnum,
 } from '../../features';
 import { FeedTabs } from './ui';
 import {
@@ -30,13 +31,13 @@ function HomePage() {
             <GQLRenderer ErrorFallback={() => <Fragment />}>
               <ProfileSummary />
             </GQLRenderer>
-            {currentUser.role === 'artist' && (
+
+            {currentUser.role === UserRoleEnum.Artist ? (
               <Fragment>
-                <MembershipValueSummary />
+                <ClubOverview />
                 <AnalyticsSummary />
               </Fragment>
-            )}
-            {currentUser.role === 'general' && (
+            ) : (
               <Fragment>
                 <TrendingClubs />
                 <RecommendedArtists />

@@ -8,7 +8,7 @@ import {
   prefix,
 } from '../../../../../shared';
 import { Link } from 'react-router-dom';
-import { useMyMembershipsSuspenseQuery } from '../../../../memberships';
+import { useUserMembershipsSuspenseQuery } from '../../../../memberships';
 import { FlatList } from '../../../../../tmp/flat-list';
 import { MembershipItem } from '../../groups/membership-item';
 
@@ -28,11 +28,15 @@ function MyMemberships() {
 MyMemberships.displayName = 'MyMemberships';
 
 function Content() {
-  const { data } = useMyMembershipsSuspenseQuery({ take: 3 });
+  const currentUser = useCurrentUser();
+
+  const { data } = useUserMembershipsSuspenseQuery(currentUser.username, {
+    take: 3,
+  });
 
   return (
     <VStack
-      minHeight={data.myMemberships.total > 0 ? 330 : 292}
+      minHeight={data.userMemberships.total > 0 ? 330 : 292}
       as='nav'
       p={4}
     >
@@ -48,7 +52,7 @@ function Content() {
           backgroundColor: 'rgba(152, 152, 255, 0.10)',
         }}
       />
-      {data.myMemberships.total === 0 ? (
+      {data.userMemberships.total === 0 ? (
         <Link to={prefix('/', Paths.clubs)}>
           <Button
             fullWidth
@@ -61,7 +65,7 @@ function Content() {
       ) : (
         <FlatList
           direction='vertical'
-          data={data.myMemberships.edges}
+          data={data.userMemberships.edges}
           renderItem={(item) => <MembershipItem data={item.node} />}
           keyExtractor={(item) => item.node.id}
         />

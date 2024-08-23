@@ -29,10 +29,9 @@ import {
   IProfile,
   AuctionCard,
   useCurrentUser,
-  useMyMembershipsQuery,
+  useUserMembershipsQuery,
   MembershipCard,
 } from '../../../../features';
-import { dummyPerks } from '../../../clubs/shared';
 
 // TODO: fix - not snapping on scroll
 
@@ -44,7 +43,7 @@ function UserMembershipsPage() {
   const location = useLocation();
   const previousLocation = usePreviousLocation('/');
 
-  const { data, loading, error } = useMyMembershipsQuery();
+  const { data, loading, error } = useUserMembershipsQuery(username || '');
 
   if (!username) {
     return <Fragment />;
@@ -139,7 +138,7 @@ function UserMembershipsPage() {
                           scrollSnapPointsY: '500px',
                           scrollSnapType: 'y mandatory',
                         }}
-                        data={data.myMemberships.edges}
+                        data={data.userMemberships.edges}
                         renderItem={(item) => (
                           <Box h='500px'>
                             <MembershipCard

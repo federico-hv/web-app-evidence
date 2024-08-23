@@ -8,4 +8,5 @@ export interface QueryGuardProps<U> extends GenericProps {
   args: U;
   fallback?: ReactElement;
   loader?: ReactElement;
+  negate?: boolean;
 }

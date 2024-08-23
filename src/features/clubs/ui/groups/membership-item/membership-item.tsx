@@ -1,5 +1,6 @@
 import { Avatar, HStack, VStack, Text, theme } from '@holdr-ui/react';
 import { IMembership } from '../../../../memberships';
+import { LinkOverlay } from '../../../../../shared';
 
 function MembershipItem({ data }: { data: IMembership }) {
   const percentage = Math.random();
@@ -11,11 +12,13 @@ function MembershipItem({ data }: { data: IMembership }) {
       py={2}
       px={3}
       radius={3}
+      position='relative'
       _hover={{ background: '#9898FF26', cursor: 'pointer' }}
       css={{
         transition: theme.transitions['duration-normal'],
       }}
     >
+      <LinkOverlay to={`/memberships/${data.club.id}`} />
       <Avatar size={60} src={data.club.coverImage} variant='squircle' />
       <VStack gap={2}>
         <Text noOfLines={1} size={3} weight={500}>

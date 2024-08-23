@@ -11,13 +11,17 @@ import {
   Text,
   useDisclosure,
 } from '@holdr-ui/react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import {
   TextGroup,
   TextGroupSubheading,
   usePreviousLocation,
 } from '../../../shared';
 import { FlatList } from '../../../tmp/flat-list';
+import {
+  useClubMembersSuspenseQuery,
+  useSuspenseGetClub,
+} from '../../../features';
 
 const users = [
   {
@@ -143,10 +147,23 @@ const users = [
 ];
 
 function ClubMembersPage() {
+  const { slug } = useParams();
+
   const disclosure = useDisclosure(true);
   const navigate = useNavigate();
   const location = useLocation();
   const previousLocation = usePreviousLocation('/');
+
+  const { data: clubData } = useSuspenseGetClub({
+    slug: slug || '',
+  });
+
+  const { data: membersData } = useClubMembersSuspenseQuery(
+    clubData.club.id,
+    {
+      take: 5,
+    },
+  );
 
   // go back to previous location if the user has account is protected or blocked
 
@@ -196,38 +213,42 @@ function ClubMembersPage() {
               direction='vertical'
               gap={4}
               w='100%'
-              data={users}
-              renderItem={(data) => (
+              data={membersData.clubMembers.edges}
+              renderItem={(item) => (
                 <HStack gap={2} items='center'>
-                  <Avatar src={data.avatar} size={40}>
-                    {Math.random() > 0.5 && (
-                      <AvatarBadge
-                        zIndex={1}
-                        borderColor='#292940'
-                        border={1}
-                        bgColor='#34C05A'
-                        r={0}
-                        b={10}
-                        size='10px'
-                        radius='full'
-                      />
-                    )}
+                  <Avatar
+                    name={item.node.displayName}
+                    src={item.node.avatar}
+                    size={40}
+                  >
+                    {/*{Math.random() > 0.5 && (*/}
+                    {/*  <AvatarBadge*/}
+                    {/*    zIndex={1}*/}
+                    {/*    borderColor='#292940'*/}
+                    {/*    border={1}*/}
+                    {/*    bgColor='#34C05A'*/}
+                    {/*    r={0}*/}
+                    {/*    b={10}*/}
+                    {/*    size='10px'*/}
+                    {/*    radius='full'*/}
+                    {/*  />*/}
+                    {/*)}*/}
                   </Avatar>
                   <TextGroup gap={0}>
                     <TextGroupSubheading weight={500}>
-                      {data.displayName}
+                      {item.node.displayName}
                     </TextGroupSubheading>
                     <TextGroupSubheading
                       color='white700'
                       weight={300}
                       size={1}
                     >
-                      @{data.username}
+                      @{item.node.username}
                     </TextGroupSubheading>
                   </TextGroup>
                 </HStack>
               )}
-              keyExtractor={(item) => item.id}
+              keyExtractor={(item) => item.node.id}
             />
           </DialogBody>
         </DialogContent>

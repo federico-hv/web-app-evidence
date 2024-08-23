@@ -12,6 +12,7 @@ export const Paths = {
   bids: 'live-bids',
   musicAndLinks: 'music-and-links',
   slug: ':slug',
+  id: ':id',
   create: 'create',
   members: 'members',
   edit: 'edit',

@@ -113,23 +113,15 @@ function PostCard({ data }: { data: PostModel }) {
               name={owner.displayName}
             />
 
-            <TextGroup>
-              <TextGroup.Heading weight={500} size={2}>
+            <VStack>
+              <HStack gap={1} css={{ fontSize: '$2', fontWeight: 500 }}>
                 {owner.displayName}
-                <Box as='span' ml={1}>
-                  <Icon name='verified-fill' color='purple500' />
-                </Box>
-              </TextGroup.Heading>
-              <TextGroup.Subheading
-                color='base300'
-                weight={400}
-                css={{
-                  fontSize: '12px',
-                }}
-              >
+                <Icon name='verified-fill' color='purple500' />
+              </HStack>
+              <Text color='base300' weight={400} size={1}>
                 {capitalize(DateUtility.fromNow(createdAt))} ago
-              </TextGroup.Subheading>
-            </TextGroup>
+              </Text>
+            </VStack>
           </HStack>
         </Box>
 

@@ -1,11 +1,10 @@
-import { RadialSurface } from '../../../../../shared';
 import { Box, Heading, VStack } from '@holdr-ui/react';
-import ValueStatistic from './value-statistic';
-import { dummyMembershipValueData } from '../../../shared/constants';
-import GainLossIndicator from '../../../../../shared/components/gain-loss-indicator';
+import { InformationTooltip, RadialSurface } from '../../../../../shared';
+import ValueStatistic from '../membership-value-summary/value-statistic';
 import { getFormattedPriceVal } from '../../../../../shared/utilities/price.utility';
+import { dummyMembershipValueData } from '../../../shared/constants';
 
-function MembershipValueSummary() {
+function ClubOverview() {
   return (
     <RadialSurface radius={4} h='auto' w='100%' css={{ flexShrink: 0 }}>
       <VStack p={4}>
@@ -15,11 +14,10 @@ function MembershipValueSummary() {
           weight={500}
           css={{ userSelect: 'none' }}
         >
-          Membership value
+          Club Overview
         </Heading>
         <Box
-          mt={2}
-          mb={3}
+          my={5}
           h='1px'
           w='100%'
           css={{
@@ -29,25 +27,21 @@ function MembershipValueSummary() {
         <VStack gap={3} justify='flex-end'>
           <ValueStatistic
             label='Average price'
+            description='A description'
             value={getFormattedPriceVal(
               dummyMembershipValueData.averagePrice,
             )}
           />
           <ValueStatistic
-            label='Gains/Losses'
+            label='Last membership sale'
+            description='A description'
             value={getFormattedPriceVal(
-              dummyMembershipValueData.priceChange,
+              dummyMembershipValueData.averagePrice,
             )}
-            leftAddon={
-              dummyMembershipValueData.priceChange !== 0 && (
-                <GainLossIndicator
-                  isGain={dummyMembershipValueData.priceChange > 0}
-                />
-              )
-            }
           />
           <ValueStatistic
             label='Memberships sold'
+            description='A description'
             prefix=''
             value={`${dummyMembershipValueData.membershipsSold}/${dummyMembershipValueData.numOfMemberships}`}
           />
@@ -56,6 +50,6 @@ function MembershipValueSummary() {
     </RadialSurface>
   );
 }
-MembershipValueSummary.displayName = 'MembershipValueSummary';
+ClubOverview.displayName = 'ClubOverview';
 
-export default MembershipValueSummary;
+export default ClubOverview;
