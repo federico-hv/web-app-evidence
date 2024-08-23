@@ -51,8 +51,6 @@ export function useSaveArtistDetails() {
                   },
                 });
 
-                console.log(artistDetails);
-
                 return current;
               },
               externalArtistLinks(current = []) {
