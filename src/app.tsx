@@ -8,7 +8,7 @@ import {
   RouteChangeListener,
   ToastProvider,
 } from './shared';
-import { ArtistProvider, AuthProvider, Pendo } from './features';
+import { ArtistProvider, AuthProvider } from './features';
 import { Tooltip } from '@holdr-ui/react';
 import Router from './router';
 import { loadErrorMessages, loadDevMessages } from '@apollo/client/dev';
@@ -26,32 +26,30 @@ export function App() {
   globalStyles();
 
   return (
-    <Pendo>
-      <Elements stripe={stripePromise}>
-        <CookiesProvider>
-          <HelmetProvider>
-            <ApolloProvider client={GQLClient}>
-              <AuthProvider>
-                <ArtistProvider>
-                  <AlertDialogProvider>
-                    <ToastProvider>
-                      <Tooltip.Provider>
-                        <BrowserRouter
-                          basename={import.meta.env.VITE_APP_BASE_PATH}
-                        >
-                          <RouteChangeListener>
-                            <Router />
-                          </RouteChangeListener>
-                        </BrowserRouter>
-                      </Tooltip.Provider>
-                    </ToastProvider>
-                  </AlertDialogProvider>
-                </ArtistProvider>
-              </AuthProvider>
-            </ApolloProvider>
-          </HelmetProvider>
-        </CookiesProvider>
-      </Elements>
-    </Pendo>
+    <Elements stripe={stripePromise}>
+      <CookiesProvider>
+        <HelmetProvider>
+          <ApolloProvider client={GQLClient}>
+            <AuthProvider>
+              <ArtistProvider>
+                <AlertDialogProvider>
+                  <ToastProvider>
+                    <Tooltip.Provider>
+                      <BrowserRouter
+                        basename={import.meta.env.VITE_APP_BASE_PATH}
+                      >
+                        <RouteChangeListener>
+                          <Router />
+                        </RouteChangeListener>
+                      </BrowserRouter>
+                    </Tooltip.Provider>
+                  </ToastProvider>
+                </AlertDialogProvider>
+              </ArtistProvider>
+            </AuthProvider>
+          </ApolloProvider>
+        </HelmetProvider>
+      </CookiesProvider>
+    </Elements>
   );
 }
