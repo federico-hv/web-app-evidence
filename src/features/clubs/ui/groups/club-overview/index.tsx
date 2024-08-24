@@ -1,10 +1,11 @@
 import { Box, Heading, VStack } from '@holdr-ui/react';
-import { InformationTooltip, RadialSurface } from '../../../../../shared';
+import { formatMoney, RadialSurface } from '../../../../../shared';
 import ValueStatistic from '../membership-value-summary/value-statistic';
-import { getFormattedPriceVal } from '../../../../../shared/utilities/price.utility';
-import { dummyMembershipValueData } from '../../../shared/constants';
+import { useClubOverviewSuspenseQuery } from '../../../../stats';
 
 function ClubOverview() {
+  const { data } = useClubOverviewSuspenseQuery();
+
   return (
     <RadialSurface radius={4} h='auto' w='100%' css={{ flexShrink: 0 }}>
       <VStack p={4}>
@@ -28,22 +29,18 @@ function ClubOverview() {
           <ValueStatistic
             label='Average price'
             description='A description'
-            value={getFormattedPriceVal(
-              dummyMembershipValueData.averagePrice,
-            )}
+            value={formatMoney(data.clubOverview.averagePrice.value)}
           />
           <ValueStatistic
             label='Last membership sale'
             description='A description'
-            value={getFormattedPriceVal(
-              dummyMembershipValueData.averagePrice,
-            )}
+            value={formatMoney(data.clubOverview.lastSale.value)}
           />
           <ValueStatistic
             label='Memberships sold'
             description='A description'
             prefix=''
-            value={`${dummyMembershipValueData.membershipsSold}/${dummyMembershipValueData.numOfMemberships}`}
+            value={`${data.clubOverview.membershipCount.numerator}/${data.clubOverview.membershipCount.denominator}`}
           />
         </VStack>
       </VStack>
