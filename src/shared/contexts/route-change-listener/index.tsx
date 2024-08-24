@@ -31,7 +31,7 @@ function RouteChangeListener({ children }: GenericProps) {
 
   const location = useLocation();
   const previousLocationRef = useRef(location);
-
+  
   return (
     <RouteChangeListenerContextProvider value={state}>
       {children}
