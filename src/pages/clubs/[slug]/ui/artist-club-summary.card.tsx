@@ -27,19 +27,20 @@ function ArtistClubSummaryCard() {
           key={artistData.artist.name}
           src={artistData.artist.avatar}
           name={artistData.artist.name}
+          fallbackTextSize={10}
           size={'136px'}
           variant='squircle'
         >
-          <AvatarBadge
-            zIndex={1}
-            bgColor='#34C05A'
-            borderColor='#292940'
-            border={1}
-            r={10}
-            b={10}
-            size={'20px'}
-            radius='full'
-          />
+          {/*<AvatarBadge*/}
+          {/*  zIndex={1}*/}
+          {/*  bgColor='#34C05A'*/}
+          {/*  borderColor='#292940'*/}
+          {/*  border={1}*/}
+          {/*  r={10}*/}
+          {/*  b={10}*/}
+          {/*  size={'20px'}*/}
+          {/*  radius='full'*/}
+          {/*/>*/}
         </Avatar>
         <VStack gap={2} flex={1} justify='center'>
           <HStack gap={2} items='center'>

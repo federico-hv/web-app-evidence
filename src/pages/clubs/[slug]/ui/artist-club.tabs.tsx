@@ -3,6 +3,7 @@ import { Navigate, useParams } from 'react-router-dom';
 import {
   GQLRenderer,
   makePath,
+  NotFoundError,
   Paths,
   RadialSurface,
   RoutingTabs,
@@ -12,7 +13,12 @@ import {
   RoutingTabsTrigger,
   voidFn,
 } from '../../../../shared';
-import { CheckBidStatus, useSuspenseGetClub } from '../../../../features';
+import {
+  CheckBidStatus,
+  useCurrentUser,
+  useSuspenseGetArtist,
+  useSuspenseGetClub,
+} from '../../../../features';
 import ArtistClubHeader from './artist-club.header';
 import { useGetAuctionQuery } from '../../../../features';
 import AuctionAlert from './auction.alert';
@@ -21,10 +27,17 @@ import { AuctionAlertProvider } from '../shared/contexts';
 function Content() {
   const { slug } = useParams();
 
+  const currentUser = useCurrentUser();
+
   const { data } = useSuspenseGetClub({ slug: slug || '' });
+
   const { data: auctionData, error: auctionError } = useGetAuctionQuery(
     data?.club.id,
   );
+
+  const { data: artistData } = useSuspenseGetArtist({
+    slug,
+  });
 
   const activeAuction =
     auctionData?.auction?.id != null && auctionError == null;
@@ -58,16 +71,18 @@ function Content() {
                   borderColor='rgba(152, 152, 255, 0.10)'
                 >
                   <RoutingTabsList gap={1}>
-                    <RoutingTabsTrigger
-                      to='bio'
-                      w='fit-content'
-                      py={2}
-                      px={6}
-                      fontSize={2}
-                      _hover={{ background: '#9898FF26' }}
-                    >
-                      Bio
-                    </RoutingTabsTrigger>
+                    {currentUser.id !== artistData.artist.accountId && (
+                      <RoutingTabsTrigger
+                        to='bio'
+                        w='fit-content'
+                        py={2}
+                        px={6}
+                        fontSize={2}
+                        _hover={{ background: '#9898FF26' }}
+                      >
+                        Bio
+                      </RoutingTabsTrigger>
+                    )}
                     <RoutingTabsTrigger
                       to='feeds'
                       w='fit-content'
@@ -122,9 +137,7 @@ function Content() {
 
 function ArtistClubTabs() {
   return (
-    <GQLRenderer
-      ErrorFallback={() => <Navigate to={makePath([Paths.clubs])} />}
-    >
+    <GQLRenderer ErrorFallback={() => <NotFoundError />}>
       <Content />
     </GQLRenderer>
   );

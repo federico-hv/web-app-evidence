@@ -7,6 +7,16 @@ export const noShrink = css({
   flexShrink: 0,
 });
 
+export const createShimmer = (startColor: string, endColor: string) =>
+  keyframes({
+    '0%': {
+      backgroundColor: startColor,
+    },
+    '100%': {
+      backgroundColor: endColor,
+    },
+  });
+
 export const MotionBox = motion(Box);
 export const MotionDot = motion(Circle);
 

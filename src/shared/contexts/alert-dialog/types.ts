@@ -7,6 +7,8 @@ export interface AlertDialogContextState {
   cancelText?: string;
   onAction?: VoidFunction;
   onCancel?: VoidFunction;
+  loadingText?: string;
+  isLoading?: boolean;
 }
 
 export interface IAlertDialogContext {

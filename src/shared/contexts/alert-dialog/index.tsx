@@ -40,6 +40,8 @@ function AlertDialogProvider({ children }: GenericProps) {
     onClose();
   };
 
+  console.log(current?.isLoading);
+
   return (
     <>
       <AlertDialogContext.Provider
@@ -100,6 +102,8 @@ function AlertDialogProvider({ children }: GenericProps) {
                 py={0}
               >
                 <Button
+                  isLoading={current.isLoading}
+                  loadingText={current.loadingText}
                   autoFocus
                   tabIndex={0}
                   css={{ px: '28px' }}

@@ -56,6 +56,7 @@ export const GET_CLUB_PERKS = gql`
       perks {
         id
         label
+        description
       }
     }
   }

@@ -1,6 +1,6 @@
 import { useMutation } from '@apollo/client';
 import { LINK_PAYMENT_METHOD } from './schema';
-import { ISuccessResponse } from '../../../shared';
+import { ErrorMessage, ISuccessResponse, useToast } from '../../../shared';
 import { CHECK_HAS_PAYMENT_METHOD } from '../queries';
 
 /**
@@ -9,6 +9,8 @@ import { CHECK_HAS_PAYMENT_METHOD } from '../queries';
  * to an existing/new stripe customer (i.e. a user).
  */
 export function useLinkPaymentMethodMutation() {
+  const { openWith } = useToast();
+
   const [mutate, result] = useMutation<
     {
       linkPaymentMethod: ISuccessResponse;
@@ -31,7 +33,13 @@ export function useLinkPaymentMethodMutation() {
         refetchQueries: [{ query: CHECK_HAS_PAYMENT_METHOD }],
       });
     } catch (e) {
-      // show a toast
+      if (import.meta.env.VITE_ENVIRONMENT === 'development') {
+        console.error(e);
+      }
+      openWith({
+        status: 'danger',
+        description: ErrorMessage.Any,
+      });
     }
   };
 

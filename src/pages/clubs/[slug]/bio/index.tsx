@@ -18,20 +18,15 @@ import {
   VStack,
 } from '@holdr-ui/react';
 import {
+  useClubMembersSuspenseQuery,
   useSuspenseGetArtist,
+  useSuspenseGetClub,
   useSuspenseGetCollaborators,
 } from '../../../../features';
 import { Fragment, useState } from 'react';
 import { FlatList } from '../../../../tmp/flat-list';
 import ArtistClubBioAdditionalContent from '../ui/artist-club-bio-additional.content';
 import { ArtistClubSummaryCard } from '../ui';
-
-const imageSrcs = [
-  'https://www.gravatar.com/avatar/2c7d99fe281ecd3bcd65ab915bac6dd5?s=250',
-  'https://i.pravatar.cc/250?u=mail@ashallendesign.co.uk',
-  'https://avatar.iran.liara.run/public/boy?username=Ash',
-  'https://api.dicebear.com/7.x/adventurer-neutral/svg?seed=mail@ashallendesign.co.uk',
-];
 
 function SeeMoreText({ text }: { text: string }) {
   const NumberOfLines = 3;
@@ -65,9 +60,79 @@ function SeeMoreText({ text }: { text: string }) {
   );
 }
 
-function ArtistClubBioPage() {
+function ClubMembers() {
+  const { slug } = useParams();
+
   const { pathname } = useLocation();
   const previousLocation = usePreviousLocation(pathname);
+
+  const { data: clubData } = useSuspenseGetClub({
+    slug: slug || '',
+  });
+
+  const { data: membersData } = useClubMembersSuspenseQuery(
+    clubData.club.id,
+    {
+      take: 5,
+    },
+  );
+
+  if (membersData.clubMembers.total === 0) {
+    return <Fragment />;
+  }
+
+  return (
+    <VStack>
+      <HStack justify={'space-between'}>
+        <Box flex={1} h='21px'>
+          <Heading weight={500} size={4}>
+            Club Members
+          </Heading>
+        </Box>
+        <Link
+          to={makePath([Paths.clubs, slug || '', 'members'])}
+          state={{ previousLocation }}
+        >
+          <Text size={4} weight={300} color='purple200'>
+            View all
+          </Text>
+        </Link>
+      </HStack>
+      <Heading
+        size={'16px'}
+        weight={300}
+        color='white700'
+        css={{ marginTop: '$1', lineHeight: 1.5 }}
+      >
+        {membersData.clubMembers.total} Members
+      </Heading>
+      <VStack pt='20px' pb='8px'>
+        <AvatarGroup max={7} borderColor='#292940' size={'56px'}>
+          {membersData.clubMembers.edges.map((item) => (
+            <Avatar
+              key={item.node.id}
+              src={item.node.avatar}
+              name={item.node.displayName}
+            >
+              {/*<AvatarBadge*/}
+              {/*  zIndex={1}*/}
+              {/*  borderColor='#292940'*/}
+              {/*  border={1}*/}
+              {/*  bgColor='#34C05A'*/}
+              {/*  r={10}*/}
+              {/*  b={5}*/}
+              {/*  size={'12px'}*/}
+              {/*  radius='full'*/}
+              {/*/>*/}
+            </Avatar>
+          ))}
+        </AvatarGroup>
+      </VStack>
+    </VStack>
+  );
+}
+
+function ArtistClubBioPage() {
   const { slug } = useParams();
 
   const { data: artistData } = useSuspenseGetArtist({
@@ -175,49 +240,8 @@ function ArtistClubBioPage() {
                 />
               </Fragment>
             )}
-            <VStack>
-              <HStack justify={'space-between'}>
-                <Box flex={1} h='21px'>
-                  <Heading weight={500} size={4}>
-                    Club Members
-                  </Heading>
-                </Box>
-                <Link
-                  to={makePath([Paths.clubs, slug || '', 'members'])}
-                  state={{ previousLocation }}
-                >
-                  <Text size={4} weight={300} color='purple200'>
-                    View all
-                  </Text>
-                </Link>
-              </HStack>
-              <Heading
-                size={'16px'}
-                weight={300}
-                color='white700'
-                css={{ marginTop: '$1', lineHeight: 1.5 }}
-              >
-                50 Members
-              </Heading>
-              <VStack pt='20px' pb='8px'>
-                <AvatarGroup max={7} borderColor='#292940' size={'56px'}>
-                  {imageSrcs.map((item) => (
-                    <Avatar key={item} src={item} name='Micky Weekes'>
-                      <AvatarBadge
-                        zIndex={1}
-                        borderColor='#292940'
-                        border={1}
-                        bgColor='#34C05A'
-                        r={10}
-                        b={5}
-                        size={'12px'}
-                        radius='full'
-                      />
-                    </Avatar>
-                  ))}
-                </AvatarGroup>
-              </VStack>
-            </VStack>
+
+            <ClubMembers />
           </VStack>
         </VStack>
 

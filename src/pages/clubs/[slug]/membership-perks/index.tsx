@@ -1,18 +1,31 @@
-import { Box, VStack, Heading, StackDivider } from '@holdr-ui/react';
+import {
+  Box,
+  VStack,
+  Heading,
+  StackDivider,
+  useGeneralContext,
+} from '@holdr-ui/react';
 import { Fragment } from 'react';
-import { useSuspenseGetArtist } from '../../../../features';
+import {
+  IClub,
+  useSuspenseGetArtist,
+  useSuspenseGetClubPerks,
+} from '../../../../features';
 import { ArtistClubPerkItem } from './ui';
 import { FlatList } from '../../../../tmp/flat-list';
 import { Head, RadialSurface } from '../../../../shared';
 import { useParams } from 'react-router-dom';
-import { dummyPerksData } from '../shared';
 
 function ArtistClubMembershipPerksPage() {
   const { slug } = useParams();
 
+  const { state: club } = useGeneralContext<IClub>();
+
   const { data: artistData } = useSuspenseGetArtist({
     slug,
   });
+
+  const { data: perksData } = useSuspenseGetClubPerks(club.id);
 
   return (
     <Fragment>
@@ -43,7 +56,7 @@ function ArtistClubMembershipPerksPage() {
             py={8}
             gap={8}
             direction='vertical'
-            data={dummyPerksData}
+            data={perksData.clubPerks.perks}
             renderItem={(item) => <ArtistClubPerkItem data={item} />}
             keyExtractor={(item) => `MembershipDetails-${item.id}`}
           />

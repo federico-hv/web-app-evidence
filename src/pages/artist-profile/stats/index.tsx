@@ -526,16 +526,16 @@ function ArtistProfileStatsPage() {
           />
         </RadialSurface2>
       </HStack>
-      <RadialSurface2 w='100%' p={4} radius={3}>
-        <Box pb={2} w='100%' borderBottom={1} borderColor='#9898FF1A'>
-          <Heading size={5} weight={400}>
-            Membership Activity
-          </Heading>
-        </Box>
-        <VStack mt={6} minHeight={300}>
-          <HStack></HStack>
-        </VStack>
-      </RadialSurface2>
+      {/*<RadialSurface2 w='100%' p={4} radius={3}>*/}
+      {/*  <Box pb={2} w='100%' borderBottom={1} borderColor='#9898FF1A'>*/}
+      {/*    <Heading size={5} weight={400}>*/}
+      {/*      Membership Activity*/}
+      {/*    </Heading>*/}
+      {/*  </Box>*/}
+      {/*  <VStack mt={6} minHeight={300}>*/}
+      {/*    <HStack></HStack>*/}
+      {/*  </VStack>*/}
+      {/*</RadialSurface2>*/}
     </VStack>
   );
 }

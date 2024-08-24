@@ -4,7 +4,6 @@ export const dummyPerksData: IPerk[] = [
   {
     id: 1,
     label: 'Private Chat',
-    additionalInfo: '',
     description: `Access to a dedicated online fan club community, where
     members can connect, share stories, and discuss their love
     for the artist. Exclusive forums and chatrooms will foster
@@ -13,7 +12,6 @@ export const dummyPerksData: IPerk[] = [
   {
     id: 2,
     label: 'Direct notifications',
-    additionalInfo: '',
     description: `Members will receive updates and personalized responses
     providing a unique opportunity for them to connect directly
     with their favourite artists.`,
@@ -21,7 +19,6 @@ export const dummyPerksData: IPerk[] = [
   {
     id: 3,
     label: 'FOTL (Front of the line) Access',
-    additionalInfo: '',
     description: `Members receive a unique pass granting them VIP access to
     all of the musician's concerts and performances, including
     sound checks and meet-and-greet sessions.`,
@@ -29,7 +26,6 @@ export const dummyPerksData: IPerk[] = [
   {
     id: 4,
     label: 'Community Playlist',
-    additionalInfo: '',
     description: `Members receive an invite to Boslen’s exclusive playlist
     granting them access to all of the musician's favourite new
     songs, and allowing them to connect and curate the playlist
@@ -38,7 +34,6 @@ export const dummyPerksData: IPerk[] = [
   {
     id: 5,
     label: 'VIP Tickets to Infinite Solitude Tour',
-    additionalInfo: '(2 tickets per member)',
     description: `Members will have priority access to pre-sale tickets for
     all concerts and events, ensuring they get the best seats
     in the house before they go on sale to the general public.`,
@@ -46,7 +41,6 @@ export const dummyPerksData: IPerk[] = [
   {
     id: 6,
     label: 'Exclusive Lightning Collective Hoodies',
-    additionalInfo: '(1 product per member)',
     description: `Members enjoy exclusive discounts on the artist's official
     merchandise, allowing them to show their support with
     unique items at a more affordable price.`,
@@ -54,7 +48,6 @@ export const dummyPerksData: IPerk[] = [
   {
     id: 7,
     label: 'Private access to unreleased music and videos',
-    additionalInfo: '',
     description: `Access to an extensive library of unreleased music, demos,
     and rare recordings. Members can explore the artist's
     musical journey, discovering hidden gems and unreleased

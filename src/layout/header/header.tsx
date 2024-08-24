@@ -4,10 +4,13 @@ import { RadialSurface } from '../../shared';
 import {
   MyMembershipList,
   MyMembersList,
+  useCurrentUser,
+  UserRoleEnum,
   WatchlistList,
 } from '../../features';
 
 function Header() {
+  const currentUser = useCurrentUser();
   return (
     <Box
       as='header'
@@ -22,7 +25,13 @@ function Header() {
         t={80}
         pb={4}
       >
-        <VStack gap={4} w={{ '@bp4': 90, '@bp7': 308 }} h='100%'>
+        <VStack
+          gap={4}
+          w={{ '@bp4': 90, '@bp7': 308 }}
+          h='100%'
+          overflowY='auto'
+          className='hide-scrollbar'
+        >
           <RadialSurface
             w='100%'
             // h={248}
@@ -34,8 +43,11 @@ function Header() {
             <NavigationList />
           </RadialSurface>
           <RadialSurface w='100%' radius={4}>
-            <MyMembershipList />
-            <MyMembersList />
+            {currentUser.role === UserRoleEnum.GeneralUser ? (
+              <MyMembershipList />
+            ) : (
+              <MyMembersList />
+            )}
           </RadialSurface>
           <RadialSurface w='100%' radius={4}>
             <WatchlistList />

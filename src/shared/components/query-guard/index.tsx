@@ -12,6 +12,7 @@ function QueryGuard<
   T extends { [key: string]: boolean },
   U extends OperationVariables,
 >({
+  negate = false,
   query,
   args,
   name,
@@ -29,7 +30,11 @@ function QueryGuard<
 
   return (
     <Loader as={loader} h='100%' loading={loading}>
-      {data && !data[name] ? children : fallback}
+      {negate ? (
+        <Fragment>{data && data[name] ? children : fallback}</Fragment>
+      ) : (
+        <Fragment>{data && !data[name] ? children : fallback}</Fragment>
+      )}
     </Loader>
   );
 }

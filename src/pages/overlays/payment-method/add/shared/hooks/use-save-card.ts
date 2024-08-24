@@ -9,12 +9,21 @@ import {
   useLinkPaymentMethodMutation,
 } from '../../../../../../features';
 import { useState } from 'react';
+import { useRecordState } from '@holdr-ui/react';
+
+interface CodeError {
+  title: string;
+  message: string;
+  code?: string;
+}
 
 /**
  * Returns a method that sets up a setup intent on Stripe
  * and links a user's customer account to a card on Stripe.
  */
 export function useSaveCard() {
+  const [error, updateError] = useRecordState<null | CodeError>(null);
+
   const [loading, setLoading] = useState(false);
 
   const stripe = useStripe();
@@ -23,6 +32,14 @@ export function useSaveCard() {
 
   const { createSetupIntent } = useCreateSetupIntentMutation();
   const { linkPaymentMethod } = useLinkPaymentMethodMutation();
+
+  const createError = (data: CodeError) => {
+    setLoading(false);
+
+    updateError(data);
+
+    return { error };
+  };
 
   if (!stripe || !elements) {
     return { saveCard: null, loading: false };
@@ -35,25 +52,32 @@ export function useSaveCard() {
    * @param billingInfo The customer billing information
    */
   const saveCard = async (billingInfo: SaveCardDataType) => {
-    setLoading(true);
+    try {
+      setLoading(true);
 
-    const cardNumberElement = elements.getElement(CardNumberElement);
+      const cardNumberElement = elements.getElement(CardNumberElement);
 
-    if (!cardNumberElement) {
-      throw new Error('Failed to find the card number element.');
-    }
+      if (!cardNumberElement) {
+        return createError({
+          title: 'Failed to save card',
+          message: 'Something went wrong. Please try again later.',
+        });
+      }
 
-    // create a stripe intent
-    const result = await createSetupIntent();
+      // create a stripe intent
+      const result = await createSetupIntent();
 
-    if (!result || !result.data) {
-      throw new Error('Failed to retrieve setup intent token.');
-    }
+      if (!result || !result.data) {
+        return createError({
+          title: 'Failed to save card',
+          message:
+            'We could no connect with Stripe at the moment. Please try again..',
+        });
+      }
 
-    const secret = result.data.createSetupIntent;
-    // link card to the customer account
-    const cardSetup = await stripe
-      .confirmCardSetup(secret, {
+      const secret = result.data.createSetupIntent;
+      // link card to the customer account
+      const cardSetup = await stripe.confirmCardSetup(secret, {
         payment_method: {
           card: cardNumberElement,
           billing_details: {
@@ -68,33 +92,54 @@ export function useSaveCard() {
             },
           },
         },
-      })
-      .catch((e) => {
-        console.error(e);
-        throw new Error('Failed to confirm the card details.');
       });
 
-    if (
-      !cardSetup ||
-      !cardSetup.setupIntent ||
-      !cardSetup.setupIntent.payment_method
-    ) {
-      throw new Error('Something went wrong, please try again later.');
-    }
+      if (cardSetup.error) {
+        if (import.meta.env.VITE_ENVIRONMENT !== 'production')
+          console.error(cardSetup.error);
 
-    const linkCardResult = await linkPaymentMethod(
-      cardSetup.setupIntent.payment_method as string, // we did not ask for the expanded result.
-    );
+        return createError({
+          title: 'Failed to save card',
+          message:
+            cardSetup.error.message ??
+            'Something went wrong while saving your card. Please try a different card or contact support if the problem persists',
+          code: cardSetup.error.code,
+        });
+      }
 
-    if (!linkCardResult || !linkCardResult.data) {
-      throw new Error('Something went wrong, please try again later.');
-    }
+      const linkCardResult = await linkPaymentMethod(
+        cardSetup.setupIntent.payment_method as string,
+      );
 
-    if (!linkCardResult.data.linkPaymentMethod.isSuccess) {
-      throw new Error(linkCardResult.data.linkPaymentMethod.message);
+      if (!linkCardResult || !linkCardResult.data) {
+        return createError({
+          title: 'Failed to save card',
+          message:
+            'We failed to link the card you provided to your account. Please try again.',
+        });
+      }
+
+      if (!linkCardResult.data.linkPaymentMethod.isSuccess) {
+        return createError({
+          title: 'Failed to save card',
+          message:
+            'We failed to link the card you provided to your account. Please try again.',
+        });
+      }
+
+      setLoading(false);
+    } catch (e: any) {
+      if (import.meta.env.VITE_ENVIRONMENT !== 'production')
+        console.error(e);
+
+      return createError({
+        title: 'Failed to save card',
+        message:
+          e.message ??
+          'Something went wrong while saving your card. Please try a different card or contact support if the problem persists.',
+      });
     }
-    setLoading(false);
   };
 
-  return { saveCard, loading };
+  return { saveCard, loading, error };
 }

@@ -29,16 +29,22 @@ function MembershipValueSummary() {
         <VStack gap={3} justify='flex-end'>
           <ValueStatistic
             label='Average price'
-            value={
-              getFormattedPriceVal(dummyMembershipValueData.averagePrice)
-            }
+            value={getFormattedPriceVal(
+              dummyMembershipValueData.averagePrice,
+            )}
           />
           <ValueStatistic
             label='Gains/Losses'
-            value={
-              getFormattedPriceVal(dummyMembershipValueData.priceChange)
+            value={getFormattedPriceVal(
+              dummyMembershipValueData.priceChange,
+            )}
+            leftAddon={
+              dummyMembershipValueData.priceChange !== 0 && (
+                <GainLossIndicator
+                  isGain={dummyMembershipValueData.priceChange > 0}
+                />
+              )
             }
-            leftAddon={dummyMembershipValueData.priceChange !== 0 && <GainLossIndicator isGain={dummyMembershipValueData.priceChange > 0}/>}
           />
           <ValueStatistic
             label='Memberships sold'

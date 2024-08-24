@@ -9,9 +9,18 @@ import { useRelationshipCount } from '../shared';
 import FollowCountItem from './follow-count-item';
 import { makePath } from '../../../shared';
 import { useQuery } from '@apollo/client';
-import { bool } from 'yup';
+import { TextProps } from '@holdr-ui/react/dist/components/text/src/text.types';
 
-export function UserRelationshipCount({ username }: { username: string }) {
+export function UserRelationshipCount({
+  colorTheme = 'primary',
+  username,
+  labelProps,
+  countProps,
+}: { username: string } & {
+  colorTheme?: 'primary' | 'secondary';
+  labelProps?: TextProps;
+  countProps?: TextProps;
+}) {
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
@@ -51,12 +60,15 @@ export function UserRelationshipCount({ username }: { username: string }) {
           divider={<Circle bgColor='black300' size='5px' />}
         >
           <FollowCountItem
+            labelProps={labelProps}
+            countProps={countProps}
             onClick={
               checkData.checkIsProfileBlockedOrProtected
                 ? undefined
                 : () =>
                     navigate(makePath([username, 'followers']), {
                       state: {
+                        colorTheme,
                         previousLocation: pathname,
                       },
                     })
@@ -65,12 +77,15 @@ export function UserRelationshipCount({ username }: { username: string }) {
             label='Followers'
           />
           <FollowCountItem
+            labelProps={labelProps}
+            countProps={countProps}
             onClick={
               checkData.checkIsProfileBlockedOrProtected
                 ? undefined
                 : () =>
                     navigate(makePath([username, 'following']), {
                       state: {
+                        colorTheme,
                         previousLocation: pathname,
                       },
                     })

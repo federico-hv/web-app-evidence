@@ -2,10 +2,24 @@ import { UserWithRelationship } from '../shared';
 import { Avatar, Box, HStack, Text } from '@holdr-ui/react';
 import { LinkOverlay } from '../../../shared';
 import { SocialButton } from './index';
+import { ThemeColor } from '@holdr-ui/react/dist/shared/types';
 
-function FollowItem({ data }: { data: UserWithRelationship }) {
+function FollowItem({
+  data,
+  color,
+  colorTheme,
+}: {
+  data: UserWithRelationship;
+  color?: ThemeColor;
+  colorTheme?: { follow?: ThemeColor; following?: ThemeColor };
+}) {
   return (
-    <HStack justify='space-between' items='center' position='relative'>
+    <HStack
+      color={color}
+      justify='space-between'
+      items='center'
+      position='relative'
+    >
       <LinkOverlay
         to={`${data.role === 'artist' ? '/clubs' : ''}/${data.username}`}
       />
@@ -25,6 +39,7 @@ function FollowItem({ data }: { data: UserWithRelationship }) {
       {/* Show the current viewers relationship with the user*/}
       <Box zIndex={5}>
         <SocialButton
+          colorTheme={colorTheme}
           username={data.username}
           statusInfo={data.relationshipStatusInfo}
         />

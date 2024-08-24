@@ -16,7 +16,7 @@ const Colors: Record<
   { backgroundColor: string; color: ThemeColor }
 > = {
   success: {
-    backgroundColor: 'rgba(70, 105, 76)',
+    backgroundColor: 'rgb(70, 105, 76)',
     color: 'success50',
   },
   warning: {

@@ -4,36 +4,72 @@ import {
   RadialSurface,
   TextGroup,
   TextGroupSubheading,
+  usePreviousLocation,
 } from '../../../shared';
 import { useCurrentUser } from '../../auth';
 import { Fragment } from 'react';
 import millify from 'millify';
 import { useSuspenseRelationshipCount } from '../../relationships';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import {
+  useClubMembersSuspenseQuery,
+  useUserMembershipsSuspenseQuery,
+} from '../../memberships';
+import { useSuspenseGetClub } from '../../clubs';
 
 function Members() {
+  const currentUser = useCurrentUser();
+
+  const { data: clubData } = useSuspenseGetClub({
+    slug: currentUser.username,
+  });
+
+  const { data: membersData } = useClubMembersSuspenseQuery(
+    clubData.club.id,
+  );
+
+  const { pathname } = useLocation();
+  const previousLocation = usePreviousLocation(pathname);
+
   return (
-    <TextGroup w='fit-content' direction='horizontal' gap={1}>
-      <TextGroupSubheading size={1}>
-        {millify(0, { precision: 2 })}
-      </TextGroupSubheading>
-      <TextGroupSubheading size={1} color='base300'>
-        Members
-      </TextGroupSubheading>
-    </TextGroup>
+    <Link
+      to={`/clubs/${currentUser.username}/members`}
+      state={{ previousLocation }}
+    >
+      <TextGroup w='fit-content' direction='horizontal' gap={1}>
+        <TextGroupSubheading size={1}>
+          {millify(membersData.clubMembers.total, { precision: 2 })}
+        </TextGroupSubheading>
+        <TextGroupSubheading size={1} color='base300'>
+          Members
+        </TextGroupSubheading>
+      </TextGroup>
+    </Link>
   );
 }
 
 function Memberships() {
+  const currentUser = useCurrentUser();
+
+  const { pathname } = useLocation();
+  const previousLocation = usePreviousLocation(pathname);
+
+  const { data } = useUserMembershipsSuspenseQuery(currentUser.username);
+
   return (
-    <TextGroup w='fit-content' direction='horizontal' gap={1}>
-      <TextGroupSubheading size={1}>
-        {millify(0, { precision: 2 })}
-      </TextGroupSubheading>
-      <TextGroupSubheading size={1} color='base300'>
-        Memberships
-      </TextGroupSubheading>
-    </TextGroup>
+    <Link
+      to={`/${currentUser.username}/memberships`}
+      state={{ previousLocation }}
+    >
+      <TextGroup w='fit-content' direction='horizontal' gap={1}>
+        <TextGroupSubheading size={1}>
+          {millify(data.userMemberships.total, { precision: 2 })}
+        </TextGroupSubheading>
+        <TextGroupSubheading size={1} color='base300'>
+          Memberships
+        </TextGroupSubheading>
+      </TextGroup>
+    </Link>
   );
 }
 

@@ -101,9 +101,9 @@ function PostCard({ data }: { data: PostModel }) {
         direction='horizontal'
         justify='space-between'
       >
-        <HStack gap={3} position='relative'>
+        <Box position='relative'>
           <LinkOverlay to={prefix('/clubs/', owner.username)} />
-          <VStack>
+          <HStack gap={3}>
             <Avatar
               variant='squircle'
               src={owner.avatar}
@@ -112,27 +112,18 @@ function PostCard({ data }: { data: PostModel }) {
               }}
               name={owner.displayName}
             />
-          </VStack>
-          <TextGroup>
-            <TextGroup.Heading
-              weight={500}
-              css={{
-                fontSize: '14px',
-              }}
-            >
-              {owner.displayName}
-            </TextGroup.Heading>
-            <TextGroup.Subheading
-              color='base300'
-              weight={400}
-              css={{
-                fontSize: '12px',
-              }}
-            >
-              {capitalize(DateUtility.fromNow(createdAt))} ago
-            </TextGroup.Subheading>
-          </TextGroup>
-        </HStack>
+
+            <VStack>
+              <HStack gap={1} css={{ fontSize: '$2', fontWeight: 500 }}>
+                {owner.displayName}
+                <Icon name='verified-fill' color='purple500' />
+              </HStack>
+              <Text color='base300' weight={400} size={1}>
+                {capitalize(DateUtility.fromNow(createdAt))} ago
+              </Text>
+            </VStack>
+          </HStack>
+        </Box>
 
         <Box position='relative' css={{ zIndex: 5 }}>
           {currentUser && currentUser.id === owner.id ? (
@@ -177,7 +168,7 @@ function PostCard({ data }: { data: PostModel }) {
         justify='space-between'
         w='100%'
       >
-        <HStack gap={6} items='center'>
+        <HStack gap={2} items='center'>
           <FeedLikeGroup />
           <FeedCommentGroup />
           {/*<FeedShareGroup />*/}

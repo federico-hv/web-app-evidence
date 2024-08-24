@@ -7,6 +7,7 @@ import { GQLRenderer } from '../../../../shared';
 
 const ClubContext = createContext<IClub>({
   createdAt: new Date(),
+  name: '',
   id: '',
 });
 

@@ -1,5 +1,5 @@
 import { useLocation } from 'react-router-dom';
-import { createContext, useContext, useEffect, useRef } from 'react';
+import { createContext, useContext, useRef } from 'react';
 import { GenericProps, useRecordState } from '@holdr-ui/react';
 
 export interface IRouteChangeListenerContext {
@@ -31,32 +31,7 @@ function RouteChangeListener({ children }: GenericProps) {
 
   const location = useLocation();
   const previousLocationRef = useRef(location);
-
-  useEffect(() => {
-    if (previousLocationRef.current !== location) {
-      update({
-        hasPathChanged: true,
-        prevPathname: previousLocationRef.current.pathname,
-        newPathname: location.pathname,
-      });
-
-      previousLocationRef.current = location;
-    }
-
-    // @ts-ignore
-    if (window.pendo) {
-      // @ts-ignore
-      console.log(
-        `PATH FULL URL: ${window.location.origin}${location.pathname}`,
-      );
-      // @ts-ignore
-      window.pendo.pageLoad(
-        // 'https://staging.holdrsclub.com/federicoteststaging/new-route',
-        `${window.location.origin}${location.pathname}`,
-      );
-    }
-  }, [location]);
-
+  
   return (
     <RouteChangeListenerContextProvider value={state}>
       {children}

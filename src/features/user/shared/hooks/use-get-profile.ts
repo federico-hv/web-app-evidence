@@ -1,6 +1,6 @@
 import { useLazyQuery, useQuery, useSuspenseQuery } from '@apollo/client';
 import { IProfile } from '../types';
-import { GET_PROFILE } from '../../queries/schema';
+import { GET_PROFILE } from '../../queries';
 
 export function useGetProfile(username: string) {
   return useQuery<{ profile: IProfile }, { username: string }>(

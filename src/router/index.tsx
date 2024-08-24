@@ -27,6 +27,7 @@ import { MainLayout } from '../layout';
 import { Fragment } from 'react';
 import { useLocation } from 'react-router-dom';
 import { DevRoutes } from './__dev__';
+import NotificationsPage from '../pages/notifications';
 
 function Router() {
   const location = useLocation();
@@ -41,51 +42,52 @@ function Router() {
         {import.meta.env.VITE_ENVIRONMENT === 'development' && (
           <Route path='__dev__/*' element={<DevRoutes />} />
         )}
-        <Route
-          path={makePath(['memberships', '/*'])}
-          element={<MembershipRoutes />}
-        />
-
-        <Route element={<MainLayout />}>
+        <Route>
           <Route
             path='/'
             element={<AuthGuard roles={['artist', 'general']} />}
           >
-            {/* Home Route*/}
-            <Route path={Paths.root} element={<HomePage />} />
-            {/* Club Routes */}
             <Route
-              path={prefix(Paths.clubs, '/*')}
-              element={<ClubRoutes />}
+              path={makePath(['memberships', '/*'])}
+              element={<MembershipRoutes />}
             />
-            {/*/!* Settings Route*!/*/}
-            <Route
-              path={prefix(Paths.settings, '/*')}
-              element={<SettingsRoutes />}
-            />
-            <Route
-              path={prefix('artist/:username', '/*')}
-              element={<ArtistProfileRoutes />}
-            />
-            <Route
-              path={prefix(Paths.username, '/*')}
-              element={<UserRoutes />}
-            />
-            {/*/!* Bookmarks Route *!/*/}
-            <Route
-              path={prefix(Paths.bookmarks, '/*')}
-              element={<BookmarksRoutes />}
-            />
-            {/*/!* Notifications Route *!/*/}
-            {/*<Route*/}
-            {/*  path={prefix(Paths.notifications, '/*')}*/}
-            {/*  element={<NotificationsPage />}*/}
-            {/*/>*/}
-            {/*/!* Messages Route *!/*/}
-            {/*<Route*/}
-            {/*  path={prefix(Paths.messages, '/*')}*/}
-            {/*  element={<MessagesRoutes />}*/}
-            {/*/>*/}
+            <Route element={<MainLayout />}>
+              {/* Home Route*/}
+              <Route path={Paths.root} element={<HomePage />} />
+              {/* Club Routes */}
+              <Route
+                path={prefix(Paths.clubs, '/*')}
+                element={<ClubRoutes />}
+              />
+              {/*/!* Settings Route*!/*/}
+              <Route
+                path={prefix(Paths.settings, '/*')}
+                element={<SettingsRoutes />}
+              />
+              <Route
+                path={prefix('artist/:slug', '/*')}
+                element={<ArtistProfileRoutes />}
+              />
+              <Route
+                path={prefix(Paths.username, '/*')}
+                element={<UserRoutes />}
+              />
+              {/*/!* Bookmarks Route *!/*/}
+              <Route
+                path={prefix(Paths.bookmarks, '/*')}
+                element={<BookmarksRoutes />}
+              />
+              {/* Notifications Route */}
+              <Route
+                path={prefix(Paths.notifications, '/*')}
+                element={<NotificationsPage />}
+              />
+              {/*/!* Messages Route *!/*/}
+              {/*<Route*/}
+              {/*  path={prefix(Paths.messages, '/*')}*/}
+              {/*  element={<MessagesRoutes />}*/}
+              {/*/>*/}
+            </Route>
           </Route>
 
           <Route path='*' element={<NotFoundError />} />

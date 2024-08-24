@@ -3,14 +3,18 @@ import {
   BaseRelationshipButtonProps,
   useCreateRelationshipAction,
 } from '../../shared';
+import { ThemeColor } from '@holdr-ui/react/dist/shared/types';
 
-function FollowButton({ username }: BaseRelationshipButtonProps) {
+function FollowButton({
+  username,
+  colorTheme = 'purple100',
+}: BaseRelationshipButtonProps & { colorTheme?: ThemeColor }) {
   const { follow, loading } = useCreateRelationshipAction();
 
   return (
     <Button
       css={{ px: '50px' }}
-      colorTheme='purple100'
+      colorTheme={colorTheme}
       isLoading={loading}
       loadingText={loading ? '' : 'Follow'}
       onClick={async () => follow(username)}

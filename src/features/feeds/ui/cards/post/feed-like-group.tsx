@@ -9,10 +9,10 @@ function FeedLikeGroup() {
   const { data } = useFeedStatistic(feedId, 'love');
 
   return (
-    <HStack items='center' gap={1} zIndex={5}>
+    <HStack w={70} items='center' gap={1} zIndex={5}>
       <LikeButton />
       {data && (
-        <Box cursor='pointer'>
+        <Box fontSize={2} cursor='pointer'>
           {millify(data.feedStatistic, { precision: 2 })}
         </Box>
       )}
