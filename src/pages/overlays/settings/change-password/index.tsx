@@ -92,6 +92,7 @@ function ChangeEmailPage() {
         </Heading>
       </Box>
       <VStack
+        data-private
         as='form'
         onSubmit={async (e) => {
           e.preventDefault();

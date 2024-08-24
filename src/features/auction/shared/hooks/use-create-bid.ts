@@ -44,14 +44,14 @@ export function useCreateBid() {
           });
         },
       });
-    } catch (e) {
+    } catch (e: any) {
       if (import.meta.env.DEV) {
         console.error(e);
       }
 
       openWith({
         status: 'danger',
-        description: ErrorMessage.Any,
+        description: e.message ?? ErrorMessage.Any,
       });
     }
   };
