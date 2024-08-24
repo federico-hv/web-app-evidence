@@ -4,16 +4,18 @@ import {
   ArtistProfileStatsPage,
   ArtistProfileMembersPage,
   ArtistProfileTabs,
-  ArtistProfileWatchlistPage,
+  // ArtistProfileWatchlistPage,
+  ArtistClubBioPage,
 } from '../../pages';
 
 const ArtistProfileRoutes = () => (
   <Routes>
     <Route element={<ArtistProfileTabs />}>
-      <Route path='' element={<Navigate to='stats' replace />} />
+      <Route path='' element={<Navigate to='bio' replace />} />
+      <Route path='bio' element={<ArtistClubBioPage />} />
       <Route path='stats' element={<ArtistProfileStatsPage />} />
       <Route path='my-members' element={<ArtistProfileMembersPage />} />
-      <Route path='watchlist' element={<ArtistProfileWatchlistPage />} />
+      {/*<Route path='watchlist' element={<ArtistProfileWatchlistPage />} />*/}
     </Route>
   </Routes>
 );

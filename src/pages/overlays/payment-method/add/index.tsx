@@ -12,6 +12,8 @@ import {
 } from '../../../../shared';
 import {
   Alert,
+  AlertAction,
+  AlertActions,
   AlertContent,
   AlertDescription,
   AlertTitle,
@@ -52,7 +54,56 @@ import {
   useStripeCardInfo,
   useStripeElementFocused,
   useSaveCard,
+  dummyBillingInfo,
 } from './shared';
+
+function ErrorAlert({
+  code,
+  message,
+  title,
+}: {
+  code?: string;
+  message: string;
+  title?: string;
+}) {
+  return (
+    <Alert status='danger'>
+      <AlertContent>
+        {code && <AlertTitle>{code}</AlertTitle>}
+        <AlertDescription color='black500'>{message}</AlertDescription>
+      </AlertContent>
+    </Alert>
+  );
+}
+
+function DeveloperAlert({ onAction }: { onAction: VoidFunction }) {
+  return (
+    <Fragment>
+      {import.meta.env.VITE_ENVIRONMENT === 'development' && (
+        <Box mb={5}>
+          <Alert status='info'>
+            <AlertContent>
+              <AlertTitle>Testing notice</AlertTitle>
+              <AlertDescription color='black500'>
+                Use <strong>4242 4242 4242 4242</strong> for the card
+                number. Any CVC number works.
+              </AlertDescription>
+            </AlertContent>
+            <AlertActions>
+              <AlertAction
+                type='button'
+                onClick={onAction}
+                css={{ fontSize: '12px !important' }}
+              >
+                Autocomplete
+              </AlertAction>
+            </AlertActions>
+          </Alert>
+        </Box>
+      )}
+    </Fragment>
+  );
+}
 
 /**
  * Notes: [For future state]
@@ -80,7 +131,7 @@ function AddPaymentMethodPage() {
 
   const previousLocation = usePreviousLocation('/');
 
-  const { saveCard, loading: loadingSaveCard } = useSaveCard();
+  const { saveCard, loading: loadingSaveCard, error } = useSaveCard();
 
   const handleOnChange = (e: ChangeEvent<HTMLInputElement>) =>
     updateBillingInfo({ [e.target.name]: e.target.value });
@@ -110,7 +161,7 @@ function AddPaymentMethodPage() {
             zIndex={20}
             radius={2}
             className='setup-account'
-            minWidth={540}
+            minWidth={600}
             maxHeight='90vh'
             bgColor='#30304B'
             overflow='hidden'
@@ -136,15 +187,17 @@ function AddPaymentMethodPage() {
               />
             </Dialog.Header>
             <DialogBody
+              data-private
               overflowY='hidden'
               px={0}
               py={0}
               as='form'
               onSubmit={async (e) => {
                 e.preventDefault();
+
                 if (saveCard)
-                  await saveCard(billingInfo).then(() => {
-                    goBack();
+                  await saveCard(billingInfo).then((error) => {
+                    if (!error) goBack();
                   });
               }}
             >
@@ -159,20 +212,17 @@ function AddPaymentMethodPage() {
                       <Heading mb={8} size={6} weight={500}>
                         Payment Method
                       </Heading>
-                      {import.meta.env.VITE_ENVIRONMENT ===
-                        'development' && (
-                        <Box mb={5}>
-                          <Alert status='info'>
-                            <AlertContent>
-                              <AlertTitle>Testing notice</AlertTitle>
-                              <AlertDescription color='black500'>
-                                Use <strong>4242 4242 4242 4242</strong>{' '}
-                                for the card number. Any CVC number works.
-                              </AlertDescription>
-                            </AlertContent>
-                          </Alert>
-                        </Box>
-                      )}
+                      <VStack gap={2}>
+                        {error && <ErrorAlert {...error} />}
+                        <DeveloperAlert
+                          onAction={() =>
+                            updateBillingInfo({
+                              ...billingInfo,
+                              ...dummyBillingInfo,
+                            })
+                          }
+                        />
+                      </VStack>
                       <VStack gap={4}>
                         <InputTextField
                           readOnly

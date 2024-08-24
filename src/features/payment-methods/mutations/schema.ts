@@ -15,3 +15,17 @@ export const LINK_PAYMENT_METHOD = gql`
     }
   }
 `;
+
+export const DELETE_PAYMENT_METHOD = gql`
+  mutation DeletePaymentMethod($id: Int!) {
+    deletePaymentMethod(id: $id) {
+      id
+      card {
+        last4
+        expires
+        displayBrand
+        brand
+      }
+    }
+  }
+`;

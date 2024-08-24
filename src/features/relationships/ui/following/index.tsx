@@ -3,8 +3,12 @@ import {
   BaseRelationshipButtonProps,
   useRemoveRelationshipAction,
 } from '../../shared';
+import { ThemeColor } from '@holdr-ui/react/dist/shared/types';
 
-function FollowingButton({ username }: BaseRelationshipButtonProps) {
+function FollowingButton({
+  username,
+  colorTheme = 'purple50',
+}: BaseRelationshipButtonProps & { colorTheme?: ThemeColor }) {
   const { unfollow, loading } = useRemoveRelationshipAction();
 
   return (
@@ -13,7 +17,7 @@ function FollowingButton({ username }: BaseRelationshipButtonProps) {
       loadingText={loading ? '' : 'Following'}
       onClick={async () => unfollow(username)}
       css={{ px: '50px' }}
-      colorTheme='purple50'
+      colorTheme={colorTheme}
       variant='outline'
     >
       Following

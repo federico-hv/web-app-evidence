@@ -1,8 +1,54 @@
 import { useCurrentUser } from '../../../../auth';
 import { Fragment } from 'react';
-import { Box, Button, Heading, VStack } from '@holdr-ui/react';
-import { makeButtonLarger, Paths, prefix } from '../../../../../shared';
+import {
+  Box,
+  Button,
+  Heading,
+  HStack,
+  Icon,
+  VStack,
+} from '@holdr-ui/react';
+import {
+  GQLRenderer,
+  makeButtonLarger,
+  Paths,
+  prefix,
+} from '../../../../../shared';
 import { Link } from 'react-router-dom';
+import { useUserMembershipsSuspenseQuery } from '../../../../memberships';
+import { FlatList } from '../../../../../tmp/flat-list';
+import { MembershipItem } from '../../groups/membership-item';
+
+function InfoItem({ description }: { description: string }) {
+  return (
+    <HStack
+      items='center'
+      gap={2}
+      radius={1}
+      p={3}
+      fontWeight={500}
+      fontSize={2}
+      bgColor='rgba(152,152,255,0.2)'
+    >
+      <Icon name='information-outline' />
+      {description}
+    </HStack>
+  );
+}
+
+function BrowseMemberships() {
+  return (
+    <Link to={prefix('/', Paths.clubs)}>
+      <Button
+        fullWidth
+        className={makeButtonLarger('2.5rem')}
+        colorTheme='purple500'
+      >
+        Browse Clubs
+      </Button>
+    </Link>
+  );
+}
 
 function MyMemberships() {
   const currentUser = useCurrentUser();
@@ -12,7 +58,7 @@ function MyMemberships() {
   }
 
   return (
-    <VStack minHeight={292} as='nav' p={4}>
+    <VStack minHeight={292} p={4}>
       <Heading size={3} weight={500} css={{ userSelect: 'none' }}>
         My Memberships
       </Heading>
@@ -25,23 +71,39 @@ function MyMemberships() {
           backgroundColor: 'rgba(152, 152, 255, 0.10)',
         }}
       />
-      <Link to={prefix('/', Paths.clubs)}>
-        <Button
-          fullWidth
-          className={makeButtonLarger('2.5rem')}
-          colorTheme='purple500'
-        >
-          Browse Clubs
-        </Button>
-        {/*<VStack gap={3}>*/}
-        {/*  <MembershipItem data={dummyOwnedMembershipData}/>*/}
-        {/*  <MembershipItem data={dummyOwnedMembershipData}/>*/}
-        {/*  <MembershipItem data={dummyOwnedMembershipData2}/>*/}
-        {/*</VStack>*/}
-      </Link>
+      <GQLRenderer
+        ErrorFallback={() => (
+          <InfoItem description='Failed to load your memberships' />
+        )}
+      >
+        <Content />
+      </GQLRenderer>
     </VStack>
   );
 }
 MyMemberships.displayName = 'MyMemberships';
+
+function Content() {
+  const currentUser = useCurrentUser();
+
+  const { data } = useUserMembershipsSuspenseQuery(currentUser.username, {
+    take: 3,
+  });
+
+  return (
+    <Fragment>
+      {data.userMemberships.total === 0 ? (
+        <BrowseMemberships />
+      ) : (
+        <FlatList
+          direction='vertical'
+          data={data.userMemberships.edges.slice(0, 3)}
+          renderItem={(item) => <MembershipItem data={item.node} />}
+          keyExtractor={(item) => item.node.id}
+        />
+      )}
+    </Fragment>
+  );
+}
 
 export default MyMemberships;

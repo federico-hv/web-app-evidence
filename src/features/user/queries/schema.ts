@@ -40,8 +40,8 @@ export const GET_EXTERNAL_ACCOUNT = gql`
 export const GET_PROFILE = gql`
   query profile($username: String!) {
     profile(username: $username) {
-      displayName
       username
+      displayName
       avatar
       bio
       protected
@@ -52,7 +52,6 @@ export const GET_PROFILE = gql`
         coverImage
         artists
         externalIds {
-          id
           provider
           externalId
         }
@@ -63,7 +62,6 @@ export const GET_PROFILE = gql`
         image
         artistId
         externalIds {
-          id
           provider
           externalId
           externalUrl

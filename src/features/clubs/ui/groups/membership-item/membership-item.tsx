@@ -1,19 +1,10 @@
-import {
-  Avatar,
-  HStack,
-  VStack,
-  Text,
-  Icon,
-  theme,
-} from '@holdr-ui/react';
-import { MembershipItemProps } from './membership-item.types';
-import {
-  TextGroup,
-  TextGroupHeading,
-  TextGroupSubheading,
-} from '../../../../../shared';
+import { Avatar, HStack, VStack, Text, theme } from '@holdr-ui/react';
+import { IMembership } from '../../../../memberships';
+import { LinkOverlay } from '../../../../../shared';
 
-function MembershipItem({ data }: MembershipItemProps) {
+function MembershipItem({ data }: { data: IMembership }) {
+  const percentage = Math.random();
+  const value = 1000;
   return (
     <HStack
       gap={4}
@@ -21,54 +12,29 @@ function MembershipItem({ data }: MembershipItemProps) {
       py={2}
       px={3}
       radius={3}
+      position='relative'
       _hover={{ background: '#9898FF26', cursor: 'pointer' }}
       css={{
         transition: theme.transitions['duration-normal'],
       }}
     >
-      <Avatar size='xl' src={data.artist.avatar} variant='squircle' />
+      <LinkOverlay to={`/memberships/${data.club.id}`} />
+      <Avatar size={60} src={data.club.coverImage} variant='squircle' />
       <VStack gap={2}>
-        <TextGroup gap={0}>
-          <TextGroupHeading
-            size={2}
-            css={{ lineHeight: 1.45 }}
-            aria-label='membership-item name'
-          >
-            {data.name}
-          </TextGroupHeading>
-          <TextGroupSubheading
-            size={1}
-            weight={300}
-            color='white700'
-            css={{ lineHeight: 1 }}
-            aria-label='membership-item number'
-          >
-            {`Membership #${data.number}`}
-          </TextGroupSubheading>
-        </TextGroup>
-        <HStack gap={1} items='center'>
-          {data.percentage !== 0 && (
-            <Icon
-              name={
-                data.percentage > 0
-                  ? 'arrow-up-outline'
-                  : 'arrow-down-outline'
-              }
-              color={data.percentage > 0 ? 'success500' : 'danger400'}
-              aria-label={`${
-                data.percentage ? 'increase' : 'decrease'
-              } in value`}
-            />
-          )}
-          <Text
-            weight={500}
-            size={2}
-            color={data.percentage ? 'success500' : 'danger400'}
-            aria-label='membership-item price change'
-          >
-            {`$${data.price.toFixed(2)} USD`}
-          </Text>
-        </HStack>
+        <Text noOfLines={1} size={3} weight={500}>
+          {data.club.name}
+        </Text>
+        {/*<HStack gap={1} items='center'>*/}
+        {/*  <GainLossIndicator isGain={percentage > 0.5} />*/}
+        {/*  <Text*/}
+        {/*    weight={500}*/}
+        {/*    size={2}*/}
+        {/*    color={percentage > 0.5 ? 'success500' : 'danger400'}*/}
+        {/*    aria-label='membership-item price change'*/}
+        {/*  >*/}
+        {/*    {`$${value.toFixed(2)} USD`}*/}
+        {/*  </Text>*/}
+        {/*</HStack>*/}
       </VStack>
     </HStack>
   );

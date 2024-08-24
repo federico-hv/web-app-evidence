@@ -1,9 +1,10 @@
 import React from 'react';
 import { Route, Routes } from 'react-router';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 import { Suspense } from 'react';
 import { ErrorFallback, Loader } from '../../shared';
 import { ErrorBoundary } from 'react-error-boundary';
+import { useCurrentUser, useSuspenseGetArtist } from '../../features';
 
 const ActiveBidsClubsPage = React.lazy(
   () => import('../../pages/clubs/active-bids'),
@@ -34,12 +35,27 @@ const WatchlistClubPage = React.lazy(
   () => import('../../pages/clubs/watchlist'),
 );
 
+function HandleClubNavigation() {
+  const { slug } = useParams();
+
+  const { data } = useSuspenseGetArtist({ slug });
+
+  const currentUser = useCurrentUser();
+
+  return (
+    <Navigate
+      to={data.artist.username === currentUser.username ? 'feeds' : 'bio'}
+      replace
+    />
+  );
+}
+
 const ClubRoutes = () => (
   <ErrorBoundary FallbackComponent={ErrorFallback}>
     <Suspense fallback={<Loader loading={true} />}>
       <Routes>
         <Route path=':slug' element={<ArtistClubTabs />}>
-          <Route path='' element={<Navigate to='bio' replace />} />
+          <Route path='' element={<HandleClubNavigation />} />
           <Route path='bio' element={<ArtistClubBioPage />} />
           <Route path='feeds' element={<ArtistClubFeedsPage />} />
           <Route path='live-bids' element={<ArtistClubLiveBidsPage />} />

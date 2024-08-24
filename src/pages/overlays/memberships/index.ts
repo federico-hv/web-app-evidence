@@ -1,4 +1,4 @@
-export { default as UserMembershipsPage } from './users';
+export { default as UserMembershipsPage } from './user-memberships';
 export { default as MembershipCreateEventPerkPage } from './create-event-perk';
 export { default as MembershipEventPerkPage } from './event-perk';
 export { default as MembershipAddPublicPlaylistPage } from './add-public-playlist';

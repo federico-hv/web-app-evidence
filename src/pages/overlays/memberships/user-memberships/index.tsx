@@ -1,5 +1,8 @@
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import {
+  Alert,
+  AlertContent,
+  AlertDescription,
   Box,
   Dialog,
   DialogBody,
@@ -14,6 +17,8 @@ import {
 } from '@holdr-ui/react';
 import {
   Asset,
+  CustomSkeleton,
+  Loader,
   LoadWithoutPreviousLocation,
   usePreviousLocation,
 } from '../../../../shared';
@@ -24,8 +29,9 @@ import {
   IProfile,
   AuctionCard,
   useCurrentUser,
+  useUserMembershipsQuery,
+  MembershipCard,
 } from '../../../../features';
-import { dummyPerks } from '../../../clubs/shared';
 
 // TODO: fix - not snapping on scroll
 
@@ -37,8 +43,29 @@ function UserMembershipsPage() {
   const location = useLocation();
   const previousLocation = usePreviousLocation('/');
 
+  const { data, loading, error } = useUserMembershipsQuery(username || '');
+
   if (!username) {
     return <Fragment />;
+  }
+
+  if (error) {
+    return (
+      <Box
+        mt={5}
+        py={4}
+        borderTop={1}
+        borderColor='rgba(152, 152, 255, 0.1)'
+      >
+        <Alert variant='solid' status='danger'>
+          <AlertContent>
+            <AlertDescription>
+              Failed to load your memberships
+            </AlertDescription>
+          </AlertContent>
+        </Alert>
+      </Box>
+    );
   }
 
   return (
@@ -92,43 +119,45 @@ function UserMembershipsPage() {
                   />
                 </HStack>
 
-                <FlatList
-                  className='thin-scrollbar'
-                  pt='18px'
-                  direction='vertical'
-                  gap={3}
-                  w='100%'
-                  overflowY='auto'
-                  h='557px'
-                  css={{
-                    paddingInlineEnd: '$3',
-                    scrollSnapPointsY: '500px',
-                    scrollSnapType: 'y mandatory',
-                  }}
-                  data={[
-                    {
-                      id: '4',
-                      name: 'James Dean',
-                    },
-                    {
-                      id: '41',
-                      name: 'Altman',
-                    },
-                  ]}
-                  renderItem={(data) => (
-                    <Box h='500px'>
-                      <AuctionCard
-                        data={{
-                          name: `${data.name}'s Club`,
-                          coverImage: Asset.Image.DummyMembershipCover,
-                          slug: '',
-                          perks: dummyPerks,
+                <Box h='557px'>
+                  <Loader
+                    loading={loading}
+                    as={<CustomSkeleton radius={3} />}
+                  >
+                    {data && (
+                      <FlatList
+                        className='thin-scrollbar'
+                        pt='18px'
+                        direction='vertical'
+                        gap={3}
+                        w='100%'
+                        overflowY='auto'
+                        h='557px'
+                        css={{
+                          paddingInlineEnd: '$3',
+                          scrollSnapPointsY: '500px',
+                          scrollSnapType: 'y mandatory',
                         }}
+                        data={data.userMemberships.edges}
+                        renderItem={(item) => (
+                          <Box h='500px'>
+                            <MembershipCard
+                              data={{
+                                id: item.node.club.id,
+                                name: `${item.node.club.name}'s club`,
+                                coverImage: item.node.club.coverImage,
+                                perks: item.node.club.perks.map(
+                                  ({ label }) => label,
+                                ),
+                              }}
+                            />
+                          </Box>
+                        )}
+                        keyExtractor={(item) => item.node.id}
                       />
-                    </Box>
-                  )}
-                  keyExtractor={({ id }) => id}
-                />
+                    )}
+                  </Loader>
+                </Box>
               </ProfileProvider>
             </DialogBody>
           </DialogContent>

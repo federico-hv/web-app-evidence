@@ -45,15 +45,15 @@ function UserProfileHeader() {
         src={profile.avatar}
         name={profile.displayName}
       >
-        <AvatarBadge
-          zIndex={1}
-          size={18}
-          bgColor='success500'
-          r={20}
-          b={15}
-          border={2}
-          borderColor='#1C1C29'
-        />
+        {/*<AvatarBadge*/}
+        {/*  zIndex={1}*/}
+        {/*  size={18}*/}
+        {/*  bgColor='success500'*/}
+        {/*  r={20}*/}
+        {/*  b={15}*/}
+        {/*  border={2}*/}
+        {/*  borderColor='#1C1C29'*/}
+        {/*/>*/}
       </Avatar>
       <VStack flex={1} gap={1}>
         <HStack flex={1} justify='space-between'>

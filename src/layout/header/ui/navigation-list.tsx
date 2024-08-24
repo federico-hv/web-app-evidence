@@ -9,8 +9,6 @@ import {
   PopoverTrigger,
   PopoverPortal,
   PopoverContent,
-  Button,
-  ButtonGroup,
 } from '@holdr-ui/react';
 import {
   LinkOverlay,
@@ -18,7 +16,6 @@ import {
   Responsive,
   ResponsiveItem,
   Paths,
-  prefix,
 } from '../../../shared';
 import { useCurrentUser } from '../../../features';
 import { Fragment } from 'react';
@@ -213,6 +210,15 @@ function NavigationList() {
           inactive: 'bookmark-outline',
         }}
       />
+      {/*<NavigationItem*/}
+      {/*  active={!!matchPath(makePath([Paths.payouts, '/*']), pathname)}*/}
+      {/*  label='Payouts'*/}
+      {/*  to={makePath([Paths.bookmarks, 'all'])}*/}
+      {/*  icon={{*/}
+      {/*    active: 'bookmark-fill',*/}
+      {/*    inactive: 'bookmark-outline',*/}
+      {/*  }}*/}
+      {/*/>*/}
       {/*<CreateActionButton />*/}
     </VStack>
   );

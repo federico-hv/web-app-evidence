@@ -3,12 +3,14 @@ import { Box, HStack, IconButton } from '@holdr-ui/react';
 import { BookmarkPopover } from '../../../../bookmarks';
 import { useFeedStatistic } from '../../../shared';
 import millify from 'millify';
+import { useCurrentUser } from '../../../../auth';
 
 function FeedBookmarkGroup() {
-  const { isBookmarked, feedId } = useFeedContext();
+  const currentUser = useCurrentUser();
+  const { isBookmarked, feedId, owner } = useFeedContext();
   const { data } = useFeedStatistic(feedId, 'bookmarks');
   return (
-    <HStack items='center' gap={1} zIndex={5}>
+    <HStack w={70} items='center' gap={1} zIndex={5}>
       <BookmarkPopover position='right' sideOffset={0}>
         <IconButton
           variant='ghost'
@@ -17,8 +19,8 @@ function FeedBookmarkGroup() {
           icon={!isBookmarked ? 'bookmark-outline' : 'bookmark-fill'}
         />
       </BookmarkPopover>
-      {data && (
-        <Box cursor='pointer'>
+      {data && currentUser.username === owner.username && (
+        <Box fontSize={2} cursor='pointer'>
           {millify(data.feedStatistic, { precision: 2 })}
         </Box>
       )}

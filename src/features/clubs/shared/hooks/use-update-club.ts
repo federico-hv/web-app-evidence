@@ -1,6 +1,7 @@
 import { gql, Reference, useMutation } from '@apollo/client';
 import { UPDATE_CLUB } from '../../mutations';
 import { IClub } from '../types';
+import { ErrorMessage, useToast } from '../../../../shared';
 
 interface IUpdateClubPayload {
   coverImage?: File;
@@ -12,6 +13,8 @@ interface IUpdateClubPayload {
  *
  */
 export function useUpdateClub() {
+  const { openWith } = useToast();
+
   const [mutate, { loading, error, data }] = useMutation<
     { updateClub: IClub },
     { payload: IUpdateClubPayload }
@@ -58,7 +61,15 @@ export function useUpdateClub() {
           });
         },
       });
-    } catch (error) {}
+    } catch (e) {
+      if (import.meta.env.VITE_ENVIRONMENT === 'development') {
+        console.error(e);
+      }
+      openWith({
+        status: 'danger',
+        description: ErrorMessage.Any,
+      });
+    }
   };
 
   return { updateClub, data, loading, error };

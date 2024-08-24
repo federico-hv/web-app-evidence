@@ -30,6 +30,7 @@ export { default as ContentBox } from './content-box';
 export { default as CountryPicker } from './country-picker';
 export { default as Squircle } from './squircle';
 export { default as EmbeddedPlaylist } from './embedded-playlist';
+export { default as CustomSkeleton } from './custom-skeleton';
 export {
   default as StepperIndicator,
   StepperIndicatorStep,
