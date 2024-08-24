@@ -1,10 +1,18 @@
-export interface IMembershipCount {
-  sold: number;
-  remaining: number;
+export interface IFraction {
+  numerator: number;
+  denominator: number;
+}
+
+export interface IStatisticValue {
+  value: number;
+  percentage: number;
 }
 
 export interface IClubSummary {
-  averagePrice: number;
-  lastSale: number;
-  membershipCount: IMembershipCount;
+  averagePrice: IStatisticValue;
+  lastSale: IStatisticValue;
+  clubViews: IStatisticValue;
+  averageBidders: IStatisticValue;
+  membersCount: IFraction;
+  membershipCount: IFraction;
 }

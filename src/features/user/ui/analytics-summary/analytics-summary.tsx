@@ -3,8 +3,15 @@ import { Box, Heading, VStack } from '@holdr-ui/react';
 import AnalyticsStatistic from './analytics-statistic';
 import { dummyAnalyticsSummaryData } from '../../shared';
 import { getFormattedTime } from '../../../../shared/utilities/time.utility';
+import { useQuickAnalyticsSuspenseQuery } from '../../../stats/queries/use-quick-analytics.query';
+
+function makePercentage(value: number) {
+  return parseFloat((value * 100).toFixed(2));
+}
 
 function AnalyticsSummary() {
+  const { data } = useQuickAnalyticsSuspenseQuery();
+
   return (
     <RadialSurface radius={4} h='auto' w='100%' css={{ flexShrink: 0 }}>
       <VStack
@@ -29,32 +36,31 @@ function AnalyticsSummary() {
           <AnalyticsStatistic
             label='club views'
             description='A description'
-            value={dummyAnalyticsSummaryData.clubViews.value}
-            percent={dummyAnalyticsSummaryData.clubViews.changePercentage}
+            value={data.clubAnalytics.clubViews.value}
+            percent={makePercentage(
+              data.clubAnalytics.clubViews.percentage,
+            )}
           />
           <AnalyticsStatistic
             label='average bidders'
             description='A description'
-            value={dummyAnalyticsSummaryData.averageBidders.value}
-            percent={
-              dummyAnalyticsSummaryData.averageBidders.changePercentage
-            }
+            value={data.clubAnalytics.averageBidders.value}
+            percent={makePercentage(
+              data.clubAnalytics.averageBidders.percentage,
+            )}
           />
           <AnalyticsStatistic
             label='social interactions'
             description='A description'
-            value={dummyAnalyticsSummaryData.socialInteractions.value}
-            percent={
-              dummyAnalyticsSummaryData.socialInteractions.changePercentage
-            }
-            suffix='%'
+            value={data.socialAnalytics.socialInteractions.value}
+            percent={makePercentage(
+              data.socialAnalytics.socialInteractions.percentage,
+            )}
           />
           <AnalyticsStatistic
             label='peak engagement time'
             description='A description'
-            value={getFormattedTime(
-              dummyAnalyticsSummaryData.peakEngagementTime,
-            )}
+            value={data.socialAnalytics.peakEngagementTime}
           />
         </VStack>
       </VStack>
