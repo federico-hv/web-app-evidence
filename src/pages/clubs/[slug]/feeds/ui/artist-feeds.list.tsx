@@ -1,8 +1,13 @@
 import { Fragment } from 'react';
-import { EmptyMessage, Loader } from '../../../../../shared';
-import { FeedCard, useFeedsQuery } from '../../../../../features';
+import { Loader } from '../../../../../shared';
+import {
+  CreatePost,
+  FeedCard,
+  useFeedsQuery,
+} from '../../../../../features';
 import { FlatList } from '../../../../../tmp/flat-list';
 import { useParams } from 'react-router-dom';
+import { VStack } from '@holdr-ui/react';
 
 function ArtistFeedsList() {
   const { slug } = useParams();
@@ -15,17 +20,22 @@ function ArtistFeedsList() {
 
   return (
     <Loader loading={loading}>
-      {data && data.feeds.edges.length > 0 ? (
-        <FlatList
-          gap={6}
-          direction='vertical'
-          data={data.feeds.edges}
-          renderItem={({ node }) => <FeedCard key={node.id} data={node} />}
-          keyExtractor={({ node }) => node.id}
-        />
-      ) : (
-        <Fragment />
-      )}
+      <VStack gap={5}>
+        <CreatePost />
+        {data && data.feeds.edges.length > 0 ? (
+          <FlatList
+            gap={6}
+            direction='vertical'
+            data={data.feeds.edges}
+            renderItem={({ node }) => (
+              <FeedCard key={node.id} data={node} />
+            )}
+            keyExtractor={({ node }) => node.id}
+          />
+        ) : (
+          <Fragment />
+        )}
+      </VStack>
     </Loader>
   );
 }

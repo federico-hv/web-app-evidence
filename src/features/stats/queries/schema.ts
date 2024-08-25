@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
 
-export const GET_CLUB_SUMMARY = gql`
+export const GET_CLUB_OVERVIEW = gql`
   query ClubOverview {
     clubOverview: clubSummary {
       averagePrice {
@@ -19,7 +19,41 @@ export const GET_CLUB_SUMMARY = gql`
   }
 `;
 
-export const GET_QUICK_ANALYTOCS = gql`
+export const GET_CLUB_ANALYTICS = gql`
+  query ClubAnalytics {
+    clubSummary {
+      averagePrice {
+        value
+        percentage
+      }
+      milestones {
+        numerator
+        denominator
+      }
+      lastSale {
+        value
+        percentage
+      }
+      membershipCount {
+        numerator
+        denominator
+      }
+      averageBidders {
+        value
+        percentage
+      }
+      clubViews {
+        value
+        percentage
+      }
+    }
+    socialSummary {
+      peakEngagementTime
+    }
+  }
+`;
+
+export const GET_QUICK_ANALYTICS = gql`
   query QuickAnalytics {
     clubAnalytics: clubSummary {
       clubViews {
@@ -37,6 +71,15 @@ export const GET_QUICK_ANALYTOCS = gql`
         value
         percentage
       }
+    }
+  }
+`;
+
+export const GET_MONTHLY_MEMBERSHIP_VALUES = gql`
+  query MonthlyMembershipValues {
+    monthlyMembershipValues {
+      date
+      value
     }
   }
 `;

@@ -13,6 +13,6 @@ export interface IClubSummary {
   lastSale: IStatisticValue;
   clubViews: IStatisticValue;
   averageBidders: IStatisticValue;
-  membersCount: IFraction;
+  milestones: IFraction;
   membershipCount: IFraction;
 }

@@ -5,6 +5,11 @@ import {
   SocialProviderNameEnum,
 } from '../constants';
 
+export interface IDateValueCoordinate {
+  date: Date;
+  value: number;
+}
+
 export interface GenericProps {
   innerRef?: Ref<any>;
   children?: ReactNode;

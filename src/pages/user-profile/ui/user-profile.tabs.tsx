@@ -1,6 +1,11 @@
 import UserProfileHeader from './user-profile.header';
 import {
   CHECK_IS_PROFILE_BLOCKED_OR_PROTECTED,
+  IProfile,
+  ISaveClubViewsResponse,
+  ISaveProfileViewsArgs,
+  SAVE_PROFILE_VIEWS,
+  SaveViews,
   useCurrentUser,
 } from '../../../features';
 import { Navigate, useParams } from 'react-router-dom';
@@ -24,8 +29,21 @@ import {
   CircularProgress,
   Icon,
   Text,
+  useGeneralContext,
   VStack,
 } from '@holdr-ui/react';
+
+function SaveUserProfileView() {
+  const { state: profile } = useGeneralContext<IProfile>();
+
+  return (
+    <SaveViews<ISaveClubViewsResponse, ISaveProfileViewsArgs>
+      mutation={SAVE_PROFILE_VIEWS}
+      name='saveProfileViews'
+      args={{ username: profile.username }}
+    />
+  );
+}
 
 function UserProfileTabs() {
   const { username } = useParams();
@@ -39,6 +57,7 @@ function UserProfileTabs() {
   return (
     <GQLRenderer>
       <ProfileProvider>
+        <SaveUserProfileView />
         <ContentLayout>
           <ContentLayoutMain>
             <RadialSurface w='100%' minHeight='100%' p={4} radius={4}>
