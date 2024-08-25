@@ -78,8 +78,17 @@ export const GET_QUICK_ANALYTICS = gql`
 export const GET_MONTHLY_MEMBERSHIP_VALUES = gql`
   query MonthlyMembershipValues {
     monthlyMembershipValues {
-      date
-      value
+      x
+      y
+    }
+  }
+`;
+
+export const GET_VISITS_BY_COUNTRY = gql`
+  query VisitsByCountry {
+    visitsByCountry {
+      x
+      y
     }
   }
 `;

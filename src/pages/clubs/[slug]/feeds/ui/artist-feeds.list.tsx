@@ -1,10 +1,6 @@
 import { Fragment } from 'react';
 import { Loader } from '../../../../../shared';
-import {
-  CreatePost,
-  FeedCard,
-  useFeedsQuery,
-} from '../../../../../features';
+import { FeedCard, useFeedsQuery } from '../../../../../features';
 import { FlatList } from '../../../../../tmp/flat-list';
 import { useParams } from 'react-router-dom';
 import { VStack } from '@holdr-ui/react';
@@ -21,7 +17,7 @@ function ArtistFeedsList() {
   return (
     <Loader loading={loading}>
       <VStack gap={5}>
-        <CreatePost />
+        {/*<CreatePost />*/}
         {data && data.feeds.edges.length > 0 ? (
           <FlatList
             gap={6}

@@ -1,9 +1,9 @@
 import { useQuery, useSuspenseQuery } from '@apollo/client';
-import { IDateValueCoordinate } from '../../../shared';
+import { IStringNumberCoordinate } from '../../../shared';
 import { GET_MONTHLY_MEMBERSHIP_VALUES } from './schema';
 
 export interface IMonthlyMembershipValuesResponse {
-  monthlyMembershipValues: IDateValueCoordinate[];
+  monthlyMembershipValues: IStringNumberCoordinate[];
 }
 
 export function useMonthlyMembershipValuesQuery() {

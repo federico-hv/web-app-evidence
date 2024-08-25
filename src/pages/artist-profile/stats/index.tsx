@@ -1,5 +1,6 @@
 import {
   Box,
+  Center,
   Circle,
   GeneralContextProvider,
   Grid,
@@ -15,7 +16,6 @@ import {
   darkSelectCSS,
   formatNumberWithCommas,
   GQLRenderer,
-  InformationTooltip,
   makePercentage,
   prefix,
   RadialSurface2,
@@ -26,11 +26,13 @@ import { ArtistProfileStatistic } from './ui';
 import {
   IClubAnalyticsResponse,
   useClubAnalyticsSuspenseQuery,
+  useMonthlyMembershipValuesSuspenseQuery,
 } from '../../../features';
-import { Chart, ReactGoogleChartEvent } from 'react-google-charts';
+import { Chart } from 'react-google-charts';
 import millify from 'millify';
-import { useMonthlyMembershipValuesSuspenseQuery } from '../../../features/stats/queries/use-monthly-membership-values.query';
-import dayjs from 'dayjs';
+import { useVisitsByCountrySuspenseQuery } from '../../../features/stats/queries/use-visits-by-country.query';
+import { Fragment } from 'react';
+import countries from '../../../shared/components/country-picker/data/countries';
 
 export const data = [
   ['Country', 'Popularity'],
@@ -38,48 +40,6 @@ export const data = [
   ['United States', 300],
   ['United Kingdom', 400],
   ['France', 600],
-];
-
-const countries = [
-  {
-    country: 'Canada',
-    color: '#A2E2B3',
-  },
-  {
-    country: 'France',
-    color: '#FFE2A6',
-  },
-  {
-    country: 'United Kingdom',
-    color: '#E28A97',
-  },
-  {
-    country: 'United States',
-    color: '#B9B9FF',
-  },
-  {
-    country: 'Other',
-    color: '#eca88b',
-  },
-];
-
-const lineChartData = [
-  [
-    { type: 'string', label: 'Month' },
-    { type: 'number', label: 'Price ($)' },
-  ],
-  ['Jan', 0],
-  ['Feb', 50],
-  ['Mar', 100],
-  ['Apr', 150],
-  ['May', 200],
-  ['Jun', 250],
-  ['Jul', 300],
-  ['Aug', 350],
-  ['Sep', 400],
-  ['Oct', 350],
-  ['Nov', 300],
-  ['Dec', 200],
 ];
 
 export const barChartData = [
@@ -96,28 +56,6 @@ export const barChartData = [
   ['Oct', 65],
   ['Nov', 70],
   ['Dec', 75],
-];
-
-const donutData = [
-  ['Country', 'Percentage of Visits'],
-  ['Canada', 33],
-  ['France', 6],
-  ['United Kingdom', 10],
-  ['United States', 48],
-  ['Other', 3],
-];
-
-const geoChartEvents: ReactGoogleChartEvent[] = [
-  {
-    eventName: 'select',
-    callback: ({ chartWrapper }) => {
-      const chart = chartWrapper.getChart();
-      const selection = chart.getSelection();
-      if (selection.length === 0) return;
-      const region = data[selection[0].row + 1];
-      console.log('Selected : ' + region);
-    },
-  },
 ];
 
 function ClubProgress() {
@@ -255,14 +193,12 @@ function MembershipValueChart() {
     useMonthlyMembershipValuesSuspenseQuery();
 
   const data = membershipValueData.monthlyMembershipValues.map((item) => [
-    dayjs(item.date).format('MMMM'),
-    item.value,
+    item.x,
+    item.y,
   ]);
 
-  console.log();
-
   return (
-    <RadialSurface2 w='100%' p={4} radius={3}>
+    <RadialSurface2 h='450px' w='100%' p={4} radius={3}>
       <HStack
         pb={2}
         items='center'
@@ -274,12 +210,16 @@ function MembershipValueChart() {
           Membership Price
         </Heading>
       </HStack>
-      {data.length > 0 && (
-        <HStack>
+      {data.length === 0 ? (
+        <Center h='100%'>
+          <Text color='white700'>No data to display</Text>
+        </Center>
+      ) : (
+        <VStack flex={1}>
           <Chart
             chartType='AreaChart'
             width='100%'
-            height='400px'
+            height='100%'
             data={[
               [
                 { type: 'string', label: 'month' },
@@ -321,13 +261,22 @@ function MembershipValueChart() {
               },
             }}
           />
-        </HStack>
+        </VStack>
       )}
     </RadialSurface2>
   );
 }
 
 function VisitsByCountryChart() {
+  const { data: visitsByCountryData } = useVisitsByCountrySuspenseQuery();
+
+  const colors = ['#A2E2B3', '#FFE2A6', '#E28A97', '#B9B9FF', '#eca88b'];
+
+  const data = visitsByCountryData.visitsByCountry.map((item) => [
+    item.x,
+    item.y,
+  ]);
+
   return (
     <RadialSurface2 position='relative' w='100%' p={4} radius={3}>
       <HStack
@@ -357,59 +306,68 @@ function VisitsByCountryChart() {
           />
         </Box>
       </HStack>
-      <HStack h='100%' gap={6}>
-        <Chart
-          chartType='PieChart'
-          width='100%'
-          height='100%'
-          data={donutData}
-          options={{
-            pieHole: 0.5,
-            is3D: false,
-            legend: 'none',
-            backgroundColor: 'transparent',
-            colors: [
-              '#A2E2B3',
-              '#FFE2A6',
-              '#E28A97',
-              '#B9B9FF',
-              '#eca88b',
-            ],
-            borderColor: ['red', 'red', 'red', 'blue'],
-            chartArea: {
-              width: '90%',
-              height: '70%',
-            },
-            pieSliceTextStyle: {
-              color: '#000',
-            },
-            tooltip: {
-              trigger: 'none', // rmeove tooltip
-            },
-          }}
-        />
-        <VStack flex='1' gap={1} justify='center'>
-          {countries.map((item) => (
-            <HStack
-              key={item.country}
-              py='5px'
-              px='8px'
-              radius='10px'
-              border={1}
-              borderColor='rgba(152, 152, 255, 0.25)'
-              bgColor='rgba(152, 152, 255, 0.15)'
-              items='center'
-              gap={2}
-              w='fit-content'
-            >
-              <Circle bgColor={item.color} size='8px' />
-              <Text css={{ whiteSpace: 'nowrap' }} size={2} weight={300}>
-                {item.country}
-              </Text>
-            </HStack>
-          ))}
-        </VStack>
-      </HStack>
+      {data.length === 0 ? (
+        <Center h='100%'>
+          <Text color='white700'>No data to display</Text>
+        </Center>
+      ) : (
+        <HStack h='100%' gap={6}>
+          <Chart
+            chartType='PieChart'
+            width='100%'
+            height='100%'
+            data={[['Country', 'Percentage of Visits'], ...data]}
+            options={{
+              pieHole: 0.5,
+              is3D: false,
+              legend: 'none',
+              backgroundColor: 'transparent',
+              colors: colors,
+              borderColor: ['red', 'red', 'red', 'blue'],
+              chartArea: {
+                width: '90%',
+                height: '70%',
+              },
+              pieSliceTextStyle: {
+                color: '#000',
+              },
+              tooltip: {
+                trigger: 'none', // remove tooltip
+              },
+            }}
+          />
+          <VStack flex='1' gap={1} justify='center'>
+            {visitsByCountryData.visitsByCountry.map((item, idx) =>
+              item.y === 0 ? (
+                <Fragment key={item.x} />
+              ) : (
+                <HStack
+                  key={item.x}
+                  py='5px'
+                  px='8px'
+                  radius='10px'
+                  border={1}
+                  borderColor='rgba(152, 152, 255, 0.25)'
+                  bgColor='rgba(152, 152, 255, 0.15)'
+                  items='center'
+                  gap={2}
+                  w='fit-content'
+                >
+                  <Circle bgColor={colors[idx]} size='8px' />
+                  <Text
+                    css={{ whiteSpace: 'nowrap' }}
+                    size={2}
+                    weight={300}
+                  >
+                    {countries.find((country) => country.code === item.x)
+                      ?.name ?? item.x}
+                  </Text>
+                </HStack>
+              ),
+            )}
+          </VStack>
+        </HStack>
+      )}
     </RadialSurface2>
   );
 }
