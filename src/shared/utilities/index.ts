@@ -7,3 +7,4 @@ export * from './file';
 export * from './auth';
 export * from './array';
 export * from './dsp';
+export * from './money';

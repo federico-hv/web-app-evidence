@@ -215,3 +215,15 @@ export function parseSocialLinks(state: {
       return item.url.length !== 0;
     }) as Array<ICreateSocialLink>;
 }
+
+/**
+ *
+ * @param value
+ */
+export function makePercentage(value: number) {
+  return parseFloat((value * 100).toFixed(1));
+}
+
+export function formatNumberWithCommas(number: number) {
+  return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}

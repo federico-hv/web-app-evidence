@@ -10,7 +10,6 @@ import { FlatList } from '../../../tmp/flat-list';
 
 function Feeds({
   filter,
-  type,
 }: {
   filter: FeedFilterTypeEnum;
   type: FeedViewType;

@@ -34,13 +34,21 @@ function HomePage() {
 
             {currentUser.role === UserRoleEnum.Artist ? (
               <Fragment>
-                <ClubOverview />
-                <AnalyticsSummary />
+                <GQLRenderer ErrorFallback={() => <Fragment />}>
+                  <ClubOverview />
+                </GQLRenderer>
+                <GQLRenderer ErrorFallback={() => <Fragment />}>
+                  <AnalyticsSummary />
+                </GQLRenderer>
               </Fragment>
             ) : (
               <Fragment>
-                <TrendingClubs />
-                <RecommendedArtists />
+                <GQLRenderer ErrorFallback={() => <Fragment />}>
+                  <TrendingClubs />
+                </GQLRenderer>
+                <GQLRenderer ErrorFallback={() => <Fragment />}>
+                  <RecommendedArtists />
+                </GQLRenderer>
               </Fragment>
             )}
           </ContentLayoutAside>

@@ -5,6 +5,11 @@ import {
   SocialProviderNameEnum,
 } from '../constants';
 
+export interface IStringNumberCoordinate {
+  x: string;
+  y: number;
+}
+
 export interface GenericProps {
   innerRef?: Ref<any>;
   children?: ReactNode;

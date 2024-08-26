@@ -45,6 +45,7 @@ function InformationTooltip({
         fontSize={1}
         bgColor='#202032'
         border={1}
+        p={2}
         borderColor={hexToRGB('#9898FF', 0.25)}
       >
         {description}

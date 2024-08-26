@@ -13,6 +13,8 @@ import { Fragment, useState } from 'react';
 import { PostMediaUpload } from '../../inputs';
 import { AddMediaProps } from './types';
 
+const ONE_MB = 1024 * 1024;
+
 function AddMedia({
   as = <Icon color='white500' size='xl' name='image-add-fill' />,
   update,
@@ -58,6 +60,18 @@ function AddMedia({
       return;
     }
 
+    if (
+      allFiles.length === 1 &&
+      FileUtility.ofType(allFiles[0].type, 'video') &&
+      allFiles[0].size > 25 * ONE_MB
+    ) {
+      openWith({
+        description: 'The video should be less than 25MB in size.',
+        status: 'info',
+      });
+      return;
+    }
+
     if (allFiles.length > 1) {
       // images only
       // check if file interface are image only
@@ -68,6 +82,13 @@ function AddMedia({
               'You can only add 1 video or upto 4 images at a time.',
             status: 'info',
           });
+
+          if (file.size > 5 * ONE_MB) {
+            openWith({
+              description: 'All images should be less than 5MB in size.',
+              status: 'info',
+            });
+          }
           return;
         }
       }

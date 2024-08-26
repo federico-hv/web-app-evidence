@@ -3,7 +3,7 @@ import { Box, Heading, VStack } from '@holdr-ui/react';
 import ValueStatistic from './value-statistic';
 import { dummyMembershipValueData } from '../../../shared/constants';
 import GainLossIndicator from '../../../../../shared/components/gain-loss-indicator';
-import { getFormattedPriceVal } from '../../../../../shared/utilities/price.utility';
+import { formatMoney } from '../../../../../shared/utilities/money';
 
 function MembershipValueSummary() {
   return (
@@ -29,15 +29,11 @@ function MembershipValueSummary() {
         <VStack gap={3} justify='flex-end'>
           <ValueStatistic
             label='Average price'
-            value={getFormattedPriceVal(
-              dummyMembershipValueData.averagePrice,
-            )}
+            value={formatMoney(dummyMembershipValueData.averagePrice)}
           />
           <ValueStatistic
             label='Gains/Losses'
-            value={getFormattedPriceVal(
-              dummyMembershipValueData.priceChange,
-            )}
+            value={formatMoney(dummyMembershipValueData.priceChange)}
             leftAddon={
               dummyMembershipValueData.priceChange !== 0 && (
                 <GainLossIndicator
