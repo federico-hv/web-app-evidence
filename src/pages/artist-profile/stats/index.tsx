@@ -1,4 +1,5 @@
 import {
+  arrayFrom,
   Box,
   Center,
   Circle,
@@ -25,14 +26,17 @@ import {
 import { ArtistProfileStatistic } from './ui';
 import {
   IClubAnalyticsResponse,
+  TimePeriodEnum,
   useClubAnalyticsSuspenseQuery,
   useMonthlyMembershipValuesSuspenseQuery,
+  useSocialInteractionSuspenseQuery,
+  useVisitsByCountrySuspenseQuery,
 } from '../../../features';
 import { Chart } from 'react-google-charts';
 import millify from 'millify';
-import { useVisitsByCountrySuspenseQuery } from '../../../features/stats/queries/use-visits-by-country.query';
-import { Fragment } from 'react';
+import { Fragment, useState } from 'react';
 import countries from '../../../shared/components/country-picker/data/countries';
+import dayjs from 'dayjs';
 
 export const data = [
   ['Country', 'Popularity'],
@@ -40,22 +44,6 @@ export const data = [
   ['United States', 300],
   ['United Kingdom', 400],
   ['France', 600],
-];
-
-export const barChartData = [
-  ['Month', 'Price'],
-  ['Jan', 20],
-  ['Feb', 25],
-  ['Mar', 30],
-  ['Apr', 35],
-  ['May', 40],
-  ['Jun', 45],
-  ['Jul', 50],
-  ['Aug', 55],
-  ['Sep', 60],
-  ['Oct', 65],
-  ['Nov', 70],
-  ['Dec', 75],
 ];
 
 function ClubProgress() {
@@ -268,7 +256,12 @@ function MembershipValueChart() {
 }
 
 function VisitsByCountryChart() {
-  const { data: visitsByCountryData } = useVisitsByCountrySuspenseQuery();
+  const [period, setPeriod] = useState<TimePeriodEnum>(
+    TimePeriodEnum.threeMonths,
+  );
+
+  const { data: visitsByCountryData } =
+    useVisitsByCountrySuspenseQuery(period);
 
   const colors = ['#A2E2B3', '#FFE2A6', '#E28A97', '#B9B9FF', '#eca88b'];
 
@@ -292,12 +285,15 @@ function VisitsByCountryChart() {
         <Box>
           <SelectInputField
             position='popper'
-            value='3'
+            value={period.toString()}
+            onValueChange={(value) =>
+              setPeriod(value as unknown as TimePeriodEnum)
+            }
             triggerCSS={{ width: 150, ...darkSelectCSS }}
             options={[
-              { value: '3', label: '3 months' },
-              { value: '6', label: '6 months' },
-              { value: '12', label: '1 year' },
+              { value: TimePeriodEnum.threeMonths, label: '3 months' },
+              { value: TimePeriodEnum.sixMonths, label: '6 months' },
+              { value: TimePeriodEnum.oneYear, label: '1 year' },
             ]}
             keySelector={({ label }) => label}
             labelSelector={({ label }) => label}
@@ -373,6 +369,21 @@ function VisitsByCountryChart() {
 }
 
 function SocialInteractionChart() {
+  const [year, setYear] = useState<number>(dayjs().year());
+
+  const { data: socialInteractionsData } =
+    useSocialInteractionSuspenseQuery();
+
+  const years = arrayFrom(dayjs().year() - 2023).map((n) => ({
+    value: n + 2024,
+    label: `${n + 2024}`,
+  }));
+
+  const data = socialInteractionsData.socialInteractions.map((item) => [
+    item.x,
+    item.y,
+  ]);
+
   return (
     <RadialSurface2 w='100%' p={4} radius={3}>
       <HStack
@@ -388,9 +399,10 @@ function SocialInteractionChart() {
         <Box>
           <SelectInputField
             position='popper'
-            value='2024'
+            value={year.toString()}
+            onValueChange={(value) => setYear(parseInt(value))}
             triggerCSS={{ width: 150, ...darkSelectCSS }}
-            options={[{ value: '2024', label: '2024' }]}
+            options={years}
             keySelector={({ label }) => label}
             labelSelector={({ label }) => label}
             valueSelector={({ value }) => value.toString()}
@@ -398,58 +410,69 @@ function SocialInteractionChart() {
           />
         </Box>
       </HStack>
-      <Chart
-        chartType='ColumnChart'
-        width='100%'
-        height='100%'
-        data={barChartData}
-        options={{
-          legend: 'none',
-          backgroundColor: 'transparent',
-          bar: { groupWidth: '16px' },
-          series: {
-            0: {
-              color: '#9898FF', // Line color
-              areaOpacity: 0.1, // Area opacity
+
+      {data.length === 0 ? (
+        <Center h='100%'>
+          <Text color='white700'>No data to display</Text>
+        </Center>
+      ) : (
+        <Chart
+          chartType='ColumnChart'
+          width='100%'
+          height='100%'
+          data={[['Month', 'Price'], ...data]}
+          options={{
+            legend: 'none',
+            backgroundColor: 'transparent',
+            bar: { groupWidth: '16px' },
+            series: {
+              0: {
+                color: '#9898FF', // Line color
+                areaOpacity: 0.1, // Area opacity
+              },
             },
-          },
-          chartArea: {
-            width: '90%',
-            height: '70%',
-          },
-          vAxis: {
-            gridlines: { color: '#3b3a59' },
-            minorGridlines: { color: '#3b3a59' },
-            textStyle: {
-              color: '#B3B4AF',
-              fontWeight: 300,
+            chartArea: {
+              width: '90%',
+              height: '70%',
             },
-          },
-          hAxis: {
-            gridLineColor: 'red',
-            textStyle: { color: '#B3B4AF' },
-          },
-          tooltip: {
-            trigger: 'none', // rmeove tooltip
-          },
-        }}
-      />
+            vAxis: {
+              gridlines: { color: '#3b3a59' },
+              minorGridlines: { color: '#3b3a59' },
+              textStyle: {
+                color: '#B3B4AF',
+                fontWeight: 300,
+              },
+            },
+            hAxis: {
+              gridLineColor: 'red',
+              textStyle: { color: '#B3B4AF' },
+            },
+            tooltip: {
+              trigger: 'none', // rmeove tooltip
+            },
+          }}
+        />
+      )}
     </RadialSurface2>
   );
 }
 
 function ArtistProfileStatsPage() {
   return (
-    <GQLRenderer>
-      <VStack gap={4}>
-        <ClubSummary />
+    <VStack gap={4}>
+      <ClubSummary />
+      <GQLRenderer>
         <MembershipValueChart />
-        <HStack h={400} gap={4}>
+      </GQLRenderer>
+      <HStack h={400} gap={4}>
+        <GQLRenderer>
           <VisitsByCountryChart />
+        </GQLRenderer>
+        <GQLRenderer>
           <SocialInteractionChart />
-        </HStack>
-      </VStack>
-    </GQLRenderer>
+        </GQLRenderer>
+      </HStack>
+    </VStack>
   );
 }
 ArtistProfileStatsPage.displayName = 'ArtistProfileStatsPage';

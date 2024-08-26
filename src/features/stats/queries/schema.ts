@@ -85,8 +85,17 @@ export const GET_MONTHLY_MEMBERSHIP_VALUES = gql`
 `;
 
 export const GET_VISITS_BY_COUNTRY = gql`
-  query VisitsByCountry {
-    visitsByCountry {
+  query VisitsByCountry($period: TimePeriodEnum) {
+    visitsByCountry(period: $period) {
+      x
+      y
+    }
+  }
+`;
+
+export const GET_SOCIAL_INTERACTIONS = gql`
+  query SocialInteractions($year: Int) {
+    socialInteractions(year: $year) {
       x
       y
     }
