@@ -52,7 +52,7 @@
     "@types/react-input-mask": "^3.0.5",
     "apollo-upload-client": "^17.0.0",
     "country-list": "^2.3.0",
-    "dayjs": "^1.11.10",
+    "dayjs": "^1.11.13",
     "formik": "^2.2.9",
     "formik-stepper": "^2.1.4",
     "framer-motion": "^10.16.5",

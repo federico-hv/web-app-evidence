@@ -379,10 +379,9 @@ function SocialInteractionChart() {
     label: `${n + 2024}`,
   }));
 
-  const data = socialInteractionsData.socialInteractions.map((item) => [
-    item.x,
-    item.y,
-  ]);
+  const data = socialInteractionsData.monthlySocialInteractions.map(
+    (item) => [item.x, item.y],
+  );
 
   return (
     <RadialSurface2 w='100%' p={4} radius={3}>

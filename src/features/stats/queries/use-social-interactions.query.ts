@@ -4,7 +4,7 @@ import { GET_SOCIAL_INTERACTIONS } from './schema';
 import { TimePeriodEnum } from '../shared';
 
 export interface ISocialInteractionsResponse {
-  socialInteractions: IStringNumberCoordinate[];
+  monthlySocialInteractions: IStringNumberCoordinate[];
 }
 
 export interface ISocialInteractionArgs {

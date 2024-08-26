@@ -95,7 +95,7 @@ export const GET_VISITS_BY_COUNTRY = gql`
 
 export const GET_SOCIAL_INTERACTIONS = gql`
   query SocialInteractions($year: Int) {
-    socialInteractions(year: $year) {
+    monthlySocialInteractions(year: $year) {
       x
       y
     }

@@ -3,8 +3,14 @@ import { Box, Heading, VStack } from '@holdr-ui/react';
 import AnalyticsStatistic from './analytics-statistic';
 import { useQuickAnalyticsSuspenseQuery } from '../../../stats';
 import millify from 'millify';
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+
+dayjs.extend(utc);
 
 function AnalyticsSummary() {
+  const today = dayjs().format('YYYY-MM-D');
+
   const { data } = useQuickAnalyticsSuspenseQuery();
 
   return (
@@ -55,7 +61,16 @@ function AnalyticsSummary() {
           <AnalyticsStatistic
             label='peak engagement time'
             description='The average time when fans are most active based on pageviews and social interactions.'
-            value={data.socialAnalytics.peakEngagementTime}
+            value={
+              data.socialAnalytics.peakEngagementTime.length > 0
+                ? dayjs(
+                    `${today}${data.socialAnalytics.peakEngagementTime}`,
+                  )
+                    .utc()
+                    .local()
+                    .format('h:mm A')
+                : 'N/A'
+            }
           />
         </VStack>
       </VStack>
