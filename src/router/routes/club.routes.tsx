@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Route, Routes } from 'react-router';
-import { Navigate, useParams } from 'react-router-dom';
+import { Navigate, Outlet, useParams } from 'react-router-dom';
 import { Suspense } from 'react';
 import { ErrorFallback, Loader } from '../../shared';
 import { ErrorBoundary } from 'react-error-boundary';

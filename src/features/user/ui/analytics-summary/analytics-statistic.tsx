@@ -1,13 +1,4 @@
-import {
-  Icon,
-  VStack,
-  HStack,
-  Box,
-  Text,
-  Tooltip,
-  TooltipTrigger,
-  TooltipContent,
-} from '@holdr-ui/react';
+import { VStack, HStack, Box, Text } from '@holdr-ui/react';
 import { AnalyticsStatisticProps } from './types';
 import GainLossIndicator from '../../../../shared/components/gain-loss-indicator';
 import { InformationTooltip } from '../../../../shared';
@@ -33,7 +24,11 @@ function AnalyticsStatistic({
           </Text>
         </Box>
         {description && (
-          <InformationTooltip size='xs' description={description} />
+          <InformationTooltip
+            sideOffset={4}
+            size='xs'
+            description={description}
+          />
         )}
       </HStack>
       <HStack items='flex-end' justify='space-between'>

@@ -17,6 +17,13 @@ import {
 import {
   AuctionCard,
   IClub,
+  ISaveAuctionViewsArgs,
+  ISaveAuctionViewsResponse,
+  ISaveClubViewsArgs,
+  ISaveClubViewsResponse,
+  SAVE_AUCTION_VIEWS,
+  SAVE_CLUB_VIEWS,
+  SaveViews,
   useAddPaymentMethod,
   useBidSuspenseQuery,
   useCreateBid,
@@ -59,8 +66,6 @@ const DialogState = {
 
 function AuctionBannerCard() {
   const { slug } = useParams();
-
-  const navigate = useNavigate();
 
   const { data: clubData } = useSuspenseGetClub({ slug });
 
@@ -259,6 +264,24 @@ function AuctionPlaceBid() {
   );
 }
 
+function SaveAuctionView() {
+  const { slug } = useParams();
+
+  const { data: clubData } = useSuspenseGetClub({ slug });
+
+  const { data: auctionData } = useGetAuctionSuspenseQuery(
+    clubData.club.id,
+  );
+
+  return (
+    <SaveViews<ISaveAuctionViewsResponse, ISaveAuctionViewsArgs>
+      mutation={SAVE_AUCTION_VIEWS}
+      name='saveAuctionViews'
+      args={{ auctionIds: [auctionData.auction.id] }}
+    />
+  );
+}
+
 function ArtistClubLiveBidsPage() {
   const { slug } = useParams();
 
@@ -277,6 +300,7 @@ function ArtistClubLiveBidsPage() {
             title='Live Bids'
             description='A catalog of memberships that are being offered by artists.'
           />
+          <SaveAuctionView />
           <GQLRenderer>
             <VStack gap={6}>
               <HStack gap={4} h={500}>

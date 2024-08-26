@@ -1,5 +1,5 @@
 import { useQuery, useSuspenseQuery } from '@apollo/client';
-import { GET_QUICK_ANALYTOCS } from './schema';
+import { GET_QUICK_ANALYTICS } from './schema';
 import { IStatisticValue } from '../shared';
 
 interface IQuickAnalytics {
@@ -14,9 +14,9 @@ interface IQuickAnalytics {
 }
 
 export function useQuickAnalyticsQuery() {
-  return useQuery<IQuickAnalytics>(GET_QUICK_ANALYTOCS);
+  return useQuery<IQuickAnalytics>(GET_QUICK_ANALYTICS);
 }
 
 export function useQuickAnalyticsSuspenseQuery() {
-  return useSuspenseQuery<IQuickAnalytics>(GET_QUICK_ANALYTOCS);
+  return useSuspenseQuery<IQuickAnalytics>(GET_QUICK_ANALYTICS);
 }

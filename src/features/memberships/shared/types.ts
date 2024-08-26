@@ -1,7 +1,11 @@
-import { IPerk, ITinyClub } from '../../clubs';
+import { ITinyClub } from '../../clubs';
 
-export interface IMembership {
-  id: number;
+export interface ITinyMembership {
+  id: string;
   number: number;
+  createdAt: Date;
+}
+
+export interface IMembership extends ITinyMembership {
   club: ITinyClub;
 }

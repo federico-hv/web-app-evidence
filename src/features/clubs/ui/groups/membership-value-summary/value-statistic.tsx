@@ -27,7 +27,11 @@ function ValueStatistic({
           {label}
         </Text>
         {description && (
-          <InformationTooltip size='xs' description={description} />
+          <InformationTooltip
+            sideOffset={4}
+            size='xs'
+            description={description}
+          />
         )}
       </HStack>
       <HStack gap={1} items='center'>

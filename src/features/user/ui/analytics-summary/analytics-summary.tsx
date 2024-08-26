@@ -1,15 +1,16 @@
-import { RadialSurface } from '../../../../shared';
+import { makePercentage, RadialSurface } from '../../../../shared';
 import { Box, Heading, VStack } from '@holdr-ui/react';
 import AnalyticsStatistic from './analytics-statistic';
-import { dummyAnalyticsSummaryData } from '../../shared';
-import { getFormattedTime } from '../../../../shared/utilities/time.utility';
-import { useQuickAnalyticsSuspenseQuery } from '../../../stats/queries/use-quick-analytics.query';
+import { useQuickAnalyticsSuspenseQuery } from '../../../stats';
+import millify from 'millify';
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
 
-function makePercentage(value: number) {
-  return parseFloat((value * 100).toFixed(2));
-}
+dayjs.extend(utc);
 
 function AnalyticsSummary() {
+  const today = dayjs().format('YYYY-MM-D');
+
   const { data } = useQuickAnalyticsSuspenseQuery();
 
   return (
@@ -35,32 +36,41 @@ function AnalyticsSummary() {
         <VStack gap={6}>
           <AnalyticsStatistic
             label='club views'
-            description='A description'
-            value={data.clubAnalytics.clubViews.value}
+            description='The total number of times a specific web page has been visited by users within a 1-month timeframe.'
+            value={millify(data.clubAnalytics.clubViews.value)}
             percent={makePercentage(
               data.clubAnalytics.clubViews.percentage,
             )}
           />
           <AnalyticsStatistic
             label='average bidders'
-            description='A description'
-            value={data.clubAnalytics.averageBidders.value}
+            description='The average number of participants in Live Auctions in a 3-month period.'
+            value={millify(data.clubAnalytics.averageBidders.value)}
             percent={makePercentage(
               data.clubAnalytics.averageBidders.percentage,
             )}
           />
           <AnalyticsStatistic
             label='social interactions'
-            description='A description'
-            value={data.socialAnalytics.socialInteractions.value}
+            description='Social interactions is a percentage of the total number of likes, bookmarks and comments within a 3-month period.'
+            value={millify(data.socialAnalytics.socialInteractions.value)}
             percent={makePercentage(
               data.socialAnalytics.socialInteractions.percentage,
             )}
           />
           <AnalyticsStatistic
             label='peak engagement time'
-            description='A description'
-            value={data.socialAnalytics.peakEngagementTime}
+            description='The average time when fans are most active based on page views and social interactions.'
+            value={
+              data.socialAnalytics.peakEngagementTime.length > 0
+                ? dayjs(
+                    `${today}${data.socialAnalytics.peakEngagementTime}`,
+                  )
+                    .utc()
+                    .local()
+                    .format('h:mm A')
+                : 'N/A'
+            }
           />
         </VStack>
       </VStack>

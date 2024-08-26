@@ -12,10 +12,13 @@ export interface ICardDetails {
   expires: string;
 }
 
-export interface IPaymentTransaction {
+export interface ITinyPaymentTransaction {
   id: number;
   createdAt: Date;
   amount: number;
-  card: ICardDetails;
+}
+
+export interface IPaymentTransaction extends ITinyPaymentTransaction {
+  card?: ICardDetails;
   club: ITinyClub;
 }

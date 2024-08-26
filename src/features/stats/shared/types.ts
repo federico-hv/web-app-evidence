@@ -1,3 +1,7 @@
+import { ITinyMembership } from '../../memberships';
+import { ITinyPaymentTransaction } from '../../payment-methods';
+import { IUser, UserModel } from '../../../shared';
+
 export interface IFraction {
   numerator: number;
   denominator: number;
@@ -13,6 +17,13 @@ export interface IClubSummary {
   lastSale: IStatisticValue;
   clubViews: IStatisticValue;
   averageBidders: IStatisticValue;
-  membersCount: IFraction;
+  milestones: IFraction;
   membershipCount: IFraction;
+}
+
+export interface IExpandedClubMember {
+  id: number; // paymentOnMembership ID
+  user: IUser;
+  membership: ITinyMembership;
+  payment: ITinyPaymentTransaction;
 }
