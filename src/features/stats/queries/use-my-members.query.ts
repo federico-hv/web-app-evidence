@@ -17,12 +17,17 @@ export interface IMyMembersArgs {
   sortOrder?: OrderByEnum;
 }
 
-export function useMyMembersQuery() {
-  return useQuery<IMyMembersResponse, IMyMembersArgs>(GET_MY_MEMBERS);
+export function useMyMembersQuery(args?: IMyMembersArgs) {
+  return useQuery<IMyMembersResponse, IMyMembersArgs>(GET_MY_MEMBERS, {
+    variables: args,
+  });
 }
 
-export function useMyMembersSuspenseQuery() {
+export function useMyMembersSuspenseQuery(args?: IMyMembersArgs) {
   return useSuspenseQuery<IMyMembersResponse, IMyMembersArgs>(
     GET_MY_MEMBERS,
+    {
+      variables: args,
+    },
   );
 }

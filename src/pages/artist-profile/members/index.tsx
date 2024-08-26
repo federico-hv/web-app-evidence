@@ -1,5 +1,6 @@
 import {
   formatMoney,
+  OrderByEnum,
   RadialSurface2,
   TextGroup,
   TextGroupSubheading,
@@ -15,10 +16,13 @@ import {
   VStack,
 } from '@holdr-ui/react';
 import { FlatList } from '../../../tmp/flat-list';
-import { useMyMembersSuspenseQuery } from '../../../features';
+import {
+  MembersSortByEnum,
+  useMyMembersSuspenseQuery,
+} from '../../../features';
 import dayjs from 'dayjs';
 import localizedFormat from 'dayjs/plugin/localizedFormat';
-import { Fragment } from 'react';
+import { Fragment, useState } from 'react';
 
 dayjs.extend(localizedFormat);
 
@@ -37,7 +41,28 @@ function ArtistProfileMembersPage() {
 ArtistProfileMembersPage.displayName = 'ArtistProfileMembersPage';
 
 function MembersList() {
-  const { data } = useMyMembersSuspenseQuery();
+  const [sortBy, setSortBy] = useState<MembersSortByEnum>();
+  const [sortOrder, setSortOrder] = useState(OrderByEnum.asc);
+
+  const { data } = useMyMembersSuspenseQuery({
+    sortBy,
+    sortOrder,
+  });
+
+  const onSortChange = (nextSortBy: MembersSortByEnum) => {
+    const toggledSortOrder =
+      sortOrder === OrderByEnum.asc ? OrderByEnum.desc : OrderByEnum.asc;
+
+    if (sortBy === nextSortBy) {
+      setSortOrder(toggledSortOrder);
+    }
+
+    setSortBy(nextSortBy);
+
+    if (sortOrder === OrderByEnum.asc) {
+      setSortOrder(OrderByEnum.desc);
+    }
+  };
 
   return (
     <Fragment>
@@ -50,28 +75,81 @@ function MembersList() {
       ) : (
         <VStack mt={6} gap={2}>
           <HStack gap={4}>
-            <HStack gap={2} flex={1} items='center'>
+            <HStack
+              gap={2}
+              flex={1}
+              items='center'
+              onClick={() => onSortChange(MembersSortByEnum.name)}
+            >
               <Heading size={2} weight={600} color='white700'>
                 Name
               </Heading>
-              <Icon color='white700' size='xl' name='caret-down' />
+              <Icon
+                size='xl'
+                color={
+                  sortBy === MembersSortByEnum.name
+                    ? 'purple400'
+                    : 'white700'
+                }
+                name={
+                  sortOrder === OrderByEnum.desc
+                    ? 'caret-up'
+                    : 'caret-down'
+                }
+              />
             </HStack>
             <Box basis={125}>
               <Heading size={2} weight={600} color='white700'>
                 Membership No.
               </Heading>
             </Box>
-            <HStack gap={2} basis={200} items='center'>
+            <HStack
+              gap={2}
+              basis={200}
+              items='center'
+              onClick={() => onSortChange(MembersSortByEnum.startedOn)}
+            >
               <Heading size={2} weight={600} color='white700'>
                 Member Since
               </Heading>
-              <Icon color='white700' size='xl' name='caret-down' />
+              <Icon
+                size='xl'
+                color={
+                  sortBy === MembersSortByEnum.startedOn
+                    ? 'purple400'
+                    : 'white700'
+                }
+                name={
+                  sortOrder === OrderByEnum.desc
+                    ? 'caret-up'
+                    : 'caret-down'
+                }
+              />
             </HStack>
-            <HStack gap={2} basis={200} items='center'>
+            <HStack
+              gap={2}
+              basis={200}
+              items='center'
+              onClick={() =>
+                onSortChange(MembersSortByEnum.purchaseAmount)
+              }
+            >
               <Heading size={2} weight={600} color='white700'>
                 Purchase Price
               </Heading>
-              <Icon color='white700' size='xl' name='caret-down' />
+              <Icon
+                size='xl'
+                color={
+                  sortBy === MembersSortByEnum.purchaseAmount
+                    ? 'purple400'
+                    : 'white700'
+                }
+                name={
+                  sortOrder === OrderByEnum.desc
+                    ? 'caret-up'
+                    : 'caret-down'
+                }
+              />
             </HStack>
           </HStack>
           <FlatList
