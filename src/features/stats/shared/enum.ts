@@ -3,3 +3,9 @@ export enum TimePeriodEnum {
   'sixMonths' = 'sixMonths',
   'oneYear' = 'oneYear',
 }
+
+export enum MembersSortByEnum {
+  name = 'name',
+  startedOn = 'startedOn',
+  purchaseAmount = 'purchaseAmount',
+}

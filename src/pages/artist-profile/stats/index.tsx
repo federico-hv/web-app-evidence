@@ -98,6 +98,8 @@ function ClubProgress() {
 }
 
 function ClubValueSummary() {
+  const today = dayjs().format('YYYY-MM-D');
+
   const { state } = useGeneralContext<IClubAnalyticsResponse>();
 
   return (
@@ -156,7 +158,14 @@ function ClubValueSummary() {
         <ArtistProfileStatistic
           tooltip='The average time when fans are most active based on pageviews and social interactions.'
           label='Peak engagement time'
-          value={state.socialSummary.peakEngagementTime}
+          value={
+            state.socialSummary.peakEngagementTime.length > 0
+              ? dayjs(`${today}${state.socialSummary.peakEngagementTime}`)
+                  .utc()
+                  .local()
+                  .format('h:mm A')
+              : 'N/A'
+          }
         />
       </GridItem>
     </Grid>
@@ -200,7 +209,9 @@ function MembershipValueChart() {
       </HStack>
       {data.length === 0 ? (
         <Center h='100%'>
-          <Text color='white700'>No data to display</Text>
+          <Text size={2} weight={600} color='white600'>
+            No data to display
+          </Text>
         </Center>
       ) : (
         <VStack flex={1}>
@@ -304,7 +315,9 @@ function VisitsByCountryChart() {
       </HStack>
       {data.length === 0 ? (
         <Center h='100%'>
-          <Text color='white700'>No data to display</Text>
+          <Text size={2} weight={600} color='white600'>
+            No data to display
+          </Text>
         </Center>
       ) : (
         <HStack h='100%' gap={6}>
@@ -412,7 +425,9 @@ function SocialInteractionChart() {
 
       {data.length === 0 ? (
         <Center h='100%'>
-          <Text color='white700'>No data to display</Text>
+          <Text size={2} weight={600} color='white600'>
+            No data to display
+          </Text>
         </Center>
       ) : (
         <Chart

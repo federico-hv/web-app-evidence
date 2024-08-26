@@ -60,7 +60,7 @@ function AnalyticsSummary() {
           />
           <AnalyticsStatistic
             label='peak engagement time'
-            description='The average time when fans are most active based on pageviews and social interactions.'
+            description='The average time when fans are most active based on page views and social interactions.'
             value={
               data.socialAnalytics.peakEngagementTime.length > 0
                 ? dayjs(

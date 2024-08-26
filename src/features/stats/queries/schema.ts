@@ -101,3 +101,44 @@ export const GET_SOCIAL_INTERACTIONS = gql`
     }
   }
 `;
+
+export const GET_MY_MEMBERS = gql`
+  query MyMembers(
+    $params: NumberPaginationParamsInput
+    $sortBy: MembersSortByEnum
+    $sortOrder: OrderByEnum
+  ) {
+    myMembers(params: $params, sortBy: $sortBy, sortOrder: $sortOrder) {
+      total
+      edges {
+        cursor
+        node {
+          id
+          user {
+            id
+            avatar
+            displayName
+            username
+            role
+          }
+          membership {
+            id
+            number
+            createdAt
+          }
+          payment {
+            id
+            createdAt
+            amount
+          }
+        }
+      }
+      pageInfo {
+        startCursor
+        endCursor
+        hasNextPage
+        hasPreviousPage
+      }
+    }
+  }
+`;
