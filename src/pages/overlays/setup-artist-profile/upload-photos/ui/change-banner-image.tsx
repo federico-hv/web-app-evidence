@@ -1,15 +1,5 @@
-import {
-  Box,
-  Center,
-  Icon,
-  Image,
-  useGeneralContext,
-} from '@holdr-ui/react';
-import {
-  IClub,
-  useClubContext,
-  useUpdateClub,
-} from '../../../../../features';
+import { Box, Center, Icon, Image } from '@holdr-ui/react';
+import { useClubContext, useUpdateClub } from '../../../../../features';
 import { Fragment, useState } from 'react';
 import { ImageUpload } from '../../../../../shared';
 import { ImageUploadContext } from '../../../../../shared/components/image-upload/context';

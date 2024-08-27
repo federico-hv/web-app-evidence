@@ -13,7 +13,12 @@ import {
 import { ChangeEvent, Fragment } from 'react';
 import ChooseFeedType from '../choose-feed-type';
 import {
+  darkInputStyles,
+  darkTextareaStyles,
+  FieldLengths,
+  InputTextField,
   OgMetadataCard,
+  TextareaField,
   useStepperContext,
 } from '../../../../../../../shared';
 import { useCreateFeedContext } from '../../shared';
@@ -80,64 +85,40 @@ function CantFindLinkForm() {
         w='100%'
         css={{ backgroundColor: 'rgba(204, 204, 204, 0.10)' }}
       />
-      <VStack as='label' w='100%' gap={1}>
-        <Text color='base400' size={2}>
-          Title
-        </Text>
-        <Box
-          radius={2}
-          css={{ backgroundColor: 'rgba(26, 26, 41, 0.75)' }}
-        >
-          <Input
-            radius={2}
-            focusColor='transparent'
-            name='title'
-            value={articleState.title}
-            onChange={handleChange}
-            color='white500'
-            maxLength={75}
-            css={{ $$hoverColor: 'transparent' }}
-          />
-        </Box>
-      </VStack>
-      <VStack as='label' w='100%' gap={1}>
-        <Text color='base400' size={2}>
-          Website URL
-        </Text>
-        <Box
-          radius={2}
-          css={{ backgroundColor: 'rgba(26, 26, 41, 0.75)' }}
-        >
-          <Input
-            radius={2}
-            focusColor='transparent'
-            name='url'
-            value={articleState.url}
-            onChange={handleChange}
-            color='white500'
-            css={{ $$hoverColor: 'transparent' }}
-          />
-        </Box>
-      </VStack>
-      <VStack as='label' w='100%' gap={1}>
-        <Text color='base400' size={2}>
-          Image URL
-        </Text>
-        <Box
-          radius={2}
-          css={{ backgroundColor: 'rgba(26, 26, 41, 0.75)' }}
-        >
-          <Input
-            radius={2}
-            focusColor='transparent'
-            name='imageUrl'
-            value={articleState.imageUrl}
-            onChange={handleChange}
-            color='white500'
-            css={{ $$hoverColor: 'transparent' }}
-          />
-        </Box>
-      </VStack>
+      <InputTextField
+        label='Title'
+        name='title'
+        className={darkInputStyles()}
+        value={articleState.title}
+        onChange={handleChange}
+        maxLength={FieldLengths.article.title.max}
+        minLength={FieldLengths.article.title.min}
+      />
+      <InputTextField
+        label='Website URL'
+        name='url'
+        className={darkInputStyles()}
+        value={articleState.url}
+        onChange={handleChange}
+      />
+      <InputTextField
+        label='Image URL'
+        name='imageUrl'
+        className={darkInputStyles()}
+        value={articleState.imageUrl}
+        onChange={handleChange}
+      />
+      <TextareaField
+        id='description'
+        label='Description'
+        name='description'
+        className={darkTextareaStyles()}
+        value={articleState.description}
+        onChange={handleChange}
+        placeholder='Let people know a bit about the article.'
+        maxLength={FieldLengths.article.description.max}
+        minLength={FieldLengths.article.description.min}
+      />
     </VStack>
   );
 }

@@ -1,4 +1,5 @@
 import { OgSite } from '../../../../shared';
+import { FeedAudienceEnum } from '../enum';
 
 export interface CreateArticleInput {
   title: string;
@@ -6,4 +7,5 @@ export interface CreateArticleInput {
   imageUrl: string;
   url: string;
   site: OgSite;
+  audience?: FeedAudienceEnum;
 }

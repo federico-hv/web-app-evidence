@@ -1,21 +1,30 @@
 import { useNavigate } from 'react-router-dom';
 import {
   makePath,
+  missingField,
   Paths,
-  TextGroup,
-  TextGroupHeading,
-  TextGroupSubheading,
   usePreviousLocation,
 } from '../../../../shared';
-import { Button, HStack, VStack } from '@holdr-ui/react';
+import { Button, HStack, Text, VStack } from '@holdr-ui/react';
 import {
   ChangeClubBannerImage,
   ChangeClubImage,
   ChangeProfileAvatar,
 } from './ui';
-import { useClubContext } from '../../../../features';
+import {
+  useClubContext,
+  useCurrentArtist,
+  useSuspenseGetArtist,
+} from '../../../../features';
+import { SectionHeader } from '../ui';
 
 function UploadPhotoView() {
+  const currentArtist = useCurrentArtist();
+
+  const { data: artistData } = useSuspenseGetArtist({
+    id: currentArtist?.id,
+  });
+
   const previousLocation = usePreviousLocation('/');
 
   const navigate = useNavigate();
@@ -25,32 +34,28 @@ function UploadPhotoView() {
   return (
     <VStack gap={9} pl={2} h='100%' overflowY='auto'>
       <VStack gap={4}>
-        <TextGroup gap={0}>
-          <TextGroupHeading size={4}>Profile</TextGroupHeading>
-          <TextGroupSubheading size={1} color='white700'>
-            Add an image for your profile photo
-          </TextGroupSubheading>
-        </TextGroup>
+        <SectionHeader
+          required
+          title='Profile'
+          subtitle='Add an image for your profile photo'
+        />
         <ChangeProfileAvatar />
       </VStack>
       <VStack gap={4}>
-        <TextGroup gap={0}>
-          <TextGroupHeading size={4}>Auction Card</TextGroupHeading>
-          <TextGroupSubheading size={1} color='white700'>
-            Add an image that will be visible for your fans on the Clubs
-            page
-          </TextGroupSubheading>
-        </TextGroup>
+        <SectionHeader
+          required
+          title='Auction Card'
+          subtitle='Add an image that will be visible for your fans on the Club page'
+        />
         <ChangeClubImage placeholder={club.coverImage} />
       </VStack>
       <VStack gap={4}>
-        <TextGroup gap={0}>
-          <TextGroupHeading size={4}>Banner</TextGroupHeading>
-          <TextGroupSubheading size={1} color='white700'>
-            Add a banner image that willy be displayed on your member’s
-            page
-          </TextGroupSubheading>
-        </TextGroup>
+        <SectionHeader
+          required
+          title='Banner'
+          subtitle='Add a banner image that willy be displayed on your member’s
+            page'
+        />
         <ChangeClubBannerImage />
       </VStack>
       <HStack
@@ -67,6 +72,21 @@ function UploadPhotoView() {
         pt='14px'
       >
         <Button
+          type='button'
+          onClick={() => navigate(previousLocation)}
+          variant='ghost'
+          radius={1}
+          colorTheme='purple200'
+          css={{ px: '40px' }}
+        >
+          Skip
+        </Button>
+        <Button
+          disabled={missingField({
+            avatar: artistData.artist.avatar,
+            banner: club.bannerImage,
+            cover: club.coverImage,
+          })}
           onClick={() =>
             navigate(
               makePath([

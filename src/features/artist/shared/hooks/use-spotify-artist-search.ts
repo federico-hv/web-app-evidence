@@ -19,7 +19,7 @@ export function useSpotifyArtistSearch<T>(): [
   const [result, setResult] = useState<T>();
   const [query, { loading, error }] = useLazyQuery<
     {
-      spotifyArtists: T;
+      spotifyArtist: T;
     },
     { queryString: string; limit?: number; offset?: number }
   >(GET_SPOTIFY_ARTISTS);
@@ -31,7 +31,7 @@ export function useSpotifyArtistSearch<T>(): [
         variables: { queryString: newValue, limit: 5, offset: 0 },
       });
 
-      if (data) setResult(data.spotifyArtists);
+      if (data) setResult(data.spotifyArtist);
     }, 500),
     [],
   );

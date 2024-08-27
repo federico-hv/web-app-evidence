@@ -1,3 +1,5 @@
+import { FeedAudienceEnum } from '../enum';
+
 interface CreatePoll {
   description: string;
   endDate?: Date;
@@ -18,6 +20,8 @@ interface CreatePost {
   length?: number;
 }
 
-type CreatePostInput = CreatePost | CreatePoll;
+type CreatePostInput = (CreatePost | CreatePoll) & {
+  audience?: FeedAudienceEnum;
+};
 
 export type { CreatePostInput };

@@ -3,3 +3,9 @@ export enum FeedFilterTypeEnum {
   'All' = 'All',
   'Articles' = 'Articles',
 }
+
+export enum FeedAudienceEnum {
+  'Members' = 'Members',
+  'Followers' = 'Followers',
+  'Everyone' = 'Everyone',
+}

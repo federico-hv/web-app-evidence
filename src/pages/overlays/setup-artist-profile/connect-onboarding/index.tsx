@@ -16,6 +16,7 @@ import {
 import { Button, HStack, useDisclosure, VStack } from '@holdr-ui/react';
 import { useLazyQuery, useQuery } from '@apollo/client';
 import { OnboardingStatus, OnboardingFormDialog } from './ui';
+import { SectionHeader } from '../ui';
 
 function ConnectOnboardingView() {
   const previousLocation = usePreviousLocation('/');
@@ -54,12 +55,11 @@ function ConnectOnboardingView() {
   return (
     <VStack gap={9} pl={2} h='100%' overflow='auto'>
       <VStack gap={4}>
-        <TextGroup gap={0}>
-          <TextGroupHeading size={4}>Verification</TextGroupHeading>
-          <TextGroupSubheading size={1} color='white700'>
-            To create live auctions, we need to verify your identity
-          </TextGroupSubheading>
-        </TextGroup>
+        <SectionHeader
+          required
+          title='Verification'
+          subtitle='To create live auctions, we need to verify your identity'
+        />
       </VStack>
       <Loader loading={loading || loading2}>
         {data && !data.connectAccountStatus && (
@@ -138,7 +138,7 @@ function ConnectOnboardingView() {
             onClick={onClose}
             css={{ px: '28px' }}
           >
-            Continue
+            Skip for now
           </Button>
         </HStack>
       </Loader>

@@ -1,14 +1,12 @@
 import { Button } from '@holdr-ui/react';
 import { Fragment } from 'react';
 import {
-  CreateArticleInput,
   useCreateArticle,
   useCreateOgMetadata,
 } from '../../../../../shared';
 import {
   isValidURL,
   makeButtonLarger,
-  URLPattern,
   useStepperContext,
 } from '../../../../../../../shared';
 import {
@@ -25,6 +23,7 @@ function CreateArticleButton() {
   const { createOgMetadata, loading: loadingCreateOgMetadata } =
     useCreateOgMetadata();
   const {
+    audience,
     badLink,
     articleState,
     websiteUrl,
@@ -104,9 +103,10 @@ function CreateArticleButton() {
           isLoading={loadingCreateArticle}
           loadingText={loadingCreateArticle ? '' : 'Posting'}
           onClick={async () => {
-            const result = await createArticle(
-              articleState as CreateArticleInput,
-            );
+            const result = await createArticle({
+              ...articleState,
+              audience,
+            });
             if (result) {
               resetWebsiteUrl();
               updateArticleState(defaultArticleState);

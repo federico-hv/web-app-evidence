@@ -128,6 +128,16 @@ export const darkInputStyles = css({
   },
 });
 
+export const darkTextareaStyles = css({
+  border: '1px solid $purpleTint400 !important',
+  borderRadius: '$1',
+  backgroundColor: '#1A1A29 !important',
+  '&:focus': {
+    border: '1px solid rgba(152, 152, 255, 1) !important',
+    backgroundColor: 'transparent',
+  },
+});
+
 export const lightSelectCSS: CSSTheme = {
   border: '1px solid rgba(152, 152, 255, 0.35) !important',
   backgroundColor: 'rgba(152, 152, 255, 0.15) !important',

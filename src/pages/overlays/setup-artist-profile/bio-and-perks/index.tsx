@@ -26,6 +26,7 @@ import {
 } from '../../../../features';
 import { useState } from 'react';
 import { SelectPredefinedPerks } from './ui';
+import { SectionHeader } from '../ui';
 
 function BioAndPerksView() {
   const currentArtist = useCurrentArtist();
@@ -85,14 +86,12 @@ function BioAndPerksView() {
   return (
     <VStack gap={9} pl={2} h='100%' overflow='auto'>
       <VStack gap={4}>
-        <TextGroup gap={0}>
-          <TextGroupHeading size={4}>About Me</TextGroupHeading>
-          <TextGroupSubheading size={1} color='white700'>
-            Introduce yourself to your fans and share your music journey,
-            and what inspires your artistry
-          </TextGroupSubheading>
-        </TextGroup>
-
+        <SectionHeader
+          required
+          title='About Me'
+          subtitle='Introduce yourself to your fans and share your music journey,
+            and what inspires your artistry'
+        />
         <TextareaField
           id='bio'
           name='bio'
@@ -104,13 +103,11 @@ function BioAndPerksView() {
         />
       </VStack>
       <VStack gap={4}>
-        <TextGroup gap={0}>
-          <TextGroupHeading size={4}>Perks</TextGroupHeading>
-          <TextGroupSubheading size={1} color='white700'>
-            Choose what perks you would like to offer to your fans
-          </TextGroupSubheading>
-        </TextGroup>
-
+        <SectionHeader
+          required
+          title='Perks'
+          subtitle='Choose what perks you would like to offer to your fans'
+        />
         {/** ⚠️ Disable when live auction is running*/}
         {selectedPerks.length < 3 && (
           <Box mb={4}>
@@ -119,7 +116,6 @@ function BioAndPerksView() {
             </Text>
           </Box>
         )}
-
         <SelectPredefinedPerks
           values={selectedPerks}
           onChange={(next: number[]) => setSelectedPerks(next)}
@@ -148,7 +144,7 @@ function BioAndPerksView() {
           Go back
         </Button>
         <Button
-          disabled={selectedPerks.length < 3}
+          disabled={selectedPerks.length < 3 || bio.length < 1}
           isLoading={loadingUpdate}
           loadingText={loadingUpdate ? 'Continue' : 'Continue'}
           onClick={async () => {

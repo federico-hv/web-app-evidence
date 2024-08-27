@@ -31,8 +31,8 @@ export const GET_ME_ARTIST = gql`
 `;
 
 export const GET_SPOTIFY_ARTISTS = gql`
-  query spotifyArtists($queryString: String!, $limit: Int, $offset: Int) {
-    spotifyArtists(
+  query spotifyArtist($queryString: String!, $limit: Int, $offset: Int) {
+    spotifyArtist(
       queryString: $queryString
       limit: $limit
       offset: $offset

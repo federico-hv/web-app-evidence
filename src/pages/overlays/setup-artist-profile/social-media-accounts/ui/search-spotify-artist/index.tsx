@@ -22,8 +22,7 @@ function SearchSpotifyArtist() {
   const { data } = useSuspenseExternalAccount('Spotify');
   const { addExternalAccount } = useAddExternalAccount();
 
-  const { update, state } =
-    useGeneralContext<ISocialMediaAccountsViewContext>();
+  const { update } = useGeneralContext<ISocialMediaAccountsViewContext>();
 
   const [value, setValue] = useState('');
 
@@ -59,12 +58,11 @@ function SearchSpotifyArtist() {
     );
   };
 
-  useEffect(() => {
-    if (data.externalAccount) {
-      console.log('Updating external account');
-      update({ externalAccount: data.externalAccount });
-    }
-  }, [data, update]);
+  // useEffect(() => {
+  //   if (data.externalAccount) {
+  //     update({ externalAccount: data.externalAccount });
+  //   }
+  // }, [data, update]);
 
   return (
     <Box zIndex={25}>

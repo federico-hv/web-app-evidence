@@ -6,7 +6,7 @@ import { useCreatePostMutation } from '../../../../../mutations';
 
 function CreatePostButton() {
   const { createPost, loading } = useCreatePostMutation();
-  const { postState, close } = useCreateFeedContext();
+  const { postState, audience, close } = useCreateFeedContext();
 
   const checkIsDisabled = () => {
     try {
@@ -28,7 +28,7 @@ function CreatePostButton() {
       disabled={checkIsDisabled()}
       loadingText={loading ? '' : 'Posting'}
       onClick={async () => {
-        const result = await createPost(postState);
+        const result = await createPost({ ...postState, audience });
         if (result) {
           close();
         }

@@ -7,30 +7,41 @@ import {
   SelectItem,
   SelectItemList,
   SelectTrigger,
-  useOnValueChange,
 } from '@holdr-ui/react';
 import { Fragment } from 'react';
 import { IconName } from '@holdr-ui/react/dist/shared/types';
+import { FeedAudienceEnum } from '../../../../../shared';
+import { useCreateFeedContext } from '../../shared';
 
-export interface CustomSelectOptionPair {
+interface CustomSelectOptionPair {
   label: string;
   icon: IconName;
 }
 
-type Options = 'public' | 'members' | 'followers';
-
 function SelectAudience() {
-  const options: Record<Options, CustomSelectOptionPair> = {
-    public: { label: 'Public', icon: 'global-outline' },
-    members: { label: 'Members', icon: 'user-square-outline' },
-    followers: { label: 'Followers', icon: 'user-group-outline' },
+  const options: Record<FeedAudienceEnum, CustomSelectOptionPair> = {
+    [FeedAudienceEnum.Everyone]: {
+      label: 'Public',
+      icon: 'global-outline',
+    },
+    [FeedAudienceEnum.Members]: {
+      label: 'Members',
+      icon: 'user-square-outline',
+    },
+    [FeedAudienceEnum.Followers]: {
+      label: 'Followers',
+      icon: 'user-group-outline',
+    },
   };
 
-  const { value, handleOnValueChange } = useOnValueChange('public');
+  const { audience, setAudience } = useCreateFeedContext();
 
   return (
     <Box w='150px'>
-      <Select value={value} onValueChange={handleOnValueChange}>
+      <Select
+        value={audience}
+        onValueChange={(value) => setAudience(value as FeedAudienceEnum)}
+      >
         <SelectTrigger
           css={{
             backgroundColor: 'rgba(26, 26, 41, 0.75)',
@@ -39,8 +50,8 @@ function SelectAudience() {
           }}
         >
           <HStack gap={2} items='center'>
-            <Icon name={options[value as Options].icon} />
-            {options[value as Options].label}
+            <Icon name={options[audience].icon} />
+            {options[audience].label}
           </HStack>
         </SelectTrigger>
         <SelectContent zIndex={100} sticky='always'>
@@ -52,39 +63,43 @@ function SelectAudience() {
             css={{
               borderBottomLeftRadius: '$2',
               borderBottomRightRadius: '$2',
-              backgroundColor: 'rgba(26, 26, 41, 0.75)',
+              backgroundColor: 'rgba(26, 26, 41)',
               boxShadow: `0px 0px 50px 0px rgba(0, 0, 0, 0.25)`,
             }}
           >
             <SelectItem
-              value='public'
+              value={FeedAudienceEnum.Everyone}
               _hover={{ background: 'rgba(48, 48, 75, 0.50)' }}
-              label={options.public.label}
-              icon={options.public.icon}
+              icon={options[FeedAudienceEnum.Everyone].icon}
+              label={options[FeedAudienceEnum.Everyone].label}
               m={0}
               px={4}
               radius={0}
             />
             <SelectItem
-              value='followers'
+              value={FeedAudienceEnum.Followers}
               _hover={{ background: 'rgba(48, 48, 75, 0.50)' }}
-              label={options.followers.label}
-              icon={options.followers.icon}
+              label={options[FeedAudienceEnum.Followers].label}
+              icon={options[FeedAudienceEnum.Followers].icon}
               m={0}
               px={4}
               radius={0}
-            />
+            >
+              Followers
+            </SelectItem>
             <SelectItem
-              value='members'
+              value={FeedAudienceEnum.Members}
               _hover={{
                 background: 'rgba(48, 48, 75, 0.50)',
               }}
-              label={options.members.label}
-              icon={options.members.icon}
+              label={options[FeedAudienceEnum.Members].label}
+              icon={options[FeedAudienceEnum.Members].icon}
               m={0}
               px={4}
               radius={0}
-            />
+            >
+              Members
+            </SelectItem>
           </SelectItemList>
         </SelectContent>
       </Select>

@@ -188,13 +188,95 @@ export const ADD_REACTION = gql`
 
 export const PIN_FEED = gql`
   mutation pinFeed($id: String!) {
-    pinFeed(id: $id) # feed ID [nullable, string]
+    pinFeed(id: $id) {
+      id
+      type
+      isPinned
+      isLiked
+      isBookmarked
+      createdAt
+      owner {
+        id
+        displayName
+        username
+        avatar
+      }
+      item {
+        ... on PostModel {
+          id
+          endDate
+          description
+          media {
+            id
+            url
+            type
+          }
+          polls {
+            id
+            text
+            count
+            voted
+          }
+        }
+        ... on ArticleModel {
+          id
+          title
+          description
+          imageUrl
+          source {
+            name
+            logo
+          }
+        }
+      }
+    }
   }
 `;
 
 export const UNPIN_FEED = gql`
   mutation unpinFeed($id: String!) {
-    unpinFeed(id: $id) # feed ID [nullable, string]
+    unpinFeed(id: $id) {
+      id
+      type
+      isPinned
+      isLiked
+      isBookmarked
+      createdAt
+      owner {
+        id
+        displayName
+        username
+        avatar
+      }
+      item {
+        ... on PostModel {
+          id
+          endDate
+          description
+          media {
+            id
+            url
+            type
+          }
+          polls {
+            id
+            text
+            count
+            voted
+          }
+        }
+        ... on ArticleModel {
+          id
+          title
+          description
+          imageUrl
+          source {
+            name
+            logo
+          }
+        }
+      }
+    }
   }
 `;
 
@@ -246,7 +328,7 @@ export const DELETE_FEED = gql`
 `;
 
 export const CHANGE_AUDIENCE = gql`
-  mutation changeFeedAudience($id: String!, $audience: FeedAudience!) {
+  mutation changeFeedAudience($id: String!, $audience: FeedAudienceEnum!) {
     changeFeedAudience(id: $id, audience: $audience) {
       status
       message

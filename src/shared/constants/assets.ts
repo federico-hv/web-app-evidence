@@ -20,6 +20,8 @@ import userAdd from '../../assets/icons/user-add.svg';
 import amex from '../../assets/icons/amex.svg';
 import mastercard from '../../assets/icons/mastercard.svg';
 import visa from '../../assets/icons/visa.png';
+import pinFilled from '../../assets/images/pin-filled.png';
+import pinOutlined from '../../assets/images/pin-outlined.png';
 
 export const Asset = {
   Image: {
@@ -47,5 +49,7 @@ export const Asset = {
     Amex: amex,
     Mastercard: mastercard,
     Visa: visa,
+    PinOutlined: pinOutlined,
+    PinFilled: pinFilled,
   },
 };

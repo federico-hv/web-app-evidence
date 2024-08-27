@@ -1,8 +1,12 @@
-import { CreateArticleInput, CreatePostInput } from '../../../../shared';
+import {
+  CreateArticleInput,
+  CreatePostInput,
+  FeedAudienceEnum,
+} from '../../../../shared';
 import { ChangeEvent, createContext, useContext } from 'react';
 import { dummyFn } from '../../../../../../shared';
 import { defaultArticleState, defaultPostState } from './constants';
-import { PostType } from './types';
+import { FeedWithType } from './types';
 
 interface ICreateFeedContext {
   close: VoidFunction;
@@ -24,8 +28,11 @@ interface ICreateFeedContext {
   articleState: CreateArticleInput;
   updateArticleState: (next: Partial<CreateArticleInput>) => void;
 
-  type?: PostType;
-  toggleType: (next: PostType) => void;
+  type?: FeedWithType;
+  toggleType: (next: FeedWithType) => void;
+
+  audience: FeedAudienceEnum;
+  setAudience: (audience: FeedAudienceEnum) => void;
 }
 
 const CreateFeedContext = createContext<ICreateFeedContext>({
@@ -38,6 +45,9 @@ const CreateFeedContext = createContext<ICreateFeedContext>({
   websiteUrl: '',
   handleOnWebsiteChange: dummyFn,
   resetWebsiteUrl: dummyFn,
+
+  audience: FeedAudienceEnum.Everyone,
+  setAudience: (audience: FeedAudienceEnum) => console.log(audience),
 
   articleState: defaultArticleState,
   updateArticleState: dummyFn,

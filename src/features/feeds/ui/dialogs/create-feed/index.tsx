@@ -1,6 +1,10 @@
 import { useState } from 'react';
 import { useCurrentUser } from '../../../../auth';
-import { CreateArticleInput, CreatePostInput } from '../../../shared';
+import {
+  CreateArticleInput,
+  CreatePostInput,
+  FeedAudienceEnum,
+} from '../../../shared';
 import {
   StepperContextProvider,
   useDialogContext,
@@ -20,8 +24,8 @@ import {
   DialogPortal,
   HStack,
   Stack,
-  THEME_COLOR,
   Text,
+  THEME_COLOR,
   useCounter,
   useInputChange,
   useSwitch,
@@ -36,30 +40,42 @@ import {
   CreateFeedContextProvider,
   defaultArticleState,
   defaultPostState,
+  FeedWithType,
 } from './shared';
-import { PostType } from './shared';
 
 function CreateFeedDialog() {
   const currentUser = useCurrentUser();
   const { isOpen, onOpen, onClose } = useDialogContext();
+  // TODO: Find out what this is used for, IDK
   const {
     value: websiteUrl,
     handleOnChange: handleOnWebsiteChange,
     resetValue: resetWebsiteUrl,
   } = useInputChange('');
+
   const [articleState, updateArticleState] =
     useRecordState<CreateArticleInput>(defaultArticleState);
+
   const [postState, updatePostState, setPostState] =
     useRecordState<CreatePostInput>(defaultPostState);
-  const [type, setType] = useState<PostType | undefined>();
+  const [type, setType] = useState<FeedWithType | undefined>();
+
+  const [audience, setAudienceState] = useState<FeedAudienceEnum>(
+    FeedAudienceEnum.Everyone,
+  );
+
   const { current, increment, decrement, reset } = useCounter();
+  // TODO: Find out what this is used for, IDK
   const {
     switchState: badLink,
     turnOn: onBadLink,
     turnOff: onGoodLink,
   } = useSwitch();
 
-  const toggleType = (next: PostType) => {
+  const setAudience = (audience: FeedAudienceEnum) =>
+    setAudienceState(audience);
+
+  const toggleType = (next: FeedWithType) => {
     if (type === next) {
       // remove the type
       setType(undefined);
@@ -77,6 +93,7 @@ function CreateFeedDialog() {
     updateArticleState(defaultArticleState);
     updatePostState(defaultPostState);
     reset();
+    setAudience(FeedAudienceEnum.Everyone);
     onGoodLink();
   };
 
@@ -96,6 +113,8 @@ function CreateFeedDialog() {
         updatePostState,
         type,
         toggleType,
+        audience,
+        setAudience,
       }}
     >
       {currentUser && (

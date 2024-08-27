@@ -1,22 +1,47 @@
 import { useFeedContext } from '../../shared';
 import { useRelationshipStatusInfo } from '../../../relationships';
 import {
+  Asset,
   DialogContextProvider,
   Menu,
   useAlertDialog,
 } from '../../../../shared';
-import { IconButton, Image, useDisclosure } from '@holdr-ui/react';
+import { IconButton, Image, Square, useDisclosure } from '@holdr-ui/react';
 import { Fragment } from 'react';
 import { AudienceDialog } from '../dialogs';
-
-import stats from '../../../../assets/images/stats.png';
-import pinOutlined from '../../../../assets/images/pin-outlined.png';
-import pinFilled from '../../../../assets/images/pin-filled.png';
 import {
   useDeleteFeedMutation,
   usePinFeedMutation,
   useUnpinFeedMutation,
 } from '../../mutations';
+
+function PinFilledSVG() {
+  return (
+    <Square size={20}>
+      <svg
+        xmlns='http://www.w3.org/2000/svg'
+        viewBox='0 0 24 24'
+        fill='currentColor'
+      >
+        <path d='M18 3V5H17V11L19 14V16H13V23H11V16H5V14L7 11V5H6V3H18Z'></path>
+      </svg>
+    </Square>
+  );
+}
+
+function PinOutlinedSVG() {
+  return (
+    <Square size={20}>
+      <svg
+        xmlns='http://www.w3.org/2000/svg'
+        viewBox='0 0 24 24'
+        fill='currentColor'
+      >
+        <path d='M18 3V5H17V11L19 14V16H13V23H11V16H5V14L7 11V5H6V3H18ZM9 5V11.6056L7.4037 14H16.5963L15 11.6056V5H9Z'></path>
+      </svg>
+    </Square>
+  );
+}
 
 function FeedOwnerMoreButton({ ghost }: { ghost?: boolean }) {
   const { openWith } = useAlertDialog();
@@ -54,8 +79,18 @@ function FeedOwnerMoreButton({ ghost }: { ghost?: boolean }) {
               <Menu.Item
                 icon={
                   <Image
-                    size={24}
-                    src={isPinned ? pinFilled : pinOutlined}
+                    alt=''
+                    key={
+                      isPinned
+                        ? Asset.Icon.PinFilled
+                        : Asset.Icon.PinOutlined
+                    }
+                    size={20}
+                    src={
+                      isPinned
+                        ? Asset.Icon.PinFilled
+                        : Asset.Icon.PinOutlined
+                    }
                   />
                 }
                 action={
@@ -70,10 +105,10 @@ function FeedOwnerMoreButton({ ghost }: { ghost?: boolean }) {
                 label='Change audience'
                 action={onOpen}
               />
-              <Menu.Item
-                icon={<Image size={24} src={stats} />}
-                label='View analytics'
-              />
+              {/*<Menu.Item*/}
+              {/*  icon={<Image size={24} src={stats} />}*/}
+              {/*  label='View analytics'*/}
+              {/*/>*/}
               <Menu.Item
                 dangerous
                 icon='remove-outline'

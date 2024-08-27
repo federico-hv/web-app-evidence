@@ -1,8 +1,13 @@
 import { useNavigate } from 'react-router-dom';
-import { Button, HStack, useRecordState, VStack } from '@holdr-ui/react';
+import {
+  Button,
+  HStack,
+  useRecordState,
+  VStack,
+  GeneralContextProvider,
+} from '@holdr-ui/react';
 import { Fragment } from 'react';
 import {
-  GeneralContextProvider,
   GQLRenderer,
   makePath,
   Paths,
@@ -23,6 +28,7 @@ import {
   SocialURLName,
 } from './shared';
 import { SearchSpotifyArtist, SocialLinksForm } from './ui';
+import { SectionHeader } from '../ui';
 export type Item = { item: ISpotifySearchResult; index: number };
 
 function SocialMediaAccountsView() {
@@ -37,33 +43,28 @@ function SocialMediaAccountsView() {
     links: {},
     externalAccount: undefined,
   });
+
   const navigate = useNavigate();
+
+  console.log({ external: state.externalAccount });
 
   return (
     <GeneralContextProvider value={{ state, update }}>
       <VStack gap={9} pl={2} h='100%' overflow='auto'>
         <VStack gap={4}>
-          <TextGroup gap={0}>
-            <TextGroupHeading size={4}>
-              Find Spotify account
-            </TextGroupHeading>
-            <TextGroupSubheading size={1} color='white700'>
-              Search for the Spotify account that is yours.
-            </TextGroupSubheading>
-          </TextGroup>
-
-          {/** TODO: fix this by adding an external artist. */}
+          <SectionHeader
+            required
+            title='Find Spotify account'
+            subtitle='Search for the Spotify account that is yours'
+          />
           <SearchSpotifyArtist />
         </VStack>
         <VStack gap={4}>
-          <TextGroup gap={0}>
-            <TextGroupHeading size={4}>
-              Add Your Social Links
-            </TextGroupHeading>
-            <TextGroupSubheading size={1} color='white700'>
-              Share your social links for your fans
-            </TextGroupSubheading>
-          </TextGroup>
+          <SectionHeader
+            required
+            title='Add Your Social Links'
+            subtitle='Share your social links for your fans'
+          />
           <GQLRenderer ErrorFallback={() => <Fragment />}>
             <SocialLinksForm />
           </GQLRenderer>
@@ -106,7 +107,11 @@ function SocialMediaAccountsView() {
           <Button
             isLoading={loading}
             loadingText='Continue'
-            disabled={state.isDisabled || !!error}
+            disabled={
+              state.isDisabled ||
+              !!error ||
+              state.externalAccount === undefined
+            }
             type='submit'
             radius={1}
             colorTheme='purple500'

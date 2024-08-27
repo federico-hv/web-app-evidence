@@ -25,6 +25,16 @@ export const ErrorMessage = {
 };
 
 export const FieldLengths = {
+  article: {
+    description: {
+      max: 300,
+      min: 1,
+    },
+    title: {
+      max: 150,
+      min: 1,
+    },
+  },
   username: {
     min: 3,
     max: 25,

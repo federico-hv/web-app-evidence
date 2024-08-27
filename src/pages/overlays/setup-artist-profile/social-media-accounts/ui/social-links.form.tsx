@@ -2,7 +2,7 @@ import {
   useCurrentUser,
   useSuspenseSocialLinks,
 } from '../../../../../features';
-import { VStack } from '@holdr-ui/react';
+import { VStack, useGeneralContext } from '@holdr-ui/react';
 import { ChangeEvent, useEffect } from 'react';
 import {
   isMatchingPattern,
@@ -10,7 +10,6 @@ import {
   Patterns,
   SocialProvider,
   InputTextField,
-  useGeneralContext,
 } from '../../../../../shared';
 import {
   ISocialMediaAccountsViewContext,

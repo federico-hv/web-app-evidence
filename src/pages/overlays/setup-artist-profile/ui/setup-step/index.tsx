@@ -29,7 +29,7 @@ function SetupStep({
           {number}
         </Circle>
         <Text
-          weight={300}
+          weight={active ? 500 : 300}
           casing='capitalize'
           color={active ? 'purple200' : 'white700'}
         >

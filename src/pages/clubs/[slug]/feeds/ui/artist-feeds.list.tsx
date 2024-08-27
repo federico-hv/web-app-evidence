@@ -24,7 +24,7 @@ function ArtistFeedsList() {
             direction='vertical'
             data={data.feeds.edges}
             renderItem={({ node }) => (
-              <FeedCard key={node.id} data={node} />
+              <FeedCard showPin key={node.id} data={node} />
             )}
             keyExtractor={({ node }) => node.id}
           />

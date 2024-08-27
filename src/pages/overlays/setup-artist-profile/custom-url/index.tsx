@@ -15,6 +15,7 @@ import {
 import { ChangeEvent, useState } from 'react';
 import { useClubContext, useUpdateClub } from '../../../../features';
 import { useDebounceIsUniqueClubUrl } from '../../../../features';
+import { SectionHeader } from '../ui';
 
 function CustomURLView() {
   const previousLocation = usePreviousLocation('/');
@@ -26,7 +27,7 @@ function CustomURLView() {
 
   const club = useClubContext();
 
-  const [url, setURL] = useState<string | undefined>(club.url);
+  const [url, setURL] = useState<string>(club.url ?? '');
 
   const navigate = useNavigate();
 
@@ -48,12 +49,10 @@ function CustomURLView() {
   return (
     <VStack gap={9} pl={2} h='100%' overflow='auto'>
       <VStack gap={4}>
-        <TextGroup gap={0}>
-          <TextGroupHeading size={4}>Custom URL</TextGroupHeading>
-          <TextGroupSubheading size={1} color='white700'>
-            Create your own custom URL to easily share with your fans
-          </TextGroupSubheading>
-        </TextGroup>
+        <SectionHeader
+          title='Custom URL'
+          subtitle='Create your own custom URL to easily share with your fans'
+        />
         <InputTextField
           name='url'
           label='Custom URL'
@@ -111,10 +110,11 @@ function CustomURLView() {
           onClick={async () => {
             // TODO: Check uniqueness here as well
 
-            await updateClub({
-              url: url,
-            });
-
+            if (url.length > 0) {
+              await updateClub({
+                url: url,
+              });
+            }
             navigate(
               makePath([
                 Paths.setupArtists,

@@ -1,1 +1,1 @@
-export type PostType = 'with-image' | 'with-poll' | 'as-article';
+export type FeedWithType = 'with-image' | 'with-poll' | 'as-article';

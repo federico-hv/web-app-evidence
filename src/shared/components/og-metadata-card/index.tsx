@@ -9,6 +9,7 @@ import { OgMetadata } from '../../interfaces';
 import { Asset } from '../../constants';
 
 function OgMetadataCard({ data }: { data: OgMetadata }) {
+  console.log(data);
   return (
     <Stack
       direction={{

@@ -1,11 +1,20 @@
-import { Avatar, Box, CloseButton, HStack, Text } from '@holdr-ui/react';
+import {
+  Avatar,
+  Box,
+  CloseButton,
+  HStack,
+  Text,
+  useGeneralContext,
+} from '@holdr-ui/react';
 import {
   IExternalAccountModel,
   useRemoveExternalAccount,
 } from '../../../../../features';
+import { ISocialMediaAccountsViewContext } from '../shared';
 
 function SpotifyItem({ data }: { data: IExternalAccountModel }) {
   const { removeExternalAccount } = useRemoveExternalAccount();
+  const { update } = useGeneralContext<ISocialMediaAccountsViewContext>();
 
   return (
     <HStack
@@ -34,6 +43,7 @@ function SpotifyItem({ data }: { data: IExternalAccountModel }) {
       <Box>
         <CloseButton
           onClick={async () => {
+            update({ externalAccount: undefined });
             if (data) {
               await removeExternalAccount(data.id);
             }
