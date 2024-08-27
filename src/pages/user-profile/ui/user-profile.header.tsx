@@ -1,6 +1,7 @@
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import {
   Avatar,
+  Box,
   Button,
   HStack,
   Text,
@@ -15,7 +16,13 @@ import {
   useRelationshipStatusInfo,
   UserRelationshipCount,
 } from '../../../features';
-import { usePreviousLocation } from '../../../shared';
+import {
+  MediaView,
+  MediaViewAvatar,
+  MediaViewContent,
+  MediaViewTrigger,
+  usePreviousLocation,
+} from '../../../shared';
 import BioSocialLinks from '../../../features/user/ui/bio-social-links';
 
 function UserProfileHeader() {
@@ -37,23 +44,41 @@ function UserProfileHeader() {
 
   return (
     <HStack items='center' gap={3} mb={5}>
-      <Avatar
-        key={profile.displayName}
-        fallbackTextSize={10}
-        size={124}
-        src={profile.avatar}
-        name={profile.displayName}
-      >
-        {/*<AvatarBadge*/}
-        {/*  zIndex={1}*/}
-        {/*  size={18}*/}
-        {/*  bgColor='success500'*/}
-        {/*  r={20}*/}
-        {/*  b={15}*/}
-        {/*  border={2}*/}
-        {/*  borderColor='#1C1C29'*/}
-        {/*/>*/}
-      </Avatar>
+      <Box>
+        <MediaView>
+          <MediaViewTrigger>
+            <Avatar
+              fallbackTextSize={10}
+              size={124}
+              key={profile.displayName}
+              src={profile.avatar}
+              name={profile.displayName}
+            >
+              {/*<AvatarBadge*/}
+              {/*  zIndex={1}*/}
+              {/*  bgColor='#34C05A'*/}
+              {/*  borderColor='#292940'*/}
+              {/*  border={1}*/}
+              {/*  r={10}*/}
+              {/*  b={10}*/}
+              {/*  size={'20px'}*/}
+              {/*  radius='full'*/}
+              {/*/>*/}
+            </Avatar>
+          </MediaViewTrigger>
+          <MediaViewContent>
+            <MediaViewAvatar
+              fallbackTextSize='100px'
+              variant='squircle'
+              size={'300px'}
+              key={profile.displayName}
+              src={profile.avatar}
+              name={profile.displayName}
+            />
+          </MediaViewContent>
+        </MediaView>
+      </Box>
+
       <VStack flex={1} gap={1}>
         <HStack flex={1} justify='space-between'>
           <VStack gap={1}>

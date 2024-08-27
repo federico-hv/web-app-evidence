@@ -12,6 +12,7 @@ import {
   useCustomCreateRelationshipMutation,
   useCustomRemoveRelationshipMutation,
 } from '../mutations';
+import { useCurrentUser } from '../../auth';
 
 interface SocialButtonProps {
   account: UserWithRelationship;
@@ -93,6 +94,8 @@ function FollowItem({
   color?: ThemeColor;
   colorTheme?: { follow?: ThemeColor; following?: ThemeColor };
 }) {
+  const currentUser = useCurrentUser();
+
   return (
     <HStack
       color={color}
@@ -117,13 +120,15 @@ function FollowItem({
         </HStack>
       </HStack>
       {/* Show the current viewers relationship with the user*/}
-      <Box zIndex={5}>
-        <SocialButton
-          colorTheme={colorTheme}
-          account={data}
-          statusInfo={data.relationshipStatusInfo}
-        />
-      </Box>
+      {currentUser.id !== data.id && (
+        <Box zIndex={5}>
+          <SocialButton
+            colorTheme={colorTheme}
+            account={data}
+            statusInfo={data.relationshipStatusInfo}
+          />
+        </Box>
+      )}
     </HStack>
   );
 }
