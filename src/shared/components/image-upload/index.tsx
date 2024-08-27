@@ -95,6 +95,7 @@ function ImageUpload({
             accept='image/jpeg,image/png,image/webp'
             onChange={(event: ChangeEvent<HTMLInputElement>) => {
               imageUploadOnChange(event);
+              event.currentTarget.value = '';
               onOpen(); // open dialog
             }}
           />
