@@ -1,5 +1,5 @@
 import { CreatePost, FeedFilterTypeEnum } from '../../../features';
-import { Box, HStack, VStack } from '@holdr-ui/react';
+import { Box, Center, HStack, VStack } from '@holdr-ui/react';
 import CustomTabs, {
   CustomTabsContent,
   CustomTabsHeader,
@@ -79,7 +79,16 @@ function FeedTabs() {
       >
         <VStack minHeight={0} w='100%' p={3} as='aside' gap={4}>
           <CreatePost />
-          <Feeds filter={filter} type='following' />
+          {/*<Feeds filter={filter} type='following' />*/}
+          <Center
+            bgColor='rgba(152, 152, 255, 0.1)'
+            border={1}
+            borderColor='rgba(152, 152, 255, 0.25)'
+            p={4}
+            radius={2}
+          >
+            Coming soon
+          </Center>
         </VStack>
       </CustomTabsContent>
       <CustomTabsContent
@@ -95,7 +104,7 @@ function FeedTabs() {
       >
         <VStack w='100%' p={3} gap={4}>
           <CreatePost />
-          <Feeds filter={filter} type='recommended' />
+          <Feeds filter={filter} type='following' />
         </VStack>
       </CustomTabsContent>
     </CustomTabs>
