@@ -218,7 +218,7 @@ function EditArtistClubBioPage() {
             value={state.bio}
             onChange={handleOnChange}
             placeholder='Let people know a little about yourself and your musical interests.'
-            maxLength={FieldLengths.bio.max}
+            maxLength={FieldLengths.artist.bio.max}
           />
           <InputTextField
             value={state.location}
