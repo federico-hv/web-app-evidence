@@ -113,6 +113,70 @@ export const GET_FEED = gql`
   }
 `;
 
+export const GET_TRENDING_FEEDS = gql`
+  query TrendingFeeds(
+    $params: StringPaginationParamsInput
+    $filter: FeedFilterTypeEnum
+  ) {
+    trendingFeeds(params: $params, filter: $filter) {
+      total
+      edges {
+        node {
+          id
+          type
+          isLiked
+          isBookmarked
+          isPinned
+          createdAt
+          owner {
+            id
+            displayName
+            username
+            avatar
+          }
+          item {
+            ... on PostModel {
+              id
+              endDate
+              description
+              media {
+                id
+                url
+                type
+              }
+              polls {
+                id
+                text
+                count
+                voted
+              }
+            }
+            ... on ArticleModel {
+              id
+              title
+              description
+              imageUrl
+              url
+              source {
+                name
+                logo
+                url
+              }
+            }
+          }
+        }
+        cursor
+      }
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+    }
+  }
+`;
+
 export const GET_FEED_STATISTIC = gql`
   query feedStatistic($id: String!, $name: FeedStatistic!) {
     feedStatistic(id: $id, name: $name) # count, i.e number of items.

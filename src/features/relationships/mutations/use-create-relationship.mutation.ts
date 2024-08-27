@@ -1,4 +1,4 @@
-import { gql, useMutation } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import { CREATE_RELATIONSHIP, REMOVE_RELATIONSHIP } from './schema';
 import {
   CreateRelationshipInput,
@@ -8,7 +8,11 @@ import {
 } from '../shared';
 import { useToast } from '../../../shared';
 import { ReadFieldFunction } from '@apollo/client/cache/core/types/common';
-import follow from '../ui/follow';
+import {
+  FeedFilterTypeEnum,
+  GET_FEEDS,
+  GET_TRENDING_FEEDS,
+} from '../../feeds';
 
 interface ICreateRelationshipArgs {
   createRelationship: CreateRelationshipModel;
@@ -76,6 +80,24 @@ export function useCustomCreateRelationshipMutation(accountId: string) {
     try {
       return await mutate({
         variables: { payload },
+        refetchQueries: [
+          {
+            query: GET_FEEDS,
+            variables: { filter: FeedFilterTypeEnum.All },
+          },
+          {
+            query: GET_FEEDS,
+            variables: { filter: FeedFilterTypeEnum.Polls },
+          },
+          {
+            query: GET_TRENDING_FEEDS,
+            variables: { filter: FeedFilterTypeEnum.All },
+          },
+          {
+            query: GET_TRENDING_FEEDS,
+            variables: { filter: FeedFilterTypeEnum.Polls },
+          },
+        ],
         update: (cache, { data }) => {
           cache.modify({
             fields: {
@@ -130,6 +152,24 @@ export function useCustomRemoveRelationshipMutation(accountId: string) {
     try {
       return await mutate({
         variables: { payload },
+        refetchQueries: [
+          {
+            query: GET_FEEDS,
+            variables: { filter: FeedFilterTypeEnum.All },
+          },
+          {
+            query: GET_FEEDS,
+            variables: { filter: FeedFilterTypeEnum.Polls },
+          },
+          {
+            query: GET_TRENDING_FEEDS,
+            variables: { filter: FeedFilterTypeEnum.All },
+          },
+          {
+            query: GET_TRENDING_FEEDS,
+            variables: { filter: FeedFilterTypeEnum.Polls },
+          },
+        ],
         update: (cache, { data }) => {
           cache.modify({
             fields: {

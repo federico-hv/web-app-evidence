@@ -9,6 +9,12 @@ import ArticleCard from './article';
 import PostCard from './post';
 import { Asset } from '../../../../shared';
 
+/**
+ * Future state:
+ * - Need to simplify the rendering of a feed card.
+ * - Create separate entities for Post and Poll cards
+ */
+
 function FeedCard({
   data,
   showPin,
@@ -49,7 +55,7 @@ function FeedCard({
             createdAt: data.createdAt,
           }}
         >
-          {data.type === 'post' && (
+          {(data.type === 'post' || data.type === 'poll') && (
             <PostCard data={data.item as PostModel} />
           )}
           {data.type === 'article' && (

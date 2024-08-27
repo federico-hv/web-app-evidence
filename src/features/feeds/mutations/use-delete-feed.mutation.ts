@@ -23,6 +23,11 @@ export function useDeleteFeedMutation() {
 
                 return;
               },
+              trendingFeeds(current = {}) {
+                cache.evict({ id: current.__ref });
+
+                return;
+              },
             },
           });
         },

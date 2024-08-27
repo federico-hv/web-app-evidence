@@ -1,14 +1,22 @@
 import { Fragment } from 'react';
 import { useFeedContext, useVotePoll } from '../../../shared';
-import { Box, Skeleton, VStack, useDisclosure } from '@holdr-ui/react';
+import { VStack, useDisclosure } from '@holdr-ui/react';
 import dayjs from 'dayjs';
-import { DialogContextProvider, Loader } from '../../../../../shared';
+import {
+  CustomSkeleton,
+  DialogContextProvider,
+  Loader,
+} from '../../../../../shared';
 import { PollResponse } from '../index';
 import { AnswerPollButton } from '../../buttons';
 import { PollsProps } from './types';
 import { PollVotesDialog } from '../../dialogs';
+import { FlatList } from '../../../../../tmp/flat-list';
+import { useCurrentUser } from '../../../../auth';
 
 function Polls({ id, items, endDate }: PollsProps) {
+  const currentUser = useCurrentUser();
+
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { feedId, owner } = useFeedContext();
 
@@ -26,25 +34,25 @@ function Polls({ id, items, endDate }: PollsProps) {
         loading={loading}
         h='fit-content'
         as={
-          <VStack w='100%' gap={3} mt={4}>
-            {items.map(({ id }) => (
-              <Box
-                key={`loader-${id}`}
-                w='100%'
-                radius='full'
-                overflow='hidden'
-              >
-                <Skeleton h='29px' />
-              </Box>
-            ))}
-          </VStack>
+          <FlatList
+            w='100%'
+            direction='vertical'
+            gap={3}
+            mt={4}
+            pl='6px'
+            data={items}
+            renderItem={(item) => (
+              <CustomSkeleton radius={1} h={6} w='100%' />
+            )}
+            keyExtractor={(item) => item.id}
+          />
         }
       >
         <VStack position='relative' zIndex={5} gap={5}>
           <VStack gap={3} mt={5} pl='6px'>
             {items.map((data) => (
               <Fragment key={`poll-${data.id}`}>
-                {!voted && !expired ? (
+                {!voted && !expired && owner.id !== currentUser.id ? (
                   <AnswerPollButton
                     onClick={async () =>
                       votePoll(feedId, id, data.id as number)

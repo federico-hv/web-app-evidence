@@ -6,7 +6,7 @@ import {
   Menu,
   useAlertDialog,
 } from '../../../../shared';
-import { IconButton, Image, Square, useDisclosure } from '@holdr-ui/react';
+import { IconButton, Image, useDisclosure } from '@holdr-ui/react';
 import { Fragment } from 'react';
 import { AudienceDialog } from '../dialogs';
 import {
@@ -14,34 +14,6 @@ import {
   usePinFeedMutation,
   useUnpinFeedMutation,
 } from '../../mutations';
-
-function PinFilledSVG() {
-  return (
-    <Square size={20}>
-      <svg
-        xmlns='http://www.w3.org/2000/svg'
-        viewBox='0 0 24 24'
-        fill='currentColor'
-      >
-        <path d='M18 3V5H17V11L19 14V16H13V23H11V16H5V14L7 11V5H6V3H18Z'></path>
-      </svg>
-    </Square>
-  );
-}
-
-function PinOutlinedSVG() {
-  return (
-    <Square size={20}>
-      <svg
-        xmlns='http://www.w3.org/2000/svg'
-        viewBox='0 0 24 24'
-        fill='currentColor'
-      >
-        <path d='M18 3V5H17V11L19 14V16H13V23H11V16H5V14L7 11V5H6V3H18ZM9 5V11.6056L7.4037 14H16.5963L15 11.6056V5H9Z'></path>
-      </svg>
-    </Square>
-  );
-}
 
 function FeedOwnerMoreButton({ ghost }: { ghost?: boolean }) {
   const { openWith } = useAlertDialog();
@@ -62,7 +34,7 @@ function FeedOwnerMoreButton({ ghost }: { ghost?: boolean }) {
             <Menu.Trigger>
               <IconButton
                 size={{ '@bp1': 'sm', '@bp3': 'base' }}
-                colorTheme={ghost ? 'darkTint400' : 'darkTint400'}
+                colorTheme='darkTint400'
                 variant={ghost ? 'filled' : 'ghost'}
                 blur='xl'
                 icon='more-fill'

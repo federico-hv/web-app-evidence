@@ -21,7 +21,7 @@ function SectionHeader({
         {required && (
           <Box
             color='danger200'
-            css={{ fontSize: '$7', lineHeight: '100%' }}
+            css={{ fontSize: '$5', lineHeight: '110%' }}
           >
             *
           </Box>

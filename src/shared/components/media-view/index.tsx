@@ -9,8 +9,8 @@ import {
   useNoScroll,
   VStack,
 } from '@holdr-ui/react';
-import { dummyFn, getSubComponent } from '../../utilities';
-import { Fragment, useEffect } from 'react';
+import { getSubComponent } from '../../utilities';
+import { Fragment } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { createPortal } from 'react-dom';
 import { MediaViewProps, MediaViewSCNames } from './type';
@@ -118,6 +118,7 @@ function MediaView({
                         className={extraBtnPadding()}
                         colorTheme='white50'
                         variant='ghost'
+                        css={{ px: '$8' }}
                       >
                         Close
                       </Button>

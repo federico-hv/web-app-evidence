@@ -2,7 +2,7 @@ import { GenericItem, UserModel } from '../../../../shared';
 import { ArticleModel, PostModel } from './post.interface';
 
 export interface FeedModel extends GenericItem {
-  type: 'article' | 'post';
+  type: 'article' | 'post' | 'poll';
   isLiked: boolean;
   isBookmarked: boolean;
   isPinned: boolean;

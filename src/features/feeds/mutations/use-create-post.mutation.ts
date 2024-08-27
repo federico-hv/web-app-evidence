@@ -2,7 +2,7 @@ import { ErrorMessage, useToast } from '../../../shared';
 import { useMutation } from '@apollo/client';
 import { CreatePostInput, FeedFilterTypeEnum, FeedModel } from '../shared';
 import { CREATE_POST } from './schema';
-import { GET_FEEDS } from '../queries';
+import { GET_FEEDS, GET_TRENDING_FEEDS } from '../queries';
 
 export function useCreatePostMutation() {
   const { openWith } = useToast();
@@ -25,7 +25,15 @@ export function useCreatePostMutation() {
           },
           {
             query: GET_FEEDS,
-            variables: { filter: FeedFilterTypeEnum.Posts },
+            variables: { filter: FeedFilterTypeEnum.Polls },
+          },
+          {
+            query: GET_TRENDING_FEEDS,
+            variables: { filter: FeedFilterTypeEnum.All },
+          },
+          {
+            query: GET_TRENDING_FEEDS,
+            variables: { filter: FeedFilterTypeEnum.Polls },
           },
         ],
         context: {

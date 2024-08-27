@@ -241,7 +241,7 @@ function MembershipTabs() {
   }
 
   return (
-    <QueryGuard<{ ownsClubMemberhsio: boolean }, { clubId: string }>
+    <QueryGuard<{ OwnsClubMembership: boolean }, { clubId: string }>
       negate
       name='ownsClubMembership'
       query={OWNS_CLUB_MEMBERSHIP}

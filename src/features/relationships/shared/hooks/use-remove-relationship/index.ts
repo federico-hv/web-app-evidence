@@ -11,7 +11,11 @@ import {
   GET_RELATIONSHIP_STATUS_INFO,
 } from '../../../queries';
 import { omit } from 'lodash';
-import { FeedFilterTypeEnum, GET_FEEDS } from '../../../../feeds';
+import {
+  FeedFilterTypeEnum,
+  GET_FEEDS,
+  GET_TRENDING_FEEDS,
+} from '../../../../feeds';
 
 export function useRemoveRelationship() {
   const [mutation, { loading, error }] = useMutation<
@@ -32,8 +36,16 @@ export function useRemoveRelationship() {
           variables: { filter: FeedFilterTypeEnum.All },
         },
         {
-          query: GET_RELATIONSHIP_COUNT,
-          variables: { username: payload.username },
+          query: GET_FEEDS,
+          variables: { filter: FeedFilterTypeEnum.Polls },
+        },
+        {
+          query: GET_TRENDING_FEEDS,
+          variables: { filter: FeedFilterTypeEnum.All },
+        },
+        {
+          query: GET_TRENDING_FEEDS,
+          variables: { filter: FeedFilterTypeEnum.Polls },
         },
       ],
       update: (cache, { data }) => {

@@ -37,7 +37,8 @@ function FeedFilter({ current, onClick }: FeedFilterProps) {
       >
         <SelectItemList
           w={200}
-          _active={{ color: '$purple400' }}
+          bgColor='rgba(56, 56, 140, 0.25)'
+          _active={{ color: '$purple400', fontWeight: 600 }}
           _hover={{ background: 'rgba(14, 14, 27, 0.50)' }}
           _highlighted={{ background: 'rgba(14, 14, 27, 0.50)' }}
           divider={
@@ -50,18 +51,17 @@ function FeedFilter({ current, onClick }: FeedFilterProps) {
             />
           }
           position='relative'
+          blur='xl'
+          radius='$3'
           css={{
             boxShadow: '0px 0px 100px 0px rgba(14, 14, 27, 0.35)',
-            backgroundColor: 'rgba(49, 49, 73, 0.75)',
-            backdropFilter: 'blur(50px)',
-            borderRadius: '$3',
           }}
         >
           <SelectItem
             py={3}
             radius={2}
             _hover={{ background: 'rgba(14, 14, 27, 0.50)' }}
-            css={{ fontSize: '$2' }}
+            css={{ fontSize: '$2', fontWeight: 500 }}
             value={FeedFilterTypeEnum.All}
             label='All'
           />
@@ -69,7 +69,7 @@ function FeedFilter({ current, onClick }: FeedFilterProps) {
             py={3}
             radius={2}
             _hover={{ background: 'rgba(14, 14, 27, 0.50)' }}
-            css={{ fontSize: '$2' }}
+            css={{ fontSize: '$2', fontWeight: 500 }}
             value={FeedFilterTypeEnum.Articles}
             label='News'
           />
@@ -77,9 +77,9 @@ function FeedFilter({ current, onClick }: FeedFilterProps) {
             py={3}
             radius={2}
             _hover={{ background: 'rgba(14, 14, 27, 0.50)' }}
-            css={{ fontSize: '$2' }}
-            value={FeedFilterTypeEnum.Posts}
-            label='Posts'
+            css={{ fontSize: '$2', fontWeight: 500 }}
+            value={FeedFilterTypeEnum.Polls}
+            label='Polls'
           />
         </SelectItemList>
       </SelectContent>

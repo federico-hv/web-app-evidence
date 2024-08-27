@@ -27,12 +27,14 @@ function GeneralArticleMoreButton({
           <Menu.Trigger>
             <IconButton
               size={{ '@bp1': 'sm', '@bp3': 'base' }}
-              variant={tinted ? 'filled' : 'ghost'}
-              colorTheme={tinted ? 'darkTint400' : 'darkTint400'}
+              colorTheme='darkTint400'
               blur='lg'
               icon='more-fill'
               boxShadow='none'
               ariaLabel='view options'
+              css={{
+                color: '$white500',
+              }}
             />
           </Menu.Trigger>
           <Menu.Header />

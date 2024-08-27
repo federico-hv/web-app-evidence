@@ -1,20 +1,14 @@
 import {
   FeedCard,
   FeedFilterTypeEnum,
-  useFeedsQuery,
+  useTrendingFeedsQuery,
 } from '../../../features';
 import { Error, Loader } from '../../../shared';
 import { Alert, AlertContent, AlertDescription } from '@holdr-ui/react';
-import { FeedViewType } from '../shared';
 import { FlatList } from '../../../tmp/flat-list';
 
-function Feeds({
-  filter,
-}: {
-  filter: FeedFilterTypeEnum;
-  type: FeedViewType;
-}) {
-  const { loading, error, data } = useFeedsQuery({ filter });
+function Feeds({ filter }: { filter: FeedFilterTypeEnum }) {
+  const { loading, error, data } = useTrendingFeedsQuery({ filter });
 
   return (
     <Error
@@ -28,11 +22,11 @@ function Feeds({
       }
     >
       <Loader loading={loading}>
-        {data && data.feeds.edges.length > 0 && (
+        {data && data.trendingFeeds.edges.length > 0 && (
           <FlatList
             gap={6}
             direction='vertical'
-            data={data.feeds.edges}
+            data={data.trendingFeeds.edges}
             renderItem={({ node }) => (
               <FeedCard key={node.id} data={node} />
             )}

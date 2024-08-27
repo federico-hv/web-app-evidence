@@ -1,5 +1,5 @@
 import { CreatePost, FeedFilterTypeEnum } from '../../../features';
-import { Box, Center, HStack, VStack } from '@holdr-ui/react';
+import { Box, HStack, VStack } from '@holdr-ui/react';
 import CustomTabs, {
   CustomTabsContent,
   CustomTabsHeader,
@@ -8,7 +8,17 @@ import CustomTabs, {
 } from '../../../tmp/custom-tabs';
 import { useState } from 'react';
 import FeedFilter from './feed-filter';
-import Feeds from './feeds';
+import FollowingFeeds from './followingFeeds';
+import { TrendingFeeds } from './index';
+import { CSS } from '@stitches/react';
+
+const FeedsContainerStyles: CSS = {
+  borderRight: '1px solid rgba(152, 152, 255, 0.10)',
+  borderLeft: '1px solid rgba(152, 152, 255, 0.10)',
+  borderBottom: '1px solid rgba(152, 152, 255, 0.10)',
+  borderBottomLeftRadius: '$4',
+  borderBottomRightRadius: '$4',
+};
 
 function FeedTabs() {
   const [filter, setFilter] = useState<FeedFilterTypeEnum>(
@@ -69,42 +79,21 @@ function FeedTabs() {
       <CustomTabsContent
         value='for-you'
         minHeight='calc(100vh - 158px)'
-        css={{
-          borderRight: '1px solid rgba(152, 152, 255, 0.10)',
-          borderLeft: '1px solid rgba(152, 152, 255, 0.10)',
-          borderBottom: '1px solid rgba(152, 152, 255, 0.10)',
-          borderBottomLeftRadius: '$4',
-          borderBottomRightRadius: '$4',
-        }}
+        css={FeedsContainerStyles}
       >
         <VStack minHeight={0} w='100%' p={3} as='aside' gap={4}>
           <CreatePost />
-          {/*<Feeds filter={filter} type='following' />*/}
-          <Center
-            bgColor='rgba(152, 152, 255, 0.1)'
-            border={1}
-            borderColor='rgba(152, 152, 255, 0.25)'
-            p={4}
-            radius={2}
-          >
-            Coming soon
-          </Center>
+          <TrendingFeeds filter={filter} />
         </VStack>
       </CustomTabsContent>
       <CustomTabsContent
         value='following'
         minHeight='calc(100vh - 158px)'
-        css={{
-          borderRight: '1px solid rgba(152, 152, 255, 0.10)',
-          borderLeft: '1px solid rgba(152, 152, 255, 0.10)',
-          borderBottom: '1px solid rgba(152, 152, 255, 0.10)',
-          borderBottomLeftRadius: '$4',
-          borderBottomRightRadius: '$4',
-        }}
+        css={FeedsContainerStyles}
       >
         <VStack w='100%' p={3} gap={4}>
           <CreatePost />
-          <Feeds filter={filter} type='following' />
+          <FollowingFeeds filter={filter} />
         </VStack>
       </CustomTabsContent>
     </CustomTabs>

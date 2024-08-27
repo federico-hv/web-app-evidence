@@ -24,7 +24,7 @@ export function useCreateArticle() {
         },
         {
           query: GET_FEEDS,
-          variables: { filter: FeedFilterTypeEnum.Posts },
+          variables: { filter: FeedFilterTypeEnum.Polls },
         },
       ],
     });

@@ -12,11 +12,11 @@ function AnswerPollButton({ label, onClick }: AnswerPollButtonProps) {
       position='relative'
       overflow='hidden'
       items='center'
+      radius={1}
       gap={2}
-      // _hover={{
-      //   backgroundColor: '$base100',
-      //   color: '$black500',
-      // }}
+      _hover={{
+        backgroundColor: 'rgba(152, 152, 255, 0.1)',
+      }}
       css={{
         userSelect: 'none',
       }}

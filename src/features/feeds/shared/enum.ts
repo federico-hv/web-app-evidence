@@ -1,5 +1,5 @@
 export enum FeedFilterTypeEnum {
-  'Posts' = 'Posts',
+  'Polls' = 'Polls',
   'All' = 'All',
   'Articles' = 'Articles',
 }

@@ -51,7 +51,7 @@ function PollTimer({ endDate }: { endDate?: Date | null }) {
 }
 
 function PollVotesCount({ id, items, endDate }: PollsProps) {
-  const user = useCurrentUser();
+  const currentUser = useCurrentUser();
 
   const { owner } = useFeedContext();
 
@@ -63,14 +63,14 @@ function PollVotesCount({ id, items, endDate }: PollsProps) {
 
   return (
     <Fragment>
-      {(voted || expired || user?.id === owner.id) && (
+      {(owner.id === currentUser.id || voted || expired) && (
         <HStack
           fontSize={2}
           gap={2}
           items='center'
           w='fit-content'
           css={{ userSelect: 'none' }}
-          {...(user?.id === owner.id && {
+          {...(currentUser?.id === owner.id && {
             _hover: {
               cursor: 'pointer',
               textDecoration: 'underline',
@@ -81,7 +81,7 @@ function PollVotesCount({ id, items, endDate }: PollsProps) {
           {/*<Icon name='poll-fill' color='base400' />*/}
           <HStack color='white700' items='center' gap={1}>
             <Text weight={500}>{total}</Text>
-            <Text weight={300}>{total > 1 ? 'votes' : 'vote'}</Text>
+            <Text weight={300}>{total <= 1 ? 'votes' : 'vote'}</Text>
           </HStack>
         </HStack>
       )}
@@ -124,7 +124,6 @@ function PostCard({ data }: { data: PostModel }) {
             </VStack>
           </HStack>
         </Box>
-
         <Box position='relative' css={{ zIndex: 5 }}>
           {currentUser && currentUser.id === owner.id ? (
             <FeedOwnerMoreButton />
@@ -174,11 +173,12 @@ function PostCard({ data }: { data: PostModel }) {
           {/*<FeedShareGroup />*/}
           <FeedBookmarkGroup />
         </HStack>
-        {data.polls?.find((item) => item.voted) ? (
+        {data.polls?.find((item) => item.voted) ||
+        owner.id === currentUser.id ? (
           <PollVotesCount
             id={data.id}
             endDate={data.endDate}
-            items={data.polls}
+            items={data.polls ?? []}
           />
         ) : (
           <PollTimer endDate={data.endDate} />
