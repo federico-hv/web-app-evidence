@@ -92,7 +92,8 @@ function MembersList() {
                     : 'white700'
                 }
                 name={
-                  sortOrder === OrderByEnum.desc
+                  sortOrder === OrderByEnum.desc &&
+                  sortBy === MembersSortByEnum.startedOn
                     ? 'caret-up'
                     : 'caret-down'
                 }
@@ -120,7 +121,8 @@ function MembersList() {
                     : 'white700'
                 }
                 name={
-                  sortOrder === OrderByEnum.desc
+                  sortOrder === OrderByEnum.desc &&
+                  sortBy === MembersSortByEnum.startedOn
                     ? 'caret-up'
                     : 'caret-down'
                 }
@@ -145,7 +147,8 @@ function MembersList() {
                     : 'white700'
                 }
                 name={
-                  sortOrder === OrderByEnum.desc
+                  sortOrder === OrderByEnum.desc &&
+                  sortBy === MembersSortByEnum.purchaseAmount
                     ? 'caret-up'
                     : 'caret-down'
                 }
