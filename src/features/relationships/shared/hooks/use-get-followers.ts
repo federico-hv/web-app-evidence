@@ -13,7 +13,7 @@ export function useGetFollowers(username: string) {
     { followers: AltManyUsersWithRelationship },
     { username: string; params?: IPaginationParams<number> }
   >(GET_FOLLOWERS, {
-    fetchPolicy: 'no-cache',
+    // fetchPolicy: 'no-cache',
     variables: {
       username,
     },

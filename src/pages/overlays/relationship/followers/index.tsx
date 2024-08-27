@@ -16,8 +16,6 @@ function FollowersListPage() {
     return <Fragment />;
   }
 
-  console.log(colorTheme);
-
   return (
     <Loader loading={loading}>
       {data && (

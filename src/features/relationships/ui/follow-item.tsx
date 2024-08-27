@@ -1,8 +1,88 @@
-import { UserWithRelationship } from '../shared';
-import { Avatar, Box, HStack, Text } from '@holdr-ui/react';
+import {
+  IRelationshipStatusInfo,
+  RelationshipStatusCodeEnum,
+  UserWithRelationship,
+} from '../shared';
+import { Avatar, Box, Button, HStack, Icon, Text } from '@holdr-ui/react';
 import { LinkOverlay } from '../../../shared';
-import { SocialButton } from './index';
 import { ThemeColor } from '@holdr-ui/react/dist/shared/types';
+import { Fragment } from 'react';
+import { UserRoleEnum } from '../../user';
+import {
+  useCustomCreateRelationshipMutation,
+  useCustomRemoveRelationshipMutation,
+} from '../mutations';
+
+interface SocialButtonProps {
+  account: UserWithRelationship;
+  statusInfo: IRelationshipStatusInfo;
+  colorTheme?: {
+    follow?: ThemeColor;
+    following?: ThemeColor;
+  };
+}
+
+function SocialButton({
+  statusInfo,
+  account,
+  colorTheme = {
+    follow: 'purple100',
+  },
+}: SocialButtonProps) {
+  const { create, loading: loadingCreate } =
+    useCustomCreateRelationshipMutation(account.id);
+  const { remove, loading: loadingRemove } =
+    useCustomRemoveRelationshipMutation(account.id);
+
+  return (
+    <Fragment>
+      {statusInfo.isFollowing && (
+        <Button
+          onClick={async () =>
+            await remove({
+              id: account.id,
+              type: RelationshipStatusCodeEnum.Following,
+            })
+          }
+          isLoading={loadingRemove}
+          variant='outline'
+          css={{ px: '50px' }}
+          colorTheme={colorTheme?.follow}
+        >
+          Following
+        </Button>
+      )}
+      {statusInfo.hasFollowRequest && (
+        <Button
+          variant='outline'
+          css={{ px: '50px' }}
+          colorTheme={colorTheme?.following}
+        >
+          Requested
+        </Button>
+      )}
+      {!(
+        statusInfo.isFollowing ||
+        statusInfo.isBlocked ||
+        statusInfo.hasFollowRequest
+      ) && (
+        <Button
+          isLoading={loadingCreate}
+          onClick={async () =>
+            await create({
+              id: account.id,
+              type: RelationshipStatusCodeEnum.Following,
+            })
+          }
+          css={{ px: '50px' }}
+          colorTheme={colorTheme?.follow}
+        >
+          Follow
+        </Button>
+      )}
+    </Fragment>
+  );
+}
 
 function FollowItem({
   data,
@@ -29,18 +109,18 @@ function FollowItem({
           <Text weight={500} style={{ marginBottom: '5px' }}>
             {data.displayName}
           </Text>
-          {/*{data.isVerified && (*/}
-          {/*  <Box fontSize='18px' mt={1}>*/}
-          {/*    <Icon name='verified-outline' />*/}
-          {/*  </Box>*/}
-          {/*)}*/}
+          {data.role === UserRoleEnum.Artist && (
+            <Box fontSize='18px'>
+              <Icon name='verified-outline' />
+            </Box>
+          )}
         </HStack>
       </HStack>
       {/* Show the current viewers relationship with the user*/}
       <Box zIndex={5}>
         <SocialButton
           colorTheme={colorTheme}
-          username={data.username}
+          account={data}
           statusInfo={data.relationshipStatusInfo}
         />
       </Box>
