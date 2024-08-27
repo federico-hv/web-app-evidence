@@ -49,6 +49,7 @@ const ContentLayoutAside = ({
           className={hideScrollbar ? 'hide-scrollbar' : 'thin-scrollbar'}
           overflow='auto'
           position='fixed'
+          t={80}
           gap={4}
           h='calc(100% - 80px)'
           pb={4}
