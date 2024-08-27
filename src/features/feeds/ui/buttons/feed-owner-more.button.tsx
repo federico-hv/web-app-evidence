@@ -98,7 +98,7 @@ function FeedOwnerMoreButton({ ghost }: { ghost?: boolean }) {
                     ? async () => await unpin(feedId)
                     : async () => await pin(feedId)
                 }
-                label={isPinned ? 'Unpin from profile' : 'Pin to profile'}
+                label={isPinned ? 'Unpin from feeds' : 'Pin to feeds'}
               />
               <Menu.Item
                 icon='eye-show'
