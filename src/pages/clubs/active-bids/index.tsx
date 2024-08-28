@@ -13,15 +13,21 @@ import dayjs from 'dayjs';
 import { gql, useQuery } from '@apollo/client';
 import { useEffect, useState } from 'react';
 import { GQLClient } from '../../../shared';
-import { GET_BIDS, GET_BID_STATUS } from '../../../features';
+import {
+  AuctionBidStatusEnum,
+  GET_BIDS,
+  GET_BID_STATUS,
+} from '../../../features';
 import {
   Bids,
   BidsData,
   BidsEdge,
   useGetBids,
 } from '../shared/hooks/use-get-bids';
+import { Link } from 'react-router-dom';
 
 interface ActiveBid {
+  artistUsername: string;
   coverImage: string;
   artistName: string;
   amount: number;
@@ -61,6 +67,7 @@ function ActiveBidsClubsPage() {
           }
 
           return {
+            artistUsername: edge.node.artist.username,
             coverImage: edge.node.club.coverImage,
             artistName: edge.node.artist.displayName,
             amount: edge.node.bid.amount,
@@ -97,6 +104,17 @@ function ActiveBidsClubsPage() {
       throw error;
     }
   }
+
+  const getBidStatusMessage = (status: string) => {
+    switch (status) {
+      case AuctionBidStatusEnum.Eligible:
+        return AuctionBidStatusEnum.Eligible;
+      case AuctionBidStatusEnum.Ineligible:
+        return 'Update Bid';
+      default:
+        return '';
+    }
+  };
 
   if (bids.length == 0) {
     return <VStack h={'100vh'}></VStack>;
@@ -135,33 +153,39 @@ function ActiveBidsClubsPage() {
       </HStack>
       <Box h={'1px'} w='100%' bgColor='purpleTint300' />
       {bids.map((bid) => (
-        <VStack>
-          <HStack p={'8px'} css={bid.css} items='center'>
-            <VStack flex={2}>
-              <HStack gap={3} items='center'>
-                <Image
-                  w='100%'
-                  css={{ width: '50px', height: '50px' }}
-                  src={bid.coverImage}
-                  srcSet={bid.coverImage}
-                  fallbackSrc={Asset.Image.SpotifyLogo}
-                  alt={`${bid.artistName}'s club cover image.`}
-                />
-                <Text>{bid.artistName}</Text>
-                <Icon size='xl' color='white500' name='verified-outline' />
-              </HStack>
-            </VStack>
-            <VStack flex={1}>
-              <Text>${bid.amount.toFixed(2)}</Text>
-            </VStack>
-            <VStack flex={1}>
-              <Countdown color='white500' targetDate={bid.targetDate} />
-            </VStack>
-            <VStack flex={1}>
-              <Text>{bid.status}</Text>
-            </VStack>
-          </HStack>
-        </VStack>
+        <Link to={`/clubs/${bid.artistUsername}/live-bids`}>
+          <VStack>
+            <HStack p={'8px'} css={bid.css} items='center'>
+              <VStack flex={2}>
+                <HStack gap={3} items='center'>
+                  <Image
+                    w='100%'
+                    css={{ width: '50px', height: '50px' }}
+                    src={bid.coverImage}
+                    srcSet={bid.coverImage}
+                    fallbackSrc={Asset.Image.SpotifyLogo}
+                    alt={`${bid.artistName}'s club cover image.`}
+                  />
+                  <Text>{bid.artistName}</Text>
+                  <Icon
+                    size='xl'
+                    color='white500'
+                    name='verified-outline'
+                  />
+                </HStack>
+              </VStack>
+              <VStack flex={1}>
+                <Text>${bid.amount.toFixed(2)}</Text>
+              </VStack>
+              <VStack flex={1}>
+                <Countdown color='white500' targetDate={bid.targetDate} />
+              </VStack>
+              <VStack flex={1}>
+                <Text>{getBidStatusMessage(bid.status)}</Text>
+              </VStack>
+            </HStack>
+          </VStack>
+        </Link>
       ))}
     </VStack>
   );

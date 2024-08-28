@@ -70,11 +70,13 @@ function AllClubsPage() {
                 <AuctionCard
                   data={data as AuctionCardData}
                   onWatchClick={() => removeFromWatchlist(data)}
+                  watchlist
                 />
               ) : (
                 <ClubCard
                   data={data as ClubCardData}
                   onWatchClick={() => removeFromWatchlist(data)}
+                  watchlist
                 />
               );
             }}

@@ -51,7 +51,6 @@ export function useWatchlistItems() {
               endDate: item.node.auction.endsAt,
               price: item.node.auction.entryPrice,
               perks,
-              watchlist: true,
             };
           } else {
             const club = clubsData?.clubs.edges.find(

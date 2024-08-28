@@ -32,18 +32,19 @@ export interface ClubCardData {
 
   followers: number;
   following: number;
-  watchlist?: boolean;
 }
 
 function ClubCard({
   data,
   showPerksOnHover = true,
   onWatchClick,
+  watchlist,
 }: {
   /** Show the perks when hovered. Set to true by default */
   showPerksOnHover?: boolean;
   data: ClubCardData;
   onWatchClick: () => void;
+  watchlist?: boolean;
 }) {
   const [h, setH] = useState<number>();
 
@@ -107,6 +108,13 @@ function ClubCard({
           onClick={onWatchClick}
           ariaLabel='add to watchlist'
           icon='eye-show'
+          css={
+            watchlist
+              ? {
+                  color: '$purple200',
+                }
+              : {}
+          }
         />
       </CardHeader>
       <CardBody
@@ -173,7 +181,6 @@ function ClubCard({
           className='membership-card-footer__overlay'
           position='absolute'
           bgColor='#30304bcf'
-          blur='sm'
           h={0}
           b={0}
           w='100%'

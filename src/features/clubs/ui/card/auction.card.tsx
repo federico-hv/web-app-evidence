@@ -45,12 +45,14 @@ function AuctionCard({
   showPerksOnHover = true,
   disableWatchlist = false,
   onWatchClick,
+  watchlist,
 }: {
   /** Show the perks when hovered. Set to true by default */
   showPerksOnHover?: boolean;
   disableWatchlist?: boolean;
   data: AuctionCardData;
   onWatchClick?: () => void;
+  watchlist?: boolean;
 }) {
   const [h, setH] = useState<number>();
 
@@ -115,6 +117,13 @@ function AuctionCard({
             onClick={onWatchClick}
             ariaLabel='add to watchlist'
             icon='eye-show'
+            css={
+              watchlist
+                ? {
+                    color: '$purple200',
+                  }
+                : {}
+            }
           />
         )}
       </CardHeader>
@@ -171,7 +180,6 @@ function AuctionCard({
           className='membership-card-footer__overlay'
           position='absolute'
           bgColor='#30304bcf'
-          blur='sm'
           h={0}
           b={0}
           w='100%'
