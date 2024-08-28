@@ -7,14 +7,10 @@ import {
   HStack,
   Icon,
   Text,
+  useSwitch,
   VStack,
 } from '@holdr-ui/react';
-import {
-  DateUtility,
-  LinkOverlay,
-  prefix,
-  TextGroup,
-} from '../../../../../shared';
+import { DateUtility, LinkOverlay, prefix } from '../../../../../shared';
 import { capitalize } from 'lodash';
 import { useCurrentUser } from '../../../../auth';
 import { FeedOwnerMoreButton, GeneralPostMoreButton } from '../../buttons';
@@ -22,9 +18,10 @@ import { PostMedia, Polls } from '../../groups';
 import FeedLikeGroup from './feed-like-group';
 import FeedBookmarkGroup from './feed-bookmark-group';
 import FeedCommentGroup from './feed-comment-group';
+import { PollsProps } from '../../groups/polls/types';
+import FeedComments from './feed-comments';
 import { Fragment } from 'react';
 import dayjs from 'dayjs';
-import { PollsProps } from '../../groups/polls/types';
 
 function PollTimer({ endDate }: { endDate?: Date | null }) {
   const expired = dayjs(dayjs()).isAfter(endDate);
@@ -91,7 +88,11 @@ function PollVotesCount({ id, items, endDate }: PollsProps) {
 
 function PostCard({ data }: { data: PostModel }) {
   const currentUser = useCurrentUser();
-  const { owner, createdAt } = useFeedContext();
+
+  const { switchState: isCommenting, toggle: toggleComments } =
+    useSwitch();
+
+  const { owner, createdAt, type } = useFeedContext();
 
   return (
     <Card boxShadow='none' gap={3}>
@@ -159,30 +160,36 @@ function PostCard({ data }: { data: PostModel }) {
           }}
         />
       </Card.Body>
-      <Card.Footer
-        px={{ '@bp1': 3, '@bp3': 4 }}
-        pb={{ '@bp1': 3, '@bp3': 4 }}
-        direction='horizontal'
-        items='center'
-        justify='space-between'
-        w='100%'
-      >
-        <HStack gap={2} items='center'>
-          <FeedLikeGroup />
-          <FeedCommentGroup />
-          {/*<FeedShareGroup />*/}
-          <FeedBookmarkGroup />
+      <Card.Footer w='100%'>
+        <HStack
+          px={{ '@bp1': 3, '@bp3': 4 }}
+          pb={{ '@bp1': 3, '@bp3': 4 }}
+          direction='horizontal'
+          items='center'
+          justify='space-between'
+          w='100%'
+        >
+          <HStack gap={2} items='center'>
+            <FeedLikeGroup />
+            <FeedCommentGroup
+              isCommenting={isCommenting}
+              onClick={toggleComments}
+            />
+            {/*<FeedShareGroup />*/}
+            <FeedBookmarkGroup />
+          </HStack>
+          {data.polls?.find((item) => item.voted) ||
+          (owner.id === currentUser.id && type === 'poll') ? (
+            <PollVotesCount
+              id={data.id}
+              endDate={data.endDate}
+              items={data.polls ?? []}
+            />
+          ) : (
+            <PollTimer endDate={data.endDate} />
+          )}
         </HStack>
-        {data.polls?.find((item) => item.voted) ||
-        owner.id === currentUser.id ? (
-          <PollVotesCount
-            id={data.id}
-            endDate={data.endDate}
-            items={data.polls ?? []}
-          />
-        ) : (
-          <PollTimer endDate={data.endDate} />
-        )}
+        {isCommenting && <FeedComments />}
       </Card.Footer>
     </Card>
   );

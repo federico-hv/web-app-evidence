@@ -47,6 +47,7 @@ function FeedCard({
       >
         <FeedContextProvider
           value={{
+            type: data.type,
             owner: data.owner,
             feedId: data.id as string,
             isBookmarked: data.isBookmarked,

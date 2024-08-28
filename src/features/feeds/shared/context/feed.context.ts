@@ -8,6 +8,7 @@ interface IFeedContext {
   isPinned: boolean;
   isLiked: boolean;
   isBookmarked: boolean;
+  type: 'article' | 'post' | 'poll';
 }
 
 const FeedContext = createContext<IFeedContext>({
@@ -23,6 +24,7 @@ const FeedContext = createContext<IFeedContext>({
   isBookmarked: false,
   createdAt: '',
   isPinned: false,
+  type: 'post',
 });
 
 const FeedContextProvider = FeedContext.Provider;

@@ -20,6 +20,7 @@ export { default as PrimaryTooltip } from './primary-tooltip';
 export { default as PasswordErrorChecker } from './password-error-checker';
 export { default as ShowPasswordButton } from './show-password-button';
 export { default as ErrorItem } from './error-item';
+export { default as TextAreaField } from './text-area-field';
 export { default as AppearingContent } from './appearing-content';
 export { default as ImageUpload } from './image-upload';
 export { default as FormInput } from './form-input';

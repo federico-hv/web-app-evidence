@@ -1,4 +1,5 @@
 import { GenericItem } from '../../../../shared';
+import { FeedFilterTypeEnum } from '../enum';
 
 interface IArticleSource {
   name: string;
@@ -31,6 +32,7 @@ interface ArticleModel extends GenericItem {
 interface PostModel extends GenericItem {
   __typename: string;
   id: number;
+  type: 'poll' | 'post';
   description: string;
   endDate?: Date | null;
   media?: IPostMedia[];

@@ -1,7 +1,7 @@
 import { Box, mergeStyles, Textarea, VStack } from '@holdr-ui/react';
 import { customInputStyles, textAreaClassName } from '../../styles';
 import { TextareaProps } from '@holdr-ui/react/dist/components/text-area/src/text-area.types';
-import { ReactNode, useState } from 'react';
+import { ReactNode, Ref, useState } from 'react';
 import Label from '../label';
 import { TextProps } from '@holdr-ui/react/dist/components/text/src/text.types';
 
@@ -18,6 +18,7 @@ function TextAreaField({
   tooltip,
   value,
   labelProps,
+  innerRef,
   ...props
 }: TextareaProps & {
   name: string;
@@ -25,6 +26,7 @@ function TextAreaField({
   label?: string;
   tooltip?: ReactNode;
   labelProps?: TextProps;
+  innerRef?: Ref<any>;
 }) {
   const [internalValue, set] = useState<string>(value as string);
 
@@ -40,7 +42,7 @@ function TextAreaField({
         />
       )}
 
-      <Box position='relative'>
+      <Box innerRef={innerRef} position='relative'>
         <Textarea
           className={mergeStyles([
             textAreaClassName(),
