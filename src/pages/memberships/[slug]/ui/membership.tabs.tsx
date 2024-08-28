@@ -146,6 +146,100 @@ function MembershipPageHeader() {
 function MembershipTabs() {
   const { slug } = useParams();
 
+  const MembershipTabsContent = () => (
+    <GQLRenderer>
+      <ContentLayout>
+        <ContentLayoutMain>
+          <VStack
+            w='100%'
+            minHeight='100vh'
+            color='black500'
+            bgColor='white500'
+          >
+            <MembershipPageHeader />
+            <RoutingTabs
+              flex={1}
+              bgColor='white100'
+              position='relative'
+              h='calc(100% - 80px)'
+            >
+              <RoutingTabsHeader
+                position='sticky'
+                zIndex={2}
+                bgColor='white100'
+                t={60}
+                borderBottom={1}
+                borderColor='rgba(152, 152, 255, 0.10)'
+                mx='auto'
+                css={{
+                  boxShadow: '0px 4px 25px 0px rgba(0, 0, 0, 0.1)',
+                }}
+              >
+                <RoutingTabsList gap={1} maxWidth={1280} mx='auto'>
+                  <RoutingTabsTrigger
+                    w='fit-content'
+                    py={2}
+                    px={6}
+                    fontSize={2}
+                    _hover={{ background: '#9898FF26' }}
+                    to={Paths.home}
+                  >
+                    Home
+                  </RoutingTabsTrigger>
+                  <RoutingTabsTrigger
+                    w='fit-content'
+                    py={2}
+                    px={6}
+                    fontSize={2}
+                    _hover={{ background: '#9898FF26' }}
+                    to={Paths.events}
+                  >
+                    Events
+                  </RoutingTabsTrigger>
+                  <RoutingTabsTrigger
+                    w='fit-content'
+                    py={2}
+                    px={6}
+                    fontSize={2}
+                    _hover={{ background: '#9898FF26' }}
+                    to={Paths.music}
+                  >
+                    Music
+                  </RoutingTabsTrigger>
+                  <RoutingTabsTrigger
+                    w='fit-content'
+                    py={2}
+                    px={6}
+                    fontSize={2}
+                    _hover={{ background: '#9898FF26' }}
+                    to={Paths.more}
+                  >
+                    More
+                  </RoutingTabsTrigger>
+                  <RoutingTabsTrigger
+                    w='fit-content'
+                    py={2}
+                    px={6}
+                    fontSize={2}
+                    _hover={{ background: '#9898FF26' }}
+                    to={Paths.about}
+                  >
+                    About
+                  </RoutingTabsTrigger>
+                </RoutingTabsList>
+              </RoutingTabsHeader>
+              <RoutingTabsContent pt='32px' h='full' />
+            </RoutingTabs>
+          </VStack>
+        </ContentLayoutMain>
+      </ContentLayout>
+    </GQLRenderer>
+  );
+
+  if (slug === 'federicoguitarist') {
+    return <MembershipTabsContent />;
+  }
+
   return (
     <QueryGuard<{ ownsClubMemberhsio: boolean }, { clubId: string }>
       negate
@@ -159,93 +253,7 @@ function MembershipTabs() {
         </Center>
       }
     >
-      <GQLRenderer>
-        <ContentLayout>
-          <ContentLayoutMain>
-            <VStack
-              w='100%'
-              minHeight='100vh'
-              color='black500'
-              bgColor='white500'
-            >
-              <MembershipPageHeader />
-              <RoutingTabs
-                flex={1}
-                bgColor='white100'
-                position='relative'
-                h='calc(100% - 80px)'
-              >
-                <RoutingTabsHeader
-                  position='sticky'
-                  zIndex={2}
-                  bgColor='white100'
-                  t={60}
-                  borderBottom={1}
-                  borderColor='rgba(152, 152, 255, 0.10)'
-                  mx='auto'
-                  css={{
-                    boxShadow: '0px 4px 25px 0px rgba(0, 0, 0, 0.1)',
-                  }}
-                >
-                  <RoutingTabsList gap={1} maxWidth={1280} mx='auto'>
-                    <RoutingTabsTrigger
-                      w='fit-content'
-                      py={2}
-                      px={6}
-                      fontSize={2}
-                      _hover={{ background: '#9898FF26' }}
-                      to={Paths.home}
-                    >
-                      Home
-                    </RoutingTabsTrigger>
-                    <RoutingTabsTrigger
-                      w='fit-content'
-                      py={2}
-                      px={6}
-                      fontSize={2}
-                      _hover={{ background: '#9898FF26' }}
-                      to={Paths.events}
-                    >
-                      Events
-                    </RoutingTabsTrigger>
-                    <RoutingTabsTrigger
-                      w='fit-content'
-                      py={2}
-                      px={6}
-                      fontSize={2}
-                      _hover={{ background: '#9898FF26' }}
-                      to={Paths.music}
-                    >
-                      Music
-                    </RoutingTabsTrigger>
-                    <RoutingTabsTrigger
-                      w='fit-content'
-                      py={2}
-                      px={6}
-                      fontSize={2}
-                      _hover={{ background: '#9898FF26' }}
-                      to={Paths.more}
-                    >
-                      More
-                    </RoutingTabsTrigger>
-                    <RoutingTabsTrigger
-                      w='fit-content'
-                      py={2}
-                      px={6}
-                      fontSize={2}
-                      _hover={{ background: '#9898FF26' }}
-                      to={Paths.about}
-                    >
-                      About
-                    </RoutingTabsTrigger>
-                  </RoutingTabsList>
-                </RoutingTabsHeader>
-                <RoutingTabsContent pt='32px' h='full' />
-              </RoutingTabs>
-            </VStack>
-          </ContentLayoutMain>
-        </ContentLayout>
-      </GQLRenderer>
+      <MembershipTabsContent />
     </QueryGuard>
   );
 }
