@@ -1,7 +1,14 @@
-import { Box, Circle, HStack, Icon, Text, VStack } from '@holdr-ui/react';
+import { Box, Circle, HStack, Text, VStack } from '@holdr-ui/react';
 import { PollResponseProps } from './types';
+import { useCurrentUser } from '../../../../auth';
+import { useFeedContext } from '../../../shared';
+import { Fragment } from 'react';
 
 function PollResponse({ data, total }: PollResponseProps) {
+  const currentUser = useCurrentUser();
+
+  const { owner } = useFeedContext();
+
   const percentage = !total ? 0 : (data.count / total) * 100;
 
   return (
@@ -14,12 +21,26 @@ function PollResponse({ data, total }: PollResponseProps) {
       overflow='hidden'
       css={{ userSelect: 'none' }}
     >
-      {data.voted ? (
-        <Circle zIndex={10} size={20} border={2} borderColor='purple100'>
-          <Circle size='8px' bgColor='purple100' />
-        </Circle>
-      ) : (
-        <Circle zIndex={10} size={20} border={2} borderColor='purple100' />
+      {currentUser.id !== owner.id && (
+        <Fragment>
+          {data.voted ? (
+            <Circle
+              zIndex={10}
+              size={20}
+              border={2}
+              borderColor='purple100'
+            >
+              <Circle size='8px' bgColor='purple100' />
+            </Circle>
+          ) : (
+            <Circle
+              zIndex={10}
+              size={20}
+              border={2}
+              borderColor='purple100'
+            />
+          )}
+        </Fragment>
       )}
       <Box
         position='absolute'
