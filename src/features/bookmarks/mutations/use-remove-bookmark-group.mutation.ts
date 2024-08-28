@@ -24,6 +24,12 @@ export function useRemoveBookmarkGroupMutation() {
         update: (cache, { data }) => {
           cache.modify({
             fields: {
+              trendingFeeds() {
+                return;
+              },
+              feeds() {
+                return;
+              },
               bookmarkGroups(current) {
                 // TODO: Update this method - see create bookmark group
                 if (!data) return;

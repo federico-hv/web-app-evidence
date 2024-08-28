@@ -31,8 +31,7 @@ function SelectTime({
           radius={2}
           _open={{ borderRadius: '$2' }}
           css={{
-            background:
-              'linear-gradient(0deg, rgba(152, 152, 255, 0.15) 0%, rgba(152, 152, 255, 0.15) 100%), rgb(26, 26, 41)',
+            bgColor: 'rgba(26, 26, 41, 0.75)',
           }}
           placeholder='Select your role'
         />
@@ -43,7 +42,7 @@ function SelectTime({
           alignOffset={0}
         >
           <SelectItemList
-            bgColor='purple500'
+            bgColor='rgba(56, 56, 140, 0.25)'
             divider={
               <Box
                 h='1px'
@@ -51,12 +50,13 @@ function SelectTime({
                 css={{ backgroundColor: 'rgba(204, 204, 204, 0.10)' }}
               />
             }
-            css={{
-              borderRadius: '$2',
-              border: '1px solid rgba(152, 152, 255, 0.10)',
-              background: ' rgba(56, 56, 140, 0.25)',
-              backdropFilter: 'blur(50px)',
+            _highlighted={{
+              backgroundColor: 'rgba(152, 152, 255, 0.5)',
             }}
+            radius={1}
+            border={1}
+            borderColor='rgba(152, 152, 255, 0.10)'
+            blur='lg'
           >
             {options.map((value) => (
               <SelectItem

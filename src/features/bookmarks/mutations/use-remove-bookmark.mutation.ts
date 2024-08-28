@@ -31,6 +31,9 @@ export function useRemoveBookmarkMutation() {
               feedStatistic(current) {
                 voidFn();
               },
+              trendingFeeds() {
+                voidFn();
+              },
               allBookmarkTotal(current) {
                 voidFn();
               },

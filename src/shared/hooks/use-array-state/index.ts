@@ -8,14 +8,18 @@ export function useArrayState<T>(
   T[],
   ItemFn<T>,
   (idx: number, item: T) => void,
-  (filter: ItemFn<T>) => void,
+  (filter: (item: T, idx?: number) => boolean) => void,
   Dispatch<SetStateAction<T[]>>,
 ] {
   const [state, set] = useState<T[]>(initialState);
 
   const push = (item: T) => set((prev) => [...prev, item]);
-  const remove = (filter: (item: T, idx: number) => void) =>
-    set((prev) => prev.filter(filter));
+  const remove = (filter: (item: T, idx: number) => boolean) =>
+    set((prev) => {
+      return prev.filter((item, idx) => {
+        return filter(item, idx);
+      });
+    });
   const replace = (idx: number, item: T) =>
     set((prev) => [...prev.slice(0, idx), item, ...prev.slice(idx + 1)]);
 

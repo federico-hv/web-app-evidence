@@ -12,6 +12,7 @@ function CreatePostButton() {
     try {
       PostSchema.validateSync(postState);
       if (postState.responses) {
+        console.log(postState);
         PollSchema.validateSync(postState);
       }
       return false;
@@ -19,8 +20,6 @@ function CreatePostButton() {
       return true;
     }
   };
-
-  const postButtonSize = makeButtonLarger('3.0rem', '16px');
 
   return (
     <Button
@@ -33,7 +32,7 @@ function CreatePostButton() {
           close();
         }
       }}
-      className={postButtonSize}
+      className={makeButtonLarger('3rem')}
       colorTheme='purple500'
       fullWidth
     >

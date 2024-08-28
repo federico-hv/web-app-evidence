@@ -1,11 +1,11 @@
-import { FeedCard, useBookmarksQuery } from '../../../features';
+import { FeedCard, useBookmarksSuspenseQuery } from '../../../features';
 import { FlatList } from '../../../tmp/flat-list';
 import { useParams } from 'react-router-dom';
 
 function Content() {
   const { id } = useParams();
 
-  const { data } = useBookmarksQuery({ id: id ?? 'all' });
+  const { data } = useBookmarksSuspenseQuery({ id: id ?? 'all' });
 
   return (
     <FlatList

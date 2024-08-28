@@ -14,7 +14,7 @@ import { nodeStyle as useNodeStyle } from '../styles';
 import { omit } from 'lodash';
 import { Editor, UserModel } from '../../../../../../../shared';
 import { useSearch } from '../../../../../../search';
-import { Box, hexToRGB } from '@holdr-ui/react';
+import { Box } from '@holdr-ui/react';
 
 export default function CreatePostEditor({
   update,
@@ -29,15 +29,15 @@ export default function CreatePostEditor({
 
   return (
     <Box
-      radius={2}
+      radius={1}
       py={3}
       px={2}
       as='label'
       color='white500'
       minHeight={{ '@bp1': 75, '@bp3': 125 }}
       css={{
-        backgroundColor: 'rgba(26, 26, 41, 0.75)',
-        display: 'flex'
+        backgroundColor: '#1A1A29 ',
+        display: 'flex',
       }}
     >
       <Editor

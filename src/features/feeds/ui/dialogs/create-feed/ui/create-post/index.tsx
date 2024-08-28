@@ -14,7 +14,6 @@ function CreatePost() {
   return (
     <VStack t='1rem' l={0} r={0} overflowY='auto' pb={0} gap={4}>
       <CreatePostEditor update={updatePostState} />
-      <ChooseFeedType />
       {type === 'with-image' && (
         <AddMedia
           as={
@@ -31,6 +30,7 @@ function CreatePost() {
         />
       )}
       {type === 'with-poll' && <AddPoll update={updatePostState} />}
+      <ChooseFeedType />
     </VStack>
   );
 }

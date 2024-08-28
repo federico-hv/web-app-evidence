@@ -31,6 +31,9 @@ export function useRemoveBookmark() {
             feeds() {
               return;
             },
+            trendingFeeds() {
+              return;
+            },
             userFeeds() {
               return;
             },

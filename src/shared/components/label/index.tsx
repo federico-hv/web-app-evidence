@@ -55,9 +55,9 @@ function Label({
             side='right'
             align='start'
             fontSize={1}
-            container={node}
             bgColor='transparent'
             css={{ padding: 0 }}
+            container={node}
           >
             {tooltip}
           </TooltipContent>

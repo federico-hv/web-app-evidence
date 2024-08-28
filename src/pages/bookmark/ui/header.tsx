@@ -66,7 +66,8 @@ function Header() {
           </Heading>
         </Box>
         <HStack gap={3} items='center'>
-          <SelectVisibility />
+          {/* ⚙️ Hide this for Beta v1*}
+          {/*<SelectVisibility />*/}
           <Menu minWidth={270} offset={12}>
             <MenuTrigger>
               <IconButton

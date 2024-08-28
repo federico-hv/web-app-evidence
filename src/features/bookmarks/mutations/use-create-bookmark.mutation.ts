@@ -39,6 +39,9 @@ export function useCreateBookmarkMutation() {
               feeds(current) {
                 voidFn();
               },
+              trendingFeeds(current) {
+                voidFn();
+              },
             },
           });
         },

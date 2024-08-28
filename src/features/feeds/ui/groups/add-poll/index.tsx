@@ -1,5 +1,6 @@
 import {
   Button,
+  Heading,
   HStack,
   Switch,
   useSwitch,
@@ -11,6 +12,7 @@ import {
   TextGroup,
   TextGroupHeading,
   TextGroupSubheading,
+  useArrayState,
   useRecordState,
 } from '../../../../../shared';
 import dayjs from 'dayjs';
@@ -19,7 +21,7 @@ import { AddPollProps, ITime } from './types';
 
 function AddPoll({ update }: AddPollProps) {
   const MaximumOptions = 4;
-  const [responses, set] = useState(['', '']);
+  const [responses, add, replace, remove] = useArrayState(['', '']);
   const { switchState: withEndDate, turnOn, turnOff } = useSwitch(true);
   const [startFrom, updateStartFrom] = useRecordState<ITime>({
     days: -1,
@@ -31,27 +33,6 @@ function AddPoll({ update }: AddPollProps) {
     hours: 0,
     minutes: 0,
   });
-
-  const addPoll = () => set((prev) => [...prev, '']);
-
-  const updatePoll = (text: string, idx: number) =>
-    set((prev) => {
-      // endDate
-
-      // replace elem at idx
-      const newResponses = [
-        ...prev.slice(0, idx),
-        text,
-        ...prev.slice(idx + 1),
-      ];
-
-      // update state
-      update({
-        responses: newResponses,
-      });
-      // return new responses
-      return newResponses;
-    });
 
   const updateEndDate = (current: ITime) =>
     update({
@@ -66,7 +47,7 @@ function AddPoll({ update }: AddPollProps) {
 
   useEffect(() => {
     update({ responses });
-  }, []);
+  }, [responses]);
 
   return (
     <VStack
@@ -74,24 +55,28 @@ function AddPoll({ update }: AddPollProps) {
       radius={1}
       gap={4}
       pb={4}
-      css={{ flexShrink: 0, backgroundColor: '#1A1A29' }}
+      css={{ flexShrink: 0 }}
     >
+      <Heading size={3} weight={500} color='white500'>
+        Options
+      </Heading>
       <VStack h='full' w='full' gap={3}>
-        {responses.map((current, idx) => (
+        {responses.map((_, idx) => (
           <PollAnswerInput
             key={`choice-${idx + 1}`}
             title={`Choice ${idx + 1}`}
             value={responses[idx]}
-            update={(value) => updatePoll(value, idx)}
+            update={(value) => replace(idx, value)}
+            remove={() => remove((_, index) => idx !== index)}
           />
         ))}
         {responses.length < MaximumOptions && (
           <Button
-            className={makeButtonLarger('2.5rem')}
+            leftIcon='add'
+            variant='ghost'
             radius={2}
-            fullWidth
-            colorTheme='white500'
-            onClick={addPoll}
+            colorTheme='white700'
+            onClick={() => add('')}
           >
             Add Choice
           </Button>
@@ -124,7 +109,7 @@ function AddPoll({ update }: AddPollProps) {
             </TextGroupSubheading>
           </TextGroup>
           <Switch
-            colorTheme='success500'
+            colorTheme={withEndDate ? 'white700' : 'purple500'}
             size={{ '@bp1': 'sm', '@bp3': 'base' }}
             value={String(withEndDate)}
             onChange={(e) =>

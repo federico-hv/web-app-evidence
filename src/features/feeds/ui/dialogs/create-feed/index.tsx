@@ -6,6 +6,7 @@ import {
   FeedAudienceEnum,
 } from '../../../shared';
 import {
+  makeButtonLarger,
   StepperContextProvider,
   useDialogContext,
   useRecordState,
@@ -46,7 +47,6 @@ import {
 function CreateFeedDialog() {
   const currentUser = useCurrentUser();
   const { isOpen, onOpen, onClose } = useDialogContext();
-  // TODO: Find out what this is used for, IDK
   const {
     value: websiteUrl,
     handleOnChange: handleOnWebsiteChange,
@@ -181,7 +181,7 @@ function CreateFeedDialog() {
                 <Stack direction='vertical' gap={3}>
                   <Button
                     onClick={close}
-                    // className={cancelButtonSize}
+                    className={makeButtonLarger('3rem')}
                     colorTheme='white500'
                     variant='ghost'
                     fullWidth

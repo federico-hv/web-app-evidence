@@ -90,7 +90,7 @@ function CreateArticleButton() {
               increment();
             }
           }}
-          className={makeButtonLarger('2.5rem', '15px')}
+          className={makeButtonLarger('3rem')}
           colorTheme='purple500'
           fullWidth
         >
@@ -113,7 +113,7 @@ function CreateArticleButton() {
               close();
             }
           }}
-          className={makeButtonLarger('2.5rem', '15px')}
+          className={makeButtonLarger('3rem')}
           colorTheme='purple500'
           fullWidth
         >

@@ -122,6 +122,9 @@ export const darkInputStyles = css({
   borderRadius: '$1',
   backgroundColor: '#1A1A29 !important',
   height: '2.75rem !important',
+  '&::placeholder': {
+    color: '$white700',
+  },
   '&:focus': {
     border: '1px solid rgba(152, 152, 255, 1) !important',
     backgroundColor: 'transparent',
