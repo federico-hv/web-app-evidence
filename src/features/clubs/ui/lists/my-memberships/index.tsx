@@ -11,10 +11,12 @@ import {
 import {
   GQLRenderer,
   makeButtonLarger,
+  makePath,
   Paths,
   prefix,
+  usePreviousLocation,
 } from '../../../../../shared';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useUserMembershipsSuspenseQuery } from '../../../../memberships';
 import { FlatList } from '../../../../../tmp/flat-list';
 import { MembershipItem } from '../../groups/membership-item';
@@ -52,6 +54,8 @@ function BrowseMemberships() {
 
 function MyMemberships() {
   const currentUser = useCurrentUser();
+  const { pathname } = useLocation();
+  const previousLocation = usePreviousLocation(pathname);
 
   if (!currentUser || (currentUser && currentUser.role === 'artist')) {
     return <Fragment />;
@@ -59,9 +63,14 @@ function MyMemberships() {
 
   return (
     <VStack minHeight={292} p={4}>
-      <Heading size={3} weight={500} css={{ userSelect: 'none' }}>
-        My Memberships
-      </Heading>
+      <Link
+        to={makePath([currentUser.username, 'memberships'])}
+        state={{ previousLocation }}
+      >
+        <Heading size={3} weight={500} css={{ userSelect: 'none' }}>
+          My Memberships
+        </Heading>
+      </Link>
       <Box
         mt={{ '@bp1': '8px', '@bp3': '8px' }}
         mb={{ '@bp1': '16px', '@bp3': '16px' }}
