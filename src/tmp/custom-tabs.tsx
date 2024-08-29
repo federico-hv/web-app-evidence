@@ -90,7 +90,6 @@ function CustomTabsTrigger({
     borderBottom: '2px solid $purple500',
     fontWeight: 500,
   },
-  // flex = 1,
   ...props
 }: StackProps & {
   value: string;

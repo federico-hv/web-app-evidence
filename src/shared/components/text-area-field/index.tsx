@@ -18,6 +18,7 @@ function TextAreaField({
   tooltip,
   value,
   labelProps,
+  hideCounter = false,
   innerRef,
   ...props
 }: TextareaProps & {
@@ -27,6 +28,7 @@ function TextAreaField({
   tooltip?: ReactNode;
   labelProps?: TextProps;
   innerRef?: Ref<any>;
+  hideCounter?: boolean;
 }) {
   const [internalValue, set] = useState<string>(value as string);
 
@@ -61,7 +63,7 @@ function TextAreaField({
           }}
           {...props}
         />
-        {maxLength && (
+        {!hideCounter && maxLength && (
           <Box
             position='absolute'
             b='8px'

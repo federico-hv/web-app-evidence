@@ -1,25 +1,18 @@
 import {
-  feedAudience,
   FeedAudienceEnum,
-  FeedAudienceName,
   useChangeAudience,
   useFeedContext,
 } from '../../shared';
 import { useQuery } from '@apollo/client';
 import { GET_FEED_AUDIENCE } from '../../queries';
 import {
-  CommonDialog,
-  CommonDialogContent,
-  CommonDialogHeader,
   CustomSkeleton,
   Error,
   Loader,
-  RadioWrapper,
   useDialogContext,
 } from '../../../../shared';
 import {
   arrayFrom,
-  Box,
   Center,
   Dialog,
   DialogBody,
@@ -30,8 +23,6 @@ import {
   Heading,
   HStack,
   Icon,
-  Radio,
-  Skeleton,
   Text,
   VStack,
 } from '@holdr-ui/react';

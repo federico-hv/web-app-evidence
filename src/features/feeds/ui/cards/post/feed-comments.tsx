@@ -263,9 +263,10 @@ function FeedComments() {
             src={currentUser.avatar}
             name={currentUser.displayName}
           />
-          <HStack flex={1} gap={2} items='flex-end'>
+          <HStack flex={1} gap={2} items='flex-start'>
             <Box flex={1}>
               <TextAreaField
+                hideCounter
                 id='user-comment'
                 value={value}
                 onChange={(e) => handleOnValueChange(e.target.value)}
@@ -274,6 +275,7 @@ function FeedComments() {
                 minLines={1}
                 maxLines={3}
                 name='comment'
+                maxLength={250}
               />
             </Box>
             {value.length > 0 && (
@@ -282,7 +284,7 @@ function FeedComments() {
                   <AppearingContent>
                     <Button
                       variant='ghost'
-                      className={makeButtonLarger('3rem')}
+                      className={makeButtonLarger('50px')}
                       colorTheme='purple100'
                       css={{
                         px: '28px',

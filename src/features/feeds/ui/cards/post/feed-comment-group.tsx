@@ -17,9 +17,7 @@ function FeedCommentGroup({
         icon={isCommenting ? 'chat-alt-fill' : 'chat-alt-outline'}
         ariaLabel='view comments'
       />
-      <Box fontSize={2} cursor='pointer'>
-        {millify(0, { precision: 2 })}
-      </Box>
+      <Box fontSize={2}>{millify(0, { precision: 2 })}</Box>
     </HStack>
   );
 }

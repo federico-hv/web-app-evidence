@@ -1,16 +1,23 @@
 import { gql } from '@apollo/client';
 
+export const RELATIONSHIP_STATUS_INFO_MODEL = gql`
+  fragment RelationshipStatusInfoFragment on RelationshipStatusInfoModel {
+    isBlocked
+    isMuted
+    isFollower
+    isFollowing
+    isRestricted
+    hasFollowRequest
+  }
+`;
+
 export const GET_RELATIONSHIP_STATUS_INFO = gql`
   query relationshipStatusInfo($username: String!) {
     relationshipStatusInfo(username: $username) {
-      isBlocked
-      isMuted
-      isFollower
-      isFollowing
-      isRestricted
-      hasFollowRequest
+      ...RelationshipStatusInfoFragment
     }
   }
+  ${RELATIONSHIP_STATUS_INFO_MODEL}
 `;
 
 export const GET_BLOCKED_USERS = gql`
@@ -61,23 +68,28 @@ export const GET_MUTED_USERS = gql`
   }
 `;
 
+export const USER_WITH_RELATIONSHIP_FRAGMENT = gql`
+  fragment UserWithRelationshipFragment on UserWithRelationshipModel {
+    id
+    avatar
+    role
+    username
+    displayName
+    relationshipStatusInfo {
+      isFollower
+      isFollowing
+      isRestricted
+    }
+  }
+`;
+
 export const GET_FOLLOWERS = gql`
   query followers($username: String!) {
     followers(username: $username) {
       edges {
         cursor
         node {
-          id
-          avatar
-          role
-          username
-          displayName
-          relationshipStatusInfo {
-            isFollower
-            isFollowing
-            isRestricted
-            hasFollowRequest
-          }
+          ...UserWithRelationshipFragment
         }
       }
       pageInfo {
@@ -88,6 +100,7 @@ export const GET_FOLLOWERS = gql`
       }
     }
   }
+  ${USER_WITH_RELATIONSHIP_FRAGMENT}
 `;
 
 export const GET_RELATIONSHIP_COUNT = gql`
@@ -105,17 +118,7 @@ export const GET_FOLLOWING = gql`
       edges {
         cursor
         node {
-          id
-          avatar
-          role
-          username
-          displayName
-          relationshipStatusInfo {
-            isFollower
-            isFollowing
-            isRestricted
-            hasFollowRequest
-          }
+          ...UserWithRelationshipFragment
         }
       }
       pageInfo {
@@ -126,6 +129,7 @@ export const GET_FOLLOWING = gql`
       }
     }
   }
+  ${USER_WITH_RELATIONSHIP_FRAGMENT}
 `;
 
 export const GET_MUTUAL_USERS = gql`

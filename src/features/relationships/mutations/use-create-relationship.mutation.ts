@@ -107,6 +107,15 @@ export function useCustomCreateRelationshipMutation(accountId: string) {
               following(current = {}, { readField }) {
                 updateLists(current, readField, accountId, data);
               },
+              usersWhoLiked(current = {}, { readField }) {
+                updateLists(current, readField, accountId, data);
+              },
+              usersWhoBookmarked(current = {}, { readField }) {
+                updateLists(current, readField, accountId, data);
+              },
+              usersWhoVoted(current = {}, { readField }) {
+                updateLists(current, readField, accountId, data);
+              },
               relationshipCount(current = {}, { readField }) {
                 const following = readField('following', current);
 
@@ -177,6 +186,15 @@ export function useCustomRemoveRelationshipMutation(accountId: string) {
                 updateLists(current, readField, accountId, data);
               },
               following(current = {}, { readField }) {
+                updateLists(current, readField, accountId, data);
+              },
+              usersWhoLiked(current = {}, { readField }) {
+                updateLists(current, readField, accountId, data);
+              },
+              usersWhoBookmarked(current = {}, { readField }) {
+                updateLists(current, readField, accountId, data);
+              },
+              usersWhoVoted(current = {}, { readField }) {
                 updateLists(current, readField, accountId, data);
               },
               relationshipCount(current = {}, { readField }) {

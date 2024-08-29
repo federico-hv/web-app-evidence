@@ -7,6 +7,7 @@ import {
   HStack,
   Icon,
   Text,
+  useDisclosure,
   useSwitch,
   VStack,
 } from '@holdr-ui/react';
@@ -22,6 +23,7 @@ import { PollsProps } from '../../groups/polls/types';
 import FeedComments from './feed-comments';
 import { Fragment } from 'react';
 import dayjs from 'dayjs';
+import { PollVotesDialog } from '../../dialogs';
 
 function PollTimer({ endDate }: { endDate?: Date | null }) {
   const expired = dayjs(dayjs()).isAfter(endDate);
@@ -48,6 +50,8 @@ function PollTimer({ endDate }: { endDate?: Date | null }) {
 }
 
 function PollVotesCount({ id, items, endDate }: PollsProps) {
+  const disclosure = useDisclosure();
+
   const currentUser = useCurrentUser();
 
   const { owner } = useFeedContext();
@@ -62,18 +66,23 @@ function PollVotesCount({ id, items, endDate }: PollsProps) {
     <Fragment>
       {(owner.id === currentUser.id || voted || expired) && (
         <HStack
+          onClick={
+            owner.id === currentUser.id ? disclosure.onOpen : undefined
+          }
           fontSize={2}
           gap={2}
           items='center'
           w='fit-content'
           css={{ userSelect: 'none' }}
-          {...(currentUser?.id === owner.id && {
-            _hover: {
-              cursor: 'pointer',
-              textDecoration: 'underline',
-            },
-            // onClick: onOpen,
-          })}
+          _hover={
+            currentUser.id === owner.id
+              ? {
+                  color: '$white700',
+                  textDecoration: 'underline',
+                  cursor: 'pointer',
+                }
+              : undefined
+          }
         >
           {/*<Icon name='poll-fill' color='base400' />*/}
           <HStack color='white700' items='center' gap={1}>
@@ -82,6 +91,9 @@ function PollVotesCount({ id, items, endDate }: PollsProps) {
           </HStack>
         </HStack>
       )}
+      {owner.id === currentUser.id && disclosure.isOpen && (
+        <PollVotesDialog {...disclosure} />
+      )}
     </Fragment>
   );
 }
@@ -89,7 +101,7 @@ function PollVotesCount({ id, items, endDate }: PollsProps) {
 function PostCard({ data }: { data: PostModel }) {
   const currentUser = useCurrentUser();
 
-  const { switchState: isCommenting, toggle: toggleComments } =
+  const { switchState: showComments, toggle: toggleShowComments } =
     useSwitch();
 
   const { owner, createdAt, type } = useFeedContext();
@@ -172,8 +184,8 @@ function PostCard({ data }: { data: PostModel }) {
           <HStack gap={2} items='center'>
             <FeedLikeGroup />
             <FeedCommentGroup
-              isCommenting={isCommenting}
-              onClick={toggleComments}
+              isCommenting={showComments}
+              onClick={toggleShowComments}
             />
             {/*<FeedShareGroup />*/}
             <FeedBookmarkGroup />
@@ -189,7 +201,7 @@ function PostCard({ data }: { data: PostModel }) {
             <PollTimer endDate={data.endDate} />
           )}
         </HStack>
-        {isCommenting && <FeedComments />}
+        {showComments && <FeedComments />}
       </Card.Footer>
     </Card>
   );

@@ -1,5 +1,67 @@
 import { gql } from '@apollo/client';
 
+const USER_WITH_RELATIONSHIP_FRAGMENT = gql`
+  fragment UserWithRelationshipFragment on UserWithRelationshipModel {
+    id
+    avatar
+    role
+    username
+    displayName
+    relationshipStatusInfo {
+      isFollower
+      isFollowing
+      isRestricted
+    }
+  }
+`;
+
+export const FEED_FRAGMENT = gql`
+  fragment FeedFragment on FeedModel {
+    id
+    type
+    isLiked
+    isBookmarked
+    isPinned
+    createdAt
+    owner {
+      id
+      displayName
+      username
+      avatar
+    }
+    item {
+      ... on PostModel {
+        id
+        endDate
+        description
+        media {
+          id
+          url
+          type
+        }
+        polls {
+          id
+          text
+          count
+          voted
+        }
+      }
+      ... on ArticleModel {
+        id
+        title
+        description
+        imageUrl
+        url
+        source {
+          name
+          logo
+          url
+        }
+      }
+    }
+  }
+`;
+
 export const GET_FEEDS = gql`
   query feeds(
     $params: StringPaginationParamsInput
@@ -9,48 +71,7 @@ export const GET_FEEDS = gql`
     feeds(params: $params, filter: $filter, slug: $slug) {
       edges {
         node {
-          id
-          type
-          isLiked
-          isBookmarked
-          isPinned
-          createdAt
-          owner {
-            id
-            displayName
-            username
-            avatar
-          }
-          item {
-            ... on PostModel {
-              id
-              endDate
-              description
-              media {
-                id
-                url
-                type
-              }
-              polls {
-                id
-                text
-                count
-                voted
-              }
-            }
-            ... on ArticleModel {
-              id
-              title
-              description
-              imageUrl
-              url
-              source {
-                name
-                logo
-                url
-              }
-            }
-          }
+          ...FeedFragment
         }
         cursor
       }
@@ -62,55 +83,7 @@ export const GET_FEEDS = gql`
       }
     }
   }
-`;
-
-export const GET_FEED = gql`
-  query feed($id: String!) {
-    feed(id: $id) {
-      id
-      type
-      isLiked
-      isBookmarked
-      isPinned
-      createdAt
-      owner {
-        id
-        displayName
-        username
-        avatar
-      }
-      node {
-        ... on PostModel {
-          id
-          endDate
-          description
-          media {
-            id
-            url
-            type
-          }
-          polls {
-            id
-            text
-            count
-            voted
-          }
-        }
-        ... on ArticleModel {
-          id
-          title
-          url
-          description
-          imageUrl
-          source {
-            name
-            url
-            logo
-          }
-        }
-      }
-    }
-  }
+  ${FEED_FRAGMENT}
 `;
 
 export const GET_TRENDING_FEEDS = gql`
@@ -122,48 +95,7 @@ export const GET_TRENDING_FEEDS = gql`
       total
       edges {
         node {
-          id
-          type
-          isLiked
-          isBookmarked
-          isPinned
-          createdAt
-          owner {
-            id
-            displayName
-            username
-            avatar
-          }
-          item {
-            ... on PostModel {
-              id
-              endDate
-              description
-              media {
-                id
-                url
-                type
-              }
-              polls {
-                id
-                text
-                count
-                voted
-              }
-            }
-            ... on ArticleModel {
-              id
-              title
-              description
-              imageUrl
-              url
-              source {
-                name
-                logo
-                url
-              }
-            }
-          }
+          ...FeedFragment
         }
         cursor
       }
@@ -175,6 +107,93 @@ export const GET_TRENDING_FEEDS = gql`
       }
     }
   }
+  ${FEED_FRAGMENT}
+`;
+
+export const GET_USERS_WHO_LIKED = gql`
+  query UsersWhoLiked(
+    $feedId: String!
+    $params: StringPaginationParamsInput
+  ) {
+    usersWhoLiked(feedId: $feedId, params: $params) {
+      total
+      edges {
+        cursor
+        node {
+          ...UserWithRelationshipFragment
+        }
+      }
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+    }
+  }
+  ${USER_WITH_RELATIONSHIP_FRAGMENT}
+`;
+
+export const GET_USERS_WHO_BOOKMARKED = gql`
+  query UsersWhoLiked(
+    $feedId: String!
+    $params: StringPaginationParamsInput
+  ) {
+    usersWhoBookmarked(feedId: $feedId, params: $params) {
+      total
+      edges {
+        cursor
+        node {
+          ...UserWithRelationshipFragment
+        }
+      }
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+    }
+  }
+  ${USER_WITH_RELATIONSHIP_FRAGMENT}
+`;
+
+export const GET_FEED = gql`
+  query Feed($id: String!) {
+    feed(id: $id) {
+      ...FeedFragment
+    }
+  }
+  ${FEED_FRAGMENT}
+`;
+
+export const GET_USERS_WHO_VOTED = gql`
+  query usersWhoVoted(
+    $pollAnswerId: Int!
+    $postId: Int!
+    $params: StringPaginationParamsInput
+  ) {
+    usersWhoVoted(
+      pollAnswerId: $pollAnswerId
+      postId: $postId
+      params: $params
+    ) {
+      total
+      edges {
+        cursor
+        node {
+          ...UserWithRelationshipFragment
+        }
+      }
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+    }
+  }
+  ${USER_WITH_RELATIONSHIP_FRAGMENT}
 `;
 
 export const GET_FEED_STATISTIC = gql`
@@ -198,10 +217,7 @@ export const GET_POLL_VOTES = gql`
     usersWhoVoted(id: $id, params: $params, pollId: $pollId) {
       edges {
         node {
-          id
-          username
-          avatar
-          displayName
+          ...UserWithRelationshipFragment
         }
         cursor
       }
@@ -213,4 +229,5 @@ export const GET_POLL_VOTES = gql`
       }
     }
   }
+  ${USER_WITH_RELATIONSHIP_FRAGMENT}
 `;

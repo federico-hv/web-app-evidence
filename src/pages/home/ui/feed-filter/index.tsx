@@ -32,7 +32,7 @@ function FeedFilter({ current, onClick }: FeedFilterProps) {
         align='end'
         side='bottom'
         sideOffset={10}
-        zIndex={10}
+        zIndex={5}
         sticky='always'
       >
         <SelectItemList
