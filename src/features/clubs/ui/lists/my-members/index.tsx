@@ -1,8 +1,13 @@
 import { useCurrentUser } from '../../../../auth';
 import { Fragment } from 'react';
 import { Box, Button, Heading, HStack, VStack } from '@holdr-ui/react';
-import { makeButtonLarger, makePath, Paths } from '../../../../../shared';
-import { Link } from 'react-router-dom';
+import {
+  makeButtonLarger,
+  makePath,
+  Paths,
+  usePreviousLocation,
+} from '../../../../../shared';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useClubMembersSuspenseQuery } from '../../../../memberships';
 import { useSuspenseGetClub } from '../../../shared';
 import { FlatList } from '../../../../../tmp/flat-list';
@@ -10,6 +15,9 @@ import { MyMemberItem } from '../../groups';
 
 function MyMembers() {
   const currentUser = useCurrentUser();
+
+  const { pathname } = useLocation();
+  const previousLocation = usePreviousLocation(pathname);
 
   const { data: clubData } = useSuspenseGetClub({
     slug: currentUser.username,
@@ -28,9 +36,22 @@ function MyMembers() {
     <VStack minHeight={292} p={4}>
       <HStack items='center' justify='space-between'>
         <HStack items='center' gap={1}>
-          <Heading size={3} weight={500} css={{ userSelect: 'none' }}>
-            My Members
-          </Heading>
+          <Link
+            to={makePath([
+              Paths.clubs,
+              currentUser.username,
+              Paths.members,
+            ])}
+            state={{ previousLocation }}
+          >
+            <Heading
+              size={3}
+              weight={500}
+              css={{ userSelect: 'none', cursor: 'pointer' }}
+            >
+              My Members
+            </Heading>
+          </Link>
           {/*<InformationTooltip*/}
           {/*  sideOffset={5}*/}
           {/*  side='bottom'*/}
