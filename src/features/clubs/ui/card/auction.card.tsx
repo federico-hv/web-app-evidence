@@ -22,6 +22,8 @@ import {
 import { FlatList } from '../../../../tmp/flat-list';
 import { useEffect, useState } from 'react';
 
+const CARD_ANIMATION_TRANSITION = 'all 500ms ease-in-out';
+
 function AuctionCard({
   data,
   showPerksOnHover = true,
@@ -75,18 +77,18 @@ function AuctionCard({
               },
               '&:hover .membership-card-footer__overlay': {
                 height: '100%',
-                transition: 'all 0.25s ease-out',
+                transition: CARD_ANIMATION_TRANSITION,
               },
               '&:hover .membership-card-footer__overlay > *': {
                 display: 'block',
               },
               '&:hover .membership-card__body': {
                 height: '100%',
-                transition: 'all 0.25s ease-out',
+                transition: CARD_ANIMATION_TRANSITION,
               },
               '&:hover .membership-card__footer': {
                 height: '0%',
-                transition: 'all 0.25s ease-out',
+                transition: CARD_ANIMATION_TRANSITION,
               },
             }
           : undefined
