@@ -10,6 +10,7 @@ import {
 import { ChangeClubImage } from '../../setup-artist-profile/upload-photos/ui';
 import {
   useClubContext,
+  useGetAuctionSuspenseQuery,
   usePerksContext,
   useSuspenseGetArtist,
   useUpdatePerks,
@@ -26,6 +27,10 @@ function EditArtistClubAuctionDetailsPage() {
   const { clubPerks } = usePerksContext();
 
   const { data: artistData } = useSuspenseGetArtist({ slug });
+
+  const { data: auctionData } = useGetAuctionSuspenseQuery(club.id);
+
+  const isAuctionLive = !!auctionData.auction;
 
   const navigate = useNavigate();
 
@@ -86,8 +91,8 @@ function EditArtistClubAuctionDetailsPage() {
               {/*  description='Something useful.'*/}
               {/*/>*/}
             </HStack>
-            {/** ⚠️ Disable when live auction is running*/}
             <ChangeClubImage
+              disabled={isAuctionLive}
               artistName={artistData.artist.name}
               placeholder={club.coverImage}
             />
@@ -98,12 +103,13 @@ function EditArtistClubAuctionDetailsPage() {
             <TextGroupHeading as='h2' size={3} weight={500}>
               Membership Perks
             </TextGroupHeading>
-            <TextGroupSubheading size={1} color='white700'>
-              Select the perks that you will be offered to your fans
-            </TextGroupSubheading>
+            {!isAuctionLive && (
+              <TextGroupSubheading size={1} color='white700'>
+                Select the perks that you will be offered to your fans
+              </TextGroupSubheading>
+            )}
           </TextGroup>
 
-          {/** ⚠️ Disable when live auction is running*/}
           {selectedPerks.length < 3 && (
             <Box mb={4}>
               <Text size={1} color='danger200' weight={300}>
@@ -114,7 +120,9 @@ function EditArtistClubAuctionDetailsPage() {
 
           <SelectPredefinedPerks
             values={selectedPerks}
-            onChange={(next: number[]) => setSelectedPerks(next)}
+            onChange={(next: number[]) =>
+              !isAuctionLive && setSelectedPerks(next)
+            }
           />
 
           <Box bgColor='rgba(152, 152, 255, 0.20)' h='1px' my={4} />
