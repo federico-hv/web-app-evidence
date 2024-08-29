@@ -66,7 +66,7 @@ function EditUserAddFavoritesPage() {
         <VStack gap={2}>
           <HStack color='white700' gap={1} items='center'>
             <Text size={2} weight={500} as='label'>
-              Favourite Track
+              Favorite Track
             </Text>
             <InformationTooltip
               side='right'
@@ -112,7 +112,7 @@ function EditUserAddFavoritesPage() {
         <VStack gap={2}>
           <HStack color='white700' gap={1} items='center'>
             <Text size={2} as='label'>
-              Favourite Musicians
+              Favorite Musicians
             </Text>
             <InformationTooltip
               side='right'

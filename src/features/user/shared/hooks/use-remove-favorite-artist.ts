@@ -1,5 +1,5 @@
 import { gql, Reference, useMutation } from '@apollo/client';
-import { REMOVE_FAVOURITE_ARTIST } from '../../mutations';
+import { REMOVE_FAVORITE_ARTIST } from '../../mutations';
 import { ITinyArtist } from '../../../../shared';
 
 export function useRemoveFavoriteArtist() {
@@ -10,7 +10,7 @@ export function useRemoveFavoriteArtist() {
       removeFavoriteArtist: ITinyArtist<number>;
     },
     { id: number }
-  >(REMOVE_FAVOURITE_ARTIST);
+  >(REMOVE_FAVORITE_ARTIST);
 
   const removeFavoriteArtist = async (id: number) => {
     try {

@@ -14,7 +14,7 @@ export const dummyPerksData: IPerk[] = [
     label: 'Direct notifications',
     description: `Members will receive updates and personalized responses
     providing a unique opportunity for them to connect directly
-    with their favourite artists.`,
+    with their favorite artists.`,
   },
   {
     id: 3,
@@ -27,7 +27,7 @@ export const dummyPerksData: IPerk[] = [
     id: 4,
     label: 'Community Playlist',
     description: `Members receive an invite to Boslen’s exclusive playlist
-    granting them access to all of the musician's favourite new
+    granting them access to all of the musician's favorite new
     songs, and allowing them to connect and curate the playlist
     further with other membership owners.`,
   },

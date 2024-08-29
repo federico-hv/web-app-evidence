@@ -40,7 +40,7 @@ export interface RemoveRelationshipModel {
   isMuted?: boolean | null;
   isFollowing?: boolean | null;
   isFriend?: boolean | null;
-  isFavourite?: boolean | null;
+  isFavorite?: boolean | null;
 }
 
 export interface CreateRelationshipInput {

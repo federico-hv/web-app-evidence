@@ -107,9 +107,9 @@ function EditUserProfileDialog() {
                         />
                         <SetupStep
                           number={2}
-                          path={makePath([username, 'edit', 'favourites'])}
-                          description='Add Favourites'
-                          active={currentPath === 'favourites'}
+                          path={makePath([username, 'edit', 'favorites'])}
+                          description='Add Favorites'
+                          active={currentPath === 'favorites'}
                         />
                       </VStack>
                     </Box>

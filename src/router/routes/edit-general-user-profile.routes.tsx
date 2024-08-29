@@ -16,7 +16,7 @@ const EditGeneralUserProfileRoutes = () => (
         }
       />
       <Route path='profile' element={<EditUserProfilePage />} />
-      <Route path='favourites' element={<EditUserAddFavoritesPage />} />
+      <Route path='favorites' element={<EditUserAddFavoritesPage />} />
     </Route>
   </Routes>
 );

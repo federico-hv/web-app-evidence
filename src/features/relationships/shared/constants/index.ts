@@ -4,7 +4,7 @@ export const createRelationshipActions = [
   'block',
   'follow',
   'mute',
-  'favourite',
+  'favorite',
   'restrict',
 ] as const;
 
@@ -13,7 +13,7 @@ export const removeRelationshipActions = [
   'follow',
   'mute',
   'friend',
-  'favourite',
+  'favorite',
   'restrict',
   'follow request',
   'friend request',

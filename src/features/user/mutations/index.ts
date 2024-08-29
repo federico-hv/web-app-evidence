@@ -127,7 +127,7 @@ export const SAVE_FAVORITE_ARTIST = gql`
   }
 `;
 
-export const REMOVE_FAVOURITE_ARTIST = gql`
+export const REMOVE_FAVORITE_ARTIST = gql`
   mutation removeFavoriteArtist($id: Int!) {
     removeFavoriteArtist(id: $id) {
       id

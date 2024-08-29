@@ -51,7 +51,7 @@ function EditUserProfilePage() {
     });
 
   const nextStep = () => {
-    navigate(makePath([username || '', 'edit', 'favourites']), {
+    navigate(makePath([username || '', 'edit', 'favorites']), {
       state: {
         previousLocation,
       },
